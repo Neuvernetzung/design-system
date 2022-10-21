@@ -34,7 +34,13 @@ export const Variants = ({ ...args }) => {
   return (
     <Container>
       {_variants.map((variant: any) => (
-        <IconButton variant={variant} key={variant} icon={HomeIcon} {...args} />
+        <IconButton
+          ariaLabel="home"
+          variant={variant}
+          key={variant}
+          icon={HomeIcon}
+          {...args}
+        />
       ))}
     </Container>
   );
@@ -50,7 +56,13 @@ export const Colors = ({ ...args }) => {
   return (
     <Container>
       {_colors.map((color: any) => (
-        <IconButton color={color} key={color} icon={HomeIcon} {...args} />
+        <IconButton
+          ariaLabel="home"
+          color={color}
+          key={color}
+          icon={HomeIcon}
+          {...args}
+        />
       ))}
     </Container>
   );
@@ -69,7 +81,13 @@ export const Sizes = ({ ...args }) => {
   return (
     <Container>
       {_size.map((size: any) => (
-        <IconButton size={size} key={size} icon={HomeIcon} {...args} />
+        <IconButton
+          ariaLabel="home"
+          size={size}
+          key={size}
+          icon={HomeIcon}
+          {...args}
+        />
       ))}
     </Container>
   );
@@ -80,12 +98,13 @@ Sizes.parameters = {
 };
 
 export const AsComponent = ({ ...args }) => {
-  const components = ["button", "a", "div"];
+  const components = ["button", "a"];
 
   return (
     <Container>
       {components.map((component: any) => (
         <IconButton
+          ariaLabel="home"
           as={component}
           href="#"
           key={component}
@@ -100,7 +119,7 @@ export const AsComponent = ({ ...args }) => {
 export const Rounded = ({ ...args }) => {
   return (
     <Container>
-      <IconButton rounded icon={HomeIcon} {...args} />
+      <IconButton ariaLabel="home" rounded icon={HomeIcon} {...args} />
     </Container>
   );
 };
@@ -108,7 +127,7 @@ export const Rounded = ({ ...args }) => {
 export const Disabled = ({ ...args }) => {
   return (
     <Container>
-      <IconButton disabled icon={HomeIcon} {...args} />
+      <IconButton ariaLabel="home" disabled icon={HomeIcon} {...args} />
     </Container>
   );
 };
