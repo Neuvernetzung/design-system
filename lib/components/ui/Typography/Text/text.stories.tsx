@@ -4,7 +4,7 @@ import React from "react";
 import { Text, sizes, colors } from "./text";
 
 export default {
-  title: "UI/Text",
+  title: "UI/Typography/Text",
   component: Text,
   argTypes: {
     size: {

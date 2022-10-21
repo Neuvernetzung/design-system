@@ -1,16 +1,14 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Heading, sizes, colors } from "./heading";
+import { Icon, sizes, colors } from "./icon";
+import { HomeIcon } from "../../icons";
 
 export default {
-  title: "UI/Typography/Heading",
-  component: Heading,
+  title: "UI/Icon",
+  component: Icon,
   argTypes: {
     size: {
-      control: { type: "select" },
-    },
-    color: {
       control: { type: "select" },
     },
   },
@@ -26,9 +24,7 @@ export const Sizes = ({ ...args }) => {
   return (
     <Container>
       {_sizes.map((size: any) => (
-        <Heading size={size} key={size} {...args}>
-          {size}
-        </Heading>
+        <Icon size={size} key={size} icon={HomeIcon} {...args} />
       ))}
     </Container>
   );
@@ -37,15 +33,14 @@ export const Sizes = ({ ...args }) => {
 Sizes.parameters = {
   controls: { exclude: "size" },
 };
+
 export const Colors = ({ ...args }) => {
   const _colors = Object.keys(colors);
 
   return (
     <Container>
       {_colors.map((color: any) => (
-        <Heading color={color} key={color} {...args}>
-          {color}
-        </Heading>
+        <Icon color={color} key={color} icon={HomeIcon} {...args} />
       ))}
     </Container>
   );
@@ -53,7 +48,4 @@ export const Colors = ({ ...args }) => {
 
 Colors.parameters = {
   controls: { exclude: "color" },
-  a11y: {
-    disable: true,
-  },
 };
