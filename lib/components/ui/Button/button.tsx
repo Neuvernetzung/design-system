@@ -1,7 +1,17 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
 import { colorIsBright, getThemeColors } from "../../../utils";
-import { ButtonHTMLAttributes, forwardRef, memo } from "react";
+import {
+  forwardRef,
+  memo,
+  Ref,
+  ElementType,
+  ComponentPropsWithoutRef,
+  ReactElement,
+  ReactNode,
+} from "react";
+import { Icon } from "../Icon";
+import { sizes as textSizes } from "../Typography/Text/text";
 
 export const variants: Variants = {
   filled: "",
@@ -11,9 +21,9 @@ export const variants: Variants = {
     "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 dark:hover:bg-opacity-10",
 };
 
-type Variants = { filled: string; outline: string; ghost: string };
+export type Variants = { filled: string; outline: string; ghost: string };
 
-const realColors = {
+export const realColors = {
   "primary-500": getThemeColors("primary")[500],
   "accent-500": getThemeColors("accent")[500],
   "green-500": getThemeColors("green")[500],
@@ -74,7 +84,7 @@ export const colors: Colors = {
   },
 };
 
-type Colors = {
+export type Colors = {
   primary: ColorProps;
   accent: ColorProps;
   success: ColorProps;
@@ -89,13 +99,13 @@ type ColorProps = {
 
 export const sizes: Sizes = {
   xs: "py-0.5 px-2",
-  sm: "py-1 px-4",
-  md: "py-2 px-6",
-  lg: "py-3 px-8",
-  xl: "py-4 px-12",
+  sm: "py-1 px-2",
+  md: "py-2 px-3",
+  lg: "py-3 px-6",
+  xl: "py-4 px-8",
 };
 
-type Sizes = {
+export type Sizes = {
   xs: string;
   sm: string;
   md: string;
@@ -104,68 +114,77 @@ type Sizes = {
 };
 
 export const styles = {
-  base: "appearance-none inline-block prose prose-sm rounded-md h-min",
+  base: "appearance-none prose prose-sm rounded-md h-min select-none flex flex-row justify-center items-center gap-2 font-semibold",
   focus: "focus:outline-none focus-visible:ring focus-visible:ring-opacity-20",
   transition: "transition duration-300 ease-in-out",
   disabled: "bg-gray-200 cursor-not-allowed",
   fullWidth: "w-full",
+  rounded: "rounded-full",
 };
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps<T extends ElementType> = ComponentPropsWithoutRef<T> & {
   variant?: keyof Variants;
   color?: keyof Colors;
   size?: keyof Sizes;
   fullWidth?: boolean;
-}
+  rounded?: boolean;
+  leftIcon?: ElementType<SVGElement>;
+  rightIcon?: ElementType<SVGElement>;
+  as?: T;
+  children?: ReactNode;
+};
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
+type PolymorphicComponent = <T extends ElementType = "button">(
+  props: ButtonProps<T>
+) => ReactElement | null;
+
+export const Button: PolymorphicComponent = forwardRef(
+  <T extends ElementType>(
     {
-      children,
       size = "md",
       type = "button",
       variant = "filled",
       color = "accent",
       disabled = false,
       fullWidth,
+      rounded,
+      leftIcon,
+      rightIcon,
       className,
+      as,
+      children,
       ...props
-    },
-    ref
+    }: ButtonProps<T>,
+    ref: Ref<T>
   ): JSX.Element => {
-    const classes = cn(
-      styles.base,
-      styles.transition,
-      styles.focus,
-      variants[variant],
-      sizes[size],
-      !disabled && colors[color]?.base,
-      !disabled && colors[color]?.text[variant],
-      disabled && styles.disabled,
-      { [styles.fullWidth]: fullWidth },
-      className
-    );
+    const Component = as || "button";
 
     return (
-      <button
+      <Component
         ref={ref}
         type={type}
         disabled={disabled}
-        className={classes}
+        className={cn(
+          styles.base,
+          styles.transition,
+          styles.focus,
+          variants[variant],
+          sizes[size],
+          textSizes[size],
+          !disabled && colors[color]?.base,
+          !disabled && colors[color]?.text[variant],
+          disabled && styles.disabled,
+          { [styles.fullWidth]: fullWidth, [styles.rounded]: rounded },
+          className
+        )}
         {...props}
       >
+        {leftIcon && <Icon size={size} icon={leftIcon} />}
         {children}
-      </button>
+        {rightIcon && <Icon size={size} icon={rightIcon} />}
+      </Component>
     );
   }
 );
 
 export default memo(Button);
-
-Button.displayName = "Button";
-Button.defaultProps = {
-  variant: "filled",
-  color: "accent",
-  size: "md",
-  fullWidth: false,
-};
