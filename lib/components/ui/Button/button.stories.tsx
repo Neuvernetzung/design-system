@@ -85,7 +85,7 @@ Sizes.parameters = {
 };
 
 export const AsComponent = ({ ...args }) => {
-  const components = ["button", "a", "div"];
+  const components = ["button", "a"];
 
   return (
     <Container>

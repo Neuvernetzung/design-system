@@ -34,6 +34,7 @@ export type IconButtonProps<T extends ElementType> =
     size?: keyof Sizes;
     rounded?: boolean;
     icon: ElementType<SVGElement>;
+    ariaLabel: string;
     as?: T;
   };
 
@@ -51,6 +52,7 @@ export const IconButton: PolymorphicComponent = forwardRef(
       disabled = false,
       rounded,
       icon,
+      ariaLabel,
       className,
       as,
       ...props
@@ -64,6 +66,7 @@ export const IconButton: PolymorphicComponent = forwardRef(
         ref={ref}
         type={type}
         disabled={disabled}
+        aria-label={ariaLabel}
         className={cn(
           styles.base,
           styles.transition,
