@@ -23,8 +23,17 @@ jobs:
       - name: Dependencies installieren
         run: npm i
 
-      - name: Tests ausführen
-        run: npm run test
+      - name: Playwright installieren
+        run: npx playwright install --with-deps
+
+      - name: Storybook builden
+        run: npm run build --quiet
+
+      - name: Storybook starken und testen
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:6006 && npm run test"
 
       - name: Semantic release
         env:
