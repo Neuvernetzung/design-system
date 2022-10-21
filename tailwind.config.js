@@ -1,14 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
-
 module.exports = {
   purge: ["./lib/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
-    fontFamily: {
-      heading: ["Oswald", ...defaultTheme.fontFamily.sans],
-      body: ["Inter", ...defaultTheme.fontFamily.sans],
-    },
     extend: {
       colors: {
         primary: {
