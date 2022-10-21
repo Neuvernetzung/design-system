@@ -1,14 +1,12 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
 import { colorIsBright, getThemeColors } from "../../../utils";
-import { ButtonHTMLAttributes, forwardRef, memo } from "react";
+import React from "react";
 
 export const variants: Variants = {
   filled: "",
-  outline:
-    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 dark:hover:bg-opacity-10 border",
-  ghost:
-    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 dark:hover:bg-opacity-10",
+  outline: "bg-opacity-0 hover:bg-opacity-10 border",
+  ghost: "bg-opacity-0 hover:bg-opacity-10",
 };
 
 type Variants = { filled: string; outline: string; ghost: string };
@@ -33,13 +31,13 @@ export const colors: Colors = {
     },
   },
   accent: {
-    base: "bg-accent-600 dark:bg-accent-300 hover:bg-accent-700 dark:hover:bg-accent-200 border-accent-600 dark:border-accent-300 ring-accent-600 dark:ring-accent-300",
+    base: "bg-accent-500 hover:bg-accent-600 border-accent-500 ring-accent-500",
     text: {
       filled: colorIsBright(realColors["accent-500"])
-        ? "text-accent-50 dark:text-accent-900"
-        : "text-accent-900 dark:text-accent-50",
-      outline: "text-accent-600 dark:text-accent-300",
-      ghost: "text-accent-600 dark:text-accent-300",
+        ? "text-accent-50"
+        : "text-accent-900",
+      outline: "text-accent-500",
+      ghost: "text-accent-500",
     },
   },
   success: {
@@ -111,21 +109,22 @@ export const styles = {
   fullWidth: "w-full",
 };
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: keyof Variants;
   color?: keyof Colors;
   size?: keyof Sizes;
   fullWidth?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
       size = "md",
       type = "button",
       variant = "filled",
-      color = "accent",
+      color = "primary",
       disabled = false,
       fullWidth,
       className,
@@ -160,12 +159,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-export default memo(Button);
+export default React.memo(Button);
 
 Button.displayName = "Button";
 Button.defaultProps = {
   variant: "filled",
-  color: "accent",
+  color: "primary",
   size: "md",
   fullWidth: false,
 };

@@ -1,7 +1,9 @@
-import "../lib/styles/globals.css";
+import "../lib/styles/tailwind.css";
 
 import React, { useEffect, useState } from "react";
 import { addDecorator, addParameters } from "@storybook/react";
+
+// import { IconButton } from "../src/lib/components/ui";
 
 const Theme = (Story) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -17,9 +19,11 @@ const Theme = (Story) => {
   return (
     <>
       <div className="absolute z-50 bottom-5 right-5">
-        <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-          Dark Mode Toggle
-        </button>
+        {/* <IconButton
+          size="xs"
+          icon={theme === "light" ? <Moon white /> : <Sun white />}
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        /> */}
       </div>
       <div className="p-5 bg-white dark:bg-gray-900">
         <Story />
