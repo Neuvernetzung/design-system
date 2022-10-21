@@ -1,7 +1,9 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
+import { Icon } from "../Icon";
 import { Button, variants, colors, sizes } from "./button";
+import { HomeIcon } from "@heroicons/react/24/outline";
 
 export default {
   title: "UI/Button",
