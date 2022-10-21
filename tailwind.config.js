@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require("tailwindcss/defaultTheme");
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   purge: ["./lib/**/*.{js,ts,jsx,tsx}"],
@@ -46,5 +47,12 @@ module.exports = {
       borderColor: ["focus-visible"],
     },
   },
-  plugins: [import("@tailwindcss/forms"), import("@tailwindcss/typography")],
+  plugins: [
+    import("@tailwindcss/forms"),
+    import("@tailwindcss/typography"),
+    plugin(function ({ addVariant }) {
+      addVariant("not-first", "&>*:not(:first-child)");
+      addVariant("not-last", "&>*:not(:last-child)");
+    }),
+  ],
 };

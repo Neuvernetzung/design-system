@@ -18,13 +18,15 @@ import {
   type Variants,
   styles,
 } from "../button";
+import { minHeights } from "../../../../styles/sizes";
+import { roundings } from "../../../../styles/roundings";
 
 export const sizes: Sizes = {
-  xs: "p-0.5",
-  sm: "p-1",
-  md: "p-2",
-  lg: "p-3",
-  xl: "p-4",
+  xs: `${roundings.xs} ${minHeights.xs}`,
+  sm: `${roundings.sm} ${minHeights.sm}`,
+  md: `${roundings.md} ${minHeights.md}`,
+  lg: `${roundings.lg} ${minHeights.lg}`,
+  xl: `${roundings.xl} ${minHeights.xl}`,
 };
 
 export type IconButtonProps<T extends ElementType> =
@@ -68,6 +70,7 @@ export const IconButton: PolymorphicComponent = forwardRef(
         disabled={disabled}
         aria-label={ariaLabel}
         className={cn(
+          "aspect-square",
           styles.base,
           styles.transition,
           styles.focus,
