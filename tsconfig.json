@@ -1,0 +1,24 @@
+{
+  "extends": "tsconfig/react-library.json",
+  "include": ["."],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@ui": ["ui"],
+      "@ui/*": ["ui/*"],
+      "@theme": ["theme"],
+      "@theme/*": ["theme/*"],
+      "@utils": ["utils"],
+      "@utils/*": ["utils/*"],
+      "@icons": ["icons"],
+      "@public/*": ["src/public/*"],
+      "@components/*": ["src/components/*"]
+    },
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve"
+  }
+}

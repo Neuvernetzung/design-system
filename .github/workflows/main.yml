@@ -1,0 +1,32 @@
+name: Semantic release
+
+on: push
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: NodeJs aufsetzen
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+
+      - name: GitHub Token einstellen für Private packages
+        run: git config --global url."https://${{ secrets.GH_TOKEN }}@github.com/".insteadOf ssh://git@github.com/ # Personal Access Token hinzufügen um Private Github Repos installieren zu können.
+
+      - name: Dependencies installieren
+        run: npm i
+
+      - name: Tests ausführen
+        run: npm run test
+
+      - name: Semantic release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx semantic-release
