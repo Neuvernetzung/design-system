@@ -6,3 +6,4 @@ src
 .storybook
 CHANGELOG.md
 **/**.test.**
+**/**.stories.**
