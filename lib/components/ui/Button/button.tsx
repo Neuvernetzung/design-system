@@ -12,6 +12,8 @@ import {
 } from "react";
 import { Icon } from "../Icon";
 import { sizes as textSizes } from "../Typography/Text/text";
+import { minHeights } from "../../../styles/sizes";
+import { roundings } from "../../../styles/roundings";
 
 export const variants: Variants = {
   filled: "",
@@ -98,11 +100,11 @@ type ColorProps = {
 };
 
 export const sizes: Sizes = {
-  xs: "py-0.5 px-2",
-  sm: "py-1 px-2",
-  md: "py-2 px-3",
-  lg: "py-3 px-6",
-  xl: "py-4 px-8",
+  xs: `py-0.5 px-2 ${roundings.xs} ${minHeights.xs}`,
+  sm: `py-1 px-2 ${roundings.sm} ${minHeights.sm}`,
+  md: `py-2 px-3 ${roundings.md} ${minHeights.md}`,
+  lg: `py-3 px-6 ${roundings.lg} ${minHeights.lg}`,
+  xl: `py-4 px-8 ${roundings.xl} ${minHeights.xl}`,
 };
 
 export type Sizes = {
@@ -114,7 +116,7 @@ export type Sizes = {
 };
 
 export const styles = {
-  base: "appearance-none prose prose-sm rounded-md h-min select-none flex flex-row justify-center items-center gap-2 font-semibold",
+  base: "appearance-none prose prose-sm h-min select-none flex flex-row justify-center items-center gap-2 font-semibold",
   focus: "focus:outline-none focus-visible:ring focus-visible:ring-opacity-20",
   transition: "transition duration-300 ease-in-out",
   disabled: "bg-gray-200 cursor-not-allowed",
