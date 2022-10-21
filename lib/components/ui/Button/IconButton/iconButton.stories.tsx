@@ -2,11 +2,12 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Button, variants, colors, sizes } from "./button";
+import { IconButton, sizes } from "./iconButton";
+import { variants, colors } from "../button";
 
 export default {
-  title: "UI/Buttons/Button",
-  component: Button,
+  title: "UI/Buttons/IconButton",
+  component: IconButton,
   argTypes: {
     color: {
       control: { type: "select" },
@@ -33,9 +34,7 @@ export const Variants = ({ ...args }) => {
   return (
     <Container>
       {_variants.map((variant: any) => (
-        <Button variant={variant} key={variant} {...args}>
-          {variant}
-        </Button>
+        <IconButton variant={variant} key={variant} icon={HomeIcon} {...args} />
       ))}
     </Container>
   );
@@ -51,9 +50,7 @@ export const Colors = ({ ...args }) => {
   return (
     <Container>
       {_colors.map((color: any) => (
-        <Button color={color} key={color} {...args}>
-          {color}
-        </Button>
+        <IconButton color={color} key={color} icon={HomeIcon} {...args} />
       ))}
     </Container>
   );
@@ -72,9 +69,7 @@ export const Sizes = ({ ...args }) => {
   return (
     <Container>
       {_size.map((size: any) => (
-        <Button size={size} key={size} {...args}>
-          {size}
-        </Button>
+        <IconButton size={size} key={size} icon={HomeIcon} {...args} />
       ))}
     </Container>
   );
@@ -90,20 +85,14 @@ export const AsComponent = ({ ...args }) => {
   return (
     <Container>
       {components.map((component: any) => (
-        <Button as={component} href="#" key={component} {...args}>
-          {component}
-        </Button>
+        <IconButton
+          as={component}
+          href="#"
+          key={component}
+          icon={HomeIcon}
+          {...args}
+        />
       ))}
-    </Container>
-  );
-};
-
-export const FullWidth = ({ ...args }) => {
-  return (
-    <Container>
-      <Button fullWidth {...args}>
-        full width
-      </Button>
     </Container>
   );
 };
@@ -111,22 +100,7 @@ export const FullWidth = ({ ...args }) => {
 export const Rounded = ({ ...args }) => {
   return (
     <Container>
-      <Button rounded {...args}>
-        rounded
-      </Button>
-    </Container>
-  );
-};
-
-export const WithIcon = ({ ...args }) => {
-  return (
-    <Container>
-      <Button leftIcon={HomeIcon} {...args}>
-        left Icon
-      </Button>
-      <Button rightIcon={HomeIcon} {...args}>
-        right Icon
-      </Button>
+      <IconButton rounded icon={HomeIcon} {...args} />
     </Container>
   );
 };
@@ -134,9 +108,7 @@ export const WithIcon = ({ ...args }) => {
 export const Disabled = ({ ...args }) => {
   return (
     <Container>
-      <Button disabled {...args}>
-        disabled
-      </Button>
+      <IconButton disabled icon={HomeIcon} {...args} />
     </Container>
   );
 };

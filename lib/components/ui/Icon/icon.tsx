@@ -38,7 +38,7 @@ type Colors = {
 export interface IconProps extends HTMLAttributes<HTMLElement> {
   size?: keyof Sizes;
   color?: keyof Colors;
-  icon: ElementType;
+  icon: ElementType<SVGElement>;
   className?: string;
 }
 
