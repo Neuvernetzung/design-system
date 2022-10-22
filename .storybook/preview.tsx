@@ -1,4 +1,5 @@
 import "../lib/styles/globals.css";
+import * as NextImage from "next/image";
 
 import React, { useEffect, useState } from "react";
 import { addDecorator, addParameters } from "@storybook/react";
@@ -41,3 +42,10 @@ addDecorator(Theme);
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
 };
+
+const OriginalNextImage = NextImage.default;
+
+Object.defineProperty(NextImage, "default", {
+  configurable: true,
+  value: (props) => <OriginalNextImage {...props} unoptimized />,
+});
