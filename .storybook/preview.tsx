@@ -3,6 +3,8 @@ import * as NextImage from "next/image";
 
 import React, { useEffect, useState } from "react";
 import { addDecorator, addParameters } from "@storybook/react";
+import { IconButton } from "../lib/components/ui/Button";
+import { SunIcon } from "../lib/components/icons";
 
 const Theme = (Story) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -16,16 +18,17 @@ const Theme = (Story) => {
   }, [theme]);
 
   return (
-    <>
-      <div className="absolute z-50 bottom-5 right-5">
-        <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-          Dark Mode Toggle
-        </button>
+    <div className="relative w-full h-full">
+      <div className="absolute z-50 right-0">
+        <IconButton
+          variant="ghost"
+          icon={SunIcon}
+          ariaLabel="Darkmode"
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        />
       </div>
-      <div className="p-5 bg-white dark:bg-gray-900">
-        <Story />
-      </div>
-    </>
+      <Story />
+    </div>
   );
 };
 
