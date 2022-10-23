@@ -1,13 +1,15 @@
 import { Text } from "../Typography";
-import get from "lodash/get";
 import { FC, ReactNode, memo } from "react";
 import cn from "classnames";
+import type { Sizes } from "../../../types";
+import { sizes as textSizes } from "../Typography/Text/text";
 
 export type FormElementProps = {
-  formMethods: any;
+  error: any;
   label?: any;
   helper?: any;
   name: string;
+  size?: keyof Sizes;
   children: ReactNode;
   className?: string;
 };
@@ -19,30 +21,40 @@ export type RequiredProps =
     }
   | boolean;
 
+const labelSizes: Sizes = {
+  xs: textSizes.xs,
+  sm: textSizes.xs,
+  md: textSizes.sm,
+  lg: textSizes.md,
+  xl: textSizes.md,
+};
+
 export const FormElement: FC<FormElementProps> = ({
-  formMethods,
+  error,
   label = null,
   helper = null,
   name,
+  size = "md",
   children,
   className,
 }: FormElementProps) => {
-  const error = get(formMethods?.formState.errors, name);
-
   return (
-    <div id={name} className={cn("flex flex-col gap-1", className)}>
+    <div className={cn("flex flex-col gap-0.5", className)}>
       {label && (
-        <Text size="sm" as="label">
+        <label
+          className={cn("text-accent-800", labelSizes[size])}
+          htmlFor={name}
+        >
           {label}
-        </Text>
+        </label>
       )}
       {children}
-      {helper && <Text size="xs">{helper}</Text>}
       {error && (
-        <Text size="sm" color="danger">
+        <Text size="xs" color="danger">
           {error?.message}
         </Text>
       )}
+      {helper && <Text size="xs">{helper}</Text>}
     </div>
   );
 };
@@ -50,6 +62,7 @@ export const FormElement: FC<FormElementProps> = ({
 FormElement.defaultProps = {
   label: null,
   helper: null,
+  size: "md",
   className: undefined,
 };
 

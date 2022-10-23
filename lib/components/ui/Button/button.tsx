@@ -12,8 +12,13 @@ import {
 } from "react";
 import { Icon } from "../Icon";
 import { sizes as textSizes } from "../Typography/Text/text";
-import { minHeights } from "../../../styles/sizes";
-import { roundings } from "../../../styles/roundings";
+import {
+  minHeights,
+  roundings,
+  paddings,
+  focus,
+  transition,
+} from "../../../styles";
 
 export const variants: Variants = {
   filled: "",
@@ -35,7 +40,7 @@ export const realColors = {
 
 export const colors: Colors = {
   primary: {
-    base: "bg-primary-500 hover:bg-primary-600 border-primary-500 ring-primary-500",
+    base: "bg-primary-500 hover:bg-primary-600 border-primary-500",
     text: {
       filled: colorIsBright(realColors["primary-500"])
         ? "text-accent-50"
@@ -45,7 +50,7 @@ export const colors: Colors = {
     },
   },
   accent: {
-    base: "bg-accent-600 dark:bg-accent-300 hover:bg-accent-700 dark:hover:bg-accent-200 border-accent-600 dark:border-accent-300 ring-accent-600 dark:ring-accent-300",
+    base: "bg-accent-600 dark:bg-accent-300 hover:bg-accent-700 dark:hover:bg-accent-200 border-accent-600 dark:border-accent-300",
     text: {
       filled: colorIsBright(realColors["accent-500"])
         ? "text-accent-50 dark:text-accent-900"
@@ -55,7 +60,7 @@ export const colors: Colors = {
     },
   },
   success: {
-    base: "bg-green-500 hover:bg-green-600 border-green-500 ring-green-500",
+    base: "bg-green-500 hover:bg-green-600 border-green-500",
     text: {
       filled: colorIsBright(realColors["green-500"])
         ? "text-accent-50"
@@ -65,7 +70,7 @@ export const colors: Colors = {
     },
   },
   warn: {
-    base: "bg-yellow-500 hover:bg-yellow-600 border-yellow-500 ring-yellow-500",
+    base: "bg-yellow-500 hover:bg-yellow-600 border-yellow-500",
     text: {
       filled: colorIsBright(realColors["yellow-500"])
         ? "text-accent-50"
@@ -75,7 +80,7 @@ export const colors: Colors = {
     },
   },
   danger: {
-    base: "bg-red-500 hover:bg-red-600 border-red-500 ring-red-500",
+    base: "bg-red-500 hover:bg-red-600 border-red-500",
     text: {
       filled: colorIsBright(realColors["red-500"])
         ? "text-accent-50"
@@ -100,11 +105,11 @@ type ColorProps = {
 };
 
 export const sizes: Sizes = {
-  xs: `py-0.5 px-2 ${roundings.xs} ${minHeights.xs}`,
-  sm: `py-1 px-2 ${roundings.sm} ${minHeights.sm}`,
-  md: `py-2 px-3 ${roundings.md} ${minHeights.md}`,
-  lg: `py-3 px-6 ${roundings.lg} ${minHeights.lg}`,
-  xl: `py-4 px-8 ${roundings.xl} ${minHeights.xl}`,
+  xs: `${paddings.xs} ${roundings.xs} ${minHeights.xs}`,
+  sm: `${paddings.sm} ${roundings.sm} ${minHeights.sm}`,
+  md: `${paddings.md} ${roundings.md} ${minHeights.md}`,
+  lg: `${paddings.lg} ${roundings.lg} ${minHeights.lg}`,
+  xl: `${paddings.xl} ${roundings.xl} ${minHeights.xl}`,
 };
 
 export type Sizes = {
@@ -117,8 +122,6 @@ export type Sizes = {
 
 export const styles = {
   base: "appearance-none prose prose-sm h-min select-none flex flex-row justify-center items-center gap-2 font-semibold",
-  focus: "focus:outline-none focus-visible:ring focus-visible:ring-opacity-20",
-  transition: "transition duration-300 ease-in-out",
   disabled: "bg-gray-200 cursor-not-allowed",
   fullWidth: "w-full",
   rounded: "rounded-full",
@@ -167,9 +170,9 @@ export const Button: PolymorphicComponent = forwardRef(
         type={type}
         disabled={disabled}
         className={cn(
+          focus[color],
           styles.base,
-          styles.transition,
-          styles.focus,
+          transition,
           variants[variant],
           sizes[size],
           textSizes[size],

@@ -1,7 +1,10 @@
 import { forwardRef, HTMLAttributes, memo } from "react";
 import cn from "classnames";
+import type { ExtendedColors, ExtendedSizes } from "../../../../types";
+import { extendedTextColors } from "../../../../styles";
+export { extendedTextColors as colors };
 
-export const sizes: Sizes = {
+export const sizes: Required<ExtendedSizes> = {
   xs: "text-xs",
   sm: "text-sm",
   md: "text-md",
@@ -14,55 +17,33 @@ export const sizes: Sizes = {
   "6xl": "lg:text-6xl md:text-5xl text-4xl",
 };
 
-type Sizes = {
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  "2xl": string;
-  "3xl": string;
-  "4xl": string;
-  "5xl": string;
-  "6xl": string;
-};
-
-export const colors = {
-  primary: "text-primary-500",
-  accent: "text-accent-800 dark:text-accent-100",
-  light: "text-accent-100",
-  dark: "text-accent-800",
-  success: "text-green-500",
-  warn: "text-yellow-500",
-  danger: "text-red-500",
-};
-
-type Colors = {
-  primary: string;
-  accent: string;
-  success: string;
-  warn: string;
-  danger: string;
-};
-
 export interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
-  size?: keyof Sizes;
-  color?: keyof Colors;
+  size?: keyof ExtendedSizes;
+  color?: keyof ExtendedColors;
   as?: keyof JSX.IntrinsicElements;
   className?: string;
 }
 
 export const Text = forwardRef<HTMLParagraphElement, TextProps>(
-  ({
-    size = "md",
-    color = "accent",
-    as: Component = "p",
-    className,
-    children,
-  }: TextProps) => {
+  (
+    {
+      size = "md",
+      color = "accent",
+      as: Component = "p",
+      className,
+      children,
+    }: TextProps,
+    ref
+  ) => {
     return (
       <Component
-        className={cn("font-body", sizes[size], colors[color], className)}
+        ref={ref}
+        className={cn(
+          "font-body",
+          sizes[size],
+          extendedTextColors[color],
+          className
+        )}
       >
         {children}
       </Component>

@@ -18,8 +18,7 @@ import {
   type Variants,
   styles,
 } from "../button";
-import { minHeights } from "../../../../styles/sizes";
-import { roundings } from "../../../../styles/roundings";
+import { minHeights, roundings, transition, focus } from "../../../../styles";
 
 export const sizes: Sizes = {
   xs: `${roundings.xs} ${minHeights.xs}`,
@@ -72,8 +71,8 @@ export const IconButton: PolymorphicComponent = forwardRef(
         className={cn(
           "aspect-square",
           styles.base,
-          styles.transition,
-          styles.focus,
+          transition,
+          focus[color],
           variants[variant],
           sizes[size],
           textSizes[size],
