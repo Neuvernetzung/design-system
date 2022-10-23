@@ -15,7 +15,7 @@
 
   html,
   body {
-    @apply bg-accent-50 dark:bg-accent-900;
+    @apply bg-accent-50 dark:bg-accent-900 font-body;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

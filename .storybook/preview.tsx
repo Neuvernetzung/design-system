@@ -27,7 +27,9 @@ const Theme = (Story) => {
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         />
       </div>
-      <Story />
+      <div>
+        <Story />
+      </div>
     </div>
   );
 };

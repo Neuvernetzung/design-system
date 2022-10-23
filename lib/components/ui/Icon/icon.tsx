@@ -43,11 +43,14 @@ export interface IconProps extends HTMLAttributes<HTMLElement> {
 }
 
 export const Icon = forwardRef<HTMLElement, IconProps>(
-  ({ size = "md", icon, color = "inherit", className }) => {
+  ({ size = "md", icon, color = "inherit", className }, ref) => {
     const IconWrapper: ElementType<SVGElement> = icon;
 
     return (
-      <IconWrapper className={cn(sizes[size], colors[color], className)} />
+      <IconWrapper
+        ref={ref}
+        className={cn(sizes[size], colors[color], className)}
+      />
     );
   }
 );
