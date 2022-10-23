@@ -5,7 +5,7 @@ import { Icon, sizes, colors } from "./icon";
 import { HomeIcon } from "../../icons";
 
 export default {
-  title: "UI/Icon",
+  title: "UI/Media/Icon",
   component: Icon,
   argTypes: {
     size: {

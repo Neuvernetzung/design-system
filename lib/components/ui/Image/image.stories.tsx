@@ -4,7 +4,7 @@ import React from "react";
 import { Image } from "./image";
 
 export default {
-  title: "UI/Image",
+  title: "UI/Media/Image",
   component: Image,
   argTypes: {
     size: {
