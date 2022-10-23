@@ -1,13 +1,13 @@
-import { FC, ReactNode } from "react";
+import { FC, memo, ReactNode } from "react";
 
-type Props = {
+export type FormProps = {
   formMethods: any;
   onSubmit: Function;
   className?: string;
   children: ReactNode;
 };
 
-export const Form: FC<Props> = ({
+export const Form: FC<FormProps> = ({
   formMethods,
   onSubmit,
   className,
@@ -23,3 +23,5 @@ export const Form: FC<Props> = ({
 Form.defaultProps = {
   className: "",
 };
+
+export default memo(Form);
