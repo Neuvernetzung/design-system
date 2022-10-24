@@ -7,6 +7,7 @@ export type Colors = {
 };
 
 export interface ExtendedColors extends Colors {
+  accentReverse?: any;
   light?: any;
   dark?: any;
   filled?: any;

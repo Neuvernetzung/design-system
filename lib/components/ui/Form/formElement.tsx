@@ -2,6 +2,7 @@ import { Text } from "../Typography";
 import { FC, ReactNode, memo } from "react";
 import cn from "classnames";
 import type { Sizes } from "../../../types";
+import { textColors } from "../../../styles";
 import { sizes as textSizes } from "../Typography/Text/text";
 
 export type FormElementProps = {
@@ -21,7 +22,7 @@ export type RequiredProps =
     }
   | boolean;
 
-const labelSizes: Sizes = {
+export const labelSizes: Sizes = {
   xs: textSizes.xs,
   sm: textSizes.xs,
   md: textSizes.sm,
@@ -42,7 +43,7 @@ export const FormElement: FC<FormElementProps> = ({
     <div className={cn("flex flex-col gap-0.5", className)}>
       {label && (
         <label
-          className={cn("text-accent-800", labelSizes[size])}
+          className={cn(textColors.accent, labelSizes[size])}
           htmlFor={name}
         >
           {label}

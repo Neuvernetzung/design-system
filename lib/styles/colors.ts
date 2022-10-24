@@ -10,6 +10,7 @@ export const textColors: Colors = {
 
 export const extendedTextColors: ExtendedColors = {
   ...textColors,
+  accentReverse: "text-accent-100 dark:text-accent-800",
   light: "text-accent-100",
   dark: "text-accent-800",
   filled: "text-accent-100 dark:text-accent-800",
@@ -41,4 +42,20 @@ export const extendedBgColorsInteractive: ExtendedColors = {
   ...bgColorsInteractive,
   filledSubtile: `${extendedBgColors.filledSubtile} hover:bg-accent-200 dark:hover:bg-accent-700`,
   filled: `${extendedBgColors.filled} hover:bg-accent-300 dark:hover:bg-accent-600`,
+};
+
+export const checkboxColors: Colors = {
+  primary:
+    "checked:bg-primary-500 checked:hover:bg-primary-600 dark:checked:hover:bg-primary-400",
+  accent:
+    "checked:bg-accent-500 checked:hover:bg-accent-600 dark:checked:hover:bg-accent-400",
+  success:
+    "checked:bg-green-500 checked:hover:bg-green-600 dark:checked:hover:bg-green-400",
+  warn: "checked:bg-yellow-500 checked:hover:bg-yellow-600 dark:checked:hover:bg-yellow-400",
+  danger:
+    "checked:bg-red-500 checked:hover:bg-red-600 dark:checked:hover:bg-red-400",
+};
+
+export const radioColors: Colors = {
+  ...checkboxColors,
 };
