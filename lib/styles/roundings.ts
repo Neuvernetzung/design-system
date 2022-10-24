@@ -23,3 +23,11 @@ export const roundingsRight: Sizes = {
   lg: "rounded-r-lg",
   xl: "rounded-r-lg",
 };
+
+export const roundingsSmall: Sizes = {
+  xs: "rounded-sm",
+  sm: "rounded-sm",
+  md: "rounded",
+  lg: "rounded-md",
+  xl: "rounded-md",
+};

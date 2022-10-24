@@ -6,3 +6,4 @@ export * from "./transition";
 export * from "./colors";
 export * from "./placeholder";
 export * from "./borders";
+export * from "./gaps";
