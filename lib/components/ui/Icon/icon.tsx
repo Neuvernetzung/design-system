@@ -1,5 +1,19 @@
-import { forwardRef, memo, HTMLAttributes, FC, ElementType } from "react";
 import cn from "classnames";
+import {
+  ElementType,
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
+  memo,
+} from "react";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "react-polymorphic-types";
+
+import { extendedTextColors } from "../../../styles";
+import { ExtendedColors } from "../../../types";
 
 export const sizes: Sizes = {
   xs: "h-4 w-4",
@@ -17,33 +31,33 @@ type Sizes = {
   xl: string;
 };
 
-export const colors: Colors = {
-  inherit: "text-inherit",
-  primary: "text-primary-500",
-  accent: "text-accent-800 dark:text-accent-100",
-  success: "text-green-500",
-  warn: "text-yellow-500",
-  danger: "text-red-500",
-};
+export const colors: ExtendedColors = extendedTextColors;
 
-type Colors = {
-  inherit: string;
-  primary: string;
-  accent: string;
-  success: string;
-  warn: string;
-  danger: string;
-};
+const IconDefaultElement = "svg";
 
-export interface IconProps extends HTMLAttributes<HTMLElement> {
+export interface IconOwnProps extends HTMLAttributes<HTMLElement> {
   size?: keyof Sizes;
-  color?: keyof Colors;
+  color?: keyof ExtendedColors;
   icon: ElementType<SVGElement>;
   className?: string;
 }
 
-export const Icon = forwardRef<HTMLElement, IconProps>(
-  ({ size = "md", icon, color = "inherit", className }, ref) => {
+export type IconProps<T extends ElementType = typeof IconDefaultElement> =
+  PolymorphicPropsWithRef<IconOwnProps, T>;
+
+export const Icon: PolymorphicForwardRefExoticComponent<
+  IconOwnProps,
+  typeof IconDefaultElement
+> = forwardRef(
+  <T extends ElementType = typeof IconDefaultElement>(
+    {
+      size = "md",
+      icon,
+      color = "inherit",
+      className,
+    }: PolymorphicPropsWithoutRef<IconOwnProps, T>,
+    ref: ForwardedRef<Element>
+  ) => {
     const IconWrapper: ElementType<SVGElement> = icon;
 
     return (
@@ -61,3 +75,9 @@ Icon.defaultProps = {
 };
 
 export default memo(Icon);
+
+Icon.displayName = "Icon";
+
+Icon.defaultProps = {
+  className: undefined,
+};

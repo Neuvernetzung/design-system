@@ -1,5 +1,5 @@
-import { ReactNode, HTMLAttributes } from "react";
 import cn from "classnames";
+import { HTMLAttributes, ReactNode } from "react";
 
 export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -20,3 +20,8 @@ const ButtonGroup = ({ className, children, ...props }: ButtonGroupProps) => (
 );
 
 export default ButtonGroup;
+
+ButtonGroup.defaultProps = {
+  className: undefined,
+  children: undefined,
+};

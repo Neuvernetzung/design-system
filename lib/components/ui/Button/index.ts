@@ -1,4 +1,4 @@
-export { default as Button } from "./button";
 export type { ButtonProps } from "./button";
-export * from "./IconButton";
+export { default as Button } from "./button";
 export * from "./ButtonGroup";
+export * from "./IconButton";

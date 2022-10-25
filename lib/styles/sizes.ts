@@ -1,4 +1,4 @@
-import type { Sizes } from "../types/Sizes";
+import type { ExtendedSizes, Sizes } from "../types/Sizes";
 
 export const minHeights: Sizes = {
   xs: "min-h-[20px]",
@@ -18,4 +18,17 @@ export const checkboxSizes: Sizes = {
 
 export const radioSizes: Sizes = {
   ...checkboxSizes,
+};
+
+export const textSizes: Required<ExtendedSizes> = {
+  xs: "text-xs",
+  sm: "text-sm",
+  md: "text-md",
+  lg: "text-lg",
+  xl: "text-xl",
+  "2xl": "sm:text-2xl text-xl",
+  "3xl": "sm:text-3xl text-2xl",
+  "4xl": "md:text-4xl text-3xl",
+  "5xl": "lg:text-5xl md:text-4xl text-3xl",
+  "6xl": "lg:text-6xl md:text-5xl text-4xl",
 };

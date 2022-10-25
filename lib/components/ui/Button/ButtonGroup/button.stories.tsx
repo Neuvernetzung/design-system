@@ -2,8 +2,8 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
+import { Button, IconButton } from "../..";
 import ButtonGroup from "./buttonGroup";
-import { Button, IconButton } from "../../";
 
 export default {
   title: "UI/Buttons/ButtonGroup",
@@ -28,14 +28,12 @@ const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
 );
 
-export const Variants = ({ ...args }) => {
-  return (
-    <Container>
-      <ButtonGroup>
-        <Button {...args}>Button 1</Button>
-        <Button {...args}>Button 2</Button>
-        <IconButton ariaLabel="home" icon={HomeIcon} {...args} />
-      </ButtonGroup>
-    </Container>
-  );
-};
+export const Variants = ({ ...args }) => (
+  <Container>
+    <ButtonGroup>
+      <Button {...args}>Button 1</Button>
+      <Button {...args}>Button 2</Button>
+      <IconButton ariaLabel="home" icon={HomeIcon} {...args} />
+    </ButtonGroup>
+  </Container>
+);

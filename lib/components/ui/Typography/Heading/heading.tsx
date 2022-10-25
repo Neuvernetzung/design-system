@@ -1,6 +1,18 @@
-import { forwardRef, HTMLAttributes, memo } from "react";
 import cn from "classnames";
-import type { ExtendedSizes, Colors } from "../../../../types";
+import {
+  ElementType,
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
+  memo,
+} from "react";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "react-polymorphic-types";
+
+import type { Colors, ExtendedSizes } from "../../../../types";
 
 export const sizes: Required<ExtendedSizes> = {
   xs: "text-xs",
@@ -38,21 +50,35 @@ export const tagMap: TagMap = {
   "6xl": "h1",
 };
 
+const HeadingDefaultElement = "h2";
+
 type TagMap = Record<keyof ExtendedSizes, keyof JSX.IntrinsicElements>;
 
-export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
+export interface HeadingOwnProps extends HTMLAttributes<HTMLHeadingElement> {
   size?: keyof ExtendedSizes;
   color?: keyof Colors;
   as?: keyof JSX.IntrinsicElements;
   className?: string;
 }
 
-export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
-  (
-    { size = "md", color = "accent", as, className, children }: HeadingProps,
-    ref
+export type HeadingProps<T extends ElementType = typeof HeadingDefaultElement> =
+  PolymorphicPropsWithRef<HeadingOwnProps, T>;
+
+export const Heading: PolymorphicForwardRefExoticComponent<
+  HeadingOwnProps,
+  typeof HeadingDefaultElement
+> = forwardRef(
+  <T extends ElementType = typeof HeadingDefaultElement>(
+    {
+      size = "md",
+      color = "accent",
+      as,
+      className,
+      children,
+    }: PolymorphicPropsWithoutRef<HeadingOwnProps, T>,
+    ref: ForwardedRef<Element>
   ) => {
-    const Component: keyof JSX.IntrinsicElements = as || tagMap[size];
+    const Component: ElementType = as || tagMap[size];
 
     return (
       <Component
@@ -66,3 +92,12 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
 );
 
 export default memo(Heading);
+
+Heading.displayName = "Heading";
+
+Heading.defaultProps = {
+  size: "md",
+  color: "accent",
+  as: HeadingDefaultElement,
+  className: undefined,
+};

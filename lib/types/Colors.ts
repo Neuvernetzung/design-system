@@ -7,7 +7,8 @@ export type Colors = {
 };
 
 export interface ExtendedColors extends Colors {
-  accentReverse?: any;
+  inherit?: any;
+  subtile?: any;
   light?: any;
   dark?: any;
   filled?: any;

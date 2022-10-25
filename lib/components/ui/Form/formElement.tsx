@@ -1,8 +1,10 @@
-import { Text } from "../Typography";
-import { FC, ReactNode, memo } from "react";
 import cn from "classnames";
-import type { Sizes } from "../../../types";
+import { FC, memo, ReactNode } from "react";
+import { Message, ValidationRule } from "react-hook-form";
+
 import { textColors } from "../../../styles";
+import type { Sizes } from "../../../types";
+import { Text } from "../Typography";
 import { sizes as textSizes } from "../Typography/Text/text";
 
 export type FormElementProps = {
@@ -15,12 +17,7 @@ export type FormElementProps = {
   className?: string;
 };
 
-export type RequiredProps =
-  | {
-      value: boolean;
-      message?: string;
-    }
-  | boolean;
+export type RequiredRule = Message | ValidationRule<boolean>;
 
 export const labelSizes: Sizes = {
   xs: textSizes.xs,
@@ -38,27 +35,22 @@ export const FormElement: FC<FormElementProps> = ({
   size = "md",
   children,
   className,
-}: FormElementProps) => {
-  return (
-    <div className={cn("flex flex-col gap-0.5", className)}>
-      {label && (
-        <label
-          className={cn(textColors.accent, labelSizes[size])}
-          htmlFor={name}
-        >
-          {label}
-        </label>
-      )}
-      {children}
-      {error && (
-        <Text size="xs" color="danger">
-          {error?.message}
-        </Text>
-      )}
-      {helper && <Text size="xs">{helper}</Text>}
-    </div>
-  );
-};
+}: FormElementProps) => (
+  <div className={cn("flex flex-col gap-0.5", className)}>
+    {label && (
+      <label className={cn(textColors.accent, labelSizes[size])} htmlFor={name}>
+        {label}
+      </label>
+    )}
+    {children}
+    {error && (
+      <Text size="xs" color="danger">
+        {error?.message}
+      </Text>
+    )}
+    {helper && <Text size="xs">{helper}</Text>}
+  </div>
+);
 
 FormElement.defaultProps = {
   label: null,

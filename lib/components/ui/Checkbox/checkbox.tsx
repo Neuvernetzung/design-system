@@ -1,21 +1,22 @@
-import type { Colors, Sizes } from "../../../types";
-import {
-  checkboxSizes,
-  roundingsSmall,
-  focus,
-  textColors,
-  bordersInteractive,
-  checkboxColors,
-  gapsSmall,
-  extendedTextColors,
-  borders,
-  extendedBgColors,
-} from "../../../styles";
-import { memo, ElementType } from "react";
-import { RequiredProps, FormElement } from "../Form";
+import cn from "classnames";
 import get from "lodash/get";
 import isArray from "lodash/isArray";
-import cn from "classnames";
+import { ElementType, memo } from "react";
+
+import {
+  borders,
+  bordersInteractive,
+  checkboxColors,
+  checkboxSizes,
+  extendedBgColors,
+  extendedTextColors,
+  focus,
+  gapsSmall,
+  roundingsSmall,
+  textColors,
+} from "../../../styles";
+import type { Colors, Sizes } from "../../../types";
+import { FormElement, RequiredRule } from "../Form";
 import { labelSizes } from "../Form/formElement";
 import { CheckboxIcon } from "./checkboxIcon";
 
@@ -66,7 +67,7 @@ export type CheckboxProps = {
   helper?: any;
   formMethods: any;
   options: OptionProps[];
-  required?: RequiredProps;
+  required?: RequiredRule;
   size?: keyof Sizes;
   color?: keyof Colors;
   icon?: ElementType<SVGElement>;
@@ -162,7 +163,7 @@ export const Checkbox = ({
                     className={cn(
                       "hidden peer-checked:block",
                       styles.iconWrapper,
-                      extendedTextColors.accentReverse
+                      extendedTextColors.filled
                     )}
                   >
                     <CheckboxIcon

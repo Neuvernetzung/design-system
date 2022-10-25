@@ -1,7 +1,7 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Text, sizes, colors } from "./text";
+import { colors, sizes, Text } from "./text";
 
 export default {
   title: "UI/Typography/Text",

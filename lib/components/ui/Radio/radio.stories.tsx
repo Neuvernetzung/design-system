@@ -1,9 +1,9 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button } from "..";
 
-import { Radio, sizes, colors } from "./radio";
+import { Button, Form } from "..";
+import { colors, Radio, sizes } from "./radio";
 
 export default {
   title: "UI/Form/Radio",
@@ -129,7 +129,7 @@ export const Disabled = ({ ...args }) => {
     >
       <Radio
         formMethods={formMethods}
-        name={`radio_disabled`}
+        name="radio_disabled"
         label="Alle Disabled"
         disabled
         options={[
@@ -140,7 +140,7 @@ export const Disabled = ({ ...args }) => {
       />
       <Radio
         formMethods={formMethods}
-        name={`radio_disabled_single`}
+        name="radio_disabled_single"
         label="Einzelnd Disabled"
         options={[
           { label: "Option 1", value: "option-1" },
@@ -165,7 +165,7 @@ export const Error = ({ ...args }) => {
     >
       <Radio
         formMethods={formMethods}
-        name={`radio_error`}
+        name="radio_error"
         label="Alle Error"
         required
         options={[

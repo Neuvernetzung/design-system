@@ -1,24 +1,30 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
-import { colorIsBright, getThemeColors } from "../../../utils";
 import {
+  ElementType,
+  ForwardedRef,
   forwardRef,
   memo,
-  Ref,
-  ElementType,
-  ComponentPropsWithoutRef,
-  ReactElement,
   ReactNode,
+  Ref,
 } from "react";
-import { Icon } from "../Icon";
-import { sizes as textSizes } from "../Typography/Text/text";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "react-polymorphic-types";
+
 import {
-  minHeights,
-  roundings,
-  paddings,
   focus,
+  minHeights,
+  paddings,
+  roundings,
   transition,
 } from "../../../styles";
+import type { Colors, Sizes } from "../../../types";
+import { colorIsBright, getThemeColors } from "../../../utils";
+import { Icon } from "../Icon";
+import { sizes as textSizes } from "../Typography/Text/text";
 
 export const variants: Variants = {
   filled: "",
@@ -38,7 +44,7 @@ export const realColors = {
   "red-500": getThemeColors("red")[500],
 };
 
-export const colors: Colors = {
+export const colors: Record<keyof Colors, ColorProps> = {
   primary: {
     base: "bg-primary-500 hover:bg-primary-600 border-primary-500",
     text: {
@@ -91,14 +97,6 @@ export const colors: Colors = {
   },
 };
 
-export type Colors = {
-  primary: ColorProps;
-  accent: ColorProps;
-  success: ColorProps;
-  warn: ColorProps;
-  danger: ColorProps;
-};
-
 type ColorProps = {
   base: string;
   text: Variants;
@@ -112,14 +110,6 @@ export const sizes: Sizes = {
   xl: `${paddings.xl} ${roundings.xl} ${minHeights.xl}`,
 };
 
-export type Sizes = {
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-};
-
 export const styles = {
   base: "appearance-none prose prose-sm h-min select-none flex flex-row justify-center items-center gap-2 font-semibold",
   disabled: "bg-gray-200 cursor-not-allowed",
@@ -127,7 +117,9 @@ export const styles = {
   rounded: "rounded-full",
 };
 
-export type ButtonProps<T extends ElementType> = ComponentPropsWithoutRef<T> & {
+export const ButtonDefaultElement = "button";
+
+export type ButtonOwnProps = {
   variant?: keyof Variants;
   color?: keyof Colors;
   size?: keyof Sizes;
@@ -135,16 +127,17 @@ export type ButtonProps<T extends ElementType> = ComponentPropsWithoutRef<T> & {
   rounded?: boolean;
   leftIcon?: ElementType<SVGElement>;
   rightIcon?: ElementType<SVGElement>;
-  as?: T;
   children?: ReactNode;
 };
 
-type PolymorphicComponent = <T extends ElementType = "button">(
-  props: ButtonProps<T>
-) => ReactElement | null;
+export type ButtonProps<T extends ElementType = typeof ButtonDefaultElement> =
+  PolymorphicPropsWithRef<ButtonOwnProps, T>;
 
-export const Button: PolymorphicComponent = forwardRef(
-  <T extends ElementType>(
+export const Button: PolymorphicForwardRefExoticComponent<
+  ButtonOwnProps,
+  typeof ButtonDefaultElement
+> = forwardRef(
+  <T extends ElementType = typeof ButtonDefaultElement>(
     {
       size = "md",
       type = "button",
@@ -159,10 +152,10 @@ export const Button: PolymorphicComponent = forwardRef(
       as,
       children,
       ...props
-    }: ButtonProps<T>,
-    ref: Ref<T>
-  ): JSX.Element => {
-    const Component = as || "button";
+    }: PolymorphicPropsWithoutRef<ButtonOwnProps, T>,
+    ref: ForwardedRef<Element>
+  ) => {
+    const Component = as || ButtonDefaultElement;
 
     return (
       <Component
@@ -193,3 +186,17 @@ export const Button: PolymorphicComponent = forwardRef(
 );
 
 export default memo(Button);
+
+Button.displayName = "button";
+
+Button.defaultProps = {
+  variant: "filled",
+  color: "accent",
+  size: "md",
+  fullWidth: false,
+  rounded: false,
+  leftIcon: undefined,
+  rightIcon: undefined,
+  as: undefined,
+  children: undefined,
+};

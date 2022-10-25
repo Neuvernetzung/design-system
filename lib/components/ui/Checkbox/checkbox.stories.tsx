@@ -1,10 +1,10 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button } from "..";
-import { PlusIcon, HomeIcon } from "../../icons";
 
-import { Checkbox, sizes, colors } from "./checkbox";
+import { HomeIcon, PlusIcon } from "../../icons";
+import { Button, Form } from "..";
+import { Checkbox, colors, sizes } from "./checkbox";
 
 export default {
   title: "UI/Form/Checkbox",
@@ -128,14 +128,14 @@ export const Icon = ({ ...args }) => {
     >
       <Checkbox
         formMethods={formMethods}
-        name={`checkbox_icons_default`}
+        name="checkbox_icons_default"
         label="Default"
         options={[{ label: "Default", value: "option-1" }]}
         {...args}
       />
       <Checkbox
         formMethods={formMethods}
-        name={`checkbox_icons_plus`}
+        name="checkbox_icons_plus"
         label="Plus"
         icon={PlusIcon}
         options={[{ label: "Plus", value: "option-1" }]}
@@ -143,7 +143,7 @@ export const Icon = ({ ...args }) => {
       />
       <Checkbox
         formMethods={formMethods}
-        name={`checkbox_icons_home`}
+        name="checkbox_icons_home"
         label="Home"
         icon={HomeIcon}
         options={[{ label: "Home", value: "option-1" }]}
@@ -151,7 +151,7 @@ export const Icon = ({ ...args }) => {
       />
       <Checkbox
         formMethods={formMethods}
-        name={`checkbox_icons_single`}
+        name="checkbox_icons_single"
         label="Einzelnd"
         options={[
           { label: "Default", value: "option-1" },
@@ -176,7 +176,7 @@ export const Disabled = ({ ...args }) => {
     >
       <Checkbox
         formMethods={formMethods}
-        name={`checkbox_disabled`}
+        name="checkbox_disabled"
         label="Alle Disabled"
         disabled
         options={[
@@ -187,7 +187,7 @@ export const Disabled = ({ ...args }) => {
       />
       <Checkbox
         formMethods={formMethods}
-        name={`checkbox_disabled_single`}
+        name="checkbox_disabled_single"
         label="Einzelnd Disabled"
         options={[
           { label: "Option 1", value: "option-1" },
@@ -212,7 +212,7 @@ export const Error = ({ ...args }) => {
     >
       <Checkbox
         formMethods={formMethods}
-        name={`checkbox_error`}
+        name="checkbox_error"
         label="Alle Error"
         required
         options={[
