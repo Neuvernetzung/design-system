@@ -1,15 +1,16 @@
-import { forwardRef, memo, ReactNode } from "react";
-import { sizes, variants } from "../input";
 import cn from "classnames";
+import { forwardRef, memo, ReactNode } from "react";
+
 import {
   borders,
   extendedBgColors,
-  textColors,
   roundingsLeft,
   roundingsRight,
+  textColors,
 } from "../../../../styles";
 import type { Sizes } from "../../../../types";
 import type { Variants } from "../input";
+import { sizes, variants } from "../input";
 
 export type InputAddonProps = {
   className?: string;
@@ -30,26 +31,24 @@ const styles = {
 };
 
 export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
-  ({ className, children, variant, size, isLeft, isRight }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          styles.base,
-          sizes[size],
-          addonVariant[variant],
-          extendedBgColors.filledSubtile,
-          isLeft && roundingsLeft[size],
-          isLeft && "border-l",
-          isRight && roundingsRight[size],
-          isRight && "border-r",
-          className
-        )}
-      >
-        {children}
-      </div>
-    );
-  }
+  ({ className, children, variant, size, isLeft, isRight }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        styles.base,
+        sizes[size],
+        addonVariant[variant],
+        extendedBgColors.filledSubtile,
+        isLeft && roundingsLeft[size],
+        isLeft && "border-l",
+        isRight && roundingsRight[size],
+        isRight && "border-r",
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
 );
 
 export default memo(InputAddon);

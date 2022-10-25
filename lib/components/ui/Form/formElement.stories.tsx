@@ -1,12 +1,12 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
 import { action } from "@storybook/addon-actions";
+import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
+
+import { Button } from "../Button";
+import { Input } from "../Input";
 import { Form } from "./form";
 import { FormElement } from "./formElement";
-import { Button } from "../Button";
-
-import { Input } from "../Input";
 
 export default {
   title: "UI/Form/FormElement",

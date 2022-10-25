@@ -1,7 +1,7 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Heading, sizes, colors } from "./heading";
+import { colors, Heading, sizes } from "./heading";
 
 export default {
   title: "UI/Typography/Heading",

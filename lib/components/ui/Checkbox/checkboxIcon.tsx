@@ -1,8 +1,9 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { ElementType } from "react";
+
 import { Sizes } from "../../../types";
 import { CheckIcon } from "../../icons";
 import { Icon } from "../Icon";
-import { AnimatePresence, motion } from "framer-motion";
-import { ElementType } from "react";
 
 type CheckboxIconProps = {
   size?: keyof Sizes;
@@ -10,13 +11,11 @@ type CheckboxIconProps = {
   icon?: ElementType<SVGElement>;
 };
 
-export const CheckboxIcon = ({ size, isChecked, icon }: CheckboxIconProps) => {
-  return (
-    <CheckboxTransition open={isChecked}>
-      <Icon size={size} icon={icon ?? CheckIconAnimation} />
-    </CheckboxTransition>
-  );
-};
+export const CheckboxIcon = ({ size, isChecked, icon }: CheckboxIconProps) => (
+  <CheckboxTransition open={isChecked}>
+    <Icon size={size} icon={icon ?? CheckIconAnimation} />
+  </CheckboxTransition>
+);
 
 function CheckboxTransition({ open, children }: any) {
   return (

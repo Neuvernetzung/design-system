@@ -10,7 +10,8 @@ export const textColors: Colors = {
 
 export const extendedTextColors: ExtendedColors = {
   ...textColors,
-  accentReverse: "text-accent-100 dark:text-accent-800",
+  inherit: "text-inherit",
+  subtile: "text-accent-300 dark:text-accent-600",
   light: "text-accent-100",
   dark: "text-accent-800",
   filled: "text-accent-100 dark:text-accent-800",

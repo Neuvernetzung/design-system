@@ -1,19 +1,20 @@
-import type { Colors, Sizes } from "../../../types";
-import {
-  radioSizes,
-  focus,
-  textColors,
-  bordersInteractive,
-  radioColors,
-  gapsSmall,
-  borders,
-  extendedBgColors,
-} from "../../../styles";
-import { memo, ElementType } from "react";
-import { RequiredProps, FormElement } from "../Form";
+import cn from "classnames";
 import get from "lodash/get";
 import isArray from "lodash/isArray";
-import cn from "classnames";
+import { ElementType, memo } from "react";
+
+import {
+  borders,
+  bordersInteractive,
+  extendedBgColors,
+  focus,
+  gapsSmall,
+  radioColors,
+  radioSizes,
+  textColors,
+} from "../../../styles";
+import type { Colors, Sizes } from "../../../types";
+import { FormElement, RequiredRule } from "../Form";
 import { labelSizes } from "../Form/formElement";
 
 export const colors: Colors = {
@@ -63,7 +64,7 @@ export type RadioProps = {
   helper?: any;
   formMethods: any;
   options: OptionProps[];
-  required?: RequiredProps;
+  required?: RequiredRule;
   size?: keyof Sizes;
   color?: keyof Colors;
   disabled?: boolean;
@@ -159,3 +160,11 @@ export const Radio = ({
 };
 
 export default memo(Radio);
+
+Radio.defaultProps = {
+  helper: undefined,
+  required: false,
+  size: "md",
+  color: "primary",
+  className: undefined,
+};

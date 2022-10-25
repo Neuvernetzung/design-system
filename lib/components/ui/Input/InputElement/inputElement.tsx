@@ -1,9 +1,10 @@
-import { memo, ReactNode, forwardRef } from "react";
-import { sizes, variants } from "../input";
 import cn from "classnames";
+import { forwardRef, memo, ReactNode } from "react";
+
 import { textColors } from "../../../../styles";
 import type { Sizes } from "../../../../types";
 import type { Variants } from "../input";
+import { sizes, variants } from "../input";
 
 export type InputElementProps = {
   className?: string;
@@ -23,23 +24,21 @@ export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
   (
     { className, children, size, isLeft, isRight, pointerEvents = false },
     ref
-  ) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          styles.base,
-          sizes[size],
-          isLeft && "left-0",
-          isRight && "right-0",
-          !pointerEvents && "pointer-events-none",
-          className
-        )}
-      >
-        {children}
-      </div>
-    );
-  }
+  ) => (
+    <div
+      ref={ref}
+      className={cn(
+        styles.base,
+        sizes[size],
+        isLeft && "left-0",
+        isRight && "right-0",
+        !pointerEvents && "pointer-events-none",
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
 );
 
 export default memo(InputElement);

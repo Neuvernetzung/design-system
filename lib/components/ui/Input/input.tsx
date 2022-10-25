@@ -1,45 +1,29 @@
-import { FormElement, RequiredProps } from "../Form";
-import {
-  minHeights,
-  roundings,
-  paddings,
-  focus,
-  transition,
-  placeholder,
-  textColors,
-  bgColors,
-  extendedBgColors,
-  extendedBgColorsInteractive,
-  bordersInteractive,
-  roundingsLeft,
-  roundingsRight,
-  borders,
-} from "../../../styles";
-import { memo, forwardRef, useRef, useLayoutEffect, useState } from "react";
 import cn from "classnames";
-import s from "./input.module.css";
 import get from "lodash/get";
-import { sizes as textSizes } from "../Typography/Text/text";
-import type { Sizes } from "../../../types";
-import type { InputAddonProps } from "./InputAddon/inputAddon";
-import { InputAddon } from "./InputAddon";
-import type { InputElementProps } from "./InputElement/inputElement";
-import { InputElement } from "./InputElement";
+import { forwardRef, memo, useLayoutEffect, useRef, useState } from "react";
 
-export const sizes: Sizes = {
-  xs: `${paddings.xs} ${minHeights.xs} ${textSizes.xs}`,
-  sm: `${paddings.sm} ${minHeights.sm} ${textSizes.sm}`,
-  md: `${paddings.md} ${minHeights.md} ${textSizes.md}`,
-  lg: `${paddings.lg} ${minHeights.lg} ${textSizes.lg}`,
-  xl: `${paddings.xl} ${minHeights.xl} ${textSizes.xl}`,
-};
+import {
+  getInputStyles,
+  inputSizes,
+  inputVariants,
+} from "../../../styles/groups";
+import type { InputVariants, Sizes } from "../../../types";
+import { FormElement, RequiredRule } from "../Form";
+import s from "./input.module.css";
+import { InputAddon } from "./InputAddon";
+import type { InputAddonProps } from "./InputAddon/inputAddon";
+import { InputElement } from "./InputElement";
+import type { InputElementProps } from "./InputElement/inputElement";
+
+export const sizes = inputSizes;
+export const variants = inputVariants;
 
 export type InputProps = {
   name: string;
   label?: string;
   helper?: any;
   size?: keyof Sizes;
-  variant?: keyof Variants;
+  variant?: keyof InputVariants;
   placeholder?: string;
   leftAddon?: Pick<InputAddonProps, "className" | "children">;
   rightAddon?: Pick<InputAddonProps, "className" | "children">;
@@ -52,42 +36,14 @@ export type InputProps = {
     "className" | "children" | "pointerEvents"
   >;
   formMethods: any;
-  required?: RequiredProps;
+  required?: RequiredRule;
   disabled?: boolean;
   step?: number;
   className?: string;
 };
 
-export const variants: Variants = {
-  outline: {
-    base: `${bgColors.accent} border ${placeholder.outline}`,
-    default: `${bordersInteractive.accent}`,
-    error: `${bordersInteractive.danger}`,
-    disabled: `${borders.accent} ${extendedBgColors.filledSubtile}`,
-  },
-  filled: {
-    base: ``,
-    default: `${extendedBgColorsInteractive.filled}`,
-    error: `${extendedBgColorsInteractive.danger} ${placeholder.filledError}`,
-    disabled: `${extendedBgColors.filled}`,
-  },
-};
-
-export type Variants = {
-  outline: StateVariant;
-  filled: StateVariant;
-};
-
-type StateVariant = {
-  base: string;
-  default: string;
-  error: string;
-  disabled: string;
-};
-
 const styles = {
   containerBase: "flex flex-row relative",
-  inputBase: `outline-none w-full ${textColors.accent}`,
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -103,7 +59,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       rightElement,
       formMethods,
       required,
-      disabled,
+      disabled = false,
       variant = "outline",
       step = 1,
       className,
@@ -148,19 +104,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={name}
             ref={ref}
             className={cn(
-              styles.inputBase,
               s.Input,
-              transition,
-              !error ? focus.accent : focus.danger,
-              variants[variant].base,
-              sizes[size],
-              !error
-                ? !disabled && variants[variant]?.default
-                : variants[variant]?.error,
-              !leftAddon && !rightAddon && roundings[size],
-              !leftAddon && roundingsLeft[size],
-              !rightAddon && roundingsRight[size],
-              disabled && `cursor-not-allowed ${variants[variant]?.disabled}`,
+              getInputStyles({
+                size,
+                variant,
+                error,
+                disabled,
+                leftAddon,
+                rightAddon,
+              }),
               className
             )}
             style={{

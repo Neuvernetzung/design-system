@@ -7,7 +7,6 @@ import "./carouselStyle.css";
 import "swiper/css/pagination";
 
 import cn from "classnames";
-import { ChevronLeftIcon, ChevronRightIcon } from "../../icons";
 import { memo, useState } from "react";
 import {
   A11y,
@@ -20,8 +19,9 @@ import {
   Thumbs,
 } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Image, type ImageProps } from "../Image";
 
+import { ChevronLeftIcon, ChevronRightIcon } from "../../icons";
+import { type ImageProps, Image } from "../Image";
 import useSwiperRef from "./utils/useSwiperRef";
 
 export type CarouselProps = {

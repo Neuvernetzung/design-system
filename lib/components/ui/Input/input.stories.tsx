@@ -2,9 +2,9 @@ import { PhoneIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button, Icon } from "../";
 
-import { Input, variants, sizes } from "./input";
+import { Button, Form, Icon } from "..";
+import { Input, sizes, variants } from "./input";
 
 export default {
   title: "UI/Form/Input",

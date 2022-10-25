@@ -1,8 +1,8 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Icon, sizes, colors } from "./icon";
 import { HomeIcon } from "../../icons";
+import { colors, Icon, sizes } from "./icon";
 
 export default {
   title: "UI/Media/Icon",

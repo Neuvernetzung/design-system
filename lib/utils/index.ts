@@ -1,2 +1,2 @@
-export * from "./getThemeColors";
 export * from "./colorIsBright";
+export * from "./getThemeColors";

@@ -2,7 +2,7 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Button, variants, colors, sizes } from "./button";
+import { Button, colors, sizes, variants } from "./button";
 
 export default {
   title: "UI/Buttons/Button",
@@ -98,45 +98,37 @@ export const AsComponent = ({ ...args }) => {
   );
 };
 
-export const FullWidth = ({ ...args }) => {
-  return (
-    <Container>
-      <Button fullWidth {...args}>
-        full width
-      </Button>
-    </Container>
-  );
-};
+export const FullWidth = ({ ...args }) => (
+  <Container>
+    <Button fullWidth {...args}>
+      full width
+    </Button>
+  </Container>
+);
 
-export const Rounded = ({ ...args }) => {
-  return (
-    <Container>
-      <Button rounded {...args}>
-        rounded
-      </Button>
-    </Container>
-  );
-};
+export const Rounded = ({ ...args }) => (
+  <Container>
+    <Button rounded {...args}>
+      rounded
+    </Button>
+  </Container>
+);
 
-export const WithIcon = ({ ...args }) => {
-  return (
-    <Container>
-      <Button leftIcon={HomeIcon} {...args}>
-        left Icon
-      </Button>
-      <Button rightIcon={HomeIcon} {...args}>
-        right Icon
-      </Button>
-    </Container>
-  );
-};
+export const WithIcon = ({ ...args }) => (
+  <Container>
+    <Button leftIcon={HomeIcon} {...args}>
+      left Icon
+    </Button>
+    <Button rightIcon={HomeIcon} {...args}>
+      right Icon
+    </Button>
+  </Container>
+);
 
-export const Disabled = ({ ...args }) => {
-  return (
-    <Container>
-      <Button disabled {...args}>
-        disabled
-      </Button>
-    </Container>
-  );
-};
+export const Disabled = ({ ...args }) => (
+  <Container>
+    <Button disabled {...args}>
+      disabled
+    </Button>
+  </Container>
+);

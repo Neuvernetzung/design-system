@@ -48,9 +48,10 @@ module.exports = {
     },
   },
   plugins: [
+    require("@headlessui/tailwindcss"),
     import("@tailwindcss/forms"),
     import("@tailwindcss/typography"),
-    plugin(function ({ addVariant }) {
+    plugin(({ addVariant }) => {
       addVariant("not-first", "&>*:not(:first-child)");
       addVariant("not-last", "&>*:not(:last-child)");
     }),

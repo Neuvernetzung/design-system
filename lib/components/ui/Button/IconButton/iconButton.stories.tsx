@@ -2,8 +2,8 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
+import { colors, variants } from "../button";
 import { IconButton, sizes } from "./iconButton";
-import { variants, colors } from "../button";
 
 export default {
   title: "UI/Buttons/IconButton",
@@ -116,18 +116,14 @@ export const AsComponent = ({ ...args }) => {
   );
 };
 
-export const Rounded = ({ ...args }) => {
-  return (
-    <Container>
-      <IconButton ariaLabel="home" rounded icon={HomeIcon} {...args} />
-    </Container>
-  );
-};
+export const Rounded = ({ ...args }) => (
+  <Container>
+    <IconButton ariaLabel="home" rounded icon={HomeIcon} {...args} />
+  </Container>
+);
 
-export const Disabled = ({ ...args }) => {
-  return (
-    <Container>
-      <IconButton ariaLabel="home" disabled icon={HomeIcon} {...args} />
-    </Container>
-  );
-};
+export const Disabled = ({ ...args }) => (
+  <Container>
+    <IconButton ariaLabel="home" disabled icon={HomeIcon} {...args} />
+  </Container>
+);

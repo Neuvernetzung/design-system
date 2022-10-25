@@ -1,40 +1,52 @@
-import { forwardRef, HTMLAttributes, memo } from "react";
 import cn from "classnames";
+import {
+  ElementType,
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
+  memo,
+} from "react";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "react-polymorphic-types";
+
+import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColors, ExtendedSizes } from "../../../../types";
-import { extendedTextColors } from "../../../../styles";
-export { extendedTextColors as colors };
 
-export const sizes: Required<ExtendedSizes> = {
-  xs: "text-xs",
-  sm: "text-sm",
-  md: "text-md",
-  lg: "text-lg",
-  xl: "text-xl",
-  "2xl": "sm:text-2xl text-xl",
-  "3xl": "sm:text-3xl text-2xl",
-  "4xl": "md:text-4xl text-3xl",
-  "5xl": "lg:text-5xl md:text-4xl text-3xl",
-  "6xl": "lg:text-6xl md:text-5xl text-4xl",
-};
+export const sizes: Required<ExtendedSizes> = textSizes;
 
-export interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
+export const colors: ExtendedColors = extendedTextColors;
+
+const TextDefaultElement = "p";
+
+export interface TextOwnProps extends HTMLAttributes<HTMLParagraphElement> {
   size?: keyof ExtendedSizes;
   color?: keyof ExtendedColors;
   as?: keyof JSX.IntrinsicElements;
   className?: string;
 }
 
-export const Text = forwardRef<HTMLParagraphElement, TextProps>(
-  (
+export type TextProps<T extends ElementType = typeof TextDefaultElement> =
+  PolymorphicPropsWithRef<TextOwnProps, T>;
+
+export const Text: PolymorphicForwardRefExoticComponent<
+  TextOwnProps,
+  typeof TextDefaultElement
+> = forwardRef(
+  <T extends ElementType = typeof TextDefaultElement>(
     {
       size = "md",
       color = "accent",
-      as: Component = "p",
+      as,
       className,
       children,
-    }: TextProps,
-    ref
+    }: PolymorphicPropsWithoutRef<TextOwnProps, T>,
+    ref: ForwardedRef<Element>
   ) => {
+    const Component: ElementType = as || TextDefaultElement;
+
     return (
       <Component
         ref={ref}
@@ -52,3 +64,12 @@ export const Text = forwardRef<HTMLParagraphElement, TextProps>(
 );
 
 export default memo(Text);
+
+Text.displayName = "Text";
+
+Text.defaultProps = {
+  size: "md",
+  color: "accent",
+  as: TextDefaultElement,
+  className: undefined,
+};

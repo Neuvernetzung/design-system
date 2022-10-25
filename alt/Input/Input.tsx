@@ -10,7 +10,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 
-import { FormElement, RequiredProps } from "../Form";
+import { FormElement, RequiredRule } from "../Form";
 
 interface InputGroupProps extends InputProps {
   name: string;
@@ -21,7 +21,7 @@ interface InputGroupProps extends InputProps {
   leftElement?: InputElementProps;
   rightElement?: InputElementProps;
   formMethods: any;
-  required?: RequiredProps;
+  required?: RequiredRule;
 }
 
 export const Input = ({

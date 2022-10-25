@@ -1,24 +1,17 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
-import {
-  forwardRef,
-  memo,
-  Ref,
-  ElementType,
-  ComponentPropsWithoutRef,
-  ReactElement,
-} from "react";
+import { ElementType, ForwardedRef, forwardRef, memo } from "react";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "react-polymorphic-types";
+
+import { focus, minHeights, roundings, transition } from "../../../../styles";
+import { Colors, Sizes } from "../../../../types";
 import { Icon } from "../../Icon";
 import { sizes as textSizes } from "../../Typography/Text/text";
-import {
-  variants,
-  colors,
-  type Sizes,
-  type Colors,
-  type Variants,
-  styles,
-} from "../button";
-import { minHeights, roundings, transition, focus } from "../../../../styles";
+import { type Variants, colors, styles, variants } from "../button";
 
 export const sizes: Sizes = {
   xs: `${roundings.xs} ${minHeights.xs}`,
@@ -28,23 +21,33 @@ export const sizes: Sizes = {
   xl: `${roundings.xl} ${minHeights.xl}`,
 };
 
-export type IconButtonProps<T extends ElementType> =
-  ComponentPropsWithoutRef<T> & {
-    variant?: keyof Variants;
-    color?: keyof Colors;
-    size?: keyof Sizes;
-    rounded?: boolean;
-    icon: ElementType<SVGElement>;
-    ariaLabel: string;
-    as?: T;
-  };
+const IconButtonDefaultElement = "button";
 
-type PolymorphicComponent = <T extends ElementType = "button">(
-  props: IconButtonProps<T>
-) => ReactElement | null;
+type ConditionalButtonProps =
+  | {
+      ariaLabel: string;
+      type?: "button" | "submit" | "reset";
+    }
+  | { as: string; ariaLabel?: string };
 
-export const IconButton: PolymorphicComponent = forwardRef(
-  <T extends ElementType>(
+type IconButtonOwnProps = {
+  variant?: keyof Variants;
+  color?: keyof Colors;
+  size?: keyof Sizes;
+  rounded?: boolean;
+  icon: ElementType<SVGElement>;
+  disabled?: boolean;
+} & ConditionalButtonProps;
+
+export type IconButtonProps<
+  T extends ElementType = typeof IconButtonDefaultElement
+> = PolymorphicPropsWithRef<IconButtonOwnProps, T>;
+
+export const IconButton: PolymorphicForwardRefExoticComponent<
+  IconButtonOwnProps,
+  typeof IconButtonDefaultElement
+> = forwardRef(
+  <T extends ElementType = typeof IconButtonDefaultElement>(
     {
       size = "md",
       type = "button",
@@ -57,10 +60,10 @@ export const IconButton: PolymorphicComponent = forwardRef(
       className,
       as,
       ...props
-    }: IconButtonProps<T>,
-    ref: Ref<T>
-  ): JSX.Element => {
-    const Component = as || "button";
+    }: PolymorphicPropsWithoutRef<IconButtonOwnProps, T>,
+    ref: ForwardedRef<Element>
+  ) => {
+    const Component = as || IconButtonDefaultElement;
 
     return (
       <Component
@@ -91,3 +94,13 @@ export const IconButton: PolymorphicComponent = forwardRef(
 );
 
 export default memo(IconButton);
+
+IconButton.displayName = "IconButton";
+
+IconButton.defaultProps = {
+  variant: "filled",
+  color: "accent",
+  size: "md",
+  rounded: false,
+  as: undefined,
+};
