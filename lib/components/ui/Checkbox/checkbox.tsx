@@ -2,6 +2,7 @@ import type { Colors, Sizes } from "../../../types";
 import {
   checkboxSizes,
   roundingsSmall,
+  focus,
   textColors,
   bordersInteractive,
   checkboxColors,
@@ -84,6 +85,7 @@ const styles = {
   base: "flex flex-row items-center",
   input: `appearance-none cursor-pointer border-2 checked:border-none ${bordersInteractive.accent}`,
   inputDisabled: `appearance-none cursor-not-allowed border-2 checked:border-none ${borders.accent} ${extendedBgColors.filledSubtile} checked:bg-accent-500`,
+  inputError: `${bordersInteractive.danger}`,
   label: "cursor-pointer select-none",
   labelDisabled: "cursor-not-allowed select-none opacity-75",
   iconWrapper:
@@ -145,9 +147,11 @@ export const Checkbox = ({
                     disabled={_disabled}
                     className={cn(
                       "peer",
+                      focus[color],
                       !_disabled ? styles.input : styles.inputDisabled,
                       sizes[size]?.input,
-                      !_disabled && colors[color]
+                      !_disabled && colors[color],
+                      error && styles.inputError
                     )}
                     {...(register &&
                       register(name, {

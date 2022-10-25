@@ -2,13 +2,12 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "..";
-import { PlusIcon, HomeIcon } from "../../icons";
 
-import { Checkbox, sizes, colors } from "./checkbox";
+import { Radio, sizes, colors } from "./radio";
 
 export default {
-  title: "UI/Form/Checkbox",
-  component: Checkbox,
+  title: "UI/Form/Radio",
+  component: Radio,
   argTypes: {
     variant: {
       control: { type: "select" },
@@ -34,16 +33,16 @@ export const Default = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      <Checkbox
+      <Radio
         formMethods={formMethods}
-        name="checkbox-1"
+        name="radio-1"
         label="Einzelne Option"
         options={[{ label: "Option 1", value: "option-1" }]}
         {...args}
       />
-      <Checkbox
+      <Radio
         formMethods={formMethods}
-        name="checkbox-2"
+        name="radio-2"
         label="Mehrere Optionen"
         options={[
           { label: "Option 1", value: "option-1" },
@@ -66,9 +65,9 @@ export const Sizes = ({ ...args }) => {
       className={formClassName}
     >
       {_sizes.map((size: any) => (
-        <Checkbox
+        <Radio
           formMethods={formMethods}
-          name={`checkbox_${size}`}
+          name={`radio_${size}`}
           label={size}
           size={size}
           options={[
@@ -97,9 +96,9 @@ export const Colors = ({ ...args }) => {
       className={formClassName}
     >
       {_colors.map((color: any) => (
-        <Checkbox
+        <Radio
           formMethods={formMethods}
-          name={`checkbox_${color}`}
+          name={`radio_${color}`}
           label={color}
           color={color}
           options={[
@@ -117,55 +116,9 @@ Colors.parameters = {
   controls: { exclude: "color" },
 };
 
-export const Icon = ({ ...args }) => {
-  const formMethods = useForm();
-
-  return (
-    <Form
-      formMethods={formMethods}
-      onSubmit={() => {}}
-      className={formClassName}
-    >
-      <Checkbox
-        formMethods={formMethods}
-        name={`checkbox_icons_default`}
-        label="Default"
-        options={[{ label: "Default", value: "option-1" }]}
-        {...args}
-      />
-      <Checkbox
-        formMethods={formMethods}
-        name={`checkbox_icons_plus`}
-        label="Plus"
-        icon={PlusIcon}
-        options={[{ label: "Plus", value: "option-1" }]}
-        {...args}
-      />
-      <Checkbox
-        formMethods={formMethods}
-        name={`checkbox_icons_home`}
-        label="Home"
-        icon={HomeIcon}
-        options={[{ label: "Home", value: "option-1" }]}
-        {...args}
-      />
-      <Checkbox
-        formMethods={formMethods}
-        name={`checkbox_icons_single`}
-        label="Einzelnd"
-        options={[
-          { label: "Default", value: "option-1" },
-          { label: "Plus", value: "option-1", icon: PlusIcon },
-        ]}
-        {...args}
-      />
-    </Form>
-  );
-};
-
 export const Disabled = ({ ...args }) => {
   const formMethods = useForm({
-    defaultValues: { checkbox_disabled: ["option-2"] },
+    defaultValues: { radio_disabled: ["option-2"] },
   });
 
   return (
@@ -174,9 +127,9 @@ export const Disabled = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      <Checkbox
+      <Radio
         formMethods={formMethods}
-        name={`checkbox_disabled`}
+        name={`radio_disabled`}
         label="Alle Disabled"
         disabled
         options={[
@@ -185,9 +138,9 @@ export const Disabled = ({ ...args }) => {
         ]}
         {...args}
       />
-      <Checkbox
+      <Radio
         formMethods={formMethods}
-        name={`checkbox_disabled_single`}
+        name={`radio_disabled_single`}
         label="Einzelnd Disabled"
         options={[
           { label: "Option 1", value: "option-1" },
@@ -201,7 +154,7 @@ export const Disabled = ({ ...args }) => {
 
 export const Error = ({ ...args }) => {
   const formMethods = useForm({
-    defaultValues: { checkbox_disabled: ["option-2"] },
+    defaultValues: { radio_disabled: ["option-2"] },
   });
 
   return (
@@ -210,9 +163,9 @@ export const Error = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      <Checkbox
+      <Radio
         formMethods={formMethods}
-        name={`checkbox_error`}
+        name={`radio_error`}
         label="Alle Error"
         required
         options={[

@@ -1,11 +1,11 @@
 import type { Colors } from "../types";
 
 export const borders: Colors = {
-  primary: "border-primary-500",
+  primary: "border-primary-500 dark:border-primary-500",
   accent: "border-accent-300 dark:border-accent-600",
-  success: "border-green-500",
-  warn: "border-yellow-500",
-  danger: "border-red-500",
+  success: "border-green-500 dark:border-green-500",
+  warn: "border-yellow-500 dark:border-yellow-500",
+  danger: "border-red-500 dark:border-red-500",
 };
 
 export const bordersInteractive: Colors = {
