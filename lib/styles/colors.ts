@@ -57,5 +57,13 @@ export const checkboxColors: Colors = {
 };
 
 export const radioColors: Colors = {
-  ...checkboxColors,
+  primary:
+    "checked:border-primary-500 dark:checked:border-primary-500 checked:hover:border-primary-600 dark:checked:hover:border-primary-400",
+  accent:
+    "checked:border-accent-500 dark:checked:border-accent-500 checked:hover:border-accent-600 dark:checked:hover:border-accent-400",
+  success:
+    "checked:border-green-500 dark:checked:border-green-500 checked:hover:border-green-600 dark:checked:hover:border-green-400",
+  warn: "checked:border-yellow-500 dark:checked:border-yellow-500 checked:hover:border-yellow-600 dark:checked:hover:border-yellow-400",
+  danger:
+    "checked:border-red-500 dark:checked:border-red-500 checked:hover:border-red-600 dark:checked:hover:border-red-400",
 };
