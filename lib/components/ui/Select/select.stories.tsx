@@ -44,6 +44,7 @@ export const Variants = ({ ...args }) => {
             { children: "Option 1", value: "option-1" },
             { children: "Option 2", value: "option-2" },
           ]}
+          {...args}
         />
       ))}
     </Form>
@@ -74,6 +75,7 @@ export const Sizes = ({ ...args }) => {
             { children: "Option 1", value: "option-1" },
             { children: "Option 2", value: "option-2" },
           ]}
+          {...args}
         />
       ))}
     </Form>
@@ -103,6 +105,7 @@ export const Multiple = ({ ...args }) => {
           { children: "Option 4", value: "option-4" },
         ]}
         multiple
+        {...args}
       />
     </Form>
   );
@@ -154,6 +157,66 @@ export const Groups = ({ ...args }) => {
           },
         ]}
         multiple
+        {...args}
+      />
+    </Form>
+  );
+};
+
+export const Checked = ({ ...args }) => {
+  const formMethods = useForm();
+  const options = [
+    {
+      children: "Gruppe 1",
+      value: "group-1",
+      options: [
+        { children: "Option 1", value: "option-1" },
+        { children: "Option 2", value: "option-2" },
+        { children: "Option 3", value: "option-3" },
+      ],
+    },
+    {
+      children: "Gruppe 2",
+      value: "group-2",
+      options: [
+        { children: "Option 4", value: "option-4" },
+        { children: "Option 5", value: "option-5" },
+        { children: "Option 6", value: "option-6" },
+      ],
+    },
+    { children: "Option 7", value: "option-7" },
+    {
+      children: "Gruppe 3",
+      value: "group-3",
+      options: [
+        { children: "Option 8", value: "option-8" },
+        { children: "Option 9", value: "option-9" },
+      ],
+    },
+  ];
+
+  return (
+    <Form
+      formMethods={formMethods}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Select
+        formMethods={formMethods}
+        name="select_multiple"
+        options={options}
+        multiple
+        label="CheckMark"
+        {...args}
+      />
+      <Select
+        formMethods={formMethods}
+        name="select_multiple"
+        options={options}
+        multiple
+        label="Hide active"
+        hideActive
+        {...args}
       />
     </Form>
   );

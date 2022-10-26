@@ -7,8 +7,14 @@ import type {
   PolymorphicPropsWithRef,
 } from "react-polymorphic-types";
 
-import { focus, minHeights, roundings, transition } from "../../../../styles";
-import { Colors, Sizes } from "../../../../types";
+import {
+  focusBg,
+  focusRing,
+  minHeights,
+  roundings,
+  transition,
+} from "../../../../styles";
+import { Colors, Focuses, Sizes } from "../../../../types";
 import { Icon } from "../../Icon";
 import { sizes as textSizes } from "../../Typography/Text/text";
 import { type Variants, colors, styles, variants } from "../button";
@@ -19,6 +25,11 @@ export const sizes: Sizes = {
   md: `${roundings.md} ${minHeights.md}`,
   lg: `${roundings.lg} ${minHeights.lg}`,
   xl: `${roundings.xl} ${minHeights.xl}`,
+};
+
+export const focuses: Focuses = {
+  ring: focusRing,
+  bg: focusBg,
 };
 
 const IconButtonDefaultElement = "button";
@@ -34,6 +45,7 @@ type IconButtonOwnProps = {
   variant?: keyof Variants;
   color?: keyof Colors;
   size?: keyof Sizes;
+  focus?: keyof Focuses;
   rounded?: boolean;
   icon: ElementType<SVGElement>;
   disabled?: boolean;
@@ -53,6 +65,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
       type = "button",
       variant = "filled",
       color = "accent",
+      focus = "ring",
       disabled = false,
       rounded,
       icon,
@@ -75,7 +88,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
           "aspect-square",
           styles.base,
           transition,
-          focus[color],
+          focuses[focus][color],
           variants[variant],
           sizes[size],
           textSizes[size],

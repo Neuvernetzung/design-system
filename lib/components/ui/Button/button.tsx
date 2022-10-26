@@ -1,13 +1,6 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
-import {
-  ElementType,
-  ForwardedRef,
-  forwardRef,
-  memo,
-  ReactNode,
-  Ref,
-} from "react";
+import { ElementType, ForwardedRef, forwardRef, memo, ReactNode } from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
@@ -15,13 +8,14 @@ import type {
 } from "react-polymorphic-types";
 
 import {
-  focus,
+  focusBg,
+  focusRing,
   minHeights,
   paddings,
   roundings,
   transition,
 } from "../../../styles";
-import type { Colors, Sizes } from "../../../types";
+import type { Colors, Focuses, Sizes } from "../../../types";
 import { colorIsBright, getThemeColors } from "../../../utils";
 import { Icon } from "../Icon";
 import { sizes as textSizes } from "../Typography/Text/text";
@@ -110,6 +104,11 @@ export const sizes: Sizes = {
   xl: `${paddings.xl} ${roundings.xl} ${minHeights.xl}`,
 };
 
+export const focuses: Focuses = {
+  ring: focusRing,
+  bg: focusBg,
+};
+
 export const styles = {
   base: "appearance-none prose prose-sm h-min select-none flex flex-row justify-center items-center gap-2 font-semibold",
   disabled: "bg-gray-200 cursor-not-allowed",
@@ -123,6 +122,7 @@ export type ButtonOwnProps = {
   variant?: keyof Variants;
   color?: keyof Colors;
   size?: keyof Sizes;
+  focus?: keyof Focuses;
   fullWidth?: boolean;
   rounded?: boolean;
   leftIcon?: ElementType<SVGElement>;
@@ -143,6 +143,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
       type = "button",
       variant = "filled",
       color = "accent",
+      focus = "ring",
       disabled = false,
       fullWidth,
       rounded,
@@ -163,7 +164,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
         type={type}
         disabled={disabled}
         className={cn(
-          focus[color],
+          focuses[focus][color],
           styles.base,
           transition,
           variants[variant],

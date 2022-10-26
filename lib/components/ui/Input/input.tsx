@@ -75,8 +75,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [leftElementWidth, setleftElementWidth] = useState();
     const [rightElementWidth, setRightElementWidth] = useState();
     useLayoutEffect(() => {
-      setleftElementWidth(leftElementRef?.current?.clientWidth),
-        setRightElementWidth(rightElementRef?.current?.clientWidth);
+      setleftElementWidth(leftElementRef?.current?.clientWidth);
+      setRightElementWidth(rightElementRef?.current?.clientWidth);
     }, []);
 
     return (
@@ -144,6 +144,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
+Input.displayName = "Input";
+
 Input.defaultProps = {
   label: undefined,
   helper: undefined,
@@ -152,6 +154,12 @@ Input.defaultProps = {
   leftElement: undefined,
   rightElement: undefined,
   required: false,
+  size: "md",
+  variant: "outline",
+  placeholder: undefined,
+  disabled: false,
+  step: undefined,
+  className: undefined,
 };
 
 export default memo(Input);
