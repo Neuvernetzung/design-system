@@ -31,3 +31,7 @@ export const Image = ({
 );
 
 export default memo(Image);
+
+Image.defaultProps = {
+  isLocal: false,
+};

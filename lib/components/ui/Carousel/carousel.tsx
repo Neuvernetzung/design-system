@@ -21,6 +21,7 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "../../icons";
+import { Icon } from "../Icon";
 import { type ImageProps, Image } from "../Image";
 import useSwiperRef from "./utils/useSwiperRef";
 
@@ -95,7 +96,7 @@ export const Carousel = ({
           } absolute transition duration-200 inset-y-0 left-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10`}
           ref={prevElRef}
         >
-          <ChevronLeftIcon className="h-8 w-8 fill-primary" />
+          <Icon icon={ChevronLeftIcon} size="md" color="primary" />
         </div>
         <div
           className={`${
@@ -103,7 +104,7 @@ export const Carousel = ({
           } absolute transition duration-200 inset-y-0 right-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10`}
           ref={nextElRef}
         >
-          <ChevronRightIcon className="h-8 w-8 fill-primary" />
+          <Icon icon={ChevronRightIcon} size="md" color="primary" />
         </div>
       </Swiper>
       {withThumbs && images?.length > 1 && (
@@ -136,13 +137,13 @@ export const Carousel = ({
             className="absolute transition duration-200 transform inset-y-0 left-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10"
             ref={prevElRefThumb}
           >
-            <ChevronLeftIcon className="h-8 w-8 fill-primary" />
+            <Icon icon={ChevronLeftIcon} size="md" color="primary" />
           </div>
           <div
             className="absolute transition duration-200 inset-y-0 right-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10"
             ref={nextElRefThumb}
           >
-            <ChevronRightIcon className="h-8 w-8 fill-primary" />
+            <Icon icon={ChevronRightIcon} size="md" color="primary" />
           </div>
         </Swiper>
       )}
@@ -151,3 +152,12 @@ export const Carousel = ({
 };
 
 export default memo(Carousel);
+
+Carousel.defaultProps = {
+  withThumbs: false,
+  withPagination: false,
+  loop: false,
+  autoplay: false,
+  className: undefined,
+  thumbsClassName: undefined,
+};

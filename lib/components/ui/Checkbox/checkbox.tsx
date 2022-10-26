@@ -193,3 +193,11 @@ export const Checkbox = ({
 };
 
 export default memo(Checkbox);
+
+Checkbox.defaultProps = {
+  helper: undefined,
+  required: false,
+  size: "md",
+  color: "primary",
+  className: undefined,
+};

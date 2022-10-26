@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Form } from "..";
+import { Button, Form } from "..";
 import { Select, sizes, variants } from "./select";
 
 export default {
@@ -10,6 +10,9 @@ export default {
   component: Select,
   argTypes: {
     variant: {
+      control: { type: "select" },
+    },
+    size: {
       control: { type: "select" },
     },
   },
@@ -216,6 +219,82 @@ export const Checked = ({ ...args }) => {
         multiple
         label="Hide active"
         hideActive
+        {...args}
+      />
+    </Form>
+  );
+};
+
+export const Error = ({ ...args }) => {
+  const formMethods = useForm();
+  const options = [
+    {
+      children: "Option 1",
+      value: "option-1",
+    },
+    {
+      children: "Option 2",
+      value: "option-2",
+    },
+  ];
+
+  return (
+    <Form
+      formMethods={formMethods}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Select
+        formMethods={formMethods}
+        name="select_error"
+        options={options}
+        required={{ value: true, message: "Dies ist ein Pflichtfeld." }}
+        {...args}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const Disabled = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Form
+      formMethods={formMethods}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Select
+        formMethods={formMethods}
+        name="select_all_disabled"
+        options={[
+          {
+            children: "Option 1",
+            value: "option-1",
+          },
+          {
+            children: "Option 2",
+            value: "option-2",
+          },
+        ]}
+        disabled
+        {...args}
+      />
+      <Select
+        formMethods={formMethods}
+        name="select_all_disabled"
+        options={[
+          {
+            children: "Option 1",
+            value: "option-1",
+          },
+          {
+            children: "Option 2",
+            value: "option-2",
+            disabled: true,
+          },
+        ]}
         {...args}
       />
     </Form>
