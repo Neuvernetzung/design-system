@@ -8,20 +8,19 @@ import {
   roundingsRight,
   textColors,
 } from "../../../../styles";
-import type { Sizes } from "../../../../types";
-import type { Variants } from "../input";
-import { sizes, variants } from "../input";
+import { inputSizes } from "../../../../styles/groups";
+import type { InputVariants, Sizes } from "../../../../types";
 
 export type InputAddonProps = {
   className?: string;
   children: ReactNode;
   size: keyof Sizes;
-  variant: keyof Variants;
+  variant: keyof InputVariants;
   isLeft?: boolean;
   isRight?: boolean;
 };
 
-export const addonVariant: Record<keyof Variants, string> = {
+export const addonVariant: Record<keyof InputVariants, string> = {
   outline: `border-y ${borders.accent}`,
   filled: `${extendedBgColors.filled}`,
 };
@@ -36,7 +35,7 @@ export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
       ref={ref}
       className={cn(
         styles.base,
-        sizes[size],
+        inputSizes[size],
         addonVariant[variant],
         extendedBgColors.filledSubtile,
         isLeft && roundingsLeft[size],
@@ -52,3 +51,11 @@ export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
 );
 
 export default memo(InputAddon);
+
+InputAddon.displayName = "InputAddon";
+
+InputAddon.defaultProps = {
+  className: undefined,
+  isLeft: false,
+  isRight: false,
+};

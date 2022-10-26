@@ -67,6 +67,7 @@ export const Sizes = ({ ...args }) => {
     >
       {_sizes.map((size: any) => (
         <Checkbox
+          key={size}
           formMethods={formMethods}
           name={`checkbox_${size}`}
           label={size}
@@ -98,6 +99,7 @@ export const Colors = ({ ...args }) => {
     >
       {_colors.map((color: any) => (
         <Checkbox
+          key={color}
           formMethods={formMethods}
           name={`checkbox_${color}`}
           label={color}

@@ -38,6 +38,11 @@ function CheckboxTransition({ open, children }: any) {
   );
 }
 
+CheckboxIcon.defaultProps = {
+  size: "md",
+  icon: undefined,
+};
+
 const MotionCheckIcon = motion(CheckIcon);
 
 function CheckIconAnimation(props: any) {

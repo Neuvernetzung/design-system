@@ -66,6 +66,7 @@ export const Sizes = ({ ...args }) => {
     >
       {_sizes.map((size: any) => (
         <Radio
+          key={size}
           formMethods={formMethods}
           name={`radio_${size}`}
           label={size}
@@ -97,6 +98,7 @@ export const Colors = ({ ...args }) => {
     >
       {_colors.map((color: any) => (
         <Radio
+          key={color}
           formMethods={formMethods}
           name={`radio_${color}`}
           label={color}

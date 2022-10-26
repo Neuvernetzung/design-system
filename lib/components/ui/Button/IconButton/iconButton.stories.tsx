@@ -3,7 +3,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { colors, variants } from "../button";
-import { IconButton, sizes, focuses } from "./iconButton";
+import { focuses, IconButton, sizes } from "./iconButton";
 
 export default {
   title: "UI/Buttons/IconButton",

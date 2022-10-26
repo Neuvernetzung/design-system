@@ -2,15 +2,13 @@ import cn from "classnames";
 import { forwardRef, memo, ReactNode } from "react";
 
 import { textColors } from "../../../../styles";
+import { inputSizes } from "../../../../styles/groups";
 import type { Sizes } from "../../../../types";
-import type { Variants } from "../input";
-import { sizes, variants } from "../input";
 
 export type InputElementProps = {
   className?: string;
   children: ReactNode;
   size: keyof Sizes;
-  variant: keyof Variants;
   isLeft?: boolean;
   isRight?: boolean;
   pointerEvents?: boolean;
@@ -29,7 +27,7 @@ export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
       ref={ref}
       className={cn(
         styles.base,
-        sizes[size],
+        inputSizes[size],
         isLeft && "left-0",
         isRight && "right-0",
         !pointerEvents && "pointer-events-none",
@@ -42,3 +40,12 @@ export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
 );
 
 export default memo(InputElement);
+
+InputElement.displayName = "InputElement";
+
+InputElement.defaultProps = {
+  className: undefined,
+  isLeft: false,
+  isRight: false,
+  pointerEvents: false,
+};
