@@ -8,6 +8,14 @@ export const margins: Sizes = {
   xl: "m-5",
 };
 
+export const marginsX: Sizes = {
+  xs: "mx-0.5",
+  sm: "mx-1",
+  md: "mx-2",
+  lg: "mx-4",
+  xl: "mx-5",
+};
+
 export const marginsY: Sizes = {
   xs: "my-0.5",
   sm: "my-1",
@@ -22,6 +30,14 @@ export const marginsSmall: Sizes = {
   md: "m-1",
   lg: "m-2",
   xl: "m-2",
+};
+
+export const marginsXSmall: Sizes = {
+  xs: "mx-0.5",
+  sm: "mx-0.5",
+  md: "mx-1",
+  lg: "mx-2",
+  xl: "mx-2",
 };
 
 export const marginsYSmall: Sizes = {

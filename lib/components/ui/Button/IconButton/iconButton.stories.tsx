@@ -3,7 +3,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { colors, variants } from "../button";
-import { IconButton, sizes } from "./iconButton";
+import { IconButton, sizes, focuses } from "./iconButton";
 
 export default {
   title: "UI/Buttons/IconButton",
@@ -73,6 +73,28 @@ Colors.parameters = {
   a11y: {
     disable: true,
   },
+};
+
+export const Focuses = ({ ...args }) => {
+  const _focuses = Object.keys(focuses);
+
+  return (
+    <Container>
+      {_focuses.map((focus: any) => (
+        <IconButton
+          ariaLabel="home"
+          focus={focus}
+          key={focus}
+          icon={HomeIcon}
+          {...args}
+        />
+      ))}
+    </Container>
+  );
+};
+
+Focuses.parameters = {
+  controls: { exclude: "focus" },
 };
 
 export const Sizes = ({ ...args }) => {

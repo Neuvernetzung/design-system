@@ -2,7 +2,7 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Button, colors, sizes, variants } from "./button";
+import { Button, colors, focuses, sizes, variants } from "./button";
 
 export default {
   title: "UI/Buttons/Button",
@@ -64,6 +64,24 @@ Colors.parameters = {
   a11y: {
     disable: true,
   },
+};
+
+export const Focuses = ({ ...args }) => {
+  const _focuses = Object.keys(focuses);
+
+  return (
+    <Container>
+      {_focuses.map((focus: any) => (
+        <Button focus={focus} key={focus} {...args}>
+          {focus}
+        </Button>
+      ))}
+    </Container>
+  );
+};
+
+Focuses.parameters = {
+  controls: { exclude: "focus" },
 };
 
 export const Sizes = ({ ...args }) => {

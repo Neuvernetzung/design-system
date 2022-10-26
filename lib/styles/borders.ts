@@ -15,3 +15,11 @@ export const bordersInteractive: Colors = {
   warn: `${borders.warn} hover:border-yellow-700 dark:hover:border-yellow-300`,
   danger: `${borders.danger} hover:border-red-700 dark:hover:border-red-300`,
 };
+
+export const divides: Colors = {
+  primary: "divide-primary-500 dark:divide-primary-500",
+  accent: "divide-accent-300 dark:divide-accent-600",
+  success: "divide-green-500 dark:divide-green-500",
+  warn: "divide-yellow-500 dark:divide-yellow-500",
+  danger: "divide-red-500 dark:divide-red-500",
+};

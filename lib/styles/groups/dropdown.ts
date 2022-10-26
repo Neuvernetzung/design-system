@@ -13,6 +13,8 @@ import {
   shadows,
   textSizes,
   transitionFast,
+  textColors,
+  gapsSmall,
 } from "..";
 
 type DropdownContainerStyleProps = {
@@ -42,7 +44,7 @@ type DropdownOptionsStyleProps = {
 };
 
 const optionStyles = {
-  base: `w-full select-none ${bgColors.accent} ${transitionFast}`,
+  base: `w-full flex flex-row items-center justify-between select-none focus:outline-none ${bgColors.accent} ${transitionFast} ${textColors.accent}`,
   active: `${extendedBgColors.filledSubtile}`,
 };
 
@@ -50,7 +52,12 @@ export const getDropDownOptionsStyles = ({
   size,
   active,
 }: DropdownOptionsStyleProps) =>
-  cn(optionStyles.base, optionSizes[size], active && optionStyles.active);
+  cn(
+    optionStyles.base,
+    optionSizes[size],
+    active && optionStyles.active,
+    gapsSmall[size]
+  );
 
 type DropdownGroupStyleProps = {
   size: keyof Sizes;
