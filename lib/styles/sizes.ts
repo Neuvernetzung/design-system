@@ -1,11 +1,27 @@
 import type { ExtendedSizes, Sizes } from "../types/Sizes";
 
+export const heights: Sizes = {
+  xs: "h-5",
+  sm: "h-7",
+  md: "h-10",
+  lg: "h-14",
+  xl: "h-16",
+};
+
+export const heightsSmall: Sizes = {
+  xs: "h-3",
+  sm: "h-5",
+  md: "h-7",
+  lg: "h-10",
+  xl: "h-14",
+};
+
 export const minHeights: Sizes = {
   xs: "min-h-[20px]",
   sm: "min-h-[28px]",
   md: "min-h-[40px]",
-  lg: "min-h-[52px]",
-  xl: "min-h-[60px]",
+  lg: "min-h-[56px]",
+  xl: "min-h-[64px]",
 };
 
 export const checkboxSizes: Sizes = {
