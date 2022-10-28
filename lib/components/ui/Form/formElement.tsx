@@ -18,6 +18,11 @@ export type FormElementProps = {
 };
 
 export type RequiredRule = Message | ValidationRule<boolean>;
+export type MaxLengthRule = ValidationRule<number | string>;
+export type MinLengthRule = ValidationRule<number | string>;
+export type MaxRule = ValidationRule<number | string>;
+export type MinRule = ValidationRule<number | string>;
+export type PatternRule = ValidationRule<RegExp>;
 
 export const labelSizes: Sizes = {
   xs: textSizes.xs,

@@ -8,7 +8,15 @@ import {
   inputVariants,
 } from "../../../styles/groups";
 import type { InputVariants, Sizes } from "../../../types";
-import { FormElement, RequiredRule } from "../Form";
+import {
+  FormElement,
+  MaxLengthRule,
+  MaxRule,
+  MinLengthRule,
+  MinRule,
+  PatternRule,
+  RequiredRule,
+} from "../Form";
 import s from "./input.module.css";
 import { InputAddon } from "./InputAddon";
 import type { InputAddonProps } from "./InputAddon/inputAddon";
@@ -37,6 +45,11 @@ export type InputProps = {
   >;
   formMethods: any;
   required?: RequiredRule;
+  maxLength?: MaxLengthRule;
+  minLength?: MinLengthRule;
+  max?: MaxRule;
+  min?: MinRule;
+  pattern?: PatternRule;
   disabled?: boolean;
   step?: number;
   className?: string;
@@ -58,7 +71,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       leftElement,
       rightElement,
       formMethods,
-      required,
+      required = false,
+      maxLength,
+      minLength,
+      max,
+      min,
+      pattern,
       disabled = false,
       variant = "outline",
       step = 1,
@@ -94,7 +112,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {leftElement && (
             <InputElement
               size={size}
-              variant={variant}
               isLeft
               ref={leftElementRef}
               {...leftElement}
@@ -121,6 +138,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             }}
             {...register(name, {
               required,
+              maxLength,
+              minLength,
+              max,
+              min,
+              pattern,
             })}
             step={step}
             disabled={disabled}
@@ -132,7 +154,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {rightElement && (
             <InputElement
               size={size}
-              variant={variant}
               isRight
               ref={rightElementRef}
               {...rightElement}
@@ -154,6 +175,11 @@ Input.defaultProps = {
   leftElement: undefined,
   rightElement: undefined,
   required: false,
+  maxLength: undefined,
+  minLength: undefined,
+  max: undefined,
+  min: undefined,
+  pattern: undefined,
   size: "md",
   variant: "outline",
   placeholder: undefined,
