@@ -8,6 +8,7 @@ import type {
 } from "react-polymorphic-types";
 
 import {
+  bgColorsInteractive,
   borders,
   focusBg,
   focusRing,
@@ -15,7 +16,6 @@ import {
   paddings,
   roundings,
   transition,
-  bgColorsInteractive,
 } from "../../../styles";
 import type { Colors, Focuses, Sizes } from "../../../types";
 import { colorIsBright, getThemeColors } from "../../../utils";
