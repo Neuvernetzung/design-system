@@ -6,6 +6,7 @@ export * from "./Icon";
 export * from "./Image";
 export * from "./Input";
 export * from "./Link";
+export * from "./Modal";
 export * from "./Radio";
 export * from "./Select";
 export * from "./Switch";

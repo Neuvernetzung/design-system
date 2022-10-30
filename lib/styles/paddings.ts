@@ -1,5 +1,7 @@
 import type { Sizes } from "../types";
 
+export const pagePaddings: string = "px-6 lg:px-12";
+
 export const paddingsX: Sizes = {
   xs: "px-2",
   sm: "px-2",
@@ -22,6 +24,14 @@ export const paddings: Sizes = {
   md: `${paddingsX.md} ${paddingsY.md}`,
   lg: `${paddingsX.lg} ${paddingsY.lg}`,
   xl: `${paddingsX.xl} ${paddingsY.xl}`,
+};
+
+export const paddingsEvenly: Sizes = {
+  xs: "p-0.5",
+  sm: "p-1",
+  md: "p-2",
+  lg: "p-3",
+  xl: "p-4",
 };
 
 export const paddingsXSmall: Sizes = {
