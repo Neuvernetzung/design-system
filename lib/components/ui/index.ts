@@ -9,5 +9,6 @@ export * from "./Link";
 export * from "./Radio";
 export * from "./Select";
 export * from "./Switch";
+export * from "./Tabs";
 export * from "./Textarea";
 export * from "./Typography";
