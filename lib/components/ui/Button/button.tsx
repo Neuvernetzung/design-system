@@ -8,12 +8,14 @@ import type {
 } from "react-polymorphic-types";
 
 import {
+  borders,
   focusBg,
   focusRing,
   minHeights,
   paddings,
   roundings,
   transition,
+  bgColorsInteractive,
 } from "../../../styles";
 import type { Colors, Focuses, Sizes } from "../../../types";
 import { colorIsBright, getThemeColors } from "../../../utils";
@@ -40,7 +42,7 @@ export const realColors = {
 
 export const colors: Record<keyof Colors, ColorProps> = {
   primary: {
-    base: "bg-primary-500 hover:bg-primary-600 border-primary-500",
+    base: `${bgColorsInteractive.primary} ${borders.primary}`,
     text: {
       filled: colorIsBright(realColors["primary-500"])
         ? "text-accent-50"
@@ -50,7 +52,7 @@ export const colors: Record<keyof Colors, ColorProps> = {
     },
   },
   accent: {
-    base: "bg-accent-600 dark:bg-accent-300 hover:bg-accent-700 dark:hover:bg-accent-200 border-accent-600 dark:border-accent-300",
+    base: `bg-accent-600 dark:bg-accent-300 hover:bg-accent-700 dark:hover:bg-accent-200 ${borders.accent}`,
     text: {
       filled: colorIsBright(realColors["accent-500"])
         ? "text-accent-50 dark:text-accent-900"
@@ -60,7 +62,7 @@ export const colors: Record<keyof Colors, ColorProps> = {
     },
   },
   success: {
-    base: "bg-green-500 hover:bg-green-600 border-green-500",
+    base: `${bgColorsInteractive.success} ${borders.success}`,
     text: {
       filled: colorIsBright(realColors["green-500"])
         ? "text-accent-50"
@@ -70,7 +72,7 @@ export const colors: Record<keyof Colors, ColorProps> = {
     },
   },
   warn: {
-    base: "bg-yellow-500 hover:bg-yellow-600 border-yellow-500",
+    base: `${bgColorsInteractive.warn} ${borders.warn}`,
     text: {
       filled: colorIsBright(realColors["yellow-500"])
         ? "text-accent-50"
@@ -80,7 +82,7 @@ export const colors: Record<keyof Colors, ColorProps> = {
     },
   },
   danger: {
-    base: "bg-red-500 hover:bg-red-600 border-red-500",
+    base: `${bgColorsInteractive.danger} ${borders.danger}`,
     text: {
       filled: colorIsBright(realColors["red-500"])
         ? "text-accent-50"
