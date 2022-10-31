@@ -1,11 +1,11 @@
 import { Sizes } from "../types";
 
 export const gapsSmall: Sizes = {
-  xs: "gap-2",
-  sm: "gap-2.5",
-  md: "gap-2",
-  lg: "gap-3",
-  xl: "gap-4",
+  xs: "gap-0.5",
+  sm: "gap-1",
+  md: "gap-1.5",
+  lg: "gap-2",
+  xl: "gap-3",
 };
 
 export const gaps: Sizes = {
