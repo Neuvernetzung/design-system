@@ -41,7 +41,7 @@ type ConditionalButtonProps =
     }
   | { as: string; ariaLabel?: string };
 
-type IconButtonOwnProps = {
+export type IconButtonOwnProps = {
   variant?: keyof Variants;
   color?: keyof Colors;
   size?: keyof Sizes;

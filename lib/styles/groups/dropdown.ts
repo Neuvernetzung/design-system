@@ -1,7 +1,7 @@
 import cn from "classnames";
 
 import { Sizes } from "../../types";
-import { capSize } from "../../utils";
+import { capSize, minSize } from "../../utils";
 import {
   bgColors,
   borders,
@@ -30,7 +30,12 @@ const containerStyles = {
 export const getDropdownContainerStyles = ({
   size,
 }: DropdownContainerStyleProps) =>
-  cn(containerStyles.base, marginsYSmall[size], roundings[size], shadows[size]);
+  cn(
+    containerStyles.base,
+    marginsYSmall[size],
+    roundings[minSize(size, "md")],
+    shadows[minSize(size, "md")]
+  );
 
 type DropdownOptionsStyleProps = {
   size: keyof Sizes;
@@ -41,7 +46,7 @@ type DropdownOptionsStyleProps = {
 const optionStyles = {
   base: `w-full flex flex-row items-center justify-between select-none focus:outline-none ${bgColors.accent} ${transitionFast} ${textColors.accent}`,
   active: `${extendedBgColors.filledSubtile}`,
-  disabled: `${extendedBgColors.filledSubtile} ${extendedTextColors.subtile} cursor-not-allowed`,
+  disabled: `${extendedTextColors.subtile} cursor-not-allowed`,
 };
 
 export const getDropDownOptionsStyles = ({
@@ -80,4 +85,4 @@ const groupHeaderStyles = {
 export const getDropdownGroupHeaderStyles = ({
   size,
 }: DropdownGroupHeaderStyleProps) =>
-  cn(groupHeaderStyles.base, paddingsX[size]);
+  cn(groupHeaderStyles.base, paddingsX[capSize(size, "md")]);
