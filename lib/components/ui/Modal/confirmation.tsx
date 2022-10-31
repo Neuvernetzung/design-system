@@ -6,7 +6,7 @@ import { Colors } from "../../../types";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { Heading } from "../Typography";
-import { Modal } from ".";
+import { Modal } from "./modal";
 
 export type ConfirmationModalProps = {
   open: boolean;

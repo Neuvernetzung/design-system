@@ -95,7 +95,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
                 >
                   <span
                     className={cn(
-                      bgColors.accent,
+                      bgColors.white,
                       checked
                         ? "left-full -translate-x-[120%]"
                         : "left-0 translate-x-[20%]",

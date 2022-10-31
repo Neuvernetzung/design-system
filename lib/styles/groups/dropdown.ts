@@ -24,7 +24,7 @@ type DropdownContainerStyleProps = {
 };
 
 const containerStyles = {
-  base: `absolute focus:outline-none z-10 w-full max-h-60 min-w-[16rem] overflow-auto ${bgColors.accent} border ${borders.accent}`,
+  base: `absolute focus:outline-none z-10 w-full max-h-60 min-w-[16rem] overflow-auto ${bgColors.white} border ${borders.accent}`,
 };
 
 export const getDropdownContainerStyles = ({
@@ -44,7 +44,7 @@ type DropdownOptionsStyleProps = {
 };
 
 const optionStyles = {
-  base: `w-full flex flex-row items-center justify-between select-none focus:outline-none ${bgColors.accent} ${transitionFast} ${textColors.accent}`,
+  base: `w-full flex flex-row items-center justify-between select-none focus:outline-none ${bgColors.white} ${transitionFast} ${textColors.accent}`,
   active: `${extendedBgColors.filledSubtile}`,
   disabled: `${extendedTextColors.subtile} cursor-not-allowed`,
 };

@@ -16,6 +16,7 @@
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
     "@popperjs/core": "^2.11.6",
+    "@types/uuid": "^8.3.4",
     "classnames": "^2.3.2",
     "framer-motion": "^7.6.2",
     "lodash": "^4.17.21",
@@ -26,7 +27,9 @@
     "react-merge-refs": "^2.0.1",
     "react-polymorphic-types": "^2.0.0",
     "react-popper": "^2.3.0",
-    "swiper": "^8.4.4"
+    "swiper": "^8.4.4",
+    "uuid": "^9.0.0",
+    "zustand": "^4.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
@@ -48,7 +51,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.7",
-    "@types/node": "18.11.7",
+    "@types/node": "18.11.8",
     "@types/react": "^18.0.24",
     "autoprefixer": "^10.4.13",
     "axe-playwright": "^1.1.11",

@@ -2,8 +2,9 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
+import { Sizes as SizesType } from "../../../../types";
 import { colors, variants } from "../button";
-import { focuses, IconButton, sizes } from "./iconButton";
+import { focuses, IconButton } from "./iconButton";
 
 export default {
   title: "UI/Buttons/IconButton",
@@ -98,11 +99,11 @@ Focuses.parameters = {
 };
 
 export const Sizes = ({ ...args }) => {
-  const _size = Object.keys(sizes);
+  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Container>
-      {_size.map((size: any) => (
+      {sizes.map((size: any) => (
         <IconButton
           ariaLabel="home"
           size={size}
