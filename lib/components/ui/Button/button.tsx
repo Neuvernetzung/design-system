@@ -8,6 +8,7 @@ import type {
 } from "react-polymorphic-types";
 
 import {
+  adjustedTextColors,
   bgColorsInteractive,
   borders,
   focusBg,
@@ -15,10 +16,10 @@ import {
   minHeights,
   paddings,
   roundings,
+  textColors,
   transition,
 } from "../../../styles";
 import type { Colors, Focuses, Sizes } from "../../../types";
-import { colorIsBright, getThemeColors } from "../../../utils";
 import { Icon } from "../Icon";
 import { sizes as textSizes } from "../Typography/Text/text";
 
@@ -32,63 +33,45 @@ export const variants: Variants = {
 
 export type Variants = { filled: string; outline: string; ghost: string };
 
-export const realColors = {
-  "primary-500": getThemeColors("primary")[500],
-  "accent-500": getThemeColors("accent")[500],
-  "green-500": getThemeColors("green")[500],
-  "yellow-500": getThemeColors("yellow")[500],
-  "red-500": getThemeColors("red")[500],
-};
-
 export const colors: Record<keyof Colors, ColorProps> = {
   primary: {
     base: `${bgColorsInteractive.primary} ${borders.primary}`,
     text: {
-      filled: colorIsBright(realColors["primary-500"])
-        ? "text-accent-50"
-        : "text-accent-900",
-      outline: "text-primary-500",
-      ghost: "text-primary-500",
+      filled: adjustedTextColors.primary,
+      outline: textColors.primary,
+      ghost: textColors.primary,
     },
   },
   accent: {
-    base: `bg-accent-600 dark:bg-accent-300 hover:bg-accent-700 dark:hover:bg-accent-200 ${borders.accent}`,
+    base: `${bgColorsInteractive.accent} ${borders.accent}`,
     text: {
-      filled: colorIsBright(realColors["accent-500"])
-        ? "text-accent-50 dark:text-accent-900"
-        : "text-accent-900 dark:text-accent-50",
-      outline: "text-accent-600 dark:text-accent-300",
-      ghost: "text-accent-600 dark:text-accent-300",
+      filled: adjustedTextColors.accent,
+      outline: textColors.accent,
+      ghost: textColors.accent,
     },
   },
   success: {
     base: `${bgColorsInteractive.success} ${borders.success}`,
     text: {
-      filled: colorIsBright(realColors["green-500"])
-        ? "text-accent-50"
-        : "text-accent-900",
-      outline: "text-green-500",
-      ghost: "text-green-500",
+      filled: adjustedTextColors.success,
+      outline: textColors.success,
+      ghost: textColors.success,
     },
   },
   warn: {
     base: `${bgColorsInteractive.warn} ${borders.warn}`,
     text: {
-      filled: colorIsBright(realColors["yellow-500"])
-        ? "text-accent-50"
-        : "text-accent-900",
-      outline: "text-yellow-500",
-      ghost: "text-yellow-500",
+      filled: adjustedTextColors.warn,
+      outline: textColors.warn,
+      ghost: textColors.warn,
     },
   },
   danger: {
     base: `${bgColorsInteractive.danger} ${borders.danger}`,
     text: {
-      filled: colorIsBright(realColors["red-500"])
-        ? "text-accent-50"
-        : "text-accent-900",
-      outline: "text-red-500",
-      ghost: "text-red-500",
+      filled: adjustedTextColors.danger,
+      outline: textColors.danger,
+      ghost: textColors.danger,
     },
   },
 };
@@ -96,14 +79,6 @@ export const colors: Record<keyof Colors, ColorProps> = {
 type ColorProps = {
   base: string;
   text: Variants;
-};
-
-export const sizes: Sizes = {
-  xs: `${paddings.xs} ${roundings.xs} ${minHeights.xs}`,
-  sm: `${paddings.sm} ${roundings.sm} ${minHeights.sm}`,
-  md: `${paddings.md} ${roundings.md} ${minHeights.md}`,
-  lg: `${paddings.lg} ${roundings.lg} ${minHeights.lg}`,
-  xl: `${paddings.xl} ${roundings.xl} ${minHeights.xl}`,
 };
 
 export const focuses: Focuses = {
@@ -170,7 +145,9 @@ export const Button: PolymorphicForwardRefExoticComponent<
           styles.base,
           transition,
           variants[variant],
-          sizes[size],
+          paddings[size],
+          roundings[size],
+          minHeights[size],
           textSizes[size],
           !disabled && colors[color]?.base,
           !disabled && colors[color]?.text[variant],

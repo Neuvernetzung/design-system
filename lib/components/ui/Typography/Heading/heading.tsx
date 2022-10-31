@@ -12,20 +12,10 @@ import type {
   PolymorphicPropsWithRef,
 } from "react-polymorphic-types";
 
+import { textSizes } from "../../../../styles";
 import type { Colors, ExtendedSizes } from "../../../../types";
 
-export const sizes: Required<ExtendedSizes> = {
-  xs: "text-xs",
-  sm: "text-sm",
-  md: "text-md",
-  lg: "text-lg",
-  xl: "text-xl",
-  "2xl": "sm:text-2xl text-xl",
-  "3xl": "sm:text-3xl text-2xl",
-  "4xl": "md:text-4xl text-3xl",
-  "5xl": "lg:text-5xl md:text-4xl text-3xl",
-  "6xl": "lg:text-6xl md:text-5xl text-4xl",
-};
+export const sizes: Required<ExtendedSizes> = textSizes;
 
 export const colors = {
   primary: "text-primary-500",

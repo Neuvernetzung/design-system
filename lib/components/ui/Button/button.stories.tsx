@@ -2,7 +2,8 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Button, colors, focuses, sizes, variants } from "./button";
+import { Sizes as SizesType } from "../../../types";
+import { Button, colors, focuses, variants } from "./button";
 
 export default {
   title: "UI/Buttons/Button",
@@ -85,11 +86,11 @@ Focuses.parameters = {
 };
 
 export const Sizes = ({ ...args }) => {
-  const _size = Object.keys(sizes);
+  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Container>
-      {_size.map((size: any) => (
+      {sizes.map((size: any) => (
         <Button size={size} key={size} {...args}>
           {size}
         </Button>

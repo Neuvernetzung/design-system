@@ -99,7 +99,7 @@ export const Modal = ({
                   sizes[size],
                   roundings.lg,
                   shadows.xl,
-                  bgColors.accent,
+                  bgColors.white,
                   paddingsEvenly.md
                 )}
               >

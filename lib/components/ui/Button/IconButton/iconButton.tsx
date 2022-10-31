@@ -14,18 +14,10 @@ import {
   roundings,
   transition,
 } from "../../../../styles";
-import { Colors, Focuses, Sizes } from "../../../../types";
+import { ExtendedColors, Focuses, Sizes } from "../../../../types";
 import { Icon } from "../../Icon";
 import { sizes as textSizes } from "../../Typography/Text/text";
 import { type Variants, colors, styles, variants } from "../button";
-
-export const sizes: Sizes = {
-  xs: `${roundings.xs} ${minHeights.xs}`,
-  sm: `${roundings.sm} ${minHeights.sm}`,
-  md: `${roundings.md} ${minHeights.md}`,
-  lg: `${roundings.lg} ${minHeights.lg}`,
-  xl: `${roundings.xl} ${minHeights.xl}`,
-};
 
 export const focuses: Focuses = {
   ring: focusRing,
@@ -43,7 +35,7 @@ type ConditionalButtonProps =
 
 export type IconButtonOwnProps = {
   variant?: keyof Variants;
-  color?: keyof Colors;
+  color?: keyof ExtendedColors;
   size?: keyof Sizes;
   focus?: keyof Focuses;
   rounded?: boolean;
@@ -90,7 +82,8 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
           transition,
           focuses[focus][color],
           variants[variant],
-          sizes[size],
+          roundings[size],
+          minHeights[size],
           textSizes[size],
           !disabled && colors[color]?.base,
           !disabled && colors[color]?.text[variant],

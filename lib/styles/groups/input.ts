@@ -45,7 +45,7 @@ type VariantProps = {
 
 export const inputVariants: Record<keyof InputVariants, VariantProps> = {
   outline: {
-    base: `${bgColors.accent} border ${placeholder.outline}`,
+    base: `${bgColors.white} border ${placeholder.outline}`,
     default: `${bordersInteractive.accent}`,
     error: `${bordersInteractive.danger}`,
     disabled: `${borders.accent} ${extendedBgColors.filledSubtile}`,
