@@ -14,6 +14,7 @@ export * from "./Radio";
 export * from "./Select";
 export * from "./Switch";
 export * from "./Tabs";
+export * from "./Tag";
 export * from "./Textarea";
 export * from "./Toast";
 export * from "./Typography";
