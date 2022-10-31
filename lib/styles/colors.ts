@@ -51,6 +51,7 @@ export const adjustedTextColors: Colors = {
 export const bgColors: Colors = {
   primary: "bg-primary-500",
   white: "bg-accent-50 dark:bg-accent-900",
+  black: "bg-accent-900 dark:bg-accent-50",
   accent: "bg-accent-600",
   success: "bg-green-500",
   warn: "bg-yellow-500",
@@ -66,7 +67,7 @@ export const extendedBgColors: ExtendedColors = {
 export const bgColorsInteractive: Colors = {
   primary: `${bgColors.primary} hover:bg-primary-600 dark:hover:bg-primary-400`,
   white: `${bgColors.white} hover:bg-accent-100 dark:hover:bg-accent-800`,
-  accent: `${bgColors.accent} hover:bg-accent-600 dark:hover:bg-accent-400`,
+  accent: `${bgColors.accent} hover:bg-accent-700 dark:hover:bg-accent-500`,
   success: `${bgColors.success} hover:bg-green-600 dark:hover:bg-green-400`,
   warn: `${bgColors.warn} hover:bg-yellow-600 dark:hover:bg-yellow-400`,
   danger: `${bgColors.danger} hover:bg-red-600 dark:hover:bg-red-400`,

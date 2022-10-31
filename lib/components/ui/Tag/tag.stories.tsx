@@ -6,7 +6,7 @@ import { Tag, variants } from "./tag";
 import { Cog6ToothIcon } from "../../icons";
 
 export default {
-  title: "UI/DataDisplay/Tag",
+  title: "UI/Data Display/Tag",
   component: Tag,
 } as Meta;
 
