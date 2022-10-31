@@ -17,4 +17,5 @@ export * from "./Tabs";
 export * from "./Tag";
 export * from "./Textarea";
 export * from "./Toast";
+export * from "./Tooltip";
 export * from "./Typography";

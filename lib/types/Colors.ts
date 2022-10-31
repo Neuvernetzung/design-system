@@ -2,6 +2,7 @@ export type Colors = {
   primary: any;
   accent: any;
   white?: any;
+  black?: any;
   success: any;
   warn: any;
   danger: any;
