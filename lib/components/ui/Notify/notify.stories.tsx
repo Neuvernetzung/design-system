@@ -78,3 +78,9 @@ export const Default = () => (
     </Container>
   </OverlayProvider>
 );
+
+Default.parameters = {
+  a11y: {
+    disable: true,
+  },
+};

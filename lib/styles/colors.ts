@@ -51,7 +51,7 @@ export const adjustedTextColors: Colors = {
 export const bgColors: Colors = {
   primary: "bg-primary-500",
   white: "bg-accent-50 dark:bg-accent-900",
-  accent: "bg-accent-500",
+  accent: "bg-accent-600",
   success: "bg-green-500",
   warn: "bg-yellow-500",
   danger: "bg-red-500",
