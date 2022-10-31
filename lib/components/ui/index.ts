@@ -9,6 +9,7 @@ export * from "./Link";
 export * from "./Menu";
 export * from "./Modal";
 export * from "./Notify";
+export * from "./Popover";
 export * from "./Radio";
 export * from "./Select";
 export * from "./Switch";
