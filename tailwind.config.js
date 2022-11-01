@@ -1,14 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
-const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-  content: ["./lib/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/lib/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
     fontFamily: {
-      heading: ["Oswald", ...defaultTheme.fontFamily.sans],
-      body: ["Inter", ...defaultTheme.fontFamily.sans],
+      heading: [
+        "Oswald",
+        ...require("tailwindcss/defaultTheme").fontFamily.sans,
+      ],
+      body: ["Inter", ...require("tailwindcss/defaultTheme").fontFamily.sans],
     },
     extend: {
       colors: {
@@ -49,9 +50,9 @@ module.exports = {
   },
   plugins: [
     require("@headlessui/tailwindcss"),
-    import("@tailwindcss/forms"),
-    import("@tailwindcss/typography"),
-    plugin(({ addVariant }) => {
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+    require("tailwindcss/plugin")(({ addVariant }) => {
       addVariant("not-first-of-type", "&>*:not(:first-of-type)");
       addVariant("not-last-of-type", "&>*:not(:last-of-type)");
     }),

@@ -1,7 +1,7 @@
 {
   "name": "design-system",
   "version": "0.0.0",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "private": true,
   "resolutions": {
     "webpack": "^5"
@@ -10,7 +10,9 @@
     "lint": "eslint ./ --fix",
     "test": "test-storybook",
     "dev": "start-storybook -p 6006",
-    "build": "build-storybook"
+    "build-storybook": "build-storybook",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc && cp package.json README.md ./dist"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
@@ -35,7 +37,6 @@
     "zustand": "^4.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.6",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@semantic-release/changelog": "^6.0.1",

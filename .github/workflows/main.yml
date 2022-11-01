@@ -27,7 +27,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Storybook builden
-        run: npm run build --quiet
+        run: npm run build-storybook --quiet
 
       - name: Storybook starken und testen
         run: |
@@ -35,7 +35,11 @@ jobs:
             "npx http-server storybook-static --port 6006 --silent" \
             "npx wait-on tcp:6006 && npm run test"
 
+      - name: Build
+        run: npm run build
+
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
