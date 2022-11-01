@@ -42,4 +42,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        run: rm .npmrc && npx semantic-release # .npmrc vorher löschen, da sonst NPM_TOKEN überschrieben wird, obwohl in .npmrc nicht vorhanden.
