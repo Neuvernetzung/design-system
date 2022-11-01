@@ -1,6 +1,7 @@
 import isFunction from "lodash/isFunction";
 import resolveConfig from "tailwindcss/resolveConfig";
 
+import type { Config } from "tailwindcss";
 import tailwindConfig from "../../../tailwind.config";
 
 const asColorObject = (
@@ -11,7 +12,7 @@ const asColorObject = (
 };
 
 export const getThemeColors = (color?: string) => {
-  const { theme } = resolveConfig(tailwindConfig as any);
+  const { theme } = resolveConfig(tailwindConfig as Config);
 
   if (color) return asColorObject(theme?.colors)[color];
 
