@@ -9,3 +9,5 @@ CHANGELOG.md
 **/**.stories.**
 public
 commitlint.config.ts
+storybook-static
+alt
