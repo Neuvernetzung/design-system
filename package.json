@@ -1,5 +1,5 @@
 {
-  "name": "design-system",
+  "name": "@neuvernetzung/design-system",
   "version": "1.0.0-pre-1.1",
   "main": "dist/index.js",
   "resolutions": {
