@@ -1,3 +1,54 @@
+# [1.0.0-pre-1.9](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.8...v1.0.0-pre-1.9) (2022-11-02)
+
+
+### Bug Fixes
+
+* Importe fixen und Console.time zu rewrite hinzufügen [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([6175a29](https://github.com/Neuvernetzung/design-system/commit/6175a2933a1ecd8c17c08ca653c219863040e2d6))
+
+# [1.0.0-pre-1.8](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.7...v1.0.0-pre-1.8) (2022-11-02)
+
+
+### Bug Fixes
+
+* **input:** CSS Module ersetzen durch inline Styles [#87](https://github.com/Neuvernetzung/design-system/issues/87) ([afec86b](https://github.com/Neuvernetzung/design-system/commit/afec86bd562e543faf83e31878cbb5d0304d8c93))
+
+# [1.0.0-pre-1.7](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.6...v1.0.0-pre-1.7) (2022-11-02)
+
+
+### Bug Fixes
+
+* Main Package erweitert [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([d84f59a](https://github.com/Neuvernetzung/design-system/commit/d84f59aa60c307781fb597e48a0e1a87d6942121))
+
+# [1.0.0-pre-1.6](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.5...v1.0.0-pre-1.6) (2022-11-02)
+
+
+### Bug Fixes
+
+* Files zu package.json hinzugefügt [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([3c2df81](https://github.com/Neuvernetzung/design-system/commit/3c2df818e5ff8c0cb206cd63a03ee98a0469f586))
+
+# [1.0.0-pre-1.5](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.4...v1.0.0-pre-1.5) (2022-11-02)
+
+
+### Bug Fixes
+
+* pkgRoot dist zu plugin hinzugefügt [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([7d14568](https://github.com/Neuvernetzung/design-system/commit/7d14568ed738a67984f7724b51ade3e35bbb1342))
+
+# [1.0.0-pre-1.4](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.3...v1.0.0-pre-1.4) (2022-11-02)
+
+
+### Bug Fixes
+
+* Npm ignore updaten [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([8df8880](https://github.com/Neuvernetzung/design-system/commit/8df8880efe9f1d2eb25c34b4426561953254a7f2))
+* Package Root definieren [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([f4772c3](https://github.com/Neuvernetzung/design-system/commit/f4772c399575c2d57d3032e42a30b6ea486d8b3f))
+* pkgRoot verschieben [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([f89e697](https://github.com/Neuvernetzung/design-system/commit/f89e6970394257911c346f8b488cf434424637e9))
+
+# [1.0.0-pre-1.3](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.2...v1.0.0-pre-1.3) (2022-11-02)
+
+
+### Bug Fixes
+
+* Npm ignore updaten [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([a514833](https://github.com/Neuvernetzung/design-system/commit/a514833391bbe50a5eebc8025b83064c287bc5b9))
+* Package Root definieren [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([8154085](https://github.com/Neuvernetzung/design-system/commit/815408585ad523af47aebb440e5510a7bf4fc217))
 
 # [1.0.0-pre-1.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.1...v1.0.0-pre-1.2) (2022-11-02)
 
