@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ["./src/lib/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/lib/**/*.{ts,tsx}"],
   darkMode: "class",
   theme: {
     fontFamily: {
@@ -50,7 +50,6 @@ module.exports = {
   },
   plugins: [
     require("@headlessui/tailwindcss"),
-    require("@tailwindcss/forms"),
     require("@tailwindcss/typography"),
     require("tailwindcss/plugin")(({ addVariant }) => {
       addVariant("not-first-of-type", "&>*:not(:first-of-type)");

@@ -51,7 +51,7 @@ export const inputVariants: Record<keyof InputVariants, VariantProps> = {
     disabled: `${borders.accent} ${extendedBgColors.filledSubtile}`,
   },
   filled: {
-    base: ``,
+    base: `border-none ${placeholder.filled}`,
     default: `${extendedBgColorsInteractive.filled}`,
     error: `${extendedBgColorsInteractive.danger} ${placeholder.filledError}`,
     disabled: `${extendedBgColors.filled}`,
@@ -59,7 +59,7 @@ export const inputVariants: Record<keyof InputVariants, VariantProps> = {
 };
 
 const styles = {
-  inputBase: `outline-none w-full ${textColors.accent}`,
+  inputBase: `appearance-none outline-none w-full ${textColors.accent}`,
 };
 
 export const getInputStyles = ({

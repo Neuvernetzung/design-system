@@ -17,7 +17,6 @@ import {
   PatternRule,
   RequiredRule,
 } from "../Form";
-import s from "./input.module.css";
 import { InputAddon } from "./InputAddon";
 import type { InputAddonProps } from "./InputAddon/inputAddon";
 import { InputElement } from "./InputElement";
@@ -28,6 +27,7 @@ export const variants = inputVariants;
 
 export type InputProps = {
   name: string;
+  type?: "text" | "number" | "password" | "url";
   label?: string;
   helper?: any;
   size?: keyof Sizes;
@@ -63,6 +63,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       name,
+      type = "text",
       label,
       helper,
       size = "md",
@@ -118,10 +119,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             />
           )}
           <input
+            type={type}
             id={name}
             ref={ref}
+            onWheel={(e: any) =>
+              e.target?.type === "number" && e.target?.blur()
+            } // damit beim scrollen die zahl nicht versehentlich verändert wird
             className={cn(
-              s.Input,
               getInputStyles({
                 size,
                 variant,
@@ -168,6 +172,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = "Input";
 
 Input.defaultProps = {
+  type: "text",
   label: undefined,
   helper: undefined,
   leftAddon: undefined,
