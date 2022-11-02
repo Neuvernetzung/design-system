@@ -1,6 +1,6 @@
 {
   "name": "@neuvernetzung/design-system",
-  "version": "1.0.0-pre-1.1",
+  "version": "0.0.0-development",
   "main": "dist/index.js",
   "private": false,
   "resolutions": {
@@ -12,7 +12,8 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && cp package.json README.md ./dist"
+    "build": "npm run clean && tsc && cp package.json README.md ./dist",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
@@ -100,5 +101,12 @@
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Neuvernetzung/design-system.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
