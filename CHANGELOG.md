@@ -1,3 +1,10 @@
+# [1.0.0-pre-1.3](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.2...v1.0.0-pre-1.3) (2022-11-02)
+
+
+### Bug Fixes
+
+* Npm ignore updaten [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([a514833](https://github.com/Neuvernetzung/design-system/commit/a514833391bbe50a5eebc8025b83064c287bc5b9))
+* Package Root definieren [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([8154085](https://github.com/Neuvernetzung/design-system/commit/815408585ad523af47aebb440e5510a7bf4fc217))
 
 # [1.0.0-pre-1.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.1...v1.0.0-pre-1.2) (2022-11-02)
 
