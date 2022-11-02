@@ -202,3 +202,28 @@ export const Disabled = ({ ...args }) => {
     </Form>
   );
 };
+
+export const Types = ({ ...args }) => {
+  const formMethods = useForm();
+
+  const types: any = ["text", "number", "password", "url"];
+
+  return (
+    <Form
+      formMethods={formMethods}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      {types.map((type) => (
+        <Input
+          key={type}
+          type={type}
+          formMethods={formMethods}
+          name={`input_${type}`}
+          placeholder={type}
+          {...args}
+        />
+      ))}
+    </Form>
+  );
+};
