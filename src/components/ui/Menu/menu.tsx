@@ -113,7 +113,6 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                 onClick,
                 icon,
                 color,
-                ...props
               }: ItemProps,
               i
             ) => {
@@ -135,7 +134,6 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                           onClick: _onClick,
                           icon: _icon,
                           color: _color,
-                          ..._props
                         }: ItemProps,
                         _i
                       ) => {

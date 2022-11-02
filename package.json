@@ -15,7 +15,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsc && node scripts/fix-esm-import-paths.mjs",
     "semantic-release": "semantic-release"
   },
   "dependencies": {

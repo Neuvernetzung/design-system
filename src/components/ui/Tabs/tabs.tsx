@@ -71,7 +71,7 @@ export const TabList = ({
   color,
 }: TabListProps) => (
   <Tab.List className={cn("flex flex-row", gaps[size], listClassName)}>
-    {items.map(({ title, disabled }: ItemProps, i) => (
+    {items.map(({ title, disabled }: ItemProps) => (
       <TabButton
         key={`tab_button_${title}`}
         title={title}

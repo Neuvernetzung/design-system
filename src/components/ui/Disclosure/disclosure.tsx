@@ -2,7 +2,7 @@ import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
 import cn from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import isString from "lodash/isString";
-import { ForwardedRef, forwardRef, memo, ReactNode } from "react";
+import { forwardRef, memo, ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
 import { Sizes } from "../../../types";
@@ -27,10 +27,7 @@ type ItemProps = {
 export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
 
 export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
-  (
-    { size = "md", items = [], closeOthers, className, ...props },
-    ref: ForwardedRef<Element>
-  ) => {
+  ({ size = "md", items = [], closeOthers, className, ...props }) => {
     const MotionPanel = motion(HeadlessDisclosure.Panel);
     const MotionIcon = motion(Icon);
 
