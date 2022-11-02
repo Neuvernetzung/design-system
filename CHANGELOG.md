@@ -1,3 +1,10 @@
+# [1.0.0-pre-1.9](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.8...v1.0.0-pre-1.9) (2022-11-02)
+
+
+### Bug Fixes
+
+* Importe fixen und Console.time zu rewrite hinzufügen [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([6175a29](https://github.com/Neuvernetzung/design-system/commit/6175a2933a1ecd8c17c08ca653c219863040e2d6))
+
 # [1.0.0-pre-1.8](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.7...v1.0.0-pre-1.8) (2022-11-02)
 
 
