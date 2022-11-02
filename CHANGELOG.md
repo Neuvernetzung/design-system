@@ -1,3 +1,10 @@
+# [1.0.0-pre-1.6](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.5...v1.0.0-pre-1.6) (2022-11-02)
+
+
+### Bug Fixes
+
+* Files zu package.json hinzugefügt [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([3c2df81](https://github.com/Neuvernetzung/design-system/commit/3c2df818e5ff8c0cb206cd63a03ee98a0469f586))
+
 # [1.0.0-pre-1.5](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.4...v1.0.0-pre-1.5) (2022-11-02)
 
 
