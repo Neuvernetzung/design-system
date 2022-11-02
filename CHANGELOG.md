@@ -1,3 +1,9 @@
+
+# [1.0.0-pre-1.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.1...v1.0.0-pre-1.2) (2022-11-02)
+
+
+### Bug Fixes
+
 # 1.0.0-pre-1.1 (2022-11-02)
 
 
