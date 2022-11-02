@@ -1,5 +1,5 @@
 node_modules
-src
+./src
 .next
 .github
 .husky
@@ -11,3 +11,4 @@ public
 commitlint.config.ts
 storybook-static
 alt
+**/**.tsbuildinfo
