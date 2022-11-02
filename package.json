@@ -15,7 +15,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsup src/index.tsx --format esm,cjs --dts --external react",
+    "build": "npm run clean && tsup src --format esm,cjs --dts --external react",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
