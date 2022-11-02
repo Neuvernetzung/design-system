@@ -15,9 +15,8 @@
     "test": "test-storybook",
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "rm -rf dist/ && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsup src/index.tsx --format esm,cjs --dts --external react",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
@@ -72,6 +71,7 @@
     "storybook-css-modules-preset": "^1.1.1",
     "tailwindcss": "^3.2.1",
     "tsconfig": "github:Neuvernetzung/tsconfig",
+    "tsup": "^6.3.0",
     "typescript": "4.8.4",
     "webpack": "^5.74.0"
   },
