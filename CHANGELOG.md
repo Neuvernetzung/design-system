@@ -1,3 +1,10 @@
+# [1.0.0-pre-1.5](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.4...v1.0.0-pre-1.5) (2022-11-02)
+
+
+### Bug Fixes
+
+* pkgRoot dist zu plugin hinzugefügt [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([7d14568](https://github.com/Neuvernetzung/design-system/commit/7d14568ed738a67984f7724b51ade3e35bbb1342))
+
 # [1.0.0-pre-1.4](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.3...v1.0.0-pre-1.4) (2022-11-02)
 
 
