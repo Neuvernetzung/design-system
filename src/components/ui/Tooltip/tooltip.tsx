@@ -3,13 +3,7 @@ import cn from "classnames";
 import { memo, ReactNode, useState } from "react";
 import { usePopper } from "react-popper";
 
-import {
-  bgColors,
-  extendedTextColors,
-  paddingsSmall,
-  roundings,
-  shadows,
-} from "../../../styles";
+import { bgColors, paddingsSmall, roundings, shadows } from "../../../styles";
 import { Sizes } from "../../../types";
 import { Text } from "../Typography";
 

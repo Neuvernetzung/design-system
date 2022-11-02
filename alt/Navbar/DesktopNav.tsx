@@ -1,6 +1,6 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
-import { ChevronRightIcon } from "../../lib/components/icons";
+import { ChevronRightIcon } from "../../components/icons";
 import { Button } from "../Button";
 import { Box, Flex, Stack } from "../Containers";
 import { Icon } from "../Icon";
