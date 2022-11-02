@@ -77,7 +77,12 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/github",
-    "@semantic-release/npm",
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist"
+      }
+    ],
     "@semantic-release/git"
   ],
   "release": {
@@ -92,7 +97,6 @@
       "@semantic-release/changelog",
       "@semantic-release/npm",
       {
-        "pkgRoot": "dist",
         "path": "@semantic-release/git",
         "assets": [
           "package.json",
