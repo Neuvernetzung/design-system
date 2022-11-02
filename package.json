@@ -1,6 +1,6 @@
 {
   "name": "@neuvernetzung/design-system",
-  "version": "1.0.0-pre-1.6",
+  "version": "1.0.0-pre-1.7",
   "main": "dist/index.js",
   "files": [
     "/dist/*",
