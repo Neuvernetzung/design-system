@@ -1,9 +1,8 @@
+
 # [1.0.0-pre-1.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.1...v1.0.0-pre-1.2) (2022-11-02)
 
 
 ### Bug Fixes
-
-* Npm ignore updaten [#74](https://github.com/Neuvernetzung/design-system/issues/74) ([ef535dd](https://github.com/Neuvernetzung/design-system/commit/ef535dd026854d87561ade805f731ffc987dab17))
 
 # 1.0.0-pre-1.1 (2022-11-02)
 
