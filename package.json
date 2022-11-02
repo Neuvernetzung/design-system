@@ -2,6 +2,9 @@
   "name": "@neuvernetzung/design-system",
   "version": "1.0.0-pre-1.1",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "private": false,
   "resolutions": {
     "webpack": "^5"
@@ -76,12 +79,7 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/github",
-    [
-      "@semantic-release/npm",
-      {
-        "pkgRoot": "dist"
-      }
-    ],
+    "@semantic-release/npm",
     "@semantic-release/git"
   ],
   "release": {
