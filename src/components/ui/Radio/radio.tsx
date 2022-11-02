@@ -1,6 +1,5 @@
 import cn from "classnames";
 import get from "lodash/get";
-import isArray from "lodash/isArray";
 import { ElementType, memo } from "react";
 
 import {

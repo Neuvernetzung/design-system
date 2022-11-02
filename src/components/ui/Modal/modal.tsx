@@ -5,7 +5,6 @@ import { Fragment, MutableRefObject, ReactNode } from "react";
 
 import {
   bgColors,
-  extendedBgColors,
   paddings,
   paddingsEvenly,
   pagePaddings,

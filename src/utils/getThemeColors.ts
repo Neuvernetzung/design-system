@@ -2,7 +2,7 @@ import isFunction from "lodash/isFunction";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 import type { Config } from "tailwindcss";
-import tailwindConfig from "../../../tailwind.config";
+import tailwindConfig from "../../tailwind.config";
 
 const asColorObject = (
   input: any

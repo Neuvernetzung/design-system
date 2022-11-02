@@ -6,7 +6,7 @@ import {
   MoonIcon,
   SunIcon,
   XMarkIcon,
-} from "../../lib/components/icons";
+} from "../../components/icons";
 import { useColorModeValue, useDisclosure } from "../../utils";
 import { IconButton } from "../Button";
 import { Collapse } from "../Collapse";
