@@ -3,8 +3,7 @@
   "version": "1.0.0-pre-1.7",
   "main": "dist/index.js",
   "files": [
-    "/dist/*",
-    "/tailwind.config.js"
+    "/dist/*"
   ],
   "private": false,
   "resolutions": {
@@ -24,7 +23,6 @@
     "@headlessui/tailwindcss": "^0.1.1",
     "@heroicons/react": "^2.0.12",
     "@popperjs/core": "^2.11.6",
-    "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.7",
     "@types/uuid": "^8.3.4",
     "classnames": "^2.3.2",
