@@ -1,3 +1,10 @@
+# [1.0.0-pre-1.8](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.7...v1.0.0-pre-1.8) (2022-11-02)
+
+
+### Bug Fixes
+
+* **input:** CSS Module ersetzen durch inline Styles [#87](https://github.com/Neuvernetzung/design-system/issues/87) ([afec86b](https://github.com/Neuvernetzung/design-system/commit/afec86bd562e543faf83e31878cbb5d0304d8c93))
+
 # [1.0.0-pre-1.7](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-1.6...v1.0.0-pre-1.7) (2022-11-02)
 
 
