@@ -6,6 +6,7 @@
     "allowJs": true,
     "incremental": true,
     "resolveJsonModule": true,
+    "rootDir": "./",
     "outDir": "dist"
   }
 }
