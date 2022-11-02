@@ -105,5 +105,7 @@ const DEBUG = false;
 if (DEBUG) {
   replace("./path/to/an/esm/module/index.ts", "./out.ts", defaultOptions);
 } else {
+  console.time("Rewrote imports in");
   await run("./dist/", defaultOptions);
+  console.timeEnd("Rewrote imports in");
 }
