@@ -3,7 +3,7 @@
   "version": "1.0.0-pre-1.2",
   "main": "dist/index.js",
   "files": [
-    "/dist/*"
+    "dist"
   ],
   "private": false,
   "resolutions": {
@@ -15,7 +15,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && node scripts/fix-esm-import-paths.mjs",
+    "build": "npm run clean && tsc",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
@@ -73,7 +73,6 @@
     "typescript": "4.8.4",
     "webpack": "^5.74.0"
   },
-  "pkgRoot": "dist",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
