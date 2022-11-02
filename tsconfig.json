@@ -1,7 +1,13 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["src"],
-  "exclude": ["dist", "node_modules", "**/**.stories.**"],
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": [
+    "dist",
+    "alt",
+    "node_modules",
+    "**/**.stories.**",
+    "commitlint.config.ts"
+  ],
   "compilerOptions": {
     "allowJs": true,
     "incremental": true,

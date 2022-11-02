@@ -3,7 +3,8 @@
   "version": "1.0.0-pre-1.6",
   "main": "dist/index.js",
   "files": [
-    "dist"
+    "/dist/*",
+    "/tailwind.config.js"
   ],
   "private": false,
   "resolutions": {
@@ -15,7 +16,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && cp package.json README.md ./dist",
+    "build": "npm run clean && tsc",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
