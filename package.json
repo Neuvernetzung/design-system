@@ -15,9 +15,8 @@
     "test": "test-storybook",
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "rm -rf dist/ && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc --module commonjs",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
