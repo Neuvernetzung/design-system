@@ -1,3 +1,11 @@
+# [1.0.0-pre-2.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-2.1...v1.0.0-pre-2.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* Lodash Pfade .js angehängt ([884d807](https://github.com/Neuvernetzung/design-system/commit/884d8078a81bff61dbc2b382a5f59cec3e061241))
+* Type Module entfernt ([c4d75a7](https://github.com/Neuvernetzung/design-system/commit/c4d75a7e09162bfd69ecf70ed20105e6c4797a13))
+
 # 1.0.0-pre-2.1 (2022-11-03)
 
 
