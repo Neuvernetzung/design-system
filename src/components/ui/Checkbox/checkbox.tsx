@@ -1,6 +1,6 @@
 import cn from "classnames";
-import get from "lodash/get";
-import isArray from "lodash/isArray";
+import get from "lodash/get.js";
+import isArray from "lodash/isArray.js";
 import { ElementType, memo } from "react";
 
 import {

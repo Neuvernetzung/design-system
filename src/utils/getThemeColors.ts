@@ -1,4 +1,4 @@
-import isFunction from "lodash/isFunction";
+import isFunction from "lodash/isFunction.js";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 import type { Config } from "tailwindcss";

@@ -6,6 +6,7 @@
   "files": [
     "dist"
   ],
+  "type": "module",
   "private": false,
   "resolutions": {
     "webpack": "^5"
