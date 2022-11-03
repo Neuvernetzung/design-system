@@ -49,7 +49,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("@headlessui/tailwindcss"),
     require("@tailwindcss/typography"),
     require("tailwindcss/plugin")(({ addVariant }) => {
       addVariant("not-first-of-type", "&>*:not(:first-of-type)");

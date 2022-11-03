@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import cn from "classnames";
-import isArray from "lodash/isArray.js";
+import isArray from "lodash/isArray";
 import {
   createRef,
   ForwardedRef,
@@ -13,7 +13,6 @@ import {
   useState,
 } from "react";
 import { Controller } from "react-hook-form";
-import { mergeRefs } from "react-merge-refs";
 import { usePopper } from "react-popper";
 
 import {
@@ -219,6 +218,20 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       isArray(selected) ? selected.includes(value) : selected === value;
     const _hideActive = multipleStyle !== "indicator" ? hideActive : false;
 
+    function mergeRefs<T = any>(
+      refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>
+    ): React.RefCallback<T> {
+      return (value) => {
+        refs.forEach((ref) => {
+          if (typeof ref === "function") {
+            ref(value);
+          } else if (ref != null) {
+            (ref as React.MutableRefObject<T | null>).current = value;
+          }
+        });
+      };
+    }
+
     return (
       <Controller
         control={formMethods.control}
@@ -240,205 +253,221 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
               multiple={multiple}
               disabled={disabled}
             >
-              <div className="relative">
-                <Listbox.Button
-                  className={cn(
-                    getInputStyles({ size, variant, error: !!error, disabled }),
-                    "flex justify-start items-center flex-wrap",
-                    gapsSmall[size],
-                    buttonClassName
-                  )}
-                  style={{
-                    paddingRight: rightElementWidth,
-                  }}
-                  ref={mergeRefs([buttonRef, ref, setReferenceElement])}
-                  onKeyUp={(e: any) => handleLeftAndRightArrow(e)}
-                >
-                  {!multiple
-                    ? selected
-                      ? flattenOptions?.find(
-                          (option) => returnValue(option) === selected
-                        )?.children
-                      : defaultMessage
-                    : selected.length > 0
-                    ? selected?.map((value: OptionProps, i: number) => (
-                        <Tag
-                          ref={removeButtonRefs[i].ref}
-                          size={size}
-                          onClick={(e: Event) => {
-                            e.stopPropagation();
-                            onChange(handleRemove(i));
-                          }}
-                          onKeyUp={(e: KeyboardEvent<HTMLButtonElement>) => {
-                            e.stopPropagation();
-                            handleTabAndArrowsOnRemoveTag(e);
-                            handleLeftAndRightArrow(e, i);
-                            if (e.key === "Backspace" || e.key === "Delete") {
-                              onChange(handleRemove(i));
-                              if (removeButtonRefs.length === 0)
-                                return buttonRef.current?.focus();
-                              if (!removeButtonRefs[i])
-                                return removeButtonRefs[
-                                  i - 1
-                                ].ref.current.focus();
-                            }
-                          }}
-                          key={`select_tag_${i}`}
-                        >
-                          {
-                            flattenOptions?.find(
-                              (option) => returnValue(option) === value
-                            )?.children
-                          }
-                        </Tag>
-                      ))
-                    : defaultMessage}
-                </Listbox.Button>
-                <span
-                  ref={rightElementRef}
-                  className={cn(
-                    "pointer-events-none absolute inset-y-0 right-0 flex flex-row items-center divide-x",
-                    divides.accent
-                  )}
-                >
-                  {removeAll && (
-                    <IconButton
-                      size={iconButtonSizes[size]}
-                      variant="ghost"
-                      ariaLabel={`delete_select_${name}`}
-                      icon={XMarkIcon}
-                      className={cn("pointer-events-auto", marginsXSmall[size])}
-                      onClick={() => onChange(handleRemoveAll())}
-                      disabled={disabled}
-                    />
-                  )}
-                  <div>
-                    <IconButton
-                      as="span"
-                      size={iconButtonSizes[size]}
-                      icon={ChevronUpDownIcon}
-                      variant="ghost"
-                      className={cn(
-                        "pointer-events-none ui-open:rotate-180 flex max-h-6",
-                        marginsXSmall[size],
-                        transition
-                      )}
-                    />
-                  </div>
-                </span>
-                <Listbox.Options
-                  className={cn(
-                    getDropdownContainerStyles({ size }),
-                    optionsClassName
-                  )}
-                  ref={setPopperElement}
-                  style={styles.popper}
-                  {...attributes.popper}
-                >
-                  {options?.map(
-                    (
-                      {
-                        children,
-                        value,
+              {({ open }) => (
+                <div className="relative">
+                  <Listbox.Button
+                    className={cn(
+                      getInputStyles({
+                        size,
+                        variant,
+                        error: !!error,
                         disabled,
-                        options: _options,
-                        ...props
-                      }: OptionProps,
-                      i
-                    ) => {
-                      if (_options && _options.length !== 0)
-                        return (
-                          <div className={cn(getDropdownGroupStyles({ size }))}>
-                            <Text
-                              size="xs"
-                              className={cn(
-                                getDropdownGroupHeaderStyles({ size })
-                              )}
-                            >
-                              {children}
-                            </Text>
-                            {_options?.map(
-                              (
-                                {
-                                  children: _children,
-                                  value: _value,
-                                  disabled: _disabled,
-                                  ..._props
-                                }: OptionProps,
-                                _i
-                              ) => (
-                                <Listbox.Option
-                                  key={`select_${name}_${value}_option_${_i}`}
-                                  disabled={_disabled}
-                                  value={returnValue({
-                                    value: _value,
-                                    props: _props,
-                                  })}
-                                  className={({ active }) =>
-                                    cn(
-                                      getDropDownOptionsStyles({
-                                        size,
-                                        active,
-                                        disabled: _disabled,
-                                      }),
-                                      _hideActive &&
-                                        isChecked(_value) &&
-                                        "hidden"
-                                    )
-                                  }
-                                >
-                                  {_children}
-                                  <Icon
-                                    size={capSize(size, "md")}
-                                    color="primary"
-                                    icon={CheckIcon}
-                                    className={
-                                      isChecked(_value)
-                                        ? "visible"
-                                        : "invisible"
-                                    }
-                                  />
-                                </Listbox.Option>
-                              )
-                            )}
-                          </div>
-                        );
-                      if (_options?.length === 0) return null;
-                      return (
-                        <Listbox.Option
-                          key={`select_${name}_option_${i}`}
-                          disabled={disabled}
-                          value={returnValue({ value, props })}
-                          className={({ active }) =>
-                            cn(
-                              getDropDownOptionsStyles({
-                                size,
-                                active,
-                                disabled,
-                              }),
-                              _hideActive && isChecked(value) && "hidden"
-                            )
-                          }
-                        >
-                          {children}
-                          <Icon
-                            size={capSize(size, "md")}
-                            color="primary"
-                            icon={CheckIcon}
-                            className={
-                              isChecked(value) ? "visible" : "invisible"
+                      }),
+                      "flex flex-wrap items-center justify-start",
+                      gapsSmall[size],
+                      buttonClassName
+                    )}
+                    style={{
+                      paddingRight: rightElementWidth,
+                    }}
+                    ref={mergeRefs([buttonRef, ref, setReferenceElement])}
+                    onKeyUp={(e: any) => handleLeftAndRightArrow(e)}
+                  >
+                    {!multiple
+                      ? selected
+                        ? flattenOptions?.find(
+                            (option) => returnValue(option) === selected
+                          )?.children
+                        : defaultMessage
+                      : selected.length > 0
+                      ? selected?.map((value: OptionProps, i: number) => (
+                          <Tag
+                            ref={removeButtonRefs[i].ref}
+                            size={size}
+                            onClick={(e: Event) => {
+                              e.stopPropagation();
+                              onChange(handleRemove(i));
+                            }}
+                            onKeyUp={(e: KeyboardEvent<HTMLButtonElement>) => {
+                              e.stopPropagation();
+                              handleTabAndArrowsOnRemoveTag(e);
+                              handleLeftAndRightArrow(e, i);
+                              if (e.key === "Backspace" || e.key === "Delete") {
+                                onChange(handleRemove(i));
+                                if (removeButtonRefs.length === 0)
+                                  return buttonRef.current?.focus();
+                                if (!removeButtonRefs[i])
+                                  return removeButtonRefs[
+                                    i - 1
+                                  ].ref.current.focus();
+                              }
+                            }}
+                            key={`select_tag_${i}`}
+                          >
+                            {
+                              flattenOptions?.find(
+                                (option) => returnValue(option) === value
+                              )?.children
                             }
-                          />
-                        </Listbox.Option>
-                      );
-                    }
-                  )}
-                  {!options ||
-                    (options.length === 0 && (
-                      <NoOptionsFound size={size} message={noOptionsMessage} />
-                    ))}
-                </Listbox.Options>
-              </div>
+                          </Tag>
+                        ))
+                      : defaultMessage}
+                  </Listbox.Button>
+                  <span
+                    ref={rightElementRef}
+                    className={cn(
+                      "pointer-events-none absolute inset-y-0 right-0 flex flex-row items-center divide-x",
+                      divides.accent
+                    )}
+                  >
+                    {removeAll && (
+                      <IconButton
+                        size={iconButtonSizes[size]}
+                        variant="ghost"
+                        ariaLabel={`delete_select_${name}`}
+                        icon={XMarkIcon}
+                        className={cn(
+                          "pointer-events-auto",
+                          marginsXSmall[size]
+                        )}
+                        onClick={() => onChange(handleRemoveAll())}
+                        disabled={disabled}
+                      />
+                    )}
+                    <div>
+                      <IconButton
+                        as="span"
+                        size={iconButtonSizes[size]}
+                        icon={ChevronUpDownIcon}
+                        variant="ghost"
+                        className={cn(
+                          "pointer-events-none flex max-h-6",
+                          open ? "rotate-180" : "rotate-0",
+                          marginsXSmall[size],
+                          transition
+                        )}
+                      />
+                    </div>
+                  </span>
+                  <Listbox.Options
+                    className={cn(
+                      getDropdownContainerStyles({ size }),
+                      optionsClassName
+                    )}
+                    ref={setPopperElement}
+                    style={styles.popper}
+                    {...attributes.popper}
+                  >
+                    {options?.map(
+                      (
+                        {
+                          children,
+                          value,
+                          disabled,
+                          options: _options,
+                          ...props
+                        }: OptionProps,
+                        i
+                      ) => {
+                        if (_options && _options.length !== 0)
+                          return (
+                            <div
+                              className={cn(getDropdownGroupStyles({ size }))}
+                            >
+                              <Text
+                                size="xs"
+                                className={cn(
+                                  getDropdownGroupHeaderStyles({ size })
+                                )}
+                              >
+                                {children}
+                              </Text>
+                              {_options?.map(
+                                (
+                                  {
+                                    children: _children,
+                                    value: _value,
+                                    disabled: _disabled,
+                                    ..._props
+                                  }: OptionProps,
+                                  _i
+                                ) => (
+                                  <Listbox.Option
+                                    key={`select_${name}_${value}_option_${_i}`}
+                                    disabled={_disabled}
+                                    value={returnValue({
+                                      value: _value,
+                                      props: _props,
+                                    })}
+                                    className={({ active }) =>
+                                      cn(
+                                        getDropDownOptionsStyles({
+                                          size,
+                                          active,
+                                          disabled: _disabled,
+                                        }),
+                                        _hideActive &&
+                                          isChecked(_value) &&
+                                          "hidden"
+                                      )
+                                    }
+                                  >
+                                    {_children}
+                                    <Icon
+                                      size={capSize(size, "md")}
+                                      color="primary"
+                                      icon={CheckIcon}
+                                      className={
+                                        isChecked(_value)
+                                          ? "visible"
+                                          : "invisible"
+                                      }
+                                    />
+                                  </Listbox.Option>
+                                )
+                              )}
+                            </div>
+                          );
+                        if (_options?.length === 0) return null;
+                        return (
+                          <Listbox.Option
+                            key={`select_${name}_option_${i}`}
+                            disabled={disabled}
+                            value={returnValue({ value, props })}
+                            className={({ active }) =>
+                              cn(
+                                getDropDownOptionsStyles({
+                                  size,
+                                  active,
+                                  disabled,
+                                }),
+                                _hideActive && isChecked(value) && "hidden"
+                              )
+                            }
+                          >
+                            {children}
+                            <Icon
+                              size={capSize(size, "md")}
+                              color="primary"
+                              icon={CheckIcon}
+                              className={
+                                isChecked(value) ? "visible" : "invisible"
+                              }
+                            />
+                          </Listbox.Option>
+                        );
+                      }
+                    )}
+                    {!options ||
+                      (options.length === 0 && (
+                        <NoOptionsFound
+                          size={size}
+                          message={noOptionsMessage}
+                        />
+                      ))}
+                  </Listbox.Options>
+                </div>
+              )}
             </Listbox>
           </FormElement>
         )}
