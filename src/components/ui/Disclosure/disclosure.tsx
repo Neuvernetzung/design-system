@@ -1,7 +1,7 @@
 import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
 import cn from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import isString from "lodash/isString.js";
+import isString from "lodash/isString";
 import { forwardRef, memo, ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";

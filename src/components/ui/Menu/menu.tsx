@@ -8,7 +8,6 @@ import {
   ReactNode,
   useState,
 } from "react";
-import { mergeRefs } from "react-merge-refs";
 import { usePopper } from "react-popper";
 
 import { gapsSmall, textColors } from "../../../styles";
@@ -83,6 +82,20 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
     });
 
     const ButtonComponent = { icon: IconButton, button: Button };
+
+    function mergeRefs<T = any>(
+      refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>
+    ): React.RefCallback<T> {
+      return (value) => {
+        refs.forEach((ref) => {
+          if (typeof ref === "function") {
+            ref(value);
+          } else if (ref != null) {
+            (ref as React.MutableRefObject<T | null>).current = value;
+          }
+        });
+      };
+    }
 
     return (
       <HeadlessMenu>

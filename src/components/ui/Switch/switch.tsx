@@ -1,6 +1,6 @@
 import { Switch as HeadlessSwitch } from "@headlessui/react";
 import cn from "classnames";
-import isString from "lodash/isString.js";
+import isString from "lodash/isString";
 import { ForwardedRef, forwardRef, Fragment, memo, ReactNode } from "react";
 import { Controller } from "react-hook-form";
 

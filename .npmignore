@@ -10,4 +10,6 @@ public
 commitlint.config.ts
 storybook-static
 alt
-**/**.tsbuildinfo
+**/**.tsbuildinfo 
+.rollup.cache
+stats.html
