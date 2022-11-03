@@ -1,3 +1,11 @@
+# [1.0.0-pre-3.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.1...v1.0.0-pre-3.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* Build mit rollup [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([4e890bc](https://github.com/Neuvernetzung/design-system/commit/4e890bc93ca1cdc5bddc1bc6495da0d9498a4cfb))
+* dts bei build [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([309cdde](https://github.com/Neuvernetzung/design-system/commit/309cdde64e97d4a70090ee583b1a9c0d64139a2d))
+
 # 1.0.0-pre-3.1 (2022-11-03)
 
 
