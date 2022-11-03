@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import cn from "classnames";
-import isArray from "lodash/isArray";
+import isArray from "lodash/isArray.js";
 import {
   createRef,
   ForwardedRef,

@@ -1,5 +1,5 @@
 import cn from "classnames";
-import get from "lodash/get";
+import get from "lodash/get.js";
 import { forwardRef, memo } from "react";
 
 import {
