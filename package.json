@@ -19,7 +19,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rm -rf dist",
-    "build": "npm run clean && rollup -c",
+    "build": "npm run clean && tsc && rollup -c",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
