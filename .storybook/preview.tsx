@@ -4,7 +4,7 @@ import * as NextImage from "next/image";
 import React, { useEffect, useState } from "react";
 import { addDecorator, addParameters } from "@storybook/react";
 import { IconButton } from "../src/components/ui/Button";
-import { SunIcon } from "../src/components/icons";
+import { SunIcon } from "@heroicons/react/24/outline";
 
 const Theme = (Story) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -18,8 +18,8 @@ const Theme = (Story) => {
   }, [theme]);
 
   return (
-    <div className="relative w-full h-full">
-      <div className="absolute z-50 right-0">
+    <div className="relative h-full w-full">
+      <div className="absolute right-0 z-50">
         <IconButton
           variant="ghost"
           icon={SunIcon}
