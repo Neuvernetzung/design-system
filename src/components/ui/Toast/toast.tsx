@@ -12,7 +12,7 @@ import {
   textColors,
 } from "../../../styles";
 import { Colors } from "../../../types";
-import { XMarkIcon } from "../../icons";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -65,7 +65,7 @@ export const Toast = ({
     role="dialog"
     aria-label={color}
     className={cn(
-      "w-64 flex flex-row overflow-hidden justify-between",
+      "flex w-64 flex-row justify-between overflow-hidden",
       roundings.md,
       shadows.lg,
       gaps.xl,

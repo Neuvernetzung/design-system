@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ElementType } from "react";
 
 import { Sizes } from "../../../types";
-import { CheckIcon } from "../../icons";
+import { CheckIcon } from "@heroicons/react/24/outline";
 import { Icon } from "../Icon";
 
 type CheckboxIconProps = {
@@ -29,7 +29,7 @@ function CheckboxTransition({ open, children }: any) {
           initial="unchecked"
           animate="checked"
           exit="unchecked"
-          className="flex items-center justify-center h-full"
+          className="flex h-full items-center justify-center"
         >
           {children}
         </motion.div>

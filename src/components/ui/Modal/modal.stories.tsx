@@ -3,7 +3,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
 
 import { Sizes as SizesType } from "../../../types";
-import { CheckIcon } from "../../icons";
+import { CheckIcon } from "@heroicons/react/24/outline";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { Heading } from "../Typography";
 import { Modal } from "./modal";
@@ -26,7 +26,7 @@ export const Default = ({ ...args }) => {
 
       <Modal
         header={
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex w-full flex-row items-center justify-between">
             <Heading>Ein Modal</Heading>
             <Button size="sm" variant="ghost">
               Mehr

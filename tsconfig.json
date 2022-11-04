@@ -10,11 +10,9 @@
   ],
   "compilerOptions": {
     "allowJs": true,
-    "incremental": true,
     "resolveJsonModule": true,
     "rootDir": "./",
     "declaration": true,
-    "emitDeclarationOnly": true,
     "outDir": "dist",
     "importHelpers": true,
     "sourceMap": true,
