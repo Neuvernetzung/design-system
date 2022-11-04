@@ -1,6 +1,6 @@
 import { Flex, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 
-import { ChevronDownIcon } from "../../components/icons";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Button } from "../Button";
 import { Collapse } from "../Collapse";
 import { Stack } from "../Containers";

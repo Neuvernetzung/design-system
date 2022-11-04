@@ -20,7 +20,7 @@ import {
 } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "../../icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Icon } from "../Icon";
 import type { ImageProps } from "../Image";
 import { Image } from "../Image";
@@ -54,7 +54,7 @@ export const Carousel = ({
   return (
     <>
       <Swiper
-        className={cn("rounded-lg w-full", className)}
+        className={cn("w-full rounded-lg", className)}
         modules={[
           Navigation,
           Autoplay,
@@ -94,7 +94,7 @@ export const Carousel = ({
         <div
           className={`${
             withThumbs ? "lg:hidden" : ""
-          } absolute transition duration-200 inset-y-0 left-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10`}
+          } text-accent-10 absolute inset-y-0 left-0 z-[1] flex h-full cursor-pointer items-center transition duration-200 hover:bg-black/10`}
           ref={prevElRef}
         >
           <Icon icon={ChevronLeftIcon} size="md" color="primary" />
@@ -102,7 +102,7 @@ export const Carousel = ({
         <div
           className={`${
             withThumbs ? "lg:hidden" : ""
-          } absolute transition duration-200 inset-y-0 right-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10`}
+          } text-accent-10 absolute inset-y-0 right-0 z-[1] flex h-full cursor-pointer items-center transition duration-200 hover:bg-black/10`}
           ref={nextElRef}
         >
           <Icon icon={ChevronRightIcon} size="md" color="primary" />
@@ -122,26 +122,26 @@ export const Carousel = ({
             disabledClass: "swiper-button-disabled",
           }}
           className={cn(
-            "mt-2.5 h-24 w-full rounded hidden lg:block",
+            "mt-2.5 hidden h-24 w-full rounded lg:block",
             thumbsClassName
           )}
         >
           {images?.map(({ src, alt, ...imageProps }, i) => (
             <SwiperSlide
               key={`Carousel Item ${i}`}
-              className="bg-accent-1 overflow-hidden rounded aspect-video cursor-pointer"
+              className="bg-accent-1 aspect-video cursor-pointer overflow-hidden rounded"
             >
               <Image src={src} alt={alt} {...imageProps} />
             </SwiperSlide>
           ))}
           <div
-            className="absolute transition duration-200 transform inset-y-0 left-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10"
+            className="text-accent-10 absolute inset-y-0 left-0 z-[1] flex h-full transform cursor-pointer items-center transition duration-200 hover:bg-black/10"
             ref={prevElRefThumb}
           >
             <Icon icon={ChevronLeftIcon} size="md" color="primary" />
           </div>
           <div
-            className="absolute transition duration-200 inset-y-0 right-0 h-full flex items-center z-[1] text-accent-10 cursor-pointer hover:bg-black/10"
+            className="text-accent-10 absolute inset-y-0 right-0 z-[1] flex h-full cursor-pointer items-center transition duration-200 hover:bg-black/10"
             ref={nextElRefThumb}
           >
             <Icon icon={ChevronRightIcon} size="md" color="primary" />

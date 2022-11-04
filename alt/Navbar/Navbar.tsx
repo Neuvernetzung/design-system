@@ -6,7 +6,7 @@ import {
   MoonIcon,
   SunIcon,
   XMarkIcon,
-} from "../../components/icons";
+} from "@heroicons/react/24/outline";
 import { useColorModeValue, useDisclosure } from "../../utils";
 import { IconButton } from "../Button";
 import { Collapse } from "../Collapse";

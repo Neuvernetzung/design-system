@@ -1,12 +1,12 @@
 import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
 import cn from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import isString from "lodash/isString.js";
+import isString from "lodash/isString";
 import { forwardRef, memo, ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
 import { Sizes } from "../../../types";
-import { MinusIcon, PlusIcon } from "../../icons";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -32,7 +32,7 @@ export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
     const MotionIcon = motion(Icon);
 
     return (
-      <div className="flex flex-col w-full" {...props}>
+      <div className="flex w-full flex-col" {...props}>
         {items.map(
           ({ title, content, className: panelClassName }: ItemProps, i) => (
             <HeadlessDisclosure

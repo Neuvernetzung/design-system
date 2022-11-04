@@ -1,6 +1,6 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "src/**/*ts", "src/**/*tsx"],
   "exclude": [
     "dist",
     "alt",
@@ -10,9 +10,10 @@
   ],
   "compilerOptions": {
     "allowJs": true,
-    "incremental": true,
     "resolveJsonModule": true,
-    "outDir": "dist/esm",
+    "rootDir": "./",
+    "declaration": true,
+    "outDir": "dist",
     "importHelpers": true,
     "sourceMap": true,
     "noUnusedLocals": true,
