@@ -1,3 +1,11 @@
+# [1.0.0-pre-3.3](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.2...v1.0.0-pre-3.3) (2022-11-04)
+
+
+### Bug Fixes
+
+* deps entfernen und peers hinzufügen [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([174a59f](https://github.com/Neuvernetzung/design-system/commit/174a59f3c077e7ab72e37c3c9c3a0772f27d18f5))
+* Icon Pfade geändert [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([7ae9ce6](https://github.com/Neuvernetzung/design-system/commit/7ae9ce6f9012e4306468064ae2baca257c0990da))
+
 # [1.0.0-pre-3.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.1...v1.0.0-pre-3.2) (2022-11-03)
 
 
