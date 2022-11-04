@@ -1,5 +1,5 @@
 import type { Colors, ExtendedColors } from "../types";
-import { colorIsBright, getThemeColors } from "../utils";
+// import { colorIsBright, getThemeColors } from "../utils";
 
 export const textColors: Colors = {
   primary: "text-primary-500",
@@ -18,34 +18,34 @@ export const extendedTextColors: ExtendedColors = {
   filled: "text-accent-100 dark:text-accent-800",
 };
 
-const realColors = {
-  "primary-500": getThemeColors("primary")[500],
-  "accent-50": getThemeColors("accent")[50],
-  "accent-500": getThemeColors("accent")[500],
-  "green-500": getThemeColors("green")[500],
-  "yellow-500": getThemeColors("yellow")[500],
-  "red-500": getThemeColors("red")[500],
-};
+// const realColors = {
+//   "primary-500": "", // getThemeColors("primary")[500],
+//   "accent-50": "", // getThemeColors("accent")[50],
+//   "accent-500": "", // getThemeColors("accent")[500],
+//   "green-500": "", // getThemeColors("green")[500],
+//   "yellow-500": "", // getThemeColors("yellow")[500],
+//   "red-500": "", // getThemeColors("red")[500],
+// };
 
 export const adjustedTextColors: Colors = {
-  primary: colorIsBright(realColors["primary-500"])
-    ? "text-accent-50"
-    : "text-accent-900",
-  white: colorIsBright(realColors["accent-50"])
-    ? "text-accent-50"
-    : "text-accent-900",
-  accent: colorIsBright(realColors["accent-500"])
-    ? "text-accent-50"
-    : "text-accent-900",
-  success: colorIsBright(realColors["green-500"])
-    ? "text-accent-50"
-    : "text-accent-900",
-  warn: colorIsBright(realColors["yellow-500"])
-    ? "text-accent-50"
-    : "text-accent-900",
-  danger: colorIsBright(realColors["red-500"])
-    ? "text-accent-50"
-    : "text-accent-900",
+  primary: " ", // colorIsBright(realColors["primary-500"])
+  // ? "text-accent-50"
+  // : "text-accent-900",
+  white: " ", // colorIsBright(realColors["accent-50"])
+  // ? "text-accent-50"
+  // : "text-accent-900",
+  accent: " ", // colorIsBright(realColors["accent-500"])
+  // ? "text-accent-50"
+  // : "text-accent-900",
+  success: " ", // colorIsBright(realColors["green-500"])
+  // ? "text-accent-50"
+  // : "text-accent-900",
+  warn: " ", // colorIsBright(realColors["yellow-500"])
+  // ? "text-accent-50"
+  // : "text-accent-900",
+  danger: " ", // colorIsBright(realColors["red-500"])
+  // ? "text-accent-50"
+  // : "text-accent-900",
 };
 
 export const bgColors: Colors = {

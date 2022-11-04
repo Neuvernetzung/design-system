@@ -35,7 +35,11 @@ import {
 } from "../../../styles/groups";
 import { InputVariants, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
-import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from "../../icons";
+import {
+  CheckIcon,
+  ChevronUpDownIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { Icon } from "../Icon";

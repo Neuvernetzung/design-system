@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { Colors as ColorsType } from "../../../types";
-import { ExclamationTriangleIcon } from "../../icons";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { Toast, ToastVariants } from "./toast";
 
 export default {

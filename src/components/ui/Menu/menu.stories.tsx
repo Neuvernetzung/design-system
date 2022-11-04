@@ -9,7 +9,7 @@ import {
   ArrowRightOnRectangleIcon,
   EllipsisVerticalIcon,
   TrashIcon,
-} from "../../icons";
+} from "@heroicons/react/24/outline";
 import { ButtonGroup } from "../Button";
 import { ItemProps, Menu } from "./menu";
 

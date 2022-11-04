@@ -9,7 +9,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   InformationCircleIcon,
-} from "../../icons";
+} from "@heroicons/react/24/outline";
 import { Toast, ToastVariants } from "../Toast/toast";
 
 type NotifyState = {
@@ -73,7 +73,7 @@ export const Notify = () => {
   return (
     <div
       className={cn(
-        "visible fixed bottom-5 right-5 flex flex-col-reverse flex-wrap-reverse max-h-screen gap-5",
+        "visible fixed bottom-5 right-5 flex max-h-screen flex-col-reverse flex-wrap-reverse gap-5",
         zIndexes.notify
       )}
     >
