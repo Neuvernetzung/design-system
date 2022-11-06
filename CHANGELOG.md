@@ -1,3 +1,10 @@
+# [1.0.0-pre-3.6](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.5...v1.0.0-pre-3.6) (2022-11-06)
+
+
+### Features
+
+* **ui:** Tailwind Config, globals.css exposen [#110](https://github.com/Neuvernetzung/design-system/issues/110) ([feb794e](https://github.com/Neuvernetzung/design-system/commit/feb794e1dd8c7dda4b08bad2f6ba576e1bbf5c9d))
+
 # [1.0.0-pre-3.5](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.4...v1.0.0-pre-3.5) (2022-11-06)
 
 

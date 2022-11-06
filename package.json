@@ -1,6 +1,6 @@
 {
   "name": "@neuvernetzung/design-system",
-  "version": "1.0.0-pre-3.5",
+  "version": "1.0.0-pre-3.6",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "files": [
