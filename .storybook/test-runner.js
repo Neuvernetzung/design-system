@@ -10,23 +10,23 @@ module.exports = {
     const storyContext = await getStoryContext(page, context);
 
     // Do not test a11y for stories that disable a11y
-    // if (storyContext.parameters?.a11y?.disable) {
-    //   return;
-    // }
+    if (storyContext.parameters?.a11y?.disable) {
+      return;
+    }
 
-    // // Apply story-level a11y rules
-    // await configureAxe(page, {
-    //   rules: storyContext.parameters?.a11y?.config?.rules,
-    // });
+    // Apply story-level a11y rules
+    await configureAxe(page, {
+      rules: storyContext.parameters?.a11y?.config?.rules,
+    });
 
-    // // from Storybook 7.0 onwards, the selector should be #storybook-root
-    // await checkA11y(page, "#root", {
-    //   detailedReport: true,
-    //   detailedReportOptions: {
-    //     html: true,
-    //   },
-    //   // pass axe options defined in @storybook/addon-a11y
-    //   axeOptions: storyContext.parameters?.a11y?.options,
-    // });
+    // from Storybook 7.0 onwards, the selector should be #storybook-root
+    await checkA11y(page, "#root", {
+      detailedReport: true,
+      detailedReportOptions: {
+        html: true,
+      },
+      // pass axe options defined in @storybook/addon-a11y
+      axeOptions: storyContext.parameters?.a11y?.options,
+    });
   },
 };

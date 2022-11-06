@@ -1,3 +1,5 @@
+export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
+
 export type Sizes = {
   xs: any;
   sm: any;

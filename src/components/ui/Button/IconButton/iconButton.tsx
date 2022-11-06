@@ -6,6 +6,7 @@ import type {
   PolymorphicPropsWithoutRef,
   PolymorphicPropsWithRef,
 } from "react-polymorphic-types";
+import { useColorState } from "../../../../theme";
 
 import {
   focusBg,
@@ -71,6 +72,8 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
   ) => {
     const Component = as || IconButtonDefaultElement;
 
+    const { colorState } = useColorState();
+
     return (
       <Component
         ref={ref}
@@ -86,8 +89,8 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
           roundings[size],
           minHeights[size],
           textSizes[size],
-          !disabled && colors(color)?.base,
-          !disabled && colors(color)?.text[variant],
+          !disabled && colors(color, colorState)?.base,
+          !disabled && colors(color, colorState)?.text[variant],
           disabled && styles.disabled,
           { [styles.rounded]: rounded },
           className
