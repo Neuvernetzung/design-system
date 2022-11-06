@@ -1,12 +1,12 @@
 import type { Colors, ExtendedColors } from "../types";
-// import { colorIsBright, getThemeColors } from "../utils";
+import { colorIsBright } from "../utils";
 
 export const textColors: Colors = {
   primary: "text-primary-500",
   accent: "text-accent-800 dark:text-accent-100",
-  success: "text-green-500",
-  warn: "text-yellow-500",
-  danger: "text-red-500",
+  success: "text-success-500",
+  warn: "text-warn-500",
+  danger: "text-danger-500",
 };
 
 export const extendedTextColors: ExtendedColors = {
@@ -18,44 +18,36 @@ export const extendedTextColors: ExtendedColors = {
   filled: "text-accent-100 dark:text-accent-800",
 };
 
-// const realColors = {
-//   "primary-500": "", // getThemeColors("primary")[500],
-//   "accent-50": "", // getThemeColors("accent")[50],
-//   "accent-500": "", // getThemeColors("accent")[500],
-//   "green-500": "", // getThemeColors("green")[500],
-//   "yellow-500": "", // getThemeColors("yellow")[500],
-//   "red-500": "", // getThemeColors("red")[500],
-// };
-
-export const adjustedTextColors: Colors = {
-  primary: " ", // colorIsBright(realColors["primary-500"])
-  // ? "text-accent-50"
-  // : "text-accent-900",
-  white: " ", // colorIsBright(realColors["accent-50"])
-  // ? "text-accent-50"
-  // : "text-accent-900",
-  accent: " ", // colorIsBright(realColors["accent-500"])
-  // ? "text-accent-50"
-  // : "text-accent-900",
-  success: " ", // colorIsBright(realColors["green-500"])
-  // ? "text-accent-50"
-  // : "text-accent-900",
-  warn: " ", // colorIsBright(realColors["yellow-500"])
-  // ? "text-accent-50"
-  // : "text-accent-900",
-  danger: " ", // colorIsBright(realColors["red-500"])
-  // ? "text-accent-50"
-  // : "text-accent-900",
-};
+export const adjustedTextColors = (colorState?: Colors) =>
+  ({
+    primary: colorIsBright(colorState?.primary[500])
+      ? "text-accent-50"
+      : "text-accent-900",
+    white: colorIsBright(colorState?.accent[50])
+      ? "text-accent-50"
+      : "text-accent-900",
+    accent: colorIsBright(colorState?.accent[500])
+      ? "text-accent-50"
+      : "text-accent-900",
+    success: colorIsBright(colorState?.success[500])
+      ? "text-accent-50"
+      : "text-accent-900",
+    warn: colorIsBright(colorState?.warn[500])
+      ? "text-accent-50"
+      : "text-accent-900",
+    danger: colorIsBright(colorState?.danger[500])
+      ? "text-accent-50"
+      : "text-accent-900",
+  } as Colors);
 
 export const bgColors: Colors = {
   primary: "bg-primary-500",
   white: "bg-accent-50 dark:bg-accent-900",
   black: "bg-accent-900 dark:bg-accent-50",
   accent: "bg-accent-600",
-  success: "bg-green-500",
-  warn: "bg-yellow-500",
-  danger: "bg-red-500",
+  success: "bg-success-500",
+  warn: "bg-warn-500",
+  danger: "bg-danger-500",
 };
 
 export const extendedBgColors: ExtendedColors = {
@@ -68,9 +60,9 @@ export const bgColorsInteractive: Colors = {
   primary: `${bgColors.primary} hover:bg-primary-600 dark:hover:bg-primary-400`,
   white: `${bgColors.white} hover:bg-accent-100 dark:hover:bg-accent-800`,
   accent: `${bgColors.accent} hover:bg-accent-700 dark:hover:bg-accent-500`,
-  success: `${bgColors.success} hover:bg-green-600 dark:hover:bg-green-400`,
-  warn: `${bgColors.warn} hover:bg-yellow-600 dark:hover:bg-yellow-400`,
-  danger: `${bgColors.danger} hover:bg-red-600 dark:hover:bg-red-400`,
+  success: `${bgColors.success} hover:bg-success-600 dark:hover:bg-success-400`,
+  warn: `${bgColors.warn} hover:bg-warn-600 dark:hover:bg-warn-400`,
+  danger: `${bgColors.danger} hover:bg-danger-600 dark:hover:bg-danger-400`,
 };
 
 export const extendedBgColorsInteractive: ExtendedColors = {
@@ -85,10 +77,10 @@ export const checkboxColors: Colors = {
   accent:
     "checked:bg-accent-500 checked:hover:bg-accent-600 dark:checked:hover:bg-accent-400",
   success:
-    "checked:bg-green-500 checked:hover:bg-green-600 dark:checked:hover:bg-green-400",
-  warn: "checked:bg-yellow-500 checked:hover:bg-yellow-600 dark:checked:hover:bg-yellow-400",
+    "checked:bg-success-500 checked:hover:bg-success-600 dark:checked:hover:bg-success-400",
+  warn: "checked:bg-warn-500 checked:hover:bg-warn-600 dark:checked:hover:bg-warn-400",
   danger:
-    "checked:bg-red-500 checked:hover:bg-red-600 dark:checked:hover:bg-red-400",
+    "checked:bg-danger-500 checked:hover:bg-danger-600 dark:checked:hover:bg-danger-400",
 };
 
 export const radioColors: Colors = {
@@ -97,8 +89,8 @@ export const radioColors: Colors = {
   accent:
     "checked:border-accent-500 dark:checked:border-accent-500 checked:hover:border-accent-600 dark:checked:hover:border-accent-400",
   success:
-    "checked:border-green-500 dark:checked:border-green-500 checked:hover:border-green-600 dark:checked:hover:border-green-400",
-  warn: "checked:border-yellow-500 dark:checked:border-yellow-500 checked:hover:border-yellow-600 dark:checked:hover:border-yellow-400",
+    "checked:border-success-500 dark:checked:border-success-500 checked:hover:border-success-600 dark:checked:hover:border-success-400",
+  warn: "checked:border-warn-500 dark:checked:border-warn-500 checked:hover:border-warn-600 dark:checked:hover:border-warn-400",
   danger:
-    "checked:border-red-500 dark:checked:border-red-500 checked:hover:border-red-600 dark:checked:hover:border-red-400",
+    "checked:border-danger-500 dark:checked:border-danger-500 checked:hover:border-danger-600 dark:checked:hover:border-danger-400",
 };

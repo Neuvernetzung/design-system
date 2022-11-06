@@ -1,6 +1,8 @@
-type HEX = `#${string}`;
+import type { HEX } from "../types";
 
 export const colorIsBright = (color: HEX) => {
+  if (!color) return false;
+
   const hex = color.replace("#", "");
   const r = parseInt(hex.substring(0, 0 + 2), 16);
   const g = parseInt(hex.substring(2, 2 + 2), 16);

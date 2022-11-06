@@ -1,5 +1,6 @@
 import cn from "classnames";
 import { ElementType, memo } from "react";
+import { useColorState } from "../../../theme";
 
 import {
   adjustedTextColors,
@@ -31,9 +32,12 @@ type Variants = {
   subtile: any;
 };
 
-export const variants = (color: keyof Colors): Variants => ({
+export const variants = (
+  color: keyof Colors,
+  colorState?: Colors
+): Variants => ({
   outline: cn("border", borders[color], textColors[color]),
-  solid: cn(bgColors[color], adjustedTextColors[color]),
+  solid: cn(bgColors[color], adjustedTextColors(colorState)[color]),
   subtile: cn(bgColors[color], "bg-opacity-25", textColors[color]),
 });
 
@@ -45,26 +49,30 @@ export const Tag = ({
   color = "accent",
   variant = "solid",
   rounded,
-}: TagProps) => (
-  <div
-    className={cn(
-      "h-min flex flex-row items-center",
-      variants(color)[variant],
-      roundings[size],
-      paddingsSmall[size],
-      gapsSmall[size],
-      rounded && "rounded-full"
-    )}
-  >
-    {leftIcon && <Icon size={capSize(size, "md")} icon={leftIcon} />}
-    {label && (
-      <Text color="inherit" size={size}>
-        {label}
-      </Text>
-    )}
-    {rightIcon && <Icon size={capSize(size, "md")} icon={rightIcon} />}
-  </div>
-);
+}: TagProps) => {
+  const { colorState } = useColorState();
+
+  return (
+    <div
+      className={cn(
+        "h-min flex flex-row items-center",
+        variants(color, colorState)[variant],
+        roundings[size],
+        paddingsSmall[size],
+        gapsSmall[size],
+        rounded && "rounded-full"
+      )}
+    >
+      {leftIcon && <Icon size={capSize(size, "md")} icon={leftIcon} />}
+      {label && (
+        <Text color="inherit" size={size}>
+          {label}
+        </Text>
+      )}
+      {rightIcon && <Icon size={capSize(size, "md")} icon={rightIcon} />}
+    </div>
+  );
+};
 
 export default memo(Tag);
 
