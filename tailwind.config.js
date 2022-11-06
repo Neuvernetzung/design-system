@@ -1,8 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-const path = require("path");
-const pkg = require("./package.json");
-
 const colorVariable = (color, key) =>
   `rgb(var(--color-${color}-${key}) / <alpha-value>)`;
 
@@ -20,11 +17,7 @@ const colorVariables = (color) => ({
 });
 
 module.exports = {
-  content: [
-    "./src/**/*.{ts,tsx}",
-    pkg.name !== "@neuvernetzung/design-system" &&
-      path.join(require.resolve("@neuvernetzung/design-system"), "**/*.js"),
-  ],
+  content: ["./src/**/*.{ts,tsx}", "./dist**/*.{js,mjs}"],
   darkMode: "class",
   theme: {
     fontFamily: {
