@@ -22,9 +22,9 @@ export const colors: ExtendedColors = {
   accent: "text-accent-800 dark:text-accent-100",
   light: "text-accent-100",
   dark: "text-accent-800",
-  success: "text-green-500",
-  warn: "text-yellow-500",
-  danger: "text-red-500",
+  success: "text-success-500",
+  warn: "text-warn-500",
+  danger: "text-danger-500",
 };
 
 export const tagMap: TagMap = {

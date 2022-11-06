@@ -6,6 +6,7 @@ import type {
   PolymorphicPropsWithoutRef,
   PolymorphicPropsWithRef,
 } from "react-polymorphic-types";
+import { useColorState } from "../../../theme";
 
 import {
   adjustedTextColors,
@@ -33,10 +34,13 @@ export const variants: Variants = {
 
 export type Variants = { filled: string; outline: string; ghost: string };
 
-export const colors = (color: keyof Colors): ColorProps => ({
+export const colors = (
+  color: keyof Colors,
+  colorState?: Colors
+): ColorProps => ({
   base: cn(bgColorsInteractive[color], borders[color]),
   text: {
-    filled: adjustedTextColors[color],
+    filled: adjustedTextColors(colorState)[color],
     outline: textColors[color],
     ghost: textColors[color],
   },
@@ -103,6 +107,8 @@ export const Button: PolymorphicForwardRefExoticComponent<
   ) => {
     const Component = as || ButtonDefaultElement;
 
+    const { colorState } = useColorState();
+
     return (
       <Component
         ref={ref}
@@ -117,8 +123,8 @@ export const Button: PolymorphicForwardRefExoticComponent<
           roundings[size],
           minHeights[size],
           textSizes[size],
-          !disabled && colors(color)?.base,
-          !disabled && colors(color)?.text[variant],
+          !disabled && colors(color, colorState)?.base,
+          !disabled && colors(color, colorState)?.text[variant],
           disabled && styles.disabled,
           { [styles.fullWidth]: fullWidth, [styles.rounded]: rounded },
           className

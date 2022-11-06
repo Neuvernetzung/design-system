@@ -62,3 +62,10 @@ export const Colors = ({ ...args }) => {
     </Container>
   );
 };
+
+Colors.parameters = {
+  controls: { exclude: "color" },
+  a11y: {
+    disable: true,
+  },
+};
