@@ -5,7 +5,6 @@
     "**/*.tsx",
     "src/**/*ts",
     "src/**/*tsx",
-    "tailwind.config.ts",
     "src/utils/createCSSSelector.js"
   ],
   "exclude": [
