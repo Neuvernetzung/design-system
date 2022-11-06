@@ -1,3 +1,17 @@
+# [1.0.0-pre-3.4](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.3...v1.0.0-pre-3.4) (2022-11-06)
+
+
+### Bug Fixes
+
+* Build für cjs und esm [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([b0a6afd](https://github.com/Neuvernetzung/design-system/commit/b0a6afd6502e14ac745dee93f9676ccd5d4f3197))
+* Build mit tsup [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([779819c](https://github.com/Neuvernetzung/design-system/commit/779819ca85d93d99fc6e0574b5060ed2a7009852))
+* Module als Commonjs [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([9420d1f](https://github.com/Neuvernetzung/design-system/commit/9420d1f4ce140ddc57b3b33ac4c34371631b3661))
+
+
+### Features
+
+* **config:** Config hinzugefügt mit ThemeProvider [#104](https://github.com/Neuvernetzung/design-system/issues/104) ([1544aa8](https://github.com/Neuvernetzung/design-system/commit/1544aa889fd0f905e61d16951f95dc0bdd9d3078))
+
 # [1.0.0-pre-3.3](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.2...v1.0.0-pre-3.3) (2022-11-04)
 
 
