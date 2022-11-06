@@ -1,3 +1,10 @@
+# [1.0.0-pre-3.5](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.4...v1.0.0-pre-3.5) (2022-11-06)
+
+
+### Features
+
+* **config:** Tailwind defaultColors durch eigene ersetzt [#107](https://github.com/Neuvernetzung/design-system/issues/107) ([4fd12fe](https://github.com/Neuvernetzung/design-system/commit/4fd12fecd3b6bae35caaf8e8c8d833d80907eca5))
+
 # [1.0.0-pre-3.4](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.3...v1.0.0-pre-3.4) (2022-11-06)
 
 
