@@ -14,9 +14,7 @@ const Theme = (Story) => {
       <div className="flex justify-end z-50">
         <ThemeSwitch />
       </div>
-      <div>
-        <Story />
-      </div>
+      <Story />
     </ThemeProvider>
   );
 };
