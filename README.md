@@ -8,6 +8,7 @@
 import { ConfigProps } from "./src";
 
 const config: ConfigProps = {
+  defaultTheme: "system",
   colors: {
     primary: {
       50: "#80d4ff",

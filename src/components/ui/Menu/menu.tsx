@@ -28,7 +28,7 @@ export type MenuProps = {
   items: ItemProps[];
   size?: keyof Sizes;
   disabled?: boolean;
-  itemsClassName?: string;
+  dropdownClassName?: string;
 } & MenuButtonProps;
 
 type MenuButtonProps =
@@ -71,8 +71,8 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       disabled,
       size = "md",
       buttonProps,
-      buttonType,
-      itemsClassName,
+      buttonType = "button",
+      dropdownClassName,
     }: MenuProps,
     ref: ForwardedRef<Element>
   ) => {
@@ -98,7 +98,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
           className={cn(
             "w-64",
             getDropdownContainerStyles({ size }),
-            itemsClassName
+            dropdownClassName
           )}
           style={styles.popper}
           {...attributes.popper}
@@ -236,5 +236,5 @@ Menu.displayName = "Menu";
 Menu.defaultProps = {
   size: "md",
   disabled: false,
-  itemsClassName: undefined,
+  dropdownClassName: undefined,
 };
