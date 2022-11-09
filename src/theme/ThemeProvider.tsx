@@ -4,6 +4,7 @@ import { extendColors } from "./extendColors";
 import { createCSSSelector, getRGBColorVariable } from "../utils";
 import create from "zustand";
 import get from "lodash/get";
+import { ThemeProvider as NextThemeProvider } from "next-themes";
 
 type ThemeProvider = {
   config: ConfigProps;
@@ -12,6 +13,7 @@ type ThemeProvider = {
 
 export type ConfigProps = {
   colors: Partial<Record<keyof Omit<Colors, "black" | "white">, Color>>;
+  defaultTheme?: "system" | "light" | "dark";
 };
 
 type ColorState = {
@@ -23,8 +25,9 @@ export const useColorState = create<ColorState>(() => ({
 }));
 
 export const ThemeProvider = ({ config, children }: ThemeProvider) => {
+  const { colors, defaultTheme } = config;
+
   useLayoutEffect(() => {
-    const { colors } = config;
     const extendedColors: Record<keyof Omit<Colors, "white" | "black">, Color> =
       extendColors(colors);
 
@@ -48,9 +51,14 @@ export const ThemeProvider = ({ config, children }: ThemeProvider) => {
       .join(";");
 
     createCSSSelector(":root", cssColorVariables);
-  }, [config]);
+  }, [colors]);
 
-  if (!children) return null;
-
-  return <>{children}</>;
+  return (
+    <NextThemeProvider
+      attribute="class"
+      defaultTheme={defaultTheme || "system"}
+    >
+      {children}
+    </NextThemeProvider>
+  );
 };

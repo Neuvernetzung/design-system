@@ -1,11 +1,6 @@
 import { ReactNode, ElementType, useState } from "react";
 
-import {
-  Bars3Icon,
-  MoonIcon,
-  SunIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { IconButton } from "../../ui/Button";
 import { Link } from "../../ui/Link";
 import { type TagProps } from "../../ui/Tag";
@@ -14,6 +9,7 @@ import { MobileNav } from "./mobileNav";
 import cn from "classnames";
 import { zIndexes, paddings, gaps } from "../../../styles";
 import { Sizes } from "../../../types";
+import { ThemeSwitch } from "../ThemeSwitch";
 
 export type NavItemProps = {
   label: string;
@@ -87,15 +83,7 @@ export const Navbar = ({
         </div>
         <div className="flex flex-row items-center justify-end">
           {endItems && endItems}
-          {allowDarkMode && (
-            <div>
-              <IconButton
-                icon={true ? MoonIcon : SunIcon}
-                aria-label="toggle-dark-mode"
-                variant="ghost"
-              />
-            </div>
-          )}
+          {allowDarkMode && <ThemeSwitch variant="menu" />}
           <div className={cn("flex lg:hidden")}>
             <IconButton
               icon={mobileNavOpen ? XMarkIcon : Bars3Icon}
