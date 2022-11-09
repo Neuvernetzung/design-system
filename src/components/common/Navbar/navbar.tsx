@@ -1,4 +1,10 @@
-import { ReactNode, ElementType, useState } from "react";
+import {
+  ReactNode,
+  ElementType,
+  useState,
+  ForwardedRef,
+  forwardRef,
+} from "react";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { IconButton } from "../../ui/Button";
@@ -42,68 +48,74 @@ export type SubNavProps = {
   navItems: NavItemProps[];
 };
 
-export const Navbar = ({
-  navItems = [],
-  logo,
-  logoProps,
-  allowDarkMode = true,
-  navbarClassName,
-  justifyDesktopNav = "start",
-  startItems,
-  endItems,
-  gapSize = "md",
-}: NavbarProps) => {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
+  (
+    {
+      navItems = [],
+      logo,
+      logoProps,
+      allowDarkMode = true,
+      navbarClassName,
+      justifyDesktopNav = "start",
+      startItems,
+      endItems,
+      gapSize = "md",
+    },
+    ref: ForwardedRef<Element>
+  ) => {
+    const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  return (
-    <div
-      className={cn(
-        "sticky bg-accent-100 dark:bg-accent-800 w-full",
-        zIndexes.nav,
-        navbarClassName
-      )}
-    >
+    return (
       <div
+        ref={ref}
         className={cn(
-          "flex items-center justify-between border-b border-accent-200 dark:border-accent-700",
-          paddings.md,
-          gaps[gapSize]
+          "sticky bg-accent-100 dark:bg-accent-800 w-full",
+          zIndexes.nav,
+          navbarClassName
         )}
       >
-        <Logo logo={logo} {...logoProps} />
-        {startItems && startItems}
         <div
-          className={cn("hidden lg:flex w-full flex-1", {
-            "justify-start": justifyDesktopNav === "start",
-            "justify-center": justifyDesktopNav === "center",
-            "justify-end": justifyDesktopNav === "end",
-          })}
+          className={cn(
+            "flex items-center justify-between border-b border-accent-200 dark:border-accent-700",
+            paddings.md,
+            gaps[gapSize]
+          )}
         >
-          <DesktopNav navItems={navItems} />
-        </div>
-        <div className="flex flex-row items-center justify-end">
-          {endItems && endItems}
-          {allowDarkMode && <ThemeSwitch variant="menu" />}
-          <div className={cn("flex lg:hidden")}>
-            <IconButton
-              icon={mobileNavOpen ? XMarkIcon : Bars3Icon}
-              variant="ghost"
-              aria-label="Toggle Navigation"
-              onClick={() => setMobileNavOpen(!mobileNavOpen)}
-            />
+          <Logo logo={logo} {...logoProps} />
+          {startItems && startItems}
+          <div
+            className={cn("hidden lg:flex w-full flex-1", {
+              "justify-start": justifyDesktopNav === "start",
+              "justify-center": justifyDesktopNav === "center",
+              "justify-end": justifyDesktopNav === "end",
+            })}
+          >
+            <DesktopNav navItems={navItems} />
+          </div>
+          <div className="flex flex-row items-center justify-end">
+            {endItems && endItems}
+            {allowDarkMode && <ThemeSwitch variant="menu" />}
+            <div className={cn("flex lg:hidden")}>
+              <IconButton
+                icon={mobileNavOpen ? XMarkIcon : Bars3Icon}
+                variant="ghost"
+                aria-label="Toggle Navigation"
+                onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              />
+            </div>
           </div>
         </div>
+        {mobileNavOpen && <MobileNav navItems={navItems} />}
       </div>
-      {mobileNavOpen && <MobileNav navItems={navItems} />}
-    </div>
-  );
-};
+    );
+  }
+);
+
+Navbar.displayName = "Navbar";
 
 Navbar.defaultProps = {
   allowDarkMode: true,
-  navBarProps: undefined,
   justifyDesktopNav: "start",
-  gap: "10",
 };
 
 const Logo = ({
