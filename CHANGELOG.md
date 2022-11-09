@@ -1,3 +1,15 @@
+# [1.0.0-pre-3.7](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.6...v1.0.0-pre-3.7) (2022-11-09)
+
+
+### Features
+
+* **common:** Anpassbare Navbar hinzugefügt [#111](https://github.com/Neuvernetzung/design-system/issues/111) ([bb3e657](https://github.com/Neuvernetzung/design-system/commit/bb3e657c37560c0abe510d89369bfef953e94d4d))
+* **common:** Footer hinzugefügt [#112](https://github.com/Neuvernetzung/design-system/issues/112) ([3090d0a](https://github.com/Neuvernetzung/design-system/commit/3090d0a6071a7a701d76d3d7f6e69f813bf8a8d2))
+* **common:** PageContainer hinzugefügt [#113](https://github.com/Neuvernetzung/design-system/issues/113) ([5d33e9c](https://github.com/Neuvernetzung/design-system/commit/5d33e9c87068bbff0e7d0183c89f5c06035b609b))
+* **common:** ThemeSwitcher hinzugefügt und Nav geupdated [#118](https://github.com/Neuvernetzung/design-system/issues/118) ([12d6604](https://github.com/Neuvernetzung/design-system/commit/12d6604eff75e947d81c0b6832319459cc31d675))
+* **docs:** ReadMe bearbeitet [#8](https://github.com/Neuvernetzung/design-system/issues/8) ([3c9871f](https://github.com/Neuvernetzung/design-system/commit/3c9871fcc60119b0a44717785ab60b22d09fcd19))
+* **ui:** trigger on hover zu Popover hinzugefügt [#49](https://github.com/Neuvernetzung/design-system/issues/49) ([0680b08](https://github.com/Neuvernetzung/design-system/commit/0680b08c62beaf6d99a9320cfae1e3459c07f8bd))
+
 # [1.0.0-pre-3.6](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.5...v1.0.0-pre-3.6) (2022-11-06)
 
 
