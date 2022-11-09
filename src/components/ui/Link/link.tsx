@@ -5,9 +5,9 @@ export interface LinkProps extends NextLinkProps {
   children: ReactNode;
 }
 
-export const Link = ({ as, href, ...props }: LinkProps) => (
-  <NextLink as={as} href={href} {...props} />
-);
+export const Link = ({ as, href, ...props }: LinkProps) => {
+  return <NextLink as={as} href={href} {...props} />;
+};
 
 Link.defaultProps = {};
 

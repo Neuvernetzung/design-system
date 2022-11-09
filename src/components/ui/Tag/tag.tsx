@@ -10,11 +10,11 @@ import {
   paddingsSmall,
   roundings,
   textColors,
+  textSizes,
 } from "../../../styles";
 import type { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
 import { Icon } from "../Icon";
-import { Text } from "../Typography";
 
 export type TagProps = {
   label?: string;
@@ -55,20 +55,17 @@ export const Tag = ({
   return (
     <div
       className={cn(
-        "h-min flex flex-row items-center",
+        "h-min flex-0 inline-flex flex-row items-center select-none",
         variants(color, colorState)[variant],
         roundings[size],
         paddingsSmall[size],
         gapsSmall[size],
+        textSizes[size],
         rounded && "rounded-full"
       )}
     >
       {leftIcon && <Icon size={capSize(size, "md")} icon={leftIcon} />}
-      {label && (
-        <Text color="inherit" size={size}>
-          {label}
-        </Text>
-      )}
+      {label}
       {rightIcon && <Icon size={capSize(size, "md")} icon={rightIcon} />}
     </div>
   );

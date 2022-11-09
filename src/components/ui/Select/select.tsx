@@ -14,6 +14,7 @@ import {
 } from "react";
 import { Controller } from "react-hook-form";
 import { usePopper } from "react-popper";
+import { mergeRefs } from "../../../utils/internal/mergeRefs";
 
 import {
   divides,
@@ -221,20 +222,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const isChecked = (value: any) =>
       isArray(selected) ? selected.includes(value) : selected === value;
     const _hideActive = multipleStyle !== "indicator" ? hideActive : false;
-
-    function mergeRefs<T = any>(
-      refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>
-    ): React.RefCallback<T> {
-      return (value) => {
-        refs.forEach((ref) => {
-          if (typeof ref === "function") {
-            ref(value);
-          } else if (ref != null) {
-            (ref as React.MutableRefObject<T | null>).current = value;
-          }
-        });
-      };
-    }
 
     return (
       <Controller

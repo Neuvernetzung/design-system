@@ -154,5 +154,19 @@ export const Rounded = ({ ...args }) => (
 export const Disabled = ({ ...args }) => (
   <Container>
     <IconButton ariaLabel="home" disabled icon={HomeIcon} {...args} />
+    <IconButton
+      variant="ghost"
+      ariaLabel="home"
+      disabled
+      icon={HomeIcon}
+      {...args}
+    />
+    <IconButton
+      variant="outline"
+      ariaLabel="home"
+      disabled
+      icon={HomeIcon}
+      {...args}
+    />
   </Container>
 );

@@ -44,3 +44,18 @@ export const Default = ({ ...args }) => (
     />
   </Container>
 );
+
+export const OnHover = ({ ...args }) => (
+  <Container>
+    <Popover
+      trigger="hover"
+      content={
+        <div>
+          <Text>Dies ist ein Popover</Text>
+        </div>
+      }
+      buttonProps={{ children: "Hier hovern" }}
+      {...args}
+    />
+  </Container>
+);

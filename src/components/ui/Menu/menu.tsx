@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { usePopper } from "react-popper";
+import { mergeRefs } from "../../../utils/internal/mergeRefs";
 
 import { gapsSmall, textColors } from "../../../styles";
 import {
@@ -27,7 +28,7 @@ export type MenuProps = {
   items: ItemProps[];
   size?: keyof Sizes;
   disabled?: boolean;
-  itemsClassName?: string;
+  dropdownClassName?: string;
 } & MenuButtonProps;
 
 type MenuButtonProps =
@@ -70,8 +71,8 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       disabled,
       size = "md",
       buttonProps,
-      buttonType,
-      itemsClassName,
+      buttonType = "button",
+      dropdownClassName,
     }: MenuProps,
     ref: ForwardedRef<Element>
   ) => {
@@ -82,20 +83,6 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
     });
 
     const ButtonComponent = { icon: IconButton, button: Button };
-
-    function mergeRefs<T = any>(
-      refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>
-    ): React.RefCallback<T> {
-      return (value) => {
-        refs.forEach((ref) => {
-          if (typeof ref === "function") {
-            ref(value);
-          } else if (ref != null) {
-            (ref as React.MutableRefObject<T | null>).current = value;
-          }
-        });
-      };
-    }
 
     return (
       <HeadlessMenu>
@@ -111,7 +98,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
           className={cn(
             "w-64",
             getDropdownContainerStyles({ size }),
-            itemsClassName
+            dropdownClassName
           )}
           style={styles.popper}
           {...attributes.popper}
@@ -249,5 +236,5 @@ Menu.displayName = "Menu";
 Menu.defaultProps = {
   size: "md",
   disabled: false,
-  itemsClassName: undefined,
+  dropdownClassName: undefined,
 };
