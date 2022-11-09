@@ -7,6 +7,7 @@ import { IconButton } from "../src/components/ui/Button";
 import { SunIcon } from "@heroicons/react/24/outline";
 import { ThemeProvider } from "../src";
 import config from "../example.config";
+import { RouterContext } from "next/dist/shared/lib/router-context";
 
 const Theme = (Story) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -50,6 +51,9 @@ addDecorator(Theme);
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  nextRouter: {
+    Provider: RouterContext.Provider,
+  },
 };
 
 const OriginalNextImage = NextImage.default;

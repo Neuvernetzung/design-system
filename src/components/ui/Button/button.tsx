@@ -11,6 +11,7 @@ import { useColorState } from "../../../theme";
 import {
   adjustedTextColors,
   bgColorsInteractive,
+  bgColors,
   borders,
   focusBg,
   focusRing,
@@ -27,9 +28,9 @@ import { sizes as textSizes } from "../Typography/Text/text";
 export const variants: Variants = {
   filled: "",
   outline:
-    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 dark:hover:bg-opacity-10 border",
+    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10  dark:disabled:hover:bg-opacity-0 border",
   ghost:
-    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 dark:hover:bg-opacity-10",
+    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10  dark:disabled:hover:bg-opacity-0",
 };
 
 export type Variants = { filled: string; outline: string; ghost: string };
@@ -39,6 +40,7 @@ export const colors = (
   colorState?: Colors
 ): ColorProps => ({
   base: cn(bgColorsInteractive[color], borders[color]),
+  disabled: cn(bgColors[color], borders[color], "opacity-50"),
   text: {
     filled: adjustedTextColors(colorState)[color],
     outline: textColors[color],
@@ -48,6 +50,7 @@ export const colors = (
 
 type ColorProps = {
   base: string;
+  disabled: string;
   text: Variants;
 };
 
@@ -57,8 +60,7 @@ export const focuses: Focuses = {
 };
 
 export const styles = {
-  base: "appearance-none prose prose-sm h-min select-none flex flex-row justify-center items-center gap-2 font-semibold",
-  disabled: "bg-gray-200 cursor-not-allowed",
+  base: "appearance-none prose prose-sm h-min select-none flex flex-row justify-center items-center gap-2 font-semibold disabled:cursor-not-allowed",
   fullWidth: "w-full",
   rounded: "rounded-full",
 };
@@ -124,8 +126,8 @@ export const Button: PolymorphicForwardRefExoticComponent<
           minHeights[size],
           textSizes[size],
           !disabled && colors(color, colorState)?.base,
-          !disabled && colors(color, colorState)?.text[variant],
-          disabled && styles.disabled,
+          disabled && colors(color, colorState)?.disabled,
+          colors(color, colorState)?.text[variant],
           { [styles.fullWidth]: fullWidth, [styles.rounded]: rounded },
           className
         )}

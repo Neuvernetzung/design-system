@@ -23,10 +23,8 @@ export const Default = ({ ...args }) => (
 
 export const AsButton = ({ ...args }) => (
   <Container>
-    <Link href="/" passHref>
-      <Button as="a" disabled>
-        Link
-      </Button>
+    <Link href="/" passHref legacyBehavior>
+      <Button as="a">Link</Button>
     </Link>
   </Container>
 );

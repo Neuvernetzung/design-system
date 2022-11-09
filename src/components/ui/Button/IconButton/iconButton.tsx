@@ -90,8 +90,8 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
           minHeights[size],
           textSizes[size],
           !disabled && colors(color, colorState)?.base,
-          !disabled && colors(color, colorState)?.text[variant],
-          disabled && styles.disabled,
+          disabled && colors(color, colorState)?.disabled,
+          colors(color, colorState)?.text[variant],
           { [styles.rounded]: rounded },
           className
         )}
