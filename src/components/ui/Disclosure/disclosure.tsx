@@ -19,7 +19,7 @@ export type DisclosureProps = {
 };
 
 type ItemProps = {
-  title: string;
+  title: string | ReactNode;
   content: string | ReactNode;
   className?: string;
 };
@@ -39,7 +39,7 @@ export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
               key={`disclosure_${i}`}
               as="div"
               className={cn(
-                "flex flex-col last:border-b",
+                "flex flex-col last:border-b border-t",
                 borders.accent,
                 className
               )}
@@ -52,7 +52,7 @@ export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
                     size={size}
                     fullWidth
                     className={cn(
-                      "justify-between rounded-none border-t",
+                      "justify-between rounded-none items-center",
                       borders.accent
                     )}
                   >
