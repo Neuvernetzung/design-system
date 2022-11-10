@@ -1,3 +1,10 @@
+# [1.0.0-pre-3.8](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.7...v1.0.0-pre-3.8) (2022-11-10)
+
+
+### Features
+
+* **ui:** Parsed HTML Text hinzugefügt [#3](https://github.com/Neuvernetzung/design-system/issues/3) ([6e1a03a](https://github.com/Neuvernetzung/design-system/commit/6e1a03ad78944269545dc2260deb7908ff98c4e2))
+
 # [1.0.0-pre-3.7](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.6...v1.0.0-pre-3.7) (2022-11-09)
 
 
