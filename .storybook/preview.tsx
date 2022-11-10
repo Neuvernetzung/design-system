@@ -1,34 +1,21 @@
-import "../lib/styles/tailwind.css";
+import "../src/globals.css";
+import * as NextImage from "next/image";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { addDecorator, addParameters } from "@storybook/react";
-
-// import { IconButton } from "../src/lib/components/ui";
+import { ThemeProvider } from "../src";
+import { ThemeSwitch } from "../src/components/common/ThemeSwitch";
+import config from "../example.config";
+import { RouterContext } from "next/dist/shared/lib/router-context";
 
 const Theme = (Story) => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    if (theme === "light") {
-      document.querySelector("html")?.classList.remove("dark");
-    } else {
-      document.querySelector("html")?.classList.add("dark");
-    }
-  }, [theme]);
-
   return (
-    <>
-      <div className="absolute z-50 bottom-5 right-5">
-        {/* <IconButton
-          size="xs"
-          icon={theme === "light" ? <Moon white /> : <Sun white />}
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        /> */}
+    <ThemeProvider config={config}>
+      <div className="flex justify-end z-50">
+        <ThemeSwitch />
       </div>
-      <div className="p-5 bg-white dark:bg-gray-900">
-        <Story />
-      </div>
-    </>
+      <Story />
+    </ThemeProvider>
   );
 };
 
@@ -44,4 +31,14 @@ addDecorator(Theme);
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  nextRouter: {
+    Provider: RouterContext.Provider,
+  },
 };
+
+const OriginalNextImage = NextImage.default;
+
+Object.defineProperty(NextImage, "default", {
+  configurable: true,
+  value: (props) => <OriginalNextImage {...props} unoptimized />,
+});

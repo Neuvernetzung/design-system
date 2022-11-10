@@ -23,10 +23,23 @@ jobs:
       - name: Dependencies installieren
         run: npm i
 
-      - name: Tests ausführen
-        run: npm run test
+      - name: Playwright installieren
+        run: npx playwright install --with-deps
+
+      - name: Storybook builden
+        run: npm run build-storybook --quiet
+
+      - name: Storybook starken und testen
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:6006 && npm run test"
+
+      - name: Build
+        run: npm run build
 
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: rm .npmrc && npx semantic-release # .npmrc vorher löschen, da sonst NPM_TOKEN überschrieben wird, obwohl in .npmrc nicht vorhanden.

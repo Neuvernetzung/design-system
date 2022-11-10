@@ -1,2 +1,6 @@
 node_modules
 .next
+storybook-static
+dist
+.rollup.cache
+stats.html

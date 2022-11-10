@@ -1,34 +1,39 @@
 /** @type {import('tailwindcss').Config} */
+
+const colorVariable = (color, key) =>
+  `rgb(var(--color-${color}-${key}) / <alpha-value>)`;
+
+const colorVariables = (color) => ({
+  50: colorVariable(color, 50),
+  100: colorVariable(color, 100),
+  200: colorVariable(color, 200),
+  300: colorVariable(color, 300),
+  400: colorVariable(color, 400),
+  500: colorVariable(color, 500),
+  600: colorVariable(color, 600),
+  700: colorVariable(color, 700),
+  800: colorVariable(color, 800),
+  900: colorVariable(color, 900),
+});
+
 module.exports = {
-  purge: ["./lib/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/**/*.{ts,tsx}", "./dist**/*.{js,mjs}"],
   darkMode: "class",
   theme: {
+    fontFamily: {
+      heading: [
+        "Oswald",
+        ...require("tailwindcss/defaultTheme").fontFamily.sans,
+      ],
+      body: ["Inter", ...require("tailwindcss/defaultTheme").fontFamily.sans],
+    },
     extend: {
       colors: {
-        primary: {
-          50: "#80d4ff",
-          100: "#66cbff",
-          200: "#4dc2ff",
-          300: "#33b9ff",
-          400: "#1ab1ff",
-          500: "#00a8ff",
-          600: "#0097e6",
-          700: "#0086cc",
-          800: "#0076b3",
-          900: "#006599",
-        },
-        accent: {
-          50: "#ffffff",
-          100: "#e6e6e6",
-          200: "#cccccc",
-          300: "#b3b3b3",
-          400: "#999999",
-          500: "#808080",
-          600: "#666666",
-          700: "#4c4c4c",
-          800: "#333333",
-          900: "#191919",
-        },
+        primary: colorVariables("primary"),
+        accent: colorVariables("accent"),
+        success: colorVariables("success"),
+        warn: colorVariables("warn"),
+        danger: colorVariables("danger"),
       },
     },
   },
@@ -40,5 +45,11 @@ module.exports = {
       borderColor: ["focus-visible"],
     },
   },
-  plugins: [import("@tailwindcss/forms"), import("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("tailwindcss/plugin")(({ addVariant }) => {
+      addVariant("not-first-of-type", "&>*:not(:first-of-type)");
+      addVariant("not-last-of-type", "&>*:not(:last-of-type)");
+    }),
+  ],
 };

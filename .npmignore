@@ -1,8 +1,15 @@
 node_modules
-src
 .next
 .github
 .husky
 .storybook
 CHANGELOG.md
 **/**.test.**
+**/**.stories.**
+public
+commitlint.config.ts
+storybook-static
+alt
+**/**.tsbuildinfo 
+.rollup.cache
+stats.html

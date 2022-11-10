@@ -1,5 +1,5 @@
 module.exports = {
-  stories: ["../lib/**/*.stories.mdx", "../lib/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
     {
       name: "@storybook/addon-postcss",
@@ -9,12 +9,15 @@ module.exports = {
         },
       },
     },
+    "@storybook/addon-a11y",
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "storybook-addon-next-router",
   ],
   framework: "@storybook/react",
   core: {
     builder: "@storybook/builder-webpack5",
   },
+  staticDirs: ["../public"],
 };

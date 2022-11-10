@@ -1,24 +1,29 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["."],
-  "exclude": ["node_modules"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*ts",
+    "src/**/*tsx",
+    "src/utils/createCSSSelector.js"
+  ],
+  "exclude": [
+    "dist",
+    "alt",
+    "node_modules",
+    "**/**.stories.**",
+    "commitlint.config.ts"
+  ],
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@ui": ["ui"],
-      "@ui/*": ["ui/*"],
-      "@theme": ["theme"],
-      "@theme/*": ["theme/*"],
-      "@utils": ["utils"],
-      "@utils/*": ["utils/*"],
-      "@icons": ["icons"],
-      "@public/*": ["src/public/*"],
-      "@components/*": ["src/components/*"]
-    },
     "allowJs": true,
-    "noEmit": true,
-    "incremental": true,
     "resolveJsonModule": true,
-    "jsx": "preserve"
+    "rootDir": "./",
+    "declaration": true,
+    "outDir": "dist",
+    "importHelpers": true,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true
   }
 }
