@@ -22,7 +22,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsup ./src/index.ts --format esm,cjs --minify --dts",
+    "build": "npm run clean && tsup",
     "semantic-release": "semantic-release"
   },
   "peerDependencies": {

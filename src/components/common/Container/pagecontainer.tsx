@@ -22,7 +22,7 @@ export const PageContainer = ({
     <main
       className={cn("overflow-x-hidden flex")}
       style={{
-        // paddingTop: `${navbarHeight}px`,
+        paddingTop: `${navbarHeight}px`,
         minHeight: `calc(100vh - ${footerHeight}px - ${navbarHeight}px)`,
       }}
       {...props}
