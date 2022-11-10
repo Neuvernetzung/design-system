@@ -46,7 +46,12 @@ export const MobileNavItem = ({
                   ({ label, href, tag, disabled, icon }) => {
                     if (!disabled || !href)
                       return (
-                        <Link key={label} href={href} passHref legacyBehavior>
+                        <Link
+                          key={label}
+                          href={href || "#"}
+                          passHref
+                          legacyBehavior
+                        >
                           <Button as="a" variant="ghost" fullWidth>
                             <div
                               className={cn(
@@ -92,7 +97,7 @@ export const MobileNavItem = ({
             ]}
           />
         ) : (
-          <Link href={href} width="full" passHref legacyBehavior>
+          <Link href={href || "#"} passHref legacyBehavior>
             <Button as="a" variant="ghost" fullWidth>
               {icon && (
                 <div className="flex">
