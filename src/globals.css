@@ -33,7 +33,7 @@
   }
 
   ::-webkit-scrollbar {
-    @apply w-3;
+    @apply w-2;
   }
   ::-webkit-scrollbar-thumb {
     @apply bg-accent-500 dark:bg-accent-600;

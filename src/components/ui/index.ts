@@ -10,6 +10,7 @@ export * from "./Menu";
 export * from "./Modal";
 export * from "./Notify";
 export * from "./Popover";
+export * from "./Prose";
 export * from "./Radio";
 export * from "./Select";
 export * from "./Switch";
