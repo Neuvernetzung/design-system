@@ -18,14 +18,12 @@ export const PageContainer = ({
     footerRef && setFooterHeight(footerRef?.current?.clientHeight);
   }, []);
 
-  console.log(navbarHeight, footerHeight);
-
   return (
     <main
       className={cn("overflow-x-hidden flex")}
       style={{
-        paddingTop: `${navbarHeight}px`,
-        minHeight: `calc(100vh - ${footerHeight}px)`,
+        // paddingTop: `${navbarHeight}px`,
+        minHeight: `calc(100vh - ${footerHeight}px - ${navbarHeight}px)`,
       }}
       {...props}
     />
