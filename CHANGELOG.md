@@ -1,3 +1,59 @@
+# [1.0.0-pre-3.7](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.6...v1.0.0-pre-3.7) (2022-11-09)
+
+
+### Features
+
+* **common:** Anpassbare Navbar hinzugefügt [#111](https://github.com/Neuvernetzung/design-system/issues/111) ([bb3e657](https://github.com/Neuvernetzung/design-system/commit/bb3e657c37560c0abe510d89369bfef953e94d4d))
+* **common:** Footer hinzugefügt [#112](https://github.com/Neuvernetzung/design-system/issues/112) ([3090d0a](https://github.com/Neuvernetzung/design-system/commit/3090d0a6071a7a701d76d3d7f6e69f813bf8a8d2))
+* **common:** PageContainer hinzugefügt [#113](https://github.com/Neuvernetzung/design-system/issues/113) ([5d33e9c](https://github.com/Neuvernetzung/design-system/commit/5d33e9c87068bbff0e7d0183c89f5c06035b609b))
+* **common:** ThemeSwitcher hinzugefügt und Nav geupdated [#118](https://github.com/Neuvernetzung/design-system/issues/118) ([12d6604](https://github.com/Neuvernetzung/design-system/commit/12d6604eff75e947d81c0b6832319459cc31d675))
+* **docs:** ReadMe bearbeitet [#8](https://github.com/Neuvernetzung/design-system/issues/8) ([3c9871f](https://github.com/Neuvernetzung/design-system/commit/3c9871fcc60119b0a44717785ab60b22d09fcd19))
+* **ui:** trigger on hover zu Popover hinzugefügt [#49](https://github.com/Neuvernetzung/design-system/issues/49) ([0680b08](https://github.com/Neuvernetzung/design-system/commit/0680b08c62beaf6d99a9320cfae1e3459c07f8bd))
+
+# [1.0.0-pre-3.6](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.5...v1.0.0-pre-3.6) (2022-11-06)
+
+
+### Features
+
+* **ui:** Tailwind Config, globals.css exposen [#110](https://github.com/Neuvernetzung/design-system/issues/110) ([feb794e](https://github.com/Neuvernetzung/design-system/commit/feb794e1dd8c7dda4b08bad2f6ba576e1bbf5c9d))
+
+# [1.0.0-pre-3.5](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.4...v1.0.0-pre-3.5) (2022-11-06)
+
+
+### Features
+
+* **config:** Tailwind defaultColors durch eigene ersetzt [#107](https://github.com/Neuvernetzung/design-system/issues/107) ([4fd12fe](https://github.com/Neuvernetzung/design-system/commit/4fd12fecd3b6bae35caaf8e8c8d833d80907eca5))
+
+# [1.0.0-pre-3.4](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.3...v1.0.0-pre-3.4) (2022-11-06)
+
+
+### Bug Fixes
+
+* Build für cjs und esm [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([b0a6afd](https://github.com/Neuvernetzung/design-system/commit/b0a6afd6502e14ac745dee93f9676ccd5d4f3197))
+* Build mit tsup [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([779819c](https://github.com/Neuvernetzung/design-system/commit/779819ca85d93d99fc6e0574b5060ed2a7009852))
+* Module als Commonjs [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([9420d1f](https://github.com/Neuvernetzung/design-system/commit/9420d1f4ce140ddc57b3b33ac4c34371631b3661))
+
+
+### Features
+
+* **config:** Config hinzugefügt mit ThemeProvider [#104](https://github.com/Neuvernetzung/design-system/issues/104) ([1544aa8](https://github.com/Neuvernetzung/design-system/commit/1544aa889fd0f905e61d16951f95dc0bdd9d3078))
+
+# [1.0.0-pre-3.3](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.2...v1.0.0-pre-3.3) (2022-11-04)
+
+
+### Bug Fixes
+
+* deps entfernen und peers hinzufügen [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([174a59f](https://github.com/Neuvernetzung/design-system/commit/174a59f3c077e7ab72e37c3c9c3a0772f27d18f5))
+* Icon Pfade geändert [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([7ae9ce6](https://github.com/Neuvernetzung/design-system/commit/7ae9ce6f9012e4306468064ae2baca257c0990da))
+
+# [1.0.0-pre-3.2](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.1...v1.0.0-pre-3.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* Build mit rollup [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([4e890bc](https://github.com/Neuvernetzung/design-system/commit/4e890bc93ca1cdc5bddc1bc6495da0d9498a4cfb))
+* dts bei build [#90](https://github.com/Neuvernetzung/design-system/issues/90) ([309cdde](https://github.com/Neuvernetzung/design-system/commit/309cdde64e97d4a70090ee583b1a9c0d64139a2d))
+
 # 1.0.0-pre-3.1 (2022-11-03)
 
 

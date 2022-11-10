@@ -23,7 +23,7 @@ export const DesktopNav = ({ navItems }: SubNavProps) => (
         <div key={label}>
           {!disabled ? (
             !children ? (
-              <Link href={href} passHref legacyBehavior>
+              <Link href={href || "#"} passHref legacyBehavior>
                 <Button
                   leftIcon={icon}
                   as="a"
@@ -87,7 +87,7 @@ export const DesktopSubNav = ({
 
   if (!disabled)
     return (
-      <Link href={href}>
+      <Link href={href || "#"}>
         <div
           className={cn(baseClass, bgColorsInteractive.white, "cursor-pointer")}
         >
