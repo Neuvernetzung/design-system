@@ -69,7 +69,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       <div
         ref={ref}
         className={cn(
-          "sticky bg-accent-100 dark:bg-accent-800 w-full",
+          "fixed top-0 bg-accent-100 dark:bg-accent-800 w-full",
           zIndexes.nav,
           navbarClassName
         )}
@@ -94,7 +94,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
           </div>
           <div className="flex flex-row items-center justify-end">
             {endItems && endItems}
-            {allowDarkMode && <ThemeSwitch variant="menu" />}
+            {allowDarkMode && <ThemeSwitch />}
             <div className={cn("flex lg:hidden")}>
               <IconButton
                 icon={mobileNavOpen ? XMarkIcon : Bars3Icon}
