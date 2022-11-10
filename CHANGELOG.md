@@ -1,3 +1,10 @@
+# [1.0.0-pre-3.9](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.8...v1.0.0-pre-3.9) (2022-11-10)
+
+
+### Features
+
+* **build:** Bundle imports splitten [#129](https://github.com/Neuvernetzung/design-system/issues/129) ([ccfbd1e](https://github.com/Neuvernetzung/design-system/commit/ccfbd1e48ebd4da4ca18213a70da410830d12246))
+
 # [1.0.0-pre-3.8](https://github.com/Neuvernetzung/design-system/compare/v1.0.0-pre-3.7...v1.0.0-pre-3.8) (2022-11-10)
 
 
