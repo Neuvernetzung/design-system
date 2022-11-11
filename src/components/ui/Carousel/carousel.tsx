@@ -20,7 +20,7 @@ import {
 } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
 import { Icon } from "../Icon";
 import type { ImageProps } from "../Image";
 import { Image } from "../Image";

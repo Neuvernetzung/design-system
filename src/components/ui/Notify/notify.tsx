@@ -9,7 +9,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   InformationCircleIcon,
-} from "@heroicons/react/24/outline";
+} from "../../../theme/icons";
 import { Toast, ToastVariants } from "../Toast/toast";
 
 type NotifyState = {
