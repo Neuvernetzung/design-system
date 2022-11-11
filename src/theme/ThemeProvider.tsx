@@ -5,6 +5,7 @@ import { createCSSSelector, getRGBColorVariable } from "../utils";
 import create from "zustand";
 import get from "lodash/get";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
+import { Icons } from "./icons";
 
 type ThemeProvider = {
   config: ConfigProps;
@@ -13,6 +14,7 @@ type ThemeProvider = {
 
 export type ConfigProps = {
   colors: Partial<Record<keyof Omit<Colors, "black" | "white">, Color>>;
+  icons: "outline" | "solid" | Icons;
   defaultTheme?: "system" | "light" | "dark";
 };
 

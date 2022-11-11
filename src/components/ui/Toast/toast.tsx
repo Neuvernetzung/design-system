@@ -13,7 +13,7 @@ import {
   textColors,
 } from "../../../styles";
 import { Colors } from "../../../types";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { CrossIcon } from "../../../theme/icons";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -96,7 +96,7 @@ export const Toast = ({
         variant="ghost"
         aria-label="close-dialog"
         onClick={handleClose}
-        icon={XMarkIcon}
+        icon={CrossIcon}
         className={cn(variants(color, colorState)[variant].close)}
       />
     </div>

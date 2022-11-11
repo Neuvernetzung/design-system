@@ -36,11 +36,7 @@ import {
 } from "../../../styles/groups";
 import { InputVariants, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
-import {
-  CheckIcon,
-  ChevronUpDownIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { CheckIcon, ChevronUpDownIcon, CrossIcon } from "../../../theme/icons";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { Icon } from "../Icon";
@@ -316,7 +312,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                         size={iconButtonSizes[size]}
                         variant="ghost"
                         ariaLabel={`delete_select_${name}`}
-                        icon={XMarkIcon}
+                        icon={CrossIcon}
                         className={cn(
                           "pointer-events-auto",
                           marginsXSmall[size]
@@ -516,7 +512,7 @@ const Tag = forwardRef(
         role="button"
         ariaLabel="remove"
         size={iconButtonSizes[size]}
-        icon={XMarkIcon}
+        icon={CrossIcon}
         onClick={onClick}
         onKeyUp={onKeyUp}
       />
