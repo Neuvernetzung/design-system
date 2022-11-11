@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/Neuvernetzung/design-system/compare/v1.0.0...v1.1.0) (2022-11-11)
+
+
+### Features
+
+* **config:** __dirname zu Content Path in Config hinzugefügt [#136](https://github.com/Neuvernetzung/design-system/issues/136) ([68ca93c](https://github.com/Neuvernetzung/design-system/commit/68ca93c754c6a2ce2a7661b59093d7a41fe8bb55))
+* **icons:** Icons zentralisiert [#132](https://github.com/Neuvernetzung/design-system/issues/132) ([b634b1f](https://github.com/Neuvernetzung/design-system/commit/b634b1fd922f60ef644e184228736253cda84d2f))
+
 # 1.0.0 (2022-11-10)
 
 
