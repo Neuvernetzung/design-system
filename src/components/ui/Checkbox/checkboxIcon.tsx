@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ElementType } from "react";
 
 import { Sizes } from "../../../types";
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "../../../theme/icons";
 import { Icon } from "../Icon";
 
 type CheckboxIconProps = {

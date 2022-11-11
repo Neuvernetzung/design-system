@@ -1,9 +1,5 @@
 import { IconButton, Menu } from "../../ui";
-import {
-  SunIcon,
-  MoonIcon,
-  ComputerDesktopIcon,
-} from "@heroicons/react/24/outline";
+import { SunIcon, MoonIcon, ComputerDesktopIcon } from "../../../theme/icons";
 import { useTheme } from "next-themes";
 
 type ThemeSwitchProps = {

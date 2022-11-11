@@ -6,7 +6,7 @@ import { forwardRef, memo, ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
 import { Sizes } from "../../../types";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon } from "../../../theme/icons";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -27,12 +27,12 @@ type ItemProps = {
 export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
 
 export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
-  ({ size = "md", items = [], closeOthers, className, ...props }) => {
+  ({ size = "md", items = [], closeOthers, className, ...props }, ref) => {
     const MotionPanel = motion(HeadlessDisclosure.Panel);
     const MotionIcon = motion(Icon);
 
     return (
-      <div className="flex w-full flex-col" {...props}>
+      <div ref={ref} className="flex w-full flex-col" {...props}>
         {items.map(
           ({ title, content, className: panelClassName }: ItemProps, i) => (
             <HeadlessDisclosure

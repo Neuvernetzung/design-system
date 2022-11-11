@@ -2,6 +2,7 @@ import { ConfigProps } from "./src";
 
 const config: ConfigProps = {
   defaultTheme: "system",
+  icons: "outline",
   colors: {
     primary: {
       50: "#80d4ff",

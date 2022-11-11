@@ -5,7 +5,7 @@ import React from "react";
 import { addDecorator, addParameters } from "@storybook/react";
 import { ThemeProvider } from "../src";
 import { ThemeSwitch } from "../src/components/common/ThemeSwitch";
-import config from "../example.config";
+import config from "../themeConfig";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 
 const Theme = (Story) => {

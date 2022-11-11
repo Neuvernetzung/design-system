@@ -6,7 +6,7 @@ import {
   forwardRef,
 } from "react";
 
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { MenuIcon, CrossIcon } from "../../../theme/icons";
 import { IconButton } from "../../ui/Button";
 import { Link } from "../../ui/Link";
 import { type TagProps } from "../../ui/Tag";
@@ -69,7 +69,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       <div
         ref={ref}
         className={cn(
-          "fixed top-0 bg-accent-100 dark:bg-accent-800 w-full",
+          "fixed top-0 inset-x-0 bg-accent-100 dark:bg-accent-800 w-full",
           zIndexes.nav,
           navbarClassName
         )}
@@ -97,7 +97,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
             {allowDarkMode && <ThemeSwitch />}
             <div className={cn("flex lg:hidden")}>
               <IconButton
-                icon={mobileNavOpen ? XMarkIcon : Bars3Icon}
+                icon={mobileNavOpen ? CrossIcon : MenuIcon}
                 variant="ghost"
                 aria-label="Toggle Navigation"
                 onClick={() => setMobileNavOpen(!mobileNavOpen)}
