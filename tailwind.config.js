@@ -17,7 +17,7 @@ const colorVariables = (color) => ({
 });
 
 module.exports = {
-  content: ["./src/**/*.{ts,tsx}", "./dist**/*.{js,mjs}"],
+  content: [`${__dirname}/src/**/*.{ts,tsx}`, `${__dirname}/dist**/*.{js,mjs}`],
   darkMode: "class",
   theme: {
     fontFamily: {
