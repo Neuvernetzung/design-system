@@ -1,14 +1,14 @@
 import type { Colors, Color } from "../types";
 
 export const extendColors = (
-  customColors: Partial<Record<keyof Omit<Colors, "white" | "black">, Color>>
+  customColors?: Partial<Record<keyof Omit<Colors, "white" | "black">, Color>>
 ) =>
   ({
-    primary: customColors.primary || defaultColors.primary,
-    accent: customColors.accent || defaultColors.accent,
-    success: customColors.success || defaultColors.success,
-    warn: customColors.warn || defaultColors.warn,
-    danger: customColors.danger || defaultColors.danger,
+    primary: customColors?.primary || defaultColors.primary,
+    accent: customColors?.accent || defaultColors.accent,
+    success: customColors?.success || defaultColors.success,
+    warn: customColors?.warn || defaultColors.warn,
+    danger: customColors?.danger || defaultColors.danger,
   } as Record<keyof Omit<Colors, "white" | "black">, Color>);
 
 const defaultColors: Record<keyof Omit<Colors, "white" | "black">, Color> = {

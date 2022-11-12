@@ -13,8 +13,8 @@ type ThemeProvider = {
 };
 
 export type ConfigProps = {
-  colors: Partial<Record<keyof Omit<Colors, "black" | "white">, Color>>;
-  icons: "outline" | "solid" | Icons;
+  colors?: Partial<Record<keyof Omit<Colors, "black" | "white">, Color>>;
+  icons?: "outline" | "solid" | Icons;
   defaultTheme?: "system" | "light" | "dark";
 };
 
