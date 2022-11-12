@@ -11,10 +11,12 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useEffect,
 } from "react";
 import { Controller } from "react-hook-form";
 import { usePopper } from "react-popper";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
+import isEqual from "lodash/isEqual";
 
 import {
   divides,
@@ -114,6 +116,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const [popperElement, setPopperElement] = useState(null);
     const { styles, attributes } = usePopper(referenceElement, popperElement);
 
+    const formValue = formMethods.watch(name);
+
     const returnValue = (e: any) => {
       if (returned) return e?.[returned];
       return e;
@@ -129,16 +133,19 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
     const [selected, setSelected] = useState(
       !multiple
-        ? flattenOptions.find(
-            (item) => returnValue(item) === formMethods.watch(name)
-          )
-        : formMethods
-            .watch(name)
+        ? flattenOptions.find((item) => returnValue(item) === formValue)
+        : formValue
             ?.map((item: string) =>
               flattenOptions.find((i) => item === returnValue(i))
             )
             .filter((v: any) => v) || []
     );
+
+    useEffect(() => {
+      if (isEqual(formValue, selected)) return;
+      if (multiple && !isArray(formValue)) return;
+      setSelected(formValue);
+    }, [formValue]);
 
     const handleOnChange = (e: any) => {
       if (!multiple) {
@@ -266,7 +273,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                             (option) => returnValue(option) === selected
                           )?.children
                         : defaultMessage
-                      : selected.length > 0
+                      : selected?.length > 0
                       ? selected?.map((value: OptionProps, i: number) => (
                           <Tag
                             ref={removeButtonRefs[i].ref}
