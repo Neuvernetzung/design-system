@@ -5,6 +5,7 @@ export * from "./Form";
 export * from "./Icon";
 export * from "./Image";
 export * from "./Input";
+export * from "./Datepicker";
 export * from "./Link";
 export * from "./Menu";
 export * from "./Modal";

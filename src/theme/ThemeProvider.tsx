@@ -1,7 +1,8 @@
 import { ReactNode, useLayoutEffect } from "react";
 import { Colors, Color } from "../types";
 import { extendColors } from "./extendColors";
-import { createCSSSelector, getRGBColorVariable } from "../utils";
+import { getRGBColorVariable } from "../utils";
+import { createCSSSelector } from "../utils/internal";
 import create from "zustand";
 import get from "lodash/get";
 import { ThemeProvider as NextThemeProvider } from "next-themes";

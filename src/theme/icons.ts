@@ -13,6 +13,8 @@ import {
   CheckCircleIcon as HeroCheckCircleIcon,
   ExclamationCircleIcon as HeroExclamationCircleIcon,
   InformationCircleIcon as HeroInformationCircleIcon,
+  CalendarIcon as HeroCalendarIcon,
+  ArrowUturnLeftIcon,
 } from "@heroicons/react/24/outline";
 
 import { FC } from "react";
@@ -32,6 +34,7 @@ export type Icons = {
   CheckIcon: FC<SVGElement>;
   MinusIcon: FC<SVGElement>;
   PlusIcon: FC<SVGElement>;
+  CalendarIcon: FC<SVGElement>;
 };
 
 // Menu
@@ -62,3 +65,5 @@ export const ComputerDesktopIcon = null || HeroComputerDesktopIcon;
 export const CheckIcon = null || HeroCheckIcon;
 export const MinusIcon = null || HeroMinusIcon;
 export const PlusIcon = null || HeroPlusIcon;
+export const CalendarIcon = null || HeroCalendarIcon;
+export const BackArrowIcon = null || ArrowUturnLeftIcon;

@@ -1,12 +1,6 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "src/**/*ts",
-    "src/**/*tsx",
-    "src/utils/createCSSSelector.js"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "src/**/*ts", "src/**/*tsx"],
   "exclude": [
     "dist",
     "alt",

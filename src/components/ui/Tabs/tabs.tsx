@@ -89,11 +89,12 @@ TabList.defaultProps = {
   color: "accent",
 };
 
-const TabButton = ({
+export const TabButton = ({
   title,
   disabled,
   color = "accent",
   size = "md",
+  className,
 }: Omit<ItemProps, "content"> & Pick<TabListProps, "color" | "size">) => (
   <Tab as={Fragment}>
     {({ selected }) => (
@@ -102,6 +103,7 @@ const TabButton = ({
         variant={!selected ? "ghost" : "filled"}
         disabled={disabled}
         color={color}
+        className={className}
       >
         {title}
       </Button>
