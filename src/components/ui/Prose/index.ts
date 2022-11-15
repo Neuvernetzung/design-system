@@ -1,2 +1,2 @@
-export { default as Prose } from "./prose";
 export type { ProseProps } from "./prose";
+export { default as Prose } from "./prose";

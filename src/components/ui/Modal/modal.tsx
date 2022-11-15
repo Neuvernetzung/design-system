@@ -23,7 +23,7 @@ export type ModalProps = {
   content?: string | ReactNode;
   footer?: ReactNode;
   size?: keyof Sizes;
-  initialFocus?: MutableRefObject<Element>;
+  initialFocus?: MutableRefObject<HTMLElement>;
 };
 
 const sizes: Sizes = {

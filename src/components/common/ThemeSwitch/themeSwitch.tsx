@@ -1,6 +1,7 @@
-import { IconButton, Menu } from "../../ui";
-import { SunIcon, MoonIcon, ComputerDesktopIcon } from "../../../theme/icons";
 import { useTheme } from "next-themes";
+
+import { ComputerDesktopIcon, MoonIcon, SunIcon } from "../../../theme/icons";
+import { IconButton, Menu } from "../../ui";
 
 type ThemeSwitchProps = {
   variant?: "button" | "menu";

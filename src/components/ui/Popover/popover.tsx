@@ -1,29 +1,30 @@
 import { Popover as HeadlessPopover, Transition } from "@headlessui/react";
+import type { Placement } from "@popperjs/core";
 import cn from "classnames";
 import {
+  ElementType,
+  ForwardedRef,
+  forwardRef,
   Fragment,
   memo,
   ReactNode,
-  useState,
-  forwardRef,
   useRef,
-  ForwardedRef,
+  useState,
 } from "react";
 import { usePopper } from "react-popper";
-import type { Placement } from "@popperjs/core";
-import { mergeRefs } from "../../../utils/internal/mergeRefs";
-import { keyboardEvent } from "../../../utils/internal/keyboardEvent";
 
 import { focus as focusStyle } from "../../../styles";
+import { getPopoverContainerStyles } from "../../../styles/groups";
 import { Sizes } from "../../../types";
+import { keyboardEvent } from "../../../utils/internal/keyboardEvent";
+import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps } from "../Button";
 import { Button } from "../Button";
-import { getPopoverContainerStyles } from "../../../styles/groups";
 
 export type PopoverProps = {
   content: ReactNode;
   buttonProps?: ButtonProps;
-  buttonAs?: Element;
+  buttonAs?: ElementType<any>;
   buttonComponent?: ReactNode;
   size?: keyof Sizes;
   trigger?: "click" | "hover";
@@ -50,11 +51,14 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       disabled,
       focus = false,
     },
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<HTMLButtonElement>
   ) => {
     const buttonRef = useRef<ExtendedButton>(null);
-    const [referenceElement, setReferenceElement] = useState(null);
-    const [popperElement, setPopperElement] = useState(null);
+    const [referenceElement, setReferenceElement] =
+      useState<HTMLElement | null>(null);
+    const [popperElement, setPopperElement] = useState<HTMLElement | null>(
+      null
+    );
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
       placement,
     });
@@ -73,9 +77,8 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       timeout = setTimeout(() => closePopover(), timeoutDuration);
     };
 
-    const closePopover = () => {
-      return buttonRef.current?.dispatchEvent(keyboardEvent("Escape"));
-    };
+    const closePopover = () =>
+      buttonRef.current?.dispatchEvent(keyboardEvent("Escape"));
 
     return (
       <HeadlessPopover className="relative">
@@ -133,10 +136,19 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
 
 export default memo(Popover);
 
-Popover.defaultProps = { size: "md", focus: false };
+Popover.defaultProps = {
+  size: "md",
+  focus: false,
+  buttonProps: undefined,
+  buttonAs: undefined,
+  buttonComponent: undefined,
+  trigger: "click",
+  placement: "bottom",
+  disabled: undefined,
+};
 Popover.displayName = "Popover";
 
-export const PopoverButton = forwardRef<any, Element>((props, ref) => (
+export const PopoverButton = forwardRef<Element, any>((props, ref) => (
   <HeadlessPopover.Button ref={ref} {...props} />
 ));
 

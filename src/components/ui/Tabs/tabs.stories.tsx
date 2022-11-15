@@ -2,8 +2,8 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
 
 import type { Colors as ColorsType, Sizes as SizesType } from "../../../types";
-import { TabGroup, TabList, TabButton, TabPanels, Tabs } from "./tabs";
 import { Button } from "../Button";
+import { TabButton, TabGroup, TabList, TabPanels, Tabs } from "./tabs";
 
 export default {
   title: "UI/Disclosures/Tabs",

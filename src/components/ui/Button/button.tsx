@@ -1,17 +1,24 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
-import { ElementType, ForwardedRef, forwardRef, memo, ReactNode } from "react";
+import {
+  ElementType,
+  ForwardedRef,
+  forwardRef,
+  memo,
+  ReactNode,
+  FC,
+  SVGProps,
+} from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
   PolymorphicPropsWithRef,
 } from "react-polymorphic-types";
-import { useColorState } from "../../../theme";
 
 import {
   adjustedTextColors,
-  bgColorsInteractive,
   bgColors,
+  bgColorsInteractive,
   borders,
   focusBg,
   focusRing,
@@ -21,6 +28,7 @@ import {
   textColors,
   transition,
 } from "../../../styles";
+import { useColorState } from "../../../theme";
 import type { Colors, Focuses, Sizes } from "../../../types";
 import { Icon } from "../Icon";
 import { sizes as textSizes } from "../Typography/Text/text";
@@ -74,8 +82,8 @@ export type ButtonOwnProps = {
   focus?: keyof Focuses;
   fullWidth?: boolean;
   rounded?: boolean;
-  leftIcon?: ElementType<SVGElement>;
-  rightIcon?: ElementType<SVGElement>;
+  leftIcon?: FC<SVGProps<SVGSVGElement>>;
+  rightIcon?: FC<SVGProps<SVGSVGElement>>;
   children?: ReactNode;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
@@ -105,7 +113,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
       children,
       ...props
     }: PolymorphicPropsWithoutRef<ButtonOwnProps, T>,
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<any>
   ) => {
     const Component = as || ButtonDefaultElement;
 

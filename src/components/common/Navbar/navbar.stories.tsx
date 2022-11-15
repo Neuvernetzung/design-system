@@ -1,15 +1,15 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
 import {
   AcademicCapIcon,
   ArrowPathRoundedSquareIcon,
   BoltIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { Heading } from "../../ui/Typography/Heading";
-import { Logo } from "../../../../public/Logo";
-import { Icon } from "../../../components/ui/Icon";
+import { Meta, Story } from "@storybook/react/types-6-0";
+import React from "react";
 
+import { Logo } from "../../../../public/Logo";
+import { Icon } from "../../ui/Icon";
+import { Heading } from "../../ui/Typography/Heading";
 import { Navbar } from "./navbar";
 
 export default {

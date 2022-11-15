@@ -1,4 +1,4 @@
-import type { Colors, Color } from "../types";
+import type { Color, Colors } from "../types";
 
 export const extendColors = (
   customColors?: Partial<Record<keyof Omit<Colors, "white" | "black">, Color>>

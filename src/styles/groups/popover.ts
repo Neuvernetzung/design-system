@@ -1,13 +1,14 @@
 import cn from "classnames";
+
+import { Sizes } from "../../types";
 import {
   bgColors,
-  zIndexes,
-  shadows,
-  roundings,
   paddingsEvenly,
   popoverMaxSizes,
-} from "../";
-import { Sizes } from "../../types";
+  roundings,
+  shadows,
+  zIndexes,
+} from "..";
 
 type PopoverContainerStyleProps = {
   size: keyof Sizes;
@@ -17,7 +18,7 @@ export const getPopoverContainerStyles = ({
   size,
 }: PopoverContainerStyleProps) =>
   cn(
-    "absolute left-0 md:-mx-4 mt-3 w-screen overflow-hidden",
+    "absolute left-0 md:-mx-4 mt-3 mb-3 w-screen overflow-hidden",
     bgColors.white,
     zIndexes.dropdown,
     shadows.lg,

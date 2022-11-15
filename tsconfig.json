@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/react-library.json",
+  "extends": "tsconfig/nextjs.json",
   "include": ["**/*.ts", "**/*.tsx", "src/**/*ts", "src/**/*tsx"],
   "exclude": [
     "dist",
@@ -9,6 +9,7 @@
     "commitlint.config.ts"
   ],
   "compilerOptions": {
+    "target": "es6",
     "allowJs": true,
     "resolveJsonModule": true,
     "rootDir": "./",
@@ -17,6 +18,7 @@
     "importHelpers": true,
     "sourceMap": true,
     "noUnusedLocals": true,
+    "incremental": false,
     "noUnusedParameters": true,
     "noImplicitReturns": true
   }

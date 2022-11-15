@@ -1,60 +1,64 @@
-import { memo, useRef, useEffect, useState, KeyboardEvent } from "react";
+import cn from "classnames";
+import {
+  addDays,
+  addMonths,
+  addYears,
+  differenceInDays,
+  eachYearOfInterval,
+  endOfDecade,
+  endOfMonth,
+  endOfYear,
+  format,
+  getDate,
+  isAfter,
+  isBefore,
+  isSameMonth,
+  isSameYear,
+  isThisMonth,
+  isToday,
+  isValid,
+  lastDayOfMonth,
+  setDate,
+  setMonth,
+  startOfDecade,
+  startOfMonth,
+  startOfYear,
+  subDays,
+  subMonths,
+  subYears,
+} from "date-fns";
+import de from "date-fns/locale/de";
+import { KeyboardEvent, memo, useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
+import { Day, useLilius } from "use-lilius";
+
 import {
-  Text,
-  Button,
-  IconButton,
-  FormElement,
-  Popover,
-  PopoverButton,
-  ButtonGroup,
-} from "../";
-import type { RequiredRule } from "../";
-import {
+  divides,
   gaps,
   marginsXSmall,
   paddingsX,
   placeholderAsText,
   transitionFast,
-  divides,
 } from "../../../styles";
-import {
-  CrossIcon,
-  ChevronRightIcon,
-  ChevronLeftIcon,
-  CalendarIcon,
-  BackArrowIcon,
-} from "../../../theme/icons";
-import cn from "classnames";
-import { InputVariants, Sizes } from "../../../types";
 import { getInputStyles } from "../../../styles/groups";
-import de from "date-fns/locale/de";
-import { useLilius, Day } from "use-lilius";
 import {
-  addDays,
-  endOfMonth,
-  format,
-  getDate,
-  isThisMonth,
-  isToday,
-  isValid,
-  lastDayOfMonth,
-  startOfMonth,
-  startOfYear,
-  endOfYear,
-  subDays,
-  setDate,
-  setMonth,
-  subYears,
-  addYears,
-  subMonths,
-  addMonths,
-  isSameYear,
-  isSameMonth,
-  startOfDecade,
-  endOfDecade,
-  eachYearOfInterval,
-} from "date-fns";
+  BackArrowIcon,
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CrossIcon,
+} from "../../../theme/icons";
+import { InputVariants, Sizes } from "../../../types";
+import type { RequiredRule } from "..";
+import {
+  Button,
+  ButtonGroup,
+  FormElement,
+  IconButton,
+  Popover,
+  PopoverButton,
+  Text,
+} from "..";
 
 export type DatepickerProps = {
   label?: string;
@@ -67,6 +71,8 @@ export type DatepickerProps = {
   inputVariant?: keyof InputVariants;
   disabled?: boolean;
   removeAll?: boolean;
+  minDate?: Date;
+  maxDate?: Date;
 };
 
 enum Views {
@@ -86,6 +92,8 @@ export const Datepicker = ({
   inputVariant = "outline",
   disabled = false,
   removeAll = true,
+  minDate,
+  maxDate,
 }: DatepickerProps) => {
   const {
     calendar,
@@ -103,10 +111,26 @@ export const Datepicker = ({
     viewToday,
   } = useLilius({ weekStartsOn: Day.MONDAY });
 
-  // When the selection is changed, we want to update the input field
-  // and the currently viewed month to match.
+  // Initiale Kalenderseite setzen
   useEffect(() => {
-    setViewing(selected.length > 0 ? selected[0] : new Date());
+    if (
+      minDate &&
+      !isBefore(new Date(), minDate) &&
+      maxDate &&
+      !isAfter(new Date(), maxDate)
+    ) {
+      setViewing(selected.length > 0 ? selected[0] : new Date());
+    } else if (minDate && maxDate) {
+      setViewing(
+        selected.length > 0
+          ? selected[0]
+          : new Date(addDays(minDate, differenceInDays(maxDate, minDate) / 2))
+      );
+    } else if (minDate) {
+      setViewing(selected.length > 0 ? selected[0] : minDate);
+    } else if (maxDate) {
+      setViewing(selected.length > 0 ? selected[0] : maxDate);
+    }
   }, [selected, setViewing]);
 
   const [preselectedDate, setPreselectedDate] = useState<Date>(new Date());
@@ -116,30 +140,30 @@ export const Datepicker = ({
   const [currentView, setCurrentView] = useState<Views>(Views.DATES);
 
   useEffect(() => {
-    if (isValid(preselectedDate))
-      document
-        .querySelectorAll(
-          '[data-id="' + format(preselectedDate, "dd.MM.yyyy") + '"]'
-        )[0]
-        ?.focus();
+    if (isValid(preselectedDate)) {
+      const toFocus = document.querySelectorAll(
+        `[data-id="${format(preselectedDate, "dd.MM.yyyy")}"]`
+      )[0] as HTMLButtonElement | null;
+      toFocus?.focus();
+    }
   }, [preselectedDate]);
 
   useEffect(() => {
-    if (isValid(preselectedMonth))
-      document
-        .querySelectorAll(
-          '[data-id="' + format(preselectedMonth, "MM.yyyy") + '"]'
-        )[0]
-        ?.focus();
+    if (isValid(preselectedMonth)) {
+      const toFocus = document.querySelectorAll(
+        `[data-id="${format(preselectedMonth, "MM.yyyy")}"]`
+      )[0] as HTMLButtonElement | null;
+      toFocus?.focus();
+    }
   }, [preselectedMonth]);
 
   useEffect(() => {
-    if (isValid(preselectedYear))
-      document
-        .querySelectorAll(
-          '[data-id="' + format(preselectedYear, "yyyy") + '"]'
-        )[0]
-        ?.focus();
+    if (isValid(preselectedYear)) {
+      const toFocus = document.querySelectorAll(
+        `[data-id="${format(preselectedYear, "yyyy")}"]`
+      )[0] as HTMLButtonElement | null;
+      toFocus?.focus();
+    }
   }, [preselectedYear]);
 
   const ARROW_KEYS = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
@@ -160,28 +184,28 @@ export const Datepicker = ({
 
     if (e.key === "ArrowLeft") {
       const toSelect = subDays(preselectedDate, 1);
-      !inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)) &&
+      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
         viewPreviousMonth();
       setPreselectedDate(toSelect);
     }
 
     if (e.key === "ArrowRight") {
       const toSelect = addDays(preselectedDate, 1);
-      !inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)) &&
+      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
         viewNextMonth();
       setPreselectedDate(toSelect);
     }
 
     if (e.key === "ArrowUp") {
       const toSelect = subDays(preselectedDate, 7);
-      !inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)) &&
+      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
         viewPreviousMonth();
       setPreselectedDate(toSelect);
     }
 
     if (e.key === "ArrowDown") {
       const toSelect = addDays(preselectedDate, 7);
-      !inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)) &&
+      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
         viewNextMonth();
       setPreselectedDate(toSelect);
     }
@@ -199,28 +223,28 @@ export const Datepicker = ({
 
     if (e.key === "ArrowLeft") {
       const toSelect = subMonths(preselectedMonth, 1);
-      !inRange(toSelect, startOfYear(viewing), endOfYear(viewing)) &&
+      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(subYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
 
     if (e.key === "ArrowRight") {
       const toSelect = addMonths(preselectedMonth, 1);
-      !inRange(toSelect, startOfYear(viewing), endOfYear(viewing)) &&
+      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(addYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
 
     if (e.key === "ArrowUp") {
       const toSelect = subMonths(preselectedMonth, 4);
-      !inRange(toSelect, startOfYear(viewing), endOfYear(viewing)) &&
+      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(subYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
 
     if (e.key === "ArrowDown") {
       const toSelect = addMonths(preselectedMonth, 4);
-      !inRange(toSelect, startOfYear(viewing), endOfYear(viewing)) &&
+      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(addYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
@@ -238,28 +262,28 @@ export const Datepicker = ({
 
     if (e.key === "ArrowLeft") {
       const toSelect = subYears(preselectedYear, 1);
-      !inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)) &&
+      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(subYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
 
     if (e.key === "ArrowRight") {
       const toSelect = addYears(preselectedYear, 1);
-      !inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)) &&
+      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(addYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
 
     if (e.key === "ArrowUp") {
       const toSelect = subYears(preselectedYear, 5);
-      !inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)) &&
+      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(subYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
 
     if (e.key === "ArrowDown") {
       const toSelect = addYears(preselectedYear, 5);
-      !inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)) &&
+      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(addYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
@@ -438,6 +462,8 @@ export const Datepicker = ({
                 <>
                   {currentView === Views.DATES && (
                     <div
+                      role="button"
+                      tabIndex={-1}
                       ref={outsideDaysRef}
                       onKeyDown={focusFromOutsideDates}
                       className={cn("flex flex-col", gaps.sm)}
@@ -450,16 +476,25 @@ export const Datepicker = ({
                             onChange(new Date());
                           }}
                           size="sm"
+                          disabled={
+                            (minDate && isBefore(new Date(), minDate)) ||
+                            (maxDate && isAfter(new Date(), maxDate))
+                          }
                         >
                           Heute
                         </Button>
                       </ButtonGroup>
-
                       <CalendarHeader
                         leftArrowFunction={viewPreviousMonth}
                         leftAriaLabel="Previous Month"
+                        leftArrowDisabled={
+                          minDate && isBefore(setDate(viewing, 1), minDate)
+                        }
                         rightArrowFunction={viewNextMonth}
                         rightAriaLabel="Next Month"
+                        rightArrowDisabled={
+                          maxDate && isAfter(lastDayOfMonth(viewing), maxDate)
+                        }
                         titleFunction={() => setCurrentView(Views.MONTHS)}
                         title={format(viewing, "MMMM yyyy")}
                       />
@@ -474,6 +509,8 @@ export const Datepicker = ({
                         </div>
 
                         <div
+                          role="button"
+                          tabIndex={-1}
                           ref={daysRef}
                           onKeyDown={(e) => arrowKeyNavigationDates(e)}
                           className="grid grid-cols-7"
@@ -536,6 +573,11 @@ export const Datepicker = ({
                                   toggle(day, true);
                                   onChange(day);
                                 }}
+                                disabled={
+                                  (minDate &&
+                                    isBefore(day, clearTime(minDate))) ||
+                                  (maxDate && isAfter(day, clearTime(maxDate)))
+                                }
                               >
                                 {format(day, "dd")}
                               </PopoverButton>
@@ -559,6 +601,8 @@ export const Datepicker = ({
                   )}
                   {currentView === Views.MONTHS && (
                     <div
+                      role="button"
+                      tabIndex={-1}
                       ref={outsideMonthsRef}
                       onKeyDown={focusFromOutsideMonths}
                       className={cn("flex flex-col", gaps.sm)}
@@ -568,23 +612,35 @@ export const Datepicker = ({
                           setViewing(subYears(viewing, 1))
                         }
                         leftAriaLabel="Previous Year"
+                        leftArrowDisabled={
+                          minDate && isBefore(setMonth(viewing, 1), minDate)
+                        }
                         rightArrowFunction={() =>
                           setViewing(addYears(viewing, 1))
                         }
                         rightAriaLabel="Next Year"
+                        rightArrowDisabled={
+                          maxDate && isAfter(setMonth(viewing, 12), maxDate)
+                        }
                         titleFunction={() => setCurrentView(Views.YEARS)}
                         title={format(viewing, "yyyy")}
                       />
                       <div
+                        role="button"
+                        tabIndex={-1}
                         ref={monthsRef}
                         onKeyDown={(e) => arrowKeyNavigationMonths(e)}
                         className="grid grid-cols-4"
                       >
                         {new Array(12).fill(null).map((_, i) => {
-                          const monthDate = setMonth(viewing, i);
+                          const monthDate = setMonth(
+                            setDate(clearTime(viewing), 1),
+                            i
+                          );
 
                           return (
                             <Button
+                              key={String(monthDate)}
                               tabIndex={
                                 selected.length > 0 &&
                                 isSameYear(selected[0], monthDate) &&
@@ -621,6 +677,15 @@ export const Datepicker = ({
                                 setCurrentView(Views.DATES);
                               }}
                               data-id={format(monthDate, "MM.yyyy")}
+                              disabled={
+                                (minDate &&
+                                  isBefore(
+                                    monthDate,
+                                    setDate(clearTime(minDate), 1)
+                                  )) ||
+                                (maxDate &&
+                                  isAfter(monthDate, lastDayOfMonth(maxDate)))
+                              }
                             >
                               {format(monthDate, "LLL", { locale: de })}
                             </Button>
@@ -631,6 +696,8 @@ export const Datepicker = ({
                   )}
                   {currentView === Views.YEARS && (
                     <div
+                      role="button"
+                      tabIndex={-1}
                       ref={outsideYearsRef}
                       onKeyDown={focusFromOutsideYears}
                       className={cn("flex flex-col", gaps.sm)}
@@ -640,16 +707,24 @@ export const Datepicker = ({
                           setViewing(subYears(viewing, 10))
                         }
                         leftAriaLabel="Previous Decade"
+                        leftArrowDisabled={
+                          minDate && isBefore(startOfDecade(viewing), minDate)
+                        }
                         rightArrowFunction={() =>
                           setViewing(addYears(viewing, 10))
                         }
                         rightAriaLabel="Next Decade"
+                        rightArrowDisabled={
+                          maxDate && isAfter(endOfDecade(viewing), maxDate)
+                        }
                         title={`${format(
                           startOfDecade(viewing),
                           "yyyy"
                         )} - ${format(endOfDecade(viewing), "yyyy")}`}
                       />
                       <div
+                        role="button"
+                        tabIndex={-1}
                         ref={yearsRef}
                         onKeyDown={(e) => arrowKeyNavigationYears(e)}
                         className="grid grid-cols-5"
@@ -657,55 +732,69 @@ export const Datepicker = ({
                         {eachYearOfInterval({
                           start: startOfDecade(viewing),
                           end: endOfDecade(viewing),
-                        }).map((year, i) => {
-                          return (
-                            <Button
-                              tabIndex={
-                                selected.length > 0 &&
-                                isSameYear(selected[0], year)
-                                  ? "0"
-                                  : !inRange(
-                                      selected[0],
-                                      startOfDecade(viewing),
-                                      endOfDecade(viewing)
-                                    ) && isSameYear(new Date(), year)
-                                  ? "0"
-                                  : !inRange(
-                                      selected[0],
-                                      startOfDecade(viewing),
-                                      endOfDecade(viewing)
-                                    ) &&
-                                    !inRange(
-                                      new Date(),
-                                      startOfDecade(viewing),
-                                      endOfDecade(viewing)
-                                    ) &&
-                                    i === 0
-                                  ? "0"
-                                  : "-1"
-                              }
-                              color={
-                                selected.length > 0 &&
-                                isSameYear(selected[0], year)
-                                  ? "primary"
-                                  : "accent"
-                              }
-                              variant={
-                                selected.length > 0 &&
-                                isSameYear(selected[0], year)
-                                  ? "filled"
-                                  : "ghost"
-                              }
-                              onClick={() => {
-                                setViewing(year);
-                                setCurrentView(Views.MONTHS);
-                              }}
-                              data-id={format(year, "yyyy")}
-                            >
-                              {format(year, "yyyy")}
-                            </Button>
-                          );
-                        })}
+                        }).map((year, i) => (
+                          <Button
+                            key={String(year)}
+                            tabIndex={
+                              selected.length > 0 &&
+                              isSameYear(selected[0], year)
+                                ? "0"
+                                : !inRange(
+                                    selected[0],
+                                    startOfDecade(viewing),
+                                    endOfDecade(viewing)
+                                  ) && isSameYear(new Date(), year)
+                                ? "0"
+                                : !inRange(
+                                    selected[0],
+                                    startOfDecade(viewing),
+                                    endOfDecade(viewing)
+                                  ) &&
+                                  !inRange(
+                                    new Date(),
+                                    startOfDecade(viewing),
+                                    endOfDecade(viewing)
+                                  ) &&
+                                  i === 0
+                                ? "0"
+                                : "-1"
+                            }
+                            color={
+                              selected.length > 0 &&
+                              isSameYear(selected[0], year)
+                                ? "primary"
+                                : "accent"
+                            }
+                            variant={
+                              selected.length > 0 &&
+                              isSameYear(selected[0], year)
+                                ? "filled"
+                                : "ghost"
+                            }
+                            onClick={() => {
+                              setViewing(year);
+                              setCurrentView(Views.MONTHS);
+                            }}
+                            data-id={format(year, "yyyy")}
+                            disabled={
+                              (minDate &&
+                                isBefore(
+                                  setMonth(setDate(clearTime(year), 1), 1),
+                                  setMonth(setDate(clearTime(minDate), 1), 1)
+                                )) ||
+                              (maxDate &&
+                                isAfter(
+                                  setMonth(lastDayOfMonth(clearTime(year)), 12),
+                                  setMonth(
+                                    lastDayOfMonth(clearTime(maxDate)),
+                                    12
+                                  )
+                                ))
+                            }
+                          >
+                            {format(year, "yyyy")}
+                          </Button>
+                        ))}
                       </div>
                     </div>
                   )}
@@ -721,11 +810,26 @@ export const Datepicker = ({
 
 export default memo(Datepicker);
 
+Datepicker.defaultProps = {
+  label: undefined,
+  required: undefined,
+  placeholder: undefined,
+  size: "md",
+  helper: undefined,
+  inputVariant: "outline",
+  disabled: undefined,
+  removeAll: true,
+  minDate: undefined,
+  maxDate: undefined,
+};
+
 type CalenderHeaderProps = {
   leftArrowFunction: Function;
   leftAriaLabel: string;
+  leftArrowDisabled?: boolean;
   rightArrowFunction: Function;
   rightAriaLabel: string;
+  rightArrowDisabled?: boolean;
   titleFunction?: Function;
   title: string;
 };
@@ -733,43 +837,51 @@ type CalenderHeaderProps = {
 const CalendarHeader = ({
   leftArrowFunction,
   leftAriaLabel,
+  leftArrowDisabled,
   rightArrowFunction,
   rightAriaLabel,
+  rightArrowDisabled,
   titleFunction,
   title,
-}: CalenderHeaderProps) => {
-  return (
-    <div
-      className={cn(
-        "flex flex-row items-center justify-between",
-        gaps.md,
-        paddingsX.md
-      )}
+}: CalenderHeaderProps) => (
+  <div
+    className={cn(
+      "flex flex-row items-center justify-between",
+      gaps.md,
+      paddingsX.md
+    )}
+  >
+    <IconButton
+      variant="ghost"
+      ariaLabel={leftAriaLabel}
+      icon={ChevronLeftIcon}
+      onClick={leftArrowFunction}
+      size="sm"
+      disabled={leftArrowDisabled}
+    />
+
+    <Button
+      variant="ghost"
+      onClick={titleFunction}
+      tabIndex={!titleFunction ? "-1" : "0"}
+      className={cn("w-full", !titleFunction && "pointer-events-none")}
     >
-      <IconButton
-        variant="ghost"
-        ariaLabel={leftAriaLabel}
-        icon={ChevronLeftIcon}
-        onClick={leftArrowFunction}
-        size="sm"
-      />
+      {title}
+    </Button>
 
-      <Button
-        variant="ghost"
-        onClick={titleFunction}
-        tabIndex={!titleFunction ? "-1" : "0"}
-        className={cn("w-full", !titleFunction && "pointer-events-none")}
-      >
-        {title}
-      </Button>
+    <IconButton
+      variant="ghost"
+      ariaLabel={rightAriaLabel}
+      icon={ChevronRightIcon}
+      onClick={rightArrowFunction}
+      size="sm"
+      disabled={rightArrowDisabled}
+    />
+  </div>
+);
 
-      <IconButton
-        variant="ghost"
-        ariaLabel={rightAriaLabel}
-        icon={ChevronRightIcon}
-        onClick={rightArrowFunction}
-        size="sm"
-      />
-    </div>
-  );
+CalendarHeader.defaultProps = {
+  leftArrowDisabled: false,
+  rightArrowDisabled: false,
+  titleFunction: undefined,
 };

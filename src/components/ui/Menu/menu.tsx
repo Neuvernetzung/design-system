@@ -1,15 +1,15 @@
 import { Menu as HeadlessMenu } from "@headlessui/react";
 import cn from "classnames";
 import {
-  ElementType,
+  FC,
   ForwardedRef,
   forwardRef,
   memo,
   ReactNode,
+  SVGProps,
   useState,
 } from "react";
 import { usePopper } from "react-popper";
-import { mergeRefs } from "../../../utils/internal/mergeRefs";
 
 import { gapsSmall, textColors } from "../../../styles";
 import {
@@ -20,6 +20,7 @@ import {
 } from "../../../styles/groups";
 import { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
+import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -56,7 +57,7 @@ type OptionalItemProps =
   | ({
       children: ReactNode;
       items?: never;
-      icon?: ElementType<SVGElement>;
+      icon?: FC<SVGProps<SVGSVGElement>>;
     } & OptionalFunctionProps);
 
 export type ItemProps = {
@@ -74,10 +75,13 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       buttonType = "button",
       dropdownClassName,
     }: MenuProps,
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<HTMLButtonElement>
   ) => {
-    const [referenceElement, setReferenceElement] = useState(null);
-    const [popperElement, setPopperElement] = useState(null);
+    const [referenceElement, setReferenceElement] =
+      useState<HTMLElement | null>(null);
+    const [popperElement, setPopperElement] = useState<HTMLElement | null>(
+      null
+    );
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
       placement: "bottom-end",
     });

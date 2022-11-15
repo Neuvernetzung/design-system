@@ -1,4 +1,5 @@
-import { ChevronRightIcon } from "../../../theme/icons";
+import cn from "classnames";
+
 import {
   bgColorsInteractive,
   gaps,
@@ -7,6 +8,7 @@ import {
   transition,
   transitionFast,
 } from "../../../styles";
+import { ChevronRightIcon } from "../../../theme/icons";
 import { Button } from "../../ui/Button";
 import { Icon } from "../../ui/Icon";
 import { Link } from "../../ui/Link";
@@ -14,7 +16,6 @@ import { Popover } from "../../ui/Popover";
 import { Tag } from "../../ui/Tag";
 import { Text } from "../../ui/Typography/Text";
 import type { NavItemProps, SubNavProps } from "./navbar";
-import cn from "classnames";
 
 export const DesktopNav = ({ navItems }: SubNavProps) => (
   <div className={cn("flex flex-row items-center", gaps.sm)}>
@@ -39,7 +40,7 @@ export const DesktopNav = ({ navItems }: SubNavProps) => (
                 buttonProps={{
                   leftIcon: icon,
                   variant: "ghost",
-                  disabled: disabled,
+                  disabled,
                   children: (
                     <>
                       {label}

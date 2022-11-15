@@ -1,6 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import cn from "classnames";
 import isArray from "lodash/isArray";
+import isEqual from "lodash/isEqual";
 import {
   createRef,
   ForwardedRef,
@@ -8,15 +9,13 @@ import {
   KeyboardEvent,
   memo,
   ReactNode,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
-  useEffect,
 } from "react";
 import { Controller } from "react-hook-form";
 import { usePopper } from "react-popper";
-import { mergeRefs } from "../../../utils/internal/mergeRefs";
-import isEqual from "lodash/isEqual";
 
 import {
   divides,
@@ -36,9 +35,10 @@ import {
   inputSizes,
   inputVariants,
 } from "../../../styles/groups";
+import { CheckIcon, ChevronUpDownIcon, CrossIcon } from "../../../theme/icons";
 import { InputVariants, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
-import { CheckIcon, ChevronUpDownIcon, CrossIcon } from "../../../theme/icons";
+import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { Icon } from "../Icon";
@@ -110,10 +110,13 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       label,
       helper,
     }: SelectProps,
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<HTMLButtonElement>
   ) => {
-    const [referenceElement, setReferenceElement] = useState(null);
-    const [popperElement, setPopperElement] = useState(null);
+    const [referenceElement, setReferenceElement] =
+      useState<HTMLElement | null>(null);
+    const [popperElement, setPopperElement] = useState<HTMLElement | null>(
+      null
+    );
     const { styles, attributes } = usePopper(referenceElement, popperElement);
 
     const formValue = formMethods.watch(name);

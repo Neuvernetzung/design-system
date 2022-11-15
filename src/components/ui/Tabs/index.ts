@@ -1,8 +1,8 @@
 export type { TabGroupProps } from "./tabs";
 export {
+  TabButton,
   TabGroup,
   TabList,
   TabPanels,
-  TabButton,
   default as Tabs,
 } from "./tabs";

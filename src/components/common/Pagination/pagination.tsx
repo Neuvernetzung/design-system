@@ -1,11 +1,12 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
-import { Select, Text, IconButton, Button, ButtonGroup } from "../../ui";
-import { updateQuery } from "../../../utils/internal/updateQuery";
+import cn from "classnames";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
-import cn from "classnames";
+import { updateQuery } from "../../../utils/internal/updateQuery";
+import { Button, ButtonGroup, IconButton, Select, Text } from "../../ui";
 
 export type PaginationProps = {
   limits?: number[];
@@ -175,6 +176,4 @@ Pagination.defaultProps = {
   variant: "default",
 };
 
-export const PageLimit = () => {
-  return;
-};
+export const PageLimit = () => {};

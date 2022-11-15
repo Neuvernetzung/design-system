@@ -1,12 +1,18 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
-import { ElementType, ForwardedRef, forwardRef, memo } from "react";
+import {
+  ElementType,
+  FC,
+  ForwardedRef,
+  forwardRef,
+  memo,
+  SVGProps,
+} from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
   PolymorphicPropsWithRef,
 } from "react-polymorphic-types";
-import { useColorState } from "../../../../theme";
 
 import {
   focusBg,
@@ -15,6 +21,7 @@ import {
   roundings,
   transition,
 } from "../../../../styles";
+import { useColorState } from "../../../../theme";
 import { Colors, Focuses, Sizes } from "../../../../types";
 import { Icon } from "../../Icon";
 import { sizes as textSizes } from "../../Typography/Text/text";
@@ -41,7 +48,7 @@ export type IconButtonOwnProps = {
   size?: keyof Sizes;
   focus?: keyof Focuses;
   rounded?: boolean;
-  icon: ElementType<SVGElement>;
+  icon: FC<SVGProps<SVGSVGElement>>;
   disabled?: boolean;
 } & ConditionalButtonProps;
 
@@ -68,7 +75,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
       as,
       ...props
     }: PolymorphicPropsWithoutRef<IconButtonOwnProps, T>,
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<any>
   ) => {
     const Component = as || IconButtonDefaultElement;
 
