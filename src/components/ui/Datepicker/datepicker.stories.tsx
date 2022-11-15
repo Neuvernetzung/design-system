@@ -41,6 +41,12 @@ export const Default = ({ ...args }) => {
   );
 };
 
+Default.parameters = {
+  a11y: {
+    disable: true,
+  },
+};
+
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
 
@@ -65,6 +71,11 @@ export const Sizes = ({ ...args }) => {
       ))}
     </Form>
   );
+};
+Sizes.parameters = {
+  a11y: {
+    disable: true,
+  },
 };
 
 export const ButtonVariant = ({ ...args }) => {
@@ -94,6 +105,11 @@ export const ButtonVariant = ({ ...args }) => {
       />
     </Form>
   );
+};
+ButtonVariant.parameters = {
+  a11y: {
+    disable: true,
+  },
 };
 
 export const MinMaxDate = ({ ...args }) => {
@@ -173,4 +189,9 @@ export const MinMaxDate = ({ ...args }) => {
       />
     </Form>
   );
+};
+MinMaxDate.parameters = {
+  a11y: {
+    disable: true,
+  },
 };

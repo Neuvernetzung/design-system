@@ -414,7 +414,7 @@ export const Datepicker = ({
                     {value ? (
                       format(value, "dd.MM.yyyy")
                     ) : (
-                      <span className={placeholderAsText[inputVariant]}>
+                      <span className={cn(placeholderAsText[inputVariant])}>
                         {placeholder}
                       </span>
                     )}
