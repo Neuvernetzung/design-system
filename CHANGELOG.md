@@ -1,3 +1,19 @@
+# [1.2.0](https://github.com/Neuvernetzung/design-system/compare/v1.1.0...v1.2.0) (2022-11-15)
+
+
+### Bug Fixes
+
+* **config:** Icons und Colors in Config optional [#139](https://github.com/Neuvernetzung/design-system/issues/139) ([35c7dff](https://github.com/Neuvernetzung/design-system/commit/35c7dff0569556230409ba1afd4517b43a80532e))
+* **ui:** Tab List aria Attribute parent fix [#127](https://github.com/Neuvernetzung/design-system/issues/127) ([daa8c11](https://github.com/Neuvernetzung/design-system/commit/daa8c11b354d727879b4907e56ede0babd6795ef))
+
+
+### Features
+
+* **common:** Pagination hinzugefügt [#133](https://github.com/Neuvernetzung/design-system/issues/133) ([e3851b0](https://github.com/Neuvernetzung/design-system/commit/e3851b025e626c41ade01494ce1aaa361c6a4fe6))
+* **ui:** a11y Test vorerst disabled für Datepicker [#127](https://github.com/Neuvernetzung/design-system/issues/127) ([503c7c2](https://github.com/Neuvernetzung/design-system/commit/503c7c213aaca157ba2a3761762c90c7fd1b6cf1))
+* **ui:** Grundfunktionalität und a11y für Datepicker hinzugefügt [#127](https://github.com/Neuvernetzung/design-system/issues/127) ([6103873](https://github.com/Neuvernetzung/design-system/commit/61038735909f5d5a4f5d461bcf5ef9b4f3457762))
+* **ui:** Min Max für Datepicker hinzugefügt und funktionalität optimiert [#127](https://github.com/Neuvernetzung/design-system/issues/127) ([ddf4e3e](https://github.com/Neuvernetzung/design-system/commit/ddf4e3ea25574d1da0552288c62d017320376949))
+
 # [1.1.0](https://github.com/Neuvernetzung/design-system/compare/v1.0.0...v1.1.0) (2022-11-11)
 
 
