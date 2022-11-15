@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Neuvernetzung/design-system/compare/v1.2.0...v1.2.1) (2022-11-15)
+
+
+### Bug Fixes
+
+* **build:** Node14 als Target und nurnoch ESM Module [#145](https://github.com/Neuvernetzung/design-system/issues/145) ([273aa4d](https://github.com/Neuvernetzung/design-system/commit/273aa4df9a77f0603bed080b864ba1b21855d901))
+
 # [1.2.0](https://github.com/Neuvernetzung/design-system/compare/v1.1.0...v1.2.0) (2022-11-15)
 
 
