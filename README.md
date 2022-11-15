@@ -57,13 +57,14 @@ export default MyApp;
 ### Design-System Preset in Tailwind.config.js importieren.
 
 ```
+const config = require("@neuvernetzung/design-system/tailwind.config.js");
+
 module.exports = {
-  presets: [require("@neuvernetzung/design-system/tailwind.config.js")],
-  content: ["./**/*.{js,jsx,ts,tsx}"],
-  theme: {
-    extend: {},
-  },
+  presets: [config],
+  content: ["./**/*.{mjs,js,jsx,ts,tsx}", config.content],
+
   plugins: [],
 };
+
 
 ```
