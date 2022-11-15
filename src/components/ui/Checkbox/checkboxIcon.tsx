@@ -1,14 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ElementType } from "react";
+import { FC, SVGProps } from "react";
 
-import { Sizes } from "../../../types";
 import { CheckIcon } from "../../../theme/icons";
+import { Sizes } from "../../../types";
 import { Icon } from "../Icon";
 
 type CheckboxIconProps = {
   size?: keyof Sizes;
   isChecked: boolean;
-  icon?: ElementType<SVGElement>;
+  icon?: FC<SVGProps<SVGSVGElement>>;
 };
 
 export const CheckboxIcon = ({ size, isChecked, icon }: CheckboxIconProps) => (

@@ -1,5 +1,6 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
+
 import { Prose } from "./prose";
 
 export default {
@@ -31,10 +32,8 @@ const content = `<h1>HTML Ipsum Presents</h1>
    <li>Aliquam tincidunt mauris eu risus.</li>
 </ul>`;
 
-export const Default = ({ ...args }) => {
-  return (
-    <Container>
-      <Prose content={content} />
-    </Container>
-  );
-};
+export const Default = ({ ...args }) => (
+  <Container>
+    <Prose content={content} />
+  </Container>
+);

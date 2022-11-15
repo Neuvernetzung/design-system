@@ -1,11 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { Ref, useEffect, useRef, useState } from "react";
 
-const useSwiperRef = () => {
-  const [wrapper, setWrapper] = useState(null);
-  const ref = useRef(null);
+const useSwiperRef = <T extends HTMLElement>(): [
+  T | undefined | null,
+  Ref<T>
+] => {
+  const [wrapper, setWrapper] = useState<T | null>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
-    setWrapper(ref.current);
+    if (ref.current) {
+      setWrapper(ref.current);
+    }
   }, []);
 
   return [wrapper, ref];

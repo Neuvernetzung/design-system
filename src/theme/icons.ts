@@ -1,20 +1,21 @@
 import {
-  ChevronRightIcon as HeroChevronRightIcon,
-  ChevronLeftIcon as HeroChevronLeftIcon,
-  ChevronUpDownIcon as HeroChevronUpDownIcon,
+  ArrowUturnLeftIcon,
   Bars3Icon,
-  XMarkIcon,
-  SunIcon as HeroSunIcon,
-  MoonIcon as HeroMoonIcon,
-  ComputerDesktopIcon as HeroComputerDesktopIcon,
-  CheckIcon as HeroCheckIcon,
-  MinusIcon as HeroMinusIcon,
-  PlusIcon as HeroPlusIcon,
+  CalendarIcon as HeroCalendarIcon,
   CheckCircleIcon as HeroCheckCircleIcon,
+  CheckIcon as HeroCheckIcon,
+  ChevronLeftIcon as HeroChevronLeftIcon,
+  ChevronRightIcon as HeroChevronRightIcon,
+  ChevronUpDownIcon as HeroChevronUpDownIcon,
+  ComputerDesktopIcon as HeroComputerDesktopIcon,
   ExclamationCircleIcon as HeroExclamationCircleIcon,
   InformationCircleIcon as HeroInformationCircleIcon,
+  MinusIcon as HeroMinusIcon,
+  MoonIcon as HeroMoonIcon,
+  PlusIcon as HeroPlusIcon,
+  SunIcon as HeroSunIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
-
 import { FC } from "react";
 
 export type Icons = {
@@ -32,6 +33,7 @@ export type Icons = {
   CheckIcon: FC<SVGElement>;
   MinusIcon: FC<SVGElement>;
   PlusIcon: FC<SVGElement>;
+  CalendarIcon: FC<SVGElement>;
 };
 
 // Menu
@@ -62,3 +64,5 @@ export const ComputerDesktopIcon = null || HeroComputerDesktopIcon;
 export const CheckIcon = null || HeroCheckIcon;
 export const MinusIcon = null || HeroMinusIcon;
 export const PlusIcon = null || HeroPlusIcon;
+export const CalendarIcon = null || HeroCalendarIcon;
+export const BackArrowIcon = null || ArrowUturnLeftIcon;

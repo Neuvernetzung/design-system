@@ -1,10 +1,13 @@
 import cn from "classnames";
 import {
+  createElement,
   ElementType,
+  FC,
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
   memo,
+  SVGProps,
 } from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
@@ -13,7 +16,7 @@ import type {
 } from "react-polymorphic-types";
 
 import { extendedTextColors } from "../../../styles";
-import { ExtendedColors } from "../../../types";
+import { ExtendedColors, Sizes } from "../../../types";
 
 export const sizes: Sizes = {
   xs: "h-4 w-4",
@@ -23,14 +26,6 @@ export const sizes: Sizes = {
   xl: "h-10 w-10",
 };
 
-type Sizes = {
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-};
-
 export const colors: ExtendedColors = extendedTextColors;
 
 const IconDefaultElement = "svg";
@@ -38,7 +33,7 @@ const IconDefaultElement = "svg";
 export interface IconOwnProps extends HTMLAttributes<HTMLElement> {
   size?: keyof Sizes;
   color?: keyof ExtendedColors;
-  icon: ElementType<SVGElement>;
+  icon: FC<SVGProps<SVGSVGElement>>;
   className?: string;
 }
 
@@ -56,16 +51,12 @@ export const Icon: PolymorphicForwardRefExoticComponent<
       color = "inherit",
       className,
     }: PolymorphicPropsWithoutRef<IconOwnProps, T>,
-    ref: ForwardedRef<Element>
-  ) => {
-    const IconWrapper: ElementType<SVGElement> = icon;
-
-    return (
-      <span ref={ref} className={cn(sizes[size], colors[color], className)}>
-        <IconWrapper />
-      </span>
-    );
-  }
+    ref: ForwardedRef<HTMLElement>
+  ) => (
+    <span ref={ref} className={cn(sizes[size], colors[color], className)}>
+      {icon && createElement(icon)}
+    </span>
+  )
 );
 
 Icon.defaultProps = {

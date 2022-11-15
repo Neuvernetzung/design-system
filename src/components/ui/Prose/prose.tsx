@@ -1,10 +1,11 @@
-import { memo } from "react";
-import parse, {
-  HTMLReactParserOptions,
-  Element,
-  domToReact,
-} from "html-react-parser";
 import cn from "classnames";
+import parse, {
+  domToReact,
+  Element,
+  HTMLReactParserOptions,
+} from "html-react-parser";
+import { memo } from "react";
+
 import { Heading, Text } from "../Typography";
 
 export type ProseProps = {

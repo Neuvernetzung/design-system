@@ -1,9 +1,9 @@
+import { CheckIcon } from "@heroicons/react/24/outline";
 import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
 
 import { Sizes as SizesType } from "../../../types";
-import { CheckIcon } from "@heroicons/react/24/outline";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { Heading } from "../Typography";
 import { Modal } from "./modal";

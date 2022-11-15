@@ -1,21 +1,22 @@
+import cn from "classnames";
 import {
-  ReactNode,
-  ElementType,
-  useState,
+  FC,
   ForwardedRef,
   forwardRef,
+  ReactNode,
+  SVGProps,
+  useState,
 } from "react";
 
-import { MenuIcon, CrossIcon } from "../../../theme/icons";
+import { gaps, paddings, zIndexes } from "../../../styles";
+import { CrossIcon, MenuIcon } from "../../../theme/icons";
+import { Sizes } from "../../../types";
 import { IconButton } from "../../ui/Button";
 import { Link } from "../../ui/Link";
 import { type TagProps } from "../../ui/Tag";
+import { ThemeSwitch } from "../ThemeSwitch";
 import { DesktopNav } from "./desktopNav";
 import { MobileNav } from "./mobileNav";
-import cn from "classnames";
-import { zIndexes, paddings, gaps } from "../../../styles";
-import { Sizes } from "../../../types";
-import { ThemeSwitch } from "../ThemeSwitch";
 
 export type NavItemProps = {
   label: string;
@@ -24,7 +25,7 @@ export type NavItemProps = {
   children?: NavItemProps[];
   href?: string;
   disabled?: boolean;
-  icon?: ElementType<SVGElement>;
+  icon?: FC<SVGProps<SVGSVGElement>>;
 };
 
 export type NavbarProps = {
@@ -61,7 +62,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       endItems,
       gapSize = "md",
     },
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<HTMLDivElement>
   ) => {
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -116,32 +117,33 @@ Navbar.displayName = "Navbar";
 Navbar.defaultProps = {
   allowDarkMode: true,
   justifyDesktopNav: "start",
+  logo: undefined,
+  logoProps: undefined,
+  navbarClassName: undefined,
+  startItems: undefined,
+  endItems: undefined,
+  gapSize: "md",
 };
 
 const Logo = ({
   href,
   containerClassName,
   logo,
-}: LogoProps & Pick<NavbarProps, "logo">) => {
-  return (
-    <Link href={href || "/"} legacyBehavior>
-      <a
-        className={cn(
-          "flex flex-row items-center select-none whitespace-nowrap",
-          gaps.sm,
-          containerClassName
-        )}
-      >
-        {logo}
-      </a>
-    </Link>
-  );
-};
+}: LogoProps & Pick<NavbarProps, "logo">) => (
+  <Link href={href || "/"} legacyBehavior>
+    <a
+      className={cn(
+        "flex flex-row items-center select-none whitespace-nowrap",
+        gaps.sm,
+        containerClassName
+      )}
+    >
+      {logo}
+    </a>
+  </Link>
+);
 
 Logo.defaultProps = {
-  iconProps: undefined,
-  text: undefined,
-  textProps: undefined,
   href: undefined,
-  containerProps: undefined,
+  containerClassName: undefined,
 };

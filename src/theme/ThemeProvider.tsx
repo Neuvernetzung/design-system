@@ -1,10 +1,12 @@
-import { ReactNode, useLayoutEffect } from "react";
-import { Colors, Color } from "../types";
-import { extendColors } from "./extendColors";
-import { createCSSSelector, getRGBColorVariable } from "../utils";
-import create from "zustand";
 import get from "lodash/get";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
+import { ReactNode, useLayoutEffect } from "react";
+import create from "zustand";
+
+import { Color, Colors } from "../types";
+import { getRGBColorVariable } from "../utils";
+import { createCSSSelector } from "../utils/internal";
+import { extendColors } from "./extendColors";
 import { Icons } from "./icons";
 
 type ThemeProvider = {
@@ -13,8 +15,8 @@ type ThemeProvider = {
 };
 
 export type ConfigProps = {
-  colors: Partial<Record<keyof Omit<Colors, "black" | "white">, Color>>;
-  icons: "outline" | "solid" | Icons;
+  colors?: Partial<Record<keyof Omit<Colors, "black" | "white">, Color>>;
+  icons?: "outline" | "solid" | Icons;
   defaultTheme?: "system" | "light" | "dark";
 };
 

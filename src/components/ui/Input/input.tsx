@@ -53,6 +53,7 @@ export type InputProps = {
   disabled?: boolean;
   step?: number;
   className?: string;
+  value?: string;
 };
 
 const styles = {
