@@ -89,6 +89,28 @@ TabList.defaultProps = {
   color: "accent",
 };
 
+type StandaloneTabListProps = {
+  listClassName?: string;
+  size?: keyof Sizes;
+  children?: ReactNode;
+};
+
+export const StandaloneTabList = ({
+  children,
+  size = "md",
+  listClassName,
+}: StandaloneTabListProps) => (
+  <Tab.List className={cn("flex flex-row", gaps[size], listClassName)}>
+    {children}
+  </Tab.List>
+);
+
+StandaloneTabList.defaultProps = {
+  listClassName: undefined,
+  size: "md",
+  children: undefined,
+};
+
 export const TabButton = ({
   title,
   disabled,

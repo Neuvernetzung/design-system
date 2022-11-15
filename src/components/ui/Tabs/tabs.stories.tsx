@@ -3,7 +3,14 @@ import React, { useState } from "react";
 
 import type { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button } from "../Button";
-import { TabButton, TabGroup, TabList, TabPanels, Tabs } from "./tabs";
+import {
+  TabButton,
+  TabGroup,
+  TabList,
+  TabPanels,
+  Tabs,
+  StandaloneTabList,
+} from "./tabs";
 
 export default {
   title: "UI/Disclosures/Tabs",
@@ -109,10 +116,14 @@ export const SeparateButtons = ({ ...args }) => {
   return (
     <Container>
       <TabGroup>
-        <TabButton {...items[0]} {...args} />
-        <TabButton {...items[1]} {...args} />
+        <StandaloneTabList>
+          <TabButton {...items[0]} {...args} />
+          <TabButton {...items[1]} {...args} />
+        </StandaloneTabList>
         <TabPanels items={items} {...args} />
-        <TabButton {...items[2]} {...args} />
+        <StandaloneTabList>
+          <TabButton {...items[2]} {...args} />
+        </StandaloneTabList>
       </TabGroup>
     </Container>
   );
