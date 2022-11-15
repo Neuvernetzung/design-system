@@ -1,8 +1,8 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useRef } from "react";
 
-import { Text, Heading } from "../../ui/Typography";
-import { Navbar, Footer } from "../";
+import { Heading, Text } from "../../ui/Typography";
+import { Footer, Navbar } from "..";
 import { PageContainer } from "./pagecontainer";
 
 export default {

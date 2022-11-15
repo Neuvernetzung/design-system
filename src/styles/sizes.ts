@@ -48,3 +48,11 @@ export const textSizes: Required<ExtendedSizes> = {
   "5xl": "lg:text-5xl md:text-4xl text-3xl",
   "6xl": "lg:text-6xl md:text-5xl text-4xl",
 };
+
+export const popoverMaxSizes: Sizes = {
+  xs: "max-w-xs",
+  sm: "max-w-xs sm:max-w-sm",
+  md: "max-w-xs sm:max-w-sm lg:max-w-md",
+  lg: "max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg",
+  xl: "max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl",
+};

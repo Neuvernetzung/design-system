@@ -1,9 +1,9 @@
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
 
 import { Colors as ColorTypes } from "../../../types";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { Button } from "../Button";
 import { ConfirmationModal } from "./confirmation";
 

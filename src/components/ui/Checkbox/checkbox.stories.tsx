@@ -1,8 +1,8 @@
+import { HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button, Form } from "..";
 import { Checkbox, colors, sizes } from "./checkbox";
 

@@ -21,7 +21,7 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
-import { Icon } from "../Icon";
+import { IconButton } from "../Button";
 import type { ImageProps } from "../Image";
 import { Image } from "../Image";
 import useSwiperRef from "./utils/useSwiperRef";
@@ -46,10 +46,10 @@ export const Carousel = ({
   thumbsClassName,
 }: CarouselProps) => {
   const [thumbsSwiper, setThumbsSwiper]: any = useState(null);
-  const [nextEl, nextElRef] = useSwiperRef();
-  const [prevEl, prevElRef] = useSwiperRef();
-  const [nextElThumb, nextElRefThumb] = useSwiperRef();
-  const [prevElThumb, prevElRefThumb] = useSwiperRef();
+  const [nextEl, nextElRef] = useSwiperRef<HTMLButtonElement>();
+  const [prevEl, prevElRef] = useSwiperRef<HTMLButtonElement>();
+  const [nextElThumb, nextElRefThumb] = useSwiperRef<HTMLButtonElement>();
+  const [prevElThumb, prevElRefThumb] = useSwiperRef<HTMLButtonElement>();
 
   return (
     <>
@@ -91,22 +91,28 @@ export const Carousel = ({
             <Image src={src} alt={alt} {...imageProps} />
           </SwiperSlide>
         ))}
-        <div
-          className={`${
-            withThumbs ? "lg:hidden" : ""
-          } text-accent-10 absolute inset-y-0 left-0 z-[1] flex h-full cursor-pointer items-center transition duration-200 hover:bg-black/10`}
+        <IconButton
+          variant="ghost"
+          color="primary"
+          ariaLabel="previous Element"
+          className={cn(
+            withThumbs && "lg:hidden",
+            "absolute inset-y-0 left-0 z-[1] my-auto"
+          )}
           ref={prevElRef}
-        >
-          <Icon icon={ChevronLeftIcon} size="md" color="primary" />
-        </div>
-        <div
-          className={`${
-            withThumbs ? "lg:hidden" : ""
-          } text-accent-10 absolute inset-y-0 right-0 z-[1] flex h-full cursor-pointer items-center transition duration-200 hover:bg-black/10`}
+          icon={ChevronLeftIcon}
+        />
+        <IconButton
+          variant="ghost"
+          color="primary"
+          ariaLabel="next Element"
+          className={cn(
+            withThumbs && "lg:hidden",
+            "absolute inset-y-0 right-0 z-[1] my-auto"
+          )}
           ref={nextElRef}
-        >
-          <Icon icon={ChevronRightIcon} size="md" color="primary" />
-        </div>
+          icon={ChevronRightIcon}
+        />
       </Swiper>
       {withThumbs && images?.length > 1 && (
         <Swiper
@@ -134,18 +140,22 @@ export const Carousel = ({
               <Image src={src} alt={alt} {...imageProps} />
             </SwiperSlide>
           ))}
-          <div
-            className="text-accent-10 absolute inset-y-0 left-0 z-[1] flex h-full transform cursor-pointer items-center transition duration-200 hover:bg-black/10"
+          <IconButton
+            variant="ghost"
+            color="primary"
+            ariaLabel="previous Thumb Element"
+            icon={ChevronLeftIcon}
+            className="absolute inset-y-0 my-auto left-0 z-[1]"
             ref={prevElRefThumb}
-          >
-            <Icon icon={ChevronLeftIcon} size="md" color="primary" />
-          </div>
-          <div
-            className="text-accent-10 absolute inset-y-0 right-0 z-[1] flex h-full cursor-pointer items-center transition duration-200 hover:bg-black/10"
+          />
+          <IconButton
+            variant="ghost"
+            color="primary"
+            ariaLabel="next Thumb Element"
+            className="absolute inset-y-0 my-auto right-0 z-[1]"
             ref={nextElRefThumb}
-          >
-            <Icon icon={ChevronRightIcon} size="md" color="primary" />
-          </div>
+            icon={ChevronRightIcon}
+          />
         </Swiper>
       )}
     </>

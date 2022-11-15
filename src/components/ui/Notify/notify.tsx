@@ -4,12 +4,12 @@ import { v4 as uuid } from "uuid";
 import create from "zustand";
 
 import { zIndexes } from "../../../styles";
-import { Colors } from "../../../types";
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   InformationCircleIcon,
 } from "../../../theme/icons";
+import { Colors } from "../../../types";
 import { Toast, ToastVariants } from "../Toast/toast";
 
 type NotifyState = {

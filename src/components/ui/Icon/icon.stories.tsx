@@ -1,7 +1,7 @@
+import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { HomeIcon } from "@heroicons/react/24/outline";
 import { colors, Icon, sizes } from "./icon";
 
 export default {

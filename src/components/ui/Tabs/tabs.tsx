@@ -89,11 +89,34 @@ TabList.defaultProps = {
   color: "accent",
 };
 
-const TabButton = ({
+type StandaloneTabListProps = {
+  listClassName?: string;
+  size?: keyof Sizes;
+  children?: ReactNode;
+};
+
+export const StandaloneTabList = ({
+  children,
+  size = "md",
+  listClassName,
+}: StandaloneTabListProps) => (
+  <Tab.List className={cn("flex flex-row", gaps[size], listClassName)}>
+    {children}
+  </Tab.List>
+);
+
+StandaloneTabList.defaultProps = {
+  listClassName: undefined,
+  size: "md",
+  children: undefined,
+};
+
+export const TabButton = ({
   title,
   disabled,
   color = "accent",
   size = "md",
+  className,
 }: Omit<ItemProps, "content"> & Pick<TabListProps, "color" | "size">) => (
   <Tab as={Fragment}>
     {({ selected }) => (
@@ -102,6 +125,7 @@ const TabButton = ({
         variant={!selected ? "ghost" : "filled"}
         disabled={disabled}
         color={color}
+        className={className}
       >
         {title}
       </Button>

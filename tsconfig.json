@@ -1,12 +1,6 @@
 {
-  "extends": "tsconfig/react-library.json",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "src/**/*ts",
-    "src/**/*tsx",
-    "src/utils/createCSSSelector.js"
-  ],
+  "extends": "tsconfig/nextjs.json",
+  "include": ["**/*.ts", "**/*.tsx", "src/**/*ts", "src/**/*tsx"],
   "exclude": [
     "dist",
     "alt",
@@ -15,6 +9,7 @@
     "commitlint.config.ts"
   ],
   "compilerOptions": {
+    "target": "es6",
     "allowJs": true,
     "resolveJsonModule": true,
     "rootDir": "./",
@@ -23,6 +18,7 @@
     "importHelpers": true,
     "sourceMap": true,
     "noUnusedLocals": true,
+    "incremental": false,
     "noUnusedParameters": true,
     "noImplicitReturns": true
   }

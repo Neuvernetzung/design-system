@@ -1,7 +1,7 @@
 import cn from "classnames";
 import get from "lodash/get";
 import isArray from "lodash/isArray";
-import { ElementType, memo } from "react";
+import { FC, memo, SVGProps } from "react";
 
 import {
   borders,
@@ -70,7 +70,7 @@ export type CheckboxProps = {
   required?: RequiredRule;
   size?: keyof Sizes;
   color?: keyof Colors;
-  icon?: ElementType<SVGElement>;
+  icon?: FC<SVGProps<SVGSVGElement>>;
   disabled?: boolean;
   className?: string;
 };
@@ -79,7 +79,7 @@ type OptionProps = {
   label: string;
   value: any;
   disabled?: boolean;
-  icon?: ElementType<SVGElement>;
+  icon?: FC<SVGProps<SVGSVGElement>>;
 };
 
 const styles = {

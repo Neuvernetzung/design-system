@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { ElementType, MutableRefObject, ReactNode, useRef } from "react";
+import { MutableRefObject, ReactNode, useRef, FC, SVGProps } from "react";
 
 import { gaps, gapsSmall } from "../../../styles";
 import { Colors } from "../../../types";
@@ -11,7 +11,7 @@ import { Modal } from "./modal";
 export type ConfirmationModalProps = {
   open: boolean;
   setOpen: Function;
-  icon?: ElementType<SVGElement>;
+  icon?: FC<SVGProps<SVGSVGElement>>;
   heading: string;
   content?: string | ReactNode;
   color?: keyof Colors;

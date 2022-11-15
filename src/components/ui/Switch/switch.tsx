@@ -52,7 +52,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
       reverse = false,
       disabled = false,
     },
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<HTMLButtonElement>
   ) => (
     <Controller
       control={formMethods.control}

@@ -1,6 +1,5 @@
 import cn from "classnames";
-import { ElementType, memo } from "react";
-import { useColorState } from "../../../theme";
+import { FC, memo, SVGProps } from "react";
 
 import {
   adjustedTextColors,
@@ -12,8 +11,9 @@ import {
   shadows,
   textColors,
 } from "../../../styles";
-import { Colors } from "../../../types";
+import { useColorState } from "../../../theme";
 import { CrossIcon } from "../../../theme/icons";
+import { Colors } from "../../../types";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -21,7 +21,7 @@ import { Text } from "../Typography";
 export type ToastProps = {
   message: string;
   color?: keyof Colors;
-  icon?: ElementType<SVGElement>;
+  icon?: FC<SVGProps<SVGSVGElement>>;
   handleClose: Function;
   variant?: keyof ToastVariants;
 };

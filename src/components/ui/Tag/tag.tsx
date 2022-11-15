@@ -1,6 +1,5 @@
 import cn from "classnames";
-import { ElementType, memo } from "react";
-import { useColorState } from "../../../theme";
+import { FC, memo, SVGProps } from "react";
 
 import {
   adjustedTextColors,
@@ -12,14 +11,15 @@ import {
   textColors,
   textSizes,
 } from "../../../styles";
+import { useColorState } from "../../../theme";
 import type { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
 import { Icon } from "../Icon";
 
 export type TagProps = {
   label?: string;
-  leftIcon?: ElementType<SVGElement>;
-  rightIcon?: ElementType<SVGElement>;
+  leftIcon?: FC<SVGProps<SVGSVGElement>>;
+  rightIcon?: FC<SVGProps<SVGSVGElement>>;
   size?: keyof Sizes;
   color?: keyof Colors;
   variant?: keyof Variants;

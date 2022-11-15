@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { HTMLAttributes, useState, useEffect, MutableRefObject } from "react";
+import { HTMLAttributes, MutableRefObject, useEffect, useState } from "react";
 
 interface PageContainerProps extends HTMLAttributes<HTMLDivElement> {
   navbarRef?: MutableRefObject<any>;

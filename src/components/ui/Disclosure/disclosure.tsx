@@ -2,11 +2,11 @@ import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
 import cn from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import isString from "lodash/isString";
-import { forwardRef, memo, ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
-import { Sizes } from "../../../types";
 import { MinusIcon, PlusIcon } from "../../../theme/icons";
+import { Sizes } from "../../../types";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -26,100 +26,104 @@ type ItemProps = {
 
 export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
 
-export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
-  ({ size = "md", items = [], closeOthers, className, ...props }, ref) => {
-    const MotionPanel = motion(HeadlessDisclosure.Panel);
-    const MotionIcon = motion(Icon);
+export const Disclosure = ({
+  size = "md",
+  items = [],
+  closeOthers,
+  className,
+  ...props
+}: DisclosureProps) => {
+  const MotionPanel = motion(HeadlessDisclosure.Panel);
+  const MotionIcon = motion(Icon);
 
-    return (
-      <div ref={ref} className="flex w-full flex-col" {...props}>
-        {items.map(
-          ({ title, content, className: panelClassName }: ItemProps, i) => (
-            <HeadlessDisclosure
-              key={`disclosure_${i}`}
-              as="div"
-              className={cn(
-                "flex flex-col last:border-b border-t",
-                borders.accent,
-                className
-              )}
-            >
-              {({ open }) => (
-                <>
-                  <HeadlessDisclosure.Button
-                    as={Button}
-                    variant="ghost"
-                    size={size}
-                    fullWidth
-                    className={cn(
-                      "justify-between rounded-none items-center",
-                      borders.accent
-                    )}
-                  >
-                    {title}
-                    <AnimatePresence initial={false} mode="wait">
-                      <MotionIcon
-                        size={size}
-                        icon={!open ? PlusIcon : MinusIcon}
-                        initial="initial"
-                        animate={open ? "animate" : "initial"}
-                        variants={{
-                          initial: { rotate: open ? -90 : 90 },
-                          animate: {
-                            zIndex: 1,
-                            rotate: 0,
-                            transition: {
-                              type: "tween",
-                              duration: 0.15,
-                              ease: "circOut",
-                            },
-                          },
-                        }}
-                      />
-                    </AnimatePresence>
-                  </HeadlessDisclosure.Button>
-                  {open && (
-                    <MotionPanel
+  return (
+    <div className="flex w-full flex-col" {...props}>
+      {items.map(
+        ({ title, content, className: panelClassName }: ItemProps, i) => (
+          <HeadlessDisclosure
+            key={`disclosure_${i}`}
+            as="div"
+            className={cn(
+              "flex flex-col last:border-b border-t",
+              borders.accent,
+              className
+            )}
+          >
+            {({ open }) => (
+              <>
+                <HeadlessDisclosure.Button
+                  as={Button}
+                  variant="ghost"
+                  size={size}
+                  fullWidth
+                  className={cn(
+                    "justify-between rounded-none items-center",
+                    borders.accent
+                  )}
+                >
+                  {title}
+                  <AnimatePresence initial={false} mode="wait">
+                    <MotionIcon
+                      size={size}
+                      icon={!open ? PlusIcon : MinusIcon}
                       initial="initial"
-                      animate="animate"
+                      animate={open ? "animate" : "initial"}
                       variants={{
-                        initial: {
-                          height: 0,
-                          opacity: 0,
-                        },
+                        initial: { rotate: open ? -90 : 90 },
                         animate: {
-                          height: "auto",
-                          opacity: 1,
+                          zIndex: 1,
+                          rotate: 0,
                           transition: {
-                            height: {
-                              duration: 0.3,
-                            },
-                            opacity: {
-                              duration: 0.15,
-                              delay: 0.15,
-                            },
+                            type: "tween",
+                            duration: 0.15,
+                            ease: "circOut",
                           },
                         },
                       }}
-                    >
-                      <div className={cn(paddings[size], panelClassName)}>
-                        {isString(content) ? (
-                          <Text size={size}>{content}</Text>
-                        ) : (
-                          content
-                        )}
-                      </div>
-                    </MotionPanel>
-                  )}
-                </>
-              )}
-            </HeadlessDisclosure>
-          )
-        )}
-      </div>
-    );
-  }
-);
+                    />
+                  </AnimatePresence>
+                </HeadlessDisclosure.Button>
+                {open && (
+                  <MotionPanel
+                    initial="initial"
+                    animate="animate"
+                    variants={{
+                      initial: {
+                        height: 0,
+                        opacity: 0,
+                      },
+                      animate: {
+                        height: "auto",
+                        opacity: 1,
+                        transition: {
+                          height: {
+                            duration: 0.3,
+                          },
+                          opacity: {
+                            duration: 0.15,
+                            delay: 0.15,
+                          },
+                        },
+                      },
+                    }}
+                  >
+                    <div className={cn(paddings[size], panelClassName)}>
+                      {isString(content) ? (
+                        <Text size={size}>{content}</Text>
+                      ) : (
+                        content
+                      )}
+                    </div>
+                  </MotionPanel>
+                )}
+              </>
+            )}
+          </HeadlessDisclosure>
+        )
+      )}
+    </div>
+  );
+};
 
 export default memo(Disclosure);
 
@@ -128,4 +132,5 @@ Disclosure.displayName = "Disclosure";
 Disclosure.defaultProps = {
   size: "md",
   closeOthers: false,
+  className: undefined,
 };

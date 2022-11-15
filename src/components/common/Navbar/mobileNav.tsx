@@ -1,11 +1,12 @@
+import cn from "classnames";
+
+import { gaps, paddingsEvenly } from "../../../styles";
 import { Button } from "../../ui/Button";
+import { Disclosure } from "../../ui/Disclosure";
 import { Icon } from "../../ui/Icon";
 import { Link } from "../../ui/Link";
 import { Tag } from "../../ui/Tag";
-import { Disclosure } from "../../ui/Disclosure";
 import type { NavItemProps, SubNavProps } from "./navbar";
-import cn from "classnames";
-import { paddingsEvenly, gaps } from "../../../styles";
 
 export const MobileNav = ({ navItems }: SubNavProps) => (
   <div className={cn(paddingsEvenly.md, "min-h-[80vh]")}>
@@ -74,7 +75,12 @@ export const MobileNavItem = ({
                       );
 
                     return (
-                      <Button variant="ghost" disabled={disabled} fullWidth>
+                      <Button
+                        key={label}
+                        variant="ghost"
+                        disabled={disabled}
+                        fullWidth
+                      >
                         <div
                           className={cn(
                             "w-full flex items-start justify-start",
