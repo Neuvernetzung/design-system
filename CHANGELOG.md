@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Neuvernetzung/design-system/compare/v1.2.1...v1.3.0) (2022-11-16)
+
+
+### Features
+
+* **ui:** Längeren Text bei Tooltip besser in der Breite handeln [#152](https://github.com/Neuvernetzung/design-system/issues/152) ([1d8ceec](https://github.com/Neuvernetzung/design-system/commit/1d8ceec04b6c9f9debd242dccfc43a7387a25988))
+
 ## [1.2.1](https://github.com/Neuvernetzung/design-system/compare/v1.2.0...v1.2.1) (2022-11-15)
 
 
