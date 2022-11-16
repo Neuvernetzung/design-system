@@ -10,6 +10,7 @@ import {
   roundings,
   textColors,
   textSizes,
+  paddingsSmallEvenly,
 } from "../../../styles";
 import { useColorState } from "../../../theme";
 import type { Colors, Sizes } from "../../../types";
@@ -58,10 +59,11 @@ export const Tag = ({
         "h-min flex-0 inline-flex flex-row items-center select-none",
         variants(color, colorState)[variant],
         roundings[size],
-        paddingsSmall[size],
+        label ? paddingsSmall[size] : paddingsSmallEvenly[size],
         gapsSmall[size],
         textSizes[size],
-        rounded && "rounded-full"
+        rounded && "rounded-full",
+        !label && "aspect-square"
       )}
     >
       {leftIcon && <Icon size={capSize(size, "md")} icon={leftIcon} />}
