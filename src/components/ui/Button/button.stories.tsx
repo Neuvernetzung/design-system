@@ -131,6 +131,17 @@ export const FullWidth = ({ ...args }) => (
   </Container>
 );
 
+export const ContentAlignment = ({ ...args }) => (
+  <Container>
+    <Button className="!justify-start" fullWidth {...args}>
+      left
+    </Button>
+    <Button className="!justify-end" fullWidth {...args}>
+      right
+    </Button>
+  </Container>
+);
+
 export const Rounded = ({ ...args }) => (
   <Container>
     <Button rounded {...args}>

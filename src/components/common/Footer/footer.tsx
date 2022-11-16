@@ -48,10 +48,8 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
                   {label}
                 </Text>
                 {links.map(({ label, href }, _i) => (
-                  <Text size="sm">
-                    <Link href={href} key={`footergroup_${i}_el_${_i}`}>
-                      {label}
-                    </Link>
+                  <Text size="sm" key={`footergroup_${i}_el_${_i}`}>
+                    <Link href={href}>{label}</Link>
                   </Text>
                 ))}
               </div>
@@ -81,4 +79,5 @@ Footer.defaultProps = {
   logo: undefined,
   cols: [],
   copyright: undefined,
+  className: undefined,
 };

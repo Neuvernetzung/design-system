@@ -57,3 +57,11 @@ export const paddingsSmall: Sizes = {
   lg: `${paddingsXSmall.lg} ${paddingsYSmall.lg}`,
   xl: `${paddingsXSmall.xl} ${paddingsYSmall.xl}`,
 };
+
+export const paddingsSmallEvenly: Sizes = {
+  xs: "p-px",
+  sm: "p-0.5",
+  md: "p-1",
+  lg: "py-1.5",
+  xl: "p-2",
+};
