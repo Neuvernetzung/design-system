@@ -1,5 +1,6 @@
 import { Placement } from "@popperjs/core";
 import cn from "classnames";
+import isString from "lodash/isString";
 import { memo, ReactNode, useState } from "react";
 import { usePopper } from "react-popper";
 
@@ -39,7 +40,8 @@ export const Tooltip = ({
           paddingsSmall[size],
           roundings[size],
           bgColors.black,
-          shadows.sm
+          shadows.sm,
+          isString(label) && label.length < 50 ? "max-w-[12rem]" : "w-64"
         )}
         style={styles.popper}
         {...attributes.popper}
