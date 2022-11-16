@@ -75,5 +75,14 @@ export const WithIcon = ({ ...args }) => (
   <Container>
     <Tag label="left" leftIcon={Cog6ToothIcon} {...args} />
     <Tag label="left" rightIcon={Cog6ToothIcon} {...args} />
+    <Tag leftIcon={Cog6ToothIcon} {...args} />
+  </Container>
+);
+
+export const Rounded = ({ ...args }) => (
+  <Container>
+    <Tag rounded label="rounded" {...args} />
+    <Tag rounded label="rounded" leftIcon={Cog6ToothIcon} {...args} />
+    <Tag rounded leftIcon={Cog6ToothIcon} {...args} />
   </Container>
 );
