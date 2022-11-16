@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/Neuvernetzung/design-system/compare/v1.3.0...v1.4.0) (2022-11-16)
+
+
+### Bug Fixes
+
+* **ui:** Span als Wrapper wenn disabled [#148](https://github.com/Neuvernetzung/design-system/issues/148) ([c5702dc](https://github.com/Neuvernetzung/design-system/commit/c5702dcf55bfd9ef50c9ce193f55b1fc6f086b50))
+
+
+### Features
+
+* **docs:** Button Content ausrichtbar allerdings nur mit important [#153](https://github.com/Neuvernetzung/design-system/issues/153) ([bfd444b](https://github.com/Neuvernetzung/design-system/commit/bfd444bdc40b2d9a5fc8b254fd5bdc083c781560))
+* **ui:** Disabled für Link hinzufügen [#148](https://github.com/Neuvernetzung/design-system/issues/148) ([ea1ccf4](https://github.com/Neuvernetzung/design-system/commit/ea1ccf48cea97542e2fb46e1901e3ef7c7e8111b))
+* **ui:** Tag Beispiel für rounded und Icon only verbessert [#151](https://github.com/Neuvernetzung/design-system/issues/151) ([fcc17d3](https://github.com/Neuvernetzung/design-system/commit/fcc17d378146c3ac0c874e371e3ce8a9b112a4ef))
+
 # [1.3.0](https://github.com/Neuvernetzung/design-system/compare/v1.2.1...v1.3.0) (2022-11-16)
 
 
