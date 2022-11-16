@@ -28,3 +28,11 @@ export const AsButton = ({ ...args }) => (
     </Link>
   </Container>
 );
+
+export const Disabled = ({ ...args }) => (
+  <Container>
+    <Link href="/" disabled>
+      Link
+    </Link>
+  </Container>
+);
