@@ -14,12 +14,18 @@ import {
 import { usePopper } from "react-popper";
 
 import { focus as focusStyle } from "../../../styles";
-import { getPopoverContainerStyles } from "../../../styles/groups";
+import {
+  getPopoverContainerStyles,
+  getPopoverFullScreenContainerStyles,
+  getPopoverFullScreenStyles,
+  getPopoverFullScreenHeaderStyles,
+} from "../../../styles/groups";
+import { CrossIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { keyboardEvent } from "../../../utils/internal/keyboardEvent";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps } from "../Button";
-import { Button } from "../Button";
+import { Button, IconButton } from "../Button";
 
 export type PopoverProps = {
   content: ReactNode;
@@ -32,6 +38,7 @@ export type PopoverProps = {
   disabled?: boolean;
   focus?: boolean;
   panelClassName?: string;
+  fullScreenOnMobile?: boolean;
 };
 
 interface ExtendedButton extends HTMLButtonElement {
@@ -52,6 +59,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       disabled,
       focus = false,
       panelClassName,
+      fullScreenOnMobile = false,
     },
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
@@ -123,6 +131,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
                 focus={focus}
                 ref={setPopperElement}
                 className={cn(
+                  !fullScreenOnMobile ? "block" : "hidden md:block",
                   getPopoverContainerStyles({ size }),
                   panelClassName
                 )}
@@ -130,6 +139,35 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
                 {...attributes.popper}
               >
                 {content}
+              </HeadlessPopover.Panel>
+            </Transition>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <HeadlessPopover.Panel
+                focus={focus}
+                className={cn(
+                  fullScreenOnMobile ? "block md:hidden" : "hidden",
+                  getPopoverFullScreenStyles(),
+                  panelClassName
+                )}
+              >
+                <div className={cn(getPopoverFullScreenHeaderStyles())}>
+                  <PopoverButton
+                    as={IconButton}
+                    icon={CrossIcon}
+                    variant="ghost"
+                  />
+                </div>
+                <div className={cn(getPopoverFullScreenContainerStyles())}>
+                  {content}
+                </div>
               </HeadlessPopover.Panel>
             </Transition>
           </div>
@@ -151,6 +189,7 @@ Popover.defaultProps = {
   placement: "bottom",
   disabled: undefined,
   panelClassName: undefined,
+  fullScreenOnMobile: false,
 };
 Popover.displayName = "Popover";
 
