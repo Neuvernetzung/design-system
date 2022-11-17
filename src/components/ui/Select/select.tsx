@@ -251,7 +251,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           >
             <Listbox
               value={selected}
-              onChange={(e) => onChange(handleOnChange(e))}
+              onChange={(e) => {
+                console.log("onChange", e);
+                onChange(handleOnChange(e));
+              }}
               multiple={multiple}
               disabled={disabled}
             >
@@ -399,7 +402,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                     disabled={_disabled}
                                     value={returnValue({
                                       value: _value,
-                                      props: _props,
+                                      ..._props,
                                     })}
                                     className={({ active }) =>
                                       cn(
@@ -409,7 +412,12 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                           disabled: _disabled,
                                         }),
                                         _hideActive &&
-                                          isChecked(_value) &&
+                                          isChecked(
+                                            returnValue({
+                                              value: _value,
+                                              ..._props,
+                                            })
+                                          ) &&
                                           "hidden"
                                       )
                                     }
@@ -420,7 +428,12 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                       color="primary"
                                       icon={CheckIcon}
                                       className={
-                                        isChecked(_value)
+                                        isChecked(
+                                          returnValue({
+                                            value: _value,
+                                            ..._props,
+                                          })
+                                        )
                                           ? "visible"
                                           : "invisible"
                                       }
@@ -435,7 +448,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                           <Listbox.Option
                             key={`select_${name}_option_${i}`}
                             disabled={disabled}
-                            value={returnValue({ value, props })}
+                            value={returnValue({ value, ...props })}
                             className={({ active }) =>
                               cn(
                                 getDropDownOptionsStyles({
@@ -443,7 +456,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                   active,
                                   disabled,
                                 }),
-                                _hideActive && isChecked(value) && "hidden"
+                                _hideActive &&
+                                  isChecked(returnValue({ value, ...props })) &&
+                                  "hidden"
                               )
                             }
                           >
@@ -453,7 +468,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                               color="primary"
                               icon={CheckIcon}
                               className={
-                                isChecked(value) ? "visible" : "invisible"
+                                isChecked(returnValue({ value, ...props }))
+                                  ? "visible"
+                                  : "invisible"
                               }
                             />
                           </Listbox.Option>
@@ -523,7 +540,7 @@ const Tag = forwardRef(
         ref={ref}
         as="div"
         focus="bg"
-        tabindex="-1"
+        tabIndex="-1"
         role="button"
         ariaLabel="remove"
         size={iconButtonSizes[size]}

@@ -300,3 +300,44 @@ export const Disabled = ({ ...args }) => {
     </Form>
   );
 };
+
+export const OtherValueReturned = ({ ...args }) => {
+  const formMethods = useForm();
+
+  const options = [
+    {
+      children: "Option 1",
+      _id: "option-1",
+      value: "niemals",
+    },
+    {
+      children: "Option 2",
+      _id: "option-2",
+      value: "niemals",
+    },
+  ];
+
+  return (
+    <Form
+      formMethods={formMethods}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Select
+        formMethods={formMethods}
+        name="_id_returned"
+        returned="_id"
+        options={options}
+        {...args}
+      />
+      <Select
+        formMethods={formMethods}
+        name="_id_returned_multiple"
+        multiple
+        returned="_id"
+        options={options}
+        {...args}
+      />
+    </Form>
+  );
+};
