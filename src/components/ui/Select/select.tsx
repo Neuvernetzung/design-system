@@ -16,6 +16,7 @@ import {
 } from "react";
 import { Controller } from "react-hook-form";
 import { usePopper } from "react-popper";
+import type { Placement } from "@popperjs/core";
 
 import {
   divides,
@@ -66,6 +67,7 @@ export type SelectProps = {
   hideActive?: boolean;
   label?: string;
   helper?: string;
+  placement?: Placement;
 };
 
 type OptionalOptionProps =
@@ -109,6 +111,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       multipleStyle = "tags",
       label,
       helper,
+      placement = "bottom",
     }: SelectProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
@@ -117,7 +120,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
-    const { styles, attributes } = usePopper(referenceElement, popperElement);
+    const { styles, attributes } = usePopper(referenceElement, popperElement, {
+      placement,
+    });
 
     const formValue = formMethods.watch(name);
 
