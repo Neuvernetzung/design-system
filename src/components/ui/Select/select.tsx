@@ -194,6 +194,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       }));
 
     const handleLeftAndRightArrow = (e: KeyboardEvent, index?: number) => {
+      if (!multiple) return;
       let _index = index !== undefined ? index : removeButtonRefs.length - 1;
 
       if (removeButtonRefs[_index].ref.current) {
@@ -286,6 +287,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                               onChange(handleRemove(i));
                             }}
                             onKeyUp={(e: KeyboardEvent<HTMLButtonElement>) => {
+                              if (!multiple) return;
                               e.stopPropagation();
                               handleTabAndArrowsOnRemoveTag(e);
                               handleLeftAndRightArrow(e, i);
@@ -296,7 +298,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                 if (!removeButtonRefs[i])
                                   return removeButtonRefs[
                                     i - 1
-                                  ].ref.current.focus();
+                                  ]?.ref?.current.focus();
                               }
                             }}
                             key={`select_tag_${i}`}
