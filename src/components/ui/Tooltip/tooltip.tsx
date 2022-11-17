@@ -1,6 +1,6 @@
 import { Placement } from "@popperjs/core";
 import cn from "classnames";
-import { memo, ReactNode, useState } from "react";
+import { memo, ReactElement, ReactNode, useState } from "react";
 import { usePopper } from "react-popper";
 
 import { bgColors, paddingsSmall, roundings, shadows } from "../../../styles";
@@ -8,8 +8,8 @@ import { Sizes } from "../../../types";
 import { Text } from "../Typography";
 
 export type TooltipProps = {
-  children: ReactNode;
-  label: ReactNode;
+  children: ReactElement;
+  label?: ReactNode;
   size?: keyof Sizes;
   placement?: Placement;
 };
@@ -27,6 +27,8 @@ export const Tooltip = ({
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
   });
+
+  if (!label) return children;
 
   return (
     <span ref={setReferenceElement} className="relative group">
@@ -57,4 +59,5 @@ export default memo(Tooltip);
 Tooltip.defaultProps = {
   size: "sm",
   placement: "top",
+  label: undefined,
 };
