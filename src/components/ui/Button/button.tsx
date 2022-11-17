@@ -2,11 +2,11 @@
 import cn from "classnames";
 import {
   ElementType,
+  FC,
   ForwardedRef,
   forwardRef,
   memo,
   ReactNode,
-  FC,
   SVGProps,
 } from "react";
 import type {
@@ -39,9 +39,16 @@ export const variants: Variants = {
     "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10  dark:disabled:hover:bg-opacity-0 border",
   ghost:
     "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10  dark:disabled:hover:bg-opacity-0",
+  subtile:
+    "bg-opacity-30 dark:bg-opacity-30 hover:bg-opacity-40 hover:dark:bg-opacity-40 disabled:hover:bg-opacity-30 dark:disabled:hover:bg-opacity-30",
 };
 
-export type Variants = { filled: string; outline: string; ghost: string };
+export type Variants = {
+  filled: string;
+  outline: string;
+  ghost: string;
+  subtile: string;
+};
 
 export const colors = (
   color: keyof Colors,
@@ -53,6 +60,7 @@ export const colors = (
     filled: adjustedTextColors(colorState)[color],
     outline: textColors[color],
     ghost: textColors[color],
+    subtile: textColors[color],
   },
 });
 

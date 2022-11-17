@@ -168,5 +168,12 @@ export const Disabled = ({ ...args }) => (
       icon={HomeIcon}
       {...args}
     />
+    <IconButton
+      variant="subtile"
+      ariaLabel="home"
+      disabled
+      icon={HomeIcon}
+      {...args}
+    />
   </Container>
 );
