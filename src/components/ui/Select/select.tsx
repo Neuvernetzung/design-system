@@ -200,9 +200,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
     const handleLeftAndRightArrow = (e: KeyboardEvent, index?: number) => {
       if (!multiple) return;
-      let _index = index !== undefined ? index : removeButtonRefs.length - 1;
+      if (!removeButtonRefs || removeButtonRefs?.length === 0) return;
+      let _index = index !== undefined ? index : removeButtonRefs?.length - 1;
 
-      if (removeButtonRefs[_index].ref.current) {
+      if (removeButtonRefs[_index]?.ref?.current) {
         if (e.key === "ArrowRight") {
           if (index !== undefined) _index += 1;
           if (!removeButtonRefs[_index])
@@ -295,13 +296,15 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                               onChange(handleRemove(i));
                             }}
                             onKeyUp={(e: KeyboardEvent<HTMLButtonElement>) => {
-                              if (!multiple) return;
                               e.stopPropagation();
                               handleTabAndArrowsOnRemoveTag(e);
                               handleLeftAndRightArrow(e, i);
                               if (e.key === "Backspace" || e.key === "Delete") {
                                 onChange(handleRemove(i));
-                                if (removeButtonRefs.length === 0)
+                                if (
+                                  !removeButtonRefs ||
+                                  removeButtonRefs.length === 0
+                                )
                                   return buttonRef.current?.focus();
                                 if (!removeButtonRefs[i])
                                   return removeButtonRefs[
