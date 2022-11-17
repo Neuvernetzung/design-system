@@ -172,5 +172,8 @@ export const Disabled = ({ ...args }) => (
     <Button variant="outline" disabled {...args}>
       disabled
     </Button>
+    <Button variant="subtile" disabled {...args}>
+      disabled
+    </Button>
   </Container>
 );
