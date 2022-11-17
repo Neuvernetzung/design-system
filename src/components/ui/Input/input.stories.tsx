@@ -102,6 +102,14 @@ export const Error = ({ ...args }) => {
           {...args}
         />
       ))}
+      <Input
+        formMethods={formMethods}
+        name="element_input"
+        placeholder="Mit Element"
+        required
+        rightElement={{ children: <Icon icon={PhoneIcon} /> }}
+        {...args}
+      />
       <Button type="submit">Bestätigen</Button>
     </Form>
   );
@@ -156,24 +164,24 @@ export const Elements = ({ ...args }) => {
     >
       <Input
         formMethods={formMethods}
-        name="input-left-addon"
-        placeholder="left Addon"
-        leftElement={{ children: <Icon size="xs" icon={PhoneIcon} /> }}
+        name="input-left-element"
+        placeholder="left Element"
+        leftElement={{ children: <Icon icon={PhoneIcon} /> }}
         required
         {...args}
       />
       <Input
         formMethods={formMethods}
-        name="input-right-addon"
-        placeholder="right Addon"
+        name="input-right-element"
+        placeholder="right Element"
         rightElement={{ children: <Icon icon={PhoneIcon} /> }}
         required
         {...args}
       />
       <Input
         formMethods={formMethods}
-        name="input-both-addons"
-        placeholder="both Addons"
+        name="input-both-elements"
+        placeholder="both Elements"
         leftElement={{ children: <Icon icon={PhoneIcon} /> }}
         rightElement={{ children: <Icon icon={PhoneIcon} /> }}
         required

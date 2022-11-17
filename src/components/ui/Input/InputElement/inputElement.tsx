@@ -12,6 +12,7 @@ export type InputElementProps = {
   isLeft?: boolean;
   isRight?: boolean;
   pointerEvents?: boolean;
+  style?: any;
 };
 
 const styles = {
@@ -20,7 +21,15 @@ const styles = {
 
 export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
   (
-    { className, children, size, isLeft, isRight, pointerEvents = false },
+    {
+      className,
+      children,
+      size,
+      isLeft,
+      isRight,
+      pointerEvents = false,
+      style,
+    },
     ref
   ) => (
     <div
@@ -33,6 +42,7 @@ export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
         !pointerEvents && "pointer-events-none",
         className
       )}
+      style={style} // Nur um Error Icon zu verschieben, falls ein rechtes Element angezeigt wird.
     >
       {children}
     </div>
@@ -48,4 +58,5 @@ InputElement.defaultProps = {
   isLeft: false,
   isRight: false,
   pointerEvents: false,
+  style: undefined,
 };

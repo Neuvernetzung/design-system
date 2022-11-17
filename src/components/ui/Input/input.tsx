@@ -7,6 +7,7 @@ import {
   inputSizes,
   inputVariants,
 } from "../../../styles/groups";
+import { ExclamationCircleIcon } from "../../../theme/icons";
 import type { InputVariants, Sizes } from "../../../types";
 import {
   FormElement,
@@ -17,6 +18,7 @@ import {
   PatternRule,
   RequiredRule,
 } from "../Form";
+import { Icon } from "../Icon";
 import { InputAddon } from "./InputAddon";
 import type { InputAddonProps } from "./InputAddon/inputAddon";
 import { InputElement } from "./InputElement";
@@ -153,8 +155,23 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             {...props}
           />
+
           {rightAddon && (
             <InputAddon size={size} variant={variant} isRight {...rightAddon} />
+          )}
+          {!!error && (
+            <InputElement
+              size={size}
+              isRight
+              style={{
+                right: rightElement && rightElementWidth,
+              }}
+            >
+              <Icon
+                color={variant === "outline" ? "danger" : "filled"}
+                icon={ExclamationCircleIcon}
+              />
+            </InputElement>
           )}
           {rightElement && (
             <InputElement
@@ -192,6 +209,7 @@ Input.defaultProps = {
   disabled: false,
   step: undefined,
   className: undefined,
+  value: undefined,
 };
 
 export default memo(Input);
