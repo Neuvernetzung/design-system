@@ -59,3 +59,20 @@ export const OnHover = ({ ...args }) => (
     />
   </Container>
 );
+
+export const PanelClassName = ({ ...args }) => (
+  <Container>
+    <Popover
+      trigger="hover"
+      content={
+        <div>
+          <Text>Dies ist ein Popover</Text>
+        </div>
+      }
+      placement="bottom-start"
+      panelClassName="bg-red-500 w-64"
+      buttonProps={{ children: "Hier hovern" }}
+      {...args}
+    />
+  </Container>
+);
