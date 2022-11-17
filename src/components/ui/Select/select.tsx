@@ -50,7 +50,7 @@ export const variants: InputVariants = inputVariants;
 
 export type SelectProps = {
   formMethods: any;
-  options: OptionProps[];
+  options: SelectOptionProps[];
   size?: keyof Sizes;
   variant?: keyof InputVariants;
   name: string;
@@ -70,17 +70,17 @@ export type SelectProps = {
   placement?: Placement;
 };
 
-type OptionalOptionProps =
+type OptionalSelectOptionProps =
   | {
       children: string;
-      options?: OptionProps[];
+      options?: SelectOptionProps[];
     }
   | { children: ReactNode; options: never };
 
-type OptionProps = {
+export type SelectOptionProps = {
   value: any;
   disabled?: boolean;
-} & OptionalOptionProps;
+} & OptionalSelectOptionProps;
 
 const iconButtonSizes: Sizes = {
   xs: "xs",
@@ -282,7 +282,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                           )?.children
                         : defaultMessage
                       : selected?.length > 0
-                      ? selected?.map((value: OptionProps, i: number) => (
+                      ? selected?.map((value: SelectOptionProps, i: number) => (
                           <Tag
                             ref={removeButtonRefs[i].ref}
                             size={size}
@@ -368,7 +368,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                           disabled,
                           options: _options,
                           ...props
-                        }: OptionProps,
+                        }: SelectOptionProps,
                         i
                       ) => {
                         if (_options && _options.length !== 0)
@@ -391,7 +391,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                     value: _value,
                                     disabled: _disabled,
                                     ..._props
-                                  }: OptionProps,
+                                  }: SelectOptionProps,
                                   _i
                                 ) => (
                                   <Listbox.Option
