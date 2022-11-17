@@ -31,6 +31,7 @@ export type PopoverProps = {
   placement?: Placement;
   disabled?: boolean;
   focus?: boolean;
+  panelClassName?: string;
 };
 
 interface ExtendedButton extends HTMLButtonElement {
@@ -50,6 +51,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       placement = "bottom-start",
       disabled,
       focus = false,
+      panelClassName,
     },
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
@@ -120,7 +122,10 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
               <HeadlessPopover.Panel
                 focus={focus}
                 ref={setPopperElement}
-                className={cn(getPopoverContainerStyles({ size }))}
+                className={cn(
+                  getPopoverContainerStyles({ size }),
+                  panelClassName
+                )}
                 style={styles.popper}
                 {...attributes.popper}
               >
@@ -145,6 +150,7 @@ Popover.defaultProps = {
   trigger: "click",
   placement: "bottom",
   disabled: undefined,
+  panelClassName: undefined,
 };
 Popover.displayName = "Popover";
 
