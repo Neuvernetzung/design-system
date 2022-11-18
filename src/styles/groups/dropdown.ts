@@ -33,6 +33,7 @@ export const getDropdownContainerStyles = ({
   cn(
     containerStyles.base,
     marginsYSmall[size],
+    paddingsYSmall[capSize(size, "md")],
     roundings[minSize(size, "md")],
     shadows[minSize(size, "md")]
   );
@@ -72,7 +73,11 @@ const groupStyles = {
 };
 
 export const getDropdownGroupStyles = ({ size }: DropdownGroupStyleProps) =>
-  cn(groupStyles.base, marginsYSmall[size], paddingsYSmall[size]);
+  cn(
+    groupStyles.base,
+    marginsYSmall[size],
+    paddingsYSmall[capSize(size, "md")]
+  );
 
 type DropdownGroupHeaderStyleProps = {
   size: keyof Sizes;
