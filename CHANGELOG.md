@@ -1,3 +1,23 @@
+# [1.5.0](https://github.com/Neuvernetzung/design-system/compare/v1.4.0...v1.5.0) (2022-11-18)
+
+
+### Bug Fixes
+
+* **ui:** Ref Abfrage auch bei multiple verbessert bei Select [#169](https://github.com/Neuvernetzung/design-system/issues/169) ([6127af7](https://github.com/Neuvernetzung/design-system/commit/6127af76005a0456ed6bb460572b41d203b35852))
+* **ui:** Ref nicht gefunden bei Tab auf Select [#169](https://github.com/Neuvernetzung/design-system/issues/169) ([a876b1f](https://github.com/Neuvernetzung/design-system/commit/a876b1fe1a42cff23945f4cba601481ff23e3d3b))
+* **ui:** Select returned funktioniert nun korrekt [#170](https://github.com/Neuvernetzung/design-system/issues/170) ([3f00e7c](https://github.com/Neuvernetzung/design-system/commit/3f00e7c91f42c55c035d21479193a129ed1b156a))
+
+
+### Features
+
+* **types:** SelectOptionProps exposen [#167](https://github.com/Neuvernetzung/design-system/issues/167) ([47bba20](https://github.com/Neuvernetzung/design-system/commit/47bba205b24e0a9057c8105ae0f99ef0f44ab50a))
+* **ui:** Button Subtile Variante hinzugefügt [#165](https://github.com/Neuvernetzung/design-system/issues/165) ([011f46c](https://github.com/Neuvernetzung/design-system/commit/011f46c63af290ab50a7b8b3ef947d524c8df5ef))
+* **ui:** Error Icon zu Input zusätzlich hinzufügen [#162](https://github.com/Neuvernetzung/design-system/issues/162) ([997d396](https://github.com/Neuvernetzung/design-system/commit/997d396c7854a6e71afa4c432fc94863f437d118))
+* **ui:** Optionalen Fullscreen Modus für Popover und maximale Höhe hinzugefügt [#163](https://github.com/Neuvernetzung/design-system/issues/163) ([5390541](https://github.com/Neuvernetzung/design-system/commit/5390541ee38ba0d62679bd539beeb2c0040ab886))
+* **ui:** Popover Panel zusätzlichen className hinzugefügt [#161](https://github.com/Neuvernetzung/design-system/issues/161) ([e40abf5](https://github.com/Neuvernetzung/design-system/commit/e40abf5464e55464063f7a5c9aa4b3b93882f086))
+* **ui:** Select Placement festlegbar [#168](https://github.com/Neuvernetzung/design-system/issues/168) ([14d4967](https://github.com/Neuvernetzung/design-system/commit/14d4967812c05fbe62d4edf4ca61963bdcfef9c7))
+* **ui:** Tooltip wird nicht angezeigt wenn kein label vorhanden [#166](https://github.com/Neuvernetzung/design-system/issues/166) ([fd9f572](https://github.com/Neuvernetzung/design-system/commit/fd9f5725dae919dbbe901409cce7536a5ee93e7a))
+
 # [1.4.0](https://github.com/Neuvernetzung/design-system/compare/v1.3.0...v1.4.0) (2022-11-16)
 
 
