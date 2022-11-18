@@ -1,4 +1,5 @@
 import { Listbox } from "@headlessui/react";
+import type { Placement } from "@popperjs/core";
 import cn from "classnames";
 import isArray from "lodash/isArray";
 import isEqual from "lodash/isEqual";
@@ -16,7 +17,6 @@ import {
 } from "react";
 import { Controller } from "react-hook-form";
 import { usePopper } from "react-popper";
-import type { Placement } from "@popperjs/core";
 
 import {
   divides,
@@ -254,7 +254,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             <Listbox
               value={selected}
               onChange={(e) => {
-                console.log("onChange", e);
                 onChange(handleOnChange(e));
               }}
               multiple={multiple}
@@ -519,6 +518,7 @@ Select.defaultProps = {
   hideActive: false,
   label: undefined,
   helper: undefined,
+  placement: "bottom",
 };
 
 type TagProps = {
