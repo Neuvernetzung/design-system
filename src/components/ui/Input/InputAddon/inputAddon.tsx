@@ -23,6 +23,7 @@ export type InputAddonProps = {
 export const addonVariant: Record<keyof InputVariants, string> = {
   outline: `border-y ${borders.accent}`,
   filled: `${extendedBgColors.filled}`,
+  ghost: `${extendedBgColors.filled} bg-opacity-0 border-none`,
 };
 
 const styles = {
