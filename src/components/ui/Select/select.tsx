@@ -16,6 +16,7 @@ import {
 } from "react";
 import { Controller } from "react-hook-form";
 import { usePopper } from "react-popper";
+import type { Placement } from "@popperjs/core";
 
 import {
   divides,
@@ -49,7 +50,7 @@ export const variants: InputVariants = inputVariants;
 
 export type SelectProps = {
   formMethods: any;
-  options: OptionProps[];
+  options: SelectOptionProps[];
   size?: keyof Sizes;
   variant?: keyof InputVariants;
   name: string;
@@ -66,19 +67,20 @@ export type SelectProps = {
   hideActive?: boolean;
   label?: string;
   helper?: string;
+  placement?: Placement;
 };
 
-type OptionalOptionProps =
+type OptionalSelectOptionProps =
   | {
       children: string;
-      options?: OptionProps[];
+      options?: SelectOptionProps[];
     }
   | { children: ReactNode; options: never };
 
-type OptionProps = {
+export type SelectOptionProps = {
   value: any;
   disabled?: boolean;
-} & OptionalOptionProps;
+} & OptionalSelectOptionProps;
 
 const iconButtonSizes: Sizes = {
   xs: "xs",
@@ -109,6 +111,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       multipleStyle = "tags",
       label,
       helper,
+      placement = "bottom",
     }: SelectProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
@@ -117,7 +120,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
-    const { styles, attributes } = usePopper(referenceElement, popperElement);
+    const { styles, attributes } = usePopper(referenceElement, popperElement, {
+      placement,
+    });
 
     const formValue = formMethods.watch(name);
 
@@ -194,9 +199,11 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       }));
 
     const handleLeftAndRightArrow = (e: KeyboardEvent, index?: number) => {
-      let _index = index !== undefined ? index : removeButtonRefs.length - 1;
+      if (!multiple) return;
+      if (!removeButtonRefs || removeButtonRefs?.length === 0) return;
+      let _index = index !== undefined ? index : removeButtonRefs?.length - 1;
 
-      if (removeButtonRefs[_index].ref.current) {
+      if (removeButtonRefs[_index]?.ref?.current) {
         if (e.key === "ArrowRight") {
           if (index !== undefined) _index += 1;
           if (!removeButtonRefs[_index])
@@ -246,7 +253,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           >
             <Listbox
               value={selected}
-              onChange={(e) => onChange(handleOnChange(e))}
+              onChange={(e) => {
+                console.log("onChange", e);
+                onChange(handleOnChange(e));
+              }}
               multiple={multiple}
               disabled={disabled}
             >
@@ -277,7 +287,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                           )?.children
                         : defaultMessage
                       : selected?.length > 0
-                      ? selected?.map((value: OptionProps, i: number) => (
+                      ? selected?.map((value: SelectOptionProps, i: number) => (
                           <Tag
                             ref={removeButtonRefs[i].ref}
                             size={size}
@@ -291,12 +301,15 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                               handleLeftAndRightArrow(e, i);
                               if (e.key === "Backspace" || e.key === "Delete") {
                                 onChange(handleRemove(i));
-                                if (removeButtonRefs.length === 0)
+                                if (
+                                  !removeButtonRefs ||
+                                  removeButtonRefs.length === 0
+                                )
                                   return buttonRef.current?.focus();
                                 if (!removeButtonRefs[i])
                                   return removeButtonRefs[
                                     i - 1
-                                  ].ref.current.focus();
+                                  ]?.ref?.current.focus();
                               }
                             }}
                             key={`select_tag_${i}`}
@@ -363,7 +376,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                           disabled,
                           options: _options,
                           ...props
-                        }: OptionProps,
+                        }: SelectOptionProps,
                         i
                       ) => {
                         if (_options && _options.length !== 0)
@@ -386,7 +399,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                     value: _value,
                                     disabled: _disabled,
                                     ..._props
-                                  }: OptionProps,
+                                  }: SelectOptionProps,
                                   _i
                                 ) => (
                                   <Listbox.Option
@@ -394,7 +407,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                     disabled={_disabled}
                                     value={returnValue({
                                       value: _value,
-                                      props: _props,
+                                      ..._props,
                                     })}
                                     className={({ active }) =>
                                       cn(
@@ -404,7 +417,12 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                           disabled: _disabled,
                                         }),
                                         _hideActive &&
-                                          isChecked(_value) &&
+                                          isChecked(
+                                            returnValue({
+                                              value: _value,
+                                              ..._props,
+                                            })
+                                          ) &&
                                           "hidden"
                                       )
                                     }
@@ -415,7 +433,12 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                       color="primary"
                                       icon={CheckIcon}
                                       className={
-                                        isChecked(_value)
+                                        isChecked(
+                                          returnValue({
+                                            value: _value,
+                                            ..._props,
+                                          })
+                                        )
                                           ? "visible"
                                           : "invisible"
                                       }
@@ -430,7 +453,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                           <Listbox.Option
                             key={`select_${name}_option_${i}`}
                             disabled={disabled}
-                            value={returnValue({ value, props })}
+                            value={returnValue({ value, ...props })}
                             className={({ active }) =>
                               cn(
                                 getDropDownOptionsStyles({
@@ -438,7 +461,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                   active,
                                   disabled,
                                 }),
-                                _hideActive && isChecked(value) && "hidden"
+                                _hideActive &&
+                                  isChecked(returnValue({ value, ...props })) &&
+                                  "hidden"
                               )
                             }
                           >
@@ -448,7 +473,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                               color="primary"
                               icon={CheckIcon}
                               className={
-                                isChecked(value) ? "visible" : "invisible"
+                                isChecked(returnValue({ value, ...props }))
+                                  ? "visible"
+                                  : "invisible"
                               }
                             />
                           </Listbox.Option>
@@ -518,7 +545,7 @@ const Tag = forwardRef(
         ref={ref}
         as="div"
         focus="bg"
-        tabindex="-1"
+        tabIndex="-1"
         role="button"
         ariaLabel="remove"
         size={iconButtonSizes[size]}

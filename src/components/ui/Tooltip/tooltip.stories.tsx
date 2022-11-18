@@ -20,3 +20,11 @@ export const Default = ({ ...args }) => (
     </Tooltip>
   </Container>
 );
+
+export const WithoutTooltip = ({ ...args }) => (
+  <Container>
+    <Tooltip {...args}>
+      <Button>Kein Tooltip</Button>
+    </Tooltip>
+  </Container>
+);
