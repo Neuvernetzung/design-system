@@ -329,20 +329,21 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                       divides.accent
                     )}
                   >
-                    {removeAll && (
-                      <IconButton
-                        size={iconButtonSizes[size]}
-                        variant="ghost"
-                        ariaLabel={`delete_select_${name}`}
-                        icon={CrossIcon}
-                        className={cn(
-                          "pointer-events-auto",
-                          marginsXSmall[size]
-                        )}
-                        onClick={() => onChange(handleRemoveAll())}
-                        disabled={disabled}
-                      />
-                    )}
+                    {removeAll &&
+                      (multiple ? selected?.length > 0 : selected) && (
+                        <IconButton
+                          size={iconButtonSizes[size]}
+                          variant="ghost"
+                          ariaLabel={`delete_select_${name}`}
+                          icon={CrossIcon}
+                          className={cn(
+                            "pointer-events-auto",
+                            marginsXSmall[size]
+                          )}
+                          onClick={() => onChange(handleRemoveAll())}
+                          disabled={disabled}
+                        />
+                      )}
                     <div>
                       <IconButton
                         as="span"
