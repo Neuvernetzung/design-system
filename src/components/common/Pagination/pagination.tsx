@@ -1,5 +1,6 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
+import qs from "qs";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -42,9 +43,7 @@ export const Pagination = ({
     defaultValues: { limit: limits[0] },
   });
   const limit = formMethods.watch("limit") as number;
-  const { page: p, ...restQuery }: any = {
-    ...router.query,
-  };
+  const { page: p, ...restQuery }: any = router.query;
 
   const handlePage = (_page: number) => {
     setPage(_page);
@@ -74,11 +73,13 @@ export const Pagination = ({
     }
   }, [limit]);
 
+  const restQs = qs.stringify(restQuery);
+
   useEffect(() => {
-    if (router.query.page && Number(router.query.page) !== 1) {
+    if (p && Number(p) !== 1) {
       handlePage(1);
     }
-  }, [...Object.keys(restQuery).map((k) => restQuery[k])]);
+  }, [restQs]);
 
   return (
     <div
@@ -96,6 +97,7 @@ export const Pagination = ({
             value: limit,
           }))}
           returned="value"
+          variant="ghost"
           removeAll={false}
           size={size}
         />
@@ -174,6 +176,5 @@ Pagination.defaultProps = {
   containerClassName: undefined,
   selectLimit: true,
   variant: "default",
+  emptyMessage: undefined,
 };
-
-export const PageLimit = () => {};
