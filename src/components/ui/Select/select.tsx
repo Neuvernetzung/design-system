@@ -78,7 +78,8 @@ type OptionalSelectOptionProps =
   | { children: ReactNode; options: never };
 
 export type SelectOptionProps = {
-  value: any;
+  value?: any;
+  [key: string]: any;
   disabled?: boolean;
 } & OptionalSelectOptionProps;
 
