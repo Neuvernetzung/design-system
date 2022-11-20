@@ -5,6 +5,7 @@ export * from "./gaps";
 export * from "./margins";
 export * from "./paddings";
 export * from "./placeholder";
+export * from "./prose";
 export * from "./roundings";
 export * from "./shadows";
 export * from "./sizes";

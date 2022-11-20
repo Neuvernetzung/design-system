@@ -13,6 +13,7 @@ export * from "./Notify";
 export * from "./Popover";
 export * from "./Prose";
 export * from "./Radio";
+export * from "./RichText";
 export * from "./Select";
 export * from "./Switch";
 export * from "./Tabs";

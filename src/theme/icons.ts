@@ -14,6 +14,7 @@ import {
   MoonIcon as HeroMoonIcon,
   PlusIcon as HeroPlusIcon,
   SunIcon as HeroSunIcon,
+  ListBulletIcon as HeroListBulletIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
@@ -58,11 +59,15 @@ export const CheckCircleIcon = null || HeroCheckCircleIcon;
 export const ExclamationCircleIcon = null || HeroExclamationCircleIcon;
 export const InformationCircleIcon = null || HeroInformationCircleIcon;
 
+// WYSIWYG
+export const MinusIcon = null || HeroMinusIcon;
+export const ListBulletIcon = null || HeroListBulletIcon;
+// Icons die noch nicht verfügbar sind später einbauen
+
 // Other
 
 export const ComputerDesktopIcon = null || HeroComputerDesktopIcon;
 export const CheckIcon = null || HeroCheckIcon;
-export const MinusIcon = null || HeroMinusIcon;
 export const PlusIcon = null || HeroPlusIcon;
 export const CalendarIcon = null || HeroCalendarIcon;
 export const BackArrowIcon = null || ArrowUturnLeftIcon;
