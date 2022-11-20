@@ -32,6 +32,7 @@ import {
   paddings,
   prose,
   roundings,
+  roundingsTop,
   transition,
 } from "../../../styles";
 import { ListBulletIcon } from "../../../theme/icons";
@@ -39,6 +40,7 @@ import { type ProseComponents } from "../../../types";
 import { Button, IconButton } from "../Button";
 import { type RequiredRule, FormElement } from "../Form";
 import { createProseElement } from "../Prose/prose";
+import { Tooltip } from "../Tooltip";
 import { Bold, Italic, OrderedList, Quote } from "./icons";
 import Underline from "./icons/UnderlineIcon";
 import { deserializeHtml, serializeHtml } from "./utils";
@@ -57,6 +59,7 @@ export interface RichTextProps {
   label?: string;
   helper?: string;
   required?: RequiredRule;
+  placeholder?: string;
 }
 
 interface Marks {
@@ -93,6 +96,7 @@ export const RichText = ({
   label,
   helper,
   required,
+  placeholder,
 }: RichTextProps) => {
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
@@ -123,7 +127,7 @@ export const RichText = ({
             <div
               className={cn(
                 !error ? bordersInteractive.accent : bordersInteractive.danger,
-                "group appearance-none border w-full overflow-hidden",
+                "group appearance-none border w-full",
                 roundings.md,
                 transition,
                 "group-focus-within:outline-none group-focus-within:ring-2 group-focus-within:ring-primary-500 group-focus-within:border-transparent"
@@ -136,6 +140,7 @@ export const RichText = ({
                   extendedBgColors.filledSubtile,
                   paddings.sm,
                   transition,
+                  roundingsTop.md,
                   "z-[1] flex flex-row flex-wrap border-b sticky"
                 )}
               >
@@ -154,27 +159,44 @@ export const RichText = ({
                   <BlockButton format="h6" title="h6" />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
-                  <BlockButton format="blockquote" icon={Quote} />
+                  <BlockButton
+                    format="blockquote"
+                    tooltip="Zitat"
+                    icon={Quote}
+                  />
                   <BlockButton format="ol" icon={OrderedList} />
                   <BlockButton format="ul" icon={ListBulletIcon} />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
-                  <BlockButton format="text-left" icon={Bars3BottomLeftIcon} />
-                  <BlockButton format="text-center" icon={Bars3Icon} />
+                  <BlockButton
+                    format="text-left"
+                    tooltip="Linksbündig"
+                    icon={Bars3BottomLeftIcon}
+                  />
+                  <BlockButton
+                    format="text-center"
+                    tooltip="Zentriert"
+                    icon={Bars3Icon}
+                  />
                   <BlockButton
                     format="text-right"
+                    tooltip="Rechtsbündig"
                     icon={Bars3BottomRightIcon}
                   />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
-                  <BlockButton format="text-justify" icon={Bars3Icon} />
+                  <BlockButton
+                    format="text-justify"
+                    tooltip="Gleichmäßig"
+                    icon={Bars3Icon}
+                  />
                 </div>
               </div>
-              <div className={cn(paddings.md, prose)}>
+              <div className={cn(paddings.md, prose, "relative")}>
                 <Editable
                   renderElement={renderElement}
                   renderLeaf={renderLeaf}
-                  placeholder="Enter some rich text…"
+                  placeholder={placeholder}
                   spellCheck
                   autoFocus
                   aria-label="rich_text_editable"
@@ -296,9 +318,10 @@ interface BlockButtonProps {
   format: string;
   icon?: FC<SVGProps<SVGSVGElement>>;
   title?: string;
+  tooltip?: string;
 }
 
-const BlockButton = ({ format, icon, title }: BlockButtonProps) => {
+const BlockButton = ({ format, icon, title, tooltip }: BlockButtonProps) => {
   const editor = useSlate();
 
   const active = isBlockActive(
@@ -314,33 +337,39 @@ const BlockButton = ({ format, icon, title }: BlockButtonProps) => {
 
   if (icon)
     return (
-      <IconButton
-        variant={active ? "subtile" : "ghost"}
-        ariaLabel={format}
-        onClick={onClick}
-        icon={icon}
-      />
+      <Tooltip label={tooltip}>
+        <IconButton
+          variant={active ? "subtile" : "ghost"}
+          ariaLabel={format}
+          onClick={onClick}
+          icon={icon}
+        />
+      </Tooltip>
     );
 
   return (
-    <Button variant={active ? "subtile" : "ghost"} onClick={onClick}>
-      {title}
-    </Button>
+    <Tooltip label={tooltip}>
+      <Button variant={active ? "subtile" : "ghost"} onClick={onClick}>
+        {title}
+      </Button>
+    </Tooltip>
   );
 };
 
 BlockButton.defaultProps = {
   icon: undefined,
   title: undefined,
+  tooltip: undefined,
 };
 
 interface MarkButtonProps {
   format: keyof Marks;
   icon?: FC<SVGProps<SVGSVGElement>>;
   title?: string;
+  tooltip?: string;
 }
 
-const MarkButton = ({ format, icon, title }: MarkButtonProps) => {
+const MarkButton = ({ format, icon, title, tooltip }: MarkButtonProps) => {
   const editor = useSlate();
 
   const active = isMarkActive(editor, format);
@@ -352,24 +381,29 @@ const MarkButton = ({ format, icon, title }: MarkButtonProps) => {
 
   if (icon)
     return (
-      <IconButton
-        variant={active ? "subtile" : "ghost"}
-        onClick={onClick}
-        ariaLabel={format}
-        icon={icon}
-      />
+      <Tooltip label={tooltip}>
+        <IconButton
+          variant={active ? "subtile" : "ghost"}
+          onClick={onClick}
+          ariaLabel={format}
+          icon={icon}
+        />
+      </Tooltip>
     );
 
   return (
-    <Button variant={active ? "subtile" : "ghost"} onClick={onClick}>
-      {title}
-    </Button>
+    <Tooltip label={tooltip}>
+      <Button variant={active ? "subtile" : "ghost"} onClick={onClick}>
+        {title}
+      </Button>
+    </Tooltip>
   );
 };
 
 MarkButton.defaultProps = {
   icon: undefined,
   title: undefined,
+  tooltip: undefined,
 };
 
 export default memo(RichText);
@@ -378,4 +412,5 @@ RichText.defaultProps = {
   label: undefined,
   helper: undefined,
   required: false,
+  placeholder: undefined,
 };
