@@ -4,24 +4,28 @@ import parse from "html-dom-parser";
 import { type Descendant, Text } from "slate";
 import { jsx } from "slate-hyperscript";
 
-const serializeReducer = (acc = [], node: Descendant) => {
-  const className = Object.entries(node).reduce((classNames, [prop, value]) => {
-    switch (prop) {
-      // case "indent":
-      //   return [...classNames, `indent-${value}`];
-      // case "lineHeight":
-      //   return [
-      //     ...classNames,
-      //     `line-height-${String(value).replace(".", "_")}`
-      //   ];
-      case "font-bold":
-      case "italic":
-      case "underline":
-        return [...classNames, prop];
-      default:
-        return classNames;
-    }
-  }, []);
+// eslint-disable-next-line default-param-last
+const serializeReducer = (acc: any = [], node: Descendant) => {
+  const className = Object.entries(node).reduce(
+    (classNames: any, [prop, value]) => {
+      switch (prop) {
+        // case "indent":
+        //   return [...classNames, `indent-${value}`];
+        // case "lineHeight":
+        //   return [
+        //     ...classNames,
+        //     `line-height-${String(value).replace(".", "_")}`
+        //   ];
+        case "font-bold":
+        case "italic":
+        case "underline":
+          return [...classNames, prop];
+        default:
+          return classNames;
+      }
+    },
+    []
+  );
 
   const classAttribute =
     node.className || className.length
@@ -75,11 +79,11 @@ export const serializeHtml = (nodes: Descendant[]) => {
   return serializedHtml;
 };
 
-const deserializeReducer = (acc = [], node: any) => {
-  const annotations =
-    node.attribs &&
-    node.attribs.class &&
-    node.attribs.class.split(" ").reduce((classNames, className) => {
+// eslint-disable-next-line default-param-last
+const deserializeReducer = (acc: any = [], node: any) => {
+  const annotations = node.attribs?.class
+    ?.split(" ")
+    .reduce((classNames: any, className: string) => {
       if (
         ["text-left", "text-center", "text-right", "text-justify"].includes(
           className
@@ -179,38 +183,41 @@ export const deserializeHtml = (html = "") => {
 
   const deserializedHtml = nodes.reduce(deserializeReducer, []);
 
-  const patchDeserializedHtml = deserializedHtml.reduce((acc, node) => {
-    // Remove empty text nodes.
-    if (!node.type && node.text && !node.text.trim()) {
-      return acc;
-    }
-
-    // Handle span tags outside of paragraphs.
-    if (Array.isArray(node)) {
-      // eslint-disable-next-line prefer-destructuring, no-param-reassign
-      node = node[0];
-    }
-
-    // Handle text outside of paragraphs.
-    if (!node.type && typeof node.text !== "undefined") {
-      const lastNode = acc[acc.length - 1];
-      // Combine node with previous, patched paragraph.
-      if (lastNode && lastNode.type === "p" && lastNode.isPatch) {
-        return [
-          ...acc.slice(0, -1),
-          {
-            ...lastNode,
-            children: [...lastNode.children, node],
-          },
-        ];
+  const patchDeserializedHtml = deserializedHtml.reduce(
+    (acc: any, node: any) => {
+      // Remove empty text nodes.
+      if (!node.type && node.text && !node.text.trim()) {
+        return acc;
       }
 
-      // Create a new patch node by placing it in a paragraph.
-      return [...acc, { type: "p", isPatch: true, children: [node] }];
-    }
+      // Handle span tags outside of paragraphs.
+      if (Array.isArray(node)) {
+        // eslint-disable-next-line prefer-destructuring, no-param-reassign
+        node = node[0];
+      }
 
-    return [...acc, node];
-  }, []);
+      // Handle text outside of paragraphs.
+      if (!node.type && typeof node.text !== "undefined") {
+        const lastNode = acc[acc.length - 1];
+        // Combine node with previous, patched paragraph.
+        if (lastNode && lastNode.type === "p" && lastNode.isPatch) {
+          return [
+            ...acc.slice(0, -1),
+            {
+              ...lastNode,
+              children: [...lastNode.children, node],
+            },
+          ];
+        }
+
+        // Create a new patch node by placing it in a paragraph.
+        return [...acc, { type: "p", isPatch: true, children: [node] }];
+      }
+
+      return [...acc, node];
+    },
+    []
+  );
 
   return patchDeserializedHtml;
 };

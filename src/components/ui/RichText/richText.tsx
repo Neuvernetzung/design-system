@@ -36,7 +36,8 @@ import {
 } from "../../../styles";
 import { ListBulletIcon } from "../../../theme/icons";
 import { type ProseComponents } from "../../../types";
-import { type RequiredRule, Button, FormElement, IconButton } from "..";
+import { Button, IconButton } from "../Button";
+import { type RequiredRule, FormElement } from "../Form";
 import { createProseElement } from "../Prose/prose";
 import { Bold, Italic, OrderedList, Quote } from "./icons";
 import Underline from "./icons/UnderlineIcon";
@@ -50,12 +51,18 @@ const TEXT_ALIGN_CLASSES = [
   "text-justify",
 ];
 
-export interface RichtTextProps {
+export interface RichTextProps {
   formMethods: any;
   name: string;
   label?: string;
   helper?: string;
   required?: RequiredRule;
+}
+
+interface Marks {
+  "font-bold"?: boolean;
+  italic?: boolean;
+  underline?: boolean;
 }
 
 export type CustomEditor = BaseEditor & ReactEditor & HistoryEditor;
@@ -66,12 +73,9 @@ export interface CustomElement {
   children: any;
 }
 
-export interface CustomText {
+export interface CustomText extends Marks {
   text: string;
   type: string;
-  "font-bold"?: boolean;
-  italic?: boolean;
-  underline?: boolean;
   className?: string;
 }
 
@@ -89,7 +93,7 @@ export const RichText = ({
   label,
   helper,
   required,
-}: RichtTextProps) => {
+}: RichTextProps) => {
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
     []
@@ -218,7 +222,7 @@ const toggleBlock = (editor: CustomEditor, format: string) => {
   }
 };
 
-const toggleMark = (editor: CustomEditor, format: string) => {
+const toggleMark = (editor: CustomEditor, format: keyof Marks) => {
   const isActive = isMarkActive(editor, format);
 
   if (isActive) {
@@ -231,7 +235,7 @@ const toggleMark = (editor: CustomEditor, format: string) => {
 const isBlockActive = (
   editor: CustomEditor,
   format: string,
-  blockType = "type"
+  blockType: "align" | "type" = "type"
 ) => {
   const { selection } = editor;
   if (!selection) return false;
@@ -240,18 +244,19 @@ const isBlockActive = (
     Editor.nodes(editor, {
       at: Editor.unhangRange(editor, selection),
       match: (n) =>
-        !Editor.isEditor(n) &&
-        SlateElement.isElement(n) &&
-        (blockType === "align"
-          ? n.className?.includes(format)
-          : n[blockType] === format),
+        (!Editor.isEditor(n) &&
+          SlateElement.isElement(n) &&
+          (blockType === "align"
+            ? n.className?.includes(format)
+            : n[blockType] === format)) ||
+        false,
     })
   );
 
   return !!match;
 };
 
-const isMarkActive = (editor: CustomEditor, format: string) => {
+const isMarkActive = (editor: CustomEditor, format: keyof Marks) => {
   const marks = Editor.marks(editor);
   return marks ? marks[format] === true : false;
 };
@@ -287,13 +292,13 @@ const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   return <span {...attributes}>{children}</span>;
 };
 
-interface ButtonProps {
+interface BlockButtonProps {
   format: string;
   icon?: FC<SVGProps<SVGSVGElement>>;
   title?: string;
 }
 
-const BlockButton = ({ format, icon, title }: ButtonProps) => {
+const BlockButton = ({ format, icon, title }: BlockButtonProps) => {
   const editor = useSlate();
 
   const active = isBlockActive(
@@ -329,7 +334,13 @@ BlockButton.defaultProps = {
   title: undefined,
 };
 
-const MarkButton = ({ format, icon, title }: ButtonProps) => {
+interface MarkButtonProps {
+  format: keyof Marks;
+  icon?: FC<SVGProps<SVGSVGElement>>;
+  title?: string;
+}
+
+const MarkButton = ({ format, icon, title }: MarkButtonProps) => {
   const editor = useSlate();
 
   const active = isMarkActive(editor, format);

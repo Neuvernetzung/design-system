@@ -1,8 +1,8 @@
 import cn from "classnames";
 import parse, {
+  type Element,
+  type HTMLReactParserOptions,
   domToReact,
-  Element,
-  HTMLReactParserOptions,
 } from "html-react-parser";
 import { createElement, memo, ReactNode } from "react";
 
