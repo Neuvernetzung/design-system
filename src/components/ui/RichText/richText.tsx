@@ -1,16 +1,20 @@
-import {
-  Bars3BottomLeftIcon,
-  Bars3BottomRightIcon,
-  Bars3Icon,
-} from "@heroicons/react/24/outline";
 import cn from "classnames";
-import { FC, memo, SVGProps, useCallback, useMemo } from "react";
-import { Controller } from "react-hook-form";
+import {
+  type BaseSyntheticEvent,
+  FC,
+  memo,
+  SVGProps,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   type BaseEditor,
   createEditor,
   Editor,
   Element as SlateElement,
+  Range,
   Transforms,
 } from "slate";
 import { type HistoryEditor, withHistory } from "slate-history";
@@ -35,12 +39,26 @@ import {
   roundingsTop,
   transition,
 } from "../../../styles";
-import { ListBulletIcon } from "../../../theme/icons";
+import {
+  AlignCenterIcon,
+  AlignJustifyIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
+  CrossIcon,
+  LinkIcon,
+  ListBulletIcon,
+  TrashIcon,
+} from "../../../theme/icons";
 import { type ProseComponents } from "../../../types";
-import { Button, IconButton } from "../Button";
-import { type RequiredRule, FormElement } from "../Form";
+import { hrefRegex } from "../../../utils/internal/regex";
+import { Button, ButtonGroup, IconButton } from "../Button";
+import { type RequiredRule, Form, FormElement } from "../Form";
+import { Input } from "../Input";
+import { Modal } from "../Modal";
+import { Popover, PopoverButton } from "../Popover";
 import { createProseElement } from "../Prose/prose";
 import { Tooltip } from "../Tooltip";
+import { Heading } from "../Typography";
 import { Bold, Italic, OrderedList, Quote } from "./icons";
 import Underline from "./icons/UnderlineIcon";
 import { deserializeHtml, serializeHtml } from "./utils";
@@ -68,15 +86,20 @@ interface Marks {
   underline?: boolean;
 }
 
+interface ILink {
+  a?: string;
+}
+
 export type CustomEditor = BaseEditor & ReactEditor & HistoryEditor;
 
 export interface CustomElement {
   type: string;
   className?: string;
   children: any;
+  href?: string;
 }
 
-export interface CustomText extends Marks {
+export interface CustomText extends Marks, ILink {
   text: string;
   type: string;
   className?: string;
@@ -150,6 +173,16 @@ export const RichText = ({
                   <MarkButton format="underline" icon={Underline} />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
+                  <MarkLinkButton
+                    icon={LinkIcon}
+                    tooltip={
+                      !isLinkActive(editor)
+                        ? "Link hinzufügen"
+                        : "Link bearbeiten"
+                    }
+                  />
+                </div>
+                <div className={cn(buttonGroupClassName)}>
                   <BlockButton format="p" title="p" />
                   <BlockButton format="h1" title="h1" />
                   <BlockButton format="h2" title="h2" />
@@ -171,24 +204,24 @@ export const RichText = ({
                   <BlockButton
                     format="text-left"
                     tooltip="Linksbündig"
-                    icon={Bars3BottomLeftIcon}
+                    icon={AlignLeftIcon}
                   />
                   <BlockButton
                     format="text-center"
                     tooltip="Zentriert"
-                    icon={Bars3Icon}
+                    icon={AlignCenterIcon}
                   />
                   <BlockButton
                     format="text-right"
                     tooltip="Rechtsbündig"
-                    icon={Bars3BottomRightIcon}
+                    icon={AlignRightIcon}
                   />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
                   <BlockButton
                     format="text-justify"
                     tooltip="Gleichmäßig"
-                    icon={Bars3Icon}
+                    icon={AlignJustifyIcon}
                   />
                 </div>
               </div>
@@ -244,13 +277,17 @@ const toggleBlock = (editor: CustomEditor, format: string) => {
   }
 };
 
-const toggleMark = (editor: CustomEditor, format: keyof Marks) => {
+const toggleMark = (
+  editor: CustomEditor,
+  format: keyof Marks | keyof ILink,
+  value?: any
+) => {
   const isActive = isMarkActive(editor, format);
 
   if (isActive) {
     Editor.removeMark(editor, format);
   } else {
-    Editor.addMark(editor, format, true);
+    Editor.addMark(editor, format, value ?? true);
   }
 };
 
@@ -278,9 +315,12 @@ const isBlockActive = (
   return !!match;
 };
 
-const isMarkActive = (editor: CustomEditor, format: keyof Marks) => {
+const isMarkActive = (
+  editor: CustomEditor,
+  format: keyof Marks | keyof ILink
+) => {
   const marks = Editor.marks(editor);
-  return marks ? marks[format] === true : false;
+  return marks ? !!marks[format] : false;
 };
 
 const Element = ({ attributes, children, element }: RenderElementProps) => {
@@ -403,6 +443,166 @@ const MarkButton = ({ format, icon, title, tooltip }: MarkButtonProps) => {
 MarkButton.defaultProps = {
   icon: undefined,
   title: undefined,
+  tooltip: undefined,
+};
+
+const insertLink = (editor: CustomEditor, href: string) => {
+  if (editor.selection) {
+    wrapLink(editor, href);
+  }
+};
+
+const isLinkActive = (editor: CustomEditor) => {
+  const [link] = Editor.nodes(editor, {
+    match: (n) =>
+      !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === "a",
+  });
+  return !!link;
+};
+const linkValue = (editor: CustomEditor) => {
+  const [link] = Editor.nodes(editor, {
+    match: (n) =>
+      !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === "a",
+  }) as any;
+  return link?.[0]?.href;
+};
+
+const unwrapLink = (editor: CustomEditor) => {
+  Transforms.unwrapNodes(editor, {
+    match: (n) =>
+      !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === "a",
+  });
+};
+
+const wrapLink = (editor: CustomEditor, href: string) => {
+  if (isLinkActive(editor)) {
+    unwrapLink(editor);
+  }
+
+  const { selection } = editor;
+  const isCollapsed = selection && Range.isCollapsed(selection);
+  const link: any = {
+    type: "a",
+    href,
+    children: isCollapsed ? [{ text: href }] : [],
+  };
+
+  if (isCollapsed) {
+    Transforms.insertNodes(editor, link);
+  } else {
+    Transforms.wrapNodes(editor, link, { split: true });
+    Transforms.collapse(editor, { edge: "end" });
+  }
+};
+
+interface MarkLinkButtonProps {
+  icon: FC<SVGProps<SVGSVGElement>>;
+  tooltip?: string;
+}
+
+interface LinkForm {
+  href?: string;
+}
+
+const MarkLinkButton = ({ icon, tooltip }: MarkLinkButtonProps) => {
+  const editor = useSlate();
+  const [open, setOpen] = useState(false);
+
+  const formName = "href";
+
+  const linkFormMethods = useForm<LinkForm>({
+    defaultValues: { [formName]: undefined },
+  });
+  const setFormState = (value?: string) =>
+    linkFormMethods.setValue(formName, value);
+
+  const active = isLinkActive(editor);
+
+  const onSubmit = ({ href }: LinkForm) => {
+    if (!href) return;
+    insertLink(editor, `https://${href}`);
+    setOpen(false);
+    setFormState(undefined);
+  };
+
+  const onDelete = () => {
+    unwrapLink(editor);
+    setOpen(false);
+    setFormState(undefined);
+  };
+
+  const currentLinkValue = linkValue(editor);
+
+  return (
+    <>
+      <Tooltip label={tooltip}>
+        <IconButton
+          icon={icon}
+          variant={active ? "subtile" : "ghost"}
+          onClick={() => {
+            setFormState(
+              String(currentLinkValue).includes("https://")
+                ? currentLinkValue.split("https://")?.[1]
+                : currentLinkValue
+            );
+            setOpen(true);
+          }}
+        >
+          Link
+        </IconButton>
+      </Tooltip>
+      <Modal
+        size="md"
+        content={
+          <Form
+            formMethods={linkFormMethods}
+            onSubmit={(e: BaseSyntheticEvent) => {
+              if (e) {
+                if (typeof e.preventDefault === "function") {
+                  e.preventDefault();
+                }
+                if (typeof e.stopPropagation === "function") {
+                  e.stopPropagation();
+                }
+              }
+              return linkFormMethods.handleSubmit((v) => onSubmit(v))(e);
+            }}
+            className={cn("w-full flex flex-col", gaps.sm)}
+          >
+            <Input
+              formMethods={linkFormMethods}
+              name={formName}
+              leftAddon={{ children: "https://" }}
+              label="Link"
+              required={{ value: true, message: "Der Link wird benötigt!" }}
+              pattern={{
+                value: hrefRegex,
+                message: "Dies ist kein gültiger Link!",
+              }}
+            />
+            <ButtonGroup>
+              <Button type="submit" fullWidth>
+                Bestätigen
+              </Button>
+              {active && (
+                <IconButton
+                  color="danger"
+                  icon={TrashIcon}
+                  ariaLabel="delete_link"
+                  onClick={onDelete}
+                />
+              )}
+            </ButtonGroup>
+          </Form>
+        }
+        open={open}
+        setOpen={setOpen}
+      />
+    </>
+  );
+};
+
+MarkLinkButton.defaultProps = {
   tooltip: undefined,
 };
 

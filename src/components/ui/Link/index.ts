@@ -1,2 +1,2 @@
-export type { LinkProps } from "./link";
-export { default as Link } from "./link";
+export type { LinkProps, NativeLinkProps } from "./link";
+export { default as Link, NativeLink } from "./link";

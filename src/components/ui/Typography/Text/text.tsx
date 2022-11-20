@@ -50,7 +50,7 @@ export const Text: PolymorphicForwardRefExoticComponent<
       <Component
         ref={ref}
         className={cn(
-          "font-body",
+          "font-body inline",
           sizes[size],
           extendedTextColors[color],
           className

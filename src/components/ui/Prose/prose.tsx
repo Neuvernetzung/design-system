@@ -9,6 +9,7 @@ import { createElement, memo, ReactNode } from "react";
 import { prose } from "../../../styles";
 import { ProseComponents } from "../../../types";
 import { BlockQuote } from "../BlockQuote";
+import { NativeLink } from "../Link";
 import { ListItem, OrderedList, UnorderedList } from "../List";
 import { Heading, Text } from "../Typography";
 
@@ -19,7 +20,10 @@ export type ProseProps = {
 
 export const proseComponents: ProseComponents = {
   p: { component: Text, props: {} },
-  h1: { component: Heading, props: { size: "4xl", as: "h1" } },
+  h1: {
+    component: Heading,
+    props: { size: "4xl", as: "h1" },
+  },
   h2: { component: Heading, props: { size: "xl", as: "h2" } },
   h3: { component: Heading, props: { size: "lg", as: "h3" } },
   h4: { component: Heading, props: { size: "md", as: "h4" } },
@@ -28,7 +32,14 @@ export const proseComponents: ProseComponents = {
   ol: { component: OrderedList, props: {} },
   ul: { component: UnorderedList, props: {} },
   li: { component: ListItem, props: {} },
-  blockquote: { component: BlockQuote, props: {} },
+  blockquote: {
+    component: BlockQuote,
+    props: {},
+  },
+  a: {
+    component: NativeLink,
+    props: {},
+  },
 };
 
 interface CreateProseComponent {

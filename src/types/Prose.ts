@@ -1,6 +1,7 @@
 import { FC } from "react";
 
 import type { BlockQuoteProps } from "../components/ui/BlockQuote";
+import { NativeLinkProps } from "../components/ui/Link";
 import type {
   ListItemProps,
   OrderedListProps,
@@ -21,6 +22,7 @@ export enum ProseComponentTags {
   ul,
   li,
   blockquote,
+  a,
 }
 
 export interface ProseComponents {
@@ -35,6 +37,7 @@ export interface ProseComponents {
   ul: ProseComponent<UnorderedListProps>;
   li: ProseComponent<ListItemProps>;
   blockquote: ProseComponent<BlockQuoteProps>;
+  a: ProseComponent<NativeLinkProps>;
 }
 
 interface ProseComponent<T> {

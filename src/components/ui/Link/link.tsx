@@ -1,5 +1,6 @@
+import cn from "classnames";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
-import { ReactElement } from "react";
+import { AnchorHTMLAttributes, ReactElement } from "react";
 
 export interface LinkProps extends NextLinkProps {
   children: ReactElement | string;
@@ -14,3 +15,25 @@ export const Link = ({ as, href, disabled, ...props }: LinkProps) => {
 Link.defaultProps = { disabled: undefined };
 
 export default Link;
+
+export interface NativeLinkProps
+  extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  href?: string;
+  children?: ReactElement;
+}
+
+export const NativeLink = ({
+  href,
+  children,
+  className,
+  ...props
+}: NativeLinkProps) => (
+  <a href={href} className={cn("underline", className)} {...props}>
+    {children}
+  </a>
+);
+
+NativeLink.defaultProps = {
+  href: null,
+  children: undefined,
+};

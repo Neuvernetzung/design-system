@@ -55,10 +55,10 @@ const serializeReducer = (acc: any = [], node: Descendant) => {
       return `${acc}<h5${classAttribute}>${children}</h2>`;
     case "h6":
       return `${acc}<h6${classAttribute}>${children}</h2>`;
-    // case "link":
-    //   return `${acc}<a href="${escapeHtml(
-    //     node.url
-    //   )}"${classAttribute}>${children}</a>`;
+    case "a":
+      return `${acc}<a href="${escapeHtml(
+        node.href
+      )}"${classAttribute}>${children}</a>`;
     case "ol":
       return `${acc}<ol${classAttribute}>${children}</ol>`;
     case "ul":
@@ -164,15 +164,15 @@ const deserializeReducer = (acc: any = [], node: any) => {
       ];
     // case "hr":
     //   return [...acc, jsx("element", { ...annotations, type: "hr" }, children)];
-    // case "a":
-    //   return [
-    //     ...acc,
-    //     jsx(
-    //       "element",
-    //       { ...annotations, type: "link", url: node.attribs.href },
-    //       children
-    //     ),
-    //   ];
+    case "a":
+      return [
+        ...acc,
+        jsx(
+          "element",
+          { ...annotations, type: "a", href: node.attribs.href },
+          children
+        ),
+      ];
     default:
       return acc;
   }
