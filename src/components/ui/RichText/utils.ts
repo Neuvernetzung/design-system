@@ -61,6 +61,8 @@ const serializeReducer = (acc = [], node: Descendant) => {
       return `${acc}<ul${classAttribute}>${children}</ul>`;
     case "li":
       return `${acc}<li${classAttribute}>${children}</li>`;
+    case "blockquote":
+      return `${acc}<blockquote${classAttribute}>${children}</blockquote>`;
     // case "hr":
     //   return `${acc}<hr />`;
     default:
@@ -73,7 +75,7 @@ export const serializeHtml = (nodes: Descendant[]) => {
   return serializedHtml;
 };
 
-const deserializeReducer = (acc = [], node: Descendant) => {
+const deserializeReducer = (acc = [], node: any) => {
   const annotations =
     node.attribs &&
     node.attribs.class &&
@@ -141,18 +143,11 @@ const deserializeReducer = (acc = [], node: Descendant) => {
     case "h6":
     case "p":
     case "li":
+    case "blockquote":
       return [
         ...acc,
         jsx("element", { ...annotations, type: node.name }, children),
       ];
-
-    // case "th":
-    // case "td":
-    // case "blockquote":
-    //   return [
-    //     ...acc,
-    //     jsx("element", { ...annotations, type: node.name }, children),
-    //   ];
     case "ol":
     case "ul":
       return [

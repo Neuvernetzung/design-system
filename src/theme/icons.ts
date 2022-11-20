@@ -59,7 +59,7 @@ export const CheckCircleIcon = null || HeroCheckCircleIcon;
 export const ExclamationCircleIcon = null || HeroExclamationCircleIcon;
 export const InformationCircleIcon = null || HeroInformationCircleIcon;
 
-// WYSIWYG
+// RichText
 export const MinusIcon = null || HeroMinusIcon;
 export const ListBulletIcon = null || HeroListBulletIcon;
 // Icons die noch nicht verfügbar sind später einbauen

@@ -150,7 +150,7 @@ export const RichText = ({
                   <BlockButton format="h6" title="h6" />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
-                  <BlockButton format="block-quote" icon={Quote} />
+                  <BlockButton format="blockquote" icon={Quote} />
                   <BlockButton format="ol" icon={OrderedList} />
                   <BlockButton format="ul" icon={ListBulletIcon} />
                 </div>

@@ -8,6 +8,8 @@ import { createElement, memo, ReactNode } from "react";
 
 import { prose } from "../../../styles";
 import { ProseComponents } from "../../../types";
+import { BlockQuote } from "../BlockQuote";
+import { ListItem, OrderedList, UnorderedList } from "../List";
 import { Heading, Text } from "../Typography";
 
 export type ProseProps = {
@@ -23,6 +25,10 @@ export const proseComponents: ProseComponents = {
   h4: { component: Heading, props: { size: "md", as: "h4" } },
   h5: { component: Heading, props: { size: "sm", as: "h5" } },
   h6: { component: Heading, props: { size: "xs", as: "h6" } },
+  ol: { component: OrderedList, props: {} },
+  ul: { component: UnorderedList, props: {} },
+  li: { component: ListItem, props: {} },
+  blockquote: { component: BlockQuote, props: {} },
 };
 
 interface CreateProseComponent {
@@ -52,12 +58,13 @@ const options: HTMLReactParserOptions = {
   replace: (domNode) => {
     const typedDomNode = domNode as Element;
     if (typedDomNode.attribs) {
-      const type = (typedDomNode.name || "p") as keyof ProseComponents;
+      const name = (typedDomNode.name || "p") as keyof ProseComponents;
+      const { class: className, ...attributes } = typedDomNode.attribs;
 
       return createProseElement({
-        name: type,
-        attributes: { ...typedDomNode.attribs },
-        className: typedDomNode.attribs.class,
+        name,
+        attributes,
+        className,
         children:
           typedDomNode.children && domToReact(typedDomNode.children, options),
       });
