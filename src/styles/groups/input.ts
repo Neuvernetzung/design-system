@@ -56,6 +56,12 @@ export const inputVariants: Record<keyof InputVariants, VariantProps> = {
     error: `${extendedBgColorsInteractive.danger} ${placeholder.filledError}`,
     disabled: `${extendedBgColors.filled}`,
   },
+  ghost: {
+    base: `${extendedBgColorsInteractive.white} bg-opacity-0 border-none ${placeholder.ghost}`,
+    default: "",
+    error: `${extendedBgColorsInteractive.danger} hover:bg-opacity-10`,
+    disabled: `${extendedBgColors.filledSubtile}`,
+  },
 };
 
 const styles = {

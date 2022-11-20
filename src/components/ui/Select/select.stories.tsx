@@ -2,8 +2,8 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, Form } from "..";
-import { Select, sizes, variants } from "./select";
+import { Button, Form, Select } from "..";
+import { sizes, variants } from "./select";
 
 export default {
   title: "UI/Form/Select",
@@ -308,12 +308,10 @@ export const OtherValueReturned = ({ ...args }) => {
     {
       children: "Option 1",
       _id: "option-1",
-      value: "niemals",
     },
     {
       children: "Option 2",
       _id: "option-2",
-      value: "niemals",
     },
   ];
 

@@ -1,3 +1,4 @@
+export * from "./BlockQuote";
 export * from "./Button";
 export * from "./Checkbox";
 export * from "./Datepicker";
@@ -7,6 +8,7 @@ export * from "./Icon";
 export * from "./Image";
 export * from "./Input";
 export * from "./Link";
+export * from "./List";
 export * from "./Menu";
 export * from "./Modal";
 export * from "./Notify";

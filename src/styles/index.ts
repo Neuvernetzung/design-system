@@ -2,6 +2,7 @@ export * from "./borders";
 export * from "./colors";
 export * from "./focus";
 export * from "./gaps";
+export * from "./list";
 export * from "./margins";
 export * from "./paddings";
 export * from "./placeholder";
