@@ -1,5 +1,6 @@
 import { PhoneIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
+import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -102,14 +103,7 @@ export const Error = ({ ...args }) => {
           {...args}
         />
       ))}
-      <Input
-        formMethods={formMethods}
-        name="element_input"
-        placeholder="Mit Element"
-        required
-        rightElement={{ children: <Icon icon={PhoneIcon} /> }}
-        {...args}
-      />
+
       <Button type="submit">Bestätigen</Button>
     </Form>
   );
@@ -232,6 +226,45 @@ export const Types = ({ ...args }) => {
           {...args}
         />
       ))}
+    </Form>
+  );
+};
+
+export const TestForm = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Form
+      formMethods={formMethods}
+      onSubmit={() => {}}
+      className={cn(formClassName, "max-w-xl")}
+    >
+      <Input formMethods={formMethods} name="email" label="Email" {...args} />
+      <div className="flex flex-row gap-2">
+        <Input formMethods={formMethods} name="name" label="Name" {...args} />
+        <Input
+          formMethods={formMethods}
+          name="nachname"
+          label="Nachname"
+          className="w-full"
+          {...args}
+        />
+      </div>
+      <div className="flex flex-row gap-2">
+        <Input
+          formMethods={formMethods}
+          name="straße"
+          label="Straße"
+          className="w-full"
+          {...args}
+        />
+        <Input
+          formMethods={formMethods}
+          name="hausnummer"
+          label="Hausnummer"
+          {...args}
+        />
+      </div>
     </Form>
   );
 };

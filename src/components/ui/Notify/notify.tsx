@@ -10,7 +10,8 @@ import {
   InformationCircleIcon,
 } from "../../../theme/icons";
 import { Colors } from "../../../types";
-import { Toast, ToastVariants } from "../Toast/toast";
+import { Toast } from "../Toast";
+import { ToastVariants } from "../Toast/toast";
 
 type NotifyState = {
   notification?: NotifyProps;

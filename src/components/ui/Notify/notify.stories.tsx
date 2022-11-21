@@ -1,9 +1,9 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { OverlayProvider } from "../../common";
+import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
-import { Notify, notify } from "./notify";
+import { Notify, notify } from ".";
 
 export default {
   title: "UI/Overlay/Notify",
@@ -15,7 +15,7 @@ const Container = ({ ...props }) => (
 );
 
 export const Default = () => (
-  <OverlayProvider>
+  <ThemeProvider allowNotification>
     <Container>
       <Button
         variant="outline"
@@ -76,7 +76,7 @@ export const Default = () => (
         Notify Error
       </Button>
     </Container>
-  </OverlayProvider>
+  </ThemeProvider>
 );
 
 Default.parameters = {

@@ -77,6 +77,7 @@ export interface RichTextProps {
   helper?: string;
   required?: RequiredRule;
   placeholder?: string;
+  autoFocus?: boolean;
 }
 
 interface Marks {
@@ -129,6 +130,7 @@ export const RichText = ({
   helper,
   required,
   placeholder,
+  autoFocus = false,
 }: RichTextProps) => {
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
@@ -234,7 +236,7 @@ export const RichText = ({
                   renderLeaf={renderLeaf}
                   placeholder={placeholder}
                   spellCheck
-                  autoFocus
+                  autoFocus={autoFocus}
                   aria-label="rich_text_editable"
                 />
               </div>
@@ -681,4 +683,5 @@ RichText.defaultProps = {
   helper: undefined,
   required: false,
   placeholder: undefined,
+  autoFocus: false,
 };

@@ -7,7 +7,6 @@ import {
   inputSizes,
   inputVariants,
 } from "../../../styles/groups";
-import { ExclamationCircleIcon } from "../../../theme/icons";
 import type { InputVariants, Sizes } from "../../../types";
 import {
   FormElement,
@@ -18,7 +17,6 @@ import {
   PatternRule,
   RequiredRule,
 } from "../Form";
-import { Icon } from "../Icon";
 import { InputAddon } from "./InputAddon";
 import type { InputAddonProps } from "./InputAddon/inputAddon";
 import { InputElement } from "./InputElement";
@@ -55,6 +53,8 @@ export type InputProps = {
   disabled?: boolean;
   step?: number;
   className?: string;
+  containerClassName?: string;
+  inputClassName?: string;
   value?: string;
 };
 
@@ -85,6 +85,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       variant = "outline",
       step = 1,
       className,
+      containerClassName,
+      inputClassName,
       ...props
     }: InputProps,
     ref
@@ -108,8 +110,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         label={label}
         helper={helper}
         size={size}
+        className={className}
       >
-        <div className={cn(styles.containerBase)}>
+        <div className={cn(styles.containerBase, containerClassName)}>
           {leftAddon && (
             <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
           )}
@@ -137,7 +140,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 leftAddon,
                 rightAddon,
               }),
-              className
+              inputClassName
             )}
             style={{
               paddingLeft: leftElement && leftElementWidth,
@@ -158,20 +161,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
           {rightAddon && (
             <InputAddon size={size} variant={variant} isRight {...rightAddon} />
-          )}
-          {!!error && (
-            <InputElement
-              size={size}
-              isRight
-              style={{
-                right: rightElement && rightElementWidth,
-              }}
-            >
-              <Icon
-                color={variant === "filled" ? "filled" : "danger"}
-                icon={ExclamationCircleIcon}
-              />
-            </InputElement>
           )}
           {rightElement && (
             <InputElement
@@ -209,6 +198,8 @@ Input.defaultProps = {
   disabled: false,
   step: undefined,
   className: undefined,
+  containerClassName: undefined,
+  inputClassName: undefined,
   value: undefined,
 };
 

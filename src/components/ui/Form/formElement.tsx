@@ -1,9 +1,13 @@
 import cn from "classnames";
+import { useRouter } from "next/router";
 import { FC, memo, ReactNode } from "react";
 import { Message, ValidationRule } from "react-hook-form";
 
-import { textColors } from "../../../styles";
+import { getText } from "../../../locales/getText";
+import { gapsSmall, textColors } from "../../../styles";
+import { ExclamationTriangleIcon } from "../../../theme/icons";
 import type { Sizes } from "../../../types";
+import { Icon } from "../Icon";
 import { Text } from "../Typography";
 import { sizes as textSizes } from "../Typography/Text/text";
 
@@ -40,22 +44,31 @@ export const FormElement: FC<FormElementProps> = ({
   size = "md",
   children,
   className,
-}: FormElementProps) => (
-  <div className={cn("flex flex-col gap-0.5", className)}>
-    {label && (
-      <label className={cn(textColors.accent, labelSizes[size])} htmlFor={name}>
-        {label}
-      </label>
-    )}
-    {children}
-    {error && (
-      <Text size="xs" color="danger">
-        {error?.message}
-      </Text>
-    )}
-    {helper && <Text size="xs">{helper}</Text>}
-  </div>
-);
+}: FormElementProps) => {
+  const { locale }: any = useRouter();
+  return (
+    <span className={cn("flex flex-col gap-0.5", className)}>
+      {label && (
+        <label
+          className={cn(textColors.accent, labelSizes[size])}
+          htmlFor={name}
+        >
+          {label}
+        </label>
+      )}
+      {children}
+      {error && (
+        <span className={cn("flex flex-row items-center", gapsSmall.md)}>
+          <Icon icon={ExclamationTriangleIcon} color="danger" size="xs" />
+          <Text size="xs" color="danger">
+            {error?.message || getText(locale).required}
+          </Text>
+        </span>
+      )}
+      {helper && <Text size="xs">{helper}</Text>}
+    </span>
+  );
+};
 
 FormElement.defaultProps = {
   label: null,
