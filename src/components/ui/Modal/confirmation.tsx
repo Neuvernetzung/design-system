@@ -1,5 +1,6 @@
 import cn from "classnames";
-import { MutableRefObject, ReactNode, useRef, FC, SVGProps } from "react";
+import { FC, memo, MutableRefObject, ReactNode, SVGProps, useRef } from "react";
+import create from "zustand";
 
 import { gaps, gapsSmall } from "../../../styles";
 import { Colors } from "../../../types";
@@ -8,9 +9,19 @@ import { Icon } from "../Icon";
 import { Heading } from "../Typography";
 import { Modal } from "./modal";
 
+type ConfirmationState = {
+  confirmation?: ConfirmationModalProps;
+};
+
+const useConfirmationState = create<ConfirmationState>(() => ({
+  confirmation: undefined,
+}));
+
+export const requestConfirmation = (confirmation?: ConfirmationModalProps) => {
+  useConfirmationState.setState({ confirmation });
+};
+
 export type ConfirmationModalProps = {
-  open: boolean;
-  setOpen: Function;
   icon?: FC<SVGProps<SVGSVGElement>>;
   heading: string;
   content?: string | ReactNode;
@@ -24,33 +35,39 @@ type ButtonProps = {
   children: ReactNode;
 };
 
-export const ConfirmationModal = ({
-  open,
-  setOpen,
-  icon,
-  heading,
-  content,
-  color = "primary",
-  cancelButton,
-  confirmButton,
-}: ConfirmationModalProps) => {
+export const ConfirmationModal = () => {
+  const confirmation = useConfirmationState((state) => state.confirmation);
+
   const confirmBtnRef = useRef() as MutableRefObject<HTMLButtonElement>;
   const cancelBtnRef = useRef() as MutableRefObject<HTMLButtonElement>;
 
+  if (!confirmation) return null;
+
+  const reset = () => requestConfirmation();
+
+  const {
+    icon,
+    heading,
+    content,
+    color = "primary",
+    cancelButton,
+    confirmButton,
+  }: ConfirmationModalProps = confirmation;
+
   const handleCancel = () => {
     cancelButton?.onClick?.();
-    setOpen(false);
+    reset();
   };
 
   const handleConfirm = () => {
     confirmButton?.onClick?.();
-    setOpen(false);
+    reset();
   };
 
   return (
     <Modal
-      open={open}
-      setOpen={setOpen}
+      open={!!confirmation}
+      setOpen={reset}
       size="sm"
       initialFocus={
         color !== "danger" && color !== "warn" ? confirmBtnRef : cancelBtnRef
@@ -86,7 +103,7 @@ export const ConfirmationModal = ({
   );
 };
 
-export default ConfirmationModal;
+export default memo(ConfirmationModal);
 
 ConfirmationModal.defaultProps = {
   icon: undefined,

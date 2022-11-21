@@ -3,15 +3,19 @@ import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { ReactNode, useLayoutEffect } from "react";
 import create from "zustand";
 
+import { ConfirmationModal } from "../components/ui/Modal";
+import { Notify } from "../components/ui/Notify";
 import { Color, Colors } from "../types";
 import { getRGBColorVariable } from "../utils";
 import { createCSSSelector } from "../utils/internal";
 import { extendColors } from "./extendColors";
 import { Icons } from "./icons";
 
-type ThemeProvider = {
-  config: ConfigProps;
+type ThemeProviderProps = {
+  config?: ConfigProps;
   children: ReactNode;
+  allowNotification?: boolean;
+  allowConfirmation?: boolean;
 };
 
 export type ConfigProps = {
@@ -28,8 +32,13 @@ export const useColorState = create<ColorState>(() => ({
   colorState: extendColors({}),
 }));
 
-export const ThemeProvider = ({ config, children }: ThemeProvider) => {
-  const { colors, defaultTheme } = config;
+export const ThemeProvider = ({
+  config,
+  children,
+  allowNotification = false,
+  allowConfirmation = false,
+}: ThemeProviderProps) => {
+  const { colors, defaultTheme } = config || {};
 
   useLayoutEffect(() => {
     const extendedColors: Record<keyof Omit<Colors, "white" | "black">, Color> =
@@ -62,7 +71,15 @@ export const ThemeProvider = ({ config, children }: ThemeProvider) => {
       attribute="class"
       defaultTheme={defaultTheme || "system"}
     >
+      {allowNotification && <Notify />}
+      {allowConfirmation && <ConfirmationModal />}
       {children}
     </NextThemeProvider>
   );
+};
+
+ThemeProvider.defaultProps = {
+  config: undefined,
+  allowNotification: false,
+  allowConfirmation: false,
 };
