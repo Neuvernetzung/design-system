@@ -1,10 +1,10 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
+import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { RichText } from ".";
 import { Prose } from "..";
-import cn from "classnames";
+import { RichText } from ".";
 
 export default {
   title: "UI/Form/RichText",

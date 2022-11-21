@@ -535,6 +535,7 @@ const MarkLinkButton = ({ icon, tooltip }: MarkLinkButtonProps) => {
       <Tooltip label={tooltip}>
         <IconButton
           icon={icon}
+          ariaLabel={active ? "add_link" : "remove_link"}
           variant={active ? "subtile" : "ghost"}
           onClick={() => {
             setFormState(
