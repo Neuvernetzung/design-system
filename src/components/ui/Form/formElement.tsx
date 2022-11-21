@@ -43,7 +43,7 @@ export const FormElement: FC<FormElementProps> = ({
   children,
   className,
 }: FormElementProps) => (
-  <div className={cn("flex flex-col gap-0.5", className)}>
+  <span className={cn("flex flex-col gap-0.5", className)}>
     {label && (
       <label className={cn(textColors.accent, labelSizes[size])} htmlFor={name}>
         {label}
@@ -59,7 +59,7 @@ export const FormElement: FC<FormElementProps> = ({
       </span>
     )}
     {helper && <Text size="xs">{helper}</Text>}
-  </div>
+  </span>
 );
 
 FormElement.defaultProps = {

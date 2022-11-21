@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { FC, memo, ReactNode } from "react";
 
 export type FormProps = {
@@ -16,7 +17,11 @@ export const Form: FC<FormProps> = ({
   const { handleSubmit } = formMethods;
 
   return (
-    <form className={className} onSubmit={handleSubmit(onSubmit)} {...props} />
+    <form
+      className={cn(className)}
+      onSubmit={handleSubmit(onSubmit)}
+      {...props}
+    />
   );
 };
 
