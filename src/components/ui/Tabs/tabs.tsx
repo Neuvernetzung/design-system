@@ -11,20 +11,20 @@ export type TabGroupProps = TabListProps &
     className?: string;
   };
 
-type TabListProps = {
-  items: ItemProps[];
+export type TabListProps = {
+  items: TabItemProps[];
   listClassName?: string;
   size?: keyof Sizes;
   color?: keyof Colors;
 };
 
-type TabPanelsProps = {
-  items: ItemProps[];
+export type TabPanelsProps = {
+  items: TabItemProps[];
   panelsClassName?: string;
   size?: keyof Sizes;
 };
 
-type ItemProps = {
+export type TabItemProps = {
   title: string;
   content: ReactNode;
   disabled?: boolean;
@@ -71,7 +71,7 @@ export const TabList = ({
   color,
 }: TabListProps) => (
   <Tab.List className={cn("flex flex-row", gaps[size], listClassName)}>
-    {items.map(({ title, disabled }: ItemProps) => (
+    {items.map(({ title, disabled }: TabItemProps) => (
       <TabButton
         key={`tab_button_${title}`}
         title={title}
@@ -89,7 +89,7 @@ TabList.defaultProps = {
   color: "accent",
 };
 
-type StandaloneTabListProps = {
+export type StandaloneTabListProps = {
   listClassName?: string;
   size?: keyof Sizes;
   children?: ReactNode;
@@ -117,7 +117,7 @@ export const TabButton = ({
   color = "accent",
   size = "md",
   className,
-}: Omit<ItemProps, "content"> & Pick<TabListProps, "color" | "size">) => (
+}: Omit<TabItemProps, "content"> & Pick<TabListProps, "color" | "size">) => (
   <Tab as={Fragment}>
     {({ selected }) => (
       <Button
@@ -142,8 +142,8 @@ export const TabPanels = ({
   size = "md",
   panelsClassName,
 }: TabPanelsProps) => (
-  <Tab.Panels className={cn(panelsClassName)}>
-    {items.map(({ content, className: panelClassName }: ItemProps, i) => (
+  <Tab.Panels className={cn(paddings[size], panelsClassName)}>
+    {items.map(({ content, className: panelClassName }: TabItemProps, i) => (
       <TabPanel
         key={`tab_panel_${i}`}
         content={content}
@@ -159,14 +159,33 @@ TabPanels.defaultProps = {
   size: "md",
 };
 
-const TabPanel = ({
+export type StandaloneTabPanelsProps = {
+  panelsClassName?: string;
+  size?: keyof Sizes;
+  children?: ReactNode;
+};
+
+export const StandaloneTabPanels = ({
+  children,
+  size = "md",
+  panelsClassName,
+}: StandaloneTabPanelsProps) => (
+  <Tab.Panels className={cn("flex flex-row", gaps[size], panelsClassName)}>
+    {children}
+  </Tab.Panels>
+);
+
+StandaloneTabPanels.defaultProps = {
+  panelsClassName: undefined,
+  size: "md",
+  children: undefined,
+};
+
+export const TabPanel = ({
   content,
   className,
-  size = "md",
-}: Omit<ItemProps, "title"> & Pick<TabPanelsProps, "size">) => (
-  <Tab.Panel className={cn("flex", paddings[size], className)}>
-    {content}
-  </Tab.Panel>
+}: Omit<TabItemProps, "title"> & Pick<TabPanelsProps, "size">) => (
+  <Tab.Panel className={cn("flex", className)}>{content}</Tab.Panel>
 );
 
 TabPanel.defaultProps = {

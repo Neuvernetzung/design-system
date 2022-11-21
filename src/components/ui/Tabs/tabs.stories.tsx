@@ -4,13 +4,16 @@ import React, { useState } from "react";
 import type { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button } from "../Button";
 import {
+  StandaloneTabList,
+  StandaloneTabPanels,
   TabButton,
   TabGroup,
   TabList,
   TabPanels,
+  TabPanel,
   Tabs,
-  StandaloneTabList,
-} from "./tabs";
+} from ".";
+import { Text } from "../Typography/Text";
 
 export default {
   title: "UI/Disclosures/Tabs",
@@ -126,6 +129,36 @@ export const SeparateButtons = ({ ...args }) => {
         </StandaloneTabList>
       </TabGroup>
     </Container>
+  );
+};
+
+export const SeparatePanels = ({ ...args }) => {
+  const items = [
+    { title: "Tab 1", content: "Content 1" },
+    { title: "Tab 2", content: "Content 2" },
+    { title: "Tab 3", content: "Content 3" },
+  ];
+
+  return (
+    <>
+      <Text size="xs">
+        Hinweis: Panels müssen trotzdem in der richtigen Reihenfolge sein!
+      </Text>
+      <Container>
+        <TabGroup>
+          <StandaloneTabPanels {...args}>
+            <TabPanel content={items[0].content} />
+          </StandaloneTabPanels>
+          <TabList items={items} />
+          <StandaloneTabPanels {...args}>
+            <TabPanel content={items[1].content} />
+          </StandaloneTabPanels>
+          <StandaloneTabPanels {...args}>
+            <TabPanel content={items[2].content} />
+          </StandaloneTabPanels>
+        </TabGroup>
+      </Container>
+    </>
   );
 };
 
