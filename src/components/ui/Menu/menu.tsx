@@ -1,4 +1,5 @@
 import { Menu as HeadlessMenu } from "@headlessui/react";
+import type { Placement } from "@popperjs/core";
 import cn from "classnames";
 import {
   FC,
@@ -30,6 +31,7 @@ export type MenuProps = {
   size?: keyof Sizes;
   disabled?: boolean;
   dropdownClassName?: string;
+  placement?: Placement;
 } & MenuButtonProps;
 
 type MenuButtonProps =
@@ -74,6 +76,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       buttonProps,
       buttonType = "button",
       dropdownClassName,
+      placement = "bottom-end",
     }: MenuProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
@@ -83,7 +86,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       null
     );
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
-      placement: "bottom-end",
+      placement,
     });
 
     const ButtonComponent = { icon: IconButton, button: Button };
@@ -152,7 +155,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                             {...asProps}
                             key={`menu_option_${_i}`}
                             disabled={_disabled}
-                            className={({ active }) =>
+                            className={({ active }: { active?: boolean }) =>
                               cn(
                                 getDropDownOptionsStyles({
                                   size,
@@ -197,7 +200,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                   {...asProps}
                   key={`menu_option_${i}`}
                   disabled={disabled}
-                  className={({ active }) =>
+                  className={({ active }: { active?: boolean }) =>
                     cn(
                       getDropDownOptionsStyles({
                         size,
@@ -241,4 +244,5 @@ Menu.defaultProps = {
   size: "md",
   disabled: false,
   dropdownClassName: undefined,
+  placement: "bottom-end",
 };

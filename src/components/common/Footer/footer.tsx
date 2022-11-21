@@ -43,7 +43,10 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
         >
           {cols &&
             cols?.map(({ label, links }, i) => (
-              <div className="items-start" key={`footerlinkgroup_${i}`}>
+              <div
+                className="items-start flex flex-col"
+                key={`footerlinkgroup_${i}`}
+              >
                 <Text size="sm" className="font-semibold">
                   {label}
                 </Text>

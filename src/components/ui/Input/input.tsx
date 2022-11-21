@@ -168,7 +168,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               }}
             >
               <Icon
-                color={variant === "outline" ? "danger" : "filled"}
+                color={variant === "filled" ? "filled" : "danger"}
                 icon={ExclamationCircleIcon}
               />
             </InputElement>

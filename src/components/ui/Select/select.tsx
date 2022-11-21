@@ -1,4 +1,5 @@
 import { Listbox } from "@headlessui/react";
+import type { Placement } from "@popperjs/core";
 import cn from "classnames";
 import isArray from "lodash/isArray";
 import isEqual from "lodash/isEqual";
@@ -16,7 +17,6 @@ import {
 } from "react";
 import { Controller } from "react-hook-form";
 import { usePopper } from "react-popper";
-import type { Placement } from "@popperjs/core";
 
 import {
   divides,
@@ -78,7 +78,8 @@ type OptionalSelectOptionProps =
   | { children: ReactNode; options: never };
 
 export type SelectOptionProps = {
-  value: any;
+  value?: any;
+  [key: string]: any;
   disabled?: boolean;
 } & OptionalSelectOptionProps;
 
@@ -254,7 +255,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             <Listbox
               value={selected}
               onChange={(e) => {
-                console.log("onChange", e);
                 onChange(handleOnChange(e));
               }}
               multiple={multiple}
@@ -330,20 +330,21 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                       divides.accent
                     )}
                   >
-                    {removeAll && (
-                      <IconButton
-                        size={iconButtonSizes[size]}
-                        variant="ghost"
-                        ariaLabel={`delete_select_${name}`}
-                        icon={CrossIcon}
-                        className={cn(
-                          "pointer-events-auto",
-                          marginsXSmall[size]
-                        )}
-                        onClick={() => onChange(handleRemoveAll())}
-                        disabled={disabled}
-                      />
-                    )}
+                    {removeAll &&
+                      (multiple ? selected?.length > 0 : selected) && (
+                        <IconButton
+                          size={iconButtonSizes[size]}
+                          variant="ghost"
+                          ariaLabel={`delete_select_${name}`}
+                          icon={CrossIcon}
+                          className={cn(
+                            "pointer-events-auto",
+                            marginsXSmall[size]
+                          )}
+                          onClick={() => onChange(handleRemoveAll())}
+                          disabled={disabled}
+                        />
+                      )}
                     <div>
                       <IconButton
                         as="span"
@@ -519,6 +520,7 @@ Select.defaultProps = {
   hideActive: false,
   label: undefined,
   helper: undefined,
+  placement: "bottom",
 };
 
 type TagProps = {
