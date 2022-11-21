@@ -53,7 +53,10 @@ export const Icon: PolymorphicForwardRefExoticComponent<
     }: PolymorphicPropsWithoutRef<IconOwnProps, T>,
     ref: ForwardedRef<HTMLElement>
   ) => (
-    <span ref={ref} className={cn(sizes[size], colors[color], className)}>
+    <span
+      ref={ref}
+      className={cn("flex", sizes[size], colors[color], className)}
+    >
       {icon && createElement(icon)}
     </span>
   )

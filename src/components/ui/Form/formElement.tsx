@@ -2,8 +2,10 @@ import cn from "classnames";
 import { FC, memo, ReactNode } from "react";
 import { Message, ValidationRule } from "react-hook-form";
 
-import { textColors } from "../../../styles";
+import { gapsSmall, textColors } from "../../../styles";
+import { ExclamationTriangleIcon } from "../../../theme/icons";
 import type { Sizes } from "../../../types";
+import { Icon } from "../Icon";
 import { Text } from "../Typography";
 import { sizes as textSizes } from "../Typography/Text/text";
 
@@ -49,9 +51,12 @@ export const FormElement: FC<FormElementProps> = ({
     )}
     {children}
     {error && (
-      <Text size="xs" color="danger">
-        {error?.message}
-      </Text>
+      <span className={cn("flex flex-row items-center", gapsSmall.md)}>
+        <Icon icon={ExclamationTriangleIcon} color="danger" size="xs" />
+        <Text size="xs" color="danger">
+          {error?.message}
+        </Text>
+      </span>
     )}
     {helper && <Text size="xs">{helper}</Text>}
   </div>

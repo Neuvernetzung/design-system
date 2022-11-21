@@ -11,6 +11,7 @@ import {
   ChevronUpDownIcon as HeroChevronUpDownIcon,
   ComputerDesktopIcon as HeroComputerDesktopIcon,
   ExclamationCircleIcon as HeroExclamationCircleIcon,
+  ExclamationTriangleIcon as HeroExclamationTriangleIcon,
   InformationCircleIcon as HeroInformationCircleIcon,
   LinkIcon as HeroLinkIcon,
   ListBulletIcon as HeroListBulletIcon,
@@ -18,8 +19,8 @@ import {
   MoonIcon as HeroMoonIcon,
   PlusIcon as HeroPlusIcon,
   SunIcon as HeroSunIcon,
-  XMarkIcon,
   TrashIcon as HeroTrashIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
 
@@ -64,6 +65,7 @@ export const ExclamationCircleIcon = null || HeroExclamationCircleIcon;
 export const InformationCircleIcon = null || HeroInformationCircleIcon;
 
 // RichText
+
 export const MinusIcon = null || HeroMinusIcon;
 export const ListBulletIcon = null || HeroListBulletIcon;
 export const AlignLeftIcon = null || Bars3BottomLeftIcon;
@@ -81,3 +83,4 @@ export const PlusIcon = null || HeroPlusIcon;
 export const CalendarIcon = null || HeroCalendarIcon;
 export const BackArrowIcon = null || ArrowUturnLeftIcon;
 export const TrashIcon = null || HeroTrashIcon;
+export const ExclamationTriangleIcon = null || HeroExclamationTriangleIcon;
