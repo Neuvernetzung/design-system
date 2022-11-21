@@ -178,7 +178,15 @@ const deserializeReducer = (acc: any = [], node: any) => {
   }
 };
 
-export const deserializeHtml = (html = "") => {
+export const deserializeHtml = (html: string = "") => {
+  if (!html) {
+    return [
+      {
+        type: "p",
+        children: [{ text: "" }],
+      },
+    ];
+  }
   const nodes = parse(html);
 
   const deserializedHtml = nodes.reduce(deserializeReducer, []);

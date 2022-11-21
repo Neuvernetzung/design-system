@@ -44,7 +44,6 @@ import {
   AlignJustifyIcon,
   AlignLeftIcon,
   AlignRightIcon,
-  CrossIcon,
   LinkIcon,
   ListBulletIcon,
   TrashIcon,
@@ -55,10 +54,8 @@ import { Button, ButtonGroup, IconButton } from "../Button";
 import { type RequiredRule, Form, FormElement } from "../Form";
 import { Input } from "../Input";
 import { Modal } from "../Modal";
-import { Popover, PopoverButton } from "../Popover";
 import { createProseElement } from "../Prose/prose";
 import { Tooltip } from "../Tooltip";
-import { Heading } from "../Typography";
 import { Bold, Italic, OrderedList, Quote } from "./icons";
 import Underline from "./icons/UnderlineIcon";
 import { deserializeHtml, serializeHtml } from "./utils";
