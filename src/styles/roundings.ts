@@ -24,6 +24,22 @@ export const roundingsRight: Sizes = {
   xl: "rounded-r-lg",
 };
 
+export const roundingsTop: Sizes = {
+  xs: "rounded-t-sm",
+  sm: "rounded-t",
+  md: "rounded-t-md",
+  lg: "rounded-t-lg",
+  xl: "rounded-t-lg",
+};
+
+export const roundingsBottom: Sizes = {
+  xs: "rounded-b-sm",
+  sm: "rounded-b",
+  md: "rounded-b-md",
+  lg: "rounded-b-lg",
+  xl: "rounded-b-lg",
+};
+
 export const roundingsSmall: Sizes = {
   xs: "rounded-sm",
   sm: "rounded-sm",

@@ -31,13 +31,13 @@ export const Tooltip = ({
   if (!label) return children;
 
   return (
-    <span ref={setReferenceElement} className="relative group">
+    <span ref={setReferenceElement} className="relative group-tooltip">
       {children}
       <span
         role="tooltip"
         ref={setPopperElement}
         className={cn(
-          "absolute invisible group-hover:visible pointer-events-none my-2 bg-opacity-75",
+          "absolute invisible [.group-tooltip:hover_&]:visible pointer-events-none my-2 bg-opacity-75",
           paddingsSmall[size],
           roundings[size],
           bgColors.black,

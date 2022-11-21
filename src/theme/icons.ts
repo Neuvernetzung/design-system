@@ -1,5 +1,7 @@
 import {
   ArrowUturnLeftIcon,
+  Bars3BottomLeftIcon,
+  Bars3BottomRightIcon,
   Bars3Icon,
   CalendarIcon as HeroCalendarIcon,
   CheckCircleIcon as HeroCheckCircleIcon,
@@ -10,11 +12,14 @@ import {
   ComputerDesktopIcon as HeroComputerDesktopIcon,
   ExclamationCircleIcon as HeroExclamationCircleIcon,
   InformationCircleIcon as HeroInformationCircleIcon,
+  LinkIcon as HeroLinkIcon,
+  ListBulletIcon as HeroListBulletIcon,
   MinusIcon as HeroMinusIcon,
   MoonIcon as HeroMoonIcon,
   PlusIcon as HeroPlusIcon,
   SunIcon as HeroSunIcon,
   XMarkIcon,
+  TrashIcon as HeroTrashIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
 
@@ -58,11 +63,21 @@ export const CheckCircleIcon = null || HeroCheckCircleIcon;
 export const ExclamationCircleIcon = null || HeroExclamationCircleIcon;
 export const InformationCircleIcon = null || HeroInformationCircleIcon;
 
+// RichText
+export const MinusIcon = null || HeroMinusIcon;
+export const ListBulletIcon = null || HeroListBulletIcon;
+export const AlignLeftIcon = null || Bars3BottomLeftIcon;
+export const AlignRightIcon = null || Bars3BottomRightIcon;
+export const AlignCenterIcon = null || Bars3Icon;
+export const AlignJustifyIcon = null || Bars3Icon;
+export const LinkIcon = null || HeroLinkIcon;
+// Icons die noch nicht verfügbar sind später einbauen
+
 // Other
 
 export const ComputerDesktopIcon = null || HeroComputerDesktopIcon;
 export const CheckIcon = null || HeroCheckIcon;
-export const MinusIcon = null || HeroMinusIcon;
 export const PlusIcon = null || HeroPlusIcon;
 export const CalendarIcon = null || HeroCalendarIcon;
 export const BackArrowIcon = null || ArrowUturnLeftIcon;
+export const TrashIcon = null || HeroTrashIcon;
