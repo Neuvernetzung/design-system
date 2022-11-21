@@ -1,3 +1,28 @@
+# [1.6.0](https://github.com/Neuvernetzung/design-system/compare/v1.5.0...v1.6.0) (2022-11-21)
+
+
+### Bug Fixes
+
+* **ui:** A11y bei LinkButton - RichText verbessert [#126](https://github.com/Neuvernetzung/design-system/issues/126) ([8a59104](https://github.com/Neuvernetzung/design-system/commit/8a59104a1417ec43e7547a67523481cc6a4eb5bf))
+* **ui:** Initialvalue Bug gefixt bei RichText [#126](https://github.com/Neuvernetzung/design-system/issues/126) ([3cdfa8f](https://github.com/Neuvernetzung/design-system/commit/3cdfa8fac5fdf0827190e5bb8515b07a01271ff9))
+
+
+### Features
+
+* **ui:** Block Quote hinzugefügt [#190](https://github.com/Neuvernetzung/design-system/issues/190) ([06327eb](https://github.com/Neuvernetzung/design-system/commit/06327eb60c970fae6692deec970fc2b3900bf574))
+* **ui:** Ghost Variante zu Input und Select hinzugefügt [#185](https://github.com/Neuvernetzung/design-system/issues/185) ([9921960](https://github.com/Neuvernetzung/design-system/commit/992196032ff24ec388b5d8ac0cd20337966777e3))
+* **ui:** Grundfunktion Rich Text hinzugefügt [#126](https://github.com/Neuvernetzung/design-system/issues/126) ([867a506](https://github.com/Neuvernetzung/design-system/commit/867a50655e75a45401987b697a9275f3f86809d5))
+* **ui:** Link zu RichText hinzugefügt [#126](https://github.com/Neuvernetzung/design-system/issues/126) ([50fb765](https://github.com/Neuvernetzung/design-system/commit/50fb765fa6925278fb0de1e213ea5f96b1ed9672))
+* **ui:** Liste hinzufügen [#124](https://github.com/Neuvernetzung/design-system/issues/124) ([0e5dbd2](https://github.com/Neuvernetzung/design-system/commit/0e5dbd20e5baacda0926122cd3d5848f5fd42424))
+* **ui:** Listen und Blockquote zu RichText hinzugefügt [#126](https://github.com/Neuvernetzung/design-system/issues/126) ([7025ca0](https://github.com/Neuvernetzung/design-system/commit/7025ca0f888dcc582d67c9683557bc519d5b92d1))
+* **ui:** Object.keys durch queryString ersetzt in Pagination [#182](https://github.com/Neuvernetzung/design-system/issues/182) ([f0412d7](https://github.com/Neuvernetzung/design-system/commit/f0412d7341e73b1058eac28f06f19f5b63e6bc49))
+* **ui:** Padding Y zu Dropdown Container hinzufügen [#183](https://github.com/Neuvernetzung/design-system/issues/183) ([9fe1537](https://github.com/Neuvernetzung/design-system/commit/9fe1537d1c0d6c82fdda10def98047aefdfa0d98))
+* **ui:** Placeholder für Ghost Variante hinzugefügt [#185](https://github.com/Neuvernetzung/design-system/issues/185) ([f96d3c9](https://github.com/Neuvernetzung/design-system/commit/f96d3c914b0050e3a7eff64fdf144488e278cbe5))
+* **ui:** Select für Text und Überschrift Typen bei RichText hinzugefügt [#194](https://github.com/Neuvernetzung/design-system/issues/194) ([cf09d39](https://github.com/Neuvernetzung/design-system/commit/cf09d395777c8069cd705a4c5b2e1e52ad864d19))
+* **ui:** Select Type verbessern wenn statt value ein anderer Wert returned wird [#184](https://github.com/Neuvernetzung/design-system/issues/184) ([6919a32](https://github.com/Neuvernetzung/design-system/commit/6919a32c975f164b9e9583dabcfe285bc7cfea64))
+* **ui:** Tooltip hinzugefügt zu RichText [#126](https://github.com/Neuvernetzung/design-system/issues/126) ([4b71e27](https://github.com/Neuvernetzung/design-system/commit/4b71e2705aeb6de84d8132b5f3acd6426cdd08ca))
+* **ui:** Type Issues gefixt bei RichText [#126](https://github.com/Neuvernetzung/design-system/issues/126) ([76092d0](https://github.com/Neuvernetzung/design-system/commit/76092d06b5f790b5ec6d5f50fd9b4b30eb75aac6))
+
 # [1.5.0](https://github.com/Neuvernetzung/design-system/compare/v1.4.0...v1.5.0) (2022-11-18)
 
 
