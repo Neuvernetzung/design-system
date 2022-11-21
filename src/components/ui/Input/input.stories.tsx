@@ -102,14 +102,7 @@ export const Error = ({ ...args }) => {
           {...args}
         />
       ))}
-      <Input
-        formMethods={formMethods}
-        name="element_input"
-        placeholder="Mit Element"
-        required
-        rightElement={{ children: <Icon icon={PhoneIcon} /> }}
-        {...args}
-      />
+
       <Button type="submit">Bestätigen</Button>
     </Form>
   );
