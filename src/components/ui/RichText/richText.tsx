@@ -44,6 +44,7 @@ import {
   AlignJustifyIcon,
   AlignLeftIcon,
   AlignRightIcon,
+  ChevronUpDownIcon,
   LinkIcon,
   ListBulletIcon,
   TrashIcon,
@@ -53,6 +54,7 @@ import { hrefRegex } from "../../../utils/internal/regex";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { type RequiredRule, Form, FormElement } from "../Form";
 import { Input } from "../Input";
+import { Menu } from "../Menu";
 import { Modal } from "../Modal";
 import { createProseElement } from "../Prose/prose";
 import { Tooltip } from "../Tooltip";
@@ -81,6 +83,16 @@ interface Marks {
   "font-bold"?: boolean;
   italic?: boolean;
   underline?: boolean;
+}
+
+interface TextBlocks {
+  p: any;
+  h1: any;
+  h2: any;
+  h3: any;
+  h4: any;
+  h5: any;
+  h6: any;
 }
 
 interface ILink {
@@ -170,6 +182,9 @@ export const RichText = ({
                   <MarkButton format="underline" icon={Underline} />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
+                  <TextBlockButton />
+                </div>
+                <div className={cn(buttonGroupClassName)}>
                   <MarkLinkButton
                     icon={LinkIcon}
                     tooltip={
@@ -178,15 +193,6 @@ export const RichText = ({
                         : "Link bearbeiten"
                     }
                   />
-                </div>
-                <div className={cn(buttonGroupClassName)}>
-                  <BlockButton format="p" title="p" />
-                  <BlockButton format="h1" title="h1" />
-                  <BlockButton format="h2" title="h2" />
-                  <BlockButton format="h3" title="h3" />
-                  <BlockButton format="h4" title="h4" />
-                  <BlockButton format="h5" title="h5" />
-                  <BlockButton format="h6" title="h6" />
                 </div>
                 <div className={cn(buttonGroupClassName)}>
                   <BlockButton
@@ -312,6 +318,20 @@ const isBlockActive = (
   return !!match;
 };
 
+const activeBlock = (editor: CustomEditor) => {
+  const { selection } = editor;
+  if (!selection) return false;
+
+  const [match] = Array.from(
+    Editor.nodes(editor, {
+      at: Editor.unhangRange(editor, selection),
+      match: (n) => (!Editor.isEditor(n) && SlateElement.isElement(n)) || false,
+    })
+  ) as any;
+
+  return match?.[0]?.type;
+};
+
 const isMarkActive = (
   editor: CustomEditor,
   format: keyof Marks | keyof ILink
@@ -394,6 +414,56 @@ const BlockButton = ({ format, icon, title, tooltip }: BlockButtonProps) => {
 };
 
 BlockButton.defaultProps = {
+  icon: undefined,
+  title: undefined,
+  tooltip: undefined,
+};
+
+const TextBlockButton = () => {
+  const editor = useSlate();
+
+  const active = ["p", "h1", "h2", "h3", "h4", "h5", "h6"].includes(
+    activeBlock(editor)
+  )
+    ? activeBlock(editor)
+    : "p";
+
+  const onClick = (format: keyof TextBlocks) => {
+    toggleBlock(editor, format);
+  };
+
+  return (
+    <Menu
+      buttonType="button"
+      placement="bottom"
+      size="sm"
+      buttonProps={{
+        children: active,
+        variant: "ghost",
+        rightIcon: ChevronUpDownIcon,
+      }}
+      items={[
+        {
+          children: "Text",
+          items: [{ children: "p", onClick: () => onClick("p") }],
+        },
+        {
+          children: "Überschriften",
+          items: [
+            { children: "h1", onClick: () => onClick("h1") },
+            { children: "h2", onClick: () => onClick("h2") },
+            { children: "h3", onClick: () => onClick("h3") },
+            { children: "h4", onClick: () => onClick("h4") },
+            { children: "h5", onClick: () => onClick("h5") },
+            { children: "h6", onClick: () => onClick("h6") },
+          ],
+        },
+      ]}
+    />
+  );
+};
+
+TextBlockButton.defaultProps = {
   icon: undefined,
   title: undefined,
   tooltip: undefined,
