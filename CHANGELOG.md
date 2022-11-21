@@ -1,3 +1,21 @@
+# [1.7.0](https://github.com/Neuvernetzung/design-system/compare/v1.6.0...v1.7.0) (2022-11-21)
+
+
+### Bug Fixes
+
+* **ui:** Button ohne Prose hat wieder fullWidth [#202](https://github.com/Neuvernetzung/design-system/issues/202) ([01e1e5d](https://github.com/Neuvernetzung/design-system/commit/01e1e5df59868a839dcde995e98389e8ea67587e))
+* **ui:** Inputs lassen sich wieder in voller Breite nebeneinander anzeigen [#205](https://github.com/Neuvernetzung/design-system/issues/205) ([1b66e12](https://github.com/Neuvernetzung/design-system/commit/1b66e1277d11f2691e598ac0767b8a1d9bb2087b))
+
+
+### Features
+
+* **ui:** Confirmation als Funktion nutzbar [#203](https://github.com/Neuvernetzung/design-system/issues/203) ([599bbce](https://github.com/Neuvernetzung/design-system/commit/599bbcec5fae109f41f60823c6ef2e7da61f9028))
+* **ui:** DefaultMessage für FormElement hinzugefügt [#204](https://github.com/Neuvernetzung/design-system/issues/204) ([74d4886](https://github.com/Neuvernetzung/design-system/commit/74d48864a8c7074e718ed01f45289dc597a7f3a5))
+* **ui:** Error Icon in Message angezeigt anstatt in Input [#197](https://github.com/Neuvernetzung/design-system/issues/197) ([1c677c9](https://github.com/Neuvernetzung/design-system/commit/1c677c9d347279cdbfdd7c10cc6e7ca64c0a6efd))
+* **ui:** Möglichkeit einzelne TabPanel zu benutzen [#199](https://github.com/Neuvernetzung/design-system/issues/199) ([7571cb6](https://github.com/Neuvernetzung/design-system/commit/7571cb63b973f37e623518ed13e6cc62155c684f))
+* **ui:** RichText autofocus per default aus [#200](https://github.com/Neuvernetzung/design-system/issues/200) ([494494c](https://github.com/Neuvernetzung/design-system/commit/494494cdfe80f16b69b12ec3e0553451587fd000))
+* **ui:** Select Ghost Variante hat nun auch im Darkmode keinen Hintergrund [#198](https://github.com/Neuvernetzung/design-system/issues/198) ([7d81e57](https://github.com/Neuvernetzung/design-system/commit/7d81e57ef193b141eaff7f0381dc5e31bd312fad))
+
 # [1.6.0](https://github.com/Neuvernetzung/design-system/compare/v1.5.0...v1.6.0) (2022-11-21)
 
 
