@@ -20,47 +20,6 @@ import { FormElement, RequiredRule } from "../Form";
 import { labelSizes } from "../Form/formElement";
 import { CheckboxIcon } from "./checkboxIcon";
 
-export const colors: Colors = {
-  primary: checkboxColors.primary,
-  accent: checkboxColors.accent,
-  success: checkboxColors.success,
-  warn: checkboxColors.warn,
-  danger: checkboxColors.danger,
-};
-
-export const sizes: Sizes = {
-  xs: {
-    options: gapsSmall.xs,
-    base: gapsSmall.xs,
-    input: `${checkboxSizes.xs} ${roundingsSmall.xs}`,
-    label: labelSizes.xs,
-  },
-  sm: {
-    options: gapsSmall.sm,
-    base: gapsSmall.sm,
-    input: `${checkboxSizes.sm} ${roundingsSmall.sm}`,
-    label: labelSizes.sm,
-  },
-  md: {
-    options: gapsSmall.md,
-    base: gapsSmall.md,
-    input: `${checkboxSizes.md} ${roundingsSmall.md}`,
-    label: labelSizes.md,
-  },
-  lg: {
-    options: gapsSmall.lg,
-    base: gapsSmall.lg,
-    input: `${checkboxSizes.lg} ${roundingsSmall.lg}`,
-    label: labelSizes.lg,
-  },
-  xl: {
-    options: gapsSmall.xl,
-    base: gapsSmall.xl,
-    input: `${checkboxSizes.xl} ${roundingsSmall.xl}`,
-    label: labelSizes.xl,
-  },
-};
-
 export type CheckboxProps = {
   name: string;
   label?: string;
@@ -121,7 +80,7 @@ export const Checkbox = ({
       helper={helper}
       size={size}
     >
-      <div className={cn("flex flex-col", sizes[size]?.options, className)}>
+      <div className={cn("flex flex-col", gapsSmall[size], className)}>
         {options.map(
           (
             {
@@ -138,7 +97,7 @@ export const Checkbox = ({
             return (
               <div
                 key={`checkbox_${name}_${i}`}
-                className={cn(styles.base, sizes[size]?.base)}
+                className={cn(styles.base, gapsSmall[size])}
               >
                 <div className="relative flex">
                   <input
@@ -150,8 +109,9 @@ export const Checkbox = ({
                       "peer",
                       focus[color],
                       !_disabled ? styles.input : styles.inputDisabled,
-                      sizes[size]?.input,
-                      !_disabled && colors[color],
+                      checkboxSizes[size],
+                      roundingsSmall[size],
+                      !_disabled && checkboxColors[color],
                       error && styles.inputError
                     )}
                     {...(register &&
@@ -161,7 +121,7 @@ export const Checkbox = ({
                   />
                   <span
                     className={cn(
-                      "hidden peer-checked:block",
+                      "hidden peer-checked:flex scale-50",
                       styles.iconWrapper,
                       extendedTextColors.filled
                     )}
@@ -178,7 +138,7 @@ export const Checkbox = ({
                   className={cn(
                     !_disabled ? styles.label : styles.labelDisabled,
                     textColors.accent,
-                    sizes[size]?.label
+                    labelSizes[size]
                   )}
                 >
                   {label}
