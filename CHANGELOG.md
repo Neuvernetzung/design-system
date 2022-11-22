@@ -1,3 +1,16 @@
+# [1.8.0](https://github.com/Neuvernetzung/design-system/compare/v1.7.0...v1.8.0) (2022-11-22)
+
+
+### Bug Fixes
+
+* **storybook:** a11y deaktiviert für Radio unterseiten [#217](https://github.com/Neuvernetzung/design-system/issues/217) ([5e59962](https://github.com/Neuvernetzung/design-system/commit/5e599623bdf233de17bc37522fbfc6f24b52b3e5))
+* **ui:** Checkbox Icon verkleinert mit scale-50 [#215](https://github.com/Neuvernetzung/design-system/issues/215) ([3055a08](https://github.com/Neuvernetzung/design-system/commit/3055a0890f5c62830d3d32d3feeaba5822ace13e))
+
+
+### Features
+
+* **ui:** Radio Group verbessert und Button Variante hinzugefügt [#217](https://github.com/Neuvernetzung/design-system/issues/217) ([52fae4a](https://github.com/Neuvernetzung/design-system/commit/52fae4a4aa9399d8f3e5cccde0c13d441186af43))
+
 # [1.7.0](https://github.com/Neuvernetzung/design-system/compare/v1.6.0...v1.7.0) (2022-11-21)
 
 
