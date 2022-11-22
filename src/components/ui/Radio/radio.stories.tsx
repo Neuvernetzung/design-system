@@ -85,6 +85,9 @@ export const Variants = ({ ...args }) => {
 
 Variants.parameters = {
   controls: { exclude: "variant" },
+  a11y: {
+    disable: true,
+  },
 };
 
 export const Sizes = ({ ...args }) => {
@@ -215,6 +218,11 @@ export const Disabled = ({ ...args }) => {
     </Form>
   );
 };
+Disabled.parameters = {
+  a11y: {
+    disable: true,
+  },
+};
 
 export const Error = ({ ...args }) => {
   const formMethods = useForm();
@@ -251,4 +259,9 @@ export const Error = ({ ...args }) => {
       <Button type="submit">Submit</Button>
     </Form>
   );
+};
+Error.parameters = {
+  a11y: {
+    disable: true,
+  },
 };
