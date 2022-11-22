@@ -2,8 +2,9 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
-import { colors, Radio, sizes } from "./radio";
+import { Radio, RadioVariants } from "./radio";
 
 export default {
   title: "UI/Form/Radio",
@@ -54,9 +55,9 @@ export const Default = ({ ...args }) => {
   );
 };
 
-export const Sizes = ({ ...args }) => {
+export const Variants = ({ ...args }) => {
   const formMethods = useForm();
-  const _sizes = Object.keys(sizes);
+  const variants: Array<keyof RadioVariants> = ["default", "button"];
 
   return (
     <Form
@@ -64,7 +65,39 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_sizes.map((size: any) => (
+      {variants.map((variant: any) => (
+        <Radio
+          key={variant}
+          formMethods={formMethods}
+          name={`radio_${variant}`}
+          label={variant}
+          variant={variant}
+          options={[
+            { label: "Option 1", value: "option-1" },
+            { label: "Option 2", value: "option-2" },
+          ]}
+          {...args}
+        />
+      ))}
+    </Form>
+  );
+};
+
+Variants.parameters = {
+  controls: { exclude: "variant" },
+};
+
+export const Sizes = ({ ...args }) => {
+  const formMethods = useForm();
+  const sizes: Array<keyof SizesType> = ["xs", "sm", "md", "lg", "xl"];
+
+  return (
+    <Form
+      formMethods={formMethods}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      {sizes.map((size: any) => (
         <Radio
           key={size}
           formMethods={formMethods}
@@ -88,7 +121,13 @@ Sizes.parameters = {
 
 export const Colors = ({ ...args }) => {
   const formMethods = useForm();
-  const _colors = Object.keys(colors);
+  const colors: Array<keyof ColorsType> = [
+    "primary",
+    "accent",
+    "success",
+    "warn",
+    "danger",
+  ];
 
   return (
     <Form
@@ -96,7 +135,7 @@ export const Colors = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_colors.map((color: any) => (
+      {colors.map((color: any) => (
         <Radio
           key={color}
           formMethods={formMethods}
@@ -120,7 +159,7 @@ Colors.parameters = {
 
 export const Disabled = ({ ...args }) => {
   const formMethods = useForm({
-    defaultValues: { radio_disabled: ["option-2"] },
+    defaultValues: { radio_disabled: "option-2" },
   });
 
   return (
@@ -150,14 +189,35 @@ export const Disabled = ({ ...args }) => {
         ]}
         {...args}
       />
+      <Radio
+        formMethods={formMethods}
+        name="radio_disabled"
+        label="Alle Disabled"
+        variant="button"
+        disabled
+        options={[
+          { label: "Option 1", value: "option-1" },
+          { label: "Option 2", value: "option-2" },
+        ]}
+        {...args}
+      />
+      <Radio
+        formMethods={formMethods}
+        name="radio_disabled_single"
+        variant="button"
+        label="Einzelnd Disabled"
+        options={[
+          { label: "Option 1", value: "option-1" },
+          { label: "Option 2", value: "option-2", disabled: true },
+        ]}
+        {...args}
+      />
     </Form>
   );
 };
 
 export const Error = ({ ...args }) => {
-  const formMethods = useForm({
-    defaultValues: { radio_disabled: ["option-2"] },
-  });
+  const formMethods = useForm();
 
   return (
     <Form
@@ -167,6 +227,18 @@ export const Error = ({ ...args }) => {
     >
       <Radio
         formMethods={formMethods}
+        name="radio_error"
+        label="Alle Error"
+        required
+        options={[
+          { label: "Option 1", value: "option-1" },
+          { label: "Option 2", value: "option-2" },
+        ]}
+        {...args}
+      />
+      <Radio
+        formMethods={formMethods}
+        variant="button"
         name="radio_error"
         label="Alle Error"
         required
