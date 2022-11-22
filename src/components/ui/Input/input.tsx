@@ -1,6 +1,6 @@
 import cn from "classnames";
-import get from "lodash/get";
 import { forwardRef, memo, useLayoutEffect, useRef, useState } from "react";
+import { Controller } from "react-hook-form";
 
 import {
   getInputStyles,
@@ -91,9 +91,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }: InputProps,
     ref
   ) => {
-    const { register } = formMethods;
-    const error = get(formMethods?.formState?.errors, name);
-
     const leftElementRef: any = useRef(null);
     const rightElementRef: any = useRef(null);
     const [leftElementWidth, setleftElementWidth] = useState();
@@ -104,74 +101,91 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }, []);
 
     return (
-      <FormElement
-        error={error}
+      <Controller
+        control={formMethods.control}
         name={name}
-        label={label}
-        helper={helper}
-        size={size}
-        className={className}
-      >
-        <div className={cn(styles.containerBase, containerClassName)}>
-          {leftAddon && (
-            <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
-          )}
-          {leftElement && (
-            <InputElement
-              size={size}
-              isLeft
-              ref={leftElementRef}
-              {...leftElement}
-            />
-          )}
-          <input
-            type={type}
-            id={name}
-            ref={ref}
-            onWheel={(e: any) =>
-              e.target?.type === "number" && e.target?.blur()
-            } // damit beim scrollen die zahl nicht versehentlich verändert wird
-            className={cn(
-              getInputStyles({
-                size,
-                variant,
-                error,
-                disabled,
-                leftAddon,
-                rightAddon,
-              }),
-              inputClassName
-            )}
-            style={{
-              paddingLeft: leftElement && leftElementWidth,
-              paddingRight: rightElement && rightElementWidth,
-            }}
-            {...register(name, {
-              required,
-              maxLength,
-              minLength,
-              max,
-              min,
-              pattern,
-            })}
-            step={step}
-            disabled={disabled}
-            {...props}
-          />
+        rules={{
+          required,
+          maxLength,
+          minLength,
+          max,
+          min,
+          pattern,
+        }}
+        render={({ field: { onChange }, fieldState: { error } }) => (
+          <FormElement
+            error={error}
+            name={name}
+            label={label}
+            helper={helper}
+            size={size}
+            className={className}
+          >
+            <div className={cn(styles.containerBase, containerClassName)}>
+              {leftAddon && (
+                <InputAddon
+                  size={size}
+                  variant={variant}
+                  isLeft
+                  {...leftAddon}
+                />
+              )}
+              {leftElement && (
+                <InputElement
+                  size={size}
+                  isLeft
+                  ref={leftElementRef}
+                  {...leftElement}
+                />
+              )}
+              <input
+                type={type}
+                id={name}
+                ref={ref}
+                onChange={onChange}
+                onWheel={(e: any) =>
+                  e.target?.type === "number" && e.target?.blur()
+                } // damit beim scrollen die zahl nicht versehentlich verändert wird
+                className={cn(
+                  getInputStyles({
+                    size,
+                    variant,
+                    error: !!error,
+                    disabled,
+                    leftAddon,
+                    rightAddon,
+                  }),
+                  inputClassName
+                )}
+                style={{
+                  paddingLeft: leftElement && leftElementWidth,
+                  paddingRight: rightElement && rightElementWidth,
+                }}
+                step={step}
+                disabled={disabled}
+                {...props}
+              />
 
-          {rightAddon && (
-            <InputAddon size={size} variant={variant} isRight {...rightAddon} />
-          )}
-          {rightElement && (
-            <InputElement
-              size={size}
-              isRight
-              ref={rightElementRef}
-              {...rightElement}
-            />
-          )}
-        </div>
-      </FormElement>
+              {rightAddon && (
+                <InputAddon
+                  size={size}
+                  variant={variant}
+                  isRight
+                  {...rightAddon}
+                />
+              )}
+              {rightElement && (
+                <InputElement
+                  size={size}
+                  isRight
+                  ref={rightElementRef}
+                  {...rightElement}
+                />
+              )}
+            </div>
+          </FormElement>
+        )}
+      />
     );
   }
 );
