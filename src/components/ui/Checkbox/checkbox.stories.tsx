@@ -3,8 +3,9 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
-import { Checkbox, colors, sizes } from "./checkbox";
+import { Checkbox } from "./checkbox";
 
 export default {
   title: "UI/Form/Checkbox",
@@ -57,7 +58,7 @@ export const Default = ({ ...args }) => {
 
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
-  const _sizes = Object.keys(sizes);
+  const sizes: Array<keyof SizesType> = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Form
@@ -65,7 +66,7 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_sizes.map((size: any) => (
+      {sizes.map((size: any) => (
         <Checkbox
           key={size}
           formMethods={formMethods}
@@ -89,7 +90,13 @@ Sizes.parameters = {
 
 export const Colors = ({ ...args }) => {
   const formMethods = useForm();
-  const _colors = Object.keys(colors);
+  const colors: Array<keyof ColorsType> = [
+    "primary",
+    "accent",
+    "success",
+    "warn",
+    "danger",
+  ];
 
   return (
     <Form
@@ -97,7 +104,7 @@ export const Colors = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_colors.map((color: any) => (
+      {colors.map((color: any) => (
         <Checkbox
           key={color}
           formMethods={formMethods}
