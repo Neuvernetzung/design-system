@@ -5,7 +5,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, Form, Icon } from "..";
-import { Input, sizes, variants } from "./input";
+import { Input } from ".";
+import { sizes, variants } from "./input";
 
 export default {
   title: "UI/Form/Input",
@@ -32,13 +33,13 @@ export const Variants = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_variants.map((variant: any, i) => (
         <Input
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`${variant}_input_${i}`}
           variant={variant}
           key={variant}
@@ -60,13 +61,13 @@ export const Sizes = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_sizes.map((size: any, i) => (
         <Input
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`${size}_input_${i}`}
           size={size}
           key={size}
@@ -88,13 +89,13 @@ export const Error = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_variants.map((variant: any, i) => (
         <Input
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`${variant}_input_${i}`}
           variant={variant}
           key={variant}
@@ -114,12 +115,12 @@ export const Addons = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input-left-addon"
         placeholder="left Addon"
         leftAddon={{ children: "+49" }}
@@ -127,7 +128,7 @@ export const Addons = ({ ...args }) => {
         {...args}
       />
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input-right-addon"
         placeholder="right Addon"
         rightAddon={{ children: "€" }}
@@ -135,7 +136,7 @@ export const Addons = ({ ...args }) => {
         {...args}
       />
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input-both-addons"
         placeholder="both Addons"
         leftAddon={{ children: "https://" }}
@@ -152,12 +153,12 @@ export const Elements = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input-left-element"
         placeholder="left Element"
         leftElement={{ children: <Icon icon={PhoneIcon} /> }}
@@ -165,7 +166,7 @@ export const Elements = ({ ...args }) => {
         {...args}
       />
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input-right-element"
         placeholder="right Element"
         rightElement={{ children: <Icon icon={PhoneIcon} /> }}
@@ -173,7 +174,7 @@ export const Elements = ({ ...args }) => {
         {...args}
       />
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input-both-elements"
         placeholder="both Elements"
         leftElement={{ children: <Icon icon={PhoneIcon} /> }}
@@ -190,12 +191,12 @@ export const Disabled = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input-disabled"
         placeholder="disabled"
         disabled
@@ -212,7 +213,7 @@ export const Types = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
@@ -220,7 +221,7 @@ export const Types = ({ ...args }) => {
         <Input
           key={type}
           type={type}
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`input_${type}`}
           placeholder={type}
           {...args}
@@ -230,20 +231,28 @@ export const Types = ({ ...args }) => {
   );
 };
 
+interface ITestForm {
+  email: string;
+  name: string;
+  nachname: string;
+  straße: string;
+  hausnummer: number;
+}
+
 export const TestForm = ({ ...args }) => {
-  const formMethods = useForm();
+  const { control, handleSubmit } = useForm<ITestForm>();
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={handleSubmit}
       onSubmit={() => {}}
       className={cn(formClassName, "max-w-xl")}
     >
-      <Input formMethods={formMethods} name="email" label="Email" {...args} />
+      <Input control={control} name="email" label="Email" {...args} />
       <div className="flex flex-row gap-2">
-        <Input formMethods={formMethods} name="name" label="Name" {...args} />
+        <Input control={control} name="name" label="Name" {...args} />
         <Input
-          formMethods={formMethods}
+          control={control}
           name="nachname"
           label="Nachname"
           className="w-full"
@@ -252,14 +261,14 @@ export const TestForm = ({ ...args }) => {
       </div>
       <div className="flex flex-row gap-2">
         <Input
-          formMethods={formMethods}
+          control={control}
           name="straße"
           label="Straße"
           className="w-full"
           {...args}
         />
         <Input
-          formMethods={formMethods}
+          control={control}
           name="hausnummer"
           label="Hausnummer"
           {...args}

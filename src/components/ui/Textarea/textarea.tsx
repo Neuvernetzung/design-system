@@ -1,6 +1,11 @@
 import cn from "classnames";
-import get from "lodash/get";
-import { forwardRef, memo } from "react";
+import { ForwardedRef, forwardRef } from "react";
+import {
+  Controller,
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 
 import {
   getInputStyles,
@@ -8,6 +13,7 @@ import {
   inputVariants,
 } from "../../../styles/groups";
 import type { InputVariants, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import {
   FormElement,
   MaxLengthRule,
@@ -21,13 +27,11 @@ export const sizes = inputSizes;
 export const variants = inputVariants;
 
 export type TextareaProps = {
-  name: string;
   label?: string;
   helper?: any;
   size?: keyof Sizes;
   variant?: keyof InputVariants;
   placeholder?: string;
-  formMethods: any;
   required?: RequiredRule;
   maxLength?: MaxLengthRule;
   minLength?: MinLengthRule;
@@ -38,33 +42,40 @@ export type TextareaProps = {
   rows?: number;
 };
 
-export const Textarea = forwardRef<HTMLInputElement, TextareaProps>(
-  (
-    {
-      formMethods,
-      name,
-      required = false,
+export const TextareaInner = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(
+  {
+    control,
+    name,
+    required = false,
+    maxLength,
+    minLength,
+    pattern,
+    showLength,
+    className,
+    disabled = false,
+    label,
+    helper,
+    size = "md",
+    placeholder,
+    variant = "outline",
+    rows = 3,
+    ...props
+  }: TextareaProps & UseControllerProps<TFieldValues, TName>,
+  ref: ForwardedRef<HTMLTextAreaElement>
+) => (
+  <Controller
+    control={control}
+    name={name}
+    rules={{
+      required,
       maxLength,
       minLength,
       pattern,
-      showLength,
-      className,
-      disabled = false,
-      label,
-      helper,
-      size = "md",
-      placeholder,
-      variant = "outline",
-      rows = 3,
-      ...props
-    },
-    ref
-  ) => {
-    const { register } = formMethods;
-    const error = get(formMethods?.formState?.errors, name);
-    const textLength = formMethods?.watch(name)?.length || 0;
-
-    return (
+    }}
+    render={({ field: { value, onChange }, fieldState: { error } }) => (
       <FormElement
         error={error}
         name={name}
@@ -75,18 +86,12 @@ export const Textarea = forwardRef<HTMLInputElement, TextareaProps>(
         <div className="relative">
           <textarea
             id={name}
-            type="textarea"
             ref={ref}
+            onChange={onChange}
             className={cn(
-              getInputStyles({ size, variant, error, disabled }),
+              getInputStyles({ size, variant, error: !!error, disabled }),
               className
             )}
-            {...register(name, {
-              required,
-              maxLength,
-              minLength,
-              pattern,
-            })}
             disabled={disabled}
             placeholder={placeholder}
             rows={rows}
@@ -95,34 +100,26 @@ export const Textarea = forwardRef<HTMLInputElement, TextareaProps>(
           {maxLength && showLength && (
             <Text
               size="xs"
-              color={textLength > maxLength ? "danger" : "accent"}
+              color={(value?.length || 0) > maxLength ? "danger" : "accent"}
               className={cn("absolute bottom-2 right-5")}
             >
-              {textLength} / {maxLength}
+              {value?.length || 0} / {maxLength}
             </Text>
           )}
         </div>
       </FormElement>
-    );
-  }
+    )}
+  />
 );
 
-export default memo(Textarea);
+const Textarea = forwardRef(TextareaInner) as <
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+>(
+  props: TextareaProps &
+    UseControllerProps<TFieldValues, TName> & {
+      ref?: ForwardedRef<HTMLTextAreaElement>;
+    }
+) => ReturnType<typeof TextareaInner>;
 
-Textarea.displayName = "Textarea";
-
-Textarea.defaultProps = {
-  label: undefined,
-  helper: undefined,
-  size: "md",
-  variant: "outline",
-  placeholder: undefined,
-  required: false,
-  maxLength: undefined,
-  minLength: undefined,
-  pattern: undefined,
-  showLength: true,
-  disabled: false,
-  className: undefined,
-  rows: 3,
-};
+export default typedMemo(Textarea);

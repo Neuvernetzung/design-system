@@ -1,32 +1,45 @@
 import cn from "classnames";
-import { FC, memo, ReactNode } from "react";
+import { BaseSyntheticEvent, ReactNode } from "react";
+import {
+  FieldValues,
+  SubmitHandler,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 
-export type FormProps = {
-  formMethods: any;
-  onSubmit: Function;
+import { typedMemo } from "../../../utils/internal";
+
+export type FormProps<T extends FieldValues> = {
+  handleSubmit: UseFormHandleSubmit<T>;
+  onSubmit: SubmitHandler<T>;
   className?: string;
   children: ReactNode;
+  isNestedForm?: boolean;
 };
 
-export const Form: FC<FormProps> = ({
-  formMethods,
+export const Form = <T extends FieldValues>({
+  handleSubmit,
   onSubmit,
   className,
+  isNestedForm,
   ...props
-}) => {
-  const { handleSubmit } = formMethods;
+}: FormProps<T>) => (
+  <form
+    className={cn(className)}
+    onSubmit={(e: BaseSyntheticEvent) => {
+      if (!isNestedForm) return handleSubmit(onSubmit)(e);
 
-  return (
-    <form
-      className={cn(className)}
-      onSubmit={handleSubmit(onSubmit)}
-      {...props}
-    />
-  );
-};
+      if (e) {
+        if (typeof e.preventDefault === "function") {
+          e.preventDefault();
+        }
+        if (typeof e.stopPropagation === "function") {
+          e.stopPropagation();
+        }
+      }
+      return handleSubmit(onSubmit)(e);
+    }}
+    {...props}
+  />
+);
 
-Form.defaultProps = {
-  className: "",
-};
-
-export default memo(Form);
+export default typedMemo(Form);

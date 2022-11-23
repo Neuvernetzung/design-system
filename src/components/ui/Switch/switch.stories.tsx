@@ -2,12 +2,14 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
-import { colors, sizes, Switch } from "./switch";
+import { Switch } from ".";
+import { colors, SwitchInner } from "./switch";
 
 export default {
   title: "UI/Form/Switch",
-  component: Switch,
+  component: SwitchInner,
   argTypes: {
     size: {
       control: { type: "select" },
@@ -24,20 +26,28 @@ export default {
 
 const formClassName = "flex flex-col gap-5";
 
+interface ISizes {
+  select_xs: any;
+  select_sm: any;
+  select_md: any;
+  select_lg: any;
+  select_xl: any;
+}
+
 export const Sizes = ({ ...args }) => {
-  const formMethods = useForm();
-  const _sizes = Object.keys(sizes);
+  const formMethods = useForm<ISizes>();
+  const sizes: Array<keyof SizesType> = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_sizes.map((size: any) => (
+      {sizes.map((size: keyof SizesType) => (
         <Switch
           key={size}
-          formMethods={formMethods}
+          control={formMethods.control}
           size={size}
           name={`select_${size}`}
           content={size}
@@ -58,14 +68,14 @@ export const Colors = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_colors.map((color: any) => (
         <Switch
           key={color}
-          formMethods={formMethods}
+          control={formMethods.control}
           color={color}
           name={`select_${color}`}
           content={color}
@@ -85,18 +95,18 @@ export const Order = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Switch
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_after"
         content="after"
         {...args}
       />
       <Switch
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_before"
         content="before"
         reverse
@@ -111,12 +121,12 @@ export const Error = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Switch
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_error"
         content="error"
         required
@@ -132,12 +142,12 @@ export const Disabled = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Switch
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_disabled"
         content="disabled"
         disabled
