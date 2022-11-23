@@ -1,7 +1,12 @@
 import { RadioGroup } from "@headlessui/react";
 import cn from "classnames";
-import { type ElementType, type ReactElement, memo } from "react";
-import { Controller } from "react-hook-form";
+import { type ElementType, type ReactElement } from "react";
+import {
+  Controller,
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 
 import {
   borders,
@@ -14,6 +19,7 @@ import {
   textColors,
 } from "../../../styles";
 import type { Colors, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { labelSizes } from "../Form/formElement";
@@ -44,11 +50,9 @@ export interface RadioVariants {
 }
 
 export type RadioProps = {
-  name: string;
   variant?: keyof RadioVariants;
   label?: string;
   helper?: any;
-  formMethods: any;
   options: OptionProps[];
   required?: RequiredRule;
   size?: keyof Sizes;
@@ -75,9 +79,12 @@ const styles = {
     "absolute inset-0 p-0.5 pointer-events-none flex items-center justify-center",
 };
 
-export const Radio = ({
+export const Radio = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
   name,
-  formMethods,
+  control,
   label,
   helper,
   size = "md",
@@ -87,9 +94,9 @@ export const Radio = ({
   options,
   disabled,
   className,
-}: RadioProps) => (
+}: RadioProps & UseControllerProps<TFieldValues, TName>) => (
   <Controller
-    control={formMethods.control}
+    control={control}
     name={name}
     rules={{
       required,
@@ -181,7 +188,7 @@ export const Radio = ({
   />
 );
 
-export default memo(Radio);
+export default typedMemo(Radio);
 
 Radio.defaultProps = {
   variant: "default",

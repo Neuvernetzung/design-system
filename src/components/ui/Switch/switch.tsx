@@ -1,8 +1,13 @@
 import { Switch as HeadlessSwitch } from "@headlessui/react";
 import cn from "classnames";
 import isString from "lodash/isString";
-import { ForwardedRef, forwardRef, Fragment, memo, ReactNode } from "react";
-import { Controller } from "react-hook-form";
+import { ForwardedRef, forwardRef, Fragment, ReactNode } from "react";
+import {
+  Controller,
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 
 import {
   bgColors,
@@ -13,6 +18,7 @@ import {
   transition,
 } from "../../../styles";
 import { Colors, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "../Form";
 import { FormElement } from "../Form";
 import { Text } from "../Typography";
@@ -26,8 +32,6 @@ export const colors: (keyof Omit<Colors, "accent">)[] = [
 ];
 
 export type SwitchProps = {
-  formMethods: any;
-  name: string;
   label?: string;
   helper?: string;
   size?: keyof Sizes;
@@ -38,95 +42,95 @@ export type SwitchProps = {
   disabled?: boolean;
 };
 
-export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
-  (
-    {
-      formMethods,
-      name,
+export const SwitchInner = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(
+  {
+    control,
+    name,
+    required,
+    label,
+    helper,
+    size = "md",
+    color = "primary",
+    content,
+    reverse = false,
+    disabled = false,
+  }: SwitchProps & UseControllerProps<TFieldValues, TName>,
+  ref: ForwardedRef<HTMLButtonElement>
+) => (
+  <Controller
+    control={control}
+    name={name}
+    rules={{
       required,
-      label,
-      helper,
-      size = "md",
-      color = "primary",
-      content,
-      reverse = false,
-      disabled = false,
-    },
-    ref: ForwardedRef<HTMLButtonElement>
-  ) => (
-    <Controller
-      control={formMethods.control}
-      name={name}
-      rules={{
-        required,
-      }}
-      render={({ field: { onChange }, fieldState: { error } }) => (
-        <FormElement
-          error={error}
-          name={name}
-          label={label}
-          helper={helper}
-          size={size}
+    }}
+    render={({ field: { onChange }, fieldState: { error } }) => (
+      <FormElement
+        error={error}
+        name={name}
+        label={label}
+        helper={helper}
+        size={size}
+      >
+        <div
+          className={cn(
+            "flex items-center",
+            !reverse
+              ? "flex-row justify-start"
+              : "flex-row-reverse justify-end",
+            gaps[size]
+          )}
         >
-          <div
-            className={cn(
-              "flex items-center",
-              !reverse
-                ? "flex-row justify-start"
-                : "flex-row-reverse justify-end",
-              gaps[size]
-            )}
-          >
-            <HeadlessSwitch as={Fragment} onChange={onChange}>
-              {({ checked }) => (
-                <button
-                  ref={ref}
-                  disabled={disabled}
-                  type="button"
-                  aria-label={name}
+          <HeadlessSwitch as={Fragment} onChange={onChange}>
+            {({ checked }) => (
+              <button
+                ref={ref}
+                disabled={disabled}
+                type="button"
+                aria-label={name}
+                className={cn(
+                  checked ? bgColors[color] : extendedBgColors.filled,
+                  heightsSmall[size],
+                  focus[color],
+                  transition,
+                  disabled && "cursor-not-allowed",
+                  "relative inline-flex items-center w-min aspect-video rounded-full"
+                )}
+              >
+                <span
                   className={cn(
-                    checked ? bgColors[color] : extendedBgColors.filled,
-                    heightsSmall[size],
-                    focus[color],
+                    bgColors.white,
+                    checked
+                      ? "left-full -translate-x-[120%]"
+                      : "left-0 translate-x-[20%]",
                     transition,
-                    disabled && "cursor-not-allowed",
-                    "relative inline-flex items-center w-min aspect-video rounded-full"
+                    error && bgColors.danger,
+                    disabled && extendedBgColors.filledSubtile,
+                    "transition-all absolute inline-block h-[80%] aspect-square rounded-full"
                   )}
-                >
-                  <span
-                    className={cn(
-                      bgColors.white,
-                      checked
-                        ? "left-full -translate-x-[120%]"
-                        : "left-0 translate-x-[20%]",
-                      transition,
-                      error && bgColors.danger,
-                      disabled && extendedBgColors.filledSubtile,
-                      "transition-all absolute inline-block h-[80%] aspect-square rounded-full"
-                    )}
-                  />
-                </button>
-              )}
-            </HeadlessSwitch>
-            {isString(content) ? <Text size={size}>{content}</Text> : content}
-          </div>
-        </FormElement>
-      )}
-    />
-  )
+                />
+              </button>
+            )}
+          </HeadlessSwitch>
+          {isString(content) ? <Text size={size}>{content}</Text> : content}
+        </div>
+      </FormElement>
+    )}
+  />
 );
 
-Switch.displayName = "Switch";
+SwitchInner.displayName = "Switch"; // muss bleiben sonst kommt docgen storybook plugin durcheinander
 
-Switch.defaultProps = {
-  size: "md",
-  color: "primary",
-  required: false,
-  label: undefined,
-  helper: undefined,
-  content: undefined,
-  reverse: false,
-  disabled: false,
-};
+const Switch = forwardRef(SwitchInner) as <
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+>(
+  props: SwitchProps &
+    UseControllerProps<TFieldValues, TName> & {
+      ref?: ForwardedRef<HTMLButtonElement>;
+    }
+) => ReturnType<typeof SwitchInner>;
 
-export default memo(Switch);
+export default typedMemo(Switch);

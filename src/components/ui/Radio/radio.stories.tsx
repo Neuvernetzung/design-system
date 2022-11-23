@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 
 import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
-import { Radio, RadioVariants } from "./radio";
+import { Radio } from ".";
+import { RadioVariants } from "./radio";
 
 export default {
   title: "UI/Form/Radio",
@@ -30,19 +31,19 @@ export const Default = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         name="radio-1"
         label="Einzelne Option"
         options={[{ label: "Option 1", value: "option-1" }]}
         {...args}
       />
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         name="radio-2"
         label="Mehrere Optionen"
         options={[
@@ -61,14 +62,14 @@ export const Variants = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {variants.map((variant: any) => (
         <Radio
           key={variant}
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`radio_${variant}`}
           label={variant}
           variant={variant}
@@ -96,14 +97,14 @@ export const Sizes = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {sizes.map((size: any) => (
         <Radio
           key={size}
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`radio_${size}`}
           label={size}
           size={size}
@@ -134,14 +135,14 @@ export const Colors = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {colors.map((color: any) => (
         <Radio
           key={color}
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`radio_${color}`}
           label={color}
           color={color}
@@ -161,18 +162,18 @@ Colors.parameters = {
 };
 
 export const Disabled = ({ ...args }) => {
-  const formMethods = useForm({
+  const formMethods = useForm<any>({
     defaultValues: { radio_disabled: "option-2" },
   });
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         name="radio_disabled"
         label="Alle Disabled"
         disabled
@@ -183,7 +184,7 @@ export const Disabled = ({ ...args }) => {
         {...args}
       />
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         name="radio_disabled_single"
         label="Einzelnd Disabled"
         options={[
@@ -193,7 +194,7 @@ export const Disabled = ({ ...args }) => {
         {...args}
       />
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         name="radio_disabled"
         label="Alle Disabled"
         variant="button"
@@ -205,7 +206,7 @@ export const Disabled = ({ ...args }) => {
         {...args}
       />
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         name="radio_disabled_single"
         variant="button"
         label="Einzelnd Disabled"
@@ -229,12 +230,12 @@ export const Error = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         name="radio_error"
         label="Alle Error"
         required
@@ -245,7 +246,7 @@ export const Error = ({ ...args }) => {
         {...args}
       />
       <Radio
-        formMethods={formMethods}
+        control={formMethods.control}
         variant="button"
         name="radio_error"
         label="Alle Error"

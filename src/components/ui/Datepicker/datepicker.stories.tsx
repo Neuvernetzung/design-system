@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { Sizes as SizesT } from "../../../types";
 import { Form } from "../Form";
-import { Datepicker } from "./datepicker";
+import { Datepicker } from ".";
 
 export default {
   title: "UI/Form/Datepicker",
@@ -26,12 +26,12 @@ export const Default = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Datepicker
-        formMethods={formMethods}
+        control={formMethods.control}
         name="datepicker-1"
         label="Datepicker"
         placeholder="Datum auswählen"
@@ -54,14 +54,14 @@ export const Sizes = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {sizes.map((size) => (
         <Datepicker
           key={size}
-          formMethods={formMethods}
+          control={formMethods.control}
           size={size}
           name={size}
           label={size}
@@ -83,12 +83,12 @@ export const ButtonVariant = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Datepicker
-        formMethods={formMethods}
+        control={formMethods.control}
         name="outline"
         label="outline"
         inputVariant="outline"
@@ -96,7 +96,7 @@ export const ButtonVariant = ({ ...args }) => {
         {...args}
       />
       <Datepicker
-        formMethods={formMethods}
+        control={formMethods.control}
         name="filled"
         label="filled"
         inputVariant="filled"
@@ -117,7 +117,7 @@ export const MinMaxDate = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
@@ -125,7 +125,7 @@ export const MinMaxDate = ({ ...args }) => {
         name="min"
         label="min"
         minDate={subMonths(new Date(), 1)}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />
@@ -133,7 +133,7 @@ export const MinMaxDate = ({ ...args }) => {
         name="minToday"
         label="minToday"
         minDate={new Date()}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />
@@ -141,7 +141,7 @@ export const MinMaxDate = ({ ...args }) => {
         name="minTomorrow"
         label="minTomorrow"
         minDate={addDays(new Date(), 1)}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />
@@ -149,7 +149,7 @@ export const MinMaxDate = ({ ...args }) => {
         name="max"
         label="min"
         maxDate={addMonths(new Date(), 1)}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />
@@ -158,7 +158,7 @@ export const MinMaxDate = ({ ...args }) => {
         label="min/max"
         minDate={subMonths(new Date(), 1)}
         maxDate={addMonths(new Date(), 1)}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />
@@ -166,7 +166,7 @@ export const MinMaxDate = ({ ...args }) => {
         name="minnotinview"
         label="min not in View"
         minDate={addMonths(new Date(), 1)}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />
@@ -174,7 +174,7 @@ export const MinMaxDate = ({ ...args }) => {
         name="maxnotinview"
         label="max not in View"
         maxDate={subMonths(new Date(), 1)}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />
@@ -183,7 +183,7 @@ export const MinMaxDate = ({ ...args }) => {
         label="min and max not in View"
         minDate={addMonths(new Date(), 1)}
         maxDate={addMonths(new Date(), 3)}
-        formMethods={formMethods}
+        control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
       />

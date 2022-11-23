@@ -28,8 +28,14 @@ import {
   subYears,
 } from "date-fns";
 import de from "date-fns/locale/de";
-import { KeyboardEvent, memo, useEffect, useRef, useState } from "react";
-import { Controller } from "react-hook-form";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { typedMemo } from "../../../utils/internal";
+import {
+  Controller,
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 import { Day, useLilius } from "use-lilius";
 
 import {
@@ -62,8 +68,6 @@ import {
 
 export type DatepickerProps = {
   label?: string;
-  name: string;
-  formMethods: any;
   required?: RequiredRule;
   placeholder?: string;
   size?: keyof Sizes;
@@ -81,10 +85,13 @@ enum Views {
   YEARS = "years",
 }
 
-export const Datepicker = ({
+export const Datepicker = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
   label,
   name,
-  formMethods,
+  control,
   required,
   placeholder,
   size = "md",
@@ -94,7 +101,7 @@ export const Datepicker = ({
   removeAll = true,
   minDate,
   maxDate,
-}: DatepickerProps) => {
+}: DatepickerProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     calendar,
     clearSelected,
@@ -385,7 +392,7 @@ export const Datepicker = ({
   return (
     <Controller
       name={name}
-      control={formMethods.control}
+      control={control}
       rules={{
         required,
       }}
@@ -808,7 +815,7 @@ export const Datepicker = ({
   );
 };
 
-export default memo(Datepicker);
+export default typedMemo(Datepicker);
 
 Datepicker.defaultProps = {
   label: undefined,

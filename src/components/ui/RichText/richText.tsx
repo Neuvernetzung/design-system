@@ -1,14 +1,12 @@
 import cn from "classnames";
+import { FC, SVGProps, useCallback, useMemo, useState } from "react";
 import {
-  type BaseSyntheticEvent,
-  FC,
-  memo,
-  SVGProps,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
-import { Controller, useForm } from "react-hook-form";
+  Controller,
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+  useForm,
+} from "react-hook-form";
 import {
   type BaseEditor,
   createEditor,
@@ -50,6 +48,7 @@ import {
   TrashIcon,
 } from "../../../theme/icons";
 import { type ProseComponents } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { hrefRegex } from "../../../utils/internal/regex";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { type RequiredRule, Form, FormElement } from "../Form";
@@ -71,8 +70,6 @@ const TEXT_ALIGN_CLASSES = [
 ];
 
 export interface RichTextProps {
-  formMethods: any;
-  name: string;
   label?: string;
   helper?: string;
   required?: RequiredRule;
@@ -123,15 +120,18 @@ declare module "slate" {
   }
 }
 
-export const RichText = ({
-  formMethods,
+export const RichText = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+  control,
   name,
   label,
   helper,
   required,
   placeholder,
   autoFocus = false,
-}: RichTextProps) => {
+}: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
     []
@@ -146,16 +146,16 @@ export const RichText = ({
 
   return (
     <Controller
-      control={formMethods.control}
+      control={control}
       name={name}
       rules={{
         required,
       }}
-      render={({ field: { onChange }, fieldState: { error } }) => (
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
         <FormElement name={name} label={label} helper={helper} error={error}>
           <Slate
             editor={editor}
-            value={deserializeHtml(formMethods.getValues(name))}
+            value={deserializeHtml(value)}
             onChange={(v) => onChange(serializeHtml(v))}
           >
             <div
@@ -625,22 +625,13 @@ const MarkLinkButton = ({ icon, tooltip }: MarkLinkButtonProps) => {
         size="md"
         content={
           <Form
-            formMethods={linkFormMethods}
-            onSubmit={(e: BaseSyntheticEvent) => {
-              if (e) {
-                if (typeof e.preventDefault === "function") {
-                  e.preventDefault();
-                }
-                if (typeof e.stopPropagation === "function") {
-                  e.stopPropagation();
-                }
-              }
-              return linkFormMethods.handleSubmit((v) => onSubmit(v))(e);
-            }}
+            handleSubmit={linkFormMethods.handleSubmit}
+            isNestedForm
+            onSubmit={onSubmit}
             className={cn("w-full flex flex-col", gaps.sm)}
           >
             <Input
-              formMethods={linkFormMethods}
+              control={linkFormMethods.control}
               name={formName}
               leftAddon={{ children: "https://" }}
               label="Link"
@@ -676,7 +667,7 @@ MarkLinkButton.defaultProps = {
   tooltip: undefined,
 };
 
-export default memo(RichText);
+export default typedMemo(RichText);
 
 RichText.defaultProps = {
   label: undefined,

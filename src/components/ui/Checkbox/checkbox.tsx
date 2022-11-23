@@ -1,7 +1,12 @@
 import cn from "classnames";
-import get from "lodash/get";
 import isArray from "lodash/isArray";
-import { FC, memo, SVGProps } from "react";
+import { FC, SVGProps } from "react";
+import {
+  Controller,
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 
 import {
   borders,
@@ -16,15 +21,14 @@ import {
   textColors,
 } from "../../../styles";
 import type { Colors, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { FormElement, RequiredRule } from "../Form";
 import { labelSizes } from "../Form/formElement";
 import { CheckboxIcon } from "./checkboxIcon";
 
-export type CheckboxProps = {
-  name: string;
+export interface CheckboxProps {
   label?: string;
   helper?: any;
-  formMethods: any;
   options: OptionProps[];
   required?: RequiredRule;
   size?: keyof Sizes;
@@ -32,7 +36,7 @@ export type CheckboxProps = {
   icon?: FC<SVGProps<SVGSVGElement>>;
   disabled?: boolean;
   className?: string;
-};
+}
 
 type OptionProps = {
   label: string;
@@ -52,9 +56,12 @@ const styles = {
     "absolute inset-0 p-0.5 pointer-events-none flex items-center justify-center",
 };
 
-export const Checkbox = ({
+export const Checkbox = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
   name,
-  formMethods,
+  control,
   label,
   helper,
   size = "md",
@@ -64,95 +71,97 @@ export const Checkbox = ({
   options,
   disabled,
   className,
-}: CheckboxProps) => {
-  const { register, watch } = formMethods;
-  const error = get(formMethods?.formState?.errors, name);
-  const values = watch(name);
-
-  const isChecked = (value: any) =>
-    isArray(values) ? values.includes(value) : !!values;
+}: CheckboxProps & UseControllerProps<TFieldValues, TName>) => {
+  const isChecked = (current: string | Array<string>, value: any) =>
+    isArray(current) ? current.includes(value) : !!current;
 
   return (
-    <FormElement
-      error={error}
+    <Controller
+      control={control}
       name={name}
-      label={label}
-      helper={helper}
-      size={size}
-    >
-      <div className={cn("flex flex-col", gapsSmall[size], className)}>
-        {options.map(
-          (
-            {
-              label,
-              value,
-              disabled: singleDisabled,
-              icon: singleIcon,
-            }: OptionProps,
-            i
-          ) => {
-            const _disabled = singleDisabled ?? disabled;
-            const _icon = singleIcon ?? icon;
+      rules={{
+        required,
+      }}
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
+        <FormElement
+          error={error}
+          name={name}
+          label={label}
+          helper={helper}
+          size={size}
+        >
+          <div className={cn("flex flex-col", gapsSmall[size], className)}>
+            {options.map(
+              (
+                {
+                  label,
+                  value: _value,
+                  disabled: singleDisabled,
+                  icon: singleIcon,
+                }: OptionProps,
+                i
+              ) => {
+                const _disabled = singleDisabled ?? disabled;
+                const _icon = singleIcon ?? icon;
 
-            return (
-              <div
-                key={`checkbox_${name}_${i}`}
-                className={cn(styles.base, gapsSmall[size])}
-              >
-                <div className="relative flex">
-                  <input
-                    id={`${name}_option_${i}`}
-                    value={value}
-                    type="checkbox"
-                    disabled={_disabled}
-                    className={cn(
-                      "peer",
-                      focus[color],
-                      !_disabled ? styles.input : styles.inputDisabled,
-                      checkboxSizes[size],
-                      roundingsSmall[size],
-                      !_disabled && checkboxColors[color],
-                      error && styles.inputError
-                    )}
-                    {...(register &&
-                      register(name, {
-                        required,
-                      }))}
-                  />
-                  <span
-                    className={cn(
-                      "hidden peer-checked:flex scale-50",
-                      styles.iconWrapper,
-                      extendedTextColors.filled
-                    )}
+                return (
+                  <div
+                    key={`checkbox_${name}_${i}`}
+                    className={cn(styles.base, gapsSmall[size])}
                   >
-                    <CheckboxIcon
-                      isChecked={isChecked(value)}
-                      size={size}
-                      icon={_icon}
-                    />
-                  </span>
-                </div>
-                <label
-                  htmlFor={`${name}_option_${i}`}
-                  className={cn(
-                    !_disabled ? styles.label : styles.labelDisabled,
-                    textColors.accent,
-                    labelSizes[size]
-                  )}
-                >
-                  {label}
-                </label>
-              </div>
-            );
-          }
-        )}
-      </div>
-    </FormElement>
+                    <div className="relative flex">
+                      <input
+                        id={`${name}_option_${i}`}
+                        value={_value}
+                        type="checkbox"
+                        disabled={_disabled}
+                        onChange={onChange}
+                        className={cn(
+                          "peer",
+                          focus[color],
+                          !_disabled ? styles.input : styles.inputDisabled,
+                          checkboxSizes[size],
+                          roundingsSmall[size],
+                          !_disabled && checkboxColors[color],
+                          error && styles.inputError
+                        )}
+                      />
+                      <span
+                        className={cn(
+                          "hidden peer-checked:flex scale-50",
+                          styles.iconWrapper,
+                          extendedTextColors.filled
+                        )}
+                      >
+                        <CheckboxIcon
+                          isChecked={isChecked(value, _value)}
+                          size={size}
+                          icon={_icon}
+                        />
+                      </span>
+                    </div>
+                    <label
+                      htmlFor={`${name}_option_${i}`}
+                      className={cn(
+                        !_disabled ? styles.label : styles.labelDisabled,
+                        textColors.accent,
+                        labelSizes[size]
+                      )}
+                    >
+                      {label}
+                    </label>
+                  </div>
+                );
+              }
+            )}
+          </div>
+        </FormElement>
+      )}
+    />
   );
 };
 
-export default memo(Checkbox);
+export default typedMemo(Checkbox);
 
 Checkbox.defaultProps = {
   helper: undefined,

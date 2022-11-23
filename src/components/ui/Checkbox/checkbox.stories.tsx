@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
-import { Checkbox } from "./checkbox";
+import { Checkbox } from ".";
 
 export default {
   title: "UI/Form/Checkbox",
@@ -31,19 +31,19 @@ export const Default = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox-1"
         label="Einzelne Option"
         options={[{ label: "Option 1", value: "option-1" }]}
         {...args}
       />
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox-2"
         label="Mehrere Optionen"
         options={[
@@ -62,14 +62,14 @@ export const Sizes = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {sizes.map((size: any) => (
         <Checkbox
           key={size}
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`checkbox_${size}`}
           label={size}
           size={size}
@@ -100,14 +100,14 @@ export const Colors = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {colors.map((color: any) => (
         <Checkbox
           key={color}
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`checkbox_${color}`}
           label={color}
           color={color}
@@ -131,19 +131,19 @@ export const Icon = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox_icons_default"
         label="Default"
         options={[{ label: "Default", value: "option-1" }]}
         {...args}
       />
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox_icons_plus"
         label="Plus"
         icon={PlusIcon}
@@ -151,7 +151,7 @@ export const Icon = ({ ...args }) => {
         {...args}
       />
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox_icons_home"
         label="Home"
         icon={HomeIcon}
@@ -159,7 +159,7 @@ export const Icon = ({ ...args }) => {
         {...args}
       />
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox_icons_single"
         label="Einzelnd"
         options={[
@@ -172,19 +172,24 @@ export const Icon = ({ ...args }) => {
   );
 };
 
+interface IDisabled {
+  checkbox_disabled: any;
+  checkbox_disabled_single: any;
+}
+
 export const Disabled = ({ ...args }) => {
-  const formMethods = useForm({
+  const formMethods = useForm<IDisabled>({
     defaultValues: { checkbox_disabled: ["option-2"] },
   });
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox_disabled"
         label="Alle Disabled"
         disabled
@@ -195,7 +200,7 @@ export const Disabled = ({ ...args }) => {
         {...args}
       />
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox_disabled_single"
         label="Einzelnd Disabled"
         options={[
@@ -208,19 +213,23 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
+interface ErrorProps {
+  checkbox_error: any;
+}
+
 export const Error = ({ ...args }) => {
-  const formMethods = useForm({
-    defaultValues: { checkbox_disabled: ["option-2"] },
+  const formMethods = useForm<ErrorProps>({
+    defaultValues: { checkbox_error: ["option-2"] },
   });
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Checkbox
-        formMethods={formMethods}
+        control={formMethods.control}
         name="checkbox_error"
         label="Alle Error"
         required
