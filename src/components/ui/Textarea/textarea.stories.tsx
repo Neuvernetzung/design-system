@@ -165,7 +165,12 @@ export const DefaultValue = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      <Textarea control={formMethods.control} name="default_value" {...args} />
+      <Textarea
+        label="Default Value"
+        control={formMethods.control}
+        name="default_value"
+        {...args}
+      />
       <Button type="submit">Submit</Button>
     </Form>
   );
