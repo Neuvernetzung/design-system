@@ -87,6 +87,7 @@ export const TextareaInner = <
           <textarea
             id={name}
             ref={ref}
+            value={value}
             onChange={onChange}
             className={cn(
               getInputStyles({ size, variant, error: !!error, disabled }),

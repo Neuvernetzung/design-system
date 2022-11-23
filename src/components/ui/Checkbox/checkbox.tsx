@@ -114,6 +114,11 @@ export const Checkbox = <
                         id={`${name}_option_${i}`}
                         value={_value}
                         type="checkbox"
+                        // checked={
+                        //   isArray(value)
+                        //     ? value.includes(_value)
+                        //     : value === _value
+                        // }
                         disabled={_disabled}
                         onChange={onChange}
                         className={cn(

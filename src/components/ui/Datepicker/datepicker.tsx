@@ -29,11 +29,11 @@ import {
 } from "date-fns";
 import de from "date-fns/locale/de";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { typedMemo } from "../../../utils/internal";
 import {
   Controller,
   FieldPath,
   FieldValues,
+  useController,
   UseControllerProps,
 } from "react-hook-form";
 import { Day, useLilius } from "use-lilius";
@@ -55,6 +55,7 @@ import {
   CrossIcon,
 } from "../../../theme/icons";
 import { InputVariants, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "..";
 import {
   Button,
@@ -117,6 +118,15 @@ export const Datepicker = <
     viewPreviousMonth,
     viewToday,
   } = useLilius({ weekStartsOn: Day.MONDAY });
+
+  // Initial Value für useLilius select setzen
+  const {
+    field: { value: initialValue },
+  } = useController({ control, name });
+
+  useEffect(() => {
+    if (initialValue) select(clearTime(initialValue), true);
+  }, []);
 
   // Initiale Kalenderseite setzen
   useEffect(() => {
@@ -431,7 +441,7 @@ export const Datepicker = <
                         divides.accent
                       )}
                     >
-                      {removeAll && selected.length > 0 && (
+                      {removeAll && !!value && (
                         <IconButton
                           size={iconButtonSizes[size]}
                           variant="ghost"
@@ -444,7 +454,7 @@ export const Datepicker = <
                           onClick={(e: PointerEvent) => {
                             e.preventDefault();
                             clearSelected();
-                            onChange(undefined);
+                            onChange(null);
                           }}
                           disabled={disabled}
                         />

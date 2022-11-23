@@ -156,3 +156,17 @@ export const Disabled = ({ ...args }) => {
     </Form>
   );
 };
+
+export const DefaultChecked = ({ ...args }) => {
+  const formMethods = useForm({ defaultValues: { default_checked: true } });
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Switch control={formMethods.control} name="default_checked" {...args} />
+    </Form>
+  );
+};

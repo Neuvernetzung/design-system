@@ -153,3 +153,20 @@ export const MaxLength = ({ ...args }) => {
     </Form>
   );
 };
+
+export const DefaultValue = ({ ...args }) => {
+  const formMethods = useForm({
+    defaultValues: { default_value: "Dies ist ein Standartext." },
+  });
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Textarea control={formMethods.control} name="default_value" {...args} />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};

@@ -3,7 +3,7 @@ import {
   ForwardedRef,
   forwardRef,
   Ref,
-  useLayoutEffect,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -108,7 +108,7 @@ export const InputInner = <
   const rightElementRef: any = useRef(null);
   const [leftElementWidth, setleftElementWidth] = useState();
   const [rightElementWidth, setRightElementWidth] = useState();
-  useLayoutEffect(() => {
+  useEffect(() => {
     setleftElementWidth(leftElementRef?.current?.clientWidth);
     setRightElementWidth(rightElementRef?.current?.clientWidth);
   }, []);
@@ -125,7 +125,7 @@ export const InputInner = <
         min,
         pattern,
       }}
-      render={({ field: { onChange }, fieldState: { error } }) => (
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
         <FormElement
           error={error}
           name={name}
@@ -150,6 +150,7 @@ export const InputInner = <
               type={type}
               id={name}
               ref={ref}
+              value={value}
               onChange={onChange}
               onWheel={(e: any) =>
                 e.target?.type === "number" && e.target?.blur()
