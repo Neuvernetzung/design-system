@@ -1,3 +1,11 @@
+# [1.9.0](https://github.com/Neuvernetzung/design-system/compare/v1.8.0...v1.9.0) (2022-11-23)
+
+
+### Features
+
+* **ui:** Controller für Input verwenden statt register [#222](https://github.com/Neuvernetzung/design-system/issues/222) ([f8b35f2](https://github.com/Neuvernetzung/design-system/commit/f8b35f2cd1996ad5e71aa524d09bbfdd41efaa00))
+* **ui:** formControl statt formmethods als props nutzen [#223](https://github.com/Neuvernetzung/design-system/issues/223) ([33fb586](https://github.com/Neuvernetzung/design-system/commit/33fb586d28cca29ffe4fc935daca618031b48eba))
+
 # [1.8.0](https://github.com/Neuvernetzung/design-system/compare/v1.7.0...v1.8.0) (2022-11-22)
 
 
