@@ -218,10 +218,7 @@ interface ErrorProps {
 }
 
 export const Error = ({ ...args }) => {
-  const formMethods = useForm<ErrorProps>({
-    defaultValues: { checkbox_error: ["option-2"] },
-  });
-
+  const formMethods = useForm<ErrorProps>();
   return (
     <Form
       handleSubmit={formMethods.handleSubmit}
@@ -232,6 +229,34 @@ export const Error = ({ ...args }) => {
         control={formMethods.control}
         name="checkbox_error"
         label="Alle Error"
+        required
+        options={[
+          { label: "Option 1", value: "option-1" },
+          { label: "Option 2", value: "option-2" },
+        ]}
+        {...args}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const DefaultValue = ({ ...args }) => {
+  const formMethods = useForm({
+    defaultValues: { checkbox_default: ["option-2"] },
+  });
+  console.log(formMethods.watch());
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Checkbox
+        control={formMethods.control}
+        name="checkbox_default"
+        label="Default Value"
         required
         options={[
           { label: "Option 1", value: "option-1" },

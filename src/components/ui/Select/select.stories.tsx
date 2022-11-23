@@ -345,3 +345,34 @@ export const OtherValueReturned = ({ ...args }) => {
     </Form>
   );
 };
+
+export const DefaultValue = ({ ...args }) => {
+  const formMethods = useForm({ defaultValues: { default_value: "option-2" } });
+
+  const options = [
+    {
+      children: "Option 1",
+      value: "option-1",
+    },
+    {
+      children: "Option 2",
+      value: "option-2",
+    },
+  ];
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Select
+        control={formMethods.control}
+        name="default_value"
+        returned="value"
+        options={options}
+        {...args}
+      />
+    </Form>
+  );
+};

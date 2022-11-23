@@ -266,3 +266,31 @@ Error.parameters = {
     disable: true,
   },
 };
+
+export const DefaultValue = ({ ...args }) => {
+  const formMethods = useForm({ defaultValues: { default_value: "option-1" } });
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Radio
+        control={formMethods.control}
+        name="default_value"
+        required
+        options={[
+          { label: "Option 1", value: "option-1" },
+          { label: "Option 2", value: "option-2" },
+        ]}
+        {...args}
+      />
+    </Form>
+  );
+};
+Error.parameters = {
+  a11y: {
+    disable: true,
+  },
+};
