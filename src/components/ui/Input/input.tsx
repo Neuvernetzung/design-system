@@ -1,6 +1,18 @@
 import cn from "classnames";
-import get from "lodash/get";
-import { forwardRef, memo, useLayoutEffect, useRef, useState } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  Ref,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  Controller,
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form";
 
 import {
   getInputStyles,
@@ -8,6 +20,7 @@ import {
   inputVariants,
 } from "../../../styles/groups";
 import type { InputVariants, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import {
   FormElement,
   MaxLengthRule,
@@ -26,7 +39,6 @@ export const sizes = inputSizes;
 export const variants = inputVariants;
 
 export type InputProps = {
-  name: string;
   type?: "text" | "number" | "password" | "url";
   label?: string;
   helper?: any;
@@ -43,7 +55,6 @@ export type InputProps = {
     InputElementProps,
     "className" | "children" | "pointerEvents"
   >;
-  formMethods: any;
   required?: RequiredRule;
   maxLength?: MaxLengthRule;
   minLength?: MinLengthRule;
@@ -62,145 +73,138 @@ const styles = {
   containerBase: "flex flex-row relative",
 };
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      name,
-      type = "text",
-      label,
-      helper,
-      size = "md",
-      leftAddon,
-      rightAddon,
-      leftElement,
-      rightElement,
-      formMethods,
-      required = false,
-      maxLength,
-      minLength,
-      max,
-      min,
-      pattern,
-      disabled = false,
-      variant = "outline",
-      step = 1,
-      className,
-      containerClassName,
-      inputClassName,
-      ...props
-    }: InputProps,
-    ref
-  ) => {
-    const { register } = formMethods;
-    const error = get(formMethods?.formState?.errors, name);
+export const InputInner = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(
+  {
+    name,
+    type = "text",
+    label,
+    helper,
+    size = "md",
+    leftAddon,
+    rightAddon,
+    leftElement,
+    rightElement,
+    control,
+    required = false,
+    maxLength,
+    minLength,
+    max,
+    min,
+    pattern,
+    disabled = false,
+    variant = "outline",
+    step = 1,
+    className,
+    containerClassName,
+    inputClassName,
+    ...props
+  }: InputProps & UseControllerProps<TFieldValues, TName>,
+  ref: Ref<HTMLInputElement>
+) => {
+  const leftElementRef: any = useRef(null);
+  const rightElementRef: any = useRef(null);
+  const [leftElementWidth, setleftElementWidth] = useState();
+  const [rightElementWidth, setRightElementWidth] = useState();
+  useLayoutEffect(() => {
+    setleftElementWidth(leftElementRef?.current?.clientWidth);
+    setRightElementWidth(rightElementRef?.current?.clientWidth);
+  }, []);
 
-    const leftElementRef: any = useRef(null);
-    const rightElementRef: any = useRef(null);
-    const [leftElementWidth, setleftElementWidth] = useState();
-    const [rightElementWidth, setRightElementWidth] = useState();
-    useLayoutEffect(() => {
-      setleftElementWidth(leftElementRef?.current?.clientWidth);
-      setRightElementWidth(rightElementRef?.current?.clientWidth);
-    }, []);
-
-    return (
-      <FormElement
-        error={error}
-        name={name}
-        label={label}
-        helper={helper}
-        size={size}
-        className={className}
-      >
-        <div className={cn(styles.containerBase, containerClassName)}>
-          {leftAddon && (
-            <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
-          )}
-          {leftElement && (
-            <InputElement
-              size={size}
-              isLeft
-              ref={leftElementRef}
-              {...leftElement}
-            />
-          )}
-          <input
-            type={type}
-            id={name}
-            ref={ref}
-            onWheel={(e: any) =>
-              e.target?.type === "number" && e.target?.blur()
-            } // damit beim scrollen die zahl nicht versehentlich verändert wird
-            className={cn(
-              getInputStyles({
-                size,
-                variant,
-                error,
-                disabled,
-                leftAddon,
-                rightAddon,
-              }),
-              inputClassName
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={{
+        required,
+        maxLength,
+        minLength,
+        max,
+        min,
+        pattern,
+      }}
+      render={({ field: { onChange }, fieldState: { error } }) => (
+        <FormElement
+          error={error}
+          name={name}
+          label={label}
+          helper={helper}
+          size={size}
+          className={className}
+        >
+          <div className={cn(styles.containerBase, containerClassName)}>
+            {leftAddon && (
+              <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
             )}
-            style={{
-              paddingLeft: leftElement && leftElementWidth,
-              paddingRight: rightElement && rightElementWidth,
-            }}
-            {...register(name, {
-              required,
-              maxLength,
-              minLength,
-              max,
-              min,
-              pattern,
-            })}
-            step={step}
-            disabled={disabled}
-            {...props}
-          />
-
-          {rightAddon && (
-            <InputAddon size={size} variant={variant} isRight {...rightAddon} />
-          )}
-          {rightElement && (
-            <InputElement
-              size={size}
-              isRight
-              ref={rightElementRef}
-              {...rightElement}
+            {leftElement && (
+              <InputElement
+                size={size}
+                isLeft
+                ref={leftElementRef}
+                {...leftElement}
+              />
+            )}
+            <input
+              type={type}
+              id={name}
+              ref={ref}
+              onChange={onChange}
+              onWheel={(e: any) =>
+                e.target?.type === "number" && e.target?.blur()
+              } // damit beim scrollen die zahl nicht versehentlich verändert wird
+              className={cn(
+                getInputStyles({
+                  size,
+                  variant,
+                  error: !!error,
+                  disabled,
+                  leftAddon,
+                  rightAddon,
+                }),
+                inputClassName
+              )}
+              style={{
+                paddingLeft: leftElement && leftElementWidth,
+                paddingRight: rightElement && rightElementWidth,
+              }}
+              step={step}
+              disabled={disabled}
+              {...props}
             />
-          )}
-        </div>
-      </FormElement>
-    );
-  }
-);
 
-Input.displayName = "Input";
-
-Input.defaultProps = {
-  type: "text",
-  label: undefined,
-  helper: undefined,
-  leftAddon: undefined,
-  rightAddon: undefined,
-  leftElement: undefined,
-  rightElement: undefined,
-  required: false,
-  maxLength: undefined,
-  minLength: undefined,
-  max: undefined,
-  min: undefined,
-  pattern: undefined,
-  size: "md",
-  variant: "outline",
-  placeholder: undefined,
-  disabled: false,
-  step: undefined,
-  className: undefined,
-  containerClassName: undefined,
-  inputClassName: undefined,
-  value: undefined,
+            {rightAddon && (
+              <InputAddon
+                size={size}
+                variant={variant}
+                isRight
+                {...rightAddon}
+              />
+            )}
+            {rightElement && (
+              <InputElement
+                size={size}
+                isRight
+                ref={rightElementRef}
+                {...rightElement}
+              />
+            )}
+          </div>
+        </FormElement>
+      )}
+    />
+  );
 };
 
-export default memo(Input);
+const Input = forwardRef(InputInner) as <
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+>(
+  props: InputProps &
+    UseControllerProps<TFieldValues, TName> & {
+      ref?: ForwardedRef<HTMLInputElement>;
+    }
+) => ReturnType<typeof InputInner>;
+
+export default typedMemo(Input);

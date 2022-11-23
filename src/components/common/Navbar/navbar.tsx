@@ -114,17 +114,6 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
 
 Navbar.displayName = "Navbar";
 
-Navbar.defaultProps = {
-  allowDarkMode: true,
-  justifyDesktopNav: "start",
-  logo: undefined,
-  logoProps: undefined,
-  navbarClassName: undefined,
-  startItems: undefined,
-  endItems: undefined,
-  gapSize: "md",
-};
-
 const Logo = ({
   href,
   containerClassName,

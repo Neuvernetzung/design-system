@@ -2,7 +2,8 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, Form, Select } from "..";
+import { Button, Form } from "..";
+import { Select } from ".";
 import { sizes, variants } from "./select";
 
 export default {
@@ -33,14 +34,14 @@ export const Variants = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_variants.map((variant: any) => (
         <Select
           key={variant}
-          formMethods={formMethods}
+          control={formMethods.control}
           variant={variant}
           name={`select_${variant}`}
           options={[
@@ -64,14 +65,14 @@ export const Sizes = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_sizes.map((size: any) => (
         <Select
           key={size}
-          formMethods={formMethods}
+          control={formMethods.control}
           size={size}
           name={`select_${size}`}
           options={[
@@ -94,12 +95,12 @@ export const Multiple = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_multiple"
         options={[
           { children: "Option 1", value: "option-1" },
@@ -123,12 +124,12 @@ export const Groups = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_multiple"
         options={[
           {
@@ -200,12 +201,12 @@ export const Checked = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_multiple"
         options={options}
         multiple
@@ -213,7 +214,7 @@ export const Checked = ({ ...args }) => {
         {...args}
       />
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_multiple"
         options={options}
         multiple
@@ -240,12 +241,12 @@ export const Error = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_error"
         options={options}
         required={{ value: true, message: "Dies ist ein Pflichtfeld." }}
@@ -261,12 +262,12 @@ export const Disabled = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_all_disabled"
         options={[
           {
@@ -282,7 +283,7 @@ export const Disabled = ({ ...args }) => {
         {...args}
       />
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="select_all_disabled"
         options={[
           {
@@ -301,8 +302,13 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
+interface OtherValueReturnedProps {
+  _id_returned: any;
+  _id_returned_multiple;
+}
+
 export const OtherValueReturned = ({ ...args }) => {
-  const formMethods = useForm();
+  const formMethods = useForm<OtherValueReturnedProps>();
 
   const options = [
     {
@@ -317,19 +323,19 @@ export const OtherValueReturned = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="_id_returned"
         returned="_id"
         options={options}
         {...args}
       />
       <Select
-        formMethods={formMethods}
+        control={formMethods.control}
         name="_id_returned_multiple"
         multiple
         returned="_id"

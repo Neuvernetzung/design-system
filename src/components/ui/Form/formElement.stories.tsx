@@ -5,8 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "../Button";
 import { Input } from "../Input";
-import { Form } from "./form";
-import { FormElement } from "./formElement";
+import { Form, FormElement } from ".";
 
 export default {
   title: "UI/Form/FormElement",
@@ -27,18 +26,24 @@ export default {
 
 const formClassName = "flex flex-col gap-5";
 
+interface ILabel {
+  input_1: any;
+}
+
 export const Label = ({ ...args }) => {
-  const formMethods = useForm();
+  const formMethods = useForm<ILabel>();
+
+  const onSubmit = (data: ILabel) => data;
 
   return (
     <Form
-      formMethods={formMethods}
-      onSubmit={() => {}}
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={onSubmit}
       className={formClassName}
     >
       <Input
         label="Label"
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input_1"
         placeholder="mit Label"
         {...args}
@@ -52,13 +57,13 @@ export const Helper = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Input
         helper="Helper"
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input_1"
         placeholder="mit Helper"
         {...args}
@@ -72,12 +77,12 @@ export const Error = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => action("submit")}
       className={formClassName}
     >
       <Input
-        formMethods={formMethods}
+        control={formMethods.control}
         name="input_1"
         placeholder="mit Error"
         required={{ value: true, message: "Dieses Feld wird benötigt." }}

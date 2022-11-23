@@ -90,7 +90,7 @@ export const Pagination = ({
     >
       {selectLimit && result !== 0 && limits.length > 1 && (
         <Select
-          formMethods={formMethods}
+          control={formMethods.control}
           name="limit"
           options={limits.map((limit) => ({
             children: `${limit} pro Seite`,

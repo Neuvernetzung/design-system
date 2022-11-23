@@ -4,7 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, Form, Icon } from "..";
-import { sizes, Textarea, variants } from "./textarea";
+import { Textarea } from ".";
+import { sizes, variants } from "./textarea";
 
 export default {
   title: "UI/Form/Textarea",
@@ -31,13 +32,13 @@ export const Variants = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_variants.map((variant: any, i) => (
         <Textarea
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`${variant}_textarea_${i}`}
           variant={variant}
           key={variant}
@@ -59,13 +60,13 @@ export const Sizes = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_sizes.map((size: any, i) => (
         <Textarea
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`${size}_textarea_${i}`}
           size={size}
           key={size}
@@ -87,13 +88,13 @@ export const Error = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {_variants.map((variant: any, i) => (
         <Textarea
-          formMethods={formMethods}
+          control={formMethods.control}
           name={`${variant}_textarea_${i}`}
           variant={variant}
           key={variant}
@@ -112,12 +113,12 @@ export const Disabled = ({ ...args }) => {
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Textarea
-        formMethods={formMethods}
+        control={formMethods.control}
         name="textarea_disabled"
         placeholder="disabled"
         disabled
@@ -127,20 +128,24 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
+interface IMaxLength {
+  textarea_max_length: any;
+}
+
 export const MaxLength = ({ ...args }) => {
-  const formMethods = useForm();
+  const formMethods = useForm<IMaxLength>();
 
   return (
     <Form
-      formMethods={formMethods}
+      handleSubmit={formMethods.handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Textarea
-        formMethods={formMethods}
+        control={formMethods.control}
         name="textarea_max_length"
         placeholder="max length"
-        maxLength="60"
+        maxLength={60}
         helper="Maximale länge von 60"
         {...args}
       />

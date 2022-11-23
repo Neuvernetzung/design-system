@@ -1,12 +1,13 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { FC, memo, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { Message, ValidationRule } from "react-hook-form";
 
 import { getText } from "../../../locales/getText";
 import { gapsSmall, textColors } from "../../../styles";
 import { ExclamationTriangleIcon } from "../../../theme/icons";
 import type { Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 import { sizes as textSizes } from "../Typography/Text/text";
@@ -22,8 +23,8 @@ export type FormElementProps = {
 };
 
 export type RequiredRule = Message | ValidationRule<boolean>;
-export type MaxLengthRule = ValidationRule<number | string>;
-export type MinLengthRule = ValidationRule<number | string>;
+export type MaxLengthRule = ValidationRule<number>;
+export type MinLengthRule = ValidationRule<number>;
 export type MaxRule = ValidationRule<number | string>;
 export type MinRule = ValidationRule<number | string>;
 export type PatternRule = ValidationRule<RegExp>;
@@ -77,4 +78,4 @@ FormElement.defaultProps = {
   className: undefined,
 };
 
-export default memo(FormElement);
+export default typedMemo(FormElement);
