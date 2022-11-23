@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
 import { Checkbox } from ".";
+import { CheckboxVariants } from "./checkbox";
 
 export default {
   title: "UI/Form/Checkbox",
@@ -126,6 +127,41 @@ Colors.parameters = {
   controls: { exclude: "color" },
 };
 
+export const Variants = ({ ...args }) => {
+  const formMethods = useForm();
+  const variants: Array<keyof CheckboxVariants> = ["default", "button"];
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      {variants.map((variant: any) => (
+        <Checkbox
+          key={variant}
+          control={formMethods.control}
+          name={`checkbox_${variant}`}
+          label={variant}
+          variant={variant}
+          options={[
+            { label: "Option 1", value: "option-1" },
+            { label: "Option 2", value: "option-2" },
+          ]}
+          {...args}
+        />
+      ))}
+    </Form>
+  );
+};
+
+Variants.parameters = {
+  controls: { exclude: "color" },
+  a11y: {
+    disable: true,
+  },
+};
+
 export const Icon = ({ ...args }) => {
   const formMethods = useForm();
 
@@ -164,7 +200,7 @@ export const Icon = ({ ...args }) => {
         label="Einzelnd"
         options={[
           { label: "Default", value: "option-1" },
-          { label: "Plus", value: "option-1", icon: PlusIcon },
+          { label: "Plus", value: "option-2", icon: PlusIcon },
         ]}
         {...args}
       />
