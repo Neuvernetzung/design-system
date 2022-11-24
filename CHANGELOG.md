@@ -1,3 +1,17 @@
+# [1.10.0](https://github.com/Neuvernetzung/design-system/compare/v1.9.0...v1.10.0) (2022-11-24)
+
+
+### Bug Fixes
+
+* **ui:** Form Inputs können nun eine default value haben [#227](https://github.com/Neuvernetzung/design-system/issues/227) ([ab6cdb5](https://github.com/Neuvernetzung/design-system/commit/ab6cdb5278b90bc40aae0e729656499dcbe01ca5))
+* **ui:** Label zu Textarea story hinzugefügt [#227](https://github.com/Neuvernetzung/design-system/issues/227) ([e432833](https://github.com/Neuvernetzung/design-system/commit/e4328332859faa4bfd9e8079ca30db169000b7c3))
+
+
+### Features
+
+* **deploy:** Vercel config hinzugefügt für automatischen deploy [#150](https://github.com/Neuvernetzung/design-system/issues/150) ([fb8ba07](https://github.com/Neuvernetzung/design-system/commit/fb8ba07027f63c662f654834b08ecde0022b8a6c))
+* **ui:** Custom Checkbox erstellt statt native Checkbox [#164](https://github.com/Neuvernetzung/design-system/issues/164) ([cd904dd](https://github.com/Neuvernetzung/design-system/commit/cd904dde2f3c544746f70a32696f055443cb47c3))
+
 # [1.9.0](https://github.com/Neuvernetzung/design-system/compare/v1.8.0...v1.9.0) (2022-11-23)
 
 
