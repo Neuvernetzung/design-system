@@ -2,6 +2,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import { addDays, addMonths, subMonths } from "date-fns";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { subDays } from "date-fns";
 
 import { Sizes as SizesT } from "../../../types";
 import { Form } from "../Form";
@@ -191,6 +192,35 @@ export const MinMaxDate = ({ ...args }) => {
   );
 };
 MinMaxDate.parameters = {
+  a11y: {
+    disable: true,
+  },
+};
+
+export const DefaultValue = ({ ...args }) => {
+  const formMethods = useForm({
+    defaultValues: { date: subDays(new Date(), 3) },
+  });
+
+  // console.log(formMethods.watch());
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Datepicker
+        name="date"
+        label="default Value"
+        control={formMethods.control}
+        placeholder="Datum auswählen"
+        {...args}
+      />
+    </Form>
+  );
+};
+DefaultValue.parameters = {
   a11y: {
     disable: true,
   },

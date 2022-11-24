@@ -66,7 +66,7 @@ export const SwitchInner = <
     rules={{
       required,
     }}
-    render={({ field: { onChange }, fieldState: { error } }) => (
+    render={({ field: { value, onChange }, fieldState: { error } }) => (
       <FormElement
         error={error}
         name={name}
@@ -83,7 +83,7 @@ export const SwitchInner = <
             gaps[size]
           )}
         >
-          <HeadlessSwitch as={Fragment} onChange={onChange}>
+          <HeadlessSwitch checked={value} as={Fragment} onChange={onChange}>
             {({ checked }) => (
               <button
                 ref={ref}

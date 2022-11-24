@@ -206,6 +206,27 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
+export const DefaultValue = ({ ...args }) => {
+  const formMethods = useForm({
+    defaultValues: { "input-default": "Default Value" },
+  });
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Input
+        control={formMethods.control}
+        name="input-default"
+        placeholder="default"
+        {...args}
+      />
+    </Form>
+  );
+};
+
 export const Types = ({ ...args }) => {
   const formMethods = useForm();
 

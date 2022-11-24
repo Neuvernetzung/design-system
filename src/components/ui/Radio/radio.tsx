@@ -14,9 +14,11 @@ import {
   extendedBgColors,
   focus,
   gapsSmall,
+  gaps,
   radioSizes,
   roundings,
   textColors,
+  transition,
 } from "../../../styles";
 import type { Colors, Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
@@ -37,7 +39,7 @@ export const checkedColors: Colors = {
 };
 
 export const radioBorderSizes: Sizes = {
-  xs: " border-4",
+  xs: "border-4",
   sm: "border-4",
   md: "border-[5px]",
   lg: "border-[6px]",
@@ -136,17 +138,22 @@ export const Radio = <
                   {({ checked }) => (
                     <>
                       {variant === "default" && (
-                        <>
+                        <div
+                          className={cn(
+                            "flex flex-row items-center",
+                            gaps[size]
+                          )}
+                        >
                           <span
                             className={cn(
                               "aspect-square flex",
+                              transition,
                               !_disabled ? styles.input : styles.inputDisabled,
                               radioSizes[size],
                               checked && radioBorderSizes[size],
                               !_disabled && checked
                                 ? checkedColors[color]
                                 : bordersInteractive.accent,
-                              checked && radioBorderSizes[size],
                               error && styles.inputError
                             )}
                           />
@@ -160,7 +167,7 @@ export const Radio = <
                           >
                             {label}
                           </label>
-                        </>
+                        </div>
                       )}
                       {variant === "button" && (
                         <Button
