@@ -3,7 +3,6 @@ import "swiper/css/a11y";
 import "swiper/css/navigation";
 import "swiper/css/keyboard";
 import "swiper/css/thumbs";
-import "./carouselStyle.css";
 import "swiper/css/pagination";
 
 import cn from "classnames";
@@ -70,14 +69,12 @@ export const Carousel = ({
         loop={loop}
         pagination={{
           enabled: withPagination,
-          bulletActiveClass: "swiper-pagination-bullet-active",
-          bulletClass: "swiper-pagination-bullet",
           clickable: true,
         }}
         navigation={{
           prevEl,
           nextEl,
-          disabledClass: "swiper-button-disabled",
+          disabledClass: "opacity-50",
         }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
@@ -125,7 +122,7 @@ export const Carousel = ({
           navigation={{
             prevEl: prevElThumb,
             nextEl: nextElThumb,
-            disabledClass: "swiper-button-disabled",
+            disabledClass: "opacity-50",
           }}
           className={cn(
             "mt-2.5 hidden h-24 w-full rounded lg:block",
