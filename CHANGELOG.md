@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/Neuvernetzung/design-system/compare/v1.10.2...v1.10.3) (2022-11-27)
+
+
+### Bug Fixes
+
+* **ui:** Swiper global css nach globals.css verschoben [#245](https://github.com/Neuvernetzung/design-system/issues/245) ([c8025c1](https://github.com/Neuvernetzung/design-system/commit/c8025c13c3ea73b5fc04ba8ef625dfb3314efbb0))
+
 ## [1.10.2](https://github.com/Neuvernetzung/design-system/compare/v1.10.1...v1.10.2) (2022-11-27)
 
 
