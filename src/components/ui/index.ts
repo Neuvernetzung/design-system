@@ -1,5 +1,6 @@
 export * from "./BlockQuote";
 export * from "./Button";
+export * from "./Carousel";
 export * from "./Checkbox";
 export * from "./Datepicker";
 export * from "./Disclosure";
