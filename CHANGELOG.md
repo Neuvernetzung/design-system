@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/Neuvernetzung/design-system/compare/v1.10.1...v1.10.2) (2022-11-27)
+
+
+### Bug Fixes
+
+* **ui:** Carousel darf kein globales css importieren [#242](https://github.com/Neuvernetzung/design-system/issues/242) ([95ea865](https://github.com/Neuvernetzung/design-system/commit/95ea865c3f1d1da69a8c06bff9a4f02ea8b435a9))
+
 ## [1.10.1](https://github.com/Neuvernetzung/design-system/compare/v1.10.0...v1.10.1) (2022-11-27)
 
 
