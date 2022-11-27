@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/Neuvernetzung/design-system/compare/v1.10.0...v1.10.1) (2022-11-27)
+
+
+### Bug Fixes
+
+* **ui:** Carousel exportieren ([bb376cc](https://github.com/Neuvernetzung/design-system/commit/bb376ccbf939d419caec2219a29f72577f29e0ff))
+
 # [1.10.0](https://github.com/Neuvernetzung/design-system/compare/v1.9.0...v1.10.0) (2022-11-24)
 
 
