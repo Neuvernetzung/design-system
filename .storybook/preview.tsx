@@ -1,4 +1,4 @@
-import "../src/globals.css";
+import "../globals.css";
 import * as NextImage from "next/image";
 
 import React from "react";
