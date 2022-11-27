@@ -1,10 +1,3 @@
-import "swiper/css";
-import "swiper/css/a11y";
-import "swiper/css/navigation";
-import "swiper/css/keyboard";
-import "swiper/css/thumbs";
-import "swiper/css/pagination";
-
 import cn from "classnames";
 import { memo, useState } from "react";
 import {
