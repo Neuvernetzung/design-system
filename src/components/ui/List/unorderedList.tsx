@@ -1,13 +1,23 @@
 import cn from "classnames";
-import { memo, OlHTMLAttributes } from "react";
+import { memo, OlHTMLAttributes, forwardRef, ForwardedRef } from "react";
 
 import { listStyle } from "../../../styles";
 
 export interface UnorderedListProps
   extends OlHTMLAttributes<HTMLUListElement> {}
 
-export const UnorderedList = ({ className, ...props }: UnorderedListProps) => (
-  <ul className={cn("list-disc", listStyle, className)} {...props} />
+export const UnorderedList = forwardRef(
+  (
+    { className, ...props }: UnorderedListProps,
+    ref: ForwardedRef<HTMLUListElement>
+  ) => (
+    <ul
+      ref={ref}
+      className={cn("list-disc", listStyle, className)}
+      {...props}
+    />
+  )
 );
+UnorderedList.displayName = "UnorderedList";
 
 export default memo(UnorderedList);
