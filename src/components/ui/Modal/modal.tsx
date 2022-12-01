@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import cn from "classnames";
 import isString from "lodash/isString";
-import { Fragment, MutableRefObject, ReactNode } from "react";
+import { Fragment, MutableRefObject, ReactNode, FC } from "react";
 
 import {
   bgColors,
@@ -24,6 +24,7 @@ export type ModalProps = {
   footer?: ReactNode;
   size?: keyof Sizes;
   initialFocus?: MutableRefObject<HTMLElement>;
+  wrapper?: FC;
 };
 
 const sizes: Sizes = {
@@ -42,6 +43,7 @@ export const Modal = ({
   footer,
   size = "md",
   initialFocus,
+  wrapper,
 }: ModalProps) => {
   const handleClose = () => {
     setOpen(false);
@@ -50,6 +52,8 @@ export const Modal = ({
   const sectionStyles = cn("w-full flex", paddings[size]);
 
   if (!open) return null;
+
+  const Wrapper = wrapper || Fragment;
 
   return (
     <Transition appear show={open} as={Fragment}>
@@ -102,17 +106,19 @@ export const Modal = ({
                   paddingsEvenly.md
                 )}
               >
-                {header && (
-                  <div className={sectionStyles}>
-                    {isString(header) ? <Heading>{header}</Heading> : header}
-                  </div>
-                )}
-                {content && (
-                  <div className={cn(sectionStyles, "overflow-y-scroll")}>
-                    {isString(content) ? <Text>{content}</Text> : content}
-                  </div>
-                )}
-                {footer && <div className={sectionStyles}>{footer}</div>}
+                <Wrapper>
+                  {header && (
+                    <div className={sectionStyles}>
+                      {isString(header) ? <Heading>{header}</Heading> : header}
+                    </div>
+                  )}
+                  {content && (
+                    <div className={cn(sectionStyles, "overflow-y-scroll")}>
+                      {isString(content) ? <Text>{content}</Text> : content}
+                    </div>
+                  )}
+                  {footer && <div className={sectionStyles}>{footer}</div>}
+                </Wrapper>
               </Dialog.Panel>
             </Transition.Child>
           </div>
