@@ -62,6 +62,6 @@ export const paddingsSmallEvenly: Sizes = {
   xs: "p-px",
   sm: "p-0.5",
   md: "p-1",
-  lg: "py-1.5",
+  lg: "p-1.5",
   xl: "p-2",
 };
