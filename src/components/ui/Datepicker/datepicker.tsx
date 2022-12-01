@@ -125,7 +125,9 @@ export const Datepicker = <
   } = useController({ control, name });
 
   useEffect(() => {
-    if (initialValue) select(clearTime(initialValue), true);
+    if (!initialValue || !isValid(new Date(initialValue))) return;
+
+    select(clearTime(new Date(initialValue)), true);
   }, []);
 
   // Initiale Kalenderseite setzen
@@ -429,7 +431,7 @@ export const Datepicker = <
                 children: (
                   <div className="flex flex-row justify-between items-center">
                     {value ? (
-                      format(value, "dd.MM.yyyy")
+                      format(new Date(value), "dd.MM.yyyy")
                     ) : (
                       <span className={cn(placeholderAsText[inputVariant])}>
                         {placeholder}
