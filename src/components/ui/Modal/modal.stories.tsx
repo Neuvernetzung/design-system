@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { Sizes as SizesType } from "../../../types";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { Heading } from "../Typography";
-import { Modal } from "./modal";
+import { Modal, ModalSizes } from "./modal";
 import { TabList, TabPanels, TabGroup } from "../Tabs";
 
 export default {
@@ -64,7 +64,16 @@ export const Default = ({ ...args }) => {
 };
 
 export const Sizes = ({ ...args }) => {
-  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
+  const sizes: Array<keyof ModalSizes> = [
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl",
+    "3xl",
+    "full",
+  ];
 
   return (
     <Container>
@@ -74,9 +83,7 @@ export const Sizes = ({ ...args }) => {
 
         return (
           <>
-            <Button size={size} onClick={() => setOpen(true)}>
-              {size} öffnen
-            </Button>
+            <Button onClick={() => setOpen(true)}>{size}</Button>
 
             <Modal
               header="Ein Modal"
