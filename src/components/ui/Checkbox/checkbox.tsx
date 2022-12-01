@@ -136,7 +136,7 @@ export const Checkbox = <
                   <div
                     role="checkbox"
                     aria-checked={!!isChecked(current, _value)}
-                    aria-labelledby={isString(label) ? label : _value}
+                    aria-label={isString(label) ? label : _value}
                     aria-disabled={_disabled ? true : undefined}
                     tabIndex={(() => {
                       if (_disabled) return -1;

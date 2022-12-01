@@ -329,7 +329,10 @@ export const ElementAsLabel = ({ ...args }) => {
             label: <IconComponent icon={ChevronDownIcon} />,
             value: "option-1",
           },
-          { label: <IconComponent icon={ChevronUpIcon} />, value: "option-2" },
+          {
+            label: <IconComponent icon={ChevronUpIcon} />,
+            value: "option-2",
+          },
         ]}
         {...args}
       />
