@@ -199,10 +199,11 @@ MinMaxDate.parameters = {
 
 export const DefaultValue = ({ ...args }) => {
   const formMethods = useForm({
-    defaultValues: { date: subDays(new Date(), 3) },
+    defaultValues: {
+      date: subDays(new Date(), 3),
+      isoDate: "2022-11-15T23:00:00.000Z",
+    },
   });
-
-  // console.log(formMethods.watch());
 
   return (
     <Form
@@ -212,7 +213,14 @@ export const DefaultValue = ({ ...args }) => {
     >
       <Datepicker
         name="date"
-        label="default Value"
+        label="Date"
+        control={formMethods.control}
+        placeholder="Datum auswählen"
+        {...args}
+      />
+      <Datepicker
+        name="isoDate"
+        label="ISO Date"
         control={formMethods.control}
         placeholder="Datum auswählen"
         {...args}
