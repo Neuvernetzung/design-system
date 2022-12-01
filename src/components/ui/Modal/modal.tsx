@@ -13,7 +13,7 @@ import {
   transition,
   zIndexes,
 } from "../../../styles";
-import { Sizes } from "../../../types";
+import { ExtendedSizes, Sizes } from "../../../types";
 import { Heading, Text } from "../Typography";
 
 export type ModalProps = {
@@ -22,17 +22,24 @@ export type ModalProps = {
   header?: string | ReactNode;
   content?: string | ReactNode;
   footer?: ReactNode;
-  size?: keyof Sizes;
+  size?: keyof ModalSizes;
   initialFocus?: MutableRefObject<HTMLElement>;
   wrapper?: FC;
 };
 
-const sizes: Sizes = {
+export interface ModalSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
+  full: any;
+}
+
+const sizes: ModalSizes = {
   xs: "max-w-md",
   sm: "max-w-lg",
   md: "max-w-xl",
   lg: "max-w-2xl",
   xl: "max-w-3xl",
+  "2xl": "max-w-4xl",
+  "3xl": "max-w-5xl",
+  full: "max-w-none",
 };
 
 export const Modal = ({
@@ -49,7 +56,7 @@ export const Modal = ({
     setOpen(false);
   };
 
-  const sectionStyles = cn("w-full flex", paddings[size]);
+  const sectionStyles = cn("w-full flex", paddings.lg);
 
   if (!open) return null;
 
