@@ -7,10 +7,10 @@ import {
   borders,
   gapsSmall,
   paddingsSmall,
+  paddingsSmallEvenly,
   roundings,
   textColors,
   textSizes,
-  paddingsSmallEvenly,
 } from "../../../styles";
 import { useColorState } from "../../../theme";
 import type { Colors, Sizes } from "../../../types";
@@ -58,11 +58,11 @@ export const Tag = ({
       className={cn(
         "h-min flex-0 inline-flex flex-row items-center select-none",
         variants(color, colorState)[variant],
-        roundings[size],
+
         label ? paddingsSmall[size] : paddingsSmallEvenly[size],
         gapsSmall[size],
         textSizes[size],
-        rounded && "rounded-full",
+        !rounded ? roundings[size] : "rounded-full",
         !label && "aspect-square"
       )}
     >
@@ -74,13 +74,3 @@ export const Tag = ({
 };
 
 export default memo(Tag);
-
-Tag.defaultProps = {
-  label: undefined,
-  leftIcon: undefined,
-  rightIcon: undefined,
-  size: "md",
-  color: "accent",
-  variant: "solid",
-  rounded: false,
-};
