@@ -7,6 +7,7 @@ import { Sizes as SizesType } from "../../../types";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { Heading } from "../Typography";
 import { Modal } from "./modal";
+import { TabList, TabPanels, TabGroup } from "../Tabs";
 
 export default {
   title: "UI/Overlay/Modal",
@@ -243,6 +244,40 @@ export const Nested = ({ ...args }) => {
         }
         open={nestedOpen}
         setOpen={setNestedOpen}
+        {...args}
+      />
+    </Container>
+  );
+};
+
+export const WithWrapper = ({ ...args }) => {
+  const [open, setOpen] = useState(false);
+
+  const tabs = [
+    {
+      title: "Tab 1",
+      content: "Tab Content 1",
+    },
+    {
+      title: "Tab 2",
+      content: "Tab Content 2",
+    },
+    {
+      title: "Tab 3",
+      content: "Tab Content 3",
+    },
+  ];
+
+  return (
+    <Container>
+      <Button onClick={() => setOpen(true)}>Modal öffnen</Button>
+
+      <Modal
+        wrapper={TabGroup}
+        header={<TabList items={tabs} />}
+        content={<TabPanels items={tabs} />}
+        open={open}
+        setOpen={setOpen}
         {...args}
       />
     </Container>
