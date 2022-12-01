@@ -1,11 +1,12 @@
 import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
+
 import cn from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import isString from "lodash/isString";
 import { memo, ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
-import { MinusIcon, PlusIcon } from "../../../theme/icons";
+import { MinusIcon, PlusIcon, ChevronDownIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
@@ -16,6 +17,7 @@ export type DisclosureProps = {
   items: ItemProps[];
   closeOthers?: boolean;
   className?: string;
+  icon?: "default" | "chevron";
 };
 
 type ItemProps = {
@@ -31,6 +33,7 @@ export const Disclosure = ({
   items = [],
   closeOthers,
   className,
+  icon = "default",
   ...props
 }: DisclosureProps) => {
   const MotionPanel = motion(HeadlessDisclosure.Panel);
@@ -65,17 +68,23 @@ export const Disclosure = ({
                   <AnimatePresence initial={false} mode="wait">
                     <MotionIcon
                       size={size}
-                      icon={!open ? PlusIcon : MinusIcon}
+                      icon={
+                        icon === "chevron"
+                          ? ChevronDownIcon
+                          : !open
+                          ? PlusIcon
+                          : MinusIcon
+                      }
                       initial="initial"
                       animate={open ? "animate" : "initial"}
                       variants={{
-                        initial: { rotate: open ? -90 : 90 },
+                        initial: { rotate: icon === "chevron" ? 0 : 90 },
                         animate: {
                           zIndex: 1,
-                          rotate: 0,
+                          rotate: icon === "chevron" ? 180 : 0,
                           transition: {
                             type: "tween",
-                            duration: 0.15,
+                            duration: 0.2,
                             ease: "circOut",
                           },
                         },

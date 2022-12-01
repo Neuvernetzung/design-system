@@ -8,6 +8,7 @@ import {
   CheckIcon as HeroCheckIcon,
   ChevronLeftIcon as HeroChevronLeftIcon,
   ChevronRightIcon as HeroChevronRightIcon,
+  ChevronDownIcon as HeroChevronDownIcon,
   ChevronUpDownIcon as HeroChevronUpDownIcon,
   ComputerDesktopIcon as HeroComputerDesktopIcon,
   ExclamationCircleIcon as HeroExclamationCircleIcon,
@@ -50,6 +51,7 @@ export const CrossIcon = null || XMarkIcon;
 // Chevrons
 
 export const ChevronRightIcon = null || HeroChevronRightIcon;
+export const ChevronDownIcon = null || HeroChevronDownIcon;
 export const ChevronLeftIcon = null || HeroChevronLeftIcon;
 export const ChevronUpDownIcon = null || HeroChevronUpDownIcon;
 
