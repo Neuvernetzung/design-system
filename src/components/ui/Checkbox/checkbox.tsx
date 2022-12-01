@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { isString } from "lodash";
 import isArray from "lodash/isArray";
-import { FC, KeyboardEvent, MouseEvent, SVGProps } from "react";
+import { FC, KeyboardEvent, MouseEvent, ReactElement, SVGProps } from "react";
 import {
   Controller,
   FieldPath,
@@ -49,7 +49,7 @@ export interface CheckboxProps {
 }
 
 type OptionProps = {
-  label: string;
+  label: string | ReactElement;
   value: any;
   disabled?: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
@@ -136,7 +136,7 @@ export const Checkbox = <
                   <div
                     role="checkbox"
                     aria-checked={!!isChecked(current, _value)}
-                    aria-labelledby={isString(label) ? label : _value}
+                    aria-label={isString(label) ? label : _value}
                     aria-disabled={_disabled ? true : undefined}
                     tabIndex={(() => {
                       if (_disabled) return -1;
