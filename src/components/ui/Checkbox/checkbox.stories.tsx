@@ -1,4 +1,9 @@
-import { HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  HomeIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -7,6 +12,7 @@ import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
 import { Checkbox } from ".";
 import { CheckboxVariants } from "./checkbox";
+import { Icon as IconComponent } from "../Icon";
 
 export default {
   title: "UI/Form/Checkbox",
@@ -281,7 +287,6 @@ export const DefaultValue = ({ ...args }) => {
   const formMethods = useForm({
     defaultValues: { checkbox_default: ["option-2"] },
   });
-  console.log(formMethods.watch());
 
   return (
     <Form
@@ -297,6 +302,34 @@ export const DefaultValue = ({ ...args }) => {
         options={[
           { label: "Option 1", value: "option-1" },
           { label: "Option 2", value: "option-2" },
+        ]}
+        {...args}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const ElementAsLabel = ({ ...args }) => {
+  const formMethods = useForm({});
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Checkbox
+        control={formMethods.control}
+        name="checkbox_default"
+        label="Default Value"
+        required
+        options={[
+          {
+            label: <IconComponent icon={ChevronDownIcon} />,
+            value: "option-1",
+          },
+          { label: <IconComponent icon={ChevronUpIcon} />, value: "option-2" },
         ]}
         {...args}
       />
