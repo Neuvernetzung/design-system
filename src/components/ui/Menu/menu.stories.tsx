@@ -37,7 +37,6 @@ export const Default = ({ ...args }) => {
       ],
     },
     {
-      children: "Gruppe 2",
       items: [
         {
           children: "Option 3",

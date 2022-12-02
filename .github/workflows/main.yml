@@ -20,11 +20,35 @@ jobs:
       - name: GitHub Token einstellen für Private packages
         run: git config --global url."https://${{ secrets.GH_TOKEN }}@github.com/".insteadOf ssh://git@github.com/ # Personal Access Token hinzufügen um Private Github Repos installieren zu können.
 
-      - name: Dependencies installieren
-        run: npm i
+      # NPM ci mit Cache
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
 
-      - name: Playwright installieren
-        run: npx playwright install --with-deps
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+      #
+
+      # Playright mit Cache
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+      - run: npx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      # - run: npx playwright install-deps
+      #   if: steps.playwright-cache.outputs.cache-hit != 'true'
+      #
 
       - name: Storybook builden
         run: npm run build-storybook --quiet
