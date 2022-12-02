@@ -6,9 +6,9 @@ import {
   CalendarIcon as HeroCalendarIcon,
   CheckCircleIcon as HeroCheckCircleIcon,
   CheckIcon as HeroCheckIcon,
+  ChevronDownIcon as HeroChevronDownIcon,
   ChevronLeftIcon as HeroChevronLeftIcon,
   ChevronRightIcon as HeroChevronRightIcon,
-  ChevronDownIcon as HeroChevronDownIcon,
   ChevronUpDownIcon as HeroChevronUpDownIcon,
   ComputerDesktopIcon as HeroComputerDesktopIcon,
   ExclamationCircleIcon as HeroExclamationCircleIcon,
@@ -18,6 +18,7 @@ import {
   ListBulletIcon as HeroListBulletIcon,
   MinusIcon as HeroMinusIcon,
   MoonIcon as HeroMoonIcon,
+  PhotoIcon as HeroPhotoIcon,
   PlusIcon as HeroPlusIcon,
   SunIcon as HeroSunIcon,
   TrashIcon as HeroTrashIcon,
@@ -86,3 +87,4 @@ export const CalendarIcon = null || HeroCalendarIcon;
 export const BackArrowIcon = null || ArrowUturnLeftIcon;
 export const TrashIcon = null || HeroTrashIcon;
 export const ExclamationTriangleIcon = null || HeroExclamationTriangleIcon;
+export const PhotoIcon = null || HeroPhotoIcon;

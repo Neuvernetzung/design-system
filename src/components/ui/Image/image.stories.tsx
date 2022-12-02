@@ -27,3 +27,14 @@ export const Default = ({ ...args }) => (
     />
   </Container>
 );
+
+export const Fallback = ({ ...args }) => (
+  <Container>
+    <Image
+      src="wrong/path.jpg"
+      alt="ohne Bild"
+      isLocal
+      className="aspect-video rounded-lg"
+    />
+  </Container>
+);
