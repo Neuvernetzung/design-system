@@ -1,6 +1,6 @@
 import { RadioGroup } from "@headlessui/react";
 import cn from "classnames";
-import { type ElementType, type ReactElement } from "react";
+import { ReactNode, type ElementType } from "react";
 import {
   Controller,
   FieldPath,
@@ -64,7 +64,7 @@ export type RadioProps = {
 };
 
 type OptionProps = {
-  label: ReactElement | string;
+  label: ReactNode;
   value: any;
   disabled?: boolean;
   icon?: ElementType<SVGElement>;

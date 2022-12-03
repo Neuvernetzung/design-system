@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { isString } from "lodash";
 import isArray from "lodash/isArray";
-import { FC, KeyboardEvent, MouseEvent, ReactElement, SVGProps } from "react";
+import { FC, KeyboardEvent, MouseEvent, ReactNode, SVGProps } from "react";
 import {
   Controller,
   FieldPath,
@@ -49,7 +49,7 @@ export interface CheckboxProps {
 }
 
 type OptionProps = {
-  label: string | ReactElement;
+  label: ReactNode;
   value: any;
   disabled?: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
