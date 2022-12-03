@@ -7,6 +7,7 @@ import {
   bgColors,
   paddings,
   paddingsEvenly,
+  paddingsY,
   pagePaddings,
   roundings,
   shadows,
@@ -89,8 +90,9 @@ export const Modal = ({
         <div className="fixed inset-0 overflow-y-auto">
           <div
             className={cn(
-              "flex min-h-full items-center justify-center text-center",
-              pagePaddings
+              "flex min-h-full items-center justify-center",
+              pagePaddings,
+              paddingsY.lg
             )}
           >
             <Transition.Child
@@ -104,7 +106,7 @@ export const Modal = ({
             >
               <Dialog.Panel
                 className={cn(
-                  "w-full flex flex-col max-h-[80vh]",
+                  "w-full flex flex-col",
                   transition,
                   sizes[size],
                   roundings.lg,
@@ -120,7 +122,7 @@ export const Modal = ({
                     </div>
                   )}
                   {content && (
-                    <div className={cn(sectionStyles, "overflow-y-scroll")}>
+                    <div className={cn(sectionStyles)}>
                       {isString(content) ? <Text>{content}</Text> : content}
                     </div>
                   )}
