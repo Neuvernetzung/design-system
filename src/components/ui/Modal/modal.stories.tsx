@@ -8,10 +8,19 @@ import { Button, ButtonGroup, IconButton } from "../Button";
 import { Heading } from "../Typography";
 import { Modal, ModalSizes } from "./modal";
 import { TabList, TabPanels, TabGroup } from "../Tabs";
+import { Select } from "../Select";
+import { useForm } from "react-hook-form";
 
 export default {
   title: "UI/Overlay/Modal",
   component: Modal,
+  parameters: {
+    docs: {
+      source: {
+        type: "code",
+      },
+    },
+  }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
 const Container = ({ ...props }) => (
@@ -283,6 +292,45 @@ export const WithWrapper = ({ ...args }) => {
         wrapper={TabGroup}
         header={<TabList items={tabs} />}
         content={<TabPanels items={tabs} />}
+        open={open}
+        setOpen={setOpen}
+        {...args}
+      />
+    </Container>
+  );
+};
+
+export const ContainerOverflow = ({ ...args }) => {
+  const [open, setOpen] = useState(false);
+  const { control } = useForm();
+
+  return (
+    <Container>
+      <Button onClick={() => setOpen(true)}>Modal öffnen</Button>
+
+      <Modal
+        content={
+          <div>
+            <Select
+              control={control}
+              name="test"
+              options={[
+                {
+                  children: "Option 1",
+                  value: "option-1",
+                },
+                {
+                  children: "Option 2",
+                  value: "option-2",
+                },
+                {
+                  children: "Option 3",
+                  value: "option-3",
+                },
+              ]}
+            />
+          </div>
+        }
         open={open}
         setOpen={setOpen}
         {...args}
