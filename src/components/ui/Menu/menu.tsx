@@ -6,7 +6,7 @@ import {
   ForwardedRef,
   forwardRef,
   memo,
-  ReactElement,
+  ReactNode,
   SVGProps,
   useState,
 } from "react";
@@ -61,7 +61,7 @@ type OptionalItemProps =
     } & OptionalFunctionProps);
 
 export type ItemProps = {
-  children?: string | ReactElement;
+  children?: ReactNode;
   disabled?: boolean;
   color?: keyof Colors;
 } & OptionalItemProps;
