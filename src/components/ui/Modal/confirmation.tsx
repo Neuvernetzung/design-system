@@ -57,12 +57,12 @@ export const ConfirmationModal = () => {
     cancelButton,
   }: ConfirmationModalProps = confirmationState;
 
-  const handleCancel = () => {
+  const handleConfirm = () => {
     confirm?.();
     reset();
   };
 
-  const handleConfirm = () => {
+  const handleCancel = () => {
     cancel?.();
     reset();
   };
