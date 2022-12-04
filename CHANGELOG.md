@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/Neuvernetzung/design-system/compare/v1.12.0...v1.12.1) (2022-12-04)
+
+
+### Bug Fixes
+
+* **ui:** confirmationen Funktionen richtig zugeordnet [#278](https://github.com/Neuvernetzung/design-system/issues/278) ([9724126](https://github.com/Neuvernetzung/design-system/commit/9724126e527edac0720b0dafc6a0b52c8d2fb301))
+
 # [1.12.0](https://github.com/Neuvernetzung/design-system/compare/v1.11.0...v1.12.0) (2022-12-04)
 
 
