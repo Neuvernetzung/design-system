@@ -70,3 +70,19 @@ export const extendedBgColorsInteractive: ExtendedColors = {
   filledSubtile: `${extendedBgColors.filledSubtile} hover:bg-accent-200 dark:hover:bg-accent-700`,
   filled: `${extendedBgColors.filled} hover:bg-accent-300 dark:hover:bg-accent-600`,
 };
+
+export const fillColors: Colors = {
+  primary: "fill-primary-500",
+  white: "fill-accent-50 dark:fill-accent-900",
+  black: "fill-accent-900 dark:fill-accent-50",
+  accent: "fill-accent-600",
+  success: "fill-success-500",
+  warn: "fill-warn-500",
+  danger: "fill-danger-500",
+};
+
+export const extendedFillColors: ExtendedColors = {
+  ...fillColors,
+  filledSubtile: "fill-accent-100 dark:fill-accent-800",
+  filled: "fill-accent-200 dark:fill-accent-700",
+};
