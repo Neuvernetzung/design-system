@@ -27,7 +27,7 @@ export const Default = () => (
         color="success"
         variant="outline"
         onClick={() =>
-          notify({ message: "Dies ist ein Erfolg!", status: "success" })
+          notify({ message: "Dies ist ein Erfolg!", color: "success" })
         }
       >
         Notify Success
@@ -36,7 +36,7 @@ export const Default = () => (
         color="danger"
         variant="outline"
         onClick={() =>
-          notify({ message: "Dies ist ein Fehler!", status: "danger" })
+          notify({ message: "Dies ist ein Fehler!", color: "danger" })
         }
       >
         Notify Error
@@ -56,7 +56,7 @@ export const Default = () => (
         onClick={() =>
           notify({
             message: "Dies ist ein Erfolg!",
-            status: "success",
+            color: "success",
             variant: "solid",
           })
         }
@@ -68,7 +68,7 @@ export const Default = () => (
         onClick={() =>
           notify({
             message: "Dies ist ein Fehler!",
-            status: "danger",
+            color: "danger",
             variant: "solid",
           })
         }

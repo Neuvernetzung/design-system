@@ -26,7 +26,7 @@ export const notify = (notification: NotifyProps) => {
 };
 
 export type NotifyProps = {
-  status?: keyof Colors;
+  color?: keyof Colors;
   variant?: keyof ToastVariants;
   message: string;
   icon?: ElementType<SVGElement>;
@@ -50,7 +50,7 @@ export const Notify = () => {
         ...oldArray,
         {
           message: notification.message,
-          status: notification.status,
+          color: notification.color,
           variant: notification.variant,
           id,
         },
@@ -79,18 +79,18 @@ export const Notify = () => {
       )}
     >
       {notificationArray.map(
-        ({ id, message, status = "accent", icon, variant }) => (
+        ({ id, message, color = "accent", icon, variant }) => (
           <Toast
             key={id}
             message={message}
-            color={status}
+            color={color}
             handleClose={() =>
               setNotificationArray((oldArray) =>
                 oldArray.filter((item) => item.id !== id)
               )
             }
             variant={variant}
-            icon={icon || icons[status]}
+            icon={icon || icons[color]}
           />
         )
       )}
