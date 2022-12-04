@@ -76,7 +76,7 @@ export const focuses: Focuses = {
 };
 
 export const styles = {
-  base: "appearance-none h-min select-none flex flex-row justify-center items-center gap-2 font-semibold disabled:cursor-not-allowed text-ellipsis overflow-hidden",
+  base: "appearance-none h-min select-none flex flex-row justify-center items-center gap-2 font-semibold disabled:cursor-not-allowed",
   fullWidth: "w-full",
   rounded: "rounded-full",
 };
@@ -150,7 +150,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
         {...props}
       >
         {leftIcon && <Icon size={size} icon={leftIcon} />}
-        {children}
+        <span className="text-ellipsis overflow-hidden">{children}</span>
         {rightIcon && <Icon size={size} icon={rightIcon} />}
       </Component>
     );

@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import cn from "classnames";
 import isString from "lodash/isString";
-import { Fragment, MutableRefObject, ReactNode, FC } from "react";
+import { FC, Fragment, MutableRefObject, ReactNode } from "react";
 
 import {
   bgColors,
@@ -26,6 +26,7 @@ export type ModalProps = {
   size?: keyof ModalSizes;
   initialFocus?: MutableRefObject<HTMLElement>;
   wrapper?: FC;
+  onClose?: Function;
 };
 
 export interface ModalSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
@@ -52,8 +53,10 @@ export const Modal = ({
   size = "md",
   initialFocus,
   wrapper,
+  onClose,
 }: ModalProps) => {
   const handleClose = () => {
+    onClose?.();
     setOpen(false);
   };
 
