@@ -1,14 +1,14 @@
 import de from "./de";
 import en from "./en";
 
-const DEFAULT_LOCALE = "de";
-
-interface Locales {
-  de: any;
-  en: any;
+export enum Locales {
+  DE = "de",
+  EN = "en",
 }
 
-export const getText = (locale: keyof Locales) => {
+const DEFAULT_LOCALE: Locales = Locales.DE;
+
+export const getText = (locale: Locales) => {
   const locales = { de, en };
 
   return locales[locale || DEFAULT_LOCALE] || {};

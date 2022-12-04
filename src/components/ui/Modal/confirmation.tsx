@@ -1,11 +1,13 @@
 import cn from "classnames";
 import { FC, memo, MutableRefObject, ReactNode, SVGProps, useRef } from "react";
 import create from "zustand";
+import { getText, Locales } from "../../../locales/getText";
+import { useRouter } from "next/router";
 
-import { gaps, gapsSmall } from "../../../styles";
+import { gaps } from "../../../styles";
 import { Colors } from "../../../types";
 import { Button } from "../Button";
-import { Icon } from "../Icon";
+import { Tag } from "../Tag";
 import { Heading } from "../Typography";
 import { Modal } from "./modal";
 
@@ -17,7 +19,7 @@ const useConfirmationState = create<ConfirmationState>(() => ({
   confirmation: undefined,
 }));
 
-export const requestConfirmation = (confirmation?: ConfirmationModalProps) => {
+export const confirmation = (confirmation?: ConfirmationModalProps) => {
   useConfirmationState.setState({ confirmation });
 };
 
@@ -26,55 +28,59 @@ export type ConfirmationModalProps = {
   heading: string;
   content?: string | ReactNode;
   color?: keyof Colors;
-  cancelButton: ButtonProps;
-  confirmButton: ButtonProps;
-};
-
-type ButtonProps = {
-  onClick?: Function;
-  children: ReactNode;
+  confirm: Function;
+  cancel?: Function;
+  confirmButton?: ReactNode;
+  cancelButton?: ReactNode;
 };
 
 export const ConfirmationModal = () => {
-  const confirmation = useConfirmationState((state) => state.confirmation);
+  const locale = useRouter().locale as Locales;
+
+  const confirmationState = useConfirmationState((state) => state.confirmation);
 
   const confirmBtnRef = useRef() as MutableRefObject<HTMLButtonElement>;
   const cancelBtnRef = useRef() as MutableRefObject<HTMLButtonElement>;
 
-  if (!confirmation) return null;
+  if (!confirmationState) return null;
 
-  const reset = () => requestConfirmation();
+  const reset = () => confirmation();
 
   const {
     icon,
     heading,
     content,
     color = "primary",
-    cancelButton,
+    confirm,
+    cancel,
     confirmButton,
-  }: ConfirmationModalProps = confirmation;
+    cancelButton,
+  }: ConfirmationModalProps = confirmationState;
 
   const handleCancel = () => {
-    cancelButton?.onClick?.();
+    confirm?.();
     reset();
   };
 
   const handleConfirm = () => {
-    confirmButton?.onClick?.();
+    cancel?.();
     reset();
   };
 
   return (
     <Modal
-      open={!!confirmation}
+      open={!!confirmationState}
+      onClose={handleCancel}
       setOpen={reset}
       size="sm"
       initialFocus={
         color !== "danger" && color !== "warn" ? confirmBtnRef : cancelBtnRef
       }
       header={
-        <div className={cn("flex flex-row", gapsSmall.md)}>
-          {icon && <Icon color={color} icon={icon} />}
+        <div className={cn("flex flex-row items-center", gaps.md)}>
+          {icon && (
+            <Tag color={color} variant="subtile" rounded leftIcon={icon} />
+          )}
           <Heading>{heading}</Heading>
         </div>
       }
@@ -87,7 +93,7 @@ export const ConfirmationModal = () => {
             onClick={handleCancel}
             fullWidth
           >
-            {cancelButton?.children}
+            {cancelButton || getText(locale).cancel}
           </Button>
           <Button
             ref={confirmBtnRef}
@@ -95,7 +101,7 @@ export const ConfirmationModal = () => {
             fullWidth
             color={color}
           >
-            {confirmButton?.children}
+            {confirmButton || getText(locale).confirm}
           </Button>
         </div>
       }
