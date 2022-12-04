@@ -1,3 +1,26 @@
+# [1.11.0](https://github.com/Neuvernetzung/design-system/compare/v1.10.3...v1.11.0) (2022-12-04)
+
+
+### Bug Fixes
+
+* **ui:** a11y bei Checkbox ohne string als label verbessert [#236](https://github.com/Neuvernetzung/design-system/issues/236) ([1ea0549](https://github.com/Neuvernetzung/design-system/commit/1ea05497e30e88aee264a802670645dac7ed18fc))
+* **ui:** Button truncate bei sehr langem Text [#257](https://github.com/Neuvernetzung/design-system/issues/257) ([83d42aa](https://github.com/Neuvernetzung/design-system/commit/83d42aa3c9e179fbe413d50a564b463d8d151e51))
+* **ui:** Checkbox kann nun auch ein Element als Label besitzen [#236](https://github.com/Neuvernetzung/design-system/issues/236) ([9be3c5a](https://github.com/Neuvernetzung/design-system/commit/9be3c5a4409ab35ac517fbacc52b8e36de1ae383))
+* **ui:** Datepicker kann nun auch ISO Standartwert verwenden [#235](https://github.com/Neuvernetzung/design-system/issues/235) ([d470222](https://github.com/Neuvernetzung/design-system/commit/d470222d17513cb2b23d25b0de13fbc4271ec066))
+* **ui:** forwardRef zu Liste hinzugefügt um RichText Error zu fixen [#237](https://github.com/Neuvernetzung/design-system/issues/237) ([8afe53c](https://github.com/Neuvernetzung/design-system/commit/8afe53c08c942eed1505609826960f1d592c0a7f))
+* **ui:** Menü Gruppentitel optional [#253](https://github.com/Neuvernetzung/design-system/issues/253) ([3f0cf4f](https://github.com/Neuvernetzung/design-system/commit/3f0cf4f0101c2ef2a166c848d738fe209deb0188))
+* **ui:** Rounded Full Padding bei Tab gefixt [#251](https://github.com/Neuvernetzung/design-system/issues/251) ([569fd61](https://github.com/Neuvernetzung/design-system/commit/569fd61b2633fe5ecfa9668df865fce77c0e452d))
+* **ui:** Select OptionProps children nun ReactNode statt ReactElement [#256](https://github.com/Neuvernetzung/design-system/issues/256) ([57dd219](https://github.com/Neuvernetzung/design-system/commit/57dd2195782a8d2262d30cf45e4ba82d9d9c900c))
+
+
+### Features
+
+* **ui:** Beim Modal ist nun ein Wrapper möglich [#248](https://github.com/Neuvernetzung/design-system/issues/248) ([1a0905f](https://github.com/Neuvernetzung/design-system/commit/1a0905ff09c965ba2f6fb24b7b248384b080039c))
+* **ui:** Chevron als Disclosure Icon möglich [#250](https://github.com/Neuvernetzung/design-system/issues/250) ([20a80e9](https://github.com/Neuvernetzung/design-system/commit/20a80e93f0b1bf18aeda9e4262b233a1c6d03862))
+* **ui:** Fallback für nicht gefundenes Bild hinzugefügt [#254](https://github.com/Neuvernetzung/design-system/issues/254) ([1ea13a3](https://github.com/Neuvernetzung/design-system/commit/1ea13a3bae3010db15bdf0ea3b751fb7562d7b52))
+* **ui:** Mehr größen bei Modal hinzugefügt [#249](https://github.com/Neuvernetzung/design-system/issues/249) ([a9dc1f6](https://github.com/Neuvernetzung/design-system/commit/a9dc1f6e6be547e5208f1fba3a293b395396ac76))
+* **ui:** Modal zeigt nun Container Overflow korrekt an für Select etc. [#255](https://github.com/Neuvernetzung/design-system/issues/255) ([68a8a1b](https://github.com/Neuvernetzung/design-system/commit/68a8a1b2fc7153ac4566b85e8f8a0a69fb736fde))
+
 ## [1.10.3](https://github.com/Neuvernetzung/design-system/compare/v1.10.2...v1.10.3) (2022-11-27)
 
 
