@@ -1,3 +1,15 @@
+# [1.12.0](https://github.com/Neuvernetzung/design-system/compare/v1.11.0...v1.12.0) (2022-12-04)
+
+
+### Bug Fixes
+
+* **ui:** Button truncation auf Button Content beschränkt [#273](https://github.com/Neuvernetzung/design-system/issues/273) ([1b66e01](https://github.com/Neuvernetzung/design-system/commit/1b66e0186e153ec6a148ca537594be9ad9a30a9b))
+
+
+### Features
+
+* **ui:** Confirmation überarbeitet [#274](https://github.com/Neuvernetzung/design-system/issues/274) ([bc34976](https://github.com/Neuvernetzung/design-system/commit/bc3497635a0972721228ce43a893fdbe59591d17))
+
 # [1.11.0](https://github.com/Neuvernetzung/design-system/compare/v1.10.3...v1.11.0) (2022-12-04)
 
 
