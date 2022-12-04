@@ -6,6 +6,7 @@ import {
   CalendarIcon as HeroCalendarIcon,
   CheckCircleIcon as HeroCheckCircleIcon,
   CheckIcon as HeroCheckIcon,
+  ChevronDownIcon as HeroChevronDownIcon,
   ChevronLeftIcon as HeroChevronLeftIcon,
   ChevronRightIcon as HeroChevronRightIcon,
   ChevronUpDownIcon as HeroChevronUpDownIcon,
@@ -17,6 +18,7 @@ import {
   ListBulletIcon as HeroListBulletIcon,
   MinusIcon as HeroMinusIcon,
   MoonIcon as HeroMoonIcon,
+  PhotoIcon as HeroPhotoIcon,
   PlusIcon as HeroPlusIcon,
   SunIcon as HeroSunIcon,
   TrashIcon as HeroTrashIcon,
@@ -50,6 +52,7 @@ export const CrossIcon = null || XMarkIcon;
 // Chevrons
 
 export const ChevronRightIcon = null || HeroChevronRightIcon;
+export const ChevronDownIcon = null || HeroChevronDownIcon;
 export const ChevronLeftIcon = null || HeroChevronLeftIcon;
 export const ChevronUpDownIcon = null || HeroChevronUpDownIcon;
 
@@ -84,3 +87,4 @@ export const CalendarIcon = null || HeroCalendarIcon;
 export const BackArrowIcon = null || ArrowUturnLeftIcon;
 export const TrashIcon = null || HeroTrashIcon;
 export const ExclamationTriangleIcon = null || HeroExclamationTriangleIcon;
+export const PhotoIcon = null || HeroPhotoIcon;

@@ -1,3 +1,4 @@
+import { ArrowDownIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
@@ -53,5 +54,19 @@ export const Sizes = ({ ...args }) => (
         {...args}
       />
     ))}
+  </Container>
+);
+
+export const ChevronIcon = ({ ...args }) => (
+  <Container>
+    <Disclosure
+      icon="chevron"
+      items={[
+        { title: `1`, content: "Content 1" },
+        { title: `2`, content: "Content 2" },
+        { title: `3`, content: "Content 3" },
+      ]}
+      {...args}
+    />
   </Container>
 );

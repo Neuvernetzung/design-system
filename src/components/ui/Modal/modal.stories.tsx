@@ -6,11 +6,21 @@ import React, { useState } from "react";
 import { Sizes as SizesType } from "../../../types";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { Heading } from "../Typography";
-import { Modal } from "./modal";
+import { Modal, ModalSizes } from "./modal";
+import { TabList, TabPanels, TabGroup } from "../Tabs";
+import { Select } from "../Select";
+import { useForm } from "react-hook-form";
 
 export default {
   title: "UI/Overlay/Modal",
   component: Modal,
+  parameters: {
+    docs: {
+      source: {
+        type: "code",
+      },
+    },
+  }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
 const Container = ({ ...props }) => (
@@ -63,7 +73,16 @@ export const Default = ({ ...args }) => {
 };
 
 export const Sizes = ({ ...args }) => {
-  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
+  const sizes: Array<keyof ModalSizes> = [
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl",
+    "3xl",
+    "full",
+  ];
 
   return (
     <Container>
@@ -73,9 +92,7 @@ export const Sizes = ({ ...args }) => {
 
         return (
           <>
-            <Button size={size} onClick={() => setOpen(true)}>
-              {size} öffnen
-            </Button>
+            <Button onClick={() => setOpen(true)}>{size}</Button>
 
             <Modal
               header="Ein Modal"
@@ -243,6 +260,79 @@ export const Nested = ({ ...args }) => {
         }
         open={nestedOpen}
         setOpen={setNestedOpen}
+        {...args}
+      />
+    </Container>
+  );
+};
+
+export const WithWrapper = ({ ...args }) => {
+  const [open, setOpen] = useState(false);
+
+  const tabs = [
+    {
+      title: "Tab 1",
+      content: "Tab Content 1",
+    },
+    {
+      title: "Tab 2",
+      content: "Tab Content 2",
+    },
+    {
+      title: "Tab 3",
+      content: "Tab Content 3",
+    },
+  ];
+
+  return (
+    <Container>
+      <Button onClick={() => setOpen(true)}>Modal öffnen</Button>
+
+      <Modal
+        wrapper={TabGroup}
+        header={<TabList items={tabs} />}
+        content={<TabPanels items={tabs} />}
+        open={open}
+        setOpen={setOpen}
+        {...args}
+      />
+    </Container>
+  );
+};
+
+export const ContainerOverflow = ({ ...args }) => {
+  const [open, setOpen] = useState(false);
+  const { control } = useForm();
+
+  return (
+    <Container>
+      <Button onClick={() => setOpen(true)}>Modal öffnen</Button>
+
+      <Modal
+        content={
+          <div>
+            <Select
+              control={control}
+              name="test"
+              options={[
+                {
+                  children: "Option 1",
+                  value: "option-1",
+                },
+                {
+                  children: "Option 2",
+                  value: "option-2",
+                },
+                {
+                  children: "Option 3",
+                  value: "option-3",
+                },
+              ]}
+            />
+          </div>
+        }
+        open={open}
+        setOpen={setOpen}
         {...args}
       />
     </Container>

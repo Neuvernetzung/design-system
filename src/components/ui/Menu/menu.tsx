@@ -50,19 +50,18 @@ type OptionalFunctionProps =
 
 type OptionalItemProps =
   | {
-      children: string;
       items?: ItemProps[];
       href?: never;
       onClick?: never;
       icon?: never;
     }
   | ({
-      children: ReactNode;
       items?: never;
       icon?: FC<SVGProps<SVGSVGElement>>;
     } & OptionalFunctionProps);
 
 export type ItemProps = {
+  children?: ReactNode;
   disabled?: boolean;
   color?: keyof Colors;
 } & OptionalItemProps;
@@ -126,12 +125,14 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
               if (_items && _items.length !== 0)
                 return (
                   <div className={cn(getDropdownGroupStyles({ size }))}>
-                    <Text
-                      size="xs"
-                      className={cn(getDropdownGroupHeaderStyles({ size }))}
-                    >
-                      {children}
-                    </Text>
+                    {children && (
+                      <Text
+                        size="xs"
+                        className={cn(getDropdownGroupHeaderStyles({ size }))}
+                      >
+                        {children}
+                      </Text>
+                    )}
                     {_items?.map(
                       (
                         {

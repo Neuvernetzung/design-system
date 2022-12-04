@@ -74,18 +74,13 @@ export type SelectProps = {
   placement?: Placement;
 };
 
-type OptionalSelectOptionProps =
-  | {
-      children: string;
-      options?: SelectOptionProps[];
-    }
-  | { children: ReactNode; options: never };
-
 export type SelectOptionProps = {
   value?: any;
   [key: string]: any;
   disabled?: boolean;
-} & OptionalSelectOptionProps;
+  children: ReactNode;
+  options?: SelectOptionProps[];
+};
 
 const iconButtonSizes: Sizes = {
   xs: "xs",
