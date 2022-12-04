@@ -1,3 +1,4 @@
+import React from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
@@ -5,7 +6,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import { ThemeProvider } from "../../../theme";
 import { Colors as ColorTypes } from "../../../types";
 import { Button } from "../Button";
-import { ConfirmationModal, requestConfirmation } from ".";
+import { ConfirmationModal, confirmation } from ".";
 
 export default {
   title: "UI/Overlay/Confirmation",
@@ -21,18 +22,12 @@ export const Default = ({ ...args }) => (
     <Container>
       <Button
         onClick={() =>
-          requestConfirmation({
+          confirmation({
             icon: InformationCircleIcon,
             heading: "Bestätigung erforderlich",
             content: "Wollen Sie die Bestätigung wirklich bestätigen?",
-            cancelButton: {
-              children: "Abbrechen",
-              onClick: action("cancel"),
-            },
-            confirmButton: {
-              children: "Bestätigen",
-              onClick: action("confirm"),
-            },
+            cancel: action("cancel"),
+            confirm: action("confirm"),
           })
         }
       >
@@ -59,18 +54,14 @@ export const Colors = ({ ...args }) => {
             key={color}
             color={color}
             onClick={() =>
-              requestConfirmation({
+              confirmation({
                 icon: InformationCircleIcon,
                 heading: `${color} - Bestätigung`,
                 content: "Wollen Sie die Bestätigung wirklich bestätigen?",
-                cancelButton: {
-                  children: "Abbrechen",
-                  onClick: action("cancel"),
-                },
-                confirmButton: {
-                  children: "Bestätigen",
-                  onClick: action("confirm"),
-                },
+                cancel: action("cancel"),
+                confirm: action("confirm"),
+                cancelButton: "Abbrechen",
+                confirmButton: "Bestätigen",
                 color,
                 ...args,
               })
