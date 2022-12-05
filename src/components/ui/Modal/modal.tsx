@@ -15,6 +15,7 @@ import {
   zIndexes,
 } from "../../../styles";
 import { ExtendedSizes, Sizes } from "../../../types";
+import { Backdrop } from "../Backdrop";
 import { Heading, Text } from "../Typography";
 
 export type ModalProps = {
@@ -74,21 +75,7 @@ export const Modal = ({
         className={cn("relative", zIndexes.modal)}
         onClose={handleClose}
       >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div
-            className={cn(
-              "fixed inset-0 bg-opacity-25 bg-black backdrop-blur-sm"
-            )}
-          />
-        </Transition.Child>
+        <Backdrop />
 
         <div className="fixed inset-0 overflow-y-auto">
           <div

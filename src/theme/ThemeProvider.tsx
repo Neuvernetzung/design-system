@@ -3,6 +3,7 @@ import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { ReactNode, useLayoutEffect } from "react";
 import create from "zustand";
 
+import { Loading } from "../components/ui/Loading";
 import { ConfirmationModal } from "../components/ui/Modal";
 import { Notify } from "../components/ui/Notify";
 import { Color, Colors } from "../types";
@@ -16,6 +17,7 @@ type ThemeProviderProps = {
   children: ReactNode;
   allowNotification?: boolean;
   allowConfirmation?: boolean;
+  allowGlobalLoading?: boolean;
 };
 
 export type ConfigProps = {
@@ -37,6 +39,7 @@ export const ThemeProvider = ({
   children,
   allowNotification = false,
   allowConfirmation = false,
+  allowGlobalLoading = false,
 }: ThemeProviderProps) => {
   const { colors, defaultTheme } = config || {};
 
@@ -73,6 +76,7 @@ export const ThemeProvider = ({
     >
       {allowNotification && <Notify />}
       {allowConfirmation && <ConfirmationModal />}
+      {allowGlobalLoading && <Loading />}
       {children}
     </NextThemeProvider>
   );

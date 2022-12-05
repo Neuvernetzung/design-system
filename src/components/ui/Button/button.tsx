@@ -31,7 +31,10 @@ import {
 import { useColorState } from "../../../theme";
 import type { Colors, Focuses, Sizes } from "../../../types";
 import { Icon } from "../Icon";
+import { Spinner } from "../Loading";
 import { sizes as textSizes } from "../Typography/Text/text";
+import { useLoadingState } from "../Loading/loading";
+import isString from "lodash/isString";
 
 export const variants: Variants = {
   filled: "",
@@ -76,7 +79,7 @@ export const focuses: Focuses = {
 };
 
 export const styles = {
-  base: "appearance-none h-min select-none flex flex-row justify-center items-center gap-2 font-semibold disabled:cursor-not-allowed",
+  base: "appearance-none h-min select-none flex flex-row justify-center items-center gap-2 font-semibold disabled:cursor-not-allowed text-ellipsis",
   fullWidth: "w-full",
   rounded: "rounded-full",
 };
@@ -95,6 +98,7 @@ export type ButtonOwnProps = {
   children?: ReactNode;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
+  loadingId?: string;
 };
 
 export type ButtonProps<T extends ElementType = typeof ButtonDefaultElement> =
@@ -116,6 +120,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
       rounded,
       leftIcon,
       rightIcon,
+      loadingId,
       className,
       as,
       children,
@@ -127,11 +132,16 @@ export const Button: PolymorphicForwardRefExoticComponent<
 
     const { colorState } = useColorState();
 
+    const loadingState = useLoadingState((state) => state);
+    const isLoading = isString(loadingState) && loadingState === loadingId;
+
+    const _disabled = disabled || isLoading;
+
     return (
       <Component
         ref={ref}
         type={type}
-        disabled={disabled}
+        disabled={_disabled}
         className={cn(
           focuses[focus][color],
           styles.base,
@@ -141,16 +151,20 @@ export const Button: PolymorphicForwardRefExoticComponent<
           roundings[size],
           minHeights[size],
           textSizes[size],
-          !disabled && colors(color, colorState)?.base,
-          disabled && colors(color, colorState)?.disabled,
+          !_disabled && colors(color, colorState)?.base,
+          _disabled && colors(color, colorState)?.disabled,
           colors(color, colorState)?.text[variant],
           { [styles.fullWidth]: fullWidth, [styles.rounded]: rounded },
           className
         )}
         {...props}
       >
-        {leftIcon && <Icon size={size} icon={leftIcon} />}
-        <span className="text-ellipsis overflow-hidden">{children}</span>
+        {!isLoading ? (
+          leftIcon && <Icon size={size} icon={leftIcon} />
+        ) : (
+          <Spinner size={size} />
+        )}
+        {children}
         {rightIcon && <Icon size={size} icon={rightIcon} />}
       </Component>
     );

@@ -1,3 +1,4 @@
+export * from "./Backdrop";
 export * from "./BlockQuote";
 export * from "./Button";
 export * from "./Carousel";
@@ -10,6 +11,7 @@ export * from "./Image";
 export * from "./Input";
 export * from "./Link";
 export * from "./List";
+export * from "./Loading";
 export * from "./Menu";
 export * from "./Modal";
 export * from "./Notify";

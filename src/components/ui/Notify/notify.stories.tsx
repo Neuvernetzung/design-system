@@ -1,9 +1,10 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
 import { Notify, notify } from ".";
+import { loading } from "../Loading";
 
 export default {
   title: "UI/Overlay/Notify",
@@ -27,7 +28,7 @@ export const Default = () => (
         color="success"
         variant="outline"
         onClick={() =>
-          notify({ message: "Dies ist ein Erfolg!", status: "success" })
+          notify({ message: "Dies ist ein Erfolg!", color: "success" })
         }
       >
         Notify Success
@@ -36,7 +37,7 @@ export const Default = () => (
         color="danger"
         variant="outline"
         onClick={() =>
-          notify({ message: "Dies ist ein Fehler!", status: "danger" })
+          notify({ message: "Dies ist ein Fehler!", color: "danger" })
         }
       >
         Notify Error
@@ -56,7 +57,7 @@ export const Default = () => (
         onClick={() =>
           notify({
             message: "Dies ist ein Erfolg!",
-            status: "success",
+            color: "success",
             variant: "solid",
           })
         }
@@ -68,7 +69,7 @@ export const Default = () => (
         onClick={() =>
           notify({
             message: "Dies ist ein Fehler!",
-            status: "danger",
+            color: "danger",
             variant: "solid",
           })
         }
@@ -78,6 +79,25 @@ export const Default = () => (
     </Container>
   </ThemeProvider>
 );
+
+export const CancelLoading = () => {
+  const load = (id) => {
+    loading(true, { id });
+    setTimeout(() => {
+      notify({ message: "Nicht mehr laden." });
+    }, 2000);
+  };
+
+  return (
+    <ThemeProvider allowNotification allowGlobalLoading>
+      <Container>
+        <Button variant="outline" onClick={() => load(undefined)}>
+          Global
+        </Button>
+      </Container>
+    </ThemeProvider>
+  );
+};
 
 Default.parameters = {
   a11y: {
