@@ -11,6 +11,7 @@ import {
   zIndexes,
 } from "../../../styles";
 import { ExtendedColors, Sizes } from "../../../types";
+import { Backdrop } from "../Backdrop";
 import { sizes as iconSizes } from "../Icon/icon";
 import { Text } from "../Typography";
 
@@ -36,11 +37,7 @@ export const Loading = () => {
   if (isLoading === true)
     return (
       <div className={cn("relative", zIndexes.modal)}>
-        <div
-          className={cn(
-            "fixed inset-0 bg-opacity-25 bg-black backdrop-blur-sm"
-          )}
-        />
+        <Backdrop />
         <div className={cn("fixed inset-0 flex items-center justify-center")}>
           <div className={cn("flex flex-col items-center", gaps.md)}>
             <Spinner size="xl" />
