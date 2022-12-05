@@ -10,6 +10,7 @@ import {
   InformationCircleIcon,
 } from "../../../theme/icons";
 import { Colors } from "../../../types";
+import { loading, isLoading } from "../Loading/loading";
 import { Toast } from "../Toast";
 import { ToastVariants } from "../Toast/toast";
 
@@ -55,6 +56,9 @@ export const Notify = () => {
           id,
         },
       ]);
+
+      if (isLoading()) loading(false);
+
       setTimeout(() => {
         setNotificationArray((oldArray) =>
           oldArray.filter((item) => item.id !== id)

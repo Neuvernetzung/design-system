@@ -1,5 +1,6 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
+import isString from "lodash/isString";
 import {
   ElementType,
   FC,
@@ -24,6 +25,7 @@ import {
 import { useColorState } from "../../../../theme";
 import { Colors, Focuses, Sizes } from "../../../../types";
 import { Icon } from "../../Icon";
+import { Spinner, useLoadingState } from "../../Loading/loading";
 import { sizes as textSizes } from "../../Typography/Text/text";
 import type { Variants } from "../button";
 import { colors, styles, variants } from "../button";
@@ -50,6 +52,7 @@ export type IconButtonOwnProps = {
   rounded?: boolean;
   icon: FC<SVGProps<SVGSVGElement>>;
   disabled?: boolean;
+  loadingId?: string;
 } & ConditionalButtonProps;
 
 export type IconButtonProps<
@@ -71,6 +74,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
       rounded,
       icon,
       ariaLabel,
+      loadingId,
       className,
       as,
       ...props
@@ -81,11 +85,16 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
 
     const { colorState } = useColorState();
 
+    const loadingState = useLoadingState((state) => state);
+    const isLoading = isString(loadingState) && loadingState === loadingId;
+
+    const _disabled = disabled || isLoading;
+
     return (
       <Component
         ref={ref}
         type={type}
-        disabled={disabled}
+        disabled={_disabled}
         aria-label={ariaLabel}
         className={cn(
           "aspect-square",
@@ -96,15 +105,19 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
           roundings[size],
           minHeights[size],
           textSizes[size],
-          !disabled && colors(color, colorState)?.base,
-          disabled && colors(color, colorState)?.disabled,
+          !_disabled && colors(color, colorState)?.base,
+          _disabled && colors(color, colorState)?.disabled,
           colors(color, colorState)?.text[variant],
           { [styles.rounded]: rounded },
           className
         )}
         {...props}
       >
-        <Icon size={size} icon={icon} />
+        {!isLoading ? (
+          <Icon size={size} icon={icon} />
+        ) : (
+          <Spinner size={size} />
+        )}
       </Component>
     );
   }
