@@ -164,7 +164,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
         ) : (
           <Spinner size={size} />
         )}
-        <span className="text-ellipsis overflow-hidden">{children}</span>
+        {children}
         {rightIcon && <Icon size={size} icon={rightIcon} />}
       </Component>
     );
