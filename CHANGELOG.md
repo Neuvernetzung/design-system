@@ -1,3 +1,18 @@
+# [1.13.0](https://github.com/Neuvernetzung/design-system/compare/v1.12.1...v1.13.0) (2022-12-05)
+
+
+### Bug Fixes
+
+* **ui:** [#281](https://github.com/Neuvernetzung/design-system/issues/281) wiederherstellen ([65de5eb](https://github.com/Neuvernetzung/design-system/commit/65de5eb6ad5e191cbb31bf67d9e0c9fb3b2864ae))
+* **ui:** Button truncate wieder zu Hauptkomponente [#281](https://github.com/Neuvernetzung/design-system/issues/281) ([89d14dd](https://github.com/Neuvernetzung/design-system/commit/89d14ddaaba25f9e2ab0ddaba58116a8734ca136))
+
+
+### Features
+
+* **ui:** Backdrop hinzugefügt und bei Loading, Modal ersetzt [#287](https://github.com/Neuvernetzung/design-system/issues/287) ([4cedfae](https://github.com/Neuvernetzung/design-system/commit/4cedfae4f786cca6e63efcc0899976fbae6ed6f8))
+* **ui:** Globales und Komponenten basierendes Loading incl. Spinner hinzugefügt [#283](https://github.com/Neuvernetzung/design-system/issues/283) ([3944686](https://github.com/Neuvernetzung/design-system/commit/39446862c4a6f0ac7fa6d7e81fd1d5603c80a362))
+* **ui:** Notify Status zu Color umbenannt [#282](https://github.com/Neuvernetzung/design-system/issues/282) ([2301ebe](https://github.com/Neuvernetzung/design-system/commit/2301ebeafc09f032fac2ee97ac6d64625b154393))
+
 ## [1.12.1](https://github.com/Neuvernetzung/design-system/compare/v1.12.0...v1.12.1) (2022-12-04)
 
 
