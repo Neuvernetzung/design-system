@@ -1,9 +1,10 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
 import { Notify, notify } from ".";
+import { loading } from "../Loading";
 
 export default {
   title: "UI/Overlay/Notify",
@@ -78,6 +79,25 @@ export const Default = () => (
     </Container>
   </ThemeProvider>
 );
+
+export const CancelLoading = () => {
+  const load = (id) => {
+    loading(true, { id });
+    setTimeout(() => {
+      notify({ message: "Nicht mehr laden." });
+    }, 2000);
+  };
+
+  return (
+    <ThemeProvider allowNotification allowGlobalLoading>
+      <Container>
+        <Button variant="outline" onClick={() => load(undefined)}>
+          Global
+        </Button>
+      </Container>
+    </ThemeProvider>
+  );
+};
 
 Default.parameters = {
   a11y: {

@@ -2,29 +2,38 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import { memo } from "react";
 import create from "zustand";
-import { getText, Locales } from "../../../locales/getText";
 
+import { getText, Locales } from "../../../locales/getText";
 import {
   extendedFillColors,
   extendedTextColors,
-  fillColors,
   gaps,
-  textColors,
   zIndexes,
 } from "../../../styles";
-import { Colors, ExtendedColors } from "../../../types";
+import { ExtendedColors, Sizes } from "../../../types";
+import { sizes as iconSizes } from "../Icon/icon";
+import { Text } from "../Typography";
 
-const useLoadingState = create<boolean>(() => false);
+export const useLoadingState = create<string | boolean>(() => false);
 
-export const loading = (loading: boolean) => {
-  useLoadingState.setState(loading);
+interface LoadingOptions {
+  id?: string;
+}
+
+export const loading = (loading: boolean, { id }: LoadingOptions = {}) => {
+  useLoadingState.setState(id || loading);
+};
+
+export const isLoading = (id?: string) => {
+  if (!id) return !!useLoadingState.getState();
+  return id === useLoadingState.getState();
 };
 
 export const Loading = () => {
   const locale = useRouter().locale as Locales;
   const isLoading = useLoadingState((state) => state);
 
-  if (isLoading)
+  if (isLoading === true)
     return (
       <div className={cn("relative", zIndexes.modal)}>
         <div
@@ -34,8 +43,8 @@ export const Loading = () => {
         />
         <div className={cn("fixed inset-0 flex items-center justify-center")}>
           <div className={cn("flex flex-col items-center", gaps.md)}>
-            <Spinner />
-            {getText(locale).loading}
+            <Spinner size="xl" />
+            <Text className="animate-pulse">{getText(locale).loading}</Text>
           </div>
         </div>
       </div>
@@ -48,12 +57,17 @@ export default memo(Loading);
 
 interface SpinnerProps {
   color?: keyof ExtendedColors;
+  size?: keyof Sizes;
 }
 
-export const Spinner = ({ color = "filledSubtile" }: SpinnerProps) => (
+export const Spinner = ({
+  color = "filledSubtile",
+  size = "md",
+}: SpinnerProps) => (
   <svg
     className={cn(
-      "w-8 aspect-square animate-spin",
+      iconSizes[size],
+      "aspect-square animate-spin",
       extendedTextColors.filled,
       extendedFillColors[color]
     )}

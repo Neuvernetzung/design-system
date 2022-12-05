@@ -1,8 +1,12 @@
 import { HomeIcon } from "@heroicons/react/24/outline";
+import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
+import { ThemeProvider } from "../../../theme";
 
 import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
+import { loading } from "../Loading";
+import { notify } from "../Notify";
 import { Button, focuses, variants } from "./button";
 
 export default {
@@ -196,3 +200,29 @@ export const VeryLong = ({ ...args }) => (
     </Button>
   </Container>
 );
+
+export const IsLoading = ({ ...args }) => {
+  const load = (id) => {
+    loading(true, { id });
+    setTimeout(() => {
+      notify({ message: "Nicht mehr laden." });
+    }, 2000);
+  };
+
+  return (
+    <ThemeProvider allowNotification>
+      <Container className="flex">
+        <Button
+          onClick={() => {
+            action("button");
+            load("button");
+          }}
+          loadingId="button"
+          {...args}
+        >
+          Click
+        </Button>
+      </Container>
+    </ThemeProvider>
+  );
+};
