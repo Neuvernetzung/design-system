@@ -8,7 +8,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Colors as ColorsType, Sizes as SizesType } from "../../../types";
+import { colors, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
 import { Checkbox } from ".";
 import { CheckboxVariants } from "./checkbox";
@@ -97,13 +97,6 @@ Sizes.parameters = {
 
 export const Colors = ({ ...args }) => {
   const formMethods = useForm();
-  const colors: Array<keyof ColorsType> = [
-    "primary",
-    "accent",
-    "success",
-    "warn",
-    "danger",
-  ];
 
   return (
     <Form

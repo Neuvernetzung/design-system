@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Colors as ColorsType } from "../../../types";
+import { colors } from "../../../types";
 import { Toast, ToastVariants } from "./toast";
 
 export default {
@@ -39,14 +39,6 @@ export const Variants = ({ ...args }) => {
 };
 
 export const Colors = ({ ...args }) => {
-  const colors: (keyof ColorsType)[] = [
-    "primary",
-    "accent",
-    "success",
-    "warn",
-    "danger",
-  ];
-
   return (
     <Container>
       {colors.map((color) => (

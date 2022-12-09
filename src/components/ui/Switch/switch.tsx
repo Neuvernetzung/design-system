@@ -25,6 +25,7 @@ import { Text } from "../Typography";
 
 export const sizes: Sizes = heightsSmall;
 export const colors: (keyof Omit<Colors, "accent">)[] = [
+  "brand",
   "primary",
   "success",
   "warn",

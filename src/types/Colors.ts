@@ -18,6 +18,7 @@ export type Color = {
 };
 
 export const colors: Array<keyof Colors> = [
+  "brand",
   "primary",
   "accent",
   "success",
@@ -26,6 +27,7 @@ export const colors: Array<keyof Colors> = [
 ];
 
 export type Colors = {
+  brand: any;
   primary: any;
   accent: any;
   white?: any;
