@@ -4,6 +4,7 @@ import { Sizes } from "../../types";
 import {
   bgColors,
   paddingsEvenly,
+  paddingsLargeEvenly,
   popoverMaxSizes,
   roundings,
   shadows,
@@ -28,7 +29,7 @@ export const getPopoverContainerStyles = ({
     zIndexes.dropdown,
     shadows.lg,
     roundings.lg,
-    paddingsEvenly.xl,
+    paddingsLargeEvenly.lg,
     popoverMaxSizes[size]
   );
 
