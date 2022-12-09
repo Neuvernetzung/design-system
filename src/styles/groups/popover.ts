@@ -16,7 +16,7 @@ type PopoverContainerStyleProps = {
 };
 
 const styles = {
-  base: "w-screen overflow-x-hidden",
+  base: "w-max overflow-x-hidden",
 };
 
 export const getPopoverContainerStyles = ({
