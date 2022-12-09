@@ -32,6 +32,7 @@ export type ConfirmationModalProps = {
   cancel?: Function;
   confirmButton?: ReactNode;
   cancelButton?: ReactNode;
+  forbidCancellation?: boolean;
 };
 
 export const ConfirmationModal = () => {
@@ -55,6 +56,7 @@ export const ConfirmationModal = () => {
     cancel,
     confirmButton,
     cancelButton,
+    forbidCancellation,
   }: ConfirmationModalProps = confirmationState;
 
   const handleConfirm = () => {
@@ -76,6 +78,7 @@ export const ConfirmationModal = () => {
       initialFocus={
         color !== "danger" && color !== "warn" ? confirmBtnRef : cancelBtnRef
       }
+      forbidCancellation={forbidCancellation}
       header={
         <div className={cn("flex flex-row items-center", gaps.md)}>
           {icon && (

@@ -338,3 +338,25 @@ export const ContainerOverflow = ({ ...args }) => {
     </Container>
   );
 };
+
+export const ForbidCancellation = ({ ...args }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Container>
+      <Button onClick={() => setOpen(true)}>Modal öffnen</Button>
+
+      <Modal
+        forbidCancellation
+        content={
+          <div>
+            <Button onClick={() => setOpen(false)}>Bestätigen</Button>
+          </div>
+        }
+        open={open}
+        setOpen={setOpen}
+        {...args}
+      />
+    </Container>
+  );
+};
