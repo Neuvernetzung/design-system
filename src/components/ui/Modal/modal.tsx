@@ -5,14 +5,13 @@ import { FC, Fragment, MutableRefObject, ReactNode } from "react";
 
 import {
   bgColors,
-  paddings,
-  paddingsEvenly,
-  paddingsY,
   pagePaddings,
+  paddingsY,
   roundings,
   shadows,
   transition,
   zIndexes,
+  paddingsEvenly,
 } from "../../../styles";
 import { ExtendedSizes, Sizes } from "../../../types";
 import { Backdrop } from "../Backdrop";
@@ -64,7 +63,7 @@ export const Modal = ({
     setOpen(false);
   };
 
-  const sectionStyles = cn("w-full flex", paddings.lg);
+  const sectionStyles = cn("w-full flex", paddingsEvenly.sm);
 
   if (!open) return null;
 
@@ -105,7 +104,7 @@ export const Modal = ({
                   roundings.lg,
                   shadows.xl,
                   bgColors.white,
-                  paddingsEvenly.md
+                  paddingsEvenly.xl
                 )}
               >
                 <Wrapper>

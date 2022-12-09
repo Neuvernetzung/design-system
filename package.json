@@ -77,8 +77,6 @@
     "@types/node": "18.11.12",
     "@types/react": "^18.0.26",
     "@types/uuid": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.46.0",
-    "@typescript-eslint/parser": "^5.46.0",
     "autoprefixer": "^10.4.13",
     "axe-playwright": "^1.1.11",
     "classnames": "^2.3.2",
