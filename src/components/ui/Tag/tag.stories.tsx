@@ -2,7 +2,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import type { Colors as ColorsType, Sizes as SizesType } from "../../../types";
+import { colors, type Sizes as SizesType } from "../../../types";
 import { Tag, variants } from "./tag";
 
 export default {
@@ -47,14 +47,6 @@ Variants.parameters = {
 };
 
 export const Colors = ({ ...args }) => {
-  const colors: (keyof ColorsType)[] = [
-    "primary",
-    "accent",
-    "success",
-    "warn",
-    "danger",
-  ];
-
   return (
     <Container>
       {colors.map((color: any) => (

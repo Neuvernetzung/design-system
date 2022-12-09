@@ -29,6 +29,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        brand: colorVariables("brand"),
         primary: colorVariables("primary"),
         accent: colorVariables("accent"),
         success: colorVariables("success"),

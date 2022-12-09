@@ -4,6 +4,7 @@ export const extendColors = (
   customColors?: Partial<Record<keyof Omit<Colors, "white" | "black">, Color>>
 ) =>
   ({
+    brand: customColors?.brand || defaultColors.brand,
     primary: customColors?.primary || defaultColors.primary,
     accent: customColors?.accent || defaultColors.accent,
     success: customColors?.success || defaultColors.success,
@@ -12,6 +13,18 @@ export const extendColors = (
   } as Record<keyof Omit<Colors, "white" | "black">, Color>);
 
 const defaultColors: Record<keyof Omit<Colors, "white" | "black">, Color> = {
+  brand: {
+    "50": "#e1f5ff",
+    "100": "#b3e5ff",
+    "200": "#81d5ff",
+    "300": "#4dc4ff",
+    "400": "#24b7ff",
+    "500": "#00aaff",
+    "600": "#079cef",
+    "700": "#0c89db",
+    "800": "#0b77c7",
+    "900": "#0d57a4",
+  },
   primary: {
     "50": "#eff6ff",
     "100": "#dbeafe",

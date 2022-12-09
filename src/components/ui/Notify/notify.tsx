@@ -68,6 +68,7 @@ export const Notify = () => {
   }, [notification]);
 
   const icons: Colors = {
+    brand: CheckCircleIcon,
     primary: CheckCircleIcon,
     accent: InformationCircleIcon,
     success: CheckCircleIcon,

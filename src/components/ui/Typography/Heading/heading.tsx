@@ -18,6 +18,7 @@ import type { ExtendedColors, ExtendedSizes } from "../../../../types";
 export const sizes: Required<ExtendedSizes> = textSizes;
 
 export const colors: ExtendedColors = {
+  brand: "text-brand-500",
   primary: "text-primary-500",
   accent: "text-accent-800 dark:text-accent-100",
   light: "text-accent-100",
