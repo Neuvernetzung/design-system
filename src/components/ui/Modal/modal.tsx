@@ -28,6 +28,7 @@ export type ModalProps = {
   initialFocus?: MutableRefObject<HTMLElement>;
   wrapper?: FC;
   onClose?: Function;
+  forbidCancellation?: boolean;
 };
 
 export interface ModalSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
@@ -55,8 +56,10 @@ export const Modal = ({
   initialFocus,
   wrapper,
   onClose,
+  forbidCancellation,
 }: ModalProps) => {
   const handleClose = () => {
+    if (forbidCancellation) return;
     onClose?.();
     setOpen(false);
   };

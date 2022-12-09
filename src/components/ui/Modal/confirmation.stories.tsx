@@ -71,3 +71,25 @@ Colors.parameters = {
     disable: true,
   },
 };
+
+export const ForbidCancellation = ({ ...args }) => (
+  <ThemeProvider allowConfirmation>
+    <Container>
+      <Button
+        onClick={() =>
+          confirmation({
+            icon: InformationCircleIcon,
+            forbidCancellation: true,
+            cancel: action("cancel"),
+            confirm: action("confirm"),
+            cancelButton: "Ablehnen",
+            confirmButton: "Bestätigen",
+            ...args,
+          })
+        }
+      >
+        Öffnen
+      </Button>
+    </Container>
+  </ThemeProvider>
+);
