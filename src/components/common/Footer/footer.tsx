@@ -26,11 +26,7 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
   ({ logo, cols, copyright, className }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        "bg-accent-50 dark:bg-accent-900 flex flex-col",
-        gaps.md,
-        className
-      )}
+      className={cn("bg-white dark:bg-black flex flex-col", gaps.md, className)}
     >
       <div
         className={cn("w-full max-w-6xl mx-auto", paddingsY.xl, paddingsX.lg)}

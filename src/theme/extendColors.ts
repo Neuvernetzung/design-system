@@ -1,32 +1,67 @@
-import type { Color, Colors } from "../types";
+import isString from "lodash/isString";
 
-export const extendColors = (
-  customColors?: Partial<Record<keyof Omit<Colors, "white" | "black">, Color>>
-) =>
-  ({
-    brand: customColors?.brand || defaultColors.brand,
-    primary: customColors?.primary || defaultColors.primary,
-    accent: customColors?.accent || defaultColors.accent,
-    success: customColors?.success || defaultColors.success,
-    warn: customColors?.warn || defaultColors.warn,
-    danger: customColors?.danger || defaultColors.danger,
-  } as Record<keyof Omit<Colors, "white" | "black">, Color>);
+import type { Color, Colors, HEX } from "../types";
+import { blendColor } from "../utils/internal";
 
-const defaultColors: Record<keyof Omit<Colors, "white" | "black">, Color> = {
-  brand: {
-    "50": "#e1f5ff",
-    "100": "#b3e5ff",
-    "200": "#81d5ff",
-    "300": "#4dc4ff",
-    "400": "#24b7ff",
-    "500": "#00aaff",
-    "600": "#079cef",
-    "700": "#0c89db",
-    "800": "#0b77c7",
-    "900": "#0d57a4",
-  },
+export type ExtendColors = Partial<
+  Record<keyof Omit<Colors, "white" | "black">, Color | HEX> & {
+    white: HEX;
+    black: HEX;
+  }
+>;
+
+export type ReturnedColors = Record<
+  keyof Omit<Colors, "white" | "black">,
+  Color
+> & {
+  white: HEX;
+  black: HEX;
+};
+
+export const extendColors = (customColors?: ExtendColors): ReturnedColors => ({
+  white: customColors?.white || defaultColors.white,
+  black: customColors?.black || defaultColors.black,
+  brand: colorCondition("brand", customColors),
+  primary: colorCondition("primary", customColors),
+  accent: colorCondition("accent", customColors),
+  success: colorCondition("success", customColors),
+  warn: colorCondition("warn", customColors),
+  danger: colorCondition("danger", customColors),
+});
+
+const colorCondition = (
+  color: keyof Omit<Colors, "white" | "black">,
+  customColors?: ExtendColors
+) => {
+  if (!customColors?.[color]) {
+    if (isString(defaultColors[color])) {
+      return blendColors(defaultColors[color] as HEX, customColors);
+    }
+    return defaultColors[color] as Color;
+  }
+  if (isString(customColors[color])) {
+    return blendColors(customColors[color] as HEX, customColors);
+  }
+  return customColors[color] as Color;
+};
+
+const blendColors = (color: HEX, customColors?: ExtendColors): Color => ({
+  "100": blendColor(color, customColors?.white || defaultColors.white, 0.8),
+  "200": blendColor(color, customColors?.white || defaultColors.white, 0.6),
+  "300": blendColor(color, customColors?.white || defaultColors.white, 0.4),
+  "400": blendColor(color, customColors?.white || defaultColors.white, 0.2),
+  "500": color,
+  "600": blendColor(color, customColors?.black || defaultColors.black, 0.2),
+  "700": blendColor(color, customColors?.black || defaultColors.black, 0.4),
+  "800": blendColor(color, customColors?.black || defaultColors.black, 0.6),
+  "900": blendColor(color, customColors?.black || defaultColors.black, 0.8),
+});
+
+const defaultColors: Required<Colors> = {
+  white: "#fafafa",
+  black: "#0D0D0D",
+  brand: "#00a8ff",
   primary: {
-    "50": "#eff6ff",
     "100": "#dbeafe",
     "200": "#bfdbfe",
     "300": "#93c5fd",
@@ -37,20 +72,8 @@ const defaultColors: Record<keyof Omit<Colors, "white" | "black">, Color> = {
     "800": "#1e40af",
     "900": "#1e3a8a",
   },
-  accent: {
-    "50": "#fafafa",
-    "100": "#f5f5f5",
-    "200": "#e5e5e5",
-    "300": "#d4d4d4",
-    "400": "#a3a3a3",
-    "500": "#737373",
-    "600": "#525252",
-    "700": "#404040",
-    "800": "#262626",
-    "900": "#171717",
-  },
+  accent: "#737373",
   success: {
-    "50": "#f0fdf4",
     "100": "#dcfce7",
     "200": "#bbf7d0",
     "300": "#86efac",
@@ -62,7 +85,6 @@ const defaultColors: Record<keyof Omit<Colors, "white" | "black">, Color> = {
     "900": "#14532d",
   },
   warn: {
-    "50": "#fefce8",
     "100": "#fef9c3",
     "200": "#fef08a",
     "300": "#fde047",
@@ -74,7 +96,6 @@ const defaultColors: Record<keyof Omit<Colors, "white" | "black">, Color> = {
     "900": "#713f12",
   },
   danger: {
-    "50": "#fef2f2",
     "100": "#fee2e2",
     "200": "#fecaca",
     "300": "#fca5a5",

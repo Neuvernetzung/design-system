@@ -75,7 +75,7 @@ export const Default = ({ ...args }) => (
     ]}
     logo={
       <>
-        <Icon size="lg" icon={Logo} className="fill-primary-500" />
+        <Icon size="lg" icon={Logo} className="fill-brand-500" />
         <Heading size="xl" className="hidden sm:block">
           Desing System
         </Heading>

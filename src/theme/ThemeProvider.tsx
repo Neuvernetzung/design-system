@@ -1,15 +1,16 @@
+import { isString } from "lodash";
 import get from "lodash/get";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
-import { ReactNode, useLayoutEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import create from "zustand";
 
 import { Loading } from "../components/ui/Loading";
 import { ConfirmationModal } from "../components/ui/Modal";
 import { Notify } from "../components/ui/Notify";
-import { Color, Colors } from "../types";
+import { Color, Colors, HEX } from "../types";
 import { getRGBColorVariable } from "../utils";
 import { createCSSSelector } from "../utils/internal";
-import { extendColors } from "./extendColors";
+import { ExtendColors, extendColors, ReturnedColors } from "./extendColors";
 import { Icons } from "./icons";
 
 type ThemeProviderProps = {
@@ -21,17 +22,17 @@ type ThemeProviderProps = {
 };
 
 export type ConfigProps = {
-  colors?: Partial<Record<keyof Omit<Colors, "black" | "white">, Color>>;
+  colors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
   defaultTheme?: "system" | "light" | "dark";
 };
 
 type ColorState = {
-  colorState: Record<keyof Omit<Colors, "white" | "black">, Color> | undefined;
+  colorState: ReturnedColors | undefined;
 };
 
 export const useColorState = create<ColorState>(() => ({
-  colorState: extendColors({}),
+  colorState: extendColors(),
 }));
 
 export const ThemeProvider = ({
@@ -43,26 +44,30 @@ export const ThemeProvider = ({
 }: ThemeProviderProps) => {
   const { colors, defaultTheme } = config || {};
 
-  useLayoutEffect(() => {
-    const extendedColors: Record<keyof Omit<Colors, "white" | "black">, Color> =
-      extendColors(colors);
+  useEffect(() => {
+    const extendedColors: ReturnedColors = extendColors(colors);
 
     useColorState.setState({ colorState: extendedColors });
 
     const cssColorVariables = (
       Object.keys(extendedColors) as Array<
-        keyof Omit<Colors, "white" | "black">
+        keyof (Record<keyof Omit<Colors, "white" | "black">, Color> & {
+          white: HEX;
+          black: HEX;
+        })
       >
     )
-      ?.map((color) =>
-        Object.keys(get(extendedColors, color))?.map((key) =>
+      ?.map((color) => {
+        if (isString(get(extendedColors, color)))
+          return getRGBColorVariable(get(extendedColors, color) as HEX, color);
+        return Object.keys(get(extendedColors, color))?.map((key) =>
           getRGBColorVariable(
             get(extendedColors, `${color}.${key}`),
             color,
             key
           )
-        )
-      )
+        );
+      })
       .flat()
       .join(";");
 
