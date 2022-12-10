@@ -11,11 +11,13 @@ const hex2rgb = (hex: HEX) => {
 export const getRGBColorVariable = (
   hex: HEX,
   color: keyof Colors,
-  shade: string
+  shade?: string
 ) => {
-  if (!hex || !color || !shade) return null;
+  if (!hex || !color) return null;
 
   const { r, g, b } = hex2rgb(hex);
+
+  if (!shade) return `--color-${color}: ${r} ${g} ${b}`;
 
   return `--color-${color}-${shade}: ${r} ${g} ${b}`;
 };
