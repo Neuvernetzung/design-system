@@ -1,3 +1,19 @@
+# [1.14.0](https://github.com/Neuvernetzung/design-system/compare/v1.13.0...v1.14.0) (2022-12-11)
+
+
+### Bug Fixes
+
+* **ui:** w-screen durch w-max ersetzt in Popover Panel ([47c5733](https://github.com/Neuvernetzung/design-system/commit/47c573349a434fa2955d8d091c29e61ec226f28b))
+
+
+### Features
+
+* **colors:** Brandcolor hinzugefügt [#292](https://github.com/Neuvernetzung/design-system/issues/292) ([23c8c80](https://github.com/Neuvernetzung/design-system/commit/23c8c80d269e1673bc74851fd63f4bdf41b868bb))
+* **colors:** Farben dynamisch generieren [#297](https://github.com/Neuvernetzung/design-system/issues/297) ([06a895b](https://github.com/Neuvernetzung/design-system/commit/06a895bda503062b4e8851883cf6181dc1153bcb))
+* **ui:** Cancel bei Backdrop optional [#293](https://github.com/Neuvernetzung/design-system/issues/293) ([ad447ec](https://github.com/Neuvernetzung/design-system/commit/ad447ec2bb80d892ce583865d65add7ae1c7d674))
+* **ui:** Padding bei Popover und Modal anpassen [#294](https://github.com/Neuvernetzung/design-system/issues/294) ([f5a664d](https://github.com/Neuvernetzung/design-system/commit/f5a664d8047e5c9588b0dc3422834bdae5fc0236))
+* **ui:** Tooltip Inner exposen [#295](https://github.com/Neuvernetzung/design-system/issues/295) ([7c6293b](https://github.com/Neuvernetzung/design-system/commit/7c6293beba19ebc0e73929a20b1d92d08722421d))
+
 # [1.13.0](https://github.com/Neuvernetzung/design-system/compare/v1.12.1...v1.13.0) (2022-12-05)
 
 
