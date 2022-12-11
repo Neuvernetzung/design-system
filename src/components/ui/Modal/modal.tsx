@@ -5,14 +5,13 @@ import { FC, Fragment, MutableRefObject, ReactNode } from "react";
 
 import {
   bgColors,
-  paddings,
-  paddingsEvenly,
-  paddingsY,
   pagePaddings,
+  paddingsY,
   roundings,
   shadows,
   transition,
   zIndexes,
+  paddingsEvenly,
 } from "../../../styles";
 import { ExtendedSizes, Sizes } from "../../../types";
 import { Backdrop } from "../Backdrop";
@@ -28,6 +27,7 @@ export type ModalProps = {
   initialFocus?: MutableRefObject<HTMLElement>;
   wrapper?: FC;
   onClose?: Function;
+  forbidCancellation?: boolean;
 };
 
 export interface ModalSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
@@ -55,13 +55,15 @@ export const Modal = ({
   initialFocus,
   wrapper,
   onClose,
+  forbidCancellation,
 }: ModalProps) => {
   const handleClose = () => {
+    if (forbidCancellation) return;
     onClose?.();
     setOpen(false);
   };
 
-  const sectionStyles = cn("w-full flex", paddings.lg);
+  const sectionStyles = cn("w-full flex", paddingsEvenly.sm);
 
   if (!open) return null;
 
@@ -102,7 +104,7 @@ export const Modal = ({
                   roundings.lg,
                   shadows.xl,
                   bgColors.white,
-                  paddingsEvenly.md
+                  paddingsEvenly.xl
                 )}
               >
                 <Wrapper>

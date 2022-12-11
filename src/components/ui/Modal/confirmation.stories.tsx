@@ -4,7 +4,7 @@ import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
 
 import { ThemeProvider } from "../../../theme";
-import { Colors as ColorTypes } from "../../../types";
+import { colors } from "../../../types";
 import { Button } from "../Button";
 import { ConfirmationModal, confirmation } from ".";
 
@@ -37,43 +37,33 @@ export const Default = ({ ...args }) => (
   </ThemeProvider>
 );
 
-export const Colors = ({ ...args }) => {
-  const colors: (keyof ColorTypes)[] = [
-    "primary",
-    "accent",
-    "success",
-    "warn",
-    "danger",
-  ];
-
-  return (
-    <ThemeProvider allowConfirmation>
-      <Container>
-        {colors.map((color) => (
-          <Button
-            key={color}
-            color={color}
-            onClick={() =>
-              confirmation({
-                icon: InformationCircleIcon,
-                heading: `${color} - Bestätigung`,
-                content: "Wollen Sie die Bestätigung wirklich bestätigen?",
-                cancel: action("cancel"),
-                confirm: action("confirm"),
-                cancelButton: "Abbrechen",
-                confirmButton: "Bestätigen",
-                color,
-                ...args,
-              })
-            }
-          >
-            {color}
-          </Button>
-        ))}
-      </Container>
-    </ThemeProvider>
-  );
-};
+export const Colors = ({ ...args }) => (
+  <ThemeProvider allowConfirmation>
+    <Container>
+      {colors.map((color) => (
+        <Button
+          key={color}
+          color={color}
+          onClick={() =>
+            confirmation({
+              icon: InformationCircleIcon,
+              heading: `${color} - Bestätigung`,
+              content: "Wollen Sie die Bestätigung wirklich bestätigen?",
+              cancel: action("cancel"),
+              confirm: action("confirm"),
+              cancelButton: "Abbrechen",
+              confirmButton: "Bestätigen",
+              color,
+              ...args,
+            })
+          }
+        >
+          {color}
+        </Button>
+      ))}
+    </Container>
+  </ThemeProvider>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },
@@ -81,3 +71,25 @@ Colors.parameters = {
     disable: true,
   },
 };
+
+export const ForbidCancellation = ({ ...args }) => (
+  <ThemeProvider allowConfirmation>
+    <Container>
+      <Button
+        onClick={() =>
+          confirmation({
+            icon: InformationCircleIcon,
+            forbidCancellation: true,
+            cancel: action("cancel"),
+            confirm: action("confirm"),
+            cancelButton: "Ablehnen",
+            confirmButton: "Bestätigen",
+            ...args,
+          })
+        }
+      >
+        Öffnen
+      </Button>
+    </Container>
+  </ThemeProvider>
+);

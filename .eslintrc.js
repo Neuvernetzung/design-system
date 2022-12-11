@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ["custom", "plugin:storybook/recommended"],
+  extends: ["custom"],
   rules: {
     "no-html-link-for-pages": "off",
   },

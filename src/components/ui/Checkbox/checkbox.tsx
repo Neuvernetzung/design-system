@@ -66,6 +66,7 @@ const styles = {
 };
 
 export const checkedColors: Colors = {
+  brand: "bg-brand-500 hover:bg-brand-600 dark:hover:bg-brand-400",
   primary: "bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-400",
   accent: "bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400",
   success: "bg-success-500 hover:bg-success-600 dark:hover:bg-success-400",

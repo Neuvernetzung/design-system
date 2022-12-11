@@ -4,6 +4,7 @@ import { Sizes } from "../../types";
 import {
   bgColors,
   paddingsEvenly,
+  paddingsLargeEvenly,
   popoverMaxSizes,
   roundings,
   shadows,
@@ -15,7 +16,7 @@ type PopoverContainerStyleProps = {
 };
 
 const styles = {
-  base: "w-screen overflow-x-hidden",
+  base: "w-max overflow-x-hidden",
 };
 
 export const getPopoverContainerStyles = ({
@@ -28,7 +29,7 @@ export const getPopoverContainerStyles = ({
     zIndexes.dropdown,
     shadows.lg,
     roundings.lg,
-    paddingsEvenly.xl,
+    paddingsLargeEvenly.lg,
     popoverMaxSizes[size]
   );
 

@@ -27,6 +27,8 @@ import { FormElement, RequiredRule } from "../Form";
 import { labelSizes } from "../Form/formElement";
 
 export const checkedColors: Colors = {
+  brand:
+    "border-brand-500 dark:border-brand-500 hover:border-brand-600 dark:hover:border-brand-400",
   primary:
     "border-primary-500 dark:border-primary-500 hover:border-primary-600 dark:hover:border-primary-400",
   accent:

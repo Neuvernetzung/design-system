@@ -1,10 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 
-const colorVariable = (color, key) =>
-  `rgb(var(--color-${color}-${key}) / <alpha-value>)`;
+const colorVariable = (color, key) => {
+  if (!key) return `rgb(var(--color-${color}) / <alpha-value>)`;
+  return `rgb(var(--color-${color}-${key}) / <alpha-value>)`;
+};
 
 const colorVariables = (color) => ({
-  50: colorVariable(color, 50),
   100: colorVariable(color, 100),
   200: colorVariable(color, 200),
   300: colorVariable(color, 300),
@@ -29,6 +30,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        white: colorVariable("white"),
+        black: colorVariable("black"),
+        brand: colorVariables("brand"),
         primary: colorVariables("primary"),
         accent: colorVariables("accent"),
         success: colorVariables("success"),
