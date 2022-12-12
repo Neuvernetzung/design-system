@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { Button } from "../Button";
-import { Tooltip } from "./tooltip";
+import { Tooltip, TooltipInner } from ".";
 
 export default {
   title: "UI/Overlay/Tooltip",
@@ -26,5 +26,11 @@ export const WithoutTooltip = ({ ...args }) => (
     <Tooltip {...args}>
       <Button>Kein Tooltip</Button>
     </Tooltip>
+  </Container>
+);
+
+export const TooltipInnerView = ({ ...args }) => (
+  <Container>
+    <TooltipInner label="test" {...args}/>
   </Container>
 );
