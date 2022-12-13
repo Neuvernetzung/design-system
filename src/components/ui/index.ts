@@ -3,6 +3,7 @@ export * from "./BlockQuote";
 export * from "./Button";
 export * from "./Carousel";
 export * from "./Checkbox";
+export * from "./DataGrid";
 export * from "./Datepicker";
 export * from "./Disclosure";
 export * from "./Form";
