@@ -44,6 +44,25 @@ export const ThemeProvider = ({
 }: ThemeProviderProps) => {
   const { colors, defaultTheme } = config || {};
 
+  useCssColors(":root", colors);
+
+  return (
+    <NextThemeProvider
+      attribute="class"
+      defaultTheme={defaultTheme || "system"}
+    >
+      {allowNotification && <Notify />}
+      {allowConfirmation && <ConfirmationModal />}
+      {allowGlobalLoading && <Loading />}
+      {children}
+    </NextThemeProvider>
+  );
+};
+
+export const useCssColors = (
+  selector: string,
+  colors?: Partial<ExtendColors>
+) =>
   useEffect(() => {
     const extendedColors: ReturnedColors = extendColors(colors);
 
@@ -71,24 +90,5 @@ export const ThemeProvider = ({
       .flat()
       .join(";");
 
-    createCSSSelector(":root", cssColorVariables);
+    createCSSSelector(selector, cssColorVariables);
   }, [colors]);
-
-  return (
-    <NextThemeProvider
-      attribute="class"
-      defaultTheme={defaultTheme || "system"}
-    >
-      {allowNotification && <Notify />}
-      {allowConfirmation && <ConfirmationModal />}
-      {allowGlobalLoading && <Loading />}
-      {children}
-    </NextThemeProvider>
-  );
-};
-
-ThemeProvider.defaultProps = {
-  config: undefined,
-  allowNotification: false,
-  allowConfirmation: false,
-};
