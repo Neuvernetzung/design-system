@@ -19,7 +19,7 @@ import { Heading, Text } from "../Typography";
 
 export type ModalProps = {
   open: boolean;
-  setOpen: Function;
+  setOpen: (open: boolean) => void;
   header?: string | ReactNode;
   content?: string | ReactNode;
   footer?: ReactNode;
