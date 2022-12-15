@@ -44,7 +44,7 @@ export const ThemeProvider = ({
 }: ThemeProviderProps) => {
   const { colors, defaultTheme } = config || {};
 
-  useCssColors(":root", colors);
+  useColors(":root", colors);
 
   return (
     <NextThemeProvider
@@ -59,36 +59,36 @@ export const ThemeProvider = ({
   );
 };
 
-export const useCssColors = (
-  selector: string,
+export const useColors = (
+  selector: ":root" | string,
   colors?: Partial<ExtendColors>
-) =>
-  useEffect(() => {
-    const extendedColors: ReturnedColors = extendColors(colors);
+) => useEffect(() => setColors(selector, colors), [colors]);
 
-    useColorState.setState({ colorState: extendedColors });
+export const setColors = (
+  selector: ":root" | string,
+  colors?: Partial<ExtendColors>
+) => {
+  const extendedColors: ReturnedColors = extendColors(colors);
 
-    const cssColorVariables = (
-      Object.keys(extendedColors) as Array<
-        keyof (Record<keyof Omit<Colors, "white" | "black">, Color> & {
-          white: HEX;
-          black: HEX;
-        })
-      >
-    )
-      ?.map((color) => {
-        if (isString(get(extendedColors, color)))
-          return getRGBColorVariable(get(extendedColors, color) as HEX, color);
-        return Object.keys(get(extendedColors, color))?.map((key) =>
-          getRGBColorVariable(
-            get(extendedColors, `${color}.${key}`),
-            color,
-            key
-          )
-        );
+  useColorState.setState({ colorState: extendedColors });
+
+  const cssColorVariables = (
+    Object.keys(extendedColors) as Array<
+      keyof (Record<keyof Omit<Colors, "white" | "black">, Color> & {
+        white: HEX;
+        black: HEX;
       })
-      .flat()
-      .join(";");
+    >
+  )
+    ?.map((color) => {
+      if (isString(get(extendedColors, color)))
+        return getRGBColorVariable(get(extendedColors, color) as HEX, color);
+      return Object.keys(get(extendedColors, color))?.map((key) =>
+        getRGBColorVariable(get(extendedColors, `${color}.${key}`), color, key)
+      );
+    })
+    .flat()
+    .join(";");
 
-    createCSSSelector(selector, cssColorVariables);
-  }, [colors]);
+  createCSSSelector(selector, cssColorVariables);
+};
