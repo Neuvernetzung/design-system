@@ -13,6 +13,8 @@ import { createCSSSelector } from "../utils/internal";
 import { ExtendColors, extendColors, ReturnedColors } from "./extendColors";
 import { Icons } from "./icons";
 
+const LOCAL_COLOR_KEY = "colors";
+
 type ThemeProviderProps = {
   config?: ConfigProps;
   children: ReactNode;
@@ -62,7 +64,16 @@ export const ThemeProvider = ({
 export const useColors = (
   selector: ":root" | string,
   colors?: Partial<ExtendColors>
-) => useEffect(() => setColors(selector, colors), [colors]);
+) =>
+  useEffect(() => {
+    const localStorageColors = localStorage.getItem(LOCAL_COLOR_KEY);
+    setColors(
+      selector,
+      localStorageColors !== "undefined" && isString(localStorageColors)
+        ? JSON.parse(localStorageColors)
+        : colors
+    );
+  }, [colors]);
 
 export const setColors = (
   selector: ":root" | string,
@@ -70,7 +81,11 @@ export const setColors = (
 ) => {
   const extendedColors: ReturnedColors = extendColors(colors);
 
-  useColorState.setState({ colorState: extendedColors });
+  if (selector === ":root") {
+    useColorState.setState({ colorState: extendedColors });
+
+    localStorage.setItem(LOCAL_COLOR_KEY, JSON.stringify(colors));
+  }
 
   const cssColorVariables = (
     Object.keys(extendedColors) as Array<
