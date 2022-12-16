@@ -46,6 +46,7 @@ export const Tooltip = ({
         attributes={attributes.popper}
         size={size}
         label={label}
+        className="invisible [.group-tooltip:hover_&]:visible"
       />
     </span>
   );
@@ -58,31 +59,42 @@ type TooltipInnerT = {
   attributes?: object;
   size?: keyof Sizes;
   label: ReactNode;
+  className?: string;
 };
 
 export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
   (
-    { styles, attributes, size = "md", label },
+    { styles, attributes, size = "sm", label, className },
     ref: ForwardedRef<HTMLSpanElement>
-  ) => (
-    <span
-      role="tooltip"
-      ref={ref}
-      className={cn(
-        "absolute invisible [.group-tooltip:hover_&]:visible pointer-events-none my-2 bg-opacity-75",
-        paddingsSmall[size],
-        roundings[size],
-        bgColors.black,
-        shadows.sm
-      )}
-      style={styles}
-      {...attributes}
-    >
-      <Text size={size} color="filled">
-        {label}
-      </Text>
-    </span>
-  )
+  ) => {
+    const [innerPopperElement, setInnerPopperElement] =
+      useState<HTMLElement | null>(null);
+    const { styles: innerStyles, attributes: innerAttributes } = usePopper(
+      undefined,
+      innerPopperElement
+    );
+
+    return (
+      <span
+        role="tooltip"
+        ref={ref || setInnerPopperElement}
+        className={cn(
+          "absolute pointer-events-none my-2 bg-opacity-75",
+          paddingsSmall[size],
+          roundings[size],
+          bgColors.black,
+          shadows.sm,
+          className
+        )}
+        style={styles || innerStyles}
+        {...(attributes || innerAttributes)}
+      >
+        <Text size={size} color="filled">
+          {label}
+        </Text>
+      </span>
+    );
+  }
 );
 
 TooltipInner.displayName = "TooltipInner";

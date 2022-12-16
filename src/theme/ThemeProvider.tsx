@@ -13,6 +13,8 @@ import { createCSSSelector } from "../utils/internal";
 import { ExtendColors, extendColors, ReturnedColors } from "./extendColors";
 import { Icons } from "./icons";
 
+const LOCAL_COLOR_KEY = "colors";
+
 type ThemeProviderProps = {
   config?: ConfigProps;
   children: ReactNode;
@@ -44,35 +46,7 @@ export const ThemeProvider = ({
 }: ThemeProviderProps) => {
   const { colors, defaultTheme } = config || {};
 
-  useEffect(() => {
-    const extendedColors: ReturnedColors = extendColors(colors);
-
-    useColorState.setState({ colorState: extendedColors });
-
-    const cssColorVariables = (
-      Object.keys(extendedColors) as Array<
-        keyof (Record<keyof Omit<Colors, "white" | "black">, Color> & {
-          white: HEX;
-          black: HEX;
-        })
-      >
-    )
-      ?.map((color) => {
-        if (isString(get(extendedColors, color)))
-          return getRGBColorVariable(get(extendedColors, color) as HEX, color);
-        return Object.keys(get(extendedColors, color))?.map((key) =>
-          getRGBColorVariable(
-            get(extendedColors, `${color}.${key}`),
-            color,
-            key
-          )
-        );
-      })
-      .flat()
-      .join(";");
-
-    createCSSSelector(":root", cssColorVariables);
-  }, [colors]);
+  useColors(":root", colors);
 
   return (
     <NextThemeProvider
@@ -87,8 +61,49 @@ export const ThemeProvider = ({
   );
 };
 
-ThemeProvider.defaultProps = {
-  config: undefined,
-  allowNotification: false,
-  allowConfirmation: false,
+export const useColors = (
+  selector: ":root" | string,
+  colors?: Partial<ExtendColors>
+) =>
+  useEffect(() => {
+    const localStorageColors = localStorage.getItem(LOCAL_COLOR_KEY);
+    setColors(
+      selector,
+      localStorageColors !== "undefined" && isString(localStorageColors)
+        ? JSON.parse(localStorageColors)
+        : colors
+    );
+  }, [colors]);
+
+export const setColors = (
+  selector: ":root" | string,
+  colors?: Partial<ExtendColors>
+) => {
+  const extendedColors: ReturnedColors = extendColors(colors);
+
+  if (selector === ":root") {
+    useColorState.setState({ colorState: extendedColors });
+
+    localStorage.setItem(LOCAL_COLOR_KEY, JSON.stringify(colors));
+  }
+
+  const cssColorVariables = (
+    Object.keys(extendedColors) as Array<
+      keyof (Record<keyof Omit<Colors, "white" | "black">, Color> & {
+        white: HEX;
+        black: HEX;
+      })
+    >
+  )
+    ?.map((color) => {
+      if (isString(get(extendedColors, color)))
+        return getRGBColorVariable(get(extendedColors, color) as HEX, color);
+      return Object.keys(get(extendedColors, color))?.map((key) =>
+        getRGBColorVariable(get(extendedColors, `${color}.${key}`), color, key)
+      );
+    })
+    .flat()
+    .join(";");
+
+  createCSSSelector(selector, cssColorVariables);
 };
