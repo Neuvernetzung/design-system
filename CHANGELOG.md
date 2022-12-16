@@ -1,3 +1,20 @@
+# [1.15.0](https://github.com/Neuvernetzung/design-system/compare/v1.14.0...v1.15.0) (2022-12-16)
+
+
+### Bug Fixes
+
+* **ui:** TooltipInner bekommt nun className von Parent und ist gleichzeitig ein optionales Popelement [#306](https://github.com/Neuvernetzung/design-system/issues/306) ([37d803e](https://github.com/Neuvernetzung/design-system/commit/37d803e608eb162305e8324873d11353144f5510))
+
+
+### Features
+
+* **theme:** Farben im Local Storage speichern [#304](https://github.com/Neuvernetzung/design-system/issues/304) ([f1f2ab6](https://github.com/Neuvernetzung/design-system/commit/f1f2ab6c6793f6e53d085c9003aa86de2fe6905f))
+* **theme:** setColor hinzugefügt [#309](https://github.com/Neuvernetzung/design-system/issues/309) ([2ef6e1c](https://github.com/Neuvernetzung/design-system/commit/2ef6e1c2ddad98087a63da102d82a9c13561d65d))
+* **theme:** useCssColors bereitstellen [#310](https://github.com/Neuvernetzung/design-system/issues/310) ([7f45498](https://github.com/Neuvernetzung/design-system/commit/7f4549890b5a0436eb268fc462be5c7c1c80ffd6))
+* **ui:** Breadcrumbs hinzufügen [#308](https://github.com/Neuvernetzung/design-system/issues/308) ([0957f88](https://github.com/Neuvernetzung/design-system/commit/0957f88e18329f1da253b1ec3c605b567fc31267))
+* **ui:** ColorPicker hinzugefügt [#142](https://github.com/Neuvernetzung/design-system/issues/142) ([3061573](https://github.com/Neuvernetzung/design-system/commit/3061573e3e6c2fd01e811010253dc1304fc1dee3))
+* **ui:** Drawer hinzugefügt [#311](https://github.com/Neuvernetzung/design-system/issues/311) ([2c0baf8](https://github.com/Neuvernetzung/design-system/commit/2c0baf86c33180401230b026c1bcbc83aa6e0f94))
+
 # [1.14.0](https://github.com/Neuvernetzung/design-system/compare/v1.13.0...v1.14.0) (2022-12-11)
 
 
