@@ -27,7 +27,7 @@ import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
 export type MenuProps = {
-  items: ItemProps[];
+  items: MenuItemProps[];
   size?: keyof Sizes;
   disabled?: boolean;
   dropdownClassName?: string;
@@ -50,7 +50,7 @@ type OptionalFunctionProps =
 
 type OptionalItemProps =
   | {
-      items?: ItemProps[];
+      items?: MenuItemProps[];
       href?: never;
       onClick?: never;
       icon?: never;
@@ -60,7 +60,7 @@ type OptionalItemProps =
       icon?: FC<SVGProps<SVGSVGElement>>;
     } & OptionalFunctionProps);
 
-export type ItemProps = {
+export type MenuItemProps = {
   children?: ReactNode;
   disabled?: boolean;
   color?: keyof Colors;
@@ -119,7 +119,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                 onClick,
                 icon,
                 color,
-              }: ItemProps,
+              }: MenuItemProps,
               i
             ) => {
               if (_items && _items.length !== 0)
@@ -142,7 +142,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                           onClick: _onClick,
                           icon: _icon,
                           color: _color,
-                        }: ItemProps,
+                        }: MenuItemProps,
                         _i
                       ) => {
                         const asProps: any = _href
