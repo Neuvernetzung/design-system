@@ -1,8 +1,7 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
-import { addDays, addMonths, subMonths } from "date-fns";
+import { addDays, addMonths, subMonths, subDays } from "date-fns";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { subDays } from "date-fns";
 
 import { Sizes as SizesT } from "../../../types";
 import { Form } from "../Form";
@@ -42,12 +41,6 @@ export const Default = ({ ...args }) => {
   );
 };
 
-Default.parameters = {
-  a11y: {
-    disable: true,
-  },
-};
-
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
 
@@ -72,11 +65,6 @@ export const Sizes = ({ ...args }) => {
       ))}
     </Form>
   );
-};
-Sizes.parameters = {
-  a11y: {
-    disable: true,
-  },
 };
 
 export const ButtonVariant = ({ ...args }) => {
@@ -106,11 +94,6 @@ export const ButtonVariant = ({ ...args }) => {
       />
     </Form>
   );
-};
-ButtonVariant.parameters = {
-  a11y: {
-    disable: true,
-  },
 };
 
 export const MinMaxDate = ({ ...args }) => {
@@ -191,11 +174,6 @@ export const MinMaxDate = ({ ...args }) => {
     </Form>
   );
 };
-MinMaxDate.parameters = {
-  a11y: {
-    disable: true,
-  },
-};
 
 export const DefaultValue = ({ ...args }) => {
   const formMethods = useForm({
@@ -227,9 +205,4 @@ export const DefaultValue = ({ ...args }) => {
       />
     </Form>
   );
-};
-DefaultValue.parameters = {
-  a11y: {
-    disable: true,
-  },
 };

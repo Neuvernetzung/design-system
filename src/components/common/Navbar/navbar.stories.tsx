@@ -84,9 +84,3 @@ export const Default = ({ ...args }) => (
     {...args}
   />
 );
-
-Default.parameters = {
-  a11y: {
-    disable: true,
-  },
-};

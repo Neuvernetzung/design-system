@@ -58,9 +58,6 @@ export const Colors = ({ ...args }) => {
 
 Colors.parameters = {
   controls: { exclude: "color" },
-  a11y: {
-    disable: true,
-  },
 };
 
 export const WithIcon = ({ ...args }) => (

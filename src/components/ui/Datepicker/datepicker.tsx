@@ -57,15 +57,10 @@ import {
 import { InputVariants, Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "..";
-import {
-  Button,
-  ButtonGroup,
-  FormElement,
-  IconButton,
-  Popover,
-  PopoverButton,
-  Text,
-} from "..";
+import { Button, ButtonGroup, IconButton } from "../Button";
+import { Popover, PopoverButton } from "../Popover";
+import { Text } from "../Typography";
+import { FormElement } from "../Form";
 
 export type DatepickerProps = {
   label?: string;

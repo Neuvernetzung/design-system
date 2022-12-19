@@ -156,9 +156,6 @@ export const Variants = ({ ...args }) => {
 
 Variants.parameters = {
   controls: { exclude: "color" },
-  a11y: {
-    disable: true,
-  },
 };
 
 export const Icon = ({ ...args }) => {
