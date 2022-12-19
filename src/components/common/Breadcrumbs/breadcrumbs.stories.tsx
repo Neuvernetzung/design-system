@@ -10,9 +10,3 @@ export default {
 } as Meta;
 
 export const Default = ({ ...args }) => <Breadcrumbs {...args} />;
-
-Default.parameters = {
-  a11y: {
-    disable: true,
-  },
-};

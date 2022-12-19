@@ -98,9 +98,3 @@ export const CancelLoading = () => {
     </ThemeProvider>
   );
 };
-
-Default.parameters = {
-  a11y: {
-    disable: true,
-  },
-};

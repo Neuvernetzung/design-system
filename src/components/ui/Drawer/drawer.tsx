@@ -1,6 +1,9 @@
 import { Dialog } from "@headlessui/react";
 import { CrossIcon } from "../../../theme/icons";
-import { Backdrop, Icon, IconButton, Text } from "..";
+import { Backdrop } from "../Backdrop";
+import { Icon } from "../Icon";
+import { IconButton } from "../Button";
+import { Text } from "../Typography";
 import { FC, memo, MutableRefObject, ReactNode, SVGProps } from "react";
 import { ExtendedSizes, Sizes } from "../../../types";
 
