@@ -1,3 +1,17 @@
+# [1.16.0](https://github.com/Neuvernetzung/design-system/compare/v1.15.0...v1.16.0) (2022-12-20)
+
+
+### Bug Fixes
+
+* **ui:** Breadcrumbs exposen [#326](https://github.com/Neuvernetzung/design-system/issues/326) ([b01cbf9](https://github.com/Neuvernetzung/design-system/commit/b01cbf907ac4cb15f3a72301254c68c9d16b34dc))
+
+
+### Features
+
+* **test:** Storybook axe Tests durch jest-axe tests ersetzen [#322](https://github.com/Neuvernetzung/design-system/issues/322) ([292a70f](https://github.com/Neuvernetzung/design-system/commit/292a70f384c688b27e39a8b66cc5c6f79e8e0ef1))
+* **types:** MenuItemProps exposen [#321](https://github.com/Neuvernetzung/design-system/issues/321) ([a1b0eae](https://github.com/Neuvernetzung/design-system/commit/a1b0eae996dd72cc007e48702d4368d0dc47109e))
+* **types:** Modal initialFocus type optional null [#322](https://github.com/Neuvernetzung/design-system/issues/322) ([d6742f5](https://github.com/Neuvernetzung/design-system/commit/d6742f559c71976e5fc46262f0226cc7aceda99b))
+
 # [1.15.0](https://github.com/Neuvernetzung/design-system/compare/v1.14.0...v1.15.0) (2022-12-16)
 
 
