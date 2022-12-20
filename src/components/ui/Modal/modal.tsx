@@ -24,7 +24,7 @@ export type ModalProps = {
   content?: string | ReactNode;
   footer?: ReactNode;
   size?: keyof ModalSizes;
-  initialFocus?: MutableRefObject<HTMLElement>;
+  initialFocus?: MutableRefObject<HTMLElement | null>;
   wrapper?: FC;
   onClose?: Function;
   forbidCancellation?: boolean;

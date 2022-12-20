@@ -6,26 +6,23 @@ import { jsx } from "slate-hyperscript";
 
 // eslint-disable-next-line default-param-last
 const serializeReducer = (acc: any = [], node: Descendant) => {
-  const className = Object.entries(node).reduce(
-    (classNames: any, [prop, value]) => {
-      switch (prop) {
-        // case "indent":
-        //   return [...classNames, `indent-${value}`];
-        // case "lineHeight":
-        //   return [
-        //     ...classNames,
-        //     `line-height-${String(value).replace(".", "_")}`
-        //   ];
-        case "font-bold":
-        case "italic":
-        case "underline":
-          return [...classNames, prop];
-        default:
-          return classNames;
-      }
-    },
-    []
-  );
+  const className = Object.entries(node).reduce((classNames: any, [prop]) => {
+    switch (prop) {
+      // case "indent":
+      //   return [...classNames, `indent-${value}`];
+      // case "lineHeight":
+      //   return [
+      //     ...classNames,
+      //     `line-height-${String(value).replace(".", "_")}`
+      //   ];
+      case "font-bold":
+      case "italic":
+      case "underline":
+        return [...classNames, prop];
+      default:
+        return classNames;
+    }
+  }, []);
 
   const classAttribute =
     node.className || className.length

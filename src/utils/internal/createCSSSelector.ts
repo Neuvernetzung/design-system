@@ -1,4 +1,4 @@
-export const createCSSSelector = (selector, style) => {
+export const createCSSSelector = (selector: string, style: string) => {
   if (!document.styleSheets) return;
   if (document.getElementsByTagName("head").length === 0) return;
 
@@ -12,7 +12,7 @@ export const createCSSSelector = (selector, style) => {
       mediaType = typeof media;
 
       if (mediaType === "string") {
-        if (media === "" || media.indexOf("screen") !== -1) {
+        if (!media || String(media).indexOf("screen") !== -1) {
           styleSheet = document.styleSheets[i];
         }
       } else if (mediaType === "object") {
@@ -40,35 +40,33 @@ export const createCSSSelector = (selector, style) => {
       styleSheet = document.styleSheets[i];
     }
 
-    mediaType = typeof styleSheet.media;
+    mediaType = typeof styleSheet?.media;
   }
 
   if (mediaType === "string") {
-    for (let i = 0, l = styleSheet.rules.length; i < l; i += 1) {
+    for (let i = 0, l = styleSheet?.cssRules.length || 0; i < l; i += 1) {
       if (
-        styleSheet.rules[i].selectorText &&
-        styleSheet.rules[i].selectorText.toLowerCase() ===
-          selector.toLowerCase()
+        styleSheet?.cssRules[i].cssText &&
+        styleSheet?.cssRules[i].cssText.toLowerCase() === selector.toLowerCase()
       ) {
-        styleSheet.rules[i].style.cssText = style;
+        styleSheet.cssRules[i].cssText = style;
         return;
       }
     }
-    styleSheet.addRule(selector, style);
+    styleSheet?.addRule(selector, style);
   } else if (mediaType === "object") {
-    const styleSheetLength = styleSheet.cssRules
+    const styleSheetLength = styleSheet?.cssRules
       ? styleSheet.cssRules.length
       : 0;
     for (let i = 0; i < styleSheetLength; i += 1) {
       if (
-        styleSheet.cssRules[i].selectorText &&
-        styleSheet.cssRules[i].selectorText.toLowerCase() ===
-          selector.toLowerCase()
+        styleSheet?.cssRules[i].cssText &&
+        styleSheet?.cssRules[i].cssText.toLowerCase() === selector.toLowerCase()
       ) {
-        styleSheet.cssRules[i].style.cssText = style;
+        styleSheet.cssRules[i].cssText = style;
         return;
       }
     }
-    styleSheet.insertRule(`${selector}{${style}}`, styleSheetLength);
+    styleSheet?.insertRule(`${selector}{${style}}`, styleSheetLength);
   }
 };
