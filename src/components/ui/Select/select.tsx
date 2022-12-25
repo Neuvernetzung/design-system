@@ -108,7 +108,7 @@ export const SelectInner = <
     multiple,
     defaultMessage = "Auswählen...",
     noOptionsMessage = "Keine Optionen gefunden.",
-    removeAll = true,
+    removeAll = false,
     hideActive = false,
     multipleStyle = "tags",
     label,
@@ -203,7 +203,12 @@ export const SelectInner = <
   const handleLeftAndRightArrow = (e: KeyboardEvent, index?: number) => {
     if (!multiple) return;
     if (!removeButtonRefs || removeButtonRefs?.length === 0) return;
-    let _index = index !== undefined ? index : removeButtonRefs?.length - 1;
+    let _index =
+      index !== undefined
+        ? index
+        : removeButtonRefs?.length
+        ? removeButtonRefs.length - 1
+        : 0;
 
     if (removeButtonRefs[_index]?.ref?.current) {
       if (e.key === "ArrowRight") {
