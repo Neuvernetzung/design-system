@@ -14,7 +14,7 @@ import { ListItem, OrderedList, UnorderedList } from "../List";
 import { Heading, Text } from "../Typography";
 
 export type ProseProps = {
-  content: string;
+  content: string | undefined;
   className?: string;
 };
 
@@ -86,6 +86,8 @@ const options: HTMLReactParserOptions = {
 };
 
 export const Prose = ({ content, className }: ProseProps) => {
+  if (!content) return null;
+
   const _content = parse(content, options);
 
   return <div className={cn(prose, className)}>{_content}</div>;
