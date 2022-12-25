@@ -1,3 +1,16 @@
+# [1.17.0](https://github.com/Neuvernetzung/design-system/compare/v1.16.0...v1.17.0) (2022-12-25)
+
+
+### Bug Fixes
+
+* **ui:** Gaps bei Breadcrumbs entfernt [#329](https://github.com/Neuvernetzung/design-system/issues/329) ([05f3b0c](https://github.com/Neuvernetzung/design-system/commit/05f3b0ce4a8c3f8d22f0b887a2b29bbefe31e4e2))
+
+
+### Features
+
+* **ui:** DefaultIndex zu Tabs hinzugefügt [#331](https://github.com/Neuvernetzung/design-system/issues/331) ([eb409f6](https://github.com/Neuvernetzung/design-system/commit/eb409f69efb24d31fb42cc4ce3896e563bf39055))
+* **ui:** removeAll bei Select per default als false [#330](https://github.com/Neuvernetzung/design-system/issues/330) ([87327ca](https://github.com/Neuvernetzung/design-system/commit/87327ca6cc584a7bf880ab85612bb81dc4c1de80))
+
 # [1.16.0](https://github.com/Neuvernetzung/design-system/compare/v1.15.0...v1.16.0) (2022-12-20)
 
 
