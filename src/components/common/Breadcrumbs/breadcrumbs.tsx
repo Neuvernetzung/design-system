@@ -5,7 +5,6 @@ import { Link, IconButton, Button, Icon } from "../../ui";
 import { Sizes } from "../../../types";
 import { Variants } from "../../ui/Button/button";
 import cn from "classnames";
-import { gaps } from "../../../styles";
 
 type BreadcrumbsT = {
   size?: keyof Sizes;
@@ -55,10 +54,7 @@ export const Breadcrumbs = ({
         .map((item, i) => (
           <div
             key={i}
-            className={cn(
-              gaps.sm,
-              "pl-1 flex flex-row justify-center items-center"
-            )}
+            className={cn("pl-1 flex flex-row justify-center items-center")}
           >
             <Icon size="xs" icon={ChevronRightIcon} color="subtile" />
 
