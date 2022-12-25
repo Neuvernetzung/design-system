@@ -1,3 +1,15 @@
+# [1.18.0](https://github.com/Neuvernetzung/design-system/compare/v1.17.0...v1.18.0) (2022-12-25)
+
+
+### Bug Fixes
+
+* **ui:** Prose contenet required aber undefined möglich [#336](https://github.com/Neuvernetzung/design-system/issues/336) ([ea4776b](https://github.com/Neuvernetzung/design-system/commit/ea4776b8730889e3a3d124d26e2d7be9e2c7a29e))
+
+
+### Features
+
+* **ui:** RadioOptionProps exposen [#337](https://github.com/Neuvernetzung/design-system/issues/337) ([ea1a2cc](https://github.com/Neuvernetzung/design-system/commit/ea1a2cc67435c879697f34215888eb6ad8f7f8fb))
+
 # [1.17.0](https://github.com/Neuvernetzung/design-system/compare/v1.16.0...v1.17.0) (2022-12-25)
 
 
