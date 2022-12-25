@@ -9,6 +9,7 @@ import { Button } from "../Button";
 export type TabGroupProps = TabListProps &
   TabPanelsProps & {
     className?: string;
+    defaultIndex?: number;
   };
 
 export type TabListProps = {
@@ -38,8 +39,13 @@ export const Tabs = ({
   color,
   panelsClassName,
   listClassName,
+  defaultIndex,
 }: TabGroupProps) => (
-  <Tab.Group as="div" className={cn("flex flex-col w-full", className)}>
+  <Tab.Group
+    defaultIndex={defaultIndex}
+    as="div"
+    className={cn("flex flex-col w-full", className)}
+  >
     <TabList
       items={items}
       listClassName={listClassName}
