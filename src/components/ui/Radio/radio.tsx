@@ -1,6 +1,6 @@
 import { RadioGroup } from "@headlessui/react";
 import cn from "classnames";
-import { ReactNode, type ElementType } from "react";
+import { ReactNode } from "react";
 import {
   Controller,
   FieldPath,
@@ -57,7 +57,7 @@ export type RadioProps = {
   variant?: keyof RadioVariants;
   label?: string;
   helper?: any;
-  options: OptionProps[];
+  options: RadioOptionProps[];
   required?: RequiredRule;
   size?: keyof Sizes;
   color?: keyof Colors;
@@ -65,11 +65,10 @@ export type RadioProps = {
   className?: string;
 };
 
-type OptionProps = {
+export type RadioOptionProps = {
   label: ReactNode;
   value: any;
   disabled?: boolean;
-  icon?: ElementType<SVGElement>;
 };
 
 const styles = {
@@ -120,7 +119,10 @@ export const Radio = <
           className={cn("flex flex-col", gapsSmall[size], className)}
         >
           {options.map(
-            ({ label, value, disabled: singleDisabled }: OptionProps, i) => {
+            (
+              { label, value, disabled: singleDisabled }: RadioOptionProps,
+              i
+            ) => {
               const _disabled = singleDisabled ?? disabled;
 
               return (
