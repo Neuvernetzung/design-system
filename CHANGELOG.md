@@ -1,3 +1,15 @@
+# [1.19.0](https://github.com/Neuvernetzung/design-system/compare/v1.18.0...v1.19.0) (2022-12-27)
+
+
+### Bug Fixes
+
+* **ui:** AutplayOptions statt reiner boolean bei Carousel [#341](https://github.com/Neuvernetzung/design-system/issues/341) ([1e7e9e9](https://github.com/Neuvernetzung/design-system/commit/1e7e9e915fae89efb16616dad7fb676b0fe29c78))
+
+
+### Features
+
+* **docs:** Wiederverwendbaren Import aktualisiert [#342](https://github.com/Neuvernetzung/design-system/issues/342) ([200d1dc](https://github.com/Neuvernetzung/design-system/commit/200d1dc9544cda6a5abca0336843151bf91dbdfe))
+
 # [1.18.0](https://github.com/Neuvernetzung/design-system/compare/v1.17.0...v1.18.0) (2022-12-25)
 
 
