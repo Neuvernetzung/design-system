@@ -18,7 +18,7 @@ const colorVariables = (color) => ({
 });
 
 module.exports = {
-  content: [`${__dirname}/src/**/*.{ts,tsx}`, `${__dirname}/dist**/*.{js,mjs}`],
+  content: [`${__dirname}/src/**/*.{ts,tsx}`],
   darkMode: "class",
   theme: {
     fontFamily: {
@@ -50,7 +50,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/typography"),
     require("tailwindcss/plugin")(({ addVariant }) => {
       addVariant("not-first-of-type", "&>*:not(:first-of-type)");
       addVariant("not-last-of-type", "&>*:not(:last-of-type)");

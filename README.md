@@ -10,18 +10,7 @@ import { ConfigProps } from "./src";
 const config: ConfigProps = {
   defaultTheme: "system",
   colors: {
-    primary: {
-      50: "#80d4ff",
-      100: "#66cbff",
-      200: "#4dc2ff",
-      300: "#33b9ff",
-      400: "#1ab1ff",
-      500: "#00a8ff",
-      600: "#0097e6",
-      700: "#0086cc",
-      800: "#0076b3",
-      900: "#006599",
-    },
+    primary: "#00a8ff",
     // ...accent, success, warn, danger
   },
 };
@@ -59,9 +48,14 @@ export default MyApp;
 ```
 const config = require("@neuvernetzung/design-system/tailwind.config.js");
 
+const path = require("path");
+
 module.exports = {
   presets: [config],
-  content: ["./**/*.{mjs,js,jsx,ts,tsx}", config.content],
+  content: [
+    "./**/*.{mjs,js,jsx,ts,tsx}",
+    path.join(require.resolve("@neuvernetzung/design-system/dist/index.mjs")),
+  ],
 
   plugins: [],
 };
