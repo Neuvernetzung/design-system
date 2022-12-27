@@ -1,4 +1,4 @@
-import { isString } from "lodash";
+import isString from "lodash/isString";
 import get from "lodash/get";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { ReactNode, useEffect } from "react";
