@@ -6,6 +6,7 @@ export * from "./Checkbox";
 export * from "./ColorPicker";
 export * from "./Datepicker";
 export * from "./Disclosure";
+export * from "./Drawer";
 export * from "./Form";
 export * from "./Icon";
 export * from "./Image";
