@@ -1,3 +1,11 @@
+## [1.19.1](https://github.com/Neuvernetzung/design-system/compare/v1.19.0...v1.19.1) (2022-12-29)
+
+
+### Bug Fixes
+
+* **docs:** Readme Updaten - nicht alle Paths bei Content [#346](https://github.com/Neuvernetzung/design-system/issues/346) ([dc2f2fe](https://github.com/Neuvernetzung/design-system/commit/dc2f2fed47b71e35b33c87a9f9ff3de01390396b))
+* **ui:** Drawer exposen [#347](https://github.com/Neuvernetzung/design-system/issues/347) ([b2bf4c6](https://github.com/Neuvernetzung/design-system/commit/b2bf4c62a71a86ac90361bf68ba8fd6d8fe990b2))
+
 # [1.19.0](https://github.com/Neuvernetzung/design-system/compare/v1.18.0...v1.19.0) (2022-12-27)
 
 
