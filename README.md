@@ -53,7 +53,7 @@ const path = require("path");
 module.exports = {
   presets: [config],
   content: [
-    "./**/*.{mjs,js,jsx,ts,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
     path.join(require.resolve("@neuvernetzung/design-system/dist/index.mjs")),
   ],
 
