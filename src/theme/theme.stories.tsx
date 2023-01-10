@@ -1,9 +1,11 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
+import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 import { ExtendColors, setColors, ThemeProvider, useColorState } from ".";
-import { Button, Form, ColorPicker } from "../components/ui";
+import { Button, Form, ColorPicker, Tag } from "../components/ui";
+import { borders } from "../styles";
 
 export default {
   title: "THEME/ThemeProvider",
@@ -53,8 +55,63 @@ export const Default = ({ ...args }) => {
   );
 };
 
-Default.parameters = {
-  a11y: {
-    disable: true,
-  },
+export const NestedTheme = ({ ...args }) => {
+  const { colorState } = useColorState();
+
+  const { control, handleSubmit } = useForm<Partial<ExtendColors>>({
+    defaultValues: {
+      brand: colorState?.brand[500],
+    },
+  });
+  const { control: nestedControl, handleSubmit: handleNestedSubmit } = useForm<
+    Partial<ExtendColors>
+  >({
+    defaultValues: {
+      brand: colorState?.primary[500],
+    },
+  });
+
+  const onSubmit = (data: Partial<ExtendColors>) => {
+    setColors(":root", data);
+  };
+
+  const onNestedSubmit = (data: Partial<ExtendColors>) => {
+    setColors(".container", data);
+  };
+
+  return (
+    <Container>
+      <Form
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        className="flex flex-col gap-4"
+      >
+        <ColorPicker name="brand" label="brand" control={control} />
+        <Button type="submit" color="brand">
+          Bestätigen
+        </Button>
+      </Form>
+      <div
+        className={cn(
+          "flex flex-col gap-2 items-start p-4 border",
+          borders.accent
+        )}
+      >
+        <Tag color="brand" label=":root" />
+        <div className={cn("container border p-4", borders.accent)}>
+          <Tag color="brand" label=".container" />
+        </div>
+      </div>
+      <Form
+        handleSubmit={handleNestedSubmit}
+        onSubmit={onNestedSubmit}
+        className="flex flex-col gap-4"
+      >
+        <ColorPicker name="brand" label="brand" control={nestedControl} />
+        <Button type="submit" color="brand">
+          Bestätigen
+        </Button>
+      </Form>
+    </Container>
+  );
 };
