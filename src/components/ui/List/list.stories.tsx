@@ -24,7 +24,7 @@ export const Unordered = ({ ...args }) => (
   </UnorderedList>
 );
 
-export const Hested = ({ ...args }) => (
+export const Nested = ({ ...args }) => (
   <UnorderedList {...args}>
     <ListItem>
       Dies ist eine ungeordnete Liste.
