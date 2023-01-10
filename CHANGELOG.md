@@ -1,3 +1,20 @@
+# [1.20.0](https://github.com/Neuvernetzung/design-system/compare/v1.19.1...v1.20.0) (2023-01-10)
+
+
+### Bug Fixes
+
+* **ci:** Node Version in Actions auf 18 erhöht [#351](https://github.com/Neuvernetzung/design-system/issues/351) ([43df52e](https://github.com/Neuvernetzung/design-system/commit/43df52e6b425dcf06824a90f6c616f60087b4fb1))
+* **ui:** Backdrop Animation beschleunigen [#353](https://github.com/Neuvernetzung/design-system/issues/353) ([1433f6b](https://github.com/Neuvernetzung/design-system/commit/1433f6b0f8b3b97c59031aa871ce3a2bdb49c51b))
+* **ui:** Image wenn !src ebenfalls Fallback [#355](https://github.com/Neuvernetzung/design-system/issues/355) ([c3d6467](https://github.com/Neuvernetzung/design-system/commit/c3d64678508024486b1f5178d5d62044ca5dc581))
+* **ui:** Länge bei Textarea ist nicht mehr markierbar [#351](https://github.com/Neuvernetzung/design-system/issues/351) ([4fa0cae](https://github.com/Neuvernetzung/design-system/commit/4fa0cae3c2e97d7dfbf3361b13adad2eaa3d8705))
+* **ui:** useLayoutEffect durch useEffect ersetzen [#354](https://github.com/Neuvernetzung/design-system/issues/354) ([5dbb113](https://github.com/Neuvernetzung/design-system/commit/5dbb1135ca5de665e765fead038f5dc544714cff))
+
+
+### Features
+
+* **docs:** Beispiel für nested Theme hinzugefügt [#352](https://github.com/Neuvernetzung/design-system/issues/352) ([21c1ae0](https://github.com/Neuvernetzung/design-system/commit/21c1ae0584e0beb5c377f36bc7676f80494b67d6))
+* **ui:** Rahmen um alle Container drumrum, damit diese sich besser vom Hintergrund abheben [#356](https://github.com/Neuvernetzung/design-system/issues/356) ([1dc30e8](https://github.com/Neuvernetzung/design-system/commit/1dc30e8e275781320d8aa074dacc6f7180d11a9f))
+
 ## [1.19.1](https://github.com/Neuvernetzung/design-system/compare/v1.19.0...v1.19.1) (2022-12-29)
 
 
