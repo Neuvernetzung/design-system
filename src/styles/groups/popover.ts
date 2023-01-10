@@ -3,6 +3,7 @@ import cn from "classnames";
 import { Sizes } from "../../types";
 import {
   bgColors,
+  borders,
   paddingsEvenly,
   paddingsLargeEvenly,
   popoverMaxSizes,
@@ -24,7 +25,8 @@ export const getPopoverContainerStyles = ({
 }: PopoverContainerStyleProps) =>
   cn(
     styles.base,
-    "absolute left-0 md:-mx-4 mt-3 mb-3 max-h-[60vh] overflow-y-auto",
+    "absolute left-0 md:-mx-4 mt-3 mb-3 max-h-[60vh] overflow-y-auto border",
+    borders.accent,
     bgColors.white,
     zIndexes.dropdown,
     shadows.lg,
