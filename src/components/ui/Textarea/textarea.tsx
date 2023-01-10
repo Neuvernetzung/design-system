@@ -102,7 +102,7 @@ export const TextareaInner = <
             <Text
               size="xs"
               color={(value?.length || 0) > maxLength ? "danger" : "accent"}
-              className={cn("absolute bottom-2 right-5")}
+              className={cn("absolute bottom-2 right-5 pointer-events-none")}
             >
               {value?.length || 0} / {maxLength}
             </Text>
