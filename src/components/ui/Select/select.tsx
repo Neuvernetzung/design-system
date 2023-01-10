@@ -10,7 +10,6 @@ import {
   KeyboardEvent,
   ReactNode,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -235,7 +234,7 @@ export const SelectInner = <
 
   const rightElementRef: any = useRef(null);
   const [rightElementWidth, setRightElementWidth] = useState();
-  useLayoutEffect(() => {
+  useEffect(() => {
     setRightElementWidth(rightElementRef?.current?.clientWidth);
   }, []);
 
