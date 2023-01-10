@@ -55,7 +55,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       buttonComponent,
       size = "md",
       trigger = "click",
-      placement = "bottom-start",
+      placement = "bottom",
       disabled,
       focus = false,
       panelClassName,
