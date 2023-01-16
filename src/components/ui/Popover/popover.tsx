@@ -7,6 +7,8 @@ import {
   forwardRef,
   Fragment,
   memo,
+  MouseEvent,
+  MutableRefObject,
   ReactNode,
   useRef,
   useState,
@@ -22,7 +24,6 @@ import {
 } from "../../../styles/groups";
 import { CrossIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
-import { keyboardEvent } from "../../../utils/internal/keyboardEvent";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps, IconButtonProps } from "../Button";
 import { Button, IconButton } from "../Button";
@@ -82,23 +83,28 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       return buttonRef.current?.click();
     };
 
-    const onMouseLeave = (open: boolean) => {
+    const onMouseLeave = (
+      open: boolean,
+      close: (
+        focusableElement?:
+          | HTMLElement
+          | MutableRefObject<HTMLElement | null>
+          | MouseEvent<HTMLElement>
+      ) => void
+    ) => {
       if (!open) return;
-      timeout = setTimeout(() => closePopover(), timeoutDuration);
+      timeout = setTimeout(() => close(), timeoutDuration);
     };
-
-    const closePopover = () =>
-      buttonRef.current?.dispatchEvent(keyboardEvent("Escape"));
 
     return (
       <HeadlessPopover className="relative">
-        {({ open }) => (
+        {({ open, close }) => (
           <div
             onMouseEnter={
-              trigger === "hover" ? onMouseEnter.bind(null, open) : () => {}
+              trigger === "hover" ? () => onMouseEnter(open) : () => {}
             }
             onMouseLeave={
-              trigger === "hover" ? onMouseLeave.bind(null, open) : () => {}
+              trigger === "hover" ? () => onMouseLeave(open, close) : () => {}
             }
           >
             {!buttonComponent ? (
@@ -148,10 +154,10 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
                   )}
                 >
                   <div className={cn(getPopoverFullScreenHeaderStyles())}>
-                    <PopoverButton
-                      as={IconButton}
+                    <IconButton
                       icon={CrossIcon}
                       variant="ghost"
+                      onClick={() => close()} // wenn hier ein PopoverButton verwendet wird, dann lässt sich Button nicht mehr per Klick schließen
                     />
                   </div>
                   <div className={cn(getPopoverFullScreenContainerStyles())}>
@@ -169,18 +175,6 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
 
 export default memo(Popover);
 
-Popover.defaultProps = {
-  size: "md",
-  focus: false,
-  buttonProps: undefined,
-  buttonAs: undefined,
-  buttonComponent: undefined,
-  trigger: "click",
-  placement: "bottom",
-  disabled: undefined,
-  panelClassName: undefined,
-  fullScreenOnMobile: false,
-};
 Popover.displayName = "Popover";
 
 export const PopoverButton = forwardRef<Element, any>((props, ref) => (
