@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/Neuvernetzung/design-system/compare/v1.20.0...v1.20.1) (2023-01-16)
+
+
+### Bug Fixes
+
+* **ui:** Popover State Handling verbessert und PopoverGroup hinzugefügt [#365](https://github.com/Neuvernetzung/design-system/issues/365) ([b24b751](https://github.com/Neuvernetzung/design-system/commit/b24b751095a06dc8ce7d487cb54cdbdf56c231f8))
+
 # [1.20.0](https://github.com/Neuvernetzung/design-system/compare/v1.19.1...v1.20.0) (2023-01-10)
 
 
