@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { Text } from "../Typography";
-import { Popover } from "./popover";
+import { Popover, PopoverGroup } from ".";
 
 export default {
   title: "UI/Overlay/Popover",
@@ -14,7 +14,7 @@ const Container = ({ ...props }) => (
 );
 
 export const Default = ({ ...args }) => (
-  <Container>
+  <PopoverGroup className="flex flex-row gap-4 justify-between">
     <Popover
       content={
         <div>
@@ -45,11 +45,11 @@ export const Default = ({ ...args }) => (
       placement="bottom-end"
       {...args}
     />
-  </Container>
+  </PopoverGroup>
 );
 
 export const OnHover = ({ ...args }) => (
-  <Container>
+  <PopoverGroup className="flex flex-row items-start gap-4">
     <Popover
       trigger="hover"
       content={
@@ -60,7 +60,17 @@ export const OnHover = ({ ...args }) => (
       buttonProps={{ children: "Hier hovern" }}
       {...args}
     />
-  </Container>
+    <Popover
+      trigger="hover"
+      content={
+        <div>
+          <Text>Dies ist ein Popover</Text>
+        </div>
+      }
+      buttonProps={{ children: "Hier hovern" }}
+      {...args}
+    />
+  </PopoverGroup>
 );
 
 export const PanelClassName = ({ ...args }) => (
