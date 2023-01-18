@@ -10,6 +10,7 @@ import {
   SVGProps,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 
 import { gapsSmall, textColors } from "../../../styles";
@@ -100,140 +101,142 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
           as={ButtonComponent[buttonType]}
           {...buttonProps}
         />
+        {createPortal(
+          <HeadlessMenu.Items
+            ref={setPopperElement}
+            className={cn(
+              "w-64",
+              getDropdownContainerStyles({ size }),
+              dropdownClassName
+            )}
+            style={styles.popper}
+            {...attributes.popper}
+          >
+            {items?.map(
+              (
+                {
+                  children,
+                  disabled,
+                  items: _items,
+                  href,
+                  onClick,
+                  icon,
+                  color,
+                }: MenuItemProps,
+                i
+              ) => {
+                if (_items && _items.length !== 0)
+                  return (
+                    <div className={cn(getDropdownGroupStyles({ size }))}>
+                      {children && (
+                        <Text
+                          size="xs"
+                          className={cn(getDropdownGroupHeaderStyles({ size }))}
+                        >
+                          {children}
+                        </Text>
+                      )}
+                      {_items?.map(
+                        (
+                          {
+                            children: _children,
+                            disabled: _disabled,
+                            href: _href,
+                            onClick: _onClick,
+                            icon: _icon,
+                            color: _color,
+                          }: MenuItemProps,
+                          _i
+                        ) => {
+                          const asProps: any = _href
+                            ? { as: "a", href: _href }
+                            : _onClick
+                            ? { as: "button", onClick: _onClick }
+                            : { as: "div" };
 
-        <HeadlessMenu.Items
-          ref={setPopperElement}
-          className={cn(
-            "w-64",
-            getDropdownContainerStyles({ size }),
-            dropdownClassName
-          )}
-          style={styles.popper}
-          {...attributes.popper}
-        >
-          {items?.map(
-            (
-              {
-                children,
-                disabled,
-                items: _items,
-                href,
-                onClick,
-                icon,
-                color,
-              }: MenuItemProps,
-              i
-            ) => {
-              if (_items && _items.length !== 0)
-                return (
-                  <div className={cn(getDropdownGroupStyles({ size }))}>
-                    {children && (
-                      <Text
-                        size="xs"
-                        className={cn(getDropdownGroupHeaderStyles({ size }))}
-                      >
-                        {children}
-                      </Text>
-                    )}
-                    {_items?.map(
-                      (
-                        {
-                          children: _children,
-                          disabled: _disabled,
-                          href: _href,
-                          onClick: _onClick,
-                          icon: _icon,
-                          color: _color,
-                        }: MenuItemProps,
-                        _i
-                      ) => {
-                        const asProps: any = _href
-                          ? { as: "a", href: _href }
-                          : _onClick
-                          ? { as: "button", onClick: _onClick }
-                          : { as: "div" };
-
-                        return (
-                          <HeadlessMenu.Item
-                            {...asProps}
-                            key={`menu_option_${_i}`}
-                            disabled={_disabled}
-                            className={({ active }: { active?: boolean }) =>
-                              cn(
-                                getDropDownOptionsStyles({
-                                  size,
-                                  active,
-                                  disabled: _disabled,
-                                })
-                              )
-                            }
-                          >
-                            <div
-                              className={cn(
-                                "flex flex-row items-center",
-                                gapsSmall[capSize(size, "md")],
-                                _color && textColors[_color]
-                              )}
+                          return (
+                            <HeadlessMenu.Item
+                              {...asProps}
+                              key={`menu_option_${_i}`}
+                              disabled={_disabled}
+                              className={({ active }: { active?: boolean }) =>
+                                cn(
+                                  getDropDownOptionsStyles({
+                                    size,
+                                    active,
+                                    disabled: _disabled,
+                                  })
+                                )
+                              }
                             >
-                              {_icon && (
-                                <Icon
-                                  color={_color}
-                                  icon={_icon}
-                                  size={capSize(size, "md")}
-                                />
-                              )}
-                              {_children}
-                            </div>
-                          </HeadlessMenu.Item>
-                        );
-                      }
-                    )}
-                  </div>
-                );
-              if (_items?.length === 0) return null;
+                              <div
+                                className={cn(
+                                  "flex flex-row items-center",
+                                  gapsSmall[capSize(size, "md")],
+                                  _color && textColors[_color]
+                                )}
+                              >
+                                {_icon && (
+                                  <Icon
+                                    color={_color}
+                                    icon={_icon}
+                                    size={capSize(size, "md")}
+                                  />
+                                )}
+                                {_children}
+                              </div>
+                            </HeadlessMenu.Item>
+                          );
+                        }
+                      )}
+                    </div>
+                  );
+                if (_items?.length === 0) return null;
 
-              const asProps: any = href
-                ? { as: "a", href }
-                : onClick
-                ? { as: "button", onClick }
-                : { as: "div" };
+                const asProps: any = href
+                  ? { as: "a", href }
+                  : onClick
+                  ? { as: "button", onClick }
+                  : { as: "div" };
 
-              return (
-                <HeadlessMenu.Item
-                  {...asProps}
-                  key={`menu_option_${i}`}
-                  disabled={disabled}
-                  className={({ active }: { active?: boolean }) =>
-                    cn(
-                      getDropDownOptionsStyles({
-                        size,
-                        active,
-                        disabled,
-                      })
-                    )
-                  }
-                >
-                  <div
-                    className={cn(
-                      "flex flex-row items-center",
-                      gapsSmall[capSize(size, "md")],
-                      color && textColors[color]
-                    )}
+                return (
+                  <HeadlessMenu.Item
+                    {...asProps}
+                    key={`menu_option_${i}`}
+                    disabled={disabled}
+                    className={({ active }: { active?: boolean }) =>
+                      cn(
+                        getDropDownOptionsStyles({
+                          size,
+                          active,
+                          disabled,
+                        })
+                      )
+                    }
                   >
-                    {icon && (
-                      <Icon
-                        color={color}
-                        icon={icon}
-                        size={capSize(size, "md")}
-                      />
-                    )}
-                    {children}
-                  </div>
-                </HeadlessMenu.Item>
-              );
-            }
-          )}
-        </HeadlessMenu.Items>
+                    <div
+                      className={cn(
+                        "flex flex-row items-center",
+                        gapsSmall[capSize(size, "md")],
+                        color && textColors[color]
+                      )}
+                    >
+                      {icon && (
+                        <Icon
+                          color={color}
+                          icon={icon}
+                          size={capSize(size, "md")}
+                        />
+                      )}
+                      {children}
+                    </div>
+                  </HeadlessMenu.Item>
+                );
+              }
+            )}
+          </HeadlessMenu.Items>,
+          document.body
+        )}
       </HeadlessMenu>
     );
   }
