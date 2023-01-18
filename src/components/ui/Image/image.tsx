@@ -48,9 +48,11 @@ export default memo(Image);
 
 const Fallback = () => (
   <div className="w-full h-full flex items-center justify-center bg-accent-100 dark:bg-accent-800">
-    <div className="flex flex-col gap-4 items-center object-cover object-center p-2">
-      <Icon icon={PhotoIcon} />
-      <Text>Bild konnte nicht geladen werden.</Text>
+    <div className="p-2 truncate">
+      <Icon size="sm" className="mx-auto" icon={PhotoIcon} />
+      <Text size="xs" className="mx-auto">
+        Bild konnte nicht geladen werden.
+      </Text>
     </div>
   </div>
 );
