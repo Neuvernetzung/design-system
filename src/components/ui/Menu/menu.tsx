@@ -19,6 +19,7 @@ import {
   getDropdownGroupStyles,
   getDropDownOptionsStyles,
 } from "../../../styles/groups";
+import { popperOffset } from "../../../styles/popper/offset";
 import { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
@@ -86,6 +87,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
     );
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
       placement,
+      modifiers: [{ name: "offset", options: { offset: popperOffset } }],
     });
 
     const ButtonComponent = { icon: IconButton, button: Button };

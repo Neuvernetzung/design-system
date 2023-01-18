@@ -8,7 +8,6 @@ import {
   extendedBgColors,
   extendedTextColors,
   gapsSmall,
-  marginsYSmall,
   paddings,
   paddingsX,
   paddingsYSmall,
@@ -32,7 +31,6 @@ export const getDropdownContainerStyles = ({
 }: DropdownContainerStyleProps) =>
   cn(
     containerStyles.base,
-    marginsYSmall[size],
     paddingsYSmall[capSize(size, "md")],
     roundings[minSize(size, "md")],
     shadows[minSize(size, "md")]
