@@ -17,19 +17,19 @@ import type {
 
 import {
   adjustedTextColors,
-  bgColors,
-  bgColorsInteractive,
-  borders,
+  extendedBgColors,
+  extendedBgColorsInteractive,
+  extendedBorders,
+  extendedTextColors,
   focusBg,
   focusRing,
   minHeights,
   paddings,
   roundings,
-  textColors,
   transition,
 } from "../../../styles";
 import { useColorState } from "../../../theme";
-import type { Colors, Focuses, Sizes } from "../../../types";
+import type { Colors, ExtendedColors, Focuses, Sizes } from "../../../types";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
 import { sizes as textSizes } from "../Typography/Text/text";
@@ -54,16 +54,16 @@ export type Variants = {
 };
 
 export const colors = (
-  color: keyof Colors,
+  color: keyof (Colors & Pick<ExtendedColors, "light" | "dark">),
   colorState?: Colors
 ): ColorProps => ({
-  base: cn(bgColorsInteractive[color], borders[color]),
-  disabled: cn(bgColors[color], borders[color], "opacity-50"),
+  base: cn(extendedBgColorsInteractive[color], extendedBorders[color]),
+  disabled: cn(extendedBgColors[color], extendedBorders[color], "opacity-50"),
   text: {
     filled: adjustedTextColors(colorState)[color],
-    outline: textColors[color],
-    ghost: textColors[color],
-    subtile: textColors[color],
+    outline: extendedTextColors[color],
+    ghost: extendedTextColors[color],
+    subtile: extendedTextColors[color],
   },
 });
 
@@ -88,7 +88,7 @@ export const ButtonDefaultElement = "button";
 
 export type ButtonOwnProps = {
   variant?: keyof Variants;
-  color?: keyof Colors;
+  color?: keyof (Colors & Pick<ExtendedColors, "dark" | "light">);
   size?: keyof Sizes;
   focus?: keyof Focuses;
   fullWidth?: boolean;
