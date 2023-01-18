@@ -1,6 +1,7 @@
 import cn from "classnames";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, ReactElement } from "react";
+import { focus } from "../../../styles";
 
 export interface LinkProps extends NextLinkProps {
   children: ReactElement | string;
@@ -19,7 +20,7 @@ export default Link;
 export interface NativeLinkProps
   extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string;
-  children?: ReactElement;
+  children?: ReactElement | string;
 }
 
 export const NativeLink = ({
@@ -28,7 +29,11 @@ export const NativeLink = ({
   className,
   ...props
 }: NativeLinkProps) => (
-  <a href={href} className={cn("underline", className)} {...props}>
+  <a
+    href={href}
+    className={cn("underline", focus.accent, className)}
+    {...props}
+  >
     {children}
   </a>
 );
