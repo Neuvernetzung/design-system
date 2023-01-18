@@ -22,6 +22,7 @@ import {
   getPopoverFullScreenHeaderStyles,
   getPopoverFullScreenStyles,
 } from "../../../styles/groups";
+import { popperOffset } from "../../../styles/popper/offset";
 import { CrossIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
@@ -72,6 +73,14 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
     );
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
       placement,
+      modifiers: [
+        {
+          name: "offset",
+          options: {
+            offset: popperOffset,
+          },
+        },
+      ],
     });
 
     const timeoutDuration: number = 250;
