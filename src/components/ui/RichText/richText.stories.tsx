@@ -51,3 +51,14 @@ export const CompareToProse = ({ ...args }) => {
     </Container>
   );
 };
+
+export const SelectOnTopOfEachOther = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Container>
+      <RichText control={formMethods.control} name="RichText" />
+      <RichText control={formMethods.control} name="RichText" />
+    </Container>
+  );
+};
