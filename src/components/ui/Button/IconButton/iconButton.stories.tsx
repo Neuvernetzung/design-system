@@ -54,21 +54,19 @@ Variants.parameters = {
   controls: { exclude: "variant" },
 };
 
-export const Colors = ({ ...args }) => {
-  return (
-    <Container>
-      {colors.map((color: any) => (
-        <IconButton
-          ariaLabel="home"
-          color={color}
-          key={color}
-          icon={HomeIcon}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Colors = ({ ...args }) => (
+  <Container>
+    {[...colors, "light", "dark"].map((color: any) => (
+      <IconButton
+        ariaLabel="home"
+        color={color}
+        key={color}
+        icon={HomeIcon}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },

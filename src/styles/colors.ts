@@ -4,7 +4,9 @@ import { colorIsBright } from "../utils";
 export const textColors: Colors = {
   brand: "text-brand-500",
   primary: "text-primary-500",
-  accent: "text-accent-800 dark:text-accent-100",
+  white: "text-white dark:text-black",
+  black: "text-black dark:text-white",
+  accent: "text-accent-900 dark:text-accent-100",
   success: "text-success-500",
   warn: "text-warn-500",
   danger: "text-danger-500",
@@ -13,30 +15,34 @@ export const textColors: Colors = {
 export const extendedTextColors: ExtendedColors = {
   ...textColors,
   inherit: "text-inherit",
-  subtile: "text-accent-300 dark:text-accent-600",
+  subtile: "text-accent-300 dark:text-accent-700",
   light: "text-accent-100 dark:text-accent-100",
-  dark: "text-accent-800 dark:text-accent-800",
-  filled: "text-accent-100 dark:text-accent-800",
+  dark: "text-accent-900 dark:text-accent-900",
+  filled: "text-accent-100 dark:text-accent-900",
 };
 
-export const adjustedTextColors = (colorState?: Colors) =>
-  ({
-    brand: colorIsBright(colorState?.brand[500]) ? "text-white" : "text-black",
-    primary: colorIsBright(colorState?.primary[500])
-      ? "text-white"
-      : "text-black",
-    white: colorIsBright(colorState?.accent[50]) ? "text-white" : "text-black",
-    accent: colorIsBright(colorState?.accent[500])
-      ? "text-white"
-      : "text-black",
-    success: colorIsBright(colorState?.success[500])
-      ? "text-white"
-      : "text-black",
-    warn: colorIsBright(colorState?.warn[500]) ? "text-white" : "text-black",
-    danger: colorIsBright(colorState?.danger[500])
-      ? "text-white"
-      : "text-black",
-  } as Colors);
+export const adjustedTextColors = (
+  colorState?: ExtendedColors
+): ExtendedColors => ({
+  brand: colorIsBright(colorState?.brand[500]) ? "text-white" : "text-black",
+  primary: colorIsBright(colorState?.primary[500])
+    ? "text-white"
+    : "text-black",
+  white: colorIsBright(colorState?.white)
+    ? "text-white dark:text-black"
+    : "text-black dark:text-white",
+  black: colorIsBright(colorState?.black)
+    ? "text-white dark:text-black"
+    : "text-black dark:text-white",
+  accent: colorIsBright(colorState?.accent[500]) ? "text-white" : "text-black",
+  success: colorIsBright(colorState?.success[500])
+    ? "text-white"
+    : "text-black",
+  warn: colorIsBright(colorState?.warn[500]) ? "text-white" : "text-black",
+  danger: colorIsBright(colorState?.danger[500]) ? "text-white" : "text-black",
+  light: colorIsBright(colorState?.accent[100]) ? "text-white" : "text-black",
+  dark: colorIsBright(colorState?.accent[900]) ? "text-white" : "text-black",
+});
 
 export const bgColors: Colors = {
   brand: "bg-brand-500",
@@ -51,14 +57,17 @@ export const bgColors: Colors = {
 
 export const extendedBgColors: ExtendedColors = {
   ...bgColors,
-  filledSubtile: "bg-accent-100 dark:bg-accent-800",
-  filled: "bg-accent-200 dark:bg-accent-700",
+  light: "bg-accent-100",
+  dark: "bg-accent-900",
+  filledSubtile: "bg-accent-100 dark:bg-accent-900",
+  filled: "bg-accent-200 dark:bg-accent-800",
 };
 
 export const bgColorsInteractive: Colors = {
   brand: `${bgColors.brand} hover:bg-brand-600 dark:hover:bg-brand-400`,
   primary: `${bgColors.primary} hover:bg-primary-600 dark:hover:bg-primary-400`,
-  white: `${bgColors.white} hover:bg-accent-100 dark:hover:bg-accent-800`,
+  white: `${bgColors.white} hover:bg-accent-100 dark:hover:bg-accent-900`,
+  black: `${bgColors.black} hover:bg-accent-900 dark:hover:bg-accent-100`,
   accent: `${bgColors.accent} hover:bg-accent-700 dark:hover:bg-accent-500`,
   success: `${bgColors.success} hover:bg-success-600 dark:hover:bg-success-400`,
   warn: `${bgColors.warn} hover:bg-warn-600 dark:hover:bg-warn-400`,
@@ -67,8 +76,10 @@ export const bgColorsInteractive: Colors = {
 
 export const extendedBgColorsInteractive: ExtendedColors = {
   ...bgColorsInteractive,
-  filledSubtile: `${extendedBgColors.filledSubtile} hover:bg-accent-200 dark:hover:bg-accent-700`,
-  filled: `${extendedBgColors.filled} hover:bg-accent-300 dark:hover:bg-accent-600`,
+  light: `${extendedBgColors.light} hover:bg-accent-200`,
+  dark: `${extendedBgColors.dark} hover:bg-accent-800`,
+  filledSubtile: `${extendedBgColors.filledSubtile} hover:bg-accent-200 dark:hover:bg-accent-800`,
+  filled: `${extendedBgColors.filled} hover:bg-accent-300 dark:hover:bg-accent-700`,
 };
 
 export const fillColors: Colors = {

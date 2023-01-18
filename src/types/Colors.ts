@@ -23,6 +23,8 @@ export const colors: Array<keyof Colors> = [
   "success",
   "warn",
   "danger",
+  "white",
+  "black",
 ];
 
 export type Colors = {

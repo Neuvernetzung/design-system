@@ -52,7 +52,7 @@ Variants.parameters = {
 
 export const Colors = ({ ...args }) => (
   <Container>
-    {colors.map((color: any) => (
+    {[...colors, "light", "dark"].map((color: any) => (
       <Button color={color} key={color} {...args}>
         {color}
       </Button>
