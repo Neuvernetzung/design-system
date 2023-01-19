@@ -14,8 +14,8 @@ export const PageContainer = ({
   const [navbarHeight, setNavbarHeight] = useState();
   const [footerHeight, setFooterHeight] = useState();
   useEffect(() => {
-    navbarRef && setNavbarHeight(navbarRef?.current?.clientHeight);
-    footerRef && setFooterHeight(footerRef?.current?.clientHeight);
+    if (navbarRef) setNavbarHeight(navbarRef?.current?.clientHeight);
+    if (footerRef) setFooterHeight(footerRef?.current?.clientHeight);
   }, []);
 
   return (
