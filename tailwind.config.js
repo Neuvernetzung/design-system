@@ -50,6 +50,7 @@ module.exports = {
     },
   },
   plugins: [
+    require("tailwind-scrollbar"),
     require("tailwindcss/plugin")(({ addVariant }) => {
       addVariant("not-first-of-type", "&>*:not(:first-of-type)");
       addVariant("not-last-of-type", "&>*:not(:last-of-type)");
