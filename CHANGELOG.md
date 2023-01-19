@@ -1,3 +1,15 @@
+# [1.22.0](https://github.com/Neuvernetzung/design-system/compare/v1.21.0...v1.22.0) (2023-01-19)
+
+
+### Bug Fixes
+
+* **ui:** Tooltip anzeige verbessern und Tooltip Offsets prüfen [#381](https://github.com/Neuvernetzung/design-system/issues/381) ([5f3e8c4](https://github.com/Neuvernetzung/design-system/commit/5f3e8c463e0d08cf38daa1a65f3dcb0891b57b14))
+
+
+### Features
+
+* **ui:** TailwindCSS Scrollbar testen [#382](https://github.com/Neuvernetzung/design-system/issues/382) ([0ef6518](https://github.com/Neuvernetzung/design-system/commit/0ef651830412fd5399d1b83a90e74e5b3ee0acbb))
+
 # [1.21.0](https://github.com/Neuvernetzung/design-system/compare/v1.20.1...v1.21.0) (2023-01-19)
 
 
