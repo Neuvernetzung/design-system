@@ -29,7 +29,7 @@ export default {
 } as Meta;
 
 const Container = ({ ...props }) => (
-  <div className="flex flex-row gap-5" {...props} />
+  <div className="flex flex-row items-start gap-5" {...props} />
 );
 
 export const Variants = ({ ...args }) => {
