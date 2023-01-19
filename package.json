@@ -29,7 +29,6 @@
     "@headlessui/react": "^1",
     "@heroicons/react": "^2",
     "@popperjs/core": "^2",
-    "@tailwindcss/typography": "^0",
     "classnames": "^2",
     "date-fns": "^2",
     "escape-html": "^1",
@@ -50,6 +49,8 @@
     "slate-hyperscript": "^0",
     "slate-react": "^0",
     "swiper": "^8",
+    "tailwind-scrollbar": "^2",
+    "tailwindcss": "^3",
     "use-lilius": "^2",
     "uuid": "^9",
     "zustand": "^4"
