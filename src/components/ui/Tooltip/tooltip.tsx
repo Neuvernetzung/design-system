@@ -47,7 +47,7 @@ export const Tooltip = ({
   if (!label) return children;
 
   return (
-    <span ref={setReferenceElement} className="relative group-tooltip">
+    <span ref={setReferenceElement} className="group-tooltip">
       {children}
       <TooltipInner
         ref={setPopperElement}
@@ -88,7 +88,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
         role="tooltip"
         ref={ref || setInnerPopperElement}
         className={cn(
-          "absolute pointer-events-none bg-opacity-75",
+          "pointer-events-none bg-opacity-75",
           paddingsSmall[size],
           roundings[size],
           bgColors.black,
