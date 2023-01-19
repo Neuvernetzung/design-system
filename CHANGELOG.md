@@ -1,3 +1,12 @@
+## [1.22.1](https://github.com/Neuvernetzung/design-system/compare/v1.22.0...v1.22.1) (2023-01-19)
+
+
+### Bug Fixes
+
+* **ui:** tailwind scrollbar in peers [#387](https://github.com/Neuvernetzung/design-system/issues/387) ([87a07a3](https://github.com/Neuvernetzung/design-system/commit/87a07a3b6a1332eaf593b3a563eb3cab8e17553a))
+* **ui:** Tailwind scrollbar in peers [#387](https://github.com/Neuvernetzung/design-system/issues/387) ([80709d8](https://github.com/Neuvernetzung/design-system/commit/80709d8e521f41eb2056fbb7bbbfb2d686e27a09))
+* **ui:** tailwind-scrollbar in peers [#387](https://github.com/Neuvernetzung/design-system/issues/387) ([7f4575f](https://github.com/Neuvernetzung/design-system/commit/7f4575fd82981874a06cd73de266df0d497aa156))
+
 # [1.22.0](https://github.com/Neuvernetzung/design-system/compare/v1.21.0...v1.22.0) (2023-01-19)
 
 
