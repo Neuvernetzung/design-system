@@ -40,6 +40,7 @@ import {
   inputSizes,
   inputVariants,
 } from "../../../styles/groups";
+import { popperOffset } from "../../../styles/popper/offset";
 import { CheckIcon, ChevronUpDownIcon, CrossIcon } from "../../../theme/icons";
 import { InputVariants, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
@@ -122,6 +123,7 @@ export const SelectInner = <
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
+    modifiers: [{ name: "offset", options: { offset: popperOffset } }],
   });
 
   const formValue = useWatch({ control, name });

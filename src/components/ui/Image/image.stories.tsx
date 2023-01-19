@@ -38,3 +38,14 @@ export const Fallback = ({ ...args }) => (
     />
   </Container>
 );
+
+export const FallbackShrinked = ({ ...args }) => (
+  <Container className="max-w-[6rem]">
+    <Image
+      src="wrong/path.jpg"
+      alt="ohne Bild"
+      isLocal
+      className="aspect-video rounded-lg"
+    />
+  </Container>
+);

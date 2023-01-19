@@ -3,6 +3,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { Button, IconButton } from "../..";
+import { CrossIcon } from "../../../../theme/icons";
 import ButtonGroup from "./buttonGroup";
 
 export default {
@@ -34,6 +35,17 @@ export const Variants = ({ ...args }) => (
       <Button {...args}>Button 1</Button>
       <Button {...args}>Button 2</Button>
       <IconButton ariaLabel="home" icon={HomeIcon} {...args} />
+    </ButtonGroup>
+  </Container>
+);
+
+export const DifferentSizes = ({ ...args }) => (
+  <Container>
+    <ButtonGroup>
+      <Button className="h-12" {...args}>
+        Close
+      </Button>
+      <IconButton size="sm" ariaLabel="home" icon={CrossIcon} {...args} />
     </ButtonGroup>
   </Container>
 );

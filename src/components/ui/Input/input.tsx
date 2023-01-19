@@ -6,6 +6,7 @@ import {
   useEffect,
   useRef,
   useState,
+  HTMLAttributes,
 } from "react";
 import {
   Controller,
@@ -38,7 +39,7 @@ import type { InputElementProps } from "./InputElement/inputElement";
 export const sizes = inputSizes;
 export const variants = inputVariants;
 
-export type InputProps = {
+export type InputProps = HTMLAttributes<HTMLInputElement> & {
   type?: "text" | "number" | "password" | "url";
   label?: string;
   helper?: any;

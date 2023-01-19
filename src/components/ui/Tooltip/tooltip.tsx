@@ -11,6 +11,7 @@ import {
 import { usePopper } from "react-popper";
 
 import { bgColors, paddingsSmall, roundings, shadows } from "../../../styles";
+import { popperOffset } from "../../../styles/popper/offset";
 import { Sizes } from "../../../types";
 import { Text } from "../Typography";
 
@@ -33,6 +34,14 @@ export const Tooltip = ({
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
+    modifiers: [
+      {
+        name: "offset",
+        options: {
+          offset: popperOffset,
+        },
+      },
+    ],
   });
 
   if (!label) return children;
@@ -79,7 +88,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
         role="tooltip"
         ref={ref || setInnerPopperElement}
         className={cn(
-          "absolute pointer-events-none my-2 bg-opacity-75",
+          "absolute pointer-events-none bg-opacity-75",
           paddingsSmall[size],
           roundings[size],
           bgColors.black,
