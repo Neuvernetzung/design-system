@@ -1,3 +1,21 @@
+# [1.21.0](https://github.com/Neuvernetzung/design-system/compare/v1.20.1...v1.21.0) (2023-01-19)
+
+
+### Bug Fixes
+
+* **ci:** Commit Message Lint fixen [#371](https://github.com/Neuvernetzung/design-system/issues/371) ([4f486e0](https://github.com/Neuvernetzung/design-system/commit/4f486e0ba63509c5eb3b68ce7b35e73413aebe52))
+* **ui:** Focus zu NativeLink hinzufügen [#149](https://github.com/Neuvernetzung/design-system/issues/149) ([163c6d5](https://github.com/Neuvernetzung/design-system/commit/163c6d5466f151160e656cdeba528a9bf4395e74))
+* **ui:** Multiple Select ButtonGroup Tag Remove Button in höhe anpassen zu anderem Button [#216](https://github.com/Neuvernetzung/design-system/issues/216) ([b0a15f5](https://github.com/Neuvernetzung/design-system/commit/b0a15f51af3063f08539667dcd6c57e92a934686))
+* **ui:** Platzhalter für fehlendes Vorschaubild nicht komplett dargestellt [#368](https://github.com/Neuvernetzung/design-system/issues/368) ([56314c6](https://github.com/Neuvernetzung/design-system/commit/56314c6ba9c60f0bfa7dab2ea87d2a7ce1d355e7))
+* **ui:** Popover Panel wird nicht mittig angezeigt [#369](https://github.com/Neuvernetzung/design-system/issues/369) ([da0de39](https://github.com/Neuvernetzung/design-system/commit/da0de39ea71c5105c6efbc288571ba4867fdcce9))
+* **ui:** Wenn 2 RichText untereinander dann Überlappung von Select [#201](https://github.com/Neuvernetzung/design-system/issues/201) ([e53b437](https://github.com/Neuvernetzung/design-system/commit/e53b437eb9f90b4aa40f70c4953e81a6b909312a))
+
+
+### Features
+
+* **ui:** Button mehr Farben ermöglichen [#370](https://github.com/Neuvernetzung/design-system/issues/370) ([873ccd4](https://github.com/Neuvernetzung/design-system/commit/873ccd47da49c9177a807334107a752a59704b3f))
+* **ui:** Input With Tags hinzugefügt [#238](https://github.com/Neuvernetzung/design-system/issues/238) ([94d024b](https://github.com/Neuvernetzung/design-system/commit/94d024b2f51a2a61a5668e64f2304ab52073ca60))
+
 ## [1.20.1](https://github.com/Neuvernetzung/design-system/compare/v1.20.0...v1.20.1) (2023-01-16)
 
 
