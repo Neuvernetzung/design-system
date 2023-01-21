@@ -1,5 +1,5 @@
-import isString from "lodash/isString";
 import get from "lodash/get";
+import isString from "lodash/isString";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { ReactNode, useEffect } from "react";
 import create from "zustand";
@@ -99,7 +99,11 @@ export const setColors = (
       if (isString(get(extendedColors, color)))
         return getRGBColorVariable(get(extendedColors, color) as HEX, color);
       return Object.keys(get(extendedColors, color))?.map((key) =>
-        getRGBColorVariable(get(extendedColors, `${color}.${key}`), color, key)
+        getRGBColorVariable(
+          get(extendedColors, `${color}.${key}`) as unknown as HEX,
+          color,
+          key
+        )
       );
     })
     .flat()

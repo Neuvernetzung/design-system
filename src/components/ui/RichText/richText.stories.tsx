@@ -27,7 +27,13 @@ export const Default = ({ ...args }) => {
 
   return (
     <Container>
-      <RichText control={formMethods.control} name="RichText" />
+      <RichText
+        maxLength={120}
+        control={formMethods.control}
+        name="RichText"
+        placeholder="Schreib etwas..."
+        showLength
+      />
     </Container>
   );
 };
@@ -37,17 +43,16 @@ interface CompareProps {
 }
 
 export const CompareToProse = ({ ...args }) => {
-  const formMethods = useForm<CompareProps>({
+  const { control, watch } = useForm<CompareProps>({
     defaultValues: {
-      RichTextCompare: `<h2 class="text-center">This is editable <span class="font-bold">rich</span> text, <span class="italic">much</span> better than a &lt;textarea&gt;!</h2><p class="text-justify">Since it&#39;s rich text, you can do </p><a href="#"><p class="text-justify">things </p></a><p class="text-justify">like turn a selection of text <span class="font-bold">bold</span>, or add a semantically rendered block quote in the middle of the page, like this:</p><ol><li class="text-justify">Punkt eins</li><li class="text-justify">Zwei</li></ol><blockquote class="text-left">A <span class="underline">wise</span> quote.</blockquote><ul><li class="text-left">Andere Liste</li><li class="text-left">Punkt zwei</li></ul><p class="text-right">Try it out for <span class="font-bold">yourself</span>!</p>`,
+      RichTextCompare: `<h1 class="text-center !block">Dies ist ein Vergleich.</h1><p class="text-justify !block"><br>Dieser dient zur <strong>Veranschaulich </strong>zwischen <em>RichText Editor</em> und <a target="_blank" rel="noopener noreferrer nofollow" class="underline font-bold  focus-visible:ring-accent-600 dark:focus-visible:ring-accent-300 focus:outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20 underline font-bold  focus-visible:ring-accent-600 dark:focus-visible:ring-accent-300 focus:outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20 underline font-bold  focus-visible:ring-accent-600 dark:focus-visible:ring-accent-300 focus:outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20" href="story/ui-form-richtext--compare-to-prose">Prose</a> Komponente. Wichtig ist, dass beide Komponenten den gleichen <u>Output</u> hervorbringen und <s>nicht</s> voneinander abweichen.</p><p class="text-justify !block"></p><h2>Ein Paar Komponenten sind zum Beispiel:</h2><ol><li><p>Überschriften</p><ol><li><p>H1</p></li><li><p>H2</p></li><li><p>...</p></li></ol></li><li><p>Texte</p></li></ol><hr><ul><li><p>Ausrichtungen</p><ul><li><p>Links</p></li><li><p class="text-center !block">Zentriert</p></li><li><p class="text-right !block">Rechts</p></li></ul></li></ul><blockquote><p>Außerdem sind Zitate möglich.</p></blockquote><p></p><p></p>`,
     },
   });
 
-  // console.log(formMethods.watch("RichTextCompare"));
   return (
-    <Container className="!flex-row">
-      <RichText control={formMethods.control} name="RichTextCompare" />
-      <Prose content={formMethods.watch("RichTextCompare")} />
+    <Container className="grid grid-cols-2">
+      <RichText control={control} name="RichTextCompare" />
+      <Prose content={watch("RichTextCompare")} />
     </Container>
   );
 };
