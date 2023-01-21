@@ -8,6 +8,7 @@ import {
   ReactNode,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 
 import { bgColors, paddingsSmall, roundings, shadows } from "../../../styles";
@@ -28,9 +29,9 @@ export const Tooltip = ({
   size = "sm",
   placement = "top",
 }: TooltipProps) => {
-  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
-    null
-  );
+  const [hover, setHover] = useState<boolean>(false);
+  const [referenceElement, setReferenceElement] =
+    useState<HTMLElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
@@ -47,17 +48,26 @@ export const Tooltip = ({
   if (!label) return children;
 
   return (
-    <span ref={setReferenceElement} className="group-tooltip">
-      {children}
-      <TooltipInner
-        ref={setPopperElement}
-        styles={styles.popper}
-        attributes={attributes.popper}
-        size={size}
-        label={label}
-        className="invisible [.group-tooltip:hover_&]:visible"
-      />
-    </span>
+    <>
+      <span
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        ref={setReferenceElement}
+      >
+        {children}
+      </span>
+      {hover &&
+        createPortal(
+          <TooltipInner
+            ref={setPopperElement}
+            styles={styles.popper}
+            attributes={attributes.popper}
+            size={size}
+            label={label}
+          />,
+          document.body
+        )}
+    </>
   );
 };
 
