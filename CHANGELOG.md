@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/Neuvernetzung/design-system/compare/v1.23.0...v1.23.1) (2023-01-21)
+
+
+### Bug Fixes
+
+* **deps:** Beta von TipTap bei Peers inkludieren [#394](https://github.com/Neuvernetzung/design-system/issues/394) ([8558e04](https://github.com/Neuvernetzung/design-system/commit/8558e0446e75bd2dc0235553839e531a3b2b3bd0))
+
 # [1.23.0](https://github.com/Neuvernetzung/design-system/compare/v1.22.1...v1.23.0) (2023-01-21)
 
 
