@@ -1,3 +1,15 @@
+# [1.23.0](https://github.com/Neuvernetzung/design-system/compare/v1.22.1...v1.23.0) (2023-01-21)
+
+
+### Bug Fixes
+
+* **ui:** Tooltip per onMouseEnter aktivieren und createPortal benutzen [#390](https://github.com/Neuvernetzung/design-system/issues/390) ([ed5f34d](https://github.com/Neuvernetzung/design-system/commit/ed5f34d3621820af27a14bd429d889a596c18499))
+
+
+### Features
+
+* **ui:** RichText komplett überarbeitet mit TipTap [#383](https://github.com/Neuvernetzung/design-system/issues/383) ([c103c65](https://github.com/Neuvernetzung/design-system/commit/c103c6507c0614bb4782a93d98605786f4a9ebc7))
+
 ## [1.22.1](https://github.com/Neuvernetzung/design-system/compare/v1.22.0...v1.22.1) (2023-01-19)
 
 
