@@ -12,7 +12,11 @@ export const ListItem = forwardRef(
   ) => (
     <li
       ref={ref}
-      className={cn(textColors.accent, "list-item indent-5", className)}
+      className={cn(
+        textColors.accent,
+        "pl-2 list-item [&>ul]:pl-5 [&>ol]:pl-5",
+        className
+      )}
       {...props}
     />
   )
