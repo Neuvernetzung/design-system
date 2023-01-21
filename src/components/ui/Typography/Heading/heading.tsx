@@ -65,6 +65,7 @@ export const Heading: PolymorphicForwardRefExoticComponent<
       as,
       className,
       children,
+      ...props
     }: PolymorphicPropsWithoutRef<HeadingOwnProps, T>,
     ref: ForwardedRef<Element>
   ) => {
@@ -74,6 +75,7 @@ export const Heading: PolymorphicForwardRefExoticComponent<
       <Component
         ref={ref}
         className={cn("font-heading", sizes[size], colors[color], className)}
+        {...props}
       >
         {children}
       </Component>
@@ -84,10 +86,3 @@ export const Heading: PolymorphicForwardRefExoticComponent<
 export default memo(Heading);
 
 Heading.displayName = "Heading";
-
-Heading.defaultProps = {
-  size: "md",
-  color: "accent",
-  as: HeadingDefaultElement,
-  className: undefined,
-};

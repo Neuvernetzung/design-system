@@ -8,6 +8,7 @@ export * from "./Datepicker";
 export * from "./Disclosure";
 export * from "./Drawer";
 export * from "./Form";
+export * from "./HorizontalRule";
 export * from "./Icon";
 export * from "./Image";
 export * from "./Input";
