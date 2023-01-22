@@ -130,7 +130,8 @@ export const RichText = <
             <EditorContent
               className={cn(
                 paddings.md,
-                "[&>.ProseMirror-focused]:outline-none appearance-none"
+                "[&>.ProseMirror]:outline-none [&>.ProseMirror]:focus:outline-none [&>.ProseMirror]:focus-visible:outline-none [&>.ProseMirror]:focus-within:outline-none",
+                "appearance-none"
               )}
               editor={editor}
             />

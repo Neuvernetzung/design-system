@@ -3,6 +3,7 @@ import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, ReactElement } from "react";
 
 import { linkStyle } from "../../../styles/link";
+import { hrefRegex, pathRegex } from "../../../utils/internal/regex";
 
 export interface LinkProps extends NextLinkProps {
   children: ReactElement | string;
@@ -13,8 +14,6 @@ export const Link = ({ as, href, disabled, ...props }: LinkProps) => {
   if (disabled) return <span {...props} />;
   return <NextLink as={as} href={href} {...props} />;
 };
-
-Link.defaultProps = { disabled: undefined };
 
 export default Link;
 
@@ -29,7 +28,45 @@ export const NativeLink = ({
   children,
   className,
   ...props
-}: NativeLinkProps) => (
+}: NativeLinkProps) => {
+  if (!href)
+    return (
+      <span className={cn(className)} {...props}>
+        {children}
+      </span>
+    );
+  if (hrefRegex.test(href))
+    return (
+      <NativeLinkInner href={href} className={className}>
+        {children}
+      </NativeLinkInner>
+    );
+  if (pathRegex.test(href))
+    return (
+      <NextLink href={href}>
+        <span className={cn(linkStyle, className)} {...props}>
+          {children}
+        </span>
+      </NextLink>
+    );
+  return (
+    <NativeLinkInner href={href} className={className}>
+      {children}
+    </NativeLinkInner>
+  );
+};
+
+type NativeLinkInnerProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  href?: string;
+  children?: ReactElement | string;
+};
+
+const NativeLinkInner = ({
+  href,
+  className,
+  children,
+  ...props
+}: NativeLinkInnerProps) => (
   <a
     href={href}
     rel="noopener noreferrer nofollow"
@@ -39,8 +76,3 @@ export const NativeLink = ({
     {children}
   </a>
 );
-
-NativeLink.defaultProps = {
-  href: null,
-  children: undefined,
-};
