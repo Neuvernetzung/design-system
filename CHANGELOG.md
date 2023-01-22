@@ -1,3 +1,12 @@
+## [1.23.2](https://github.com/Neuvernetzung/design-system/compare/v1.23.1...v1.23.2) (2023-01-22)
+
+
+### Bug Fixes
+
+* **ui:** InputWithTags darf kein leeren String annehmen, außerdem keine Werte doppelt. [#399](https://github.com/Neuvernetzung/design-system/issues/399) ([0aef9bc](https://github.com/Neuvernetzung/design-system/commit/0aef9bc704c8b7fa326944764091a696aebbc002))
+* **ui:** NativeLink nutzt NextLink wenn href intern, RichText addLink optimiert [#397](https://github.com/Neuvernetzung/design-system/issues/397) ([432f2f9](https://github.com/Neuvernetzung/design-system/commit/432f2f95d4898c89ddf3f7140c28520e1e004b01))
+* **ui:** RichText Focus in Anwendung behoben [#398](https://github.com/Neuvernetzung/design-system/issues/398) ([412ca1e](https://github.com/Neuvernetzung/design-system/commit/412ca1eeabba19fccc3b39924b52beeb558a67ef))
+
 ## [1.23.1](https://github.com/Neuvernetzung/design-system/compare/v1.23.0...v1.23.1) (2023-01-21)
 
 
