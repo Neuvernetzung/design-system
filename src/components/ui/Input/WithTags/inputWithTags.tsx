@@ -65,6 +65,8 @@ export const InputWithTagsInner = <
 
   const handleAddTag = (values?: string[]) => {
     const newValue = inputState;
+    if (!newValue) return values;
+    if (values?.includes(inputState)) return values;
     setInputState("");
     if (!isArray(values)) return [newValue];
     return [...values, newValue];
@@ -151,6 +153,7 @@ export const InputWithTagsInner = <
                   <ButtonGroup key={`button_tag_${v}`} className="truncate">
                     <Button
                       size={capSize(size, "sm")}
+                      color={v === inputState ? "danger" : "accent"}
                       className="pointer-events-none"
                       disabled={disabled}
                     >
@@ -158,6 +161,7 @@ export const InputWithTagsInner = <
                     </Button>
                     <IconButton
                       size={capSize(size, "sm")}
+                      color={v === inputState ? "danger" : "accent"}
                       disabled={disabled}
                       icon={CrossIcon}
                       onClick={() => onChange(handleDeleteTag(v, values))}
