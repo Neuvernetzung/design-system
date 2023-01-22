@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { memo } from "react";
-import create from "zustand";
+import { create } from "zustand";
 
 import { getText, Locales } from "../../../locales/getText";
 import {
