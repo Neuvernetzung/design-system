@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { ElementType, memo, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import create from "zustand";
+import { create } from "zustand";
 
 import { zIndexes } from "../../../styles";
 import {

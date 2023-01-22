@@ -2,7 +2,7 @@ import get from "lodash/get";
 import isString from "lodash/isString";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { ReactNode, useEffect } from "react";
-import create from "zustand";
+import { create } from "zustand";
 
 import { Loading } from "../components/ui/Loading";
 import { ConfirmationModal } from "../components/ui/Modal";
