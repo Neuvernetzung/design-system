@@ -32,6 +32,7 @@ export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
     defaultValues: { href: undefined, external: true },
   });
   const setFormState = (value?: string) => setValue("href", value);
+  const setExternalState = (value: boolean) => setValue("external", value);
 
   const isExternal = watch("external");
 
@@ -54,7 +55,7 @@ export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
       .chain()
       .focus()
       .extendMarkRange("link")
-      .setLink({ href: isExternal ? `https://${href}` : href })
+      .setLink({ href: isExternal ? `https://${href}` : `/${href}` })
       .run();
     setOpen(false);
   };
@@ -74,9 +75,20 @@ export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
           variant={!active ? "ghost" : "subtile"}
           onClick={() => {
             setFormState(
-              String(currentHref).includes("https://")
+              !currentHref
+                ? ""
+                : String(currentHref).includes("https://")
                 ? currentHref.split("https://")?.[1]
+                : currentHref.slice(0, 1) === "/"
+                ? currentHref.slice(1)
                 : currentHref
+            );
+            setExternalState(
+              !currentHref
+                ? true
+                : String(currentHref).includes("https://")
+                ? true
+                : !(currentHref.slice(0, 1) === "/")
             );
             setOpen(true);
           }}
