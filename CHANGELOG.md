@@ -1,3 +1,10 @@
+## [1.23.3](https://github.com/Neuvernetzung/design-system/compare/v1.23.2...v1.23.3) (2023-01-22)
+
+
+### Bug Fixes
+
+* **state:** Zustand default import deprecation [#404](https://github.com/Neuvernetzung/design-system/issues/404) ([9b81140](https://github.com/Neuvernetzung/design-system/commit/9b81140c73c7f50b06386ebbdac91a71c1be9189))
+
 ## [1.23.2](https://github.com/Neuvernetzung/design-system/compare/v1.23.1...v1.23.2) (2023-01-22)
 
 
