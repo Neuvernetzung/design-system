@@ -1,4 +1,5 @@
-import { memo } from "react";
+import cn from "classnames";
+import { useRouter } from "next/router";
 import { HexColorPicker } from "react-colorful";
 import {
   Controller,
@@ -6,15 +7,15 @@ import {
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
-import { Sizes } from "../../../types";
-import { RequiredRule, FormElement } from "../Form";
-import cn from "classnames";
-import { Variants } from "../Button/button";
-import { Popover } from "../Popover";
-import { colorIsBright } from "../../../utils";
-import { getInputStyles } from "../../../styles/groups";
+
 import { getText, Locales } from "../../../locales/getText";
-import { useRouter } from "next/router";
+import { getInputStyles } from "../../../styles/groups";
+import { Sizes } from "../../../types";
+import { colorIsBright } from "../../../utils";
+import { typedMemo } from "../../../utils/internal";
+import { Variants } from "../Button/button";
+import { FormElement, RequiredRule } from "../Form";
+import { Popover } from "../Popover";
 
 export type ColorPickerProps = {
   required?: RequiredRule;
@@ -99,4 +100,4 @@ export const ColorPicker = <
   );
 };
 
-export default memo(ColorPicker);
+export default typedMemo(ColorPicker);
