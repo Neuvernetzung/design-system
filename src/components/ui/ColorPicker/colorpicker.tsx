@@ -13,6 +13,7 @@ import { getInputStyles } from "../../../styles/groups";
 import { Sizes } from "../../../types";
 import { colorIsBright } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
+import { hexRegex } from "../../../utils/internal/regex/hex";
 import { Variants } from "../Button/button";
 import { FormElement, RequiredRule } from "../Form";
 import { Popover } from "../Popover";
@@ -49,6 +50,7 @@ export const ColorPicker = <
       name={name}
       rules={{
         required,
+        pattern: hexRegex,
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <FormElement
@@ -69,14 +71,18 @@ export const ColorPicker = <
                 getText(locale as Locales).colorpicker_placeholder,
               className: cn(
                 "w-full",
-                colorIsBright(value) ? "text-white" : "text-black"
+                value &&
+                  (colorIsBright(value)
+                    ? "text-accent-100 dark:text-accent-100"
+                    : "text-accent-900 dark:text-accent-900")
               ),
+              color: !error ? "accent" : "danger",
               style: {
                 backgroundColor: value,
               },
             }}
             content={
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 items-center">
                 <HexColorPicker color={value} onChange={onChange} />
                 <input
                   type="text"
