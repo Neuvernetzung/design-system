@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Form } from "..";
+import { Form, Button } from "..";
 import { ColorPicker } from "./colorpicker";
 
 export default {
@@ -68,6 +68,29 @@ export const Disabled = ({ ...args }) => {
         disabled
         {...args}
       />
+    </Form>
+  );
+};
+
+export const Error = ({ ...args }) => {
+  const formMethods = useForm({
+    defaultValues: { error: undefined },
+  });
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <ColorPicker
+        control={formMethods.control}
+        name="error"
+        label="Color Picker"
+        required
+        {...args}
+      />
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
