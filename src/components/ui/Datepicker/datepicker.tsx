@@ -58,9 +58,9 @@ import { InputVariants, Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "..";
 import { Button, ButtonGroup, IconButton } from "../Button";
+import { FormElement } from "../Form";
 import { Popover, PopoverButton } from "../Popover";
 import { Text } from "../Typography";
-import { FormElement } from "../Form";
 
 export type DatepickerProps = {
   label?: string;
@@ -191,11 +191,6 @@ export const Datepicker = <
 
     e.preventDefault();
 
-    const activeElement = document.activeElement;
-
-    // Wenn nicht im ausgewählten Kontainer dann return
-    if (!daysRef.current?.contains(activeElement)) return;
-
     if (e.key === "ArrowLeft") {
       const toSelect = subDays(preselectedDate, 1);
       if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
@@ -230,11 +225,6 @@ export const Datepicker = <
 
     e.preventDefault();
 
-    const activeElement = document.activeElement;
-
-    // Wenn nicht im ausgewählten Kontainer dann return
-    if (!monthsRef.current?.contains(activeElement)) return;
-
     if (e.key === "ArrowLeft") {
       const toSelect = subMonths(preselectedMonth, 1);
       if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
@@ -268,11 +258,6 @@ export const Datepicker = <
     if (!ARROW_KEYS.includes(e.key)) return;
 
     e.preventDefault();
-
-    const activeElement = document.activeElement;
-
-    // Wenn nicht im ausgewählten Kontainer dann return
-    if (!yearsRef.current?.contains(activeElement)) return;
 
     if (e.key === "ArrowLeft") {
       const toSelect = subYears(preselectedYear, 1);
@@ -488,6 +473,7 @@ export const Datepicker = <
                           onClick={() => {
                             select(clearTime(new Date()), true);
                             onChange(new Date());
+                            viewToday();
                           }}
                           size="sm"
                           disabled={
