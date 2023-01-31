@@ -488,6 +488,7 @@ export const Datepicker = <
                           onClick={() => {
                             select(clearTime(new Date()), true);
                             onChange(new Date());
+                            viewToday();
                           }}
                           size="sm"
                           disabled={
