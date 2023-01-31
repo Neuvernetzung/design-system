@@ -1,3 +1,14 @@
+## [1.23.4](https://github.com/Neuvernetzung/design-system/compare/v1.23.3...v1.23.4) (2023-01-31)
+
+
+### Bug Fixes
+
+* **ui:** Color Picker Error State optimiert [#410](https://github.com/Neuvernetzung/design-system/issues/410) ([0017930](https://github.com/Neuvernetzung/design-system/commit/0017930572d6594832eb345f39447836138a41d9))
+* **ui:** Datepicker Today Button setzt Wert und springt zu heute [#408](https://github.com/Neuvernetzung/design-system/issues/408) ([d88a558](https://github.com/Neuvernetzung/design-system/commit/d88a558b69a46f755daa2f8563c2bc20d3f38f66))
+* **ui:** Sinnlosen check bei handleArrowkeys entfernt [#407](https://github.com/Neuvernetzung/design-system/issues/407) ([3e5432e](https://github.com/Neuvernetzung/design-system/commit/3e5432ea286d90c50af228a8d91766d9a66cba9f))
+* **ui:** Tooltip Container zersplittern verhindern mit flex [#409](https://github.com/Neuvernetzung/design-system/issues/409) ([23f6eb7](https://github.com/Neuvernetzung/design-system/commit/23f6eb7acb519adcad920e2961a81c193e1418fd))
+* **ui:** TypedMemo bei ColorPicker nutzen, statt memo [#411](https://github.com/Neuvernetzung/design-system/issues/411) ([fc92729](https://github.com/Neuvernetzung/design-system/commit/fc9272914de08377d078567d7116cca85b778160))
+
 ## [1.23.3](https://github.com/Neuvernetzung/design-system/compare/v1.23.2...v1.23.3) (2023-01-22)
 
 
