@@ -98,7 +98,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
         role="tooltip"
         ref={ref || setInnerPopperElement}
         className={cn(
-          "pointer-events-none bg-opacity-75",
+          "pointer-events-none bg-opacity-75 flex",
           paddingsSmall[size],
           roundings[size],
           bgColors.black,
