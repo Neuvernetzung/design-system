@@ -1,6 +1,5 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { memo } from "react";
 import { HexColorPicker } from "react-colorful";
 import {
   Controller,
@@ -13,6 +12,7 @@ import { getText, Locales } from "../../../locales/getText";
 import { getInputStyles } from "../../../styles/groups";
 import { Sizes } from "../../../types";
 import { colorIsBright } from "../../../utils";
+import { typedMemo } from "../../../utils/internal";
 import { hexRegex } from "../../../utils/internal/regex/hex";
 import { Variants } from "../Button/button";
 import { FormElement, RequiredRule } from "../Form";
@@ -106,4 +106,4 @@ export const ColorPicker = <
   );
 };
 
-export default memo(ColorPicker);
+export default typedMemo(ColorPicker);
