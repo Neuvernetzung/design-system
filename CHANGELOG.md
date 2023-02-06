@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/Neuvernetzung/design-system/compare/v1.23.4...v1.24.0) (2023-02-06)
+
+
+### Features
+
+* **ui:** ReactElement bei Tag Label erlauben [#421](https://github.com/Neuvernetzung/design-system/issues/421) ([bf007ec](https://github.com/Neuvernetzung/design-system/commit/bf007ecbb19aabd3ab1416c5385706d73251d9ee))
+
 ## [1.23.4](https://github.com/Neuvernetzung/design-system/compare/v1.23.3...v1.23.4) (2023-01-31)
 
 
