@@ -46,15 +46,13 @@ Variants.parameters = {
   controls: { exclude: "variant" },
 };
 
-export const Colors = ({ ...args }) => {
-  return (
+export const Colors = ({ ...args }) => (
     <Container>
       {colors.map((color: any) => (
         <Tag key={color} label={color} color={color} {...args} />
       ))}
     </Container>
   );
-};
 
 Colors.parameters = {
   controls: { exclude: "color" },
@@ -73,5 +71,10 @@ export const Rounded = ({ ...args }) => (
     <Tag rounded label="rounded" {...args} />
     <Tag rounded label="rounded" leftIcon={Cog6ToothIcon} {...args} />
     <Tag rounded leftIcon={Cog6ToothIcon} {...args} />
+  </Container>
+);
+export const Element = ({ ...args }) => (
+  <Container>
+    <Tag label={<div className="flex flex-row items-center gap-2"><span className="flex h-2 w-2 bg-primary-500 rounded-full" />Text</div>} {...args} />
   </Container>
 );

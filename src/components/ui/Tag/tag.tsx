@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { FC, memo, SVGProps } from "react";
+import { FC, memo, ReactElement, SVGProps } from "react";
 
 import {
   adjustedTextColors,
@@ -18,7 +18,7 @@ import { capSize } from "../../../utils";
 import { Icon } from "../Icon";
 
 export type TagProps = {
-  label?: string;
+  label?: string | ReactElement;
   leftIcon?: FC<SVGProps<SVGSVGElement>>;
   rightIcon?: FC<SVGProps<SVGSVGElement>>;
   size?: keyof Sizes;
