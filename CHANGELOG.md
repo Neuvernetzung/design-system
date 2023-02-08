@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/Neuvernetzung/design-system/compare/v1.24.0...v1.24.1) (2023-02-08)
+
+
+### Bug Fixes
+
+* **deps:** Tiptap auf neuste Version updaten [#425](https://github.com/Neuvernetzung/design-system/issues/425) ([d3da14d](https://github.com/Neuvernetzung/design-system/commit/d3da14dc72d1ce6c205801d94f6df87c09fe5810))
+
 # [1.24.0](https://github.com/Neuvernetzung/design-system/compare/v1.23.4...v1.24.0) (2023-02-06)
 
 
