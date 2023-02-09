@@ -1,3 +1,202 @@
+## [1.24.1](https://github.com/Neuvernetzung/design-system/compare/v1.24.0...v1.24.1) (2023-02-08)
+
+
+### Bug Fixes
+
+* **deps:** Tiptap auf neuste Version updaten [#425](https://github.com/Neuvernetzung/design-system/issues/425) ([d3da14d](https://github.com/Neuvernetzung/design-system/commit/d3da14dc72d1ce6c205801d94f6df87c09fe5810))
+
+# [1.24.0](https://github.com/Neuvernetzung/design-system/compare/v1.23.4...v1.24.0) (2023-02-06)
+
+
+### Features
+
+* **ui:** ReactElement bei Tag Label erlauben [#421](https://github.com/Neuvernetzung/design-system/issues/421) ([bf007ec](https://github.com/Neuvernetzung/design-system/commit/bf007ecbb19aabd3ab1416c5385706d73251d9ee))
+
+## [1.23.4](https://github.com/Neuvernetzung/design-system/compare/v1.23.3...v1.23.4) (2023-01-31)
+
+
+### Bug Fixes
+
+* **ui:** Color Picker Error State optimiert [#410](https://github.com/Neuvernetzung/design-system/issues/410) ([0017930](https://github.com/Neuvernetzung/design-system/commit/0017930572d6594832eb345f39447836138a41d9))
+* **ui:** Datepicker Today Button setzt Wert und springt zu heute [#408](https://github.com/Neuvernetzung/design-system/issues/408) ([d88a558](https://github.com/Neuvernetzung/design-system/commit/d88a558b69a46f755daa2f8563c2bc20d3f38f66))
+* **ui:** Sinnlosen check bei handleArrowkeys entfernt [#407](https://github.com/Neuvernetzung/design-system/issues/407) ([3e5432e](https://github.com/Neuvernetzung/design-system/commit/3e5432ea286d90c50af228a8d91766d9a66cba9f))
+* **ui:** Tooltip Container zersplittern verhindern mit flex [#409](https://github.com/Neuvernetzung/design-system/issues/409) ([23f6eb7](https://github.com/Neuvernetzung/design-system/commit/23f6eb7acb519adcad920e2961a81c193e1418fd))
+* **ui:** TypedMemo bei ColorPicker nutzen, statt memo [#411](https://github.com/Neuvernetzung/design-system/issues/411) ([fc92729](https://github.com/Neuvernetzung/design-system/commit/fc9272914de08377d078567d7116cca85b778160))
+
+## [1.23.3](https://github.com/Neuvernetzung/design-system/compare/v1.23.2...v1.23.3) (2023-01-22)
+
+
+### Bug Fixes
+
+* **state:** Zustand default import deprecation [#404](https://github.com/Neuvernetzung/design-system/issues/404) ([9b81140](https://github.com/Neuvernetzung/design-system/commit/9b81140c73c7f50b06386ebbdac91a71c1be9189))
+
+## [1.23.2](https://github.com/Neuvernetzung/design-system/compare/v1.23.1...v1.23.2) (2023-01-22)
+
+
+### Bug Fixes
+
+* **ui:** InputWithTags darf kein leeren String annehmen, außerdem keine Werte doppelt. [#399](https://github.com/Neuvernetzung/design-system/issues/399) ([0aef9bc](https://github.com/Neuvernetzung/design-system/commit/0aef9bc704c8b7fa326944764091a696aebbc002))
+* **ui:** NativeLink nutzt NextLink wenn href intern, RichText addLink optimiert [#397](https://github.com/Neuvernetzung/design-system/issues/397) ([432f2f9](https://github.com/Neuvernetzung/design-system/commit/432f2f95d4898c89ddf3f7140c28520e1e004b01))
+* **ui:** RichText Focus in Anwendung behoben [#398](https://github.com/Neuvernetzung/design-system/issues/398) ([412ca1e](https://github.com/Neuvernetzung/design-system/commit/412ca1eeabba19fccc3b39924b52beeb558a67ef))
+
+## [1.23.1](https://github.com/Neuvernetzung/design-system/compare/v1.23.0...v1.23.1) (2023-01-21)
+
+
+### Bug Fixes
+
+* **deps:** Beta von TipTap bei Peers inkludieren [#394](https://github.com/Neuvernetzung/design-system/issues/394) ([8558e04](https://github.com/Neuvernetzung/design-system/commit/8558e0446e75bd2dc0235553839e531a3b2b3bd0))
+
+# [1.23.0](https://github.com/Neuvernetzung/design-system/compare/v1.22.1...v1.23.0) (2023-01-21)
+
+
+### Bug Fixes
+
+* **ui:** Tooltip per onMouseEnter aktivieren und createPortal benutzen [#390](https://github.com/Neuvernetzung/design-system/issues/390) ([ed5f34d](https://github.com/Neuvernetzung/design-system/commit/ed5f34d3621820af27a14bd429d889a596c18499))
+
+
+### Features
+
+* **ui:** RichText komplett überarbeitet mit TipTap [#383](https://github.com/Neuvernetzung/design-system/issues/383) ([c103c65](https://github.com/Neuvernetzung/design-system/commit/c103c6507c0614bb4782a93d98605786f4a9ebc7))
+
+## [1.22.1](https://github.com/Neuvernetzung/design-system/compare/v1.22.0...v1.22.1) (2023-01-19)
+
+
+### Bug Fixes
+
+* **ui:** tailwind scrollbar in peers [#387](https://github.com/Neuvernetzung/design-system/issues/387) ([87a07a3](https://github.com/Neuvernetzung/design-system/commit/87a07a3b6a1332eaf593b3a563eb3cab8e17553a))
+* **ui:** Tailwind scrollbar in peers [#387](https://github.com/Neuvernetzung/design-system/issues/387) ([80709d8](https://github.com/Neuvernetzung/design-system/commit/80709d8e521f41eb2056fbb7bbbfb2d686e27a09))
+* **ui:** tailwind-scrollbar in peers [#387](https://github.com/Neuvernetzung/design-system/issues/387) ([7f4575f](https://github.com/Neuvernetzung/design-system/commit/7f4575fd82981874a06cd73de266df0d497aa156))
+
+# [1.22.0](https://github.com/Neuvernetzung/design-system/compare/v1.21.0...v1.22.0) (2023-01-19)
+
+
+### Bug Fixes
+
+* **ui:** Tooltip anzeige verbessern und Tooltip Offsets prüfen [#381](https://github.com/Neuvernetzung/design-system/issues/381) ([5f3e8c4](https://github.com/Neuvernetzung/design-system/commit/5f3e8c463e0d08cf38daa1a65f3dcb0891b57b14))
+
+
+### Features
+
+* **ui:** TailwindCSS Scrollbar testen [#382](https://github.com/Neuvernetzung/design-system/issues/382) ([0ef6518](https://github.com/Neuvernetzung/design-system/commit/0ef651830412fd5399d1b83a90e74e5b3ee0acbb))
+
+# [1.21.0](https://github.com/Neuvernetzung/design-system/compare/v1.20.1...v1.21.0) (2023-01-19)
+
+
+### Bug Fixes
+
+* **ci:** Commit Message Lint fixen [#371](https://github.com/Neuvernetzung/design-system/issues/371) ([4f486e0](https://github.com/Neuvernetzung/design-system/commit/4f486e0ba63509c5eb3b68ce7b35e73413aebe52))
+* **ui:** Focus zu NativeLink hinzufügen [#149](https://github.com/Neuvernetzung/design-system/issues/149) ([163c6d5](https://github.com/Neuvernetzung/design-system/commit/163c6d5466f151160e656cdeba528a9bf4395e74))
+* **ui:** Multiple Select ButtonGroup Tag Remove Button in höhe anpassen zu anderem Button [#216](https://github.com/Neuvernetzung/design-system/issues/216) ([b0a15f5](https://github.com/Neuvernetzung/design-system/commit/b0a15f51af3063f08539667dcd6c57e92a934686))
+* **ui:** Platzhalter für fehlendes Vorschaubild nicht komplett dargestellt [#368](https://github.com/Neuvernetzung/design-system/issues/368) ([56314c6](https://github.com/Neuvernetzung/design-system/commit/56314c6ba9c60f0bfa7dab2ea87d2a7ce1d355e7))
+* **ui:** Popover Panel wird nicht mittig angezeigt [#369](https://github.com/Neuvernetzung/design-system/issues/369) ([da0de39](https://github.com/Neuvernetzung/design-system/commit/da0de39ea71c5105c6efbc288571ba4867fdcce9))
+* **ui:** Wenn 2 RichText untereinander dann Überlappung von Select [#201](https://github.com/Neuvernetzung/design-system/issues/201) ([e53b437](https://github.com/Neuvernetzung/design-system/commit/e53b437eb9f90b4aa40f70c4953e81a6b909312a))
+
+
+### Features
+
+* **ui:** Button mehr Farben ermöglichen [#370](https://github.com/Neuvernetzung/design-system/issues/370) ([873ccd4](https://github.com/Neuvernetzung/design-system/commit/873ccd47da49c9177a807334107a752a59704b3f))
+* **ui:** Input With Tags hinzugefügt [#238](https://github.com/Neuvernetzung/design-system/issues/238) ([94d024b](https://github.com/Neuvernetzung/design-system/commit/94d024b2f51a2a61a5668e64f2304ab52073ca60))
+
+## [1.20.1](https://github.com/Neuvernetzung/design-system/compare/v1.20.0...v1.20.1) (2023-01-16)
+
+
+### Bug Fixes
+
+* **ui:** Popover State Handling verbessert und PopoverGroup hinzugefügt [#365](https://github.com/Neuvernetzung/design-system/issues/365) ([b24b751](https://github.com/Neuvernetzung/design-system/commit/b24b751095a06dc8ce7d487cb54cdbdf56c231f8))
+
+# [1.20.0](https://github.com/Neuvernetzung/design-system/compare/v1.19.1...v1.20.0) (2023-01-10)
+
+
+### Bug Fixes
+
+* **ci:** Node Version in Actions auf 18 erhöht [#351](https://github.com/Neuvernetzung/design-system/issues/351) ([43df52e](https://github.com/Neuvernetzung/design-system/commit/43df52e6b425dcf06824a90f6c616f60087b4fb1))
+* **ui:** Backdrop Animation beschleunigen [#353](https://github.com/Neuvernetzung/design-system/issues/353) ([1433f6b](https://github.com/Neuvernetzung/design-system/commit/1433f6b0f8b3b97c59031aa871ce3a2bdb49c51b))
+* **ui:** Image wenn !src ebenfalls Fallback [#355](https://github.com/Neuvernetzung/design-system/issues/355) ([c3d6467](https://github.com/Neuvernetzung/design-system/commit/c3d64678508024486b1f5178d5d62044ca5dc581))
+* **ui:** Länge bei Textarea ist nicht mehr markierbar [#351](https://github.com/Neuvernetzung/design-system/issues/351) ([4fa0cae](https://github.com/Neuvernetzung/design-system/commit/4fa0cae3c2e97d7dfbf3361b13adad2eaa3d8705))
+* **ui:** useLayoutEffect durch useEffect ersetzen [#354](https://github.com/Neuvernetzung/design-system/issues/354) ([5dbb113](https://github.com/Neuvernetzung/design-system/commit/5dbb1135ca5de665e765fead038f5dc544714cff))
+
+
+### Features
+
+* **docs:** Beispiel für nested Theme hinzugefügt [#352](https://github.com/Neuvernetzung/design-system/issues/352) ([21c1ae0](https://github.com/Neuvernetzung/design-system/commit/21c1ae0584e0beb5c377f36bc7676f80494b67d6))
+* **ui:** Rahmen um alle Container drumrum, damit diese sich besser vom Hintergrund abheben [#356](https://github.com/Neuvernetzung/design-system/issues/356) ([1dc30e8](https://github.com/Neuvernetzung/design-system/commit/1dc30e8e275781320d8aa074dacc6f7180d11a9f))
+
+## [1.19.1](https://github.com/Neuvernetzung/design-system/compare/v1.19.0...v1.19.1) (2022-12-29)
+
+
+### Bug Fixes
+
+* **docs:** Readme Updaten - nicht alle Paths bei Content [#346](https://github.com/Neuvernetzung/design-system/issues/346) ([dc2f2fe](https://github.com/Neuvernetzung/design-system/commit/dc2f2fed47b71e35b33c87a9f9ff3de01390396b))
+* **ui:** Drawer exposen [#347](https://github.com/Neuvernetzung/design-system/issues/347) ([b2bf4c6](https://github.com/Neuvernetzung/design-system/commit/b2bf4c62a71a86ac90361bf68ba8fd6d8fe990b2))
+
+# [1.19.0](https://github.com/Neuvernetzung/design-system/compare/v1.18.0...v1.19.0) (2022-12-27)
+
+
+### Bug Fixes
+
+* **ui:** AutplayOptions statt reiner boolean bei Carousel [#341](https://github.com/Neuvernetzung/design-system/issues/341) ([1e7e9e9](https://github.com/Neuvernetzung/design-system/commit/1e7e9e915fae89efb16616dad7fb676b0fe29c78))
+
+
+### Features
+
+* **docs:** Wiederverwendbaren Import aktualisiert [#342](https://github.com/Neuvernetzung/design-system/issues/342) ([200d1dc](https://github.com/Neuvernetzung/design-system/commit/200d1dc9544cda6a5abca0336843151bf91dbdfe))
+
+# [1.18.0](https://github.com/Neuvernetzung/design-system/compare/v1.17.0...v1.18.0) (2022-12-25)
+
+
+### Bug Fixes
+
+* **ui:** Prose contenet required aber undefined möglich [#336](https://github.com/Neuvernetzung/design-system/issues/336) ([ea4776b](https://github.com/Neuvernetzung/design-system/commit/ea4776b8730889e3a3d124d26e2d7be9e2c7a29e))
+
+
+### Features
+
+* **ui:** RadioOptionProps exposen [#337](https://github.com/Neuvernetzung/design-system/issues/337) ([ea1a2cc](https://github.com/Neuvernetzung/design-system/commit/ea1a2cc67435c879697f34215888eb6ad8f7f8fb))
+
+# [1.17.0](https://github.com/Neuvernetzung/design-system/compare/v1.16.0...v1.17.0) (2022-12-25)
+
+
+### Bug Fixes
+
+* **ui:** Gaps bei Breadcrumbs entfernt [#329](https://github.com/Neuvernetzung/design-system/issues/329) ([05f3b0c](https://github.com/Neuvernetzung/design-system/commit/05f3b0ce4a8c3f8d22f0b887a2b29bbefe31e4e2))
+
+
+### Features
+
+* **ui:** DefaultIndex zu Tabs hinzugefügt [#331](https://github.com/Neuvernetzung/design-system/issues/331) ([eb409f6](https://github.com/Neuvernetzung/design-system/commit/eb409f69efb24d31fb42cc4ce3896e563bf39055))
+* **ui:** removeAll bei Select per default als false [#330](https://github.com/Neuvernetzung/design-system/issues/330) ([87327ca](https://github.com/Neuvernetzung/design-system/commit/87327ca6cc584a7bf880ab85612bb81dc4c1de80))
+
+# [1.16.0](https://github.com/Neuvernetzung/design-system/compare/v1.15.0...v1.16.0) (2022-12-20)
+
+
+### Bug Fixes
+
+* **ui:** Breadcrumbs exposen [#326](https://github.com/Neuvernetzung/design-system/issues/326) ([b01cbf9](https://github.com/Neuvernetzung/design-system/commit/b01cbf907ac4cb15f3a72301254c68c9d16b34dc))
+
+
+### Features
+
+* **test:** Storybook axe Tests durch jest-axe tests ersetzen [#322](https://github.com/Neuvernetzung/design-system/issues/322) ([292a70f](https://github.com/Neuvernetzung/design-system/commit/292a70f384c688b27e39a8b66cc5c6f79e8e0ef1))
+* **types:** MenuItemProps exposen [#321](https://github.com/Neuvernetzung/design-system/issues/321) ([a1b0eae](https://github.com/Neuvernetzung/design-system/commit/a1b0eae996dd72cc007e48702d4368d0dc47109e))
+* **types:** Modal initialFocus type optional null [#322](https://github.com/Neuvernetzung/design-system/issues/322) ([d6742f5](https://github.com/Neuvernetzung/design-system/commit/d6742f559c71976e5fc46262f0226cc7aceda99b))
+
+# [1.15.0](https://github.com/Neuvernetzung/design-system/compare/v1.14.0...v1.15.0) (2022-12-16)
+
+
+### Bug Fixes
+
+* **ui:** TooltipInner bekommt nun className von Parent und ist gleichzeitig ein optionales Popelement [#306](https://github.com/Neuvernetzung/design-system/issues/306) ([37d803e](https://github.com/Neuvernetzung/design-system/commit/37d803e608eb162305e8324873d11353144f5510))
+
+
+### Features
+
+* **theme:** Farben im Local Storage speichern [#304](https://github.com/Neuvernetzung/design-system/issues/304) ([f1f2ab6](https://github.com/Neuvernetzung/design-system/commit/f1f2ab6c6793f6e53d085c9003aa86de2fe6905f))
+* **theme:** setColor hinzugefügt [#309](https://github.com/Neuvernetzung/design-system/issues/309) ([2ef6e1c](https://github.com/Neuvernetzung/design-system/commit/2ef6e1c2ddad98087a63da102d82a9c13561d65d))
+* **theme:** useCssColors bereitstellen [#310](https://github.com/Neuvernetzung/design-system/issues/310) ([7f45498](https://github.com/Neuvernetzung/design-system/commit/7f4549890b5a0436eb268fc462be5c7c1c80ffd6))
+* **ui:** Breadcrumbs hinzufügen [#308](https://github.com/Neuvernetzung/design-system/issues/308) ([0957f88](https://github.com/Neuvernetzung/design-system/commit/0957f88e18329f1da253b1ec3c605b567fc31267))
+* **ui:** ColorPicker hinzugefügt [#142](https://github.com/Neuvernetzung/design-system/issues/142) ([3061573](https://github.com/Neuvernetzung/design-system/commit/3061573e3e6c2fd01e811010253dc1304fc1dee3))
+* **ui:** Drawer hinzugefügt [#311](https://github.com/Neuvernetzung/design-system/issues/311) ([2c0baf8](https://github.com/Neuvernetzung/design-system/commit/2c0baf86c33180401230b026c1bcbc83aa6e0f94))
+
 # [1.14.0](https://github.com/Neuvernetzung/design-system/compare/v1.13.0...v1.14.0) (2022-12-11)
 
 

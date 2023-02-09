@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { FC, memo, MutableRefObject, ReactNode, SVGProps, useRef } from "react";
-import create from "zustand";
+import { create } from "zustand";
 import { getText, Locales } from "../../../locales/getText";
 import { useRouter } from "next/router";
 

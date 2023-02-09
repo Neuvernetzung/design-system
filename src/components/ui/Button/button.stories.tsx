@@ -29,7 +29,7 @@ export default {
 } as Meta;
 
 const Container = ({ ...props }) => (
-  <div className="flex flex-row gap-5" {...props} />
+  <div className="flex flex-row items-start gap-5" {...props} />
 );
 
 export const Variants = ({ ...args }) => {
@@ -52,7 +52,7 @@ Variants.parameters = {
 
 export const Colors = ({ ...args }) => (
   <Container>
-    {colors.map((color: any) => (
+    {[...colors, "light", "dark"].map((color: any) => (
       <Button color={color} key={color} {...args}>
         {color}
       </Button>
@@ -62,9 +62,6 @@ export const Colors = ({ ...args }) => (
 
 Colors.parameters = {
   controls: { exclude: "color" },
-  a11y: {
-    disable: true,
-  },
 };
 
 export const Focuses = ({ ...args }) => {
@@ -200,7 +197,7 @@ export const IsLoading = ({ ...args }) => {
   };
 
   return (
-    <ThemeProvider allowNotification>
+    <ThemeProvider config={{ allowNotification: true }}>
       <Container className="flex">
         <Button
           onClick={() => {

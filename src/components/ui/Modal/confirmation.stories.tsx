@@ -18,7 +18,7 @@ const Container = ({ ...props }) => (
 );
 
 export const Default = ({ ...args }) => (
-  <ThemeProvider allowConfirmation>
+  <ThemeProvider config={{ allowConfirmation: true }}>
     <Container>
       <Button
         onClick={() =>
@@ -38,7 +38,7 @@ export const Default = ({ ...args }) => (
 );
 
 export const Colors = ({ ...args }) => (
-  <ThemeProvider allowConfirmation>
+  <ThemeProvider config={{ allowConfirmation: true }}>
     <Container>
       {colors.map((color) => (
         <Button
@@ -67,13 +67,10 @@ export const Colors = ({ ...args }) => (
 
 Colors.parameters = {
   controls: { exclude: "color" },
-  a11y: {
-    disable: true,
-  },
 };
 
 export const ForbidCancellation = ({ ...args }) => (
-  <ThemeProvider allowConfirmation>
+  <ThemeProvider config={{ allowConfirmation: true }}>
     <Container>
       <Button
         onClick={() =>
@@ -84,6 +81,7 @@ export const ForbidCancellation = ({ ...args }) => (
             confirm: action("confirm"),
             cancelButton: "Ablehnen",
             confirmButton: "Bestätigen",
+            heading: "Wollen sie wirklich?",
             ...args,
           })
         }

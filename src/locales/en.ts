@@ -3,4 +3,5 @@ export default {
   cancel: "Cancel",
   confirm: "Confirm",
   loading: "Loading...",
+  colorpicker_placeholder: "Choose color",
 };

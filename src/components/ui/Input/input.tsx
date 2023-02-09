@@ -1,4 +1,5 @@
 import cn from "classnames";
+import isNaN from "lodash/isNaN";
 import {
   ForwardedRef,
   forwardRef,
@@ -6,6 +7,7 @@ import {
   useEffect,
   useRef,
   useState,
+  HTMLAttributes,
 } from "react";
 import {
   Controller,
@@ -38,7 +40,7 @@ import type { InputElementProps } from "./InputElement/inputElement";
 export const sizes = inputSizes;
 export const variants = inputVariants;
 
-export type InputProps = {
+export type InputProps = HTMLAttributes<HTMLInputElement> & {
   type?: "text" | "number" | "password" | "url";
   label?: string;
   helper?: any;
@@ -113,6 +115,18 @@ export const InputInner = <
     setRightElementWidth(rightElementRef?.current?.clientWidth);
   }, []);
 
+  const inputTransform = (v?: string | number) => {
+    if (type === "number") return isNaN(v) ? "" : v?.toString();
+    return v;
+  };
+  const outputTransform = (v: string) => {
+    if (type === "number") {
+      const output = Number(v);
+      return isNaN(output) ? undefined : output;
+    }
+    return v;
+  };
+
   return (
     <Controller
       control={control}
@@ -150,8 +164,8 @@ export const InputInner = <
               type={type}
               id={name}
               ref={ref}
-              value={value}
-              onChange={onChange}
+              value={inputTransform(value)}
+              onChange={(e) => onChange(outputTransform(e.target.value))}
               onWheel={(e: any) =>
                 e.target?.type === "number" && e.target?.blur()
               } // damit beim scrollen die zahl nicht versehentlich verändert wird

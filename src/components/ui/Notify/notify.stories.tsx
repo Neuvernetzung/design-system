@@ -16,7 +16,7 @@ const Container = ({ ...props }) => (
 );
 
 export const Default = () => (
-  <ThemeProvider allowNotification>
+  <ThemeProvider config={{ allowNotification: true }}>
     <Container>
       <Button
         variant="outline"
@@ -89,7 +89,9 @@ export const CancelLoading = () => {
   };
 
   return (
-    <ThemeProvider allowNotification allowGlobalLoading>
+    <ThemeProvider
+      config={{ allowNotification: true, allowGlobalLoading: true }}
+    >
       <Container>
         <Button variant="outline" onClick={() => load(undefined)}>
           Global
@@ -97,10 +99,4 @@ export const CancelLoading = () => {
       </Container>
     </ThemeProvider>
   );
-};
-
-Default.parameters = {
-  a11y: {
-    disable: true,
-  },
 };

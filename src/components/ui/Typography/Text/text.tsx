@@ -41,6 +41,7 @@ export const Text: PolymorphicForwardRefExoticComponent<
       as,
       className,
       children,
+      ...props
     }: PolymorphicPropsWithoutRef<TextOwnProps, T>,
     ref: ForwardedRef<Element>
   ) => {
@@ -55,6 +56,7 @@ export const Text: PolymorphicForwardRefExoticComponent<
           extendedTextColors[color],
           className
         )}
+        {...props}
       >
         {children}
       </Component>
@@ -65,10 +67,3 @@ export const Text: PolymorphicForwardRefExoticComponent<
 export default memo(Text);
 
 Text.displayName = "Text";
-
-Text.defaultProps = {
-  size: "md",
-  color: "accent",
-  as: TextDefaultElement,
-  className: undefined,
-};

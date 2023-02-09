@@ -11,8 +11,8 @@ import {
   shadows,
   textColors,
 } from "../../../styles";
-import { useColorState } from "../../../theme";
 import { CrossIcon } from "../../../theme/icons";
+import { useColorState } from "../../../theme/useColorState";
 import { Colors } from "../../../types";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
@@ -64,6 +64,7 @@ export const Toast = ({
   icon,
 }: ToastProps) => {
   const { colorState } = useColorState();
+  console.log(variants(color, colorState).solid.text);
 
   return (
     <div
@@ -87,6 +88,7 @@ export const Toast = ({
         <Text
           size="sm"
           className={cn(variants(color, colorState)[variant].text)}
+          color="inherit"
         >
           {message}
         </Text>
@@ -96,6 +98,7 @@ export const Toast = ({
         variant="ghost"
         aria-label="close-dialog"
         onClick={handleClose}
+        color="inherit"
         icon={CrossIcon}
         className={cn(variants(color, colorState)[variant].close)}
       />

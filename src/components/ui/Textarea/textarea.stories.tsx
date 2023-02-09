@@ -146,6 +146,7 @@ export const MaxLength = ({ ...args }) => {
         name="textarea_max_length"
         placeholder="max length"
         maxLength={60}
+        showLength
         helper="Maximale länge von 60"
         {...args}
       />

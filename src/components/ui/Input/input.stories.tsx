@@ -4,7 +4,7 @@ import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, Form, Icon } from "..";
+import { Button, Form, Icon, Text } from "..";
 import { Input } from ".";
 import { sizes, variants } from "./input";
 
@@ -248,6 +248,28 @@ export const Types = ({ ...args }) => {
           {...args}
         />
       ))}
+    </Form>
+  );
+};
+
+export const NumberType = ({ ...args }) => {
+  const formMethods = useForm();
+  const value = formMethods.watch().number;
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Text>{value}</Text>
+      <Input
+        type="number"
+        control={formMethods.control}
+        name="number"
+        placeholder="Nummer eingeben."
+        {...args}
+      />
     </Form>
   );
 };

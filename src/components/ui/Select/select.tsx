@@ -10,7 +10,6 @@ import {
   KeyboardEvent,
   ReactNode,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -41,6 +40,7 @@ import {
   inputSizes,
   inputVariants,
 } from "../../../styles/groups";
+import { popperOffset } from "../../../styles/popper/offset";
 import { CheckIcon, ChevronUpDownIcon, CrossIcon } from "../../../theme/icons";
 import { InputVariants, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
@@ -108,7 +108,7 @@ export const SelectInner = <
     multiple,
     defaultMessage = "Auswählen...",
     noOptionsMessage = "Keine Optionen gefunden.",
-    removeAll = true,
+    removeAll = false,
     hideActive = false,
     multipleStyle = "tags",
     label,
@@ -123,6 +123,7 @@ export const SelectInner = <
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
+    modifiers: [{ name: "offset", options: { offset: popperOffset } }],
   });
 
   const formValue = useWatch({ control, name });
@@ -203,7 +204,12 @@ export const SelectInner = <
   const handleLeftAndRightArrow = (e: KeyboardEvent, index?: number) => {
     if (!multiple) return;
     if (!removeButtonRefs || removeButtonRefs?.length === 0) return;
-    let _index = index !== undefined ? index : removeButtonRefs?.length - 1;
+    let _index =
+      index !== undefined
+        ? index
+        : removeButtonRefs?.length
+        ? removeButtonRefs.length - 1
+        : 0;
 
     if (removeButtonRefs[_index]?.ref?.current) {
       if (e.key === "ArrowRight") {
@@ -230,7 +236,7 @@ export const SelectInner = <
 
   const rightElementRef: any = useRef(null);
   const [rightElementWidth, setRightElementWidth] = useState();
-  useLayoutEffect(() => {
+  useEffect(() => {
     setRightElementWidth(rightElementRef?.current?.clientWidth);
   }, []);
 

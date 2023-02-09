@@ -1,0 +1,15 @@
+import { Popover } from "@headlessui/react";
+import cn from "classnames";
+import { FC, memo, ReactNode } from "react";
+
+export type PopoverGroupProps = {
+  children: ReactNode;
+  className?: string;
+};
+
+export const PopoverGroup: FC<PopoverGroupProps> = ({
+  children,
+  className,
+}) => <Popover.Group className={cn("", className)}>{children}</Popover.Group>;
+
+export default memo(PopoverGroup);

@@ -29,7 +29,7 @@ export default {
 } as Meta;
 
 const Container = ({ ...props }) => (
-  <div className="flex flex-row gap-5" {...props} />
+  <div className="flex flex-row items-start gap-5" {...props} />
 );
 
 export const Variants = ({ ...args }) => {
@@ -54,27 +54,22 @@ Variants.parameters = {
   controls: { exclude: "variant" },
 };
 
-export const Colors = ({ ...args }) => {
-  return (
-    <Container>
-      {colors.map((color: any) => (
-        <IconButton
-          ariaLabel="home"
-          color={color}
-          key={color}
-          icon={HomeIcon}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Colors = ({ ...args }) => (
+  <Container>
+    {[...colors, "light", "dark"].map((color: any) => (
+      <IconButton
+        ariaLabel="home"
+        color={color}
+        key={color}
+        icon={HomeIcon}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },
-  a11y: {
-    disable: true,
-  },
 };
 
 export const Focuses = ({ ...args }) => {
@@ -182,7 +177,7 @@ export const IsLoading = ({ ...args }) => {
   };
 
   return (
-    <ThemeProvider allowNotification>
+    <ThemeProvider config={{ allowNotification: true }}>
       <Container className="flex">
         <IconButton
           ariaLabel="button"

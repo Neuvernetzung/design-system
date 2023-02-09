@@ -22,8 +22,8 @@ import {
   roundings,
   transition,
 } from "../../../../styles";
-import { useColorState } from "../../../../theme";
-import { Colors, Focuses, Sizes } from "../../../../types";
+import { useColorState } from "../../../../theme/useColorState";
+import { Colors, ExtendedColors, Focuses, Sizes } from "../../../../types";
 import { Icon } from "../../Icon";
 import { Spinner, useLoadingState } from "../../Loading/loading";
 import { sizes as textSizes } from "../../Typography/Text/text";
@@ -46,7 +46,7 @@ type ConditionalButtonProps =
 
 export type IconButtonOwnProps = {
   variant?: keyof Variants;
-  color?: keyof Colors;
+  color?: keyof (Colors & Pick<ExtendedColors, "light" | "dark" | "inherit">);
   size?: keyof Sizes;
   focus?: keyof Focuses;
   rounded?: boolean;

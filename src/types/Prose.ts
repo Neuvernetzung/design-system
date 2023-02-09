@@ -1,28 +1,30 @@
 import { FC } from "react";
 
 import type { BlockQuoteProps } from "../components/ui/BlockQuote";
-import { NativeLinkProps } from "../components/ui/Link";
+import { HorizontalRuleProps } from "../components/ui/HorizontalRule";
+import type { NativeLinkProps } from "../components/ui/Link";
 import type {
   ListItemProps,
   OrderedListProps,
   UnorderedListProps,
 } from "../components/ui/List";
-import { type HeadingProps } from "../components/ui/Typography/Heading/heading";
-import { TextProps } from "../components/ui/Typography/Text";
+import type { HeadingProps } from "../components/ui/Typography/Heading/heading";
+import type { TextProps } from "../components/ui/Typography/Text";
 
 export enum ProseComponentTags {
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  ol,
-  ul,
-  li,
-  blockquote,
-  a,
+  P = "p",
+  H1 = "h1",
+  H2 = "h2",
+  H3 = "h3",
+  H4 = "h4",
+  H5 = "h5",
+  H6 = "h6",
+  OL = "ol",
+  UL = "ul",
+  LI = "li",
+  BLOCKQUOTE = "blockquote",
+  A = "a",
+  HR = "hr",
 }
 
 export interface ProseComponents {
@@ -38,6 +40,7 @@ export interface ProseComponents {
   li: ProseComponent<ListItemProps>;
   blockquote: ProseComponent<BlockQuoteProps>;
   a: ProseComponent<NativeLinkProps>;
+  hr: ProseComponent<HorizontalRuleProps>;
 }
 
 interface ProseComponent<T> {

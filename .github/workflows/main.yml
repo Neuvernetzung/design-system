@@ -9,12 +9,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           persist-credentials: false
 
       - name: NodeJs aufsetzen
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: "npm"
 
       - name: GitHub Token einstellen für Private packages
@@ -34,34 +35,16 @@ jobs:
       #
 
       - name: Commit message checken
-        uses: JulienKode/pull-request-name-linter-action@v0.5.0
+        run: npx commitlint --from=HEAD~1
 
       - name: Build
         run: npm run build
 
-      # Playright mit Cache
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v3
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-      - run: npx playwright install --with-deps
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-      #
+      - name: Test
+        run: npm run test
 
       - name: Storybook builden
         run: npm run build-storybook --quiet
-
-      - name: Storybook starken und testen
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && npm run test"
 
       - name: Semantic release
         env:

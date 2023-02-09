@@ -86,9 +86,6 @@ export const Variants = ({ ...args }) => {
 
 Variants.parameters = {
   controls: { exclude: "variant" },
-  a11y: {
-    disable: true,
-  },
 };
 
 export const Sizes = ({ ...args }) => {
@@ -212,11 +209,6 @@ export const Disabled = ({ ...args }) => {
     </Form>
   );
 };
-Disabled.parameters = {
-  a11y: {
-    disable: true,
-  },
-};
 
 export const Error = ({ ...args }) => {
   const formMethods = useForm();
@@ -254,11 +246,6 @@ export const Error = ({ ...args }) => {
     </Form>
   );
 };
-Error.parameters = {
-  a11y: {
-    disable: true,
-  },
-};
 
 export const DefaultValue = ({ ...args }) => {
   const formMethods = useForm({ defaultValues: { default_value: "option-1" } });
@@ -281,9 +268,4 @@ export const DefaultValue = ({ ...args }) => {
       />
     </Form>
   );
-};
-Error.parameters = {
-  a11y: {
-    disable: true,
-  },
 };

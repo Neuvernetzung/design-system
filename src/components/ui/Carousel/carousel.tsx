@@ -11,6 +11,7 @@ import {
   Thumbs,
 } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { AutoplayOptions } from "swiper/types";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
 import { IconButton } from "../Button";
@@ -23,7 +24,7 @@ export type CarouselProps = {
   withThumbs?: boolean;
   withPagination?: boolean;
   loop?: boolean;
-  autoplay?: boolean;
+  autoplay?: boolean | AutoplayOptions;
   className?: string;
   thumbsClassName?: string;
 };
@@ -153,12 +154,3 @@ export const Carousel = ({
 };
 
 export default memo(Carousel);
-
-Carousel.defaultProps = {
-  withThumbs: false,
-  withPagination: false,
-  loop: false,
-  autoplay: false,
-  className: undefined,
-  thumbsClassName: undefined,
-};
