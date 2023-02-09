@@ -11,7 +11,9 @@ import {
 
 import {
   bgColors,
+  bgColorsInteractive,
   extendedBgColors,
+  extendedBgColorsInteractive,
   focus,
   gaps,
   heightsSmall,
@@ -92,7 +94,9 @@ export const SwitchInner = <
                 type="button"
                 aria-label={name}
                 className={cn(
-                  checked ? bgColors[color] : extendedBgColors.filled,
+                  checked
+                    ? bgColorsInteractive[color]
+                    : extendedBgColorsInteractive.filled,
                   heightsSmall[size],
                   focus[color],
                   transition,
