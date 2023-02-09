@@ -436,7 +436,7 @@ export const Datepicker = <
                           onClick={(e: PointerEvent) => {
                             e.preventDefault();
                             clearSelected();
-                            onChange(null);
+                            onChange(undefined);
                           }}
                           disabled={disabled}
                         />

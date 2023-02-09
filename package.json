@@ -22,6 +22,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rimraf dist",
+    "type-check": "tsc",
     "build": "npm run clean && tsup",
     "semantic-release": "semantic-release"
   },
@@ -70,7 +71,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
-    "@headlessui/react": "^1.7.7",
+    "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.13",
     "@popperjs/core": "^2.11.6",
     "@semantic-release/changelog": "^6.0.2",

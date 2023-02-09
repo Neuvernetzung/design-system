@@ -33,11 +33,13 @@ export type NotifyProps = {
   icon?: ElementType<SVGElement>;
 };
 
-interface NotifyWithId extends NotifyProps {
-  id: string;
-}
+export type GeneralNotifyProps = Pick<NotifyProps, "variant">;
 
-export const Notify = () => {
+type NotifyWithId = NotifyProps & {
+  id: string;
+};
+
+export const Notify = (generalProps: GeneralNotifyProps) => {
   const notification = useNotifyState((state) => state.notification);
 
   const [notificationArray, setNotificationArray] = useState<NotifyWithId[]>(
@@ -86,6 +88,7 @@ export const Notify = () => {
       {notificationArray.map(
         ({ id, message, color = "accent", icon, variant }) => (
           <Toast
+            {...generalProps}
             key={id}
             message={message}
             color={color}

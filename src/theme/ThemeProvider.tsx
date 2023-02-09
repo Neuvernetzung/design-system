@@ -2,49 +2,49 @@ import get from "lodash/get";
 import isString from "lodash/isString";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { ReactNode, useEffect } from "react";
-import { create } from "zustand";
 
 import { Loading } from "../components/ui/Loading";
-import { ConfirmationModal } from "../components/ui/Modal";
+import { ConfirmationModal } from "../components/ui/Modal/confirmation";
 import { Notify } from "../components/ui/Notify";
+import { GeneralNotifyProps } from "../components/ui/Notify/notify";
 import { Color, Colors, HEX } from "../types";
 import { getRGBColorVariable } from "../utils";
 import { createCSSSelector } from "../utils/internal";
 import { ExtendColors, extendColors, ReturnedColors } from "./extendColors";
 import { Icons } from "./icons";
+import { useColorState } from "./useColorState";
 
 const LOCAL_COLOR_KEY = "colors";
 
 type ThemeProviderProps = {
   config?: ConfigProps;
   children: ReactNode;
-  allowNotification?: boolean;
-  allowConfirmation?: boolean;
-  allowGlobalLoading?: boolean;
 };
 
 export type ConfigProps = {
   colors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
   defaultTheme?: "system" | "light" | "dark";
-};
+  allowConfirmation?: boolean;
+  allowGlobalLoading?: boolean;
+} & NotificationConfigProps;
 
-type ColorState = {
-  colorState: ReturnedColors | undefined;
-};
+type NotificationConfigProps =
+  | {
+      allowNotification: true;
+      notifyProps?: GeneralNotifyProps;
+    }
+  | { allowNotification?: false; notifyProps?: undefined };
 
-export const useColorState = create<ColorState>(() => ({
-  colorState: extendColors(),
-}));
-
-export const ThemeProvider = ({
-  config,
-  children,
-  allowNotification = false,
-  allowConfirmation = false,
-  allowGlobalLoading = false,
-}: ThemeProviderProps) => {
-  const { colors, defaultTheme } = config || {};
+export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
+  const {
+    colors,
+    defaultTheme,
+    allowNotification,
+    notifyProps,
+    allowConfirmation,
+    allowGlobalLoading,
+  } = config || {};
 
   useColors(":root", colors);
 
@@ -53,7 +53,7 @@ export const ThemeProvider = ({
       attribute="class"
       defaultTheme={defaultTheme || "system"}
     >
-      {allowNotification && <Notify />}
+      {allowNotification && <Notify {...(notifyProps || {})} />}
       {allowConfirmation && <ConfirmationModal />}
       {allowGlobalLoading && <Loading />}
       {children}

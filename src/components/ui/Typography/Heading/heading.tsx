@@ -74,7 +74,12 @@ export const Heading: PolymorphicForwardRefExoticComponent<
     return (
       <Component
         ref={ref}
-        className={cn("font-heading", sizes[size], colors[color], className)}
+        className={cn(
+          "font-heading font-semibold",
+          sizes[size],
+          colors[color],
+          className
+        )}
         {...props}
       >
         {children}
