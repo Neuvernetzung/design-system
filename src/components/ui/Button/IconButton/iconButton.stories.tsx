@@ -177,7 +177,7 @@ export const IsLoading = ({ ...args }) => {
   };
 
   return (
-    <ThemeProvider allowNotification>
+    <ThemeProvider config={{ allowNotification: true }}>
       <Container className="flex">
         <IconButton
           ariaLabel="button"

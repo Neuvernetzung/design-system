@@ -12,7 +12,7 @@ import {
   textColors,
   textSizes,
 } from "../../../styles";
-import { useColorState } from "../../../theme";
+import { useColorState } from "../../../theme/useColorState";
 import type { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
 import { Icon } from "../Icon";

@@ -22,6 +22,7 @@
     "dev": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rimraf dist",
+    "type-check": "tsc",
     "build": "npm run clean && tsup",
     "semantic-release": "semantic-release"
   },
