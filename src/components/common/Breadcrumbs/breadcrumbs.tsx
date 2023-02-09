@@ -10,12 +10,14 @@ type BreadcrumbsT = {
   size?: keyof Sizes;
   variant?: keyof Variants;
   transform?: (item?: string) => string;
+  shorten?: number;
 };
 
 export const Breadcrumbs = ({
   size = "sm",
   variant = "ghost",
   transform,
+  shorten = 4,
 }: BreadcrumbsT) => {
   const router = useRouter();
 
@@ -33,8 +35,8 @@ export const Breadcrumbs = ({
     return null;
   });
 
-  if (newPaths.length > 4) {
-    newPaths.splice(1, newPaths.length - 4);
+  if (newPaths.length > shorten) {
+    newPaths.splice(1, newPaths.length - shorten);
     newPaths.splice(1, 1, "...");
   }
 
