@@ -28,7 +28,7 @@ import {
   roundings,
   transition,
 } from "../../../styles";
-import { useColorState } from "../../../theme";
+import { useColorState } from "../../../theme/useColorState";
 import type { Colors, ExtendedColors, Focuses, Sizes } from "../../../types";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
@@ -54,7 +54,7 @@ export type Variants = {
 };
 
 export const colors = (
-  color: keyof (Colors & Pick<ExtendedColors, "light" | "dark">),
+  color: keyof (Colors & Pick<ExtendedColors, "light" | "dark" | "inherit">),
   colorState?: Colors
 ): ColorProps => ({
   base: cn(extendedBgColorsInteractive[color], extendedBorders[color]),
@@ -88,7 +88,7 @@ export const ButtonDefaultElement = "button";
 
 export type ButtonOwnProps = {
   variant?: keyof Variants;
-  color?: keyof (Colors & Pick<ExtendedColors, "dark" | "light">);
+  color?: keyof (Colors & Pick<ExtendedColors, "dark" | "light" | "inherit">);
   size?: keyof Sizes;
   focus?: keyof Focuses;
   fullWidth?: boolean;
