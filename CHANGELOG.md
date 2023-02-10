@@ -1,3 +1,10 @@
+## [1.25.3](https://github.com/Neuvernetzung/design-system/compare/v1.25.2...v1.25.3) (2023-02-10)
+
+
+### Bug Fixes
+
+* **ui:** Date reset wieder zurück auf null [#446](https://github.com/Neuvernetzung/design-system/issues/446) ([b008018](https://github.com/Neuvernetzung/design-system/commit/b0080184980aec2a0cc7bdafbdaef26b198bfe62))
+
 ## [1.25.2](https://github.com/Neuvernetzung/design-system/compare/v1.25.1...v1.25.2) (2023-02-10)
 
 
