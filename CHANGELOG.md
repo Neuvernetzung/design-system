@@ -1,3 +1,11 @@
+## [1.25.1](https://github.com/Neuvernetzung/design-system/compare/v1.25.0...v1.25.1) (2023-02-10)
+
+
+### Bug Fixes
+
+* **theme:** Notification Style Einstellbar in ThemeProvider Config [#431](https://github.com/Neuvernetzung/design-system/issues/431) ([1cf3c63](https://github.com/Neuvernetzung/design-system/commit/1cf3c63a7f018e0c141ddb91ac5f32a678018d82))
+* **ui:** Input type Number wenn Feld leer dann undefined [#439](https://github.com/Neuvernetzung/design-system/issues/439) ([b4782f4](https://github.com/Neuvernetzung/design-system/commit/b4782f4800760310f88500a3dc9e3ddc79b30e7e))
+
 # [1.25.0](https://github.com/Neuvernetzung/design-system/compare/v1.24.1...v1.25.0) (2023-02-09)
 
 
