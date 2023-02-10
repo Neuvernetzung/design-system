@@ -436,7 +436,7 @@ export const Datepicker = <
                           onClick={(e: PointerEvent) => {
                             e.preventDefault();
                             clearSelected();
-                            onChange(undefined);
+                            onChange(null); // null wird verwendet, da bei undefined der Controller auf den defaultValue zurücksetzt
                           }}
                           disabled={disabled}
                         />
