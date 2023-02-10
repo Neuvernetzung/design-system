@@ -1,12 +1,11 @@
 import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
-
 import cn from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import isString from "lodash/isString";
 import { memo, ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
-import { MinusIcon, PlusIcon, ChevronDownIcon } from "../../../theme/icons";
+import { ChevronDownIcon, MinusIcon, PlusIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { Button } from "../Button";
 import { Icon } from "../Icon";

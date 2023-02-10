@@ -64,7 +64,6 @@ export const Toast = ({
   icon,
 }: ToastProps) => {
   const { colorState } = useColorState();
-  console.log(variants(color, colorState).solid.text);
 
   return (
     <div

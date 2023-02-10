@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { BlockQuote } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { BlockQuote } from ".";
 
 it("BlockQuote axe", async () => {
   const { container } = render(<BlockQuote>Test</BlockQuote>);

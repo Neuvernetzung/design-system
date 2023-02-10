@@ -1,11 +1,12 @@
+import BlockQuoteExtension from "@tiptap/extension-blockquote";
 import {
   NodeViewContent,
   NodeViewWrapper,
   ReactNodeViewRenderer,
 } from "@tiptap/react";
+
 import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
-import BlockQuoteExtension from "@tiptap/extension-blockquote";
 
 const BlockQuoteComponent = () => (
   <NodeViewWrapper>

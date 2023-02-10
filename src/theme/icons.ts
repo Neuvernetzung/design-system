@@ -13,6 +13,7 @@ import {
   ComputerDesktopIcon as HeroComputerDesktopIcon,
   ExclamationCircleIcon as HeroExclamationCircleIcon,
   ExclamationTriangleIcon as HeroExclamationTriangleIcon,
+  HomeIcon as HeroHomeIcon,
   InformationCircleIcon as HeroInformationCircleIcon,
   LinkIcon as HeroLinkIcon,
   ListBulletIcon as HeroListBulletIcon,
@@ -22,7 +23,6 @@ import {
   PlusIcon as HeroPlusIcon,
   SunIcon as HeroSunIcon,
   TrashIcon as HeroTrashIcon,
-  HomeIcon as HeroHomeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";

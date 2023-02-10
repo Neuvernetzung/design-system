@@ -1,12 +1,12 @@
-import React from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
+import React from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { colors } from "../../../types";
 import { Button } from "../Button";
-import { ConfirmationModal, confirmation } from ".";
+import { confirmation, ConfirmationModal } from ".";
 
 export default {
   title: "UI/Overlay/Confirmation",

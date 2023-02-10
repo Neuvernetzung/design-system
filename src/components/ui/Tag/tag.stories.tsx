@@ -2,7 +2,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { colors, type Sizes as SizesType } from "../../../types";
+import { type Sizes as SizesType,colors } from "../../../types";
 import { Tag, variants } from "./tag";
 
 export default {

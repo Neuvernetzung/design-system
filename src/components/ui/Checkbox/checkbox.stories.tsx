@@ -10,9 +10,9 @@ import { useForm } from "react-hook-form";
 
 import { colors, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
+import { Icon as IconComponent } from "../Icon";
 import { Checkbox } from ".";
 import { CheckboxVariants } from "./checkbox";
-import { Icon as IconComponent } from "../Icon";
 
 export default {
   title: "UI/Form/Checkbox",

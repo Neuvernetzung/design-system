@@ -1,6 +1,6 @@
 import cn from "classnames";
-import parse, { domToReact } from "html-react-parser";
 import type { Element, HTMLReactParserOptions } from "html-react-parser";
+import parse, { domToReact } from "html-react-parser";
 import { createElement, memo, ReactNode } from "react";
 
 import { prose } from "../../../styles";

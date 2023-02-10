@@ -1,5 +1,6 @@
 import LinkExtension from "@tiptap/extension-link";
 import { mergeAttributes } from "@tiptap/react";
+
 import { linkStyle } from "../../../../styles/link";
 
 export const CustomLink = LinkExtension.extend({

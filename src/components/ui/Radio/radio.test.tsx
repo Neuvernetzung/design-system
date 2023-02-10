@@ -1,7 +1,8 @@
-import { axe } from "jest-axe";
-import { Radio } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
 import { useForm } from "react-hook-form";
+
+import { Radio } from ".";
 
 const ExtendedForm = () => {
   const { control } = useForm();

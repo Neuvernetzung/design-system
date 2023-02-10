@@ -1,4 +1,5 @@
 import cn from "classnames";
+
 import { borders, marginsY } from "../../../styles";
 
 export type HorizontalRuleProps = {};

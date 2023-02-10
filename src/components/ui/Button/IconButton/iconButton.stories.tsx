@@ -1,8 +1,8 @@
 import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
-import { ThemeProvider } from "../../../../theme";
 
+import { ThemeProvider } from "../../../../theme";
 import { colors, Sizes as SizesType } from "../../../../types";
 import { loading } from "../../Loading";
 import { notify } from "../../Notify";

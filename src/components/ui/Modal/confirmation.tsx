@@ -1,9 +1,9 @@
 import cn from "classnames";
+import { useRouter } from "next/router";
 import { FC, memo, MutableRefObject, ReactNode, SVGProps, useRef } from "react";
 import { create } from "zustand";
-import { getText, Locales } from "../../../locales/getText";
-import { useRouter } from "next/router";
 
+import { getText, Locales } from "../../../locales/getText";
 import { gaps } from "../../../styles";
 import { Colors } from "../../../types";
 import { Button } from "../Button";
