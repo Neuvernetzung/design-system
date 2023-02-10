@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { OrderedList, ListItem, UnorderedList } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { ListItem, OrderedList, UnorderedList } from ".";
 
 it("OrderedList axe", async () => {
   const { container } = render(

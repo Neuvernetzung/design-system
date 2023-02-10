@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { Heading } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { Heading } from ".";
 
 it("Heading axe", async () => {
   const { container } = render(<Heading>Test</Heading>);

@@ -1,5 +1,6 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
+import isString from "lodash/isString";
 import {
   ElementType,
   FC,
@@ -32,9 +33,8 @@ import { useColorState } from "../../../theme/useColorState";
 import type { Colors, ExtendedColors, Focuses, Sizes } from "../../../types";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
-import { sizes as textSizes } from "../Typography/Text/text";
 import { useLoadingState } from "../Loading/loading";
-import isString from "lodash/isString";
+import { sizes as textSizes } from "../Typography/Text/text";
 
 export const variants: Variants = {
   filled: "",

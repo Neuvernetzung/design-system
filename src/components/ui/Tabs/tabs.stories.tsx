@@ -3,17 +3,17 @@ import React, { useState } from "react";
 
 import type { Colors as ColorsType, Sizes as SizesType } from "../../../types";
 import { Button } from "../Button";
+import { Text } from "../Typography/Text";
 import {
   StandaloneTabList,
   StandaloneTabPanels,
   TabButton,
   TabGroup,
   TabList,
-  TabPanels,
   TabPanel,
+  TabPanels,
   Tabs,
 } from ".";
-import { Text } from "../Typography/Text";
 
 export default {
   title: "UI/Disclosures/Tabs",

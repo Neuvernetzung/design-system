@@ -3,9 +3,9 @@ import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { ExtendColors, setColors, ThemeProvider, useColorState } from ".";
-import { Button, Form, ColorPicker, Tag } from "../components/ui";
+import { Button, ColorPicker, Form, Tag } from "../components/ui";
 import { borders } from "../styles";
+import { ExtendColors, setColors, ThemeProvider, useColorState } from ".";
 
 export default {
   title: "THEME/ThemeProvider",

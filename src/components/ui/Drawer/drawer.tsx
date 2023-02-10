@@ -1,11 +1,6 @@
 import { Dialog } from "@headlessui/react";
-import { CrossIcon } from "../../../theme/icons";
-import { Backdrop } from "../Backdrop";
-import { Icon } from "../Icon";
-import { IconButton } from "../Button";
-import { Text } from "../Typography";
+import cn from "classnames";
 import { FC, memo, MutableRefObject, ReactNode, SVGProps } from "react";
-import { ExtendedSizes, Sizes } from "../../../types";
 
 import {
   bgColors,
@@ -16,7 +11,12 @@ import {
   transition,
   zIndexes,
 } from "../../../styles";
-import cn from "classnames";
+import { CrossIcon } from "../../../theme/icons";
+import { ExtendedSizes, Sizes } from "../../../types";
+import { Backdrop } from "../Backdrop";
+import { IconButton } from "../Button";
+import { Icon } from "../Icon";
+import { Text } from "../Typography";
 
 export type DrawerProps = {
   open: boolean;

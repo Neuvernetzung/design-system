@@ -1,8 +1,9 @@
-import { axe } from "jest-axe";
-import { IconButton, Button } from "..";
-import { ButtonGroup } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
 import { HomeIcon } from "../../../../theme/icons";
+import { Button, IconButton } from "..";
+import { ButtonGroup } from ".";
 
 it("ButtonGroup axe", async () => {
   const { container } = render(

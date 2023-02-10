@@ -2,14 +2,14 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { Sizes as SizesType } from "../../../types";
 import { Button, ButtonGroup, IconButton } from "../Button";
+import { Select } from "../Select";
+import { TabGroup, TabList, TabPanels } from "../Tabs";
 import { Heading } from "../Typography";
 import { Modal, ModalSizes } from "./modal";
-import { TabList, TabPanels, TabGroup } from "../Tabs";
-import { Select } from "../Select";
-import { useForm } from "react-hook-form";
 
 export default {
   title: "UI/Overlay/Modal",

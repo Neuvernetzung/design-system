@@ -10,7 +10,7 @@ import {
   InformationCircleIcon,
 } from "../../../theme/icons";
 import { Colors } from "../../../types";
-import { loading, isLoading } from "../Loading/loading";
+import { isLoading, loading } from "../Loading/loading";
 import { Toast } from "../Toast";
 import { ToastVariants } from "../Toast/toast";
 
@@ -39,7 +39,7 @@ type NotifyWithId = NotifyProps & {
   id: string;
 };
 
-export const Notify = (generalProps: GeneralNotifyProps) => {
+export const Notify = ({ variant }: GeneralNotifyProps) => {
   const notification = useNotifyState((state) => state.notification);
 
   const [notificationArray, setNotificationArray] = useState<NotifyWithId[]>(
@@ -54,7 +54,7 @@ export const Notify = (generalProps: GeneralNotifyProps) => {
         {
           message: notification.message,
           color: notification.color,
-          variant: notification.variant,
+          variant: notification.variant || variant,
           id,
         },
       ]);
@@ -88,7 +88,6 @@ export const Notify = (generalProps: GeneralNotifyProps) => {
       {notificationArray.map(
         ({ id, message, color = "accent", icon, variant }) => (
           <Toast
-            {...generalProps}
             key={id}
             message={message}
             color={color}
