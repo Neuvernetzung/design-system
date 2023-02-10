@@ -1,3 +1,10 @@
+## [1.25.2](https://github.com/Neuvernetzung/design-system/compare/v1.25.1...v1.25.2) (2023-02-10)
+
+
+### Bug Fixes
+
+* **ui:** Input type number kein Reset möglich wenn defaultValue gegeben ist. [#443](https://github.com/Neuvernetzung/design-system/issues/443) ([ea745a9](https://github.com/Neuvernetzung/design-system/commit/ea745a98a3eaea71a5d0ac3b06543db74278c593))
+
 ## [1.25.1](https://github.com/Neuvernetzung/design-system/compare/v1.25.0...v1.25.1) (2023-02-10)
 
 
