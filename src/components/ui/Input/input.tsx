@@ -122,7 +122,7 @@ export const InputInner = <
   const outputTransform = (v: string) => {
     if (type === "number") {
       const output = Number(v);
-      return isNaN(output) ? undefined : output;
+      return isNaN(output) || v === "" ? undefined : output;
     }
     return v;
   };
