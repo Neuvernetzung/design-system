@@ -1,6 +1,6 @@
 import cn from "classnames";
-import isString from "lodash/isString";
 import isArray from "lodash/isArray";
+import isString from "lodash/isString";
 import { FC, KeyboardEvent, MouseEvent, ReactNode, SVGProps } from "react";
 import {
   Controller,

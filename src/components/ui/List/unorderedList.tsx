@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { memo, OlHTMLAttributes, forwardRef, ForwardedRef } from "react";
+import { ForwardedRef, forwardRef, memo, OlHTMLAttributes } from "react";
 
 import { listStyle } from "../../../styles";
 

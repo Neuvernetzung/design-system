@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { Modal } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { Modal } from ".";
 
 it("Modal axe", async () => {
   const { container } = render(

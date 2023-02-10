@@ -83,9 +83,8 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   ) => {
     const [referenceElement, setReferenceElement] =
       useState<HTMLElement | null>(null);
-    const [popperElement, setPopperElement] = useState<HTMLElement | null>(
-      null
-    );
+    const [popperElement, setPopperElement] =
+      useState<HTMLElement | null>(null);
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
       placement,
       modifiers: [{ name: "offset", options: { offset: popperOffset } }],

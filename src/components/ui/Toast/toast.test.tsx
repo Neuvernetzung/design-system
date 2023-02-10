@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { Toast } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { Toast } from ".";
 
 it("Toast axe", async () => {
   const { container } = render(

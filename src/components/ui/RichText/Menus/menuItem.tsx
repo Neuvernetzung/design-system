@@ -1,8 +1,9 @@
-import { FC, SVGProps, ReactNode } from "react";
-import { Tooltip } from "../../Tooltip";
-import { IconButton } from "../../Button";
 import cn from "classnames";
+import { FC, ReactNode, SVGProps } from "react";
+
 import { gapsSmall } from "../../../../styles";
+import { IconButton } from "../../Button";
+import { Tooltip } from "../../Tooltip";
 
 type RichTextMenuItemProps = {
   onClick: (data: any[]) => void;

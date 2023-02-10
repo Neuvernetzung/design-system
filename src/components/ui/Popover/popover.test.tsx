@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { Popover } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { Popover } from ".";
 
 it("Popover axe", async () => {
   const { container } = render(

@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { LiHTMLAttributes, memo, forwardRef, ForwardedRef } from "react";
+import { ForwardedRef, forwardRef, LiHTMLAttributes, memo } from "react";
 
 import { textColors } from "../../../styles";
 

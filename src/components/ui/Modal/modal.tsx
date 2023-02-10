@@ -5,13 +5,13 @@ import { FC, Fragment, MutableRefObject, ReactNode } from "react";
 
 import {
   bgColors,
-  pagePaddings,
+  paddingsEvenly,
   paddingsY,
+  pagePaddings,
   roundings,
   shadows,
   transition,
   zIndexes,
-  paddingsEvenly,
 } from "../../../styles";
 import { ExtendedSizes, Sizes } from "../../../types";
 import { Backdrop } from "../Backdrop";

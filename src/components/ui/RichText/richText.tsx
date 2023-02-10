@@ -5,7 +5,6 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import cn from "classnames";
 import { useState } from "react";
-import { Text } from "../Typography";
 import {
   Controller,
   FieldPath,
@@ -22,6 +21,7 @@ import {
 } from "../../../styles";
 import { typedMemo } from "../../../utils/internal";
 import { FormElement, RequiredRule } from "../Form";
+import { Text } from "../Typography";
 import {
   CustomBlockQuote,
   CustomBulletList,

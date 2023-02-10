@@ -1,27 +1,28 @@
-import { forwardRef, ForwardedRef, HTMLAttributes, useState } from "react";
+import cn from "classnames";
+import isArray from "lodash/isArray";
+import { ForwardedRef, forwardRef, HTMLAttributes, useState } from "react";
 import {
   Controller,
   FieldPath,
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
-import { getInputStyles } from "../../../../styles/groups";
+
 import {
   extendedBgColors,
   gaps,
   paddingsEvenly,
   roundings,
 } from "../../../../styles";
-import cn from "classnames";
-import { RequiredRule, FormElement } from "../../Form";
-import { InputVariants, Sizes } from "../../../../types";
-import { typedMemo } from "../../../../utils/internal";
-import { InputAddon } from "../InputAddon";
+import { getInputStyles } from "../../../../styles/groups";
 import { CrossIcon, PlusIcon } from "../../../../theme/icons";
-import { ButtonGroup, IconButton, Button } from "../../Button";
-import isArray from "lodash/isArray";
-import { Text } from "../../Typography";
+import { InputVariants, Sizes } from "../../../../types";
 import { capSize } from "../../../../utils";
+import { typedMemo } from "../../../../utils/internal";
+import { Button, ButtonGroup, IconButton } from "../../Button";
+import { FormElement, RequiredRule } from "../../Form";
+import { Text } from "../../Typography";
+import { InputAddon } from "../InputAddon";
 
 export type InputWithTagsProps = HTMLAttributes<HTMLInputElement> & {
   required?: RequiredRule;
