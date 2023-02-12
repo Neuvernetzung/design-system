@@ -1,7 +1,7 @@
 import type { Colors } from "../types";
 
 export const focusBase: string =
-  "focus:outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20";
+  "focus:outline-none outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20";
 
 export const focusRing: Colors = {
   brand: `focus-visible:ring-brand-500 ${focusBase}`,
@@ -14,7 +14,7 @@ export const focusRing: Colors = {
   danger: `focus-visible:ring-danger-500 ${focusBase}`,
 };
 
-export const focusBgBase: string = "focus:outline-none";
+export const focusBgBase: string = "focus:outline-none outline-none";
 
 export const focusBg: Colors = {
   brand: `focus-visible:bg-brand-400 dark:focus-visible:bg-brand-600 ${focusBgBase}`,

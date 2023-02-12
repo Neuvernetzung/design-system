@@ -5,7 +5,6 @@ import {
   Autoplay,
   FreeMode,
   Keyboard,
-  Lazy,
   Navigation,
   Pagination,
   Thumbs,
@@ -18,6 +17,8 @@ import { IconButton } from "../Button";
 import type { ImageProps } from "../Image";
 import { Image } from "../Image";
 import useSwiperRef from "./utils/useSwiperRef";
+
+export type CarouselAutoPlayOptions = AutoplayOptions;
 
 export type CarouselProps = {
   images: ImageProps[];
@@ -48,15 +49,7 @@ export const Carousel = ({
     <>
       <Swiper
         className={cn("w-full rounded-lg", className)}
-        modules={[
-          Navigation,
-          Autoplay,
-          A11y,
-          Thumbs,
-          Keyboard,
-          Lazy,
-          Pagination,
-        ]}
+        modules={[Navigation, Autoplay, A11y, Thumbs, Keyboard, Pagination]}
         spaceBetween={0}
         slidesPerView={1}
         autoplay={autoplay}
@@ -112,7 +105,7 @@ export const Carousel = ({
           slidesPerView={4}
           freeMode
           watchSlidesProgress
-          modules={[FreeMode, Navigation, Thumbs, Lazy]}
+          modules={[FreeMode, Navigation, Thumbs]}
           navigation={{
             prevEl: prevElThumb,
             nextEl: nextElThumb,
