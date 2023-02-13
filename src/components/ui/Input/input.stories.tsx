@@ -253,8 +253,10 @@ export const Types = ({ ...args }) => {
 };
 
 export const NumberType = ({ ...args }) => {
-  const formMethods = useForm();
-  const value = formMethods.watch().number;
+  const formMethods = useForm({
+    defaultValues: { number: undefined, defaultNumber: 123 },
+  });
+  const { number, defaultNumber } = formMethods.watch();
 
   return (
     <Form
@@ -262,11 +264,19 @@ export const NumberType = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      <Text>{value}</Text>
+      <Text>{number}</Text>
       <Input
         type="number"
         control={formMethods.control}
         name="number"
+        placeholder="Nummer eingeben."
+        {...args}
+      />
+      <Text>{defaultNumber}</Text>
+      <Input
+        type="number"
+        control={formMethods.control}
+        name="defaultNumber"
         placeholder="Nummer eingeben."
         {...args}
       />

@@ -1,7 +1,8 @@
-import { axe } from "jest-axe";
-import { Loading, loading } from ".";
-import { useEffect } from "react";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+import { useEffect } from "react";
+
+import { Loading, loading } from ".";
 
 const LoadingTest = () => {
   useEffect(() => loading(true), []);

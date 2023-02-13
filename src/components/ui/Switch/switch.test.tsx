@@ -1,7 +1,8 @@
-import { axe } from "jest-axe";
-import { Switch } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
 import { useForm } from "react-hook-form";
+
+import { Switch } from ".";
 
 const ExtendedForm = () => {
   const { control } = useForm();

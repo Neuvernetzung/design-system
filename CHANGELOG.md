@@ -1,3 +1,48 @@
+# [1.26.0](https://github.com/Neuvernetzung/design-system/compare/v1.25.3...v1.26.0) (2023-02-13)
+
+
+### Features
+
+* **deps:** Packages updaten [#449](https://github.com/Neuvernetzung/design-system/issues/449) ([49e025d](https://github.com/Neuvernetzung/design-system/commit/49e025d195d43f7e832c2c3fd9791d8e604c5785))
+
+## [1.25.3](https://github.com/Neuvernetzung/design-system/compare/v1.25.2...v1.25.3) (2023-02-10)
+
+
+### Bug Fixes
+
+* **ui:** Date reset wieder zurück auf null [#446](https://github.com/Neuvernetzung/design-system/issues/446) ([b008018](https://github.com/Neuvernetzung/design-system/commit/b0080184980aec2a0cc7bdafbdaef26b198bfe62))
+
+## [1.25.2](https://github.com/Neuvernetzung/design-system/compare/v1.25.1...v1.25.2) (2023-02-10)
+
+
+### Bug Fixes
+
+* **ui:** Input type number kein Reset möglich wenn defaultValue gegeben ist. [#443](https://github.com/Neuvernetzung/design-system/issues/443) ([ea745a9](https://github.com/Neuvernetzung/design-system/commit/ea745a98a3eaea71a5d0ac3b06543db74278c593))
+
+## [1.25.1](https://github.com/Neuvernetzung/design-system/compare/v1.25.0...v1.25.1) (2023-02-10)
+
+
+### Bug Fixes
+
+* **theme:** Notification Style Einstellbar in ThemeProvider Config [#431](https://github.com/Neuvernetzung/design-system/issues/431) ([1cf3c63](https://github.com/Neuvernetzung/design-system/commit/1cf3c63a7f018e0c141ddb91ac5f32a678018d82))
+* **ui:** Input type Number wenn Feld leer dann undefined [#439](https://github.com/Neuvernetzung/design-system/issues/439) ([b4782f4](https://github.com/Neuvernetzung/design-system/commit/b4782f4800760310f88500a3dc9e3ddc79b30e7e))
+
+# [1.25.0](https://github.com/Neuvernetzung/design-system/compare/v1.24.1...v1.25.0) (2023-02-09)
+
+
+### Bug Fixes
+
+* **ui:** Date Value löschen statt Null lieber undefined [#427](https://github.com/Neuvernetzung/design-system/issues/427) ([644ce91](https://github.com/Neuvernetzung/design-system/commit/644ce91317036d1f3d41b07ee8c9307adca46e91))
+
+
+### Features
+
+* **common:** Bei Breadcrumbs einstellbar ab wievielen ausgeblendet werden sollen [#430](https://github.com/Neuvernetzung/design-system/issues/430) ([2db767a](https://github.com/Neuvernetzung/design-system/commit/2db767a98b29084df81f9fd94f5c0310bf57d46b))
+* **theme:** Notification Style Einstellbar in ThemeProvider Config [#431](https://github.com/Neuvernetzung/design-system/issues/431) ([88e0cd0](https://github.com/Neuvernetzung/design-system/commit/88e0cd0f5dc21ef1c785066d4e72f7a605f660fe))
+* **ui:** Bei Input - Number valueAsNumber bei Controller hinzufügen [#418](https://github.com/Neuvernetzung/design-system/issues/418) ([dff6a07](https://github.com/Neuvernetzung/design-system/commit/dff6a072404f2ddf45dccc9b0741e994238f7eae))
+* **ui:** Header per default dickere Schrift [#422](https://github.com/Neuvernetzung/design-system/issues/422) ([5a6966a](https://github.com/Neuvernetzung/design-system/commit/5a6966af1155c4a2a32136373d448d4e52dfa48a))
+* **ui:** Switch hover effect hinzufügen [#429](https://github.com/Neuvernetzung/design-system/issues/429) ([b7effd8](https://github.com/Neuvernetzung/design-system/commit/b7effd830b4be2b5dd4d24e2754b40cb835f393b))
+
 ## [1.24.1](https://github.com/Neuvernetzung/design-system/compare/v1.24.0...v1.24.1) (2023-02-08)
 
 

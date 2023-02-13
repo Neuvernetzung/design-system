@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import { extendColors, ReturnedColors } from "./extendColors";
 
 type ColorState = {

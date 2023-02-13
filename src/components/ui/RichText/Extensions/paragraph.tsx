@@ -1,12 +1,13 @@
+import ParagraphExtension from "@tiptap/extension-paragraph";
 import {
   NodeViewContent,
   NodeViewProps,
   NodeViewWrapper,
   ReactNodeViewRenderer,
 } from "@tiptap/react";
+
 import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
-import ParagraphExtension from "@tiptap/extension-paragraph";
 
 const ParagraphComponent = ({ node }: NodeViewProps) => {
   const { attrs } = node;

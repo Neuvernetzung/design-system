@@ -1,11 +1,12 @@
+import BulletListExtension from "@tiptap/extension-bullet-list";
 import {
   NodeViewContent,
   NodeViewWrapper,
   ReactNodeViewRenderer,
 } from "@tiptap/react";
+
 import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
-import BulletListExtension from "@tiptap/extension-bullet-list";
 
 const BulletListComponent = () => (
   <NodeViewWrapper>

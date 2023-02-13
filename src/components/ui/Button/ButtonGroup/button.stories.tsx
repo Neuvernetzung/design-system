@@ -2,8 +2,8 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { Button, IconButton } from "../..";
 import { CrossIcon } from "../../../../theme/icons";
+import { Button, IconButton } from "../..";
 import ButtonGroup from "./buttonGroup";
 
 export default {

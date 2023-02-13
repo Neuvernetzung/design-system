@@ -3,11 +3,11 @@ import isNaN from "lodash/isNaN";
 import {
   ForwardedRef,
   forwardRef,
+  HTMLAttributes,
   Ref,
   useEffect,
   useRef,
   useState,
-  HTMLAttributes,
 } from "react";
 import {
   Controller,
@@ -116,13 +116,13 @@ export const InputInner = <
   }, []);
 
   const inputTransform = (v?: string | number) => {
-    if (type === "number") return isNaN(v) ? "" : v?.toString();
+    if (type === "number") return isNaN(v) || !v ? "" : v?.toString();
     return v;
   };
   const outputTransform = (v: string) => {
     if (type === "number") {
       const output = Number(v);
-      return isNaN(output) ? undefined : output;
+      return isNaN(output) || !v ? null : output; // null wird verwendet, da bei undefined der Controller auf den defaultValue zurücksetzt
     }
     return v;
   };

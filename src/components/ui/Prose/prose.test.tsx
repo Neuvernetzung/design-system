@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { Prose } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { Prose } from ".";
 
 const content = `<h1>HTML Ipsum Presents</h1>
 

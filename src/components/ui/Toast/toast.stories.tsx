@@ -38,22 +38,20 @@ export const Variants = ({ ...args }) => {
   );
 };
 
-export const Colors = ({ ...args }) => {
-  return (
-    <Container>
-      {colors.map((color) => (
-        <Toast
-          color={color}
-          key={color}
-          icon={ExclamationTriangleIcon}
-          message={`Dies ist eine ${color} Benachrichtigung`}
-          handleClose={() => {}}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Colors = ({ ...args }) => (
+  <Container>
+    {colors.map((color) => (
+      <Toast
+        color={color}
+        key={color}
+        icon={ExclamationTriangleIcon}
+        message={`Dies ist eine ${color} Benachrichtigung`}
+        handleClose={() => {}}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },

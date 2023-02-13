@@ -1,9 +1,9 @@
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
 
-import { Drawer } from "./drawer";
 import { Button } from "../Button";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { Drawer } from "./drawer";
 
 export default {
   title: "UI/Overlay/Drawer",

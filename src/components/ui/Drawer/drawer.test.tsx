@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { Drawer } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { Drawer } from ".";
 
 it("Drawer axe", async () => {
   const { container } = render(

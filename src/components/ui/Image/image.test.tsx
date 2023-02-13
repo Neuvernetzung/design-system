@@ -1,6 +1,7 @@
-import { axe } from "jest-axe";
-import { Image } from ".";
 import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
+
+import { Image } from ".";
 
 it("Image axe", async () => {
   const { container } = render(

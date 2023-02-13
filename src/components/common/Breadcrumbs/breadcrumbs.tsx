@@ -1,10 +1,10 @@
-import { ChevronRightIcon, HomeIcon } from "../../../theme/icons";
-
-import { useRouter } from "next/router";
-import { Link, IconButton, Button, Icon } from "../../ui";
-import { Sizes } from "../../../types";
-import { Variants } from "../../ui/Button/button";
 import cn from "classnames";
+import { useRouter } from "next/router";
+
+import { ChevronRightIcon, HomeIcon } from "../../../theme/icons";
+import { Sizes } from "../../../types";
+import { Button, Icon, IconButton, Link } from "../../ui";
+import { Variants } from "../../ui/Button/button";
 
 type BreadcrumbsT = {
   size?: keyof Sizes;

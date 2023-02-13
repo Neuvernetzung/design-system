@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
-import { Notify, notify } from ".";
 import { loading } from "../Loading";
+import { Notify, notify } from ".";
 
 export default {
   title: "UI/Overlay/Notify",
