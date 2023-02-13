@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/Neuvernetzung/design-system/compare/v1.25.3...v1.26.0) (2023-02-13)
+
+
+### Features
+
+* **deps:** Packages updaten [#449](https://github.com/Neuvernetzung/design-system/issues/449) ([49e025d](https://github.com/Neuvernetzung/design-system/commit/49e025d195d43f7e832c2c3fd9791d8e604c5785))
+
 ## [1.25.3](https://github.com/Neuvernetzung/design-system/compare/v1.25.2...v1.25.3) (2023-02-10)
 
 
