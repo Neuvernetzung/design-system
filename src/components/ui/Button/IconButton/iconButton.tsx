@@ -37,13 +37,6 @@ export const focuses: Focuses = {
 
 const IconButtonDefaultElement = "button";
 
-type ConditionalButtonProps =
-  | {
-      ariaLabel: string;
-      type?: "button" | "submit" | "reset";
-    }
-  | { ariaLabel?: string; type?: never };
-
 export type IconButtonOwnProps = {
   variant?: keyof Variants;
   color?: keyof (Colors & Pick<ExtendedColors, "light" | "dark" | "inherit">);
@@ -53,7 +46,10 @@ export type IconButtonOwnProps = {
   icon: FC<SVGProps<SVGSVGElement>>;
   disabled?: boolean;
   loadingId?: string;
-} & ConditionalButtonProps;
+  iconClassName?: string;
+  ariaLabel: string;
+  type?: "button" | "submit" | "reset";
+};
 
 export type IconButtonProps<
   T extends ElementType = typeof IconButtonDefaultElement
@@ -76,6 +72,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
       ariaLabel,
       loadingId,
       className,
+      iconClassName,
       as,
       ...props
     }: PolymorphicPropsWithoutRef<IconButtonOwnProps, T>,
@@ -114,7 +111,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
         {...props}
       >
         {!isLoading ? (
-          <Icon size={size} icon={icon} />
+          <Icon size={size} icon={icon} className={iconClassName} />
         ) : (
           <Spinner size={size} />
         )}

@@ -24,6 +24,7 @@ export * from "./Radio";
 export * from "./RichText";
 export * from "./Select";
 export * from "./Switch";
+export * from "./Table";
 export * from "./Tabs";
 export * from "./Tag";
 export * from "./Textarea";

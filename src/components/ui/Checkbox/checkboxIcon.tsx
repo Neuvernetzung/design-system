@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { FC, SVGProps } from "react";
 
-import { CheckIcon } from "../../../theme/icons";
+import { CheckIcon, MinusIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { Icon } from "../Icon";
 
@@ -9,11 +9,23 @@ type CheckboxIconProps = {
   size?: keyof Sizes;
   isChecked: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
+  isIndeterminate?: boolean;
 };
 
-export const CheckboxIcon = ({ size, isChecked, icon }: CheckboxIconProps) => (
-  <CheckboxTransition open={isChecked}>
-    <Icon size={size} icon={icon ?? CheckIconAnimation} />
+export const CheckboxIcon = ({
+  size,
+  isChecked,
+  icon,
+  isIndeterminate,
+}: CheckboxIconProps) => (
+  <CheckboxTransition open={isChecked || isIndeterminate}>
+    {isChecked ? (
+      <Icon size={size} icon={icon ?? CheckIconAnimation} />
+    ) : (
+      isIndeterminate && (
+        <Icon size={size} icon={CheckIndeterminateIconAnimation} />
+      )
+    )}
   </CheckboxTransition>
 );
 
@@ -38,9 +50,22 @@ function CheckboxTransition({ open, children }: any) {
   );
 }
 
-CheckboxIcon.defaultProps = {
-  size: "md",
-  icon: undefined,
+const animationVariants = {
+  unchecked: {
+    opacity: 0,
+    strokeDashoffset: "100%",
+  },
+  checked: {
+    opacity: 1,
+    strokeDashoffset: 0,
+    transition: { duration: 0.3 },
+  },
+};
+const animationStyle = {
+  fill: "none",
+  strokeWidth: 3,
+  stroke: "currentColor",
+  strokeDasharray: "100%",
 };
 
 const MotionCheckIcon = motion(CheckIcon);
@@ -48,23 +73,20 @@ const MotionCheckIcon = motion(CheckIcon);
 function CheckIconAnimation(props: any) {
   return (
     <MotionCheckIcon
-      variants={{
-        unchecked: {
-          opacity: 0,
-          strokeDashoffset: "100%",
-        },
-        checked: {
-          opacity: 1,
-          strokeDashoffset: 0,
-          transition: { duration: 0.3 },
-        },
-      }}
-      style={{
-        fill: "none",
-        strokeWidth: 3,
-        stroke: "currentColor",
-        strokeDasharray: "100%",
-      }}
+      variants={animationVariants}
+      style={animationStyle}
+      {...props}
+    />
+  );
+}
+
+const MotionCheckIndeterminateIcon = motion(MinusIcon);
+
+function CheckIndeterminateIconAnimation(props: any) {
+  return (
+    <MotionCheckIndeterminateIcon
+      variants={animationVariants}
+      style={animationStyle}
       {...props}
     />
   );

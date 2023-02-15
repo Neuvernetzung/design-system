@@ -97,6 +97,7 @@ export const Drawer = ({
         {icon && <Icon icon={icon} />}
         <Text size="lg">{title}</Text>
         <IconButton
+          ariaLabel="closeDrawer"
           icon={CrossIcon}
           variant="ghost"
           onClick={() => setOpen(false)}

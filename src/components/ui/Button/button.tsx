@@ -81,7 +81,7 @@ export const focuses: Focuses = {
 export const styles = {
   base: "appearance-none flex items-center justify-center select-none gap-2 font-semibold disabled:cursor-not-allowed text-ellipsis",
   fullWidth: "w-full",
-  rounded: "rounded-full",
+  rounded: "!rounded-full",
 };
 
 export const ButtonDefaultElement = "button";

@@ -161,6 +161,7 @@ export const InputWithTagsInner = <
                       {v}
                     </Button>
                     <IconButton
+                      ariaLabel="delete_tag"
                       size={capSize(size, "sm")}
                       color={v === inputState ? "danger" : "accent"}
                       disabled={disabled}
