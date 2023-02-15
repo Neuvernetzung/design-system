@@ -41,6 +41,7 @@ export const Variants = ({ ...args }) => {
       {_variants.map((variant: any) => (
         <Select
           key={variant}
+          removeAll
           control={formMethods.control}
           variant={variant}
           name={`select_${variant}`}
@@ -72,6 +73,7 @@ export const Sizes = ({ ...args }) => {
       {_sizes.map((size: any) => (
         <Select
           key={size}
+          removeAll
           control={formMethods.control}
           size={size}
           name={`select_${size}`}

@@ -43,7 +43,8 @@ type DropdownOptionsStyleProps = {
 };
 
 const optionStyles = {
-  base: `w-full flex flex-row items-center justify-between select-none focus:outline-none ${bgColors.white} ${transitionFast} ${textColors.accent}`,
+  base: `w-full flex flex-row items-center justify-between select-none focus:outline-none outline-none ${transitionFast} ${textColors.accent}`,
+  inactive: cn(bgColors.white),
   active: `${extendedBgColors.filledSubtile}`,
   disabled: `${extendedTextColors.subtile} cursor-not-allowed`,
 };
@@ -57,7 +58,7 @@ export const getDropDownOptionsStyles = ({
     optionStyles.base,
     paddings[capSize(size, "md")],
     textSizes[capSize(size, "md")],
-    active && optionStyles.active,
+    active ? optionStyles.active : optionStyles.inactive,
     gapsSmall[size],
     disabled && optionStyles.disabled
   );

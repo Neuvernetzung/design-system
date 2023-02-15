@@ -444,6 +444,7 @@ export const Datepicker = <
                       <div>
                         <IconButton
                           as="span"
+                          ariaLabel="calendar"
                           size={iconButtonSizes[size]}
                           icon={CalendarIcon}
                           variant="ghost"

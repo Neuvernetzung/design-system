@@ -100,7 +100,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
               <IconButton
                 icon={mobileNavOpen ? CrossIcon : MenuIcon}
                 variant="ghost"
-                aria-label="Toggle Navigation"
+                ariaLabel="Toggle Navigation"
                 onClick={() => setMobileNavOpen(!mobileNavOpen)}
               />
             </div>

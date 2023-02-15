@@ -1,5 +1,4 @@
 import cn from "classnames";
-import isNaN from "lodash/isNaN";
 import {
   ForwardedRef,
   forwardRef,
@@ -115,18 +114,6 @@ export const InputInner = <
     setRightElementWidth(rightElementRef?.current?.clientWidth);
   }, []);
 
-  const inputTransform = (v?: string | number) => {
-    if (type === "number") return isNaN(v) || !v ? "" : v?.toString();
-    return v;
-  };
-  const outputTransform = (v: string) => {
-    if (type === "number") {
-      const output = Number(v);
-      return isNaN(output) || !v ? null : output; // null wird verwendet, da bei undefined der Controller auf den defaultValue zurücksetzt
-    }
-    return v;
-  };
-
   return (
     <Controller
       control={control}
@@ -164,8 +151,8 @@ export const InputInner = <
               type={type}
               id={name}
               ref={ref}
-              value={inputTransform(value)}
-              onChange={(e) => onChange(outputTransform(e.target.value))}
+              value={value}
+              onChange={onChange}
               onWheel={(e: any) =>
                 e.target?.type === "number" && e.target?.blur()
               } // damit beim scrollen die zahl nicht versehentlich verändert wird

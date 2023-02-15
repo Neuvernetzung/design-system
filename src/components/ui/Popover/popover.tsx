@@ -163,6 +163,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
                 >
                   <div className={cn(getPopoverFullScreenHeaderStyles())}>
                     <IconButton
+                      ariaLabel="close_popover"
                       icon={CrossIcon}
                       variant="ghost"
                       onClick={() => close()} // wenn hier ein PopoverButton verwendet wird, dann lässt sich Button nicht mehr per Klick schließen

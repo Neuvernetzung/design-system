@@ -20,7 +20,7 @@ export const ThemeSwitch = ({ variant = "button" }: ThemeSwitchProps) => {
       <IconButton
         onClick={handleSwitchTheme}
         variant="ghost"
-        aria-label="theme-switch"
+        ariaLabel="theme-switch"
         icon={resolvedTheme === "light" ? SunIcon : MoonIcon}
       />
     );
@@ -31,7 +31,7 @@ export const ThemeSwitch = ({ variant = "button" }: ThemeSwitchProps) => {
         dropdownClassName="min-w-[8rem] w-16 bg-red-500"
         buttonType="icon"
         buttonProps={{
-          "aria-label": "theme-switch",
+          ariaLabel: "theme-switch",
           icon: resolvedTheme === "light" ? SunIcon : MoonIcon,
           variant: "ghost",
         }}
