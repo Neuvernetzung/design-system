@@ -1,3 +1,15 @@
+# [1.27.0](https://github.com/Neuvernetzung/design-system/compare/v1.26.0...v1.27.0) (2023-02-15)
+
+
+### Bug Fixes
+
+* **ui:** Input type Number fixen [#452](https://github.com/Neuvernetzung/design-system/issues/452) ([f224c80](https://github.com/Neuvernetzung/design-system/commit/f224c80f824f8c3457fc27d963b745f96517920a))
+
+
+### Features
+
+* **ui:** Tables hinzufügen [#125](https://github.com/Neuvernetzung/design-system/issues/125) ([980e2ec](https://github.com/Neuvernetzung/design-system/commit/980e2ec91d683aa43858b846d75fc433f7fb9e80))
+
 # [1.26.0](https://github.com/Neuvernetzung/design-system/compare/v1.25.3...v1.26.0) (2023-02-13)
 
 
