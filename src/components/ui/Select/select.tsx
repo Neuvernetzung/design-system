@@ -354,16 +354,18 @@ export const SelectInner = <
                         disabled={disabled}
                       />
                     )}
-                  <div>
-                    <IconButton
-                      as="span"
+                  <div
+                    className={cn(
+                      "flex items-center justify-center",
+                      paddings[capSize(size, "md")]
+                    )}
+                  >
+                    <Icon
                       size={iconButtonSizes[size]}
                       icon={ChevronUpDownIcon}
-                      variant="ghost"
                       className={cn(
-                        "pointer-events-none flex max-h-6",
+                        "pointer-events-none flex",
                         open ? "rotate-180" : "rotate-0",
-                        marginsXSmall[size],
                         transition
                       )}
                     />

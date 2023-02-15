@@ -11,7 +11,12 @@ module.exports = {
     },
     "@storybook/addon-a11y",
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
+    {
+      name: "@storybook/addon-essentials",
+      options: {
+        docs: false, // Disabling due to https://github.com/storybookjs/storybook/issues/17482 and other errors
+      },
+    },
     "@storybook/addon-interactions",
     "storybook-addon-next-router",
   ],
