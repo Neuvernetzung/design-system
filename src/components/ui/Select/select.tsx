@@ -356,6 +356,7 @@ export const SelectInner = <
                     )}
                   <div>
                     <IconButton
+                      ariaLabel="select_icon"
                       as="span"
                       size={iconButtonSizes[size]}
                       icon={ChevronUpDownIcon}

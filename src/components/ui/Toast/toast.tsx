@@ -95,7 +95,7 @@ export const Toast = ({
       <IconButton
         size="sm"
         variant="ghost"
-        aria-label="close-dialog"
+        ariaLabel="close-dialog"
         onClick={handleClose}
         color="inherit"
         icon={CrossIcon}
