@@ -24,6 +24,7 @@ export type SimpleTableProps<T extends string> = {
   size?: keyof Sizes;
   cols: SimpleTableCol<T>[];
   divideX?: boolean;
+  uppercase?: boolean;
 };
 
 export type DataTableProps<T extends string, K extends string> = Omit<
@@ -66,6 +67,7 @@ export const DataTableInner = <T extends string, K extends string>({
   checkable,
   checkedValue,
   divideX,
+  uppercase = true,
 }: DataTableProps<T, K>) => {
   const router = useRouter();
 
@@ -108,6 +110,7 @@ export const DataTableInner = <T extends string, K extends string>({
               key={`head_col_${col.id}`}
               col={col}
               size={size}
+              uppercase={uppercase}
               attachment={
                 col.sortable && (
                   <IconButton
@@ -164,12 +167,18 @@ export const SimpleTableInner = <T extends string>({
   cols,
   size = "md",
   divideX,
+  uppercase = true,
 }: SimpleTableProps<T>) => (
   <TableContainer size={size}>
     <TableHead>
       <TableRow divideX={divideX}>
         {cols.map((col) => (
-          <TableHeadCell key={`head_col_${col.id}`} col={col} size={size} />
+          <TableHeadCell
+            key={`head_col_${col.id}`}
+            col={col}
+            size={size}
+            uppercase={uppercase}
+          />
         ))}
       </TableRow>
     </TableHead>
@@ -231,12 +240,14 @@ type TableHeadCellProps = {
   col: DataTableCol<string>;
   size?: keyof Sizes;
   attachment?: ReactNode;
+  uppercase?: boolean;
 };
 
 const TableHeadCell = ({
   col,
   size = "md",
   attachment,
+  uppercase = true,
 }: TableHeadCellProps) => {
   const Component = col.title ? "th" : "td";
 
@@ -250,7 +261,9 @@ const TableHeadCell = ({
       )}
     >
       <div className="flex flex-row gap-1 items-center">
-        <Text size={size}>{col.title}</Text>
+        <Text className={cn(uppercase && "uppercase")} size={size}>
+          {col.title}
+        </Text>
         {attachment}
       </div>
     </Component>
@@ -262,9 +275,9 @@ type TableHeadProps = {
 };
 
 const TableHead = ({ children }: TableHeadProps) => (
-  <tbody className={cn("text-left", extendedBgColors.filledSubtile)}>
+  <thead className={cn("text-left", extendedBgColors.filledSubtile)}>
     {children}
-  </tbody>
+  </thead>
 );
 
 type TableContainerProps = {
