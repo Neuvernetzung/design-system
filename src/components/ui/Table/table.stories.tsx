@@ -7,7 +7,7 @@ import { IconButton } from "../Button";
 import { DataTable, SimpleTable } from ".";
 
 export default {
-  title: "UI/Data Display/DataTable",
+  title: "UI/Data Display/Table",
   component: DataTable,
   parameters: {
     docs: {

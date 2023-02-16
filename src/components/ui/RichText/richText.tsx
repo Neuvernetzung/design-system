@@ -43,6 +43,7 @@ export interface RichTextProps {
   placeholder?: string;
   maxLength?: number;
   showLength?: boolean;
+  containerClassName?: string;
 }
 
 export const RichText = <
@@ -57,6 +58,7 @@ export const RichText = <
   placeholder,
   maxLength,
   showLength,
+  containerClassName,
 }: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     field: { value, onChange },
@@ -119,7 +121,8 @@ export const RichText = <
               "group border w-full relative",
               roundings.md,
               transition,
-              "focus:outline-none focus-within:ring focus-within:ring-opacity-20 dark:focus-within:ring-opacity-20 focus-within:ring-accent-600 dark:focus-within:ring-accent-300"
+              "focus:outline-none focus-within:ring focus-within:ring-opacity-20 dark:focus-within:ring-opacity-20 focus-within:ring-accent-600 dark:focus-within:ring-accent-300",
+              containerClassName
             )}
           >
             <MenuBar
