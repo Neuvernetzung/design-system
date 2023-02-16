@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/Neuvernetzung/design-system/compare/v1.28.0...v1.28.1) (2023-02-16)
+
+
+### Bug Fixes
+
+* **ui:** Table Paddings vergrößern, Header anpassen [#461](https://github.com/Neuvernetzung/design-system/issues/461) ([bb7dc2a](https://github.com/Neuvernetzung/design-system/commit/bb7dc2a950c67c39cae0325b047fa55dd61a9b5a))
+
 # [1.28.0](https://github.com/Neuvernetzung/design-system/compare/v1.27.0...v1.28.0) (2023-02-16)
 
 
