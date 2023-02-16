@@ -1,6 +1,6 @@
 import { Tab } from "@headlessui/react";
 import cn from "classnames";
-import { Fragment, memo, ReactNode } from "react";
+import { FC, Fragment, memo, ReactNode, SVGProps } from "react";
 
 import { gaps, paddings } from "../../../styles";
 import { Colors, Sizes } from "../../../types";
@@ -23,6 +23,7 @@ export type TabPanelsProps = {
   items: TabItemProps[];
   panelsClassName?: string;
   size?: keyof Sizes;
+  unmount?: boolean;
 };
 
 export type TabItemProps = {
@@ -30,6 +31,7 @@ export type TabItemProps = {
   content: ReactNode;
   disabled?: boolean;
   className?: string;
+  icon?: FC<SVGProps<SVGSVGElement>>;
 };
 
 export const Tabs = ({
@@ -40,6 +42,7 @@ export const Tabs = ({
   panelsClassName,
   listClassName,
   defaultIndex,
+  unmount,
 }: TabGroupProps) => (
   <Tab.Group
     defaultIndex={defaultIndex}
@@ -52,7 +55,12 @@ export const Tabs = ({
       size={size}
       color={color}
     />
-    <TabPanels items={items} panelsClassName={panelsClassName} size={size} />
+    <TabPanels
+      unmount={unmount}
+      items={items}
+      panelsClassName={panelsClassName}
+      size={size}
+    />
   </Tab.Group>
 );
 
@@ -62,14 +70,6 @@ export const TabGroup = ({ children, ...props }: any) => (
   <Tab.Group {...props}>{children}</Tab.Group>
 );
 
-Tabs.defaultProps = {
-  className: undefined,
-  panelsClassName: undefined,
-  listClassName: undefined,
-  size: "md",
-  color: "accent",
-};
-
 export const TabList = ({
   items,
   size = "md",
@@ -77,23 +77,18 @@ export const TabList = ({
   color,
 }: TabListProps) => (
   <Tab.List className={cn("flex flex-row", gaps[size], listClassName)}>
-    {items.map(({ title, disabled }: TabItemProps) => (
+    {items.map(({ title, disabled, icon }) => (
       <TabButton
         key={`tab_button_${title}`}
         title={title}
         disabled={disabled}
         color={color}
         size={size}
+        icon={icon}
       />
     ))}
   </Tab.List>
 );
-
-TabList.defaultProps = {
-  listClassName: undefined,
-  size: "md",
-  color: "accent",
-};
 
 export type StandaloneTabListProps = {
   listClassName?: string;
@@ -111,18 +106,13 @@ export const StandaloneTabList = ({
   </Tab.List>
 );
 
-StandaloneTabList.defaultProps = {
-  listClassName: undefined,
-  size: "md",
-  children: undefined,
-};
-
 export const TabButton = ({
   title,
   disabled,
   color = "accent",
   size = "md",
   className,
+  icon,
 }: Omit<TabItemProps, "content"> & Pick<TabListProps, "color" | "size">) => (
   <Tab as={Fragment}>
     {({ selected }) => (
@@ -132,38 +122,32 @@ export const TabButton = ({
         disabled={disabled}
         color={color}
         className={className}
+        leftIcon={icon}
       >
         {title}
       </Button>
     )}
   </Tab>
 );
-TabButton.defaultProps = {
-  diabled: undefined,
-  className: undefined,
-};
 
 export const TabPanels = ({
   items,
   size = "md",
   panelsClassName,
+  unmount,
 }: TabPanelsProps) => (
   <Tab.Panels className={cn(paddings[size], panelsClassName)}>
-    {items.map(({ content, className: panelClassName }: TabItemProps, i) => (
+    {items.map(({ content, className: panelClassName }, i) => (
       <TabPanel
         key={`tab_panel_${i}`}
         content={content}
         className={panelClassName}
         size={size}
+        unmount={unmount}
       />
     ))}
   </Tab.Panels>
 );
-
-TabPanels.defaultProps = {
-  panelsClassName: undefined,
-  size: "md",
-};
 
 export type StandaloneTabPanelsProps = {
   panelsClassName?: string;
@@ -181,20 +165,12 @@ export const StandaloneTabPanels = ({
   </Tab.Panels>
 );
 
-StandaloneTabPanels.defaultProps = {
-  panelsClassName: undefined,
-  size: "md",
-  children: undefined,
-};
-
 export const TabPanel = ({
   content,
   className,
-}: Omit<TabItemProps, "title"> & Pick<TabPanelsProps, "size">) => (
-  <Tab.Panel className={cn("flex", className)}>{content}</Tab.Panel>
+  unmount,
+}: Omit<TabItemProps, "title"> & Pick<TabPanelsProps, "size" | "unmount">) => (
+  <Tab.Panel unmount={unmount} className={cn("flex", className)}>
+    {content}
+  </Tab.Panel>
 );
-
-TabPanel.defaultProps = {
-  size: "md",
-  panelClassName: undefined,
-};
