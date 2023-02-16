@@ -1,3 +1,10 @@
+## [1.28.3](https://github.com/Neuvernetzung/design-system/compare/v1.28.2...v1.28.3) (2023-02-16)
+
+
+### Bug Fixes
+
+* **ui:** Table Head title optional [#467](https://github.com/Neuvernetzung/design-system/issues/467) ([ca2fabd](https://github.com/Neuvernetzung/design-system/commit/ca2fabd9f1336cf6940b1cd99ec88012ce9fd749))
+
 ## [1.28.2](https://github.com/Neuvernetzung/design-system/compare/v1.28.1...v1.28.2) (2023-02-16)
 
 
