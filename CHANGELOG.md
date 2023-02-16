@@ -1,3 +1,12 @@
+# [1.29.0](https://github.com/Neuvernetzung/design-system/compare/v1.28.3...v1.29.0) (2023-02-16)
+
+
+### Features
+
+* **ui:** RichText containerClassName [#473](https://github.com/Neuvernetzung/design-system/issues/473) ([dfffab4](https://github.com/Neuvernetzung/design-system/commit/dfffab4877239f947067d120d0cdc804779e9206))
+* **ui:** Table headerCell und dataCell className, header title darf Element sein [#472](https://github.com/Neuvernetzung/design-system/issues/472) ([09a13de](https://github.com/Neuvernetzung/design-system/commit/09a13de7f6777701d831d5bd494630bda800dbc1))
+* **ui:** Unmount und Button Icon bei Tabs einstellbar [#470](https://github.com/Neuvernetzung/design-system/issues/470) ([b6438bd](https://github.com/Neuvernetzung/design-system/commit/b6438bdccf5074050fa432b50ac95a7ccfbda071))
+
 ## [1.28.3](https://github.com/Neuvernetzung/design-system/compare/v1.28.2...v1.28.3) (2023-02-16)
 
 
