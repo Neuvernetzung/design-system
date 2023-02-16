@@ -6,7 +6,6 @@ import {
   extendedBgColors,
   gaps,
   paddings,
-  roundingsTop,
   transition,
 } from "../../../../styles";
 import {
@@ -54,7 +53,6 @@ export const MenuBar = ({
         extendedBgColors.filledSubtile,
         paddings.sm,
         transition,
-        roundingsTop.md,
         "z-[1] flex flex-row flex-wrap border-b sticky top-0"
       )}
     >
