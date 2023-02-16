@@ -9,11 +9,14 @@ import {
   divides,
   extendedBgColors,
   paddingsEvenly,
+  paddingsLarge,
+  paddingsLargeEvenly,
   roundings,
   transition,
 } from "../../../styles";
 import { ChevronDownIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
+import { smallerSize } from "../../../utils";
 import { typedMemo, updateQuery } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { CheckboxInner } from "../Checkbox/checkbox";
@@ -209,9 +212,9 @@ const TableDataCell = ({ item, col, size = "md" }: TableDataCellProps) => {
   const content = get(item, col.id);
 
   return (
-    <td className={cn(paddingsEvenly[size])}>
+    <td className={cn(paddingsLarge[size])}>
       {isString(content) ? (
-        <Text size={size}>{content}</Text>
+        <Text size={smallerSize(size)}>{content}</Text>
       ) : (
         (content as ReactNode)
       )}
@@ -255,13 +258,16 @@ const TableHeadCell = ({
     <Component
       className={cn(
         "group",
-        paddingsEvenly[size],
+        paddingsLargeEvenly[size],
         col.grow && "w-[999rem]", // w-full funktioniert hier nicht.
         col.shrink && "w-0"
       )}
     >
       <div className="flex flex-row gap-1 items-center">
-        <Text className={cn(uppercase && "uppercase")} size={size}>
+        <Text
+          className={cn("font-medium", uppercase && "uppercase")}
+          size={smallerSize(size)}
+        >
           {col.title}
         </Text>
         {attachment}
