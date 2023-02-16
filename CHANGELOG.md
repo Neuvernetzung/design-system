@@ -1,3 +1,10 @@
+## [1.28.2](https://github.com/Neuvernetzung/design-system/compare/v1.28.1...v1.28.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* **ui:** Tabelle verbessern [#464](https://github.com/Neuvernetzung/design-system/issues/464) ([e65da3b](https://github.com/Neuvernetzung/design-system/commit/e65da3b5461d4d2427f349207bba040bcc925cfd))
+
 ## [1.28.1](https://github.com/Neuvernetzung/design-system/compare/v1.28.0...v1.28.1) (2023-02-16)
 
 
