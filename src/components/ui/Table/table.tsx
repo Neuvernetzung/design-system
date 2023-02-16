@@ -1,7 +1,7 @@
 import cn from "classnames";
 import get from "lodash/get";
-import isString from "lodash/isString";
 import isNumber from "lodash/isNumber";
+import isString from "lodash/isString";
 import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
 
@@ -55,7 +55,7 @@ export type DataTablePropsConditional<T extends string, K extends string> =
 
 export type SimpleTableCol<T> = {
   id: T;
-  title: string;
+  title?: string;
   grow?: boolean;
   shrink?: boolean;
 };
