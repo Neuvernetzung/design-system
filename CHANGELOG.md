@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/Neuvernetzung/design-system/compare/v1.27.0...v1.28.0) (2023-02-16)
+
+
+### Features
+
+* **ui:** Data Table besser stylen und opt-out uppercase [#458](https://github.com/Neuvernetzung/design-system/issues/458) ([9f8a5c4](https://github.com/Neuvernetzung/design-system/commit/9f8a5c4232bc94a950892872ebd9e11fe11140b2))
+
 # [1.27.0](https://github.com/Neuvernetzung/design-system/compare/v1.26.0...v1.27.0) (2023-02-15)
 
 
