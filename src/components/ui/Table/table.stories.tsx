@@ -18,6 +18,49 @@ export default {
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
+const items = [
+  {
+    _id: "_1",
+    id: "1",
+    name: "Test 1",
+    title: "Titel",
+    image: "Bild",
+    options: (
+      <IconButton
+        ariaLabel="Edit"
+        size="sm"
+        variant="ghost"
+        color="primary"
+        icon={PencilIcon}
+      />
+    ),
+    createdAt: new Date().toDateString(),
+  },
+  {
+    _id: "_2",
+    id: "2",
+    title: { test: "undefined" }["23"],
+    name: 2,
+    createdAt: new Date().toDateString(),
+  },
+  {
+    _id: "_3",
+    id: "3",
+    name: "Test 3",
+    image: "Bild",
+    options: (
+      <IconButton
+        ariaLabel="Edit"
+        size="sm"
+        variant="ghost"
+        color="primary"
+        icon={PencilIcon}
+      />
+    ),
+    createdAt: new Date().toDateString(),
+  },
+];
+
 export const Simple = ({ ...args }) => (
   <SimpleTable
     cols={[
@@ -29,44 +72,7 @@ export const Simple = ({ ...args }) => (
       { id: "options", title: "", shrink: true },
     ]}
     divideX
-    items={[
-      {
-        id: "1",
-        name: "Test 1",
-        title: "Titel",
-        image: "Bild",
-        options: (
-          <IconButton
-            ariaLabel="Edit"
-            size="sm"
-            variant="ghost"
-            color="primary"
-            icon={PencilIcon}
-          />
-        ),
-        createdAt: new Date().toDateString(),
-      },
-      {
-        id: "2",
-        name: 2,
-        createdAt: new Date().toDateString(),
-      },
-      {
-        id: "3",
-        name: "Test 3",
-        image: "Bild",
-        options: (
-          <IconButton
-            ariaLabel="Edit"
-            size="sm"
-            variant="ghost"
-            color="primary"
-            icon={PencilIcon}
-          />
-        ),
-        createdAt: new Date().toDateString(),
-      },
-    ]}
+    items={items}
   />
 );
 
@@ -83,46 +89,6 @@ export const Data = ({ ...args }) => (
     checkable
     checkedValue="_id"
     divideX
-    items={[
-      {
-        _id: "_1",
-        id: "1",
-        name: "Test 1",
-        title: "Titel",
-        image: "Bild",
-        options: (
-          <IconButton
-            ariaLabel="Edit"
-            size="sm"
-            variant="ghost"
-            color="primary"
-            icon={PencilIcon}
-          />
-        ),
-        createdAt: new Date().toDateString(),
-      },
-      {
-        _id: "_2",
-        id: "2",
-        name: "Test 2",
-        createdAt: new Date().toDateString(),
-      },
-      {
-        _id: "_3",
-        id: "3",
-        name: "Test 3",
-        image: "Bild",
-        options: (
-          <IconButton
-            ariaLabel="Edit"
-            size="sm"
-            variant="ghost"
-            color="primary"
-            icon={PencilIcon}
-          />
-        ),
-        createdAt: new Date().toDateString(),
-      },
-    ]}
+    items={items}
   />
 );
