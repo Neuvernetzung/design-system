@@ -3,7 +3,7 @@ import get from "lodash/get";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
 import { useRouter } from "next/router";
-import { ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useState } from "react";
 
 import {
   borders,
@@ -55,9 +55,11 @@ export type DataTablePropsConditional<T extends string, K extends string> =
 
 export type SimpleTableCol<T> = {
   id: T;
-  title?: string;
+  title?: string | ReactElement;
   grow?: boolean;
   shrink?: boolean;
+  headCellClassName?: string;
+  dataCellClassName?: string;
 };
 
 export type DataTableCol<T> = SimpleTableCol<T> & {
@@ -118,6 +120,7 @@ export const DataTableInner = <T extends string, K extends string>({
                 col={col}
                 size={size}
                 uppercase={uppercase}
+                className={col.headCellClassName}
                 attachment={
                   col.sortable && (
                     <IconButton
@@ -161,6 +164,7 @@ export const DataTableInner = <T extends string, K extends string>({
                 col={col}
                 key={`row_${i}_col_${col.id}`}
                 size={size}
+                className={col.dataCellClassName}
               />
             ))}
           </TableRow>
@@ -188,6 +192,7 @@ export const SimpleTableInner = <T extends string>({
               col={col}
               size={size}
               uppercase={uppercase}
+              className={col.headCellClassName}
             />
           ))}
         </TableRow>
@@ -202,6 +207,7 @@ export const SimpleTableInner = <T extends string>({
               col={col}
               key={`row_${i}_col_${col.id}`}
               size={size}
+              className={col.dataCellClassName}
             />
           ))}
         </TableRow>
@@ -214,13 +220,19 @@ type TableDataCellProps = {
   item: Record<string, any>;
   col: DataTableCol<string>;
   size?: keyof Sizes;
+  className?: string;
 };
 
-const TableDataCell = ({ item, col, size = "md" }: TableDataCellProps) => {
+const TableDataCell = ({
+  item,
+  col,
+  size = "md",
+  className,
+}: TableDataCellProps) => {
   const content = get(item, col.id);
 
   return (
-    <td className={cn(paddingsLarge[size])}>
+    <td className={cn(paddingsLarge[size], className)}>
       {isString(content) || isNumber(content) ? (
         <Text size={smallerSize(size)}>{content}</Text>
       ) : (
@@ -252,6 +264,7 @@ type TableHeadCellProps = {
   size?: keyof Sizes;
   attachment?: ReactNode;
   uppercase?: boolean;
+  className?: string;
 };
 
 const TableHeadCell = ({
@@ -259,6 +272,7 @@ const TableHeadCell = ({
   size = "md",
   attachment,
   uppercase = true,
+  className,
 }: TableHeadCellProps) => {
   const Component = col.title ? "th" : "td";
 
@@ -268,7 +282,8 @@ const TableHeadCell = ({
         "group",
         paddingsLargeEvenly[size],
         col.grow && "w-[999rem]", // w-full funktioniert hier nicht.
-        col.shrink && "w-0"
+        col.shrink && "w-0",
+        className
       )}
     >
       <div className="flex flex-row gap-1 items-center">
