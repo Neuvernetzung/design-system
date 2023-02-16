@@ -48,7 +48,7 @@ export const Simple = ({ ...args }) => (
       },
       {
         id: "2",
-        name: "Test 2",
+        name: 2,
         createdAt: new Date().toDateString(),
       },
       {
