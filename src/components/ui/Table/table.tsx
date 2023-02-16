@@ -1,6 +1,7 @@
 import cn from "classnames";
 import get from "lodash/get";
 import isString from "lodash/isString";
+import isNumber from "lodash/isNumber";
 import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
 
@@ -23,11 +24,12 @@ import { CheckboxInner } from "../Checkbox/checkbox";
 import { Text } from "../Typography";
 
 export type SimpleTableProps<T extends string> = {
-  items: Array<Partial<Record<T, any>>>;
+  items?: Array<Partial<Record<T, any>>>;
   size?: keyof Sizes;
   cols: SimpleTableCol<T>[];
   divideX?: boolean;
   uppercase?: boolean;
+  disableHead?: boolean;
 };
 
 export type DataTableProps<T extends string, K extends string> = Omit<
@@ -63,7 +65,7 @@ export type DataTableCol<T> = SimpleTableCol<T> & {
 };
 
 export const DataTableInner = <T extends string, K extends string>({
-  items,
+  items = [],
   cols,
   size = "md",
   setSort,
@@ -71,6 +73,7 @@ export const DataTableInner = <T extends string, K extends string>({
   checkedValue,
   divideX,
   uppercase = true,
+  disableHead = false,
 }: DataTableProps<T, K>) => {
   const router = useRouter();
 
@@ -95,47 +98,49 @@ export const DataTableInner = <T extends string, K extends string>({
 
   return (
     <TableContainer size={size}>
-      <TableHead>
-        <TableRow divideX={divideX}>
-          {checkable && (
-            <th className={cn("w-0", paddingsEvenly[size])}>
-              <CheckboxInner
-                key="checkbox_indeterminate"
-                current={checked}
-                options={items.map((item) => get(item, checkedValue))}
-                allowIndetermination
-                onChange={setChecked}
+      {!disableHead && (
+        <TableHead>
+          <TableRow divideX={divideX}>
+            {checkable && (
+              <th className={cn("w-0", paddingsEvenly[size])}>
+                <CheckboxInner
+                  key="checkbox_indeterminate"
+                  current={checked}
+                  options={items.map((item) => get(item, checkedValue))}
+                  allowIndetermination
+                  onChange={setChecked}
+                />
+              </th>
+            )}
+            {cols.map((col) => (
+              <TableHeadCell
+                key={`head_col_${col.id}`}
+                col={col}
+                size={size}
+                uppercase={uppercase}
+                attachment={
+                  col.sortable && (
+                    <IconButton
+                      ariaLabel={`sort_${col.id}`}
+                      icon={ChevronDownIcon}
+                      onClick={() => handleSort(col.id)}
+                      className={cn("collapse group-hover:visible", {
+                        "!visible": normalizedSort === col.id,
+                      })}
+                      iconClassName={cn(
+                        { "rotate-180": sort === col.id },
+                        transition
+                      )}
+                      variant="ghost"
+                      size="xs"
+                    />
+                  )
+                }
               />
-            </th>
-          )}
-          {cols.map((col) => (
-            <TableHeadCell
-              key={`head_col_${col.id}`}
-              col={col}
-              size={size}
-              uppercase={uppercase}
-              attachment={
-                col.sortable && (
-                  <IconButton
-                    ariaLabel={`sort_${col.id}`}
-                    icon={ChevronDownIcon}
-                    onClick={() => handleSort(col.id)}
-                    className={cn("collapse group-hover:visible", {
-                      "!visible": normalizedSort === col.id,
-                    })}
-                    iconClassName={cn(
-                      { "rotate-180": sort === col.id },
-                      transition
-                    )}
-                    variant="ghost"
-                    size="xs"
-                  />
-                )
-              }
-            />
-          ))}
-        </TableRow>
-      </TableHead>
+            ))}
+          </TableRow>
+        </TableHead>
+      )}
       <TableBody>
         {items.map((item, i) => (
           <TableRow divideX={divideX} key={`row_${i}`}>
@@ -166,25 +171,28 @@ export const DataTableInner = <T extends string, K extends string>({
 };
 
 export const SimpleTableInner = <T extends string>({
-  items,
+  items = [],
   cols,
   size = "md",
   divideX,
   uppercase = true,
+  disableHead = false,
 }: SimpleTableProps<T>) => (
   <TableContainer size={size}>
-    <TableHead>
-      <TableRow divideX={divideX}>
-        {cols.map((col) => (
-          <TableHeadCell
-            key={`head_col_${col.id}`}
-            col={col}
-            size={size}
-            uppercase={uppercase}
-          />
-        ))}
-      </TableRow>
-    </TableHead>
+    {!disableHead && (
+      <TableHead>
+        <TableRow divideX={divideX}>
+          {cols.map((col) => (
+            <TableHeadCell
+              key={`head_col_${col.id}`}
+              col={col}
+              size={size}
+              uppercase={uppercase}
+            />
+          ))}
+        </TableRow>
+      </TableHead>
+    )}
     <TableBody>
       {items.map((item, i) => (
         <TableRow divideX={divideX} key={`row_${i}`}>
@@ -213,7 +221,7 @@ const TableDataCell = ({ item, col, size = "md" }: TableDataCellProps) => {
 
   return (
     <td className={cn(paddingsLarge[size])}>
-      {isString(content) ? (
+      {isString(content) || isNumber(content) ? (
         <Text size={smallerSize(size)}>{content}</Text>
       ) : (
         (content as ReactNode)
