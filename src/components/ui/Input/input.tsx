@@ -128,8 +128,8 @@ export const InputInner = <
         validate: (value) => {
           if (type === "number" && step)
             return (
-              (value.toString().split(".")[1]?.length || 0) <=
-              (step.toString().split(".")[1]?.length || 0)
+              (String(value).split(".")[1]?.length || 0) <=
+              (String(step).split(".")[1]?.length || 0)
             );
           return true;
         },
