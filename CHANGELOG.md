@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/Neuvernetzung/design-system/compare/v1.30.0...v1.30.1) (2023-02-19)
+
+
+### Bug Fixes
+
+* **ui:** TypeError: Cannot read properties of undefined (reading 'toString') [#482](https://github.com/Neuvernetzung/design-system/issues/482) ([0f10d2c](https://github.com/Neuvernetzung/design-system/commit/0f10d2c06892835ee31f5da8ed7fb7a48c7d7b0c))
+
 # [1.30.0](https://github.com/Neuvernetzung/design-system/compare/v1.29.0...v1.30.0) (2023-02-19)
 
 
