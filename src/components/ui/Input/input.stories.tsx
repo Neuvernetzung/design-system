@@ -270,6 +270,7 @@ export const NumberType = ({ ...args }) => {
         control={formMethods.control}
         name="number"
         placeholder="Nummer eingeben."
+        required
         {...args}
       />
       <Text>{defaultNumber}</Text>
@@ -278,8 +279,11 @@ export const NumberType = ({ ...args }) => {
         control={formMethods.control}
         name="defaultNumber"
         placeholder="Nummer eingeben."
+        required
+        step={0.01}
         {...args}
       />
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
