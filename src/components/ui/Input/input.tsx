@@ -125,6 +125,14 @@ export const InputInner = <
         max,
         min,
         pattern,
+        validate: (value) => {
+          if (type === "number" && step)
+            return (
+              (value.toString().split(".")[1]?.length || 0) <=
+              (step.toString().split(".")[1]?.length || 0)
+            );
+          return true;
+        },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <FormElement
