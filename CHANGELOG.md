@@ -1,3 +1,10 @@
+## [1.30.2](https://github.com/Neuvernetzung/design-system/compare/v1.30.1...v1.30.2) (2023-03-08)
+
+
+### Bug Fixes
+
+* **ui:** Input Type E-Mail hinzufügen [#488](https://github.com/Neuvernetzung/design-system/issues/488) ([0e8cfde](https://github.com/Neuvernetzung/design-system/commit/0e8cfdecccbdae600d2a56800c50e67994347916))
+
 ## [1.30.1](https://github.com/Neuvernetzung/design-system/compare/v1.30.0...v1.30.1) (2023-02-19)
 
 
