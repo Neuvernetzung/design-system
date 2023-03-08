@@ -40,7 +40,7 @@ export const sizes = inputSizes;
 export const variants = inputVariants;
 
 export type InputProps = HTMLAttributes<HTMLInputElement> & {
-  type?: "text" | "number" | "password" | "url";
+  type?: "text" | "number" | "password" | "url" | "email";
   label?: string;
   helper?: any;
   size?: keyof Sizes;
