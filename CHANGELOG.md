@@ -1,3 +1,16 @@
+# [1.31.0](https://github.com/Neuvernetzung/design-system/compare/v1.30.2...v1.31.0) (2023-03-11)
+
+
+### Bug Fixes
+
+* **ui:** Input Step per default undefined [#485](https://github.com/Neuvernetzung/design-system/issues/485) ([8cd4e37](https://github.com/Neuvernetzung/design-system/commit/8cd4e3760c568b3d4fb7a443911a2a0166af82c4))
+* **ui:** Select Options repositioniert sich nach Auswahl [#491](https://github.com/Neuvernetzung/design-system/issues/491) ([a4bfd9e](https://github.com/Neuvernetzung/design-system/commit/a4bfd9e7221357efa6bdf0f6a5a3d072ceeaa00d))
+
+
+### Features
+
+* **docs:** Docs anpassen um schneller zu installieren [#486](https://github.com/Neuvernetzung/design-system/issues/486) ([97dff46](https://github.com/Neuvernetzung/design-system/commit/97dff46f270a96f904b370a3ab14db781e003c6c))
+
 ## [1.30.2](https://github.com/Neuvernetzung/design-system/compare/v1.30.1...v1.30.2) (2023-03-08)
 
 
