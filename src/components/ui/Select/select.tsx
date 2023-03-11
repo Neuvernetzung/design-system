@@ -120,7 +120,11 @@ export const SelectInner = <
   const [referenceElement, setReferenceElement] =
     useState<HTMLElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+  const {
+    styles,
+    attributes,
+    update: updatePopper,
+  } = usePopper(referenceElement, popperElement, {
     placement,
     modifiers: [{ name: "offset", options: { offset: popperOffset } }],
   });
@@ -162,6 +166,7 @@ export const SelectInner = <
       return e;
     }
     setSelected(e);
+    updatePopper?.();
     return [...e.map((item: any) => item)];
   };
 
@@ -173,6 +178,7 @@ export const SelectInner = <
       removeButtonRefs.splice(i, 1); // Ref entfernen
       const dataArray = values;
       dataArray.splice(i, 1);
+      updatePopper?.();
       return dataArray;
     }
     return null;
