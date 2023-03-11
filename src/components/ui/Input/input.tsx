@@ -97,7 +97,7 @@ export const InputInner = <
     pattern,
     disabled = false,
     variant = "outline",
-    step = 1,
+    step,
     className,
     containerClassName,
     inputClassName,
