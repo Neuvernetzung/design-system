@@ -1,3 +1,16 @@
+# [1.32.0](https://github.com/Neuvernetzung/design-system/compare/v1.31.0...v1.32.0) (2023-03-14)
+
+
+### Bug Fixes
+
+* **ui:** Disclosure Animation optimieren [#497](https://github.com/Neuvernetzung/design-system/issues/497) ([b564c48](https://github.com/Neuvernetzung/design-system/commit/b564c488863fcb9920f8b21d0df2ca120fccbcfd))
+* **ui:** Toast bei langen Wörtern automatisch neue Zeile anfangen. [#498](https://github.com/Neuvernetzung/design-system/issues/498) ([bb3876c](https://github.com/Neuvernetzung/design-system/commit/bb3876cb2cfa71d06f53f874680f1eadf4fceff3))
+
+
+### Features
+
+* **ui:** Bar Progress hinzufügen [#496](https://github.com/Neuvernetzung/design-system/issues/496) ([00d059a](https://github.com/Neuvernetzung/design-system/commit/00d059a3bd350c49ad5c388cfd08945bbf265519))
+
 # [1.31.0](https://github.com/Neuvernetzung/design-system/compare/v1.30.2...v1.31.0) (2023-03-11)
 
 
