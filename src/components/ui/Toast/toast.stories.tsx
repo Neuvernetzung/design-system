@@ -56,3 +56,13 @@ export const Colors = ({ ...args }) => (
 Colors.parameters = {
   controls: { exclude: "color" },
 };
+export const LongWords = ({ ...args }) => (
+  <Container>
+    <Toast
+      icon={ExclamationTriangleIcon}
+      message="Dies ist eine seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehr lange Benachrichtigung"
+      handleClose={() => {}}
+      {...args}
+    />
+  </Container>
+);

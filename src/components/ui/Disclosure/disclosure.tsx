@@ -23,6 +23,7 @@ type ItemProps = {
   title: string | ReactNode;
   content: string | ReactNode;
   className?: string;
+  defaultOpen?: boolean;
 };
 
 export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
@@ -35,16 +36,19 @@ export const Disclosure = ({
   icon = "default",
   ...props
 }: DisclosureProps) => {
-  const MotionPanel = motion(HeadlessDisclosure.Panel);
   const MotionIcon = motion(Icon);
 
   return (
     <div className="flex w-full flex-col" {...props}>
       {items.map(
-        ({ title, content, className: panelClassName }: ItemProps, i) => (
+        (
+          { title, content, className: panelClassName, defaultOpen }: ItemProps,
+          i
+        ) => (
           <HeadlessDisclosure
             key={`disclosure_${i}`}
             as="div"
+            defaultOpen={defaultOpen}
             className={cn(
               "flex flex-col last:border-b border-t",
               borders.accent,
@@ -91,30 +95,41 @@ export const Disclosure = ({
                     />
                   </AnimatePresence>
                 </HeadlessDisclosure.Button>
-                {open && (
-                  <MotionPanel
-                    initial="initial"
-                    animate="animate"
-                    variants={{
-                      initial: {
-                        height: 0,
-                        opacity: 0,
-                      },
-                      animate: {
-                        height: "auto",
-                        opacity: 1,
-                        transition: {
-                          height: {
-                            duration: 0.3,
-                          },
-                          opacity: {
-                            duration: 0.15,
-                            delay: 0.15,
-                          },
+                <motion.span
+                  initial="initial"
+                  animate={open ? "animate" : "initial"}
+                  variants={{
+                    initial: {
+                      height: 0,
+                      opacity: 0,
+                      display: "none",
+                      overflow: "hidden",
+                      transition: {
+                        height: {
+                          duration: 0.15,
+                        },
+                        opacity: {
+                          duration: 0.15,
+                          delay: 0.15,
                         },
                       },
-                    }}
-                  >
+                    },
+                    animate: {
+                      height: "auto",
+                      opacity: 1,
+                      transition: {
+                        height: {
+                          duration: 0.3,
+                        },
+                        opacity: {
+                          duration: 0.15,
+                          delay: 0.15,
+                        },
+                      },
+                    },
+                  }}
+                >
+                  <HeadlessDisclosure.Panel static>
                     <div className={cn(paddings[size], panelClassName)}>
                       {isString(content) ? (
                         <Text size={size}>{content}</Text>
@@ -122,8 +137,8 @@ export const Disclosure = ({
                         content
                       )}
                     </div>
-                  </MotionPanel>
-                )}
+                  </HeadlessDisclosure.Panel>
+                </motion.span>
               </>
             )}
           </HeadlessDisclosure>

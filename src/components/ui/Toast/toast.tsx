@@ -70,7 +70,7 @@ export const Toast = ({
       role="dialog"
       aria-label={color}
       className={cn(
-        "flex w-64 flex-row justify-between overflow-hidden",
+        "flex w-64 flex-row justify-between items-start",
         roundings.md,
         shadows.lg,
         gaps.xl,
@@ -78,7 +78,7 @@ export const Toast = ({
         variants(color, colorState)[variant].container
       )}
     >
-      <div className={cn("flex flex-row", gaps.md)}>
+      <div className={cn("flex flex-row justify-start", gaps.md)}>
         {icon && (
           <div className={cn(variants(color, colorState)[variant].icon)}>
             <Icon size="sm" icon={icon} />
@@ -86,7 +86,10 @@ export const Toast = ({
         )}
         <Text
           size="sm"
-          className={cn(variants(color, colorState)[variant].text)}
+          className={cn(
+            variants(color, colorState)[variant].text,
+            "w-36 text-ellipsis overflow-hidden"
+          )}
           color="inherit"
         >
           {message}
