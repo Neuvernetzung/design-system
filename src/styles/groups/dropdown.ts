@@ -23,7 +23,7 @@ type DropdownContainerStyleProps = {
 };
 
 const containerStyles = {
-  base: `absolute focus:outline-none z-10 w-full max-h-60 min-w-[16rem] overflow-auto ${bgColors.white} border ${borders.accent}`,
+  base: `focus:outline-none z-10 w-full max-h-60 min-w-[16rem] overflow-auto ${bgColors.white} border ${borders.accent}`,
 };
 
 export const getDropdownContainerStyles = ({
