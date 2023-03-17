@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ["custom"],
+  extends: ["@neuvernetzung/eslint-config-custom"],
   rules: {
     "no-html-link-for-pages": "off",
   },
