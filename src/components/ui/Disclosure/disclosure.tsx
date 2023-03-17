@@ -117,6 +117,7 @@ export const Disclosure = ({
                     animate: {
                       height: "auto",
                       opacity: 1,
+                      overflow: "visible",
                       transition: {
                         height: {
                           duration: 0.3,
@@ -151,9 +152,3 @@ export const Disclosure = ({
 export default memo(Disclosure);
 
 Disclosure.displayName = "Disclosure";
-
-Disclosure.defaultProps = {
-  size: "md",
-  closeOthers: false,
-  className: undefined,
-};
