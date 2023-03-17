@@ -1,7 +1,8 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import React, { useState } from "react";
 
 import { ProgressBar } from ".";
+import { Button } from "..";
 import { colors, sizes } from "../../../types";
 
 export default {
@@ -26,3 +27,14 @@ export const Sizes = ({ ...args }) => (
     ))}
   </Container>
 );
+export const Transition = ({ ...args }) => {
+  const [progress, setProgress] = useState(33);
+
+  return (
+    <Container>
+      <ProgressBar progress={progress} />
+      <Button onClick={() => setProgress(66)}>66</Button>
+      <Button onClick={() => setProgress(33)}>33</Button>
+    </Container>
+  );
+};
