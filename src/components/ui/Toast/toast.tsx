@@ -88,7 +88,7 @@ export const Toast = ({
           size="sm"
           className={cn(
             variants(color, colorState)[variant].text,
-            "w-36 text-ellipsis overflow-hidden"
+            "w-36 break-words overflow-hidden"
           )}
           color="inherit"
         >
