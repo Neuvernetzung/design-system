@@ -39,35 +39,16 @@ import type { InputElementProps } from "./InputElement/inputElement";
 export const sizes = inputSizes;
 export const variants = inputVariants;
 
-export type InputProps = HTMLAttributes<HTMLInputElement> & {
-  type?: "text" | "number" | "password" | "url" | "email";
+export type InputProps = RawInputProps & {
   label?: string;
   helper?: any;
-  size?: keyof Sizes;
-  variant?: keyof InputVariants;
-  placeholder?: string;
-  leftAddon?: Pick<InputAddonProps, "className" | "children">;
-  rightAddon?: Pick<InputAddonProps, "className" | "children">;
-  leftElement?: Pick<
-    InputElementProps,
-    "className" | "children" | "pointerEvents"
-  >;
-  rightElement?: Pick<
-    InputElementProps,
-    "className" | "children" | "pointerEvents"
-  >;
   required?: RequiredRule;
   maxLength?: MaxLengthRule;
   minLength?: MinLengthRule;
   max?: MaxRule;
   min?: MinRule;
   pattern?: PatternRule;
-  disabled?: boolean;
-  step?: number;
-  className?: string;
-  containerClassName?: string;
-  inputClassName?: string;
-  value?: string;
+  type?: "text" | "number" | "password" | "url" | "email";
 };
 
 const styles = {
@@ -104,108 +85,58 @@ export const InputInner = <
     ...props
   }: InputProps & UseControllerProps<TFieldValues, TName>,
   ref: Ref<HTMLInputElement>
-) => {
-  const leftElementRef: any = useRef(null);
-  const rightElementRef: any = useRef(null);
-  const [leftElementWidth, setleftElementWidth] = useState();
-  const [rightElementWidth, setRightElementWidth] = useState();
-  useEffect(() => {
-    setleftElementWidth(leftElementRef?.current?.clientWidth);
-    setRightElementWidth(rightElementRef?.current?.clientWidth);
-  }, []);
-
-  return (
-    <Controller
-      control={control}
-      name={name}
-      rules={{
-        required,
-        maxLength,
-        minLength,
-        max,
-        min,
-        pattern,
-        validate: (value) => {
-          if (type === "number" && step)
-            return (
-              (String(value).split(".")[1]?.length || 0) <=
-              (String(step).split(".")[1]?.length || 0)
-            );
-          return true;
-        },
-      }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <FormElement
-          error={error}
-          name={name}
-          label={label}
-          helper={helper}
+) => (
+  <Controller
+    control={control}
+    name={name}
+    rules={{
+      required,
+      maxLength,
+      minLength,
+      max,
+      min,
+      pattern,
+      validate: (value) => {
+        if (type === "number" && step)
+          return (
+            (String(value).split(".")[1]?.length || 0) <=
+            (String(step).split(".")[1]?.length || 0)
+          );
+        return true;
+      },
+    }}
+    render={({ field: { value, onChange }, fieldState: { error } }) => (
+      <FormElement
+        error={error}
+        name={name}
+        label={label}
+        helper={helper}
+        size={size}
+        className={className}
+      >
+        <RawInput
+          containerClassName={containerClassName}
+          leftAddon={leftAddon}
           size={size}
-          className={className}
-        >
-          <div className={cn(styles.containerBase, containerClassName)}>
-            {leftAddon && (
-              <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
-            )}
-            {leftElement && (
-              <InputElement
-                size={size}
-                isLeft
-                ref={leftElementRef}
-                {...leftElement}
-              />
-            )}
-            <input
-              type={type}
-              id={name}
-              ref={ref}
-              value={value}
-              onChange={onChange}
-              onWheel={(e: any) =>
-                e.target?.type === "number" && e.target?.blur()
-              } // damit beim scrollen die zahl nicht versehentlich verändert wird
-              className={cn(
-                getInputStyles({
-                  size,
-                  variant,
-                  error: !!error,
-                  disabled,
-                  leftAddon,
-                  rightAddon,
-                }),
-                inputClassName
-              )}
-              style={{
-                paddingLeft: leftElement && leftElementWidth,
-                paddingRight: rightElement && rightElementWidth,
-              }}
-              step={step}
-              disabled={disabled}
-              {...props}
-            />
-
-            {rightAddon && (
-              <InputAddon
-                size={size}
-                variant={variant}
-                isRight
-                {...rightAddon}
-              />
-            )}
-            {rightElement && (
-              <InputElement
-                size={size}
-                isRight
-                ref={rightElementRef}
-                {...rightElement}
-              />
-            )}
-          </div>
-        </FormElement>
-      )}
-    />
-  );
-};
+          variant={variant}
+          leftElement={leftElement}
+          type={type}
+          id={name}
+          ref={ref}
+          value={value}
+          onChange={onChange}
+          error={!!error}
+          disabled={disabled}
+          rightAddon={rightAddon}
+          inputClassName={inputClassName}
+          rightElement={rightElement}
+          step={step}
+          {...props}
+        />
+      </FormElement>
+    )}
+  />
+);
 
 const Input = forwardRef(InputInner) as <
   TFieldValues extends FieldValues,
@@ -218,3 +149,111 @@ const Input = forwardRef(InputInner) as <
 ) => ReturnType<typeof InputInner>;
 
 export default typedMemo(Input);
+
+export type RawInputProps = HTMLAttributes<HTMLInputElement> & {
+  containerClassName?: string;
+  leftAddon?: Pick<InputAddonProps, "children" | "className">;
+  size?: keyof Sizes;
+  variant?: keyof InputVariants;
+  leftElement?: Pick<
+    InputElementProps,
+    "children" | "className" | "pointerEvents"
+  >;
+  id?: string;
+  ref?: Ref<HTMLInputElement>;
+  value?: string;
+  onChange?: (...event: any[]) => void;
+  error?: boolean;
+  disabled?: boolean;
+  rightAddon?: Pick<InputAddonProps, "children" | "className">;
+  inputClassName?: string;
+  rightElement?: Pick<
+    InputElementProps,
+    "children" | "className" | "pointerEvents"
+  >;
+  step?: number;
+  type?: HTMLInputElement["type"];
+};
+
+export const RawInput = ({
+  containerClassName,
+  leftAddon,
+  leftElement,
+  id,
+  type = "text",
+  size = "md",
+  variant = "outline",
+  ref,
+  value,
+  onChange,
+  error,
+  disabled = false,
+  rightAddon,
+  inputClassName,
+  rightElement,
+  step,
+  ...props
+}: RawInputProps) => {
+  const leftElementRef: any = useRef(null);
+  const rightElementRef: any = useRef(null);
+  const [leftElementWidth, setleftElementWidth] = useState<number>();
+  const [rightElementWidth, setRightElementWidth] = useState<number>();
+  useEffect(() => {
+    setleftElementWidth(leftElementRef?.current?.clientWidth);
+    setRightElementWidth(rightElementRef?.current?.clientWidth);
+  }, []);
+
+  return (
+    <div className={cn(styles.containerBase, containerClassName)}>
+      {leftAddon && (
+        <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
+      )}
+      {leftElement && (
+        <InputElement
+          size={size}
+          isLeft
+          ref={leftElementRef}
+          {...leftElement}
+        />
+      )}
+      <input
+        type={type}
+        id={id}
+        ref={ref}
+        value={value}
+        onChange={onChange}
+        onWheel={(e: any) => e.target?.type === "number" && e.target?.blur()} // damit beim scrollen die zahl nicht versehentlich verändert wird
+        className={cn(
+          getInputStyles({
+            size,
+            variant,
+            error: !!error,
+            disabled,
+            leftAddon,
+            rightAddon,
+          }),
+          inputClassName
+        )}
+        style={{
+          paddingLeft: leftElement && leftElementWidth,
+          paddingRight: rightElement && rightElementWidth,
+        }}
+        step={step}
+        disabled={disabled}
+        {...props}
+      />
+
+      {rightAddon && (
+        <InputAddon size={size} variant={variant} isRight {...rightAddon} />
+      )}
+      {rightElement && (
+        <InputElement
+          size={size}
+          isRight
+          ref={rightElementRef}
+          {...rightElement}
+        />
+      )}
+    </div>
+  );
+};

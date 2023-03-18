@@ -29,6 +29,7 @@ export * from "./Table";
 export * from "./Tabs";
 export * from "./Tag";
 export * from "./Textarea";
+export * from "./Timepicker";
 export * from "./Toast";
 export * from "./Tooltip";
 export * from "./Typography";

@@ -1,4 +1,4 @@
-export type { InputProps } from "./input";
-export { default as Input } from "./input";
+export type { InputProps, RawInputProps } from "./input";
+export { default as Input, RawInput } from "./input";
 export type { InputWithTagsProps } from "./WithTags";
 export { InputWithTags } from "./WithTags";
