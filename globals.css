@@ -68,4 +68,7 @@
     margin: 0;
     -moz-appearance: textfield !important;
   }
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
 }

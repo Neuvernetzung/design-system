@@ -61,6 +61,7 @@ import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement } from "../Form";
 import { Popover, PopoverButton } from "../Popover";
 import { Text } from "../Typography";
+import { smallerSize } from "../../../utils";
 
 export type DatepickerProps = {
   label?: string;
@@ -373,14 +374,6 @@ export const Datepicker = <
       return setPreselectedYear(endOfDecade(viewing));
   };
 
-  const iconButtonSizes: Sizes = {
-    xs: "xs",
-    sm: "xs",
-    md: "sm",
-    lg: "md",
-    xl: "lg",
-  };
-
   return (
     <Controller
       name={name}
@@ -425,7 +418,7 @@ export const Datepicker = <
                     >
                       {removeAll && !!value && (
                         <IconButton
-                          size={iconButtonSizes[size]}
+                          size={smallerSize(size)}
                           variant="ghost"
                           ariaLabel="delete_selected_date"
                           icon={CrossIcon}
@@ -445,7 +438,7 @@ export const Datepicker = <
                         <IconButton
                           as="span"
                           ariaLabel="calendar"
-                          size={iconButtonSizes[size]}
+                          size={smallerSize(size)}
                           icon={CalendarIcon}
                           variant="ghost"
                           className={cn(
