@@ -1,3 +1,19 @@
+# [1.33.0](https://github.com/Neuvernetzung/design-system/compare/v1.32.0...v1.33.0) (2023-03-18)
+
+
+### Bug Fixes
+
+* **deps:** Deps updaten für fixes [#506](https://github.com/Neuvernetzung/design-system/issues/506) ([5658a46](https://github.com/Neuvernetzung/design-system/commit/5658a464f1deff2b372dd5a2386d9ceeda17bf6d))
+* **ui:** Disclosure +- nur bei open oder close animieren, nicht bei rerender [#504](https://github.com/Neuvernetzung/design-system/issues/504) ([ba89067](https://github.com/Neuvernetzung/design-system/commit/ba89067f17ed01bea77a33e662efca6dcaba8689))
+* **ui:** Select und Disclosure Overflow gefixt [#503](https://github.com/Neuvernetzung/design-system/issues/503) ([1e53b7c](https://github.com/Neuvernetzung/design-system/commit/1e53b7c6404f0a2455089503cde30707642ef5d5))
+* **ui:** Toast Messages wie z.B. content.product.updateProduct werden abgeschnitten. [#505](https://github.com/Neuvernetzung/design-system/issues/505) ([fee19ea](https://github.com/Neuvernetzung/design-system/commit/fee19ea0d2b32f23ebac18f0f07c94ac5375acb8))
+
+
+### Features
+
+* **ui:** Time Selection hinzufügen [#509](https://github.com/Neuvernetzung/design-system/issues/509) ([ef8abf4](https://github.com/Neuvernetzung/design-system/commit/ef8abf47ece7e2e9138c63baab2ce5fc9ec1535e))
+* **ui:** Transition zu ProgressBar hinzufügen [#508](https://github.com/Neuvernetzung/design-system/issues/508) ([d8ef37e](https://github.com/Neuvernetzung/design-system/commit/d8ef37e8f991343c6f6a03d0c51c4434f3cdcb4c))
+
 # [1.32.0](https://github.com/Neuvernetzung/design-system/compare/v1.31.0...v1.32.0) (2023-03-14)
 
 
