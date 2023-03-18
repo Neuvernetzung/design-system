@@ -71,11 +71,4 @@ export const FormElement: FC<FormElementProps> = ({
   );
 };
 
-FormElement.defaultProps = {
-  label: null,
-  helper: null,
-  size: "md",
-  className: undefined,
-};
-
 export default typedMemo(FormElement);

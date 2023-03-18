@@ -64,5 +64,11 @@ export const LongWords = ({ ...args }) => (
       handleClose={() => {}}
       {...args}
     />
+    <Toast
+      icon={ExclamationTriangleIcon}
+      message="Dies ist eine error Benachrichtigung für den Pfad test.pfad.irgendwas.langes"
+      handleClose={() => {}}
+      {...args}
+    />
   </Container>
 );

@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/react-library.json",
+  "extends": "@neuvernetzung/tsconfig/react-library.json",
   "include": ["**/*.ts", "**/*.tsx", "src/**/*ts", "src/**/*tsx"],
   "exclude": [
     "dist",

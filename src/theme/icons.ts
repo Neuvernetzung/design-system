@@ -23,6 +23,7 @@ import {
   PlusIcon as HeroPlusIcon,
   SunIcon as HeroSunIcon,
   TrashIcon as HeroTrashIcon,
+  ClockIcon as HeroClockIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
@@ -90,3 +91,4 @@ export const TrashIcon = null || HeroTrashIcon;
 export const ExclamationTriangleIcon = null || HeroExclamationTriangleIcon;
 export const PhotoIcon = null || HeroPhotoIcon;
 export const HomeIcon = null || HeroHomeIcon;
+export const ClockIcon = null || HeroClockIcon;

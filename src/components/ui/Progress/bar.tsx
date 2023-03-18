@@ -37,7 +37,7 @@ export const ProgressBar = ({
       aria-valuenow={progress}
       aria-label="progress-bar"
       role="progressbar"
-      className={cn("h-full", bgColors[color])}
+      className={cn("h-full transition-all", bgColors[color])}
       style={{ width: `${progress}%` }}
     />
   </div>

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Button, Form } from "..";
 import { Select } from ".";
 import { sizes, variants } from "./select";
+import { Disclosure } from "../Disclosure";
 
 export default {
   title: "UI/Form/Select",
@@ -38,6 +39,20 @@ export const Variants = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
+      <div className="flex flex-col items-center">
+        <div className="w-32">
+          <Select
+            removeAll
+            control={formMethods.control}
+            name="select"
+            options={[
+              { children: "Option 1", value: "option-1" },
+              { children: "Option 2", value: "option-2" },
+            ]}
+            {...args}
+          />
+        </div>
+      </div>
       {_variants.map((variant: any) => (
         <Select
           key={variant}
@@ -374,6 +389,46 @@ export const DefaultValue = ({ ...args }) => {
         returned="value"
         options={options}
         {...args}
+      />
+    </Form>
+  );
+};
+
+export const Overflow = ({ ...args }) => {
+  const formMethods = useForm();
+
+  const options = [
+    {
+      children: "Option 1",
+      value: "option-1",
+    },
+    {
+      children: "Option 2",
+      value: "option-2",
+    },
+  ];
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Disclosure
+        items={[
+          {
+            title: "Select",
+            content: (
+              <Select
+                control={formMethods.control}
+                name="overflow"
+                returned="value"
+                options={options}
+                {...args}
+              />
+            ),
+          },
+        ]}
       />
     </Form>
   );
