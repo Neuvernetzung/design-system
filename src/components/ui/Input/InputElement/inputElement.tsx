@@ -16,7 +16,7 @@ export type InputElementProps = {
 };
 
 const styles = {
-  base: `absolute flex flex-row items-center justify-center  ${textColors.accent}`,
+  base: `absolute flex flex-row inset-y-0 items-center justify-center  ${textColors.accent}`,
 };
 
 export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(

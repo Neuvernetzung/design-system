@@ -1,11 +1,11 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
-import { addDays, addMonths, subDays, subMonths } from "date-fns";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Sizes as SizesT } from "../../../types";
+import { sizes } from "../../../types";
 import { Form } from "../Form";
 import { Timepicker } from ".";
+import { Button } from "../Button";
 
 export default {
   title: "UI/Form/Timepicker",
@@ -38,6 +38,63 @@ export const Default = ({ ...args }) => {
         placeholder="Zeit auswählen"
         {...args}
       />
+    </Form>
+  );
+};
+export const Sizes = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      {sizes.map((size) => (
+        <Timepicker
+          key={size}
+          control={formMethods.control}
+          name={size}
+          label={size}
+          size={size}
+          removeAll
+          placeholder="Zeit auswählen"
+          {...args}
+        />
+      ))}
+    </Form>
+  );
+};
+export const MinMax = ({ ...args }) => {
+  const formMethods = useForm();
+
+  const { min, max } = formMethods.watch();
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Timepicker
+        control={formMethods.control}
+        name="min"
+        label="Min"
+        max={max}
+        removeAll
+        placeholder="Zeit auswählen"
+        {...args}
+      />
+      <Timepicker
+        control={formMethods.control}
+        name="max"
+        label="Max"
+        min={min}
+        removeAll
+        placeholder="Zeit auswählen"
+        {...args}
+      />
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
