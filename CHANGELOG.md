@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/Neuvernetzung/design-system/compare/v1.33.0...v1.34.0) (2023-03-19)
+
+
+### Features
+
+* **ui:** Timepicker InputClassName hinzufügen und min/max [#518](https://github.com/Neuvernetzung/design-system/issues/518) ([0f260e0](https://github.com/Neuvernetzung/design-system/commit/0f260e0ed7a23f0427ccd8679f31b0331e12607b))
+
 # [1.33.0](https://github.com/Neuvernetzung/design-system/compare/v1.32.0...v1.33.0) (2023-03-18)
 
 
