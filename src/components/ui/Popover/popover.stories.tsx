@@ -2,6 +2,7 @@ import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { Text } from "../Typography";
+import { Button } from "../Button";
 import { Popover, PopoverGroup } from ".";
 
 export default {
@@ -163,6 +164,7 @@ export const LargeContent = ({ ...args }) => (
             nobis eleifend option congue nihil imperdiet doming id quod mazim
             placerat facer
           </Text>
+          <Button>Test</Button>
         </div>
       }
       placement="bottom-end"
