@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import cn from "classnames";
-import { FC, memo, MutableRefObject, ReactNode, SVGProps } from "react";
+import { motion } from "framer-motion";
+import { FC, MutableRefObject, ReactNode, SVGProps } from "react";
 
 import {
   bgColors,
@@ -13,6 +14,7 @@ import {
 } from "../../../styles";
 import { CrossIcon } from "../../../theme/icons";
 import { ExtendedSizes, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
@@ -60,6 +62,18 @@ const placements = (
   bottom: cn("bottom-0 inset-x-0"),
 });
 
+const animations = (open: boolean) => ({
+  animate: open ? "animate" : "initial",
+  initial: "initial",
+  variants: {
+    animate: { translateX: "0%" },
+    initial: { translateX: "100%" },
+  },
+  transition: { duration: 0.075 },
+});
+
+const MotionPanel = motion(Dialog.Panel);
+
 export const Drawer = ({
   open,
   setOpen,
@@ -73,13 +87,14 @@ export const Drawer = ({
   <Dialog
     as="div"
     initialFocus={initialFocus}
-    className={cn(zIndexes.modal, "relative")}
+    className={cn(zIndexes.modal)}
     open={open}
     onClose={() => setOpen(false)}
   >
     <Backdrop />
 
-    <Dialog.Panel
+    <MotionPanel
+      {...animations(open)}
       className={cn(
         transition,
         borders.accent,
@@ -104,8 +119,8 @@ export const Drawer = ({
         />
       </div>
       {content}
-    </Dialog.Panel>
+    </MotionPanel>
   </Dialog>
 );
 
-export default memo(Drawer);
+export default typedMemo(Drawer);
