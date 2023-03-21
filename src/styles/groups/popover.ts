@@ -38,7 +38,7 @@ export const getPopoverContainerStyles = ({
 export const getPopoverFullScreenStyles = () =>
   cn(
     styles.base,
-    "fixed inset-0 overflow-y-hidden h-screen flex flex-col",
+    "fixed inset-0 overflow-y-hidden h-screen w-screen flex flex-col",
     bgColors.white,
     zIndexes.dropdown
   );
@@ -47,4 +47,4 @@ export const getPopoverFullScreenHeaderStyles = () =>
   cn("flex justify-end", paddingsEvenly.xl);
 
 export const getPopoverFullScreenContainerStyles = () =>
-  cn("overflow-y-auto", paddingsEvenly.xl);
+  cn("flex overflow-y-auto", paddingsEvenly.xl);
