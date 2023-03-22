@@ -8,6 +8,7 @@ interface PageContainerProps extends HTMLAttributes<HTMLDivElement> {
   footerRef?: MutableRefObject<any>;
   pagePaddingSize?: keyof Sizes;
   enablePagePadding?: boolean;
+  className?: string;
 }
 
 export const PageContainer = ({
@@ -15,6 +16,7 @@ export const PageContainer = ({
   footerRef,
   pagePaddingSize = "md",
   enablePagePadding = true,
+  className,
   ...props
 }: PageContainerProps) => {
   const [navbarHeight, setNavbarHeight] = useState();
@@ -37,8 +39,9 @@ export const PageContainer = ({
   return (
     <main
       className={cn(
-        "overflow-x-hidden flex",
-        enablePagePadding && pagePaddings[pagePaddingSize]
+        "overflow-x-hidden flex flex-col",
+        enablePagePadding && pagePaddings[pagePaddingSize],
+        className
       )}
       style={{
         paddingTop: `${navbarHeight}px`,
