@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { FC, memo, ReactElement, SVGProps } from "react";
+import { FC, ReactElement, SVGProps } from "react";
 
 import {
   adjustedTextColors,
@@ -12,9 +12,10 @@ import {
   textColors,
   textSizes,
 } from "../../../styles";
-import { useColorState } from "../../../theme/useColorState";
+import { useThemeState } from "../../../theme/useThemeState";
 import type { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
+import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 
 export type TagProps = {
@@ -51,7 +52,7 @@ export const Tag = ({
   variant = "solid",
   rounded,
 }: TagProps) => {
-  const { colorState } = useColorState();
+  const { colorState } = useThemeState();
 
   return (
     <div
@@ -73,4 +74,4 @@ export const Tag = ({
   );
 };
 
-export default memo(Tag);
+export default typedMemo(Tag);

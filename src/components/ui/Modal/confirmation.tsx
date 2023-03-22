@@ -1,11 +1,12 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { FC, memo, MutableRefObject, ReactNode, SVGProps, useRef } from "react";
+import { FC, MutableRefObject, ReactNode, SVGProps, useRef } from "react";
 import { create } from "zustand";
 
 import { getText, Locales } from "../../../locales/getText";
 import { gaps } from "../../../styles";
 import { Colors } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { Tag } from "../Tag";
 import { Heading } from "../Typography";
@@ -112,10 +113,4 @@ export const ConfirmationModal = () => {
   );
 };
 
-export default memo(ConfirmationModal);
-
-ConfirmationModal.defaultProps = {
-  icon: undefined,
-  content: undefined,
-  color: "primary",
-};
+export default typedMemo(ConfirmationModal);

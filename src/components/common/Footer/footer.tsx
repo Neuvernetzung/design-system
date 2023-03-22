@@ -87,10 +87,3 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
 );
 
 Footer.displayName = "Footer";
-
-Footer.defaultProps = {
-  logo: undefined,
-  cols: [],
-  copyright: undefined,
-  className: undefined,
-};

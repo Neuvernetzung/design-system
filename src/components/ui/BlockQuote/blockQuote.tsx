@@ -1,7 +1,8 @@
 import cn from "classnames";
-import { BlockquoteHTMLAttributes, memo } from "react";
+import { BlockquoteHTMLAttributes } from "react";
 
 import { borders, paddings } from "../../../styles";
+import { typedMemo } from "../../../utils/internal";
 
 export interface BlockQuoteProps
   extends BlockquoteHTMLAttributes<HTMLQuoteElement> {}
@@ -13,4 +14,4 @@ export const BlockQuote = ({ className, ...props }: BlockQuoteProps) => (
   />
 );
 
-export default memo(BlockQuote);
+export default typedMemo(BlockQuote);

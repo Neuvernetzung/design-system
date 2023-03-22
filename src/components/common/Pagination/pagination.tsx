@@ -166,15 +166,3 @@ export const Pagination = ({
     </div>
   );
 };
-
-Pagination.defaultProps = {
-  limits: [10, 25, 50, 100],
-  result: undefined,
-  setActivePage: undefined,
-  setLimit: undefined,
-  size: "md",
-  containerClassName: undefined,
-  selectLimit: true,
-  variant: "default",
-  emptyMessage: undefined,
-};

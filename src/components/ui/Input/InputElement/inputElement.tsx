@@ -1,9 +1,10 @@
 import cn from "classnames";
-import { forwardRef, memo, ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 
 import { textColors } from "../../../../styles";
 import { inputSizes } from "../../../../styles/groups";
 import type { Sizes } from "../../../../types";
+import { typedMemo } from "../../../../utils/internal";
 
 export type InputElementProps = {
   className?: string;
@@ -49,14 +50,6 @@ export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
   )
 );
 
-export default memo(InputElement);
+export default typedMemo(InputElement);
 
 InputElement.displayName = "InputElement";
-
-InputElement.defaultProps = {
-  className: undefined,
-  isLeft: false,
-  isRight: false,
-  pointerEvents: false,
-  style: undefined,
-};

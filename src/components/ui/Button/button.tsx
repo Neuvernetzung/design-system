@@ -6,7 +6,6 @@ import {
   FC,
   ForwardedRef,
   forwardRef,
-  memo,
   ReactNode,
   SVGProps,
 } from "react";
@@ -29,8 +28,9 @@ import {
   roundings,
   transition,
 } from "../../../styles";
-import { useColorState } from "../../../theme/useColorState";
+import { useThemeState } from "../../../theme/useThemeState";
 import type { Colors, ExtendedColors, Focuses, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
 import { useLoadingState } from "../Loading/loading";
@@ -130,7 +130,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
   ) => {
     const Component = as || ButtonDefaultElement;
 
-    const { colorState } = useColorState();
+    const { colorState } = useThemeState();
 
     const loadingState = useLoadingState((state) => state);
     const isLoading = isString(loadingState) && loadingState === loadingId;
@@ -171,18 +171,6 @@ export const Button: PolymorphicForwardRefExoticComponent<
   }
 );
 
-export default memo(Button);
+export default typedMemo(Button);
 
 Button.displayName = "button";
-
-Button.defaultProps = {
-  variant: "filled",
-  color: "accent",
-  size: "md",
-  fullWidth: false,
-  rounded: false,
-  leftIcon: undefined,
-  rightIcon: undefined,
-  as: undefined,
-  children: undefined,
-};

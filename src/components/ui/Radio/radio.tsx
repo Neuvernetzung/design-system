@@ -200,12 +200,3 @@ export const Radio = <
 );
 
 export default typedMemo(Radio);
-
-Radio.defaultProps = {
-  variant: "default",
-  helper: undefined,
-  required: false,
-  size: "md",
-  color: "primary",
-  className: undefined,
-};

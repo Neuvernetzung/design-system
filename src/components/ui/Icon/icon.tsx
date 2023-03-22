@@ -6,7 +6,6 @@ import {
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
-  memo,
   SVGProps,
 } from "react";
 import type {
@@ -17,6 +16,7 @@ import type {
 
 import { extendedTextColors } from "../../../styles";
 import { ExtendedColors, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 
 export const sizes: Sizes = {
   xs: "h-4 w-4",
@@ -62,15 +62,6 @@ export const Icon: PolymorphicForwardRefExoticComponent<
   )
 );
 
-Icon.defaultProps = {
-  size: "md",
-  color: "inherit",
-};
-
-export default memo(Icon);
+export default typedMemo(Icon);
 
 Icon.displayName = "Icon";
-
-Icon.defaultProps = {
-  className: undefined,
-};

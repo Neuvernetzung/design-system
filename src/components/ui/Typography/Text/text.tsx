@@ -1,11 +1,5 @@
 import cn from "classnames";
-import {
-  ElementType,
-  ForwardedRef,
-  forwardRef,
-  HTMLAttributes,
-  memo,
-} from "react";
+import { ElementType, ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
@@ -14,6 +8,7 @@ import type {
 
 import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColors, ExtendedSizes } from "../../../../types";
+import { typedMemo } from "../../../../utils/internal";
 
 export const sizes: Required<ExtendedSizes> = textSizes;
 
@@ -64,6 +59,6 @@ export const Text: PolymorphicForwardRefExoticComponent<
   }
 );
 
-export default memo(Text);
+export default typedMemo(Text);
 
 Text.displayName = "Text";

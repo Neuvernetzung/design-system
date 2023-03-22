@@ -56,7 +56,7 @@ export const MobileNavItem = ({
                           <Button as="a" variant="ghost" fullWidth>
                             <div
                               className={cn(
-                                "w-full flex items-start justify-start",
+                                "w-full flex items-center justify-start",
                                 gaps.sm
                               )}
                             >
@@ -83,7 +83,7 @@ export const MobileNavItem = ({
                       >
                         <div
                           className={cn(
-                            "w-full flex items-start justify-start",
+                            "w-full flex items-center justify-start",
                             gaps.sm
                           )}
                         >
@@ -110,7 +110,12 @@ export const MobileNavItem = ({
                   <Icon color="accent" icon={icon} />
                 </div>
               )}
-              <div className="w-full flex items-start justify-start">
+              <div
+                className={cn(
+                  "w-full flex items-center justify-start",
+                  gaps.sm
+                )}
+              >
                 {label}
                 {tag && <Tag variant="solid" size="sm" {...tag} />}
               </div>
@@ -122,7 +127,12 @@ export const MobileNavItem = ({
 
   return (
     <Button disabled={disabled} variant="ghost" fullWidth>
-      <div className="w-full flex items-start justify-start">
+      {icon && (
+        <div className="flex">
+          <Icon color="accent" icon={icon} />
+        </div>
+      )}
+      <div className={cn("w-full flex items-center justify-start", gaps.sm)}>
         {label}
         {tag && <Tag variant="solid" size="sm" {...tag} />}
       </div>

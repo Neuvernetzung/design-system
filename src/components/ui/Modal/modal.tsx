@@ -130,11 +130,3 @@ export const Modal = ({
 };
 
 export default Modal;
-
-Modal.defaultProps = {
-  header: undefined,
-  content: undefined,
-  footer: undefined,
-  size: "md",
-  initialFocus: undefined,
-};

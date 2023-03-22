@@ -60,7 +60,3 @@ export const ThemeSwitch = ({ variant = "button" }: ThemeSwitchProps) => {
 
   return null;
 };
-
-ThemeSwitch.defaultProps = {
-  variant: "button",
-};

@@ -1,14 +1,7 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
 import isString from "lodash/isString";
-import {
-  ElementType,
-  FC,
-  ForwardedRef,
-  forwardRef,
-  memo,
-  SVGProps,
-} from "react";
+import { ElementType, FC, ForwardedRef, forwardRef, SVGProps } from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
@@ -22,8 +15,9 @@ import {
   roundings,
   transition,
 } from "../../../../styles";
-import { useColorState } from "../../../../theme/useColorState";
+import { useThemeState } from "../../../../theme/useThemeState";
 import { Colors, ExtendedColors, Focuses, Sizes } from "../../../../types";
+import { typedMemo } from "../../../../utils/internal";
 import { Icon } from "../../Icon";
 import { Spinner, useLoadingState } from "../../Loading/loading";
 import { sizes as textSizes } from "../../Typography/Text/text";
@@ -49,6 +43,7 @@ export type IconButtonOwnProps = {
   iconClassName?: string;
   ariaLabel: string;
   type?: "button" | "submit" | "reset";
+  children?: undefined;
 };
 
 export type IconButtonProps<
@@ -80,7 +75,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
   ) => {
     const Component = as || IconButtonDefaultElement;
 
-    const { colorState } = useColorState();
+    const { colorState } = useThemeState();
 
     const loadingState = useLoadingState((state) => state);
     const isLoading = isString(loadingState) && loadingState === loadingId;
@@ -120,14 +115,6 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
   }
 );
 
-export default memo(IconButton);
+export default typedMemo(IconButton);
 
 IconButton.displayName = "IconButton";
-
-IconButton.defaultProps = {
-  variant: "filled",
-  color: "accent",
-  size: "md",
-  rounded: false,
-  as: undefined,
-};

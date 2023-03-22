@@ -1,10 +1,11 @@
 import cn from "classnames";
 import type { Element, HTMLReactParserOptions } from "html-react-parser";
 import parse, { domToReact } from "html-react-parser";
-import { createElement, memo, ReactNode } from "react";
+import { createElement, ReactNode } from "react";
 
 import { prose } from "../../../styles";
 import { ProseComponents, ProseComponentTags } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { BlockQuote } from "../BlockQuote";
 import { HorizontalRule } from "../HorizontalRule";
 import { NativeLink } from "../Link";
@@ -91,4 +92,4 @@ export const Prose = ({ content, className }: ProseProps) => {
   return <div className={cn(prose, className)}>{parse(content, options)}</div>;
 };
 
-export default memo(Prose);
+export default typedMemo(Prose);

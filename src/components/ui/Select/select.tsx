@@ -8,6 +8,8 @@ import {
   ForwardedRef,
   forwardRef,
   KeyboardEvent,
+  KeyboardEventHandler,
+  MouseEventHandler,
   ReactNode,
   useEffect,
   useRef,
@@ -306,7 +308,7 @@ export const SelectInner = <
                         <Tag
                           ref={removeButtonRefs[i].ref}
                           size={size}
-                          onClick={(e: Event) => {
+                          onClick={(e) => {
                             e.stopPropagation();
                             onChange(handleRemove(values, i));
                           }}
@@ -526,15 +528,15 @@ export default typedMemo(Select);
 
 type TagProps = {
   size: keyof Sizes;
-  onClick: Function;
-  onKeyUp: Function;
+  onClick: MouseEventHandler;
+  onKeyUp: KeyboardEventHandler;
   children: any;
 };
 
 const Tag = forwardRef(
   (
     { size, onClick, onKeyUp, children }: TagProps,
-    ref: ForwardedRef<Element>
+    ref: ForwardedRef<HTMLDivElement>
   ) => (
     <ButtonGroup>
       <Button
@@ -548,7 +550,7 @@ const Tag = forwardRef(
         ref={ref}
         as="div"
         focus="bg"
-        tabIndex="-1"
+        tabIndex={-1}
         role="button"
         ariaLabel="remove"
         size={iconButtonSizes[size]}
