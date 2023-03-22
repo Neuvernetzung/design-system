@@ -1,7 +1,8 @@
 import cn from "classnames";
 import { forwardRef, ReactNode } from "react";
 
-import { gaps, paddingsX, paddingsY } from "../../../styles";
+import { gaps, paddingsX, paddingsY, pagePaddings } from "../../../styles";
+import { Sizes } from "../../../types";
 import { Link } from "../../ui/Link";
 import { Text } from "../../ui/Typography/Text";
 
@@ -10,6 +11,8 @@ type FooterProps = {
   cols?: LinkGroupProps[];
   copyright?: string;
   className?: string;
+  pagePaddingSize?: keyof Sizes;
+  size?: keyof Sizes;
 };
 
 type LinkGroupProps = {
@@ -23,18 +26,29 @@ type LinkProps = {
 };
 
 export const Footer = forwardRef<HTMLDivElement, FooterProps>(
-  ({ logo, cols, copyright, className }, ref) => (
+  (
+    { logo, cols, copyright, className, pagePaddingSize = "md", size = "md" },
+    ref
+  ) => (
     <div
       ref={ref}
-      className={cn("bg-white dark:bg-black flex flex-col", gaps.md, className)}
+      className={cn(
+        "bg-white dark:bg-black flex flex-col",
+        gaps[size],
+        className
+      )}
     >
       <div
-        className={cn("w-full max-w-6xl mx-auto", paddingsY.xl, paddingsX.lg)}
+        className={cn(
+          "w-full max-w-6xl mx-auto",
+          paddingsY[size],
+          pagePaddings[pagePaddingSize]
+        )}
       >
         <div
           className={cn(
             "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4",
-            gaps.md
+            gaps[size]
           )}
         >
           {cols &&
