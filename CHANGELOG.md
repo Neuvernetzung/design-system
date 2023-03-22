@@ -1,3 +1,16 @@
+# [1.35.0](https://github.com/Neuvernetzung/design-system/compare/v1.34.0...v1.35.0) (2023-03-22)
+
+
+### Bug Fixes
+
+* **ui:** Popover fullScreenOnMobile verbessern [#522](https://github.com/Neuvernetzung/design-system/issues/522) ([49ef828](https://github.com/Neuvernetzung/design-system/commit/49ef828d09be418b3dd336c58994c8e601a1d391))
+
+
+### Features
+
+* **ui:** Drawer Animation hinzufügen [#523](https://github.com/Neuvernetzung/design-system/issues/523) ([cbd7a28](https://github.com/Neuvernetzung/design-system/commit/cbd7a28e1ce7d8f8d6cba6de97ae728f5822200a))
+* **ui:** Navbar, Pagecontainer und Footer überarbeiten [#526](https://github.com/Neuvernetzung/design-system/issues/526) ([ee8d801](https://github.com/Neuvernetzung/design-system/commit/ee8d8014a392dc075d597956b14f100ffb1851fd))
+
 # [1.34.0](https://github.com/Neuvernetzung/design-system/compare/v1.33.0...v1.34.0) (2023-03-19)
 
 
