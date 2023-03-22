@@ -2,11 +2,12 @@ import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
 import cn from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import isString from "lodash/isString";
-import { memo, ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
 import { ChevronDownIcon, MinusIcon, PlusIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -148,6 +149,6 @@ export const Disclosure = ({
   </div>
 );
 
-export default memo(Disclosure);
+export default typedMemo(Disclosure);
 
 Disclosure.displayName = "Disclosure";

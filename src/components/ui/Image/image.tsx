@@ -1,9 +1,10 @@
 import cn from "classnames";
 import type { ImageProps as NextImageProps } from "next/image";
 import NextImage from "next/image";
-import { memo, useState } from "react";
+import { useState } from "react";
 
 import { PhotoIcon } from "../../../theme/icons";
+import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
@@ -44,7 +45,7 @@ export const Image = ({
   );
 };
 
-export default memo(Image);
+export default typedMemo(Image);
 
 const Fallback = () => (
   <div className="w-full h-full flex items-center justify-center bg-accent-100 dark:bg-accent-800">

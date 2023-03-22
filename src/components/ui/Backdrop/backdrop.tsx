@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { motion } from "framer-motion";
-import { memo } from "react";
+import { typedMemo } from "../../../utils/internal";
 
 export const Backdrop = () => (
   <motion.div
@@ -11,4 +11,4 @@ export const Backdrop = () => (
   />
 );
 
-export default memo(Backdrop);
+export default typedMemo(Backdrop);

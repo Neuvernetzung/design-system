@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { memo, useState } from "react";
+import { useState } from "react";
 import {
   A11y,
   Autoplay,
@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { AutoplayOptions } from "swiper/types";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
+import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import type { ImageProps } from "../Image";
 import { Image } from "../Image";
@@ -146,4 +147,4 @@ export const Carousel = ({
   );
 };
 
-export default memo(Carousel);
+export default typedMemo(Carousel);

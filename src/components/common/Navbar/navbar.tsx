@@ -142,8 +142,3 @@ const Logo = ({
     </a>
   </Link>
 );
-
-Logo.defaultProps = {
-  href: undefined,
-  containerClassName: undefined,
-};

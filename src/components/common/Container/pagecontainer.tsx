@@ -48,8 +48,3 @@ export const PageContainer = ({
     />
   );
 };
-
-PageContainer.defaultProps = {
-  navbarRef: undefined,
-  footerRef: undefined,
-};

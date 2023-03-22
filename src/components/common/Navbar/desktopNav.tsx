@@ -122,7 +122,7 @@ export const DesktopSubNav = ({
                 {label}
                 {tag && <Tag variant="solid" size="sm" {...tag} />}
               </Heading>
-              <Text fontSize="sm">{subLabel}</Text>
+              <Text size="sm">{subLabel}</Text>
             </div>
           </div>
           <Icon
@@ -147,7 +147,7 @@ export const DesktopSubNav = ({
             {label}
             {tag && <Tag variant="solid" size="sm" {...tag} />}
           </Text>
-          <Text fontSize="sm">{subLabel}</Text>
+          <Text size="sm">{subLabel}</Text>
         </div>
       </div>
       <Icon color="accent" icon={ChevronRightIcon} />

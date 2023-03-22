@@ -92,9 +92,7 @@ export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
             );
             setOpen(true);
           }}
-        >
-          Link
-        </IconButton>
+        />
       </Tooltip>
       <Modal
         header={

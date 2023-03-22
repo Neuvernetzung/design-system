@@ -3,7 +3,6 @@ import cn from "classnames";
 import {
   ForwardedRef,
   forwardRef,
-  memo,
   ReactElement,
   ReactNode,
   useState,
@@ -14,6 +13,7 @@ import { usePopper } from "react-popper";
 import { bgColors, paddingsSmall, roundings, shadows } from "../../../styles";
 import { popperOffset } from "../../../styles/popper/offset";
 import { Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type TooltipProps = {
@@ -71,7 +71,7 @@ export const Tooltip = ({
   );
 };
 
-export default memo(Tooltip);
+export default typedMemo(Tooltip);
 
 type TooltipInnerT = {
   styles?: object;

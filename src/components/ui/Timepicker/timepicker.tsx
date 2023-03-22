@@ -5,6 +5,7 @@ import {
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
+import { MouseEvent } from "react";
 
 import { divides, marginsXSmall } from "../../../styles";
 import { ClockIcon, CrossIcon } from "../../../theme/icons";
@@ -119,7 +120,7 @@ export const Timepicker = <
                       ariaLabel="delete_selected_date"
                       icon={CrossIcon}
                       className={cn("pointer-events-auto", marginsXSmall[size])}
-                      onClick={async (e: PointerEvent) => {
+                      onClick={async (e: MouseEvent) => {
                         e.preventDefault();
                         await onChange(""); // "" wird verwendet, da bei undefined der Input nicht zurück gesetzt wird
                         await onChange(undefined); // um den Controller zurück zu setzen
