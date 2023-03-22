@@ -15,7 +15,7 @@ import {
   roundings,
   transition,
 } from "../../../../styles";
-import { useColorState } from "../../../../theme/useColorState";
+import { useThemeState } from "../../../../theme/useThemeState";
 import { Colors, ExtendedColors, Focuses, Sizes } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
 import { Icon } from "../../Icon";
@@ -75,7 +75,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
   ) => {
     const Component = as || IconButtonDefaultElement;
 
-    const { colorState } = useColorState();
+    const { colorState } = useThemeState();
 
     const loadingState = useLoadingState((state) => state);
     const isLoading = isString(loadingState) && loadingState === loadingId;

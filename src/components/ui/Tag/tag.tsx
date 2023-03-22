@@ -12,7 +12,7 @@ import {
   textColors,
   textSizes,
 } from "../../../styles";
-import { useColorState } from "../../../theme/useColorState";
+import { useThemeState } from "../../../theme/useThemeState";
 import type { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
@@ -52,7 +52,7 @@ export const Tag = ({
   variant = "solid",
   rounded,
 }: TagProps) => {
-  const { colorState } = useColorState();
+  const { colorState } = useThemeState();
 
   return (
     <div

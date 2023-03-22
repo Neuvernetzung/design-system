@@ -3,9 +3,16 @@ import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, ColorPicker, Form, Tag } from "../components/ui";
+import { Button, ColorPicker, Form, Select, Tag } from "../components/ui";
 import { borders } from "../styles";
-import { ExtendColors, setColors, ThemeProvider, useColorState } from ".";
+import { Sizes, sizes } from "../types";
+import {
+  ExtendColors,
+  setBorderRadius,
+  setColors,
+  ThemeProvider,
+  useThemeState,
+} from ".";
 
 export default {
   title: "THEME/ThemeProvider",
@@ -24,18 +31,27 @@ const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
 );
 
-export const Default = ({ ...args }) => {
-  const { colorState } = useColorState();
+type FormProps = {
+  colors: Partial<ExtendColors>;
+  radius: keyof Sizes;
+};
 
-  const { control, handleSubmit } = useForm<Partial<ExtendColors>>({
-    defaultValues: {
-      brand: colorState?.brand[500],
-      primary: colorState?.primary[500],
+export const Default = ({ ...args }) => {
+  const { colorState } = useThemeState();
+
+  const { control, handleSubmit } = useForm<FormProps>({
+    values: {
+      colors: {
+        brand: colorState?.brand[500],
+        primary: colorState?.primary[500],
+      },
+      radius: "md",
     },
   });
 
-  const onSubmit = (data: Partial<ExtendColors>) => {
-    setColors(":root", data);
+  const onSubmit = (data: FormProps) => {
+    setColors(":root", data.colors);
+    setBorderRadius(":root", data.radius);
   };
 
   return (
@@ -45,8 +61,14 @@ export const Default = ({ ...args }) => {
         onSubmit={onSubmit}
         className="flex flex-col gap-4"
       >
-        <ColorPicker name="brand" label="brand" control={control} />
-        <ColorPicker name="primary" label="primary" control={control} />
+        <ColorPicker name="colors.brand" label="brand" control={control} />
+        <ColorPicker name="colors.primary" label="primary" control={control} />
+        <Select
+          name="radius"
+          label="border Radius"
+          control={control}
+          options={sizes.map((size) => ({ children: size, value: size }))}
+        />
         <Button type="submit" color="brand">
           Bestätigen
         </Button>
@@ -56,7 +78,7 @@ export const Default = ({ ...args }) => {
 };
 
 export const NestedTheme = ({ ...args }) => {
-  const { colorState } = useColorState();
+  const { colorState } = useThemeState();
 
   const { control, handleSubmit } = useForm<Partial<ExtendColors>>({
     defaultValues: {

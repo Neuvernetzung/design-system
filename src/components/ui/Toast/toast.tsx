@@ -12,7 +12,7 @@ import {
   textColors,
 } from "../../../styles";
 import { CrossIcon } from "../../../theme/icons";
-import { useColorState } from "../../../theme/useColorState";
+import { useThemeState } from "../../../theme/useThemeState";
 import { Colors } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
@@ -64,7 +64,7 @@ export const Toast = ({
   color = "accent",
   icon,
 }: ToastProps) => {
-  const { colorState } = useColorState();
+  const { colorState } = useThemeState();
 
   return (
     <div

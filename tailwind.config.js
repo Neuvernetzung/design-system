@@ -17,6 +17,20 @@ const colorVariables = (color) => ({
   900: colorVariable(color, 900),
 });
 
+const radiusVariable = (size) => `var(--radius-${size})`;
+
+const radiusVariables = {
+  none: radiusVariable("none"),
+  sm: radiusVariable("sm"),
+  DEFAULT: radiusVariable("DEFAULT"),
+  md: radiusVariable("md"),
+  lg: radiusVariable("lg"),
+  xl: radiusVariable("xl"),
+  "2xl": radiusVariable("2xl"),
+  "3xl": radiusVariable("3xl"),
+  full: radiusVariable("full"),
+};
+
 module.exports = {
   content: [`${__dirname}/src/**/*.{ts,tsx}`],
   darkMode: "class",
@@ -28,6 +42,7 @@ module.exports = {
       ],
       body: ["Inter", ...require("tailwindcss/defaultTheme").fontFamily.sans],
     },
+    borderRadius: radiusVariables,
     extend: {
       colors: {
         white: colorVariable("white"),
