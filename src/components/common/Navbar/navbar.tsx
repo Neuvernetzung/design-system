@@ -8,12 +8,12 @@ import {
   useState,
 } from "react";
 
-import { gaps, paddings, zIndexes } from "../../../styles";
+import { gaps, paddingsY, pagePaddings, zIndexes } from "../../../styles";
 import { CrossIcon, MenuIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { IconButton } from "../../ui/Button";
 import { Link } from "../../ui/Link";
-import { type TagProps } from "../../ui/Tag";
+import type { TagProps } from "../../ui/Tag";
 import { ThemeSwitch } from "../ThemeSwitch";
 import { DesktopNav } from "./desktopNav";
 import { MobileNav } from "./mobileNav";
@@ -38,6 +38,8 @@ export type NavbarProps = {
   startItems?: ReactNode;
   endItems?: ReactNode;
   gapSize?: keyof Sizes;
+  size?: keyof Sizes;
+  pagePaddingSize?: keyof Sizes;
 };
 
 type LogoProps = {
@@ -47,6 +49,7 @@ type LogoProps = {
 
 export type SubNavProps = {
   navItems: NavItemProps[];
+  size?: keyof Sizes;
 };
 
 export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
@@ -61,6 +64,8 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       startItems,
       endItems,
       gapSize = "md",
+      size = "md",
+      pagePaddingSize = "md",
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -78,7 +83,8 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
         <div
           className={cn(
             "flex items-center justify-between border-b border-accent-200 dark:border-accent-700",
-            paddings.md,
+            paddingsY[size],
+            pagePaddings[pagePaddingSize],
             gaps[gapSize]
           )}
         >
@@ -91,9 +97,14 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
               "justify-end": justifyDesktopNav === "end",
             })}
           >
-            <DesktopNav navItems={navItems} />
+            <DesktopNav size={size} navItems={navItems} />
           </div>
-          <div className="flex flex-row items-center justify-end">
+          <div
+            className={cn(
+              "flex flex-row items-center justify-end",
+              gaps[gapSize]
+            )}
+          >
             {endItems && endItems}
             {allowDarkMode && <ThemeSwitch />}
             <div className={cn("flex lg:hidden")}>
