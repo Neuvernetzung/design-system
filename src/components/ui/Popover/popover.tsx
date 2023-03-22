@@ -6,7 +6,6 @@ import {
   ForwardedRef,
   forwardRef,
   Fragment,
-  memo,
   MouseEvent,
   MutableRefObject,
   ReactNode,
@@ -25,6 +24,7 @@ import {
 import { popperOffset } from "../../../styles/popper/offset";
 import { CrossIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps, IconButtonProps } from "../Button";
 import { Button, IconButton } from "../Button";
@@ -182,7 +182,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
   }
 );
 
-export default memo(Popover);
+export default typedMemo(Popover);
 
 Popover.displayName = "Popover";
 

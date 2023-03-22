@@ -1,7 +1,8 @@
 import cn from "classnames";
-import { ForwardedRef, forwardRef, LiHTMLAttributes, memo } from "react";
+import { ForwardedRef, forwardRef, LiHTMLAttributes } from "react";
 
 import { textColors } from "../../../styles";
+import { typedMemo } from "../../../utils/internal";
 
 export interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {}
 
@@ -23,4 +24,4 @@ export const ListItem = forwardRef(
 );
 ListItem.displayName = "ListItem";
 
-export default memo(ListItem);
+export default typedMemo(ListItem);

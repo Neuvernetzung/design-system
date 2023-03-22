@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { FC, memo, SVGProps } from "react";
+import { FC, MouseEventHandler, SVGProps } from "react";
 
 import {
   adjustedTextColors,
@@ -14,6 +14,7 @@ import {
 import { CrossIcon } from "../../../theme/icons";
 import { useColorState } from "../../../theme/useColorState";
 import { Colors } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -22,7 +23,7 @@ export type ToastProps = {
   message: string;
   color?: keyof Colors;
   icon?: FC<SVGProps<SVGSVGElement>>;
-  handleClose: Function;
+  handleClose: MouseEventHandler;
   variant?: keyof ToastVariants;
 };
 
@@ -108,10 +109,4 @@ export const Toast = ({
   );
 };
 
-export default memo(Toast);
-
-Toast.defaultProps = {
-  variant: "outline",
-  color: "accent",
-  icon: undefined,
-};
+export default typedMemo(Toast);

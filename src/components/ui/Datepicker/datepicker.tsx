@@ -28,7 +28,14 @@ import {
   subYears,
 } from "date-fns";
 import de from "date-fns/locale/de";
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import {
+  KeyboardEvent,
+  MouseEvent,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Controller,
   FieldPath,
@@ -55,13 +62,13 @@ import {
   CrossIcon,
 } from "../../../theme/icons";
 import { InputVariants, Sizes } from "../../../types";
+import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "..";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement } from "../Form";
 import { Popover, PopoverButton } from "../Popover";
 import { Text } from "../Typography";
-import { smallerSize } from "../../../utils";
 
 export type DatepickerProps = {
   label?: string;
@@ -426,7 +433,7 @@ export const Datepicker = <
                             "pointer-events-auto",
                             marginsXSmall[size]
                           )}
-                          onClick={(e: PointerEvent) => {
+                          onClick={(e: MouseEvent) => {
                             e.preventDefault();
                             clearSelected();
                             onChange(null); // null wird verwendet, da bei undefined der Controller auf den defaultValue zurücksetzt
@@ -639,18 +646,18 @@ export const Datepicker = <
                                 selected.length > 0 &&
                                 isSameYear(selected[0], monthDate) &&
                                 isSameMonth(selected[0], monthDate)
-                                  ? "0"
+                                  ? 0
                                   : selected.length === 0 &&
                                     isSameYear(new Date(), monthDate) &&
                                     isSameMonth(new Date(), monthDate)
-                                  ? "0"
+                                  ? 0
                                   : !isSameYear(selected[0], monthDate) &&
                                     !isSameMonth(selected[0], monthDate) &&
                                     !isSameYear(new Date(), monthDate) &&
                                     !isSameMonth(new Date(), monthDate) &&
                                     i === 0
-                                  ? "0"
-                                  : "-1"
+                                  ? 0
+                                  : -1
                               }
                               color={
                                 selected.length > 0 &&
@@ -732,13 +739,13 @@ export const Datepicker = <
                             tabIndex={
                               selected.length > 0 &&
                               isSameYear(selected[0], year)
-                                ? "0"
+                                ? 0
                                 : !inRange(
                                     selected[0],
                                     startOfDecade(viewing),
                                     endOfDecade(viewing)
                                   ) && isSameYear(new Date(), year)
-                                ? "0"
+                                ? 0
                                 : !inRange(
                                     selected[0],
                                     startOfDecade(viewing),
@@ -750,8 +757,8 @@ export const Datepicker = <
                                     endOfDecade(viewing)
                                   ) &&
                                   i === 0
-                                ? "0"
-                                : "-1"
+                                ? 0
+                                : -1
                             }
                             color={
                               selected.length > 0 &&
@@ -804,27 +811,14 @@ export const Datepicker = <
 
 export default typedMemo(Datepicker);
 
-Datepicker.defaultProps = {
-  label: undefined,
-  required: undefined,
-  placeholder: undefined,
-  size: "md",
-  helper: undefined,
-  inputVariant: "outline",
-  disabled: undefined,
-  removeAll: true,
-  minDate: undefined,
-  maxDate: undefined,
-};
-
 type CalenderHeaderProps = {
-  leftArrowFunction: Function;
+  leftArrowFunction: MouseEventHandler;
   leftAriaLabel: string;
   leftArrowDisabled?: boolean;
-  rightArrowFunction: Function;
+  rightArrowFunction: MouseEventHandler;
   rightAriaLabel: string;
   rightArrowDisabled?: boolean;
-  titleFunction?: Function;
+  titleFunction?: MouseEventHandler;
   title: string;
 };
 
@@ -857,7 +851,7 @@ const CalendarHeader = ({
     <Button
       variant="ghost"
       onClick={titleFunction}
-      tabIndex={!titleFunction ? "-1" : "0"}
+      tabIndex={!titleFunction ? -1 : 0}
       className={cn("w-full", !titleFunction && "pointer-events-none")}
     >
       {title}
@@ -873,9 +867,3 @@ const CalendarHeader = ({
     />
   </div>
 );
-
-CalendarHeader.defaultProps = {
-  leftArrowDisabled: false,
-  rightArrowDisabled: false,
-  titleFunction: undefined,
-};

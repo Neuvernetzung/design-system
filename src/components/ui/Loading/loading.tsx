@@ -1,6 +1,5 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { memo } from "react";
 import { create } from "zustand";
 
 import { getText, Locales } from "../../../locales/getText";
@@ -11,6 +10,7 @@ import {
   zIndexes,
 } from "../../../styles";
 import { ExtendedColors, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
 import { sizes as iconSizes } from "../Icon/icon";
 import { Text } from "../Typography";
@@ -50,7 +50,7 @@ export const Loading = () => {
   return null;
 };
 
-export default memo(Loading);
+export default typedMemo(Loading);
 
 interface SpinnerProps {
   color?: keyof ExtendedColors;

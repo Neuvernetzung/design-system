@@ -5,7 +5,6 @@ import {
   FC,
   ForwardedRef,
   forwardRef,
-  memo,
   ReactNode,
   SVGProps,
   useState,
@@ -23,6 +22,7 @@ import {
 import { popperOffset } from "../../../styles/popper/offset";
 import { Colors, Sizes } from "../../../types";
 import { capSize } from "../../../utils";
+import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
 import { Icon } from "../Icon";
@@ -241,13 +241,6 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   }
 );
 
-export default memo(Menu);
+export default typedMemo(Menu);
 
 Menu.displayName = "Menu";
-
-Menu.defaultProps = {
-  size: "md",
-  disabled: false,
-  dropdownClassName: undefined,
-  placement: "bottom-end",
-};

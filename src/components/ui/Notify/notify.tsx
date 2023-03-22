@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { ElementType, memo, useEffect, useState } from "react";
+import { ElementType, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
 
@@ -10,6 +10,7 @@ import {
   InformationCircleIcon,
 } from "../../../theme/icons";
 import { Colors } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { isLoading, loading } from "../Loading/loading";
 import { Toast } from "../Toast";
 import { ToastVariants } from "../Toast/toast";
@@ -105,4 +106,4 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
   );
 };
 
-export default memo(Notify);
+export default typedMemo(Notify);

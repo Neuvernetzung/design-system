@@ -99,15 +99,15 @@ export const paddingsLargeEvenly: Sizes = {
 export const pagePaddings: Sizes = {
   xs: "px-2 lg:px-4",
   sm: "px-4 lg:px-8",
-  md: "px-6 lg:px-12",
-  lg: "px-8 lg:px-16",
-  xl: "px-12 lg:px-24",
+  md: "px-4 sm:px-6 lg:px-12",
+  lg: "px-4 sm:px-6 md:px-8 lg:px-16",
+  xl: "px-4 sm:px-6 md:px-12 lg:px-24",
 };
 
 export const negatePagePaddings: Sizes = {
   xs: "-mx-2 lg:-mx-4",
   sm: "-mx-4 lg:-mx-8",
-  md: "-mx-6 lg:-mx-12",
-  lg: "-mx-8 lg:-mx-16",
-  xl: "-mx-12 lg:-mx-24",
+  md: "-mx-4 sm:-mx-6 lg:-mx-12",
+  lg: "-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16",
+  xl: "-mx-4 sm:-mx-6 md:-mx-12 lg:-mx-24",
 };

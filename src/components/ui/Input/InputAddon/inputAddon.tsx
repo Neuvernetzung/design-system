@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { forwardRef, memo, ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 
 import {
   borders,
@@ -10,6 +10,7 @@ import {
 } from "../../../../styles";
 import { inputSizes } from "../../../../styles/groups";
 import type { InputVariants, Sizes } from "../../../../types";
+import { typedMemo } from "../../../../utils/internal";
 
 export type InputAddonProps = {
   className?: string;
@@ -51,12 +52,6 @@ export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
   )
 );
 
-export default memo(InputAddon);
+export default typedMemo(InputAddon);
 
 InputAddon.displayName = "InputAddon";
-
-InputAddon.defaultProps = {
-  className: undefined,
-  isLeft: false,
-  isRight: false,
-};

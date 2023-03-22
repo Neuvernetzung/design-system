@@ -1,9 +1,10 @@
 import { Tab } from "@headlessui/react";
 import cn from "classnames";
-import { FC, Fragment, memo, ReactNode, SVGProps } from "react";
+import { FC, Fragment, ReactNode, SVGProps } from "react";
 
 import { gaps, paddings } from "../../../styles";
 import { Colors, Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 
 export type TabGroupProps = TabListProps &
@@ -64,7 +65,7 @@ export const Tabs = ({
   </Tab.Group>
 );
 
-export default memo(Tabs);
+export default typedMemo(Tabs);
 
 export const TabGroup = ({ children, ...props }: any) => (
   <Tab.Group {...props}>{children}</Tab.Group>
