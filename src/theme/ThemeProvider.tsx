@@ -7,14 +7,16 @@ import { Loading } from "../components/ui/Loading";
 import { ConfirmationModal } from "../components/ui/Modal/confirmation";
 import { Notify } from "../components/ui/Notify";
 import { GeneralNotifyProps } from "../components/ui/Notify/notify";
-import { Color, Colors, HEX } from "../types";
-import { getRGBColorVariable } from "../utils";
+import { Color, Colors, HEX, Sizes } from "../types";
+import { getBorderRadiusVariable, getRGBColorVariable } from "../utils";
 import { createCSSSelector } from "../utils/internal";
+import { BorderRadiusSizes, extendBorderRadius } from "./extendBorderRadius";
 import { ExtendColors, extendColors, ReturnedColors } from "./extendColors";
 import { Icons } from "./icons";
-import { useColorState } from "./useColorState";
+import { useThemeState } from "./useThemeState";
 
 const LOCAL_COLOR_KEY = "colors";
+const LOCAL_BORDER_RADIUS_KEY = "radii";
 
 type ThemeProviderProps = {
   config?: ConfigProps;
@@ -24,9 +26,11 @@ type ThemeProviderProps = {
 export type ConfigProps = {
   colors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
+  borderRadius?: keyof Sizes;
   defaultTheme?: "system" | "light" | "dark";
   allowConfirmation?: boolean;
   allowGlobalLoading?: boolean;
+  preferSetValuesBeforeConfig?: boolean;
 } & NotificationConfigProps;
 
 type NotificationConfigProps =
@@ -39,14 +43,16 @@ type NotificationConfigProps =
 export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
   const {
     colors,
+    borderRadius,
     defaultTheme,
     allowNotification,
     notifyProps,
     allowConfirmation,
     allowGlobalLoading,
+    preferSetValuesBeforeConfig,
   } = config || {};
 
-  useColors(":root", colors);
+  useTheme(":root", { colors, borderRadius, preferSetValuesBeforeConfig });
 
   return (
     <NextThemeProvider
@@ -61,19 +67,46 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
   );
 };
 
-export const useColors = (
+type UseThemeProps = {
+  colors?: Partial<ExtendColors>;
+  borderRadius?: keyof Sizes;
+  preferSetValuesBeforeConfig?: boolean;
+};
+
+export const useTheme = (
   selector: ":root" | string,
-  colors?: Partial<ExtendColors>
-) =>
+  { colors, borderRadius, preferSetValuesBeforeConfig }: UseThemeProps
+) => {
   useEffect(() => {
     const localStorageColors = localStorage.getItem(LOCAL_COLOR_KEY);
-    setColors(
-      selector,
-      localStorageColors !== "undefined" && isString(localStorageColors)
-        ? JSON.parse(localStorageColors)
-        : colors
-    );
+    const parsedLocalStorageColors =
+      localStorageColors !== "undefined" &&
+      isString(localStorageColors) &&
+      JSON.parse(localStorageColors);
+
+    const newColors = preferSetValuesBeforeConfig
+      ? parsedLocalStorageColors || colors
+      : colors || parsedLocalStorageColors;
+
+    if (newColors) setColors(selector, newColors);
   }, [colors]);
+
+  useEffect(() => {
+    const localStorageBorderRadius = localStorage.getItem(
+      LOCAL_BORDER_RADIUS_KEY
+    );
+    const parsedLocalStorageBorderRadius =
+      localStorageBorderRadius !== "undefined" &&
+      isString(localStorageBorderRadius) &&
+      JSON.parse(localStorageBorderRadius);
+
+    const newBorderRadius = preferSetValuesBeforeConfig
+      ? parsedLocalStorageBorderRadius || borderRadius
+      : borderRadius || parsedLocalStorageBorderRadius;
+
+    if (newBorderRadius) setBorderRadius(selector, newBorderRadius);
+  }, [borderRadius]);
+};
 
 export const setColors = (
   selector: ":root" | string,
@@ -82,7 +115,7 @@ export const setColors = (
   const extendedColors: ReturnedColors = extendColors(colors);
 
   if (selector === ":root") {
-    useColorState.setState({ colorState: extendedColors });
+    useThemeState.setState({ colorState: extendedColors });
 
     localStorage.setItem(LOCAL_COLOR_KEY, JSON.stringify(colors));
   }
@@ -110,4 +143,28 @@ export const setColors = (
     .join(";");
 
   createCSSSelector(selector, cssColorVariables);
+};
+
+export const setBorderRadius = (
+  selector: ":root" | string,
+  borderRadius?: keyof Sizes
+) => {
+  const extendedBorderRadius = extendBorderRadius(borderRadius);
+
+  if (selector === ":root") {
+    useThemeState.setState({ borderRadiusState: extendedBorderRadius });
+
+    localStorage.setItem(LOCAL_BORDER_RADIUS_KEY, JSON.stringify(borderRadius));
+  }
+
+  const cssBorderRadiusVariables = (
+    Object.keys(extendedBorderRadius) as Array<keyof BorderRadiusSizes>
+  )
+    ?.map((radius) =>
+      getBorderRadiusVariable(get(extendedBorderRadius, radius), radius)
+    )
+    .flat()
+    .join(";");
+
+  createCSSSelector(selector, cssBorderRadiusVariables);
 };
