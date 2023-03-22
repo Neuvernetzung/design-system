@@ -115,13 +115,11 @@ export const DesktopSubNav = ({
               </div>
             )}
             <div>
-              <Heading
-                as="h4"
-                className={cn("flex flex-row items-center", gaps.sm)}
-              >
-                {label}
+              <div className={cn("flex flex-row items-center", gaps.sm)}>
+                <Heading as="h4">{label}</Heading>
                 {tag && <Tag variant="solid" size="sm" {...tag} />}
-              </Heading>
+              </div>
+
               <Text size="sm">{subLabel}</Text>
             </div>
           </div>
@@ -135,7 +133,7 @@ export const DesktopSubNav = ({
     );
 
   return (
-    <div className={cn(baseClass, "cursor-not-allowed opacity-75")}>
+    <div className={cn(baseClass, "cursor-not-allowed opacity-50")}>
       <div className={cn("flex flex-row", gaps.md)}>
         {icon && (
           <div className="flex">
@@ -143,10 +141,11 @@ export const DesktopSubNav = ({
           </div>
         )}
         <div>
-          <Text className={cn("flex flex-row items-center", gaps.sm)}>
-            {label}
+          <div className={cn("flex flex-row items-center", gaps.sm)}>
+            <Heading as="h4">{label}</Heading>
             {tag && <Tag variant="solid" size="sm" {...tag} />}
-          </Text>
+          </div>
+
           <Text size="sm">{subLabel}</Text>
         </div>
       </div>
