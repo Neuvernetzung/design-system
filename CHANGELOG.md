@@ -1,3 +1,17 @@
+# [1.36.0](https://github.com/Neuvernetzung/design-system/compare/v1.35.0...v1.36.0) (2023-03-22)
+
+
+### Bug Fixes
+
+* **ui:** ClassName bei PageContainer besser einbinden. Aktuell wird className überschrieben [#532](https://github.com/Neuvernetzung/design-system/issues/532) ([470cf0a](https://github.com/Neuvernetzung/design-system/commit/470cf0ae6e6ac02be85e8a470830a5a894f94135))
+* **ui:** Navbar überarbeiten [#530](https://github.com/Neuvernetzung/design-system/issues/530) ([249977c](https://github.com/Neuvernetzung/design-system/commit/249977c7e26e8b0ad692060c7c3a9ddef67aab70))
+
+
+### Features
+
+* **ui:** Einstellbar wie groß die Rundungen sein sollen [#531](https://github.com/Neuvernetzung/design-system/issues/531) ([cdb88a7](https://github.com/Neuvernetzung/design-system/commit/cdb88a753188c46f0d08a19d31869b28f6db8807))
+* **ui:** PagePaddings lg und xl weiter unterteilen [#529](https://github.com/Neuvernetzung/design-system/issues/529) ([14c4bb9](https://github.com/Neuvernetzung/design-system/commit/14c4bb99a117737d697950557ffd010059546f01))
+
 # [1.35.0](https://github.com/Neuvernetzung/design-system/compare/v1.34.0...v1.35.0) (2023-03-22)
 
 
