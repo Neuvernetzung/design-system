@@ -83,7 +83,7 @@ export const Modal = ({
           <div
             className={cn(
               "flex min-h-full items-center justify-center",
-              pagePaddings,
+              pagePaddings.md,
               paddingsY.lg
             )}
           >

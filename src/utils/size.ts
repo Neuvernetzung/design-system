@@ -8,13 +8,13 @@ export const capSize = (size: keyof Sizes, maxSize: keyof Sizes) => {
   return size;
 };
 
-export const minSize = (size: keyof Sizes, maxSize: keyof Sizes) => {
+export const minSize = (size: keyof Sizes, minSize: keyof Sizes) => {
   const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
 
-  if (!maxSize || !sizes.includes(maxSize)) return size;
-  const maxSizeIndex = sizes.indexOf(maxSize);
+  if (!minSize || !sizes.includes(minSize)) return size;
+  const minSizeIndex = sizes.indexOf(minSize);
   const sizeIndex = sizes.indexOf(size);
-  if (maxSizeIndex > sizeIndex) return maxSize;
+  if (minSizeIndex > sizeIndex) return minSize;
   return size;
 };
 
