@@ -49,8 +49,8 @@ export const DesktopNav = ({
               <Popover
                 panelClassName={cn(
                   fullWidthPopover &&
-                    "rounded-none w-screen !max-w-none !border-t-0",
-                  pagePaddings[pagePaddingSize]
+                    "rounded-none w-screen !max-w-none !border-t-0 !border-x-0",
+                  fullWidthPopover && pagePaddings[pagePaddingSize]
                 )}
                 disabledOffset={fullWidthPopover}
                 referenceElement={fullWidthPopover ? navbarRef : undefined}
