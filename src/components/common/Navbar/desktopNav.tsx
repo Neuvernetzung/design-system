@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { gaps } from "../../../styles";
+import { gaps, pagePaddings } from "../../../styles";
 import { ChevronDownIcon } from "../../../theme/icons";
 import { minSize, smallerSize } from "../../../utils";
 import { Button } from "../../ui/Button";
@@ -10,21 +10,28 @@ import { Tag } from "../../ui/Tag";
 import type { NavItemProps, SubNavProps } from "./navbar";
 import { NavbarSubItem } from "./subItem";
 
-export const DesktopNav = ({ navItems, size = "md" }: SubNavProps) => (
+export const DesktopNav = ({
+  navItems,
+  size = "md",
+  navbarRef,
+  pagePaddingSize = "md",
+}: SubNavProps) => (
   <PopoverGroup className={cn("flex flex-row items-center", gaps.sm)}>
     {navItems.map(
       ({
         label,
         children,
+        child,
         href,
         tag,
         disabled,
         icon,
         hideChevron,
+        fullWidthPopover,
       }: NavItemProps) => (
         <div key={label}>
           {!disabled ? (
-            !children ? (
+            !child && !children ? (
               <Button
                 as={Link}
                 href={href || "#"}
@@ -40,6 +47,13 @@ export const DesktopNav = ({ navItems, size = "md" }: SubNavProps) => (
               </Button>
             ) : (
               <Popover
+                panelClassName={cn(
+                  fullWidthPopover &&
+                    "rounded-none w-screen !max-w-none !border-t-0",
+                  pagePaddings[pagePaddingSize]
+                )}
+                disabledOffset={fullWidthPopover}
+                referenceElement={fullWidthPopover ? navbarRef : undefined}
                 buttonProps={{
                   leftIcon: icon,
                   ...(!hideChevron ? { rightIcon: ChevronDownIcon } : {}),
@@ -62,9 +76,11 @@ export const DesktopNav = ({ navItems, size = "md" }: SubNavProps) => (
                 trigger="hover"
                 content={
                   <div className={cn("flex flex-col", gaps.sm)}>
-                    {children?.map((child) => (
-                      <NavbarSubItem key={child.label} {...child} />
-                    ))}
+                    {fullWidthPopover
+                      ? child
+                      : children?.map((child) => (
+                          <NavbarSubItem key={child.label} {...child} />
+                        ))}
                   </div>
                 }
               />

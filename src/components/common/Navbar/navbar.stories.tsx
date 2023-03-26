@@ -69,6 +69,12 @@ const baseProps: NavbarProps = {
       ],
     },
     {
+      label: "Full",
+      fullWidthPopover: true,
+      tag: { label: "width", variant: "outline" },
+      child: "Test",
+    },
+    {
       label: "Item 3",
       href: "#",
     },

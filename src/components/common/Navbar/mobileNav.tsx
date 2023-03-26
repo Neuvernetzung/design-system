@@ -24,11 +24,27 @@ export const MobileNavItem = ({
   tag,
   disabled,
   icon,
+  fullWidthPopover,
+  child,
 }: NavItemProps) => {
   if (!disabled)
     return (
       <div>
-        {children ? (
+        {!children && !child ? (
+          <Button as={Link} href={href || "#"} variant="ghost" fullWidth>
+            {icon && (
+              <div className="flex">
+                <Icon color="accent" icon={icon} />
+              </div>
+            )}
+            <div
+              className={cn("w-full flex items-center justify-start", gaps.sm)}
+            >
+              {label}
+              {tag && <Tag variant="solid" size="sm" {...tag} />}
+            </div>
+          </Button>
+        ) : (
           <Disclosure
             className="border-none"
             items={[
@@ -44,26 +60,14 @@ export const MobileNavItem = ({
                     {tag && <Tag variant="solid" size="sm" {...tag} />}
                   </div>
                 ),
-                content: children.map((child, i) => (
-                  <NavbarSubItem key={`navbar_subitem_${i}`} {...child} />
-                )),
+                content: fullWidthPopover
+                  ? child
+                  : children?.map((child, i) => (
+                      <NavbarSubItem key={`navbar_subitem_${i}`} {...child} />
+                    )),
               },
             ]}
           />
-        ) : (
-          <Button as={Link} href={href || "#"} variant="ghost" fullWidth>
-            {icon && (
-              <div className="flex">
-                <Icon color="accent" icon={icon} />
-              </div>
-            )}
-            <div
-              className={cn("w-full flex items-center justify-start", gaps.sm)}
-            >
-              {label}
-              {tag && <Tag variant="solid" size="sm" {...tag} />}
-            </div>
-          </Button>
         )}
       </div>
     );

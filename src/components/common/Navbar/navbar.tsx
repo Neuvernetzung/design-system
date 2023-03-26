@@ -3,9 +3,11 @@ import {
   FC,
   ForwardedRef,
   forwardRef,
+  MutableRefObject,
   ReactElement,
   ReactNode,
   SVGProps,
+  useRef,
   useState,
 } from "react";
 
@@ -18,6 +20,7 @@ import {
 } from "../../../styles";
 import { CrossIcon, MenuIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
+import { mergeRefs } from "../../../utils/internal";
 import { IconButton } from "../../ui/Button";
 import { Link } from "../../ui/Link";
 import type { TagProps } from "../../ui/Tag";
@@ -34,7 +37,14 @@ export type NavItemProps = {
   disabled?: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
   hideChevron?: boolean;
-};
+} & NavFullPopoverProps;
+
+type NavFullPopoverProps =
+  | {
+      fullWidthPopover?: true;
+      child: ReactNode;
+    }
+  | { fullWidthPopover?: false; child?: never };
 
 export type NavSubLabelProps = {
   children: string | ReactElement;
@@ -63,6 +73,8 @@ type LogoProps = {
 export type SubNavProps = {
   navItems: NavItemProps[];
   size?: keyof Sizes;
+  navbarRef?: MutableRefObject<HTMLElement | null>;
+  pagePaddingSize?: keyof Sizes;
 };
 
 export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
@@ -84,9 +96,11 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
   ) => {
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
+    const navBarInternalRef = useRef<HTMLElement>(null);
+
     return (
       <div
-        ref={ref}
+        ref={mergeRefs([ref, navBarInternalRef])}
         className={cn(
           "fixed top-0 inset-x-0 bg-accent-100 dark:bg-accent-800 w-full",
           zIndexes.nav,
@@ -110,7 +124,12 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
               "justify-end": justifyDesktopNav === "end",
             })}
           >
-            <DesktopNav size={size} navItems={navItems} />
+            <DesktopNav
+              navbarRef={navBarInternalRef}
+              size={size}
+              navItems={navItems}
+              pagePaddingSize={pagePaddingSize}
+            />
           </div>
           <div
             className={cn(
