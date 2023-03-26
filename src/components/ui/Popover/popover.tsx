@@ -41,6 +41,8 @@ export type PopoverProps = {
   focus?: boolean;
   panelClassName?: string;
   fullScreenOnMobile?: boolean;
+  referenceElement?: MutableRefObject<HTMLElement | null>;
+  disabledOffset?: boolean;
 };
 
 interface ExtendedButton extends HTMLButtonElement {
@@ -62,6 +64,8 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       focus = false,
       panelClassName,
       fullScreenOnMobile = false,
+      referenceElement: _referenceElement,
+      disabledOffset = false,
     },
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
@@ -70,17 +74,21 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       useState<HTMLElement | null>(null);
     const [popperElement, setPopperElement] =
       useState<HTMLElement | null>(null);
-    const { styles, attributes } = usePopper(referenceElement, popperElement, {
-      placement,
-      modifiers: [
-        {
-          name: "offset",
-          options: {
-            offset: popperOffset,
+    const { styles, attributes } = usePopper(
+      _referenceElement?.current || referenceElement,
+      popperElement,
+      {
+        placement,
+        modifiers: [
+          {
+            name: "offset",
+            options: {
+              offset: disabledOffset ? [0, 0] : popperOffset,
+            },
           },
-        },
-      ],
-    });
+        ],
+      }
+    );
 
     const timeoutDuration: number = 250;
     let timeout: ReturnType<typeof setTimeout>;
@@ -118,7 +126,11 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
             {!buttonComponent ? (
               <HeadlessPopover.Button
                 className={cn(focusStyle.accent)}
-                ref={mergeRefs([buttonRef, ref, setReferenceElement])}
+                ref={mergeRefs([
+                  buttonRef,
+                  ref,
+                  ...(!_referenceElement ? [setReferenceElement] : []),
+                ])}
                 as={buttonAs || Button}
                 disabled={disabled}
                 {...buttonProps}
