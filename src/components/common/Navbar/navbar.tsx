@@ -3,12 +3,19 @@ import {
   FC,
   ForwardedRef,
   forwardRef,
+  ReactElement,
   ReactNode,
   SVGProps,
   useState,
 } from "react";
 
-import { gaps, paddingsY, pagePaddings, zIndexes } from "../../../styles";
+import {
+  bgColors,
+  gaps,
+  paddingsY,
+  pagePaddings,
+  zIndexes,
+} from "../../../styles";
 import { CrossIcon, MenuIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { IconButton } from "../../ui/Button";
@@ -21,11 +28,16 @@ import { MobileNav } from "./mobileNav";
 export type NavItemProps = {
   label: string;
   tag?: TagProps;
-  subLabel?: string;
+  subLabel?: NavSubLabelProps;
   children?: NavItemProps[];
   href?: string;
   disabled?: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
+};
+
+export type NavSubLabelProps = {
+  children: string | ReactElement;
+  hideOnMobile?: boolean;
 };
 
 export type NavbarProps = {
@@ -117,7 +129,11 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
             </div>
           </div>
         </div>
-        {mobileNavOpen && <MobileNav navItems={navItems} />}
+        {mobileNavOpen && (
+          <div className={cn(bgColors.white)}>
+            <MobileNav navItems={navItems} />
+          </div>
+        )}
       </div>
     );
   }
