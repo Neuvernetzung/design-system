@@ -3,14 +3,24 @@ import {
   FC,
   ForwardedRef,
   forwardRef,
+  MutableRefObject,
+  ReactElement,
   ReactNode,
   SVGProps,
+  useRef,
   useState,
 } from "react";
 
-import { gaps, paddingsY, pagePaddings, zIndexes } from "../../../styles";
+import {
+  bgColors,
+  gaps,
+  paddingsY,
+  pagePaddings,
+  zIndexes,
+} from "../../../styles";
 import { CrossIcon, MenuIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
+import { mergeRefs } from "../../../utils/internal";
 import { IconButton } from "../../ui/Button";
 import { Link } from "../../ui/Link";
 import type { TagProps } from "../../ui/Tag";
@@ -21,11 +31,24 @@ import { MobileNav } from "./mobileNav";
 export type NavItemProps = {
   label: string;
   tag?: TagProps;
-  subLabel?: string;
+  subLabel?: NavSubLabelProps;
   children?: NavItemProps[];
   href?: string;
   disabled?: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
+  hideChevron?: boolean;
+} & NavFullPopoverProps;
+
+type NavFullPopoverProps =
+  | {
+      fullWidthPopover?: true;
+      child: ReactNode;
+    }
+  | { fullWidthPopover?: false; child?: never };
+
+export type NavSubLabelProps = {
+  children: string | ReactElement;
+  hideOnMobile?: boolean;
 };
 
 export type NavbarProps = {
@@ -50,6 +73,8 @@ type LogoProps = {
 export type SubNavProps = {
   navItems: NavItemProps[];
   size?: keyof Sizes;
+  navbarRef?: MutableRefObject<HTMLElement | null>;
+  pagePaddingSize?: keyof Sizes;
 };
 
 export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
@@ -71,9 +96,11 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
   ) => {
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
+    const navBarInternalRef = useRef<HTMLElement>(null);
+
     return (
       <div
-        ref={ref}
+        ref={mergeRefs([ref, navBarInternalRef])}
         className={cn(
           "fixed top-0 inset-x-0 bg-accent-100 dark:bg-accent-800 w-full",
           zIndexes.nav,
@@ -97,7 +124,12 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
               "justify-end": justifyDesktopNav === "end",
             })}
           >
-            <DesktopNav size={size} navItems={navItems} />
+            <DesktopNav
+              navbarRef={navBarInternalRef}
+              size={size}
+              navItems={navItems}
+              pagePaddingSize={pagePaddingSize}
+            />
           </div>
           <div
             className={cn(
@@ -117,7 +149,11 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
             </div>
           </div>
         </div>
-        {mobileNavOpen && <MobileNav navItems={navItems} />}
+        {mobileNavOpen && (
+          <div className={cn(bgColors.white)}>
+            <MobileNav navItems={navItems} />
+          </div>
+        )}
       </div>
     );
   }

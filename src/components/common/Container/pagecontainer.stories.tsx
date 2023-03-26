@@ -20,7 +20,28 @@ export const Default = ({ ...args }) => {
       <Navbar
         ref={navbarRef}
         allowDarkMode={false}
-        navItems={[]}
+        navItems={[
+          {
+            label: "Full",
+            fullWidthPopover: true,
+            tag: { label: "width", variant: "outline" },
+            child: "Test",
+          },
+          {
+            label: "Item 3",
+            href: "#",
+          },
+          {
+            label: "Disabled",
+            tag: {
+              label: "nie",
+              color: "danger",
+              size: "sm",
+              variant: "subtile",
+            },
+            disabled: true,
+          },
+        ]}
         logo={
           <Heading size="xl" className="hidden sm:block">
             Navbar

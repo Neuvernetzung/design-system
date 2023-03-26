@@ -1,48 +1,62 @@
 import cn from "classnames";
 
-import {
-  bgColorsInteractive,
-  gaps,
-  paddingsEvenly,
-  roundings,
-  transition,
-  transitionFast,
-} from "../../../styles";
-import { ChevronRightIcon } from "../../../theme/icons";
+import { gaps, pagePaddings } from "../../../styles";
+import { ChevronDownIcon } from "../../../theme/icons";
 import { minSize, smallerSize } from "../../../utils";
 import { Button } from "../../ui/Button";
-import { Icon } from "../../ui/Icon";
 import { Link } from "../../ui/Link";
 import { Popover, PopoverGroup } from "../../ui/Popover";
 import { Tag } from "../../ui/Tag";
-import { Text, Heading } from "../../ui/Typography";
 import type { NavItemProps, SubNavProps } from "./navbar";
+import { NavbarSubItem } from "./subItem";
 
-export const DesktopNav = ({ navItems, size = "md" }: SubNavProps) => (
-  <div className={cn("flex flex-row items-center", gaps.sm)}>
+export const DesktopNav = ({
+  navItems,
+  size = "md",
+  navbarRef,
+  pagePaddingSize = "md",
+}: SubNavProps) => (
+  <PopoverGroup className={cn("flex flex-row items-center", gaps.sm)}>
     {navItems.map(
-      ({ label, children, href, tag, disabled, icon }: NavItemProps) => (
-        <PopoverGroup key={label}>
+      ({
+        label,
+        children,
+        child,
+        href,
+        tag,
+        disabled,
+        icon,
+        hideChevron,
+        fullWidthPopover,
+      }: NavItemProps) => (
+        <div key={label}>
           {!disabled ? (
-            !children ? (
-              <Link href={href || "#"} passHref legacyBehavior>
-                <Button
-                  leftIcon={icon}
-                  as="a"
-                  size={minSize(size, "sm")}
-                  variant="ghost"
-                  disabled={disabled}
-                >
-                  {label}
-                  {tag && (
-                    <Tag variant="solid" size={smallerSize(size)} {...tag} />
-                  )}
-                </Button>
-              </Link>
+            !child && !children ? (
+              <Button
+                as={Link}
+                href={href || "#"}
+                leftIcon={icon}
+                size={minSize(size, "sm")}
+                variant="ghost"
+                disabled={disabled}
+              >
+                {label}
+                {tag && (
+                  <Tag variant="solid" size={smallerSize(size)} {...tag} />
+                )}
+              </Button>
             ) : (
               <Popover
+                panelClassName={cn(
+                  fullWidthPopover &&
+                    "rounded-none w-screen !max-w-none !border-t-0",
+                  pagePaddings[pagePaddingSize]
+                )}
+                disabledOffset={fullWidthPopover}
+                referenceElement={fullWidthPopover ? navbarRef : undefined}
                 buttonProps={{
                   leftIcon: icon,
+                  ...(!hideChevron ? { rightIcon: ChevronDownIcon } : {}),
                   variant: "ghost",
                   disabled,
                   size: minSize(size, "sm"),
@@ -62,9 +76,11 @@ export const DesktopNav = ({ navItems, size = "md" }: SubNavProps) => (
                 trigger="hover"
                 content={
                   <div className={cn("flex flex-col", gaps.sm)}>
-                    {children?.map((child) => (
-                      <DesktopSubNav key={child.label} {...child} />
-                    ))}
+                    {fullWidthPopover
+                      ? child
+                      : children?.map((child) => (
+                          <NavbarSubItem key={child.label} {...child} />
+                        ))}
                   </div>
                 }
               />
@@ -80,76 +96,8 @@ export const DesktopNav = ({ navItems, size = "md" }: SubNavProps) => (
               {tag && <Tag variant="solid" size={smallerSize(size)} {...tag} />}
             </Button>
           )}
-        </PopoverGroup>
+        </div>
       )
     )}
-  </div>
+  </PopoverGroup>
 );
-
-export const DesktopSubNav = ({
-  label,
-  href,
-  subLabel,
-  tag,
-  disabled,
-  icon,
-}: NavItemProps) => {
-  const baseClass = cn(
-    "flex flex-row items-center justify-between group",
-    gaps.md,
-    paddingsEvenly.md,
-    roundings.md,
-    transition
-  );
-
-  if (!disabled)
-    return (
-      <Link href={href || "#"}>
-        <div
-          className={cn(baseClass, bgColorsInteractive.white, "cursor-pointer")}
-        >
-          <div className={cn("flex flex-row", gaps.md)}>
-            {icon && (
-              <div className="flex">
-                <Icon color="accent" icon={icon} />
-              </div>
-            )}
-            <div>
-              <div className={cn("flex flex-row items-center", gaps.sm)}>
-                <Heading as="h4">{label}</Heading>
-                {tag && <Tag variant="solid" size="sm" {...tag} />}
-              </div>
-
-              <Text size="sm">{subLabel}</Text>
-            </div>
-          </div>
-          <Icon
-            color="accent"
-            icon={ChevronRightIcon}
-            className={cn("group-hover:translate-x-1", transitionFast)}
-          />
-        </div>
-      </Link>
-    );
-
-  return (
-    <div className={cn(baseClass, "cursor-not-allowed opacity-50")}>
-      <div className={cn("flex flex-row", gaps.md)}>
-        {icon && (
-          <div className="flex">
-            <Icon color="accent" icon={icon} />
-          </div>
-        )}
-        <div>
-          <div className={cn("flex flex-row items-center", gaps.sm)}>
-            <Heading as="h4">{label}</Heading>
-            {tag && <Tag variant="solid" size="sm" {...tag} />}
-          </div>
-
-          <Text size="sm">{subLabel}</Text>
-        </div>
-      </div>
-      <Icon color="accent" icon={ChevronRightIcon} />
-    </div>
-  );
-};

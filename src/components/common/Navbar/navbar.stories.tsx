@@ -30,13 +30,16 @@ const baseProps: NavbarProps = {
         {
           label: "Sub Item 1",
           href: "#",
-          subLabel: "Hier steht eine Beschreibung.",
+          subLabel: {
+            children: "Hier steht eine Beschreibung.",
+            hideOnMobile: true,
+          },
           icon: AcademicCapIcon,
         },
         {
           label: "Sub Item 2",
           href: "#",
-          subLabel: "Hier steht eine Beschreibung.",
+          subLabel: { children: "Hier steht eine Beschreibung." },
           tag: {
             label: "Neu",
             color: "success",
@@ -54,16 +57,22 @@ const baseProps: NavbarProps = {
         {
           label: "Sub Item 1",
           href: "#",
-          subLabel: "Hier steht eine Beschreibung.",
+          subLabel: { children: "Hier steht eine Beschreibung." },
         },
         {
           label: "Disabled Item",
           href: "#",
-          subLabel: "Dieses Item ist disabled.",
+          subLabel: { children: "Dieses Item ist disabled." },
           disabled: true,
           icon: TrashIcon,
         },
       ],
+    },
+    {
+      label: "Full",
+      fullWidthPopover: true,
+      tag: { label: "width", variant: "outline" },
+      child: "Test",
     },
     {
       label: "Item 3",

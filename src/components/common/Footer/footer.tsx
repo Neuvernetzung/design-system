@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, ReactElement, ReactNode } from "react";
 
 import { gaps, paddingsX, paddingsY, pagePaddings } from "../../../styles";
 import { Sizes } from "../../../types";
@@ -16,7 +16,7 @@ type FooterProps = {
 };
 
 type LinkGroupProps = {
-  label: string;
+  label?: string | ReactElement;
   links: LinkProps[];
 };
 
