@@ -1,3 +1,11 @@
+## [1.37.1](https://github.com/Neuvernetzung/design-system/compare/v1.37.0...v1.37.1) (2023-03-26)
+
+
+### Bug Fixes
+
+* **ui:** Desktop Navbar Fullwidth Popover border-x entfernen [#550](https://github.com/Neuvernetzung/design-system/issues/550) ([4668706](https://github.com/Neuvernetzung/design-system/commit/466870647954eb57ea53ccb248a778154aea8eea))
+* **ui:** PagePaddings fixen in Desktop Nav [#548](https://github.com/Neuvernetzung/design-system/issues/548) ([c84bbfc](https://github.com/Neuvernetzung/design-system/commit/c84bbfc7c7a0d7d34ccec1c0c6abe72e4b92406c))
+
 # [1.37.0](https://github.com/Neuvernetzung/design-system/compare/v1.36.0...v1.37.0) (2023-03-26)
 
 
