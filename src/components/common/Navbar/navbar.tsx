@@ -33,6 +33,7 @@ export type NavItemProps = {
   href?: string;
   disabled?: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
+  hideChevron?: boolean;
 };
 
 export type NavSubLabelProps = {
