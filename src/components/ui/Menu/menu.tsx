@@ -104,7 +104,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
           <HeadlessMenu.Items
             ref={setPopperElement}
             className={cn(
-              "w-64",
+              "!w-64",
               getDropdownContainerStyles({ size }),
               dropdownClassName
             )}
