@@ -1,6 +1,7 @@
 import cn from "classnames";
 
 import { gaps } from "../../../styles";
+import { ChevronDownIcon } from "../../../theme/icons";
 import { minSize, smallerSize } from "../../../utils";
 import { Button } from "../../ui/Button";
 import { Link } from "../../ui/Link";
@@ -12,28 +13,36 @@ import { NavbarSubItem } from "./subItem";
 export const DesktopNav = ({ navItems, size = "md" }: SubNavProps) => (
   <PopoverGroup className={cn("flex flex-row items-center", gaps.sm)}>
     {navItems.map(
-      ({ label, children, href, tag, disabled, icon }: NavItemProps) => (
+      ({
+        label,
+        children,
+        href,
+        tag,
+        disabled,
+        icon,
+        hideChevron,
+      }: NavItemProps) => (
         <div key={label}>
           {!disabled ? (
             !children ? (
-              <Link href={href || "#"} passHref legacyBehavior>
-                <Button
-                  leftIcon={icon}
-                  as="a"
-                  size={minSize(size, "sm")}
-                  variant="ghost"
-                  disabled={disabled}
-                >
-                  {label}
-                  {tag && (
-                    <Tag variant="solid" size={smallerSize(size)} {...tag} />
-                  )}
-                </Button>
-              </Link>
+              <Button
+                as={Link}
+                href={href || "#"}
+                leftIcon={icon}
+                size={minSize(size, "sm")}
+                variant="ghost"
+                disabled={disabled}
+              >
+                {label}
+                {tag && (
+                  <Tag variant="solid" size={smallerSize(size)} {...tag} />
+                )}
+              </Button>
             ) : (
               <Popover
                 buttonProps={{
                   leftIcon: icon,
+                  ...(!hideChevron ? { rightIcon: ChevronDownIcon } : {}),
                   variant: "ghost",
                   disabled,
                   size: minSize(size, "sm"),

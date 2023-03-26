@@ -51,24 +51,19 @@ export const MobileNavItem = ({
             ]}
           />
         ) : (
-          <Link href={href || "#"} passHref legacyBehavior>
-            <Button as="a" variant="ghost" fullWidth>
-              {icon && (
-                <div className="flex">
-                  <Icon color="accent" icon={icon} />
-                </div>
-              )}
-              <div
-                className={cn(
-                  "w-full flex items-center justify-start",
-                  gaps.sm
-                )}
-              >
-                {label}
-                {tag && <Tag variant="solid" size="sm" {...tag} />}
+          <Button as={Link} href={href || "#"} variant="ghost" fullWidth>
+            {icon && (
+              <div className="flex">
+                <Icon color="accent" icon={icon} />
               </div>
-            </Button>
-          </Link>
+            )}
+            <div
+              className={cn("w-full flex items-center justify-start", gaps.sm)}
+            >
+              {label}
+              {tag && <Tag variant="solid" size="sm" {...tag} />}
+            </div>
+          </Button>
         )}
       </div>
     );
