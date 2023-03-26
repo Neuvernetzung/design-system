@@ -1,3 +1,18 @@
+# [1.37.0](https://github.com/Neuvernetzung/design-system/compare/v1.36.0...v1.37.0) (2023-03-26)
+
+
+### Bug Fixes
+
+* **ui:** Popover und Select Container width fixen [#478](https://github.com/Neuvernetzung/design-system/issues/478) ([1472956](https://github.com/Neuvernetzung/design-system/commit/1472956c93b9388a1c4c6acac27362b420c44bda))
+
+
+### Features
+
+* **ui:** Chevron Indicator zu Popover in Navbar hinzufügen [#541](https://github.com/Neuvernetzung/design-system/issues/541) ([8da1e9d](https://github.com/Neuvernetzung/design-system/commit/8da1e9d9ed612413e25807424d1df7bb5436da5c))
+* **ui:** FullWidth Popover für Navbar [#540](https://github.com/Neuvernetzung/design-system/issues/540) ([b0607e5](https://github.com/Neuvernetzung/design-system/commit/b0607e58cd0dc4d9ebc9e2dc5f824d2285fb0819))
+* **ui:** Hauptlabel in Footer optional [#539](https://github.com/Neuvernetzung/design-system/issues/539) ([7d9f7ff](https://github.com/Neuvernetzung/design-system/commit/7d9f7ff0b9fb9e452419046c76e030042ad9f3c3))
+* **ui:** SubLabel im mobileNav anzeigen [#538](https://github.com/Neuvernetzung/design-system/issues/538) ([b9a4535](https://github.com/Neuvernetzung/design-system/commit/b9a4535b5019317a5b4c2a0f09438101e4442a0e))
+
 # [1.36.0](https://github.com/Neuvernetzung/design-system/compare/v1.35.0...v1.36.0) (2023-03-22)
 
 
