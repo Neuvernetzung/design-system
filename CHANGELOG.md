@@ -1,3 +1,10 @@
+# [1.38.0](https://github.com/Neuvernetzung/design-system/compare/v1.37.1...v1.38.0) (2023-03-27)
+
+
+### Features
+
+* **ui:** PhunnelForm als erweiterung des normalen Forms [#453](https://github.com/Neuvernetzung/design-system/issues/453) ([6b79a44](https://github.com/Neuvernetzung/design-system/commit/6b79a440c665e6aaf533c6fe840d36b4cde877d9))
+
 ## [1.37.1](https://github.com/Neuvernetzung/design-system/compare/v1.37.0...v1.37.1) (2023-03-26)
 
 
