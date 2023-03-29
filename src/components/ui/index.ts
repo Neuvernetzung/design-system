@@ -11,6 +11,7 @@ export * from "./Form";
 export * from "./HorizontalRule";
 export * from "./Icon";
 export * from "./Image";
+export * from "./Indicator";
 export * from "./Input";
 export * from "./Link";
 export * from "./List";
