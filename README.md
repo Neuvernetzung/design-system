@@ -37,7 +37,9 @@ module.exports = {
   presets: [config],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
-    path.join(require.resolve("@neuvernetzung/design-system/dist/index.mjs")),
+    `${path.dirname(
+      require.resolve("@neuvernetzung/design-system/dist/index.mjs")
+    )}/**/*.mjs`,
   ],
   theme: {
     fontFamily: {
