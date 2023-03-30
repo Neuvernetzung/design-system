@@ -1,3 +1,20 @@
+# [1.39.0](https://github.com/Neuvernetzung/design-system/compare/v1.38.0...v1.39.0) (2023-03-30)
+
+
+### Bug Fixes
+
+* **build:** Commitlint ausklammern ([2ff22e0](https://github.com/Neuvernetzung/design-system/commit/2ff22e0b56d477b2eb62a27a4b4bcf11696c9b46))
+
+
+### Features
+
+* **deps:** Deps updaten [#565](https://github.com/Neuvernetzung/design-system/issues/565) ([53ec477](https://github.com/Neuvernetzung/design-system/commit/53ec477811eeef73d43230545056127679b8095a))
+* **deps:** Jede Komponente einzelnd exportieren ([a0eb6d6](https://github.com/Neuvernetzung/design-system/commit/a0eb6d62da83c7f299fc749b7062c2c3d48caac2))
+* **deps:** Jede Komponente einzelnd exportieren [#562](https://github.com/Neuvernetzung/design-system/issues/562) ([7b79190](https://github.com/Neuvernetzung/design-system/commit/7b79190e5407655fdfbac8b389c55048921eb1ea))
+* **deps:** Qs Paket ersetzen durch JSON.stringify [#557](https://github.com/Neuvernetzung/design-system/issues/557) ([9936c93](https://github.com/Neuvernetzung/design-system/commit/9936c93ebd07aeb5a2968d57c936a5e387722abf))
+* **ui:** Indicator hinzufügen [#559](https://github.com/Neuvernetzung/design-system/issues/559) ([3689d6b](https://github.com/Neuvernetzung/design-system/commit/3689d6be29531449e684cb2c70f2b2e1d3e68640))
+* **ui:** RichText Editor focus Management verbessern [#471](https://github.com/Neuvernetzung/design-system/issues/471) ([a9882b4](https://github.com/Neuvernetzung/design-system/commit/a9882b421ac164726ef41543468dfe4d840a5e6f))
+
 # [1.39.0-pre-1.1](https://github.com/Neuvernetzung/design-system/compare/v1.38.0...v1.39.0-pre-1.1) (2023-03-29)
 
 
