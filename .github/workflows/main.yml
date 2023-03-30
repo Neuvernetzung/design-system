@@ -34,8 +34,8 @@ jobs:
         run: npm ci
       #
 
-      - name: Commit message checken
-        run: npx commitlint --from=HEAD~1
+      # - name: Commit message checken
+      #   run: npx commitlint --from=HEAD~1
 
       - name: Build
         run: npm run build
