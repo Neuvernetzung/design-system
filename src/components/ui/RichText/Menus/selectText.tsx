@@ -28,6 +28,7 @@ type SelectTextProps = {
   editor: Editor;
   selectedTag: TextTypeTags;
   setSelectedTag: (type: TextTypeTags) => void;
+  id: string;
 };
 
 type returnTextSelectionProps = {
@@ -60,12 +61,15 @@ export const SelectText = ({
   editor,
   selectedTag,
   setSelectedTag,
+  id,
 }: SelectTextProps) => (
   <Menu
     size="sm"
     placement="bottom"
     buttonType="button"
     buttonProps={{
+      id,
+      tabIndex: -1,
       children: tags[selectedTag || TextTypeTags.P],
       className: "truncate w-36",
       variant: "ghost",
