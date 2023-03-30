@@ -1,3 +1,10 @@
+## [1.39.1](https://github.com/Neuvernetzung/design-system/compare/v1.39.0...v1.39.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* **build:** Commitlint wieder hinzufügen [#569](https://github.com/Neuvernetzung/design-system/issues/569) ([bea1e27](https://github.com/Neuvernetzung/design-system/commit/bea1e277af99d9f4c06aad097b2bff0221f47a0c))
+
 # [1.39.0](https://github.com/Neuvernetzung/design-system/compare/v1.38.0...v1.39.0) (2023-03-30)
 
 
