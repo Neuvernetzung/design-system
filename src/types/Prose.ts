@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import type { BlockQuoteProps } from "../components/ui/BlockQuote";
-import { HorizontalRuleProps } from "../components/ui/HorizontalRule";
+import type { HorizontalRuleProps } from "../components/ui/HorizontalRule";
 import type { NativeLinkProps } from "../components/ui/Link";
 import type {
   ListItemProps,

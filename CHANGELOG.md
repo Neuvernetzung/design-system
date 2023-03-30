@@ -1,3 +1,12 @@
+# [1.39.0-pre-1.1](https://github.com/Neuvernetzung/design-system/compare/v1.38.0...v1.39.0-pre-1.1) (2023-03-29)
+
+
+### Features
+
+* **deps:** Jede Komponente einzelnd exportieren ([a0eb6d6](https://github.com/Neuvernetzung/design-system/commit/a0eb6d62da83c7f299fc749b7062c2c3d48caac2))
+* **deps:** Qs Paket ersetzen durch JSON.stringify [#557](https://github.com/Neuvernetzung/design-system/issues/557) ([9936c93](https://github.com/Neuvernetzung/design-system/commit/9936c93ebd07aeb5a2968d57c936a5e387722abf))
+* **ui:** Indicator hinzufügen [#559](https://github.com/Neuvernetzung/design-system/issues/559) ([3689d6b](https://github.com/Neuvernetzung/design-system/commit/3689d6be29531449e684cb2c70f2b2e1d3e68640))
+
 # [1.38.0](https://github.com/Neuvernetzung/design-system/compare/v1.37.1...v1.38.0) (2023-03-27)
 
 

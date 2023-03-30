@@ -16,6 +16,7 @@ import { Heading } from "../../Typography";
 
 interface AddLinkButtonProps {
   editor: Editor;
+  id: string;
 }
 
 interface LinkForm {
@@ -23,7 +24,7 @@ interface LinkForm {
   external: boolean;
 }
 
-export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
+export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
   const [open, setOpen] = useState(false);
 
   const currentHref = editor.getAttributes("link").href;
@@ -69,6 +70,8 @@ export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
     <>
       <Tooltip label={!active ? "Link hinzufügen" : "Link bearbeiten"}>
         <IconButton
+          id={id}
+          tabIndex={-1}
           icon={LinkIcon}
           size="sm"
           ariaLabel={!active ? "add_link" : "remove_link"}

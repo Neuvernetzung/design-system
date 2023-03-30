@@ -12,6 +12,7 @@ type RichTextMenuItemProps = {
   disabled?: boolean;
   tooltip?: string;
   ariaLabel: string;
+  id: string;
 };
 
 export const RichTextMenuItem = ({
@@ -21,9 +22,12 @@ export const RichTextMenuItem = ({
   disabled,
   tooltip,
   ariaLabel,
+  id,
 }: RichTextMenuItemProps) => (
   <Tooltip label={tooltip} placement="top">
     <IconButton
+      id={id}
+      tabIndex={-1}
       size="sm"
       variant={active ? "subtile" : "ghost"}
       onClick={onClick}

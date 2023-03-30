@@ -1,11 +1,11 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import qs from "qs";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { updateQuery } from "../../../utils/internal/updateQuery";
 import { Button, ButtonGroup, IconButton, Select, Text } from "../../ui";
 
@@ -25,7 +25,7 @@ type FormInputs = {
   limit: number;
 };
 
-export const Pagination = ({
+const Pagination = ({
   limits = [10, 25, 50, 100],
   result = 0,
   emptyMessage,
@@ -43,7 +43,7 @@ export const Pagination = ({
     defaultValues: { limit: limits[0] },
   });
   const limit = formMethods.watch("limit") as number;
-  const { page: p, ...restQuery }: any = router.query;
+  const { page: p = 1, ...restQuery }: any = router.query;
 
   const handlePage = (_page: number) => {
     setPage(_page);
@@ -73,7 +73,7 @@ export const Pagination = ({
     }
   }, [limit]);
 
-  const restQs = qs.stringify(restQuery);
+  const restQs = JSON.stringify(restQuery);
 
   useEffect(() => {
     if (p && Number(p) !== 1) {
@@ -166,3 +166,7 @@ export const Pagination = ({
     </div>
   );
 };
+
+export default typedMemo(Pagination);
+
+Pagination.displayName = "pagination";
