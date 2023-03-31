@@ -1,3 +1,10 @@
+# [1.40.0](https://github.com/Neuvernetzung/design-system/compare/v1.39.1...v1.40.0) (2023-03-31)
+
+
+### Features
+
+* **ui:** SideNav hinzufügen [#556](https://github.com/Neuvernetzung/design-system/issues/556) ([03408e5](https://github.com/Neuvernetzung/design-system/commit/03408e54c7ccb991c73416e480de6e7f51f70f31))
+
 ## [1.39.1](https://github.com/Neuvernetzung/design-system/compare/v1.39.0...v1.39.1) (2023-03-30)
 
 
