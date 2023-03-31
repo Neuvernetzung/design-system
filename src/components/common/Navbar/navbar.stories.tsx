@@ -1,5 +1,6 @@
 import {
   AcademicCapIcon,
+  ArrowLeftOnRectangleIcon,
   ArrowPathRoundedSquareIcon,
   BoltIcon,
   TrashIcon,
@@ -13,7 +14,10 @@ import { PageContainer } from "../Container";
 import { Icon } from "../../ui/Icon";
 import { Select } from "../../ui/Select";
 import { Heading } from "../../ui/Typography/Heading";
-import { Navbar, NavbarProps } from "./navbar";
+import { Navbar, NavbarProps, SideNavbar } from "./navbar";
+import { Button } from "../../ui";
+import { borders, extendedBorders } from "../../../styles";
+import cn from "classnames";
 
 export default {
   title: "COMMON/Navbar",
@@ -86,12 +90,23 @@ const baseProps: NavbarProps = {
   ],
   logo: (
     <>
-      <Icon size="lg" icon={Logo} className="fill-brand-500" />
-      <Heading size="xl" className="hidden sm:block">
+      <Icon size="lg" icon={Logo} className="fill-brand-500" color="inherit" />
+      <Heading color="inherit" size="xl" className="hidden sm:block">
         Desing System
       </Heading>
     </>
   ),
+  footer: (
+    <Button
+      fullWidth
+      size="sm"
+      className="rounded-none"
+      leftIcon={ArrowLeftOnRectangleIcon}
+    >
+      Logout
+    </Button>
+  ),
+  footerClassName: cn("border-t !p-0", borders.accent),
 };
 
 export const Default = ({ ...args }) => <Navbar {...baseProps} {...args} />;
@@ -105,6 +120,39 @@ export const Size = ({ ...args }) => {
     <>
       <Navbar ref={navbarRef} size={size} {...baseProps} {...args} />
       <PageContainer navbarRef={navbarRef}>
+        <Select
+          control={control}
+          label="Größe"
+          name="size"
+          options={[
+            { children: "xs", value: "xs" },
+            { children: "sm", value: "sm" },
+            { children: "md", value: "md" },
+            { children: "lg", value: "lg" },
+            { children: "xl", value: "xl" },
+          ]}
+        />
+      </PageContainer>
+    </>
+  );
+};
+
+export const Sidenav = ({ ...args }) => {
+  const navbarRef = useRef(null);
+  const sidenavRef = useRef<HTMLDivElement>(null);
+  const { control, watch } = useForm();
+  const size = watch("size");
+
+  return (
+    <>
+      <SideNavbar
+        sidenavRef={sidenavRef}
+        ref={navbarRef}
+        size={size}
+        {...baseProps}
+        {...args}
+      />
+      <PageContainer sidenavRef={sidenavRef} navbarRef={navbarRef}>
         <Select
           control={control}
           label="Größe"

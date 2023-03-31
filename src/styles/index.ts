@@ -8,6 +8,7 @@ export * from "./paddings";
 export * from "./placeholder";
 export * from "./prose";
 export * from "./roundings";
+export * from "./scrollbar";
 export * from "./shadows";
 export * from "./sizes";
 export * from "./transition";
