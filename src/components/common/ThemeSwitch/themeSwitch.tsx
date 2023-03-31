@@ -5,9 +5,13 @@ import { IconButton, Menu } from "../../ui";
 
 type ThemeSwitchProps = {
   variant?: "button" | "menu";
+  textColor?: string;
 };
 
-export const ThemeSwitch = ({ variant = "button" }: ThemeSwitchProps) => {
+export const ThemeSwitch = ({
+  variant = "button",
+  textColor,
+}: ThemeSwitchProps) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   const handleSwitchTheme = () => {
@@ -21,6 +25,7 @@ export const ThemeSwitch = ({ variant = "button" }: ThemeSwitchProps) => {
         onClick={handleSwitchTheme}
         variant="ghost"
         ariaLabel="theme-switch"
+        className={textColor}
         icon={resolvedTheme === "light" ? SunIcon : MoonIcon}
       />
     );
@@ -34,6 +39,7 @@ export const ThemeSwitch = ({ variant = "button" }: ThemeSwitchProps) => {
           ariaLabel: "theme-switch",
           icon: resolvedTheme === "light" ? SunIcon : MoonIcon,
           variant: "ghost",
+          className: textColor,
         }}
         items={[
           {
