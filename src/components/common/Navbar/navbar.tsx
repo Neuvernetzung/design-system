@@ -6,27 +6,15 @@ import {
   MutableRefObject,
   ReactElement,
   ReactNode,
+  RefObject,
   SVGProps,
-  useRef,
-  useState,
 } from "react";
+import { adjustedTextColors } from "../../../styles";
+import { useThemeState } from "../../../theme";
 
-import {
-  bgColors,
-  gaps,
-  paddingsY,
-  pagePaddings,
-  zIndexes,
-} from "../../../styles";
-import { CrossIcon, MenuIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
-import { mergeRefs } from "../../../utils/internal";
-import { IconButton } from "../../ui/Button";
-import { Link } from "../../ui/Link";
+import { ExtendedColors, Sizes } from "../../../types";
 import type { TagProps } from "../../ui/Tag";
-import { ThemeSwitch } from "../ThemeSwitch";
-import { DesktopNav } from "./desktopNav";
-import { MobileNav } from "./mobileNav";
+import { NavbarContainer, NavbarSideContainer } from "./container";
 
 export type NavItemProps = {
   label: string;
@@ -37,6 +25,8 @@ export type NavItemProps = {
   disabled?: boolean;
   icon?: FC<SVGProps<SVGSVGElement>>;
   hideChevron?: boolean;
+  color?: keyof ExtendedColors;
+  textColor?: string;
 } & NavFullPopoverProps;
 
 type NavFullPopoverProps =
@@ -63,18 +53,22 @@ export type NavbarProps = {
   gapSize?: keyof Sizes;
   size?: keyof Sizes;
   pagePaddingSize?: keyof Sizes;
+  color?: keyof ExtendedColors;
+  footer?: ReactNode;
+  footerClassName?: string;
 };
 
-type LogoProps = {
+export type LogoProps = {
   href?: string;
   containerClassName?: string;
 };
 
-export type SubNavProps = {
-  navItems: NavItemProps[];
-  size?: keyof Sizes;
+export type SubNavProps = Pick<
+  NavbarProps,
+  "navItems" | "size" | "pagePaddingSize"
+> & {
+  textColor?: string;
   navbarRef?: MutableRefObject<HTMLElement | null>;
-  pagePaddingSize?: keyof Sizes;
 };
 
 export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
@@ -90,91 +84,102 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       endItems,
       gapSize = "md",
       size = "md",
+      color = "white",
       pagePaddingSize = "md",
+      footer,
+      footerClassName,
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const [mobileNavOpen, setMobileNavOpen] = useState(false);
+    const { colorState } = useThemeState();
 
-    const navBarInternalRef = useRef<HTMLElement>(null);
+    const textColor = adjustedTextColors(colorState)[color];
 
     return (
-      <div
-        ref={mergeRefs([ref, navBarInternalRef])}
-        className={cn(
-          "fixed top-0 inset-x-0 bg-accent-100 dark:bg-accent-800 w-full",
-          zIndexes.nav,
-          navbarClassName
-        )}
-      >
-        <div
-          className={cn(
-            "flex items-center justify-between border-b border-accent-200 dark:border-accent-700",
-            paddingsY[size],
-            pagePaddings[pagePaddingSize],
-            gaps[gapSize]
-          )}
-        >
-          <Logo logo={logo} {...logoProps} />
-          {startItems && startItems}
-          <div
-            className={cn("hidden lg:flex w-full flex-1", {
-              "justify-start": justifyDesktopNav === "start",
-              "justify-center": justifyDesktopNav === "center",
-              "justify-end": justifyDesktopNav === "end",
-            })}
-          >
-            <DesktopNav
-              navbarRef={navBarInternalRef}
-              size={size}
-              navItems={navItems}
-              pagePaddingSize={pagePaddingSize}
-            />
-          </div>
-          <div
-            className={cn(
-              "flex flex-row items-center justify-end",
-              gaps[gapSize]
-            )}
-          >
-            {endItems && endItems}
-            {allowDarkMode && <ThemeSwitch />}
-            <div className={cn("flex lg:hidden")}>
-              <IconButton
-                icon={mobileNavOpen ? CrossIcon : MenuIcon}
-                variant="ghost"
-                ariaLabel="Toggle Navigation"
-                onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              />
-            </div>
-          </div>
-        </div>
-        {mobileNavOpen && (
-          <div className={cn(bgColors.white)}>
-            <MobileNav navItems={navItems} />
-          </div>
-        )}
-      </div>
+      <NavbarContainer
+        ref={ref}
+        navbarClassName={navbarClassName}
+        color={color}
+        textColor={textColor}
+        size={size}
+        gapSize={gapSize}
+        pagePaddingSize={pagePaddingSize}
+        startItems={startItems}
+        allowDarkMode={allowDarkMode}
+        endItems={endItems}
+        logo={logo}
+        logoProps={logoProps}
+        navItems={navItems}
+        footer={footer}
+        footerClassName={footerClassName}
+        justifyDesktopNav={justifyDesktopNav}
+      />
     );
   }
 );
 
 Navbar.displayName = "Navbar";
 
-const Logo = ({
-  href,
-  containerClassName,
-  logo,
-}: LogoProps & Pick<NavbarProps, "logo">) => (
-  <Link href={href || "/"} legacyBehavior>
-    <a
-      className={cn(
-        "flex flex-row items-center select-none whitespace-nowrap",
-        gaps.sm,
-        containerClassName
-      )}
-    >
-      {logo}
-    </a>
-  </Link>
+export const SideNavbar = forwardRef<
+  HTMLDivElement,
+  Omit<NavbarProps, "justifyDesktopNav" | "startItems" | "endItems"> & {
+    sidenavRef?: RefObject<HTMLDivElement>;
+  }
+>(
+  (
+    {
+      navItems = [],
+      logo,
+      logoProps,
+      allowDarkMode = true,
+      navbarClassName,
+      gapSize = "md",
+      size = "md",
+      color = "white",
+      pagePaddingSize = "md",
+      footer,
+      footerClassName,
+      sidenavRef,
+    },
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
+    const { colorState } = useThemeState();
+
+    const textColor = adjustedTextColors(colorState)[color];
+
+    return (
+      <>
+        <NavbarSideContainer
+          ref={sidenavRef}
+          color={color}
+          textColor={textColor}
+          logo={logo}
+          logoProps={logoProps}
+          navItems={navItems}
+          navbarClassName={cn("hidden lg:flex", navbarClassName)}
+          gapSize={gapSize}
+          size={size}
+          footer={footer}
+          footerClassName={footerClassName}
+        />
+        <NavbarContainer
+          ref={ref}
+          navbarClassName={cn("lg:hidden", navbarClassName)}
+          color={color}
+          textColor={textColor}
+          size={size}
+          gapSize={gapSize}
+          pagePaddingSize={pagePaddingSize}
+          allowDarkMode={allowDarkMode}
+          logo={logo}
+          logoProps={logoProps}
+          navItems={navItems}
+          footer={footer}
+          footerClassName={footerClassName}
+        />
+      </>
+    );
+  }
 );
+
+SideNavbar.displayName = "SideNavbar";

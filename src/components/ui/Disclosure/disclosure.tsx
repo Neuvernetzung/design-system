@@ -6,18 +6,21 @@ import { ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
 import { ChevronDownIcon, MinusIcon, PlusIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
+import { ExtendedColors, Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
-import { Button } from "../Button";
+import { Button, ButtonProps } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
 export type DisclosureProps = {
   size?: keyof Sizes;
+  color?: keyof ExtendedColors;
   items: ItemProps[];
   closeOthers?: boolean;
   className?: string;
   icon?: "default" | "chevron";
+  buttonProps?: ButtonProps;
+  disabled?: boolean;
 };
 
 type ItemProps = {
@@ -31,10 +34,13 @@ export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
 
 export const Disclosure = ({
   size = "md",
+  color = "accent",
   items = [],
   closeOthers,
   className,
   icon = "default",
+  disabled,
+  buttonProps,
   ...props
 }: DisclosureProps) => (
   <div className="flex w-full flex-col" {...props}>
@@ -59,42 +65,47 @@ export const Disclosure = ({
                 as={Button}
                 variant="ghost"
                 size={size}
+                disabled={disabled}
                 fullWidth
+                {...buttonProps}
                 className={cn(
-                  "justify-between rounded-none items-center",
-                  borders.accent
+                  "!justify-start rounded-none items-center",
+                  borders.accent,
+                  buttonProps?.className
                 )}
               >
-                {title}
-                <AnimatePresence initial={false} mode="wait">
-                  <motion.span
-                    initial="initial"
-                    animate={open ? "animate" : "initial"}
-                    variants={{
-                      initial: { rotate: icon === "chevron" ? 0 : 90 },
-                      animate: {
-                        zIndex: 1,
-                        rotate: icon === "chevron" ? 180 : 0,
-                        transition: {
-                          type: "tween",
-                          duration: 0.2,
-                          ease: "circOut",
+                <div className="flex flex-row items-center justify-between w-full">
+                  {isString(title) ? <Text>{title}</Text> : title}
+                  <AnimatePresence initial={false} mode="wait">
+                    <motion.span
+                      initial="initial"
+                      animate={open ? "animate" : "initial"}
+                      variants={{
+                        initial: { rotate: icon === "chevron" ? 0 : 90 },
+                        animate: {
+                          zIndex: 1,
+                          rotate: icon === "chevron" ? 180 : 0,
+                          transition: {
+                            type: "tween",
+                            duration: 0.2,
+                            ease: "circOut",
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <Icon
-                      size={size}
-                      icon={
-                        icon === "chevron"
-                          ? ChevronDownIcon
-                          : !open
-                          ? PlusIcon
-                          : MinusIcon
-                      }
-                    />
-                  </motion.span>
-                </AnimatePresence>
+                      }}
+                    >
+                      <Icon
+                        size={size}
+                        icon={
+                          icon === "chevron"
+                            ? ChevronDownIcon
+                            : !open
+                            ? PlusIcon
+                            : MinusIcon
+                        }
+                      />
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
               </HeadlessDisclosure.Button>
               <motion.span
                 initial="initial"

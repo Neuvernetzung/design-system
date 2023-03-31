@@ -151,6 +151,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
           roundings[size],
           minHeights[size],
           textSizes[size],
+          disabled && "cursor-not-allowed",
           !_disabled && colors(color, colorState)?.base,
           _disabled && colors(color, colorState)?.disabled,
           colors(color, colorState)?.text[variant],
