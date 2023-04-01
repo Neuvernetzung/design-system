@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { gaps } from "../../../styles";
-import { NavbarProps } from "./navbar";
+import type { NavbarProps } from "./navbar";
 import Link from "next/link";
 
 export const NavLogo = ({
