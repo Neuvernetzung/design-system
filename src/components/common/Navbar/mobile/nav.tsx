@@ -86,6 +86,7 @@ export const MobileNavItem = ({
   disabled,
   icon,
   fullWidthPopover,
+  defaultOpen,
   child,
 }: NavItemProps) => {
   if (!disabled)
@@ -121,6 +122,7 @@ export const MobileNavItem = ({
                     {tag && <Tag variant="solid" size="sm" {...tag} />}
                   </div>
                 ),
+                defaultOpen,
                 content: fullWidthPopover
                   ? child
                   : children?.map((child, i) => (

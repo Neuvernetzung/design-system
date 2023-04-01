@@ -27,6 +27,7 @@ export type NavItemProps = {
   hideChevron?: boolean;
   color?: keyof ExtendedColors;
   textColor?: string;
+  defaultOpen?: boolean;
 } & NavFullPopoverProps;
 
 type NavFullPopoverProps =

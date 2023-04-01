@@ -13,7 +13,7 @@ import { ThemeSwitch } from "../../ThemeSwitch";
 import { DesktopItems } from "../desktop/items";
 import { NavLogo } from "../logo";
 import { MobileNav } from "../mobile/nav";
-import { NavbarProps } from "../navbar";
+import type { NavbarProps } from "../navbar";
 
 export type NavbarContainerProps = {
   textColor?: string;
