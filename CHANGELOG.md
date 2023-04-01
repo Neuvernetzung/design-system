@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/Neuvernetzung/design-system/compare/v1.40.0...v1.40.1) (2023-04-01)
+
+
+### Bug Fixes
+
+* **ui:** Sidenav Disclosure initialState hinzufügen [#575](https://github.com/Neuvernetzung/design-system/issues/575) ([b5f6486](https://github.com/Neuvernetzung/design-system/commit/b5f64861387e3c7e06ac039f7c42d15d16154034))
+
 # [1.40.0](https://github.com/Neuvernetzung/design-system/compare/v1.39.1...v1.40.0) (2023-03-31)
 
 
