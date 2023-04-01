@@ -4,7 +4,7 @@ import Link from "next/link";
 import { gaps } from "../../../../styles";
 import { Button, Disclosure, Tag, Text } from "../../../ui";
 import { NavbarMobileSubItem } from "../mobile/sub";
-import { NavItemProps } from "../navbar";
+import type { NavItemProps } from "../navbar";
 
 export const SideNavItem = ({
   label,
@@ -14,6 +14,7 @@ export const SideNavItem = ({
   disabled,
   icon,
   fullWidthPopover,
+  defaultOpen,
   child,
   textColor = "black",
 }: NavItemProps) => (
@@ -48,6 +49,7 @@ export const SideNavItem = ({
                 {tag && <Tag variant="solid" size="xs" {...tag} />}
               </div>
             ),
+            defaultOpen,
             content: fullWidthPopover
               ? child
               : children?.map((child, i) => (

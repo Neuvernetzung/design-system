@@ -11,7 +11,7 @@ import {
   zIndexes,
 } from "../../../../styles";
 import { typedMemo } from "../../../../utils/internal";
-import { NavbarProps } from "..";
+import type { NavbarProps } from "..";
 import { NavLogo } from "../logo";
 import { SideNavItem } from "../side/item";
 import { NavbarContainerProps } from "./default";

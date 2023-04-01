@@ -30,6 +30,7 @@ const baseProps: NavbarProps = {
   navItems: [
     {
       label: "Item 1",
+      defaultOpen: true,
       children: [
         {
           label: "Sub Item 1",
