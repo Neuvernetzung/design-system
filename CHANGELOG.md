@@ -1,3 +1,15 @@
+# [1.41.0](https://github.com/Neuvernetzung/design-system/compare/v1.40.1...v1.41.0) (2023-04-09)
+
+
+### Bug Fixes
+
+* **ui:** Menu - document is not defined [#579](https://github.com/Neuvernetzung/design-system/issues/579) ([c8ab8ee](https://github.com/Neuvernetzung/design-system/commit/c8ab8ee8b5a40f409f942967a6e1adb052301c30))
+
+
+### Features
+
+* **docs:** Readme anpassen ([5f58420](https://github.com/Neuvernetzung/design-system/commit/5f584206cf453361c2d7a24ab252947e35b57955))
+
 ## [1.40.1](https://github.com/Neuvernetzung/design-system/compare/v1.40.0...v1.40.1) (2023-04-01)
 
 
