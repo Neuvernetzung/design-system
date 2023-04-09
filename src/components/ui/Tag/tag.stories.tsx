@@ -2,7 +2,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
 
-import { type Sizes as SizesType,colors } from "../../../types";
+import { Sizes as SizesType, colors } from "../../../types";
 import { Tag, variants } from "./tag";
 
 export default {
@@ -47,12 +47,12 @@ Variants.parameters = {
 };
 
 export const Colors = ({ ...args }) => (
-    <Container>
-      {colors.map((color: any) => (
-        <Tag key={color} label={color} color={color} {...args} />
-      ))}
-    </Container>
-  );
+  <Container>
+    {colors.map((color: any) => (
+      <Tag key={color} label={color} color={color} {...args} />
+    ))}
+  </Container>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },
@@ -75,6 +75,14 @@ export const Rounded = ({ ...args }) => (
 );
 export const Element = ({ ...args }) => (
   <Container>
-    <Tag label={<div className="flex flex-row items-center gap-2"><span className="flex h-2 w-2 bg-primary-500 rounded-full" />Text</div>} {...args} />
+    <Tag
+      label={
+        <div className="flex flex-row items-center gap-2">
+          <span className="flex h-2 w-2 bg-primary-500 rounded-full" />
+          Text
+        </div>
+      }
+      {...args}
+    />
   </Container>
 );

@@ -26,6 +26,7 @@ export type TagProps = {
   color?: keyof Colors;
   variant?: keyof Variants;
   rounded?: boolean;
+  className?: string;
 };
 
 type Variants = {
@@ -51,6 +52,7 @@ export const Tag = ({
   color = "accent",
   variant = "solid",
   rounded,
+  className,
 }: TagProps) => {
   const { colorState } = useThemeState();
 
@@ -64,7 +66,8 @@ export const Tag = ({
         gapsSmall[size],
         textSizes[size],
         !rounded ? roundings[size] : "rounded-full",
-        !label && "aspect-square"
+        !label && "aspect-square",
+        className
       )}
     >
       {leftIcon && <Icon size={capSize(size, "md")} icon={leftIcon} />}
