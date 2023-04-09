@@ -234,7 +234,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
               }
             )}
           </HeadlessMenu.Items>,
-          document.body
+          document?.body
         )}
       </HeadlessMenu>
     );
