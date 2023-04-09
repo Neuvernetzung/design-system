@@ -29,7 +29,7 @@ export default MyApp;
 ### Design-System Preset in tailwind.config.js importieren.
 
 ```
-const config = require("@neuvernetzung/design-system/tailwind.config.js");
+const config = require("@neuvernetzung/design-system/tailwind.config");
 
 const path = require("path");
 
