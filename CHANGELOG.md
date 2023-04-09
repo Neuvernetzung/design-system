@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/Neuvernetzung/design-system/compare/v1.41.0...v1.42.0) (2023-04-09)
+
+
+### Features
+
+* **ui:** ClassName prop zu Tag hinzufügen [#585](https://github.com/Neuvernetzung/design-system/issues/585) ([9a6c641](https://github.com/Neuvernetzung/design-system/commit/9a6c64102d712c6b7ae4386e7435c826f6a9537b))
+
 # [1.41.0](https://github.com/Neuvernetzung/design-system/compare/v1.40.1...v1.41.0) (2023-04-09)
 
 
