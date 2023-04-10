@@ -1,11 +1,11 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { FC, MutableRefObject, ReactNode, SVGProps, useRef } from "react";
+import { MutableRefObject, ReactNode, useRef } from "react";
 import { create } from "zustand";
 
 import { getText, Locales } from "../../../locales/getText";
 import { gaps } from "../../../styles";
-import { Colors } from "../../../types";
+import { Colors, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { Tag } from "../Tag";
@@ -25,7 +25,7 @@ export const confirmation = (confirmation?: ConfirmationModalProps) => {
 };
 
 export type ConfirmationModalProps = {
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
   heading: string;
   content?: string | ReactNode;
   color?: keyof Colors;

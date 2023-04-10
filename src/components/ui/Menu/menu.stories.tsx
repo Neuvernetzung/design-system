@@ -11,7 +11,7 @@ import React from "react";
 
 import { Sizes as SizesType } from "../../../types";
 import { ButtonGroup } from "../Button";
-import { ItemProps, Menu } from "./menu";
+import { MenuItemProps, Menu } from "./menu";
 
 export default {
   title: "UI/Overlay/Menu",
@@ -23,7 +23,7 @@ const Container = ({ ...props }) => (
 );
 
 export const Default = ({ ...args }) => {
-  const items: ItemProps[] = [
+  const items: MenuItemProps[] = [
     {
       children: "Gruppe 1",
       items: [

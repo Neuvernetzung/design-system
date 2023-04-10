@@ -1,7 +1,7 @@
 import cn from "classnames";
 import isArray from "lodash/isArray";
 import isString from "lodash/isString";
-import { FC, KeyboardEvent, MouseEvent, ReactNode, SVGProps } from "react";
+import { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import {
   Controller,
   FieldError,
@@ -24,7 +24,7 @@ import {
   textColors,
   transition,
 } from "../../../styles";
-import type { Colors, Sizes } from "../../../types";
+import type { Colors, Sizes, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
@@ -44,7 +44,7 @@ export interface CheckboxProps {
   required?: RequiredRule;
   size?: keyof Sizes;
   color?: keyof Colors;
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
   disabled?: boolean;
   className?: string;
 }
@@ -53,7 +53,7 @@ type OptionProps = {
   label: ReactNode;
   value: any;
   disabled?: boolean;
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
 };
 
 const styles = {
@@ -186,7 +186,7 @@ type CheckboxInnerProps = {
   color?: keyof Colors;
   onChange: (...event: any[]) => void;
   options: string[];
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
   error?: FieldError;
 } & CheckboxInnerIndeterminateProps;
 

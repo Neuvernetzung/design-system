@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import cn from "classnames";
 import isString from "lodash/isString";
-import { ElementType, FC, ForwardedRef, forwardRef, SVGProps } from "react";
+import { ElementType, ForwardedRef, forwardRef } from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
@@ -16,7 +16,13 @@ import {
   transition,
 } from "../../../../styles";
 import { useThemeState } from "../../../../theme/useThemeState";
-import { Colors, ExtendedColors, Focuses, Sizes } from "../../../../types";
+import {
+  Colors,
+  ExtendedColors,
+  Focuses,
+  Sizes,
+  SvgType,
+} from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
 import { Icon } from "../../Icon";
 import { Spinner, useLoadingState } from "../../Loading/loading";
@@ -37,7 +43,7 @@ export type IconButtonOwnProps = {
   size?: keyof Sizes;
   focus?: keyof Focuses;
   rounded?: boolean;
-  icon: FC<SVGProps<SVGSVGElement>>;
+  icon: SvgType;
   disabled?: boolean;
   loadingId?: string;
   iconClassName?: string;

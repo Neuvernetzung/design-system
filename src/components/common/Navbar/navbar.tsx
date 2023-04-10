@@ -1,18 +1,16 @@
 import cn from "classnames";
 import {
-  FC,
   ForwardedRef,
   forwardRef,
   MutableRefObject,
   ReactElement,
   ReactNode,
   RefObject,
-  SVGProps,
 } from "react";
 import { adjustedTextColors } from "../../../styles";
 import { useThemeState } from "../../../theme";
 
-import { ExtendedColors, Sizes } from "../../../types";
+import { ExtendedColors, Sizes, SvgType } from "../../../types";
 import type { TagProps } from "../../ui/Tag";
 import { NavbarContainer, NavbarSideContainer } from "./container";
 
@@ -23,7 +21,7 @@ export type NavItemProps = {
   children?: NavItemProps[];
   href?: string;
   disabled?: boolean;
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
   hideChevron?: boolean;
   color?: keyof ExtendedColors;
   textColor?: string;

@@ -2,17 +2,17 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import cn from "classnames";
 import isString from "lodash/isString";
 import Link from "next/link";
-import { FC, ReactElement, SVGProps } from "react";
+import { ReactElement } from "react";
 
 import { gaps, transitionFast } from "../../../../styles";
-import { ExtendedColors } from "../../../../types";
+import { ExtendedColors, SvgType } from "../../../../types";
 import { Button, Heading, Icon, Tag, TagProps, Text } from "../../../ui";
 import type { NavSubLabelProps } from "../navbar";
 
 export type NavbarSubItemProps = {
   disabled?: boolean;
   href?: string;
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
   label: string;
   tag?: TagProps;
   subLabel?: NavSubLabelProps;

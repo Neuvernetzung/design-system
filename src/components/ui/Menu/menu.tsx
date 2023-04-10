@@ -1,14 +1,7 @@
 import { Menu as HeadlessMenu } from "@headlessui/react";
 import type { Placement } from "@popperjs/core";
 import cn from "classnames";
-import {
-  FC,
-  ForwardedRef,
-  forwardRef,
-  ReactNode,
-  SVGProps,
-  useState,
-} from "react";
+import { ForwardedRef, forwardRef, ReactNode, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 
@@ -20,7 +13,7 @@ import {
   getDropDownOptionsStyles,
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
-import { Colors, Sizes } from "../../../types";
+import { Colors, Sizes, SvgType } from "../../../types";
 import { capSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
@@ -59,7 +52,7 @@ type OptionalItemProps =
     }
   | ({
       items?: never;
-      icon?: FC<SVGProps<SVGSVGElement>>;
+      icon?: SvgType;
     } & OptionalFunctionProps);
 
 export type MenuItemProps = {

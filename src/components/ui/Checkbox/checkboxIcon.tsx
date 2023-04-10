@@ -1,14 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { FC, SVGProps } from "react";
 
 import { CheckIcon, MinusIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
+import { Sizes, SvgType } from "../../../types";
 import { Icon } from "../Icon";
 
 type CheckboxIconProps = {
   size?: keyof Sizes;
   isChecked: boolean;
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
   isIndeterminate?: boolean;
 };
 
