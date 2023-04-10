@@ -1,3 +1,10 @@
+## [1.42.1](https://github.com/Neuvernetzung/design-system/compare/v1.42.0...v1.42.1) (2023-04-10)
+
+
+### Bug Fixes
+
+* **ui:** SvgTypes fixen [#588](https://github.com/Neuvernetzung/design-system/issues/588) ([f4b8a29](https://github.com/Neuvernetzung/design-system/commit/f4b8a2925040831bab424aabdeb79bd2faa50c73))
+
 # [1.42.0](https://github.com/Neuvernetzung/design-system/compare/v1.41.0...v1.42.0) (2023-04-09)
 
 
