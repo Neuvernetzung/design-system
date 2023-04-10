@@ -1,13 +1,14 @@
 import cn from "classnames";
-import { FC, MouseEventHandler, ReactNode, SVGProps } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 import { gapsSmall } from "../../../../styles";
 import { IconButton } from "../../Button";
 import { Tooltip } from "../../Tooltip";
+import { SvgType } from "../../../../types";
 
 type RichTextMenuItemProps = {
   onClick: MouseEventHandler;
-  icon: FC<SVGProps<SVGSVGElement>>;
+  icon: SvgType;
   active?: boolean;
   disabled?: boolean;
   tooltip?: string;

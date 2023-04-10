@@ -1,9 +1,9 @@
 import { Tab } from "@headlessui/react";
 import cn from "classnames";
-import { FC, Fragment, ReactNode, SVGProps } from "react";
+import { Fragment, ReactNode } from "react";
 
 import { gaps, paddings } from "../../../styles";
-import { Colors, Sizes } from "../../../types";
+import { Colors, Sizes, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 
@@ -32,7 +32,7 @@ export type TabItemProps = {
   content: ReactNode;
   disabled?: boolean;
   className?: string;
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
 };
 
 export const Tabs = ({

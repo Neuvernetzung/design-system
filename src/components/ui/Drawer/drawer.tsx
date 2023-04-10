@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import cn from "classnames";
 import { motion } from "framer-motion";
-import { FC, MutableRefObject, ReactNode, SVGProps } from "react";
+import { MutableRefObject, ReactNode } from "react";
 
 import {
   bgColors,
@@ -13,7 +13,7 @@ import {
   zIndexes,
 } from "../../../styles";
 import { CrossIcon } from "../../../theme/icons";
-import { ExtendedSizes, Sizes } from "../../../types";
+import { ExtendedSizes, Sizes, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
 import { IconButton } from "../Button";
@@ -25,7 +25,7 @@ export type DrawerProps = {
   setOpen: (open: boolean) => void;
   initialFocus?: MutableRefObject<HTMLElement>;
   size?: keyof DrawerSizes;
-  icon?: FC<SVGProps<SVGSVGElement>>;
+  icon?: SvgType;
   title?: string;
   content?: ReactNode;
   placement?: keyof Placements;

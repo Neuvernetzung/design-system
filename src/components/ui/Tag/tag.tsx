@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { FC, ReactElement, SVGProps } from "react";
+import { ReactElement } from "react";
 
 import {
   adjustedTextColors,
@@ -13,15 +13,15 @@ import {
   textSizes,
 } from "../../../styles";
 import { useThemeState } from "../../../theme/useThemeState";
-import type { Colors, Sizes } from "../../../types";
+import type { Colors, Sizes, SvgType } from "../../../types";
 import { capSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 
 export type TagProps = {
   label?: string | ReactElement;
-  leftIcon?: FC<SVGProps<SVGSVGElement>>;
-  rightIcon?: FC<SVGProps<SVGSVGElement>>;
+  leftIcon?: SvgType;
+  rightIcon?: SvgType;
   size?: keyof Sizes;
   color?: keyof Colors;
   variant?: keyof Variants;
