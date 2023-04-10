@@ -71,7 +71,7 @@
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
     "@headlessui/react": "^1.7.13",
-    "@heroicons/react": "^2.0.16",
+    "@heroicons/react": "^2.0.17",
     "@neuvernetzung/eslint-config-custom": "1.0.1",
     "@neuvernetzung/tsconfig": "1.0.0",
     "@popperjs/core": "^2.11.7",

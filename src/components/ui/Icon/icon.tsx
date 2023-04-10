@@ -2,11 +2,9 @@ import cn from "classnames";
 import {
   createElement,
   ElementType,
-  FC,
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
-  SVGProps,
 } from "react";
 import type {
   PolymorphicForwardRefExoticComponent,
@@ -15,7 +13,7 @@ import type {
 } from "react-polymorphic-types";
 
 import { extendedTextColors } from "../../../styles";
-import { ExtendedColors, Sizes } from "../../../types";
+import { ExtendedColors, Sizes, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 
 export const sizes: Sizes = {
@@ -33,7 +31,7 @@ const IconDefaultElement = "svg";
 export interface IconOwnProps extends HTMLAttributes<HTMLElement> {
   size?: keyof Sizes;
   color?: keyof ExtendedColors;
-  icon: FC<SVGProps<SVGSVGElement>>;
+  icon: SvgType;
   className?: string;
 }
 
