@@ -119,6 +119,7 @@ export const Multiple = ({ ...args }) => {
       <Select
         control={formMethods.control}
         name="select_multiple"
+        multipleStyle="indicator"
         options={[
           { children: "Option 1", value: "option-1" },
           { children: "Option 2", value: "option-2" },
