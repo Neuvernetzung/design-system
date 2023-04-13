@@ -67,6 +67,7 @@ export type SelectProps = {
   returned?: string;
   multiple?: boolean;
   defaultMessage?: string;
+  indicatorMessage?: string;
   noOptionsMessage?: string | ReactNode;
   removeAll?: boolean;
   multipleStyle?: "tags" | "indicator";
@@ -109,6 +110,7 @@ export const SelectInner = <
     returned = "value",
     multiple,
     defaultMessage = "Auswählen...",
+    indicatorMessage = "ausgewählt.",
     noOptionsMessage = "Keine Optionen gefunden.",
     removeAll = false,
     hideActive = false,
@@ -302,6 +304,10 @@ export const SelectInner = <
                       ? flattenOptions?.find(
                           (option) => returnValue(option) === selected
                         )?.children
+                      : defaultMessage
+                    : multipleStyle === "indicator"
+                    ? selected?.length > 0
+                      ? `${selected.length} ${indicatorMessage}`
                       : defaultMessage
                     : selected?.length > 0
                     ? selected?.map((value: SelectOptionProps, i: number) => (
