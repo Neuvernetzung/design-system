@@ -1,3 +1,10 @@
+# [1.43.0](https://github.com/Neuvernetzung/design-system/compare/v1.42.1...v1.43.0) (2023-04-13)
+
+
+### Features
+
+* **ui:** Select Multiple Indicators nicht implementiert [#592](https://github.com/Neuvernetzung/design-system/issues/592) ([8be109e](https://github.com/Neuvernetzung/design-system/commit/8be109efc63fc47e5cb8ce16bca46a2dfe781e56))
+
 ## [1.42.1](https://github.com/Neuvernetzung/design-system/compare/v1.42.0...v1.42.1) (2023-04-10)
 
 
