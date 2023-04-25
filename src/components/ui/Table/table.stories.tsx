@@ -42,6 +42,7 @@ const items = [
     title: { test: "undefined" }["23"],
     name: 2,
     createdAt: new Date().toDateString(),
+    disclosure: "Test",
   },
   {
     _id: "_3",
@@ -88,7 +89,51 @@ export const Data = ({ ...args }) => (
     ]}
     checkable
     checkedValue="_id"
+    disclosureValue="disclosure"
+    disclosureClassName="bg-accent-100"
     divideX
-    items={items}
+    items={[
+      {
+        _id: "_1",
+        id: "1",
+        name: "Test 1",
+        title: "Titel",
+        image: "Bild",
+        options: (
+          <IconButton
+            ariaLabel="Edit"
+            size="sm"
+            variant="ghost"
+            color="primary"
+            icon={PencilIcon}
+          />
+        ),
+        createdAt: new Date().toDateString(),
+      },
+      {
+        _id: "_2",
+        id: "2",
+        title: { test: "undefined" }["23"],
+        disclosure: "Test",
+        name: 2,
+        createdAt: new Date().toDateString(),
+      },
+      {
+        _id: "_3",
+        id: "3",
+        name: "Test 3",
+        image: "Bild",
+        options: (
+          <IconButton
+            ariaLabel="Edit"
+            size="sm"
+            variant="ghost"
+            color="primary"
+            icon={PencilIcon}
+          />
+        ),
+        createdAt: new Date().toDateString(),
+      },
+    ]}
   />
 );
