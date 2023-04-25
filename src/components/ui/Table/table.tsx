@@ -52,6 +52,8 @@ export type DataTablePropsConditional<
   | {
       checkable: true;
       checkedValue: K;
+      checked: string[];
+      setChecked: (checked: string[]) => void;
       items: Array<
         Record<K, string> & Partial<Record<T, any>> & Partial<Record<D, any>>
       >;
@@ -59,6 +61,8 @@ export type DataTablePropsConditional<
   | {
       checkable?: false;
       checkedValue?: never;
+      checked?: never;
+      setChecked?: never;
       items: Array<Partial<Record<T, any>> & Partial<Record<D, any>>>;
     };
 
@@ -91,11 +95,12 @@ export const DataTableInner = <
   disableHead = false,
   disclosureValue,
   disclosureClassName,
+  checked,
+  setChecked,
 }: DataTableProps<T, K, D>) => {
   const router = useRouter();
 
   const [sort, setLocalSort] = useState<string>();
-  const [checked, setChecked] = useState<string[]>([]);
 
   const normalizedSort = sort?.[0] === "-" ? sort.slice(1) : sort;
 
@@ -121,9 +126,10 @@ export const DataTableInner = <
             {checkable && (
               <th className={cn("w-0", paddingsEvenly[size])}>
                 <CheckboxInner
-                  key="checkbox_indeterminate"
+                  id="checkbox_indeterminate"
                   current={checked}
-                  options={items.map((item) => get(item, checkedValue))}
+                  disabled={items?.length === 0}
+                  options={items?.map((item) => get(item, checkedValue))}
                   allowIndetermination
                   onChange={setChecked}
                 />
@@ -162,22 +168,18 @@ export const DataTableInner = <
       <TableBody>
         {items.map((item, i) => (
           <>
-            {disclosureValue && item[disclosureValue] && (
-              <tr className={disclosureClassName}>
-                <td colSpan={checkable ? cols.length + 1 : cols.length}>
-                  {item[disclosureValue]}
-                </td>
-              </tr>
-            )}
             <TableRow divideX={divideX} key={`row_${i}`}>
               {checkable && (
                 <td className={cn(paddingsEvenly[size])}>
                   <CheckboxInner
-                    key={`checkbox_${i}`}
+                    id={`checkbox_${i}`}
                     current={checked}
                     value={get(item, checkedValue)}
                     onChange={setChecked}
-                    options={items.map((item) => get(item, checkedValue))}
+                    options={[
+                      ...items.map((item) => get(item, checkedValue)),
+                      "",
+                    ]}
                   />
                 </td>
               )}
@@ -191,6 +193,13 @@ export const DataTableInner = <
                 />
               ))}
             </TableRow>
+            {disclosureValue && item[disclosureValue] && (
+              <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
+                <td colSpan={checkable ? cols.length + 1 : cols.length}>
+                  {item[disclosureValue]}
+                </td>
+              </tr>
+            )}
           </>
         ))}
       </TableBody>
