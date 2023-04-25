@@ -1,3 +1,15 @@
+# [1.44.0](https://github.com/Neuvernetzung/design-system/compare/v1.43.0...v1.44.0) (2023-04-25)
+
+
+### Bug Fixes
+
+* **ui:** Bug wenn in DataTable Checkboxes aktiviert sind, es aber nur ein Item gibt [#591](https://github.com/Neuvernetzung/design-system/issues/591) ([82ab8fd](https://github.com/Neuvernetzung/design-system/commit/82ab8fdde1c4bc6d311894fe57032ae4d5a3f2e5))
+
+
+### Features
+
+* **ui:** Disclosure für DataTable hinzufügen statisch [#597](https://github.com/Neuvernetzung/design-system/issues/597) ([9a6d4c1](https://github.com/Neuvernetzung/design-system/commit/9a6d4c193ba0495fbddc79d0578780305537f4da))
+
 # [1.43.0](https://github.com/Neuvernetzung/design-system/compare/v1.42.1...v1.43.0) (2023-04-13)
 
 
