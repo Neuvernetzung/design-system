@@ -32,25 +32,38 @@ export type SimpleTableProps<T extends string> = {
   disableHead?: boolean;
 };
 
-export type DataTableProps<T extends string, K extends string> = Omit<
-  SimpleTableProps<T>,
-  "items" | "cols"
-> &
-  DataTablePropsConditional<T, K> & {
+export type DataTableProps<
+  T extends string,
+  K extends string,
+  D extends string
+> = Omit<SimpleTableProps<T>, "items" | "cols"> &
+  DataTablePropsConditional<T, K, D> & {
     setSort?: (sort: string) => void;
     cols: DataTableCol<T>[];
+    disclosureValue?: D;
+    disclosureClassName?: string;
   };
 
-export type DataTablePropsConditional<T extends string, K extends string> =
+export type DataTablePropsConditional<
+  T extends string,
+  K extends string,
+  D extends string
+> =
   | {
       checkable: true;
       checkedValue: K;
-      items: Array<Record<K, string> & Partial<Record<T, any>>>;
+      checked: string[];
+      setChecked: (checked: string[]) => void;
+      items: Array<
+        Record<K, string> & Partial<Record<T, any>> & Partial<Record<D, any>>
+      >;
     }
   | {
       checkable?: false;
       checkedValue?: never;
-      items: Array<Partial<Record<T, any>>>;
+      checked?: never;
+      setChecked?: never;
+      items: Array<Partial<Record<T, any>> & Partial<Record<D, any>>>;
     };
 
 export type SimpleTableCol<T> = {
@@ -66,9 +79,13 @@ export type DataTableCol<T> = SimpleTableCol<T> & {
   sortable?: boolean;
 };
 
-export const DataTableInner = <T extends string, K extends string>({
+export const DataTableInner = <
+  T extends string,
+  K extends string,
+  D extends string
+>({
   items = [],
-  cols,
+  cols = [],
   size = "md",
   setSort,
   checkable,
@@ -76,11 +93,14 @@ export const DataTableInner = <T extends string, K extends string>({
   divideX,
   uppercase = true,
   disableHead = false,
-}: DataTableProps<T, K>) => {
+  disclosureValue,
+  disclosureClassName,
+  checked,
+  setChecked,
+}: DataTableProps<T, K, D>) => {
   const router = useRouter();
 
   const [sort, setLocalSort] = useState<string>();
-  const [checked, setChecked] = useState<string[]>([]);
 
   const normalizedSort = sort?.[0] === "-" ? sort.slice(1) : sort;
 
@@ -106,9 +126,10 @@ export const DataTableInner = <T extends string, K extends string>({
             {checkable && (
               <th className={cn("w-0", paddingsEvenly[size])}>
                 <CheckboxInner
-                  key="checkbox_indeterminate"
+                  id="checkbox_indeterminate"
                   current={checked}
-                  options={items.map((item) => get(item, checkedValue))}
+                  disabled={items?.length === 0}
+                  options={items?.map((item) => get(item, checkedValue))}
                   allowIndetermination
                   onChange={setChecked}
                 />
@@ -146,28 +167,40 @@ export const DataTableInner = <T extends string, K extends string>({
       )}
       <TableBody>
         {items.map((item, i) => (
-          <TableRow divideX={divideX} key={`row_${i}`}>
-            {checkable && (
-              <td className={cn(paddingsEvenly[size])}>
-                <CheckboxInner
-                  key={`checkbox_${i}`}
-                  current={checked}
-                  value={get(item, checkedValue)}
-                  onChange={setChecked}
-                  options={items.map((item) => get(item, checkedValue))}
+          <>
+            <TableRow divideX={divideX} key={`row_${i}`}>
+              {checkable && (
+                <td className={cn(paddingsEvenly[size])}>
+                  <CheckboxInner
+                    id={`checkbox_${i}`}
+                    current={checked}
+                    value={get(item, checkedValue)}
+                    onChange={setChecked}
+                    options={[
+                      ...items.map((item) => get(item, checkedValue)),
+                      "",
+                    ]}
+                  />
+                </td>
+              )}
+              {cols.map((col) => (
+                <TableDataCell
+                  item={item}
+                  col={col}
+                  key={`row_${i}_col_${col.id}`}
+                  size={size}
+                  className={col.dataCellClassName}
                 />
-              </td>
+              ))}
+            </TableRow>
+            {disclosureValue && item[disclosureValue] && (
+              <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
+                <td colSpan={checkable ? cols.length + 1 : cols.length}>
+                  {item[disclosureValue]}
+                </td>
+              </tr>
             )}
-            {cols.map((col) => (
-              <TableDataCell
-                item={item}
-                col={col}
-                key={`row_${i}_col_${col.id}`}
-                size={size}
-                className={col.dataCellClassName}
-              />
-            ))}
-          </TableRow>
+          </>
         ))}
       </TableBody>
     </TableContainer>

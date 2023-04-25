@@ -1,7 +1,7 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import React, { useState } from "react";
 
 import { IconButton } from "../Button";
 import { DataTable, SimpleTable } from ".";
@@ -42,6 +42,7 @@ const items = [
     title: { test: "undefined" }["23"],
     name: 2,
     createdAt: new Date().toDateString(),
+    disclosure: "Test",
   },
   {
     _id: "_3",
@@ -76,19 +77,77 @@ export const Simple = ({ ...args }) => (
   />
 );
 
-export const Data = ({ ...args }) => (
-  <DataTable
-    cols={[
-      { id: "id", title: "Id", sortable: true, shrink: true },
-      { id: "name", title: "Name", grow: true },
-      { id: "title", title: "Titel", grow: true },
-      { id: "image", title: "Bild" },
-      { id: "createdAt", title: "Erstellung", sortable: true },
-      { id: "options", title: "", shrink: true },
-    ]}
-    checkable
-    checkedValue="_id"
-    divideX
-    items={items}
-  />
-);
+export const Data = ({ ...args }) => {
+  const [checked, setChecked] = useState<string[]>([]);
+
+  return (
+    <DataTable
+      cols={[
+        { id: "id", title: "Id", sortable: true, shrink: true },
+        { id: "name", title: "Name", grow: true },
+        { id: "title", title: "Titel", grow: true },
+        { id: "image", title: "Bild" },
+        { id: "createdAt", title: "Erstellung", sortable: true },
+        { id: "options", title: "", shrink: true },
+      ]}
+      checkable
+      checkedValue="_id"
+      checked={checked}
+      setChecked={setChecked}
+      disclosureValue="disclosure"
+      disclosureClassName="bg-accent-100"
+      divideX
+      items={items}
+    />
+  );
+};
+
+export const DataNoItems = ({ ...args }) => {
+  const [checked, setChecked] = useState<string[]>([]);
+
+  return (
+    <DataTable
+      cols={[
+        { id: "id", title: "Id", sortable: true, shrink: true },
+        { id: "name", title: "Name", grow: true },
+        { id: "title", title: "Titel", grow: true },
+        { id: "image", title: "Bild" },
+        { id: "createdAt", title: "Erstellung", sortable: true },
+        { id: "options", title: "", shrink: true },
+      ]}
+      checkable
+      checkedValue="_id"
+      checked={checked}
+      setChecked={setChecked}
+      disclosureValue="disclosure"
+      disclosureClassName="bg-accent-100"
+      divideX
+      items={[]}
+    />
+  );
+};
+
+export const Data1Item = ({ ...args }) => {
+  const [checked, setChecked] = useState<string[]>([]);
+
+  return (
+    <DataTable
+      cols={[
+        { id: "id", title: "Id", sortable: true, shrink: true },
+        { id: "name", title: "Name", grow: true },
+        { id: "title", title: "Titel", grow: true },
+        { id: "image", title: "Bild" },
+        { id: "createdAt", title: "Erstellung", sortable: true },
+        { id: "options", title: "", shrink: true },
+      ]}
+      checkable
+      checkedValue="_id"
+      checked={checked}
+      setChecked={setChecked}
+      disclosureValue="disclosure"
+      disclosureClassName="bg-accent-100"
+      divideX
+      items={[items[0]]}
+    />
+  );
+};
