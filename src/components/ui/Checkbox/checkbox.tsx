@@ -125,6 +125,7 @@ export const Checkbox = <
 
               return (
                 <CheckboxInner
+                  id={`checkbox_${name}_${i}`}
                   key={`checkbox_${name}_${i}`}
                   current={current}
                   value={_value}
@@ -150,11 +151,18 @@ export const Checkbox = <
 const isChecked = (current: string | string[], value: any) =>
   isArray(current) ? current.includes(value) : !!current;
 
-const isIndeterminate = (current: string[], options: string[]) =>
-  options.some((o) => current.find((c) => c === o));
+const isIndeterminate = (current: string | string[], options: string[]) => {
+  if (!isArray(current)) return false;
+  return options.some((o) => current?.find((c) => c === o));
+};
 
-const isIndeterminateChecked = (current: string[], options: string[]) =>
-  options.every((o) => current.find((c) => c === o));
+const isIndeterminateChecked = (
+  current: string | string[],
+  options: string[]
+) => {
+  if (!isArray(current)) return !!current;
+  return options.every((o) => current?.find((c) => c === o));
+};
 
 const handleChange = (
   current: string | string[],
@@ -178,7 +186,7 @@ const handleChangeIndeterminate = (
 
 type CheckboxInnerProps = {
   current: string[];
-  key: string;
+  id?: string;
   label?: ReactNode;
   disabled?: boolean;
   size?: keyof Sizes;
@@ -199,7 +207,7 @@ type CheckboxInnerIndeterminateProps =
 
 export const CheckboxInner = ({
   current,
-  key,
+  id,
   value,
   label,
   disabled,
@@ -227,6 +235,7 @@ export const CheckboxInner = ({
 
   return (
     <div
+      key={id}
       role="checkbox"
       aria-checked={
         _isChecked
@@ -303,7 +312,7 @@ export const CheckboxInner = ({
           </div>
           {label && (
             <label
-              htmlFor={key}
+              htmlFor={id}
               className={cn(
                 !disabled ? styles.label : styles.labelDisabled,
                 textColors.accent,
