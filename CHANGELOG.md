@@ -1,3 +1,15 @@
+# [1.45.0](https://github.com/Neuvernetzung/design-system/compare/v1.44.0...v1.45.0) (2023-04-28)
+
+
+### Bug Fixes
+
+* **ui:** useLayoutEffect durch useEffect ersetzen [#602](https://github.com/Neuvernetzung/design-system/issues/602) ([7662d23](https://github.com/Neuvernetzung/design-system/commit/7662d2380248c643fb7ecd83ac6e83d77d31578a))
+
+
+### Features
+
+* **ui:** Sidenav Items größe md [#580](https://github.com/Neuvernetzung/design-system/issues/580) ([f29153d](https://github.com/Neuvernetzung/design-system/commit/f29153db86f2d2b97ca05172fd1e5d45248bfd0f))
+
 # [1.44.0](https://github.com/Neuvernetzung/design-system/compare/v1.43.0...v1.44.0) (2023-04-25)
 
 
