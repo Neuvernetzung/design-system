@@ -16,6 +16,7 @@ import {
   textColors,
   textSizes,
   transitionFast,
+  zIndexes,
 } from "..";
 
 type DropdownContainerStyleProps = {
@@ -31,6 +32,7 @@ export const getDropdownContainerStyles = ({
 }: DropdownContainerStyleProps) =>
   cn(
     containerStyles.base,
+    zIndexes.dropdown,
     paddingsYSmall[capSize(size, "md")],
     roundings[minSize(size, "md")],
     shadows[minSize(size, "md")]

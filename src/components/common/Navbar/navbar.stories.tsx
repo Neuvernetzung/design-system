@@ -4,6 +4,7 @@ import {
   ArrowPathRoundedSquareIcon,
   BoltIcon,
   TrashIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useRef } from "react";
@@ -15,8 +16,8 @@ import { Icon } from "../../ui/Icon";
 import { Select } from "../../ui/Select";
 import { Heading } from "../../ui/Typography/Heading";
 import { Navbar, NavbarProps, SideNavbar } from "./navbar";
-import { Button } from "../../ui";
-import { borders, extendedBorders } from "../../../styles";
+import { Menu } from "../../ui";
+import { borders } from "../../../styles";
 import cn from "classnames";
 
 export default {
@@ -98,14 +99,24 @@ const baseProps: NavbarProps = {
     </>
   ),
   footer: (
-    <Button
-      fullWidth
-      size="sm"
-      className="rounded-none"
-      leftIcon={ArrowLeftOnRectangleIcon}
-    >
-      Logout
-    </Button>
+    <Menu
+      items={[
+        {
+          children: "Logout",
+          icon: ArrowLeftOnRectangleIcon,
+          onClick: () => {},
+        },
+      ]}
+      placement="top"
+      size="xl"
+      buttonType="button"
+      buttonProps={{
+        variant: "ghost",
+        children: "Benutzer",
+        className: "w-full",
+        leftIcon: UserIcon,
+      }}
+    />
   ),
   footerClassName: cn("border-t !p-0", borders.accent),
 };

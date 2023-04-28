@@ -22,7 +22,7 @@ export const SideNavItem = ({
     {!children && !child ? (
       <Button
         disabled={disabled}
-        size="sm"
+        size="md"
         as={Link}
         href={href || "#"}
         variant="ghost"
@@ -37,7 +37,7 @@ export const SideNavItem = ({
       </Button>
     ) : (
       <Disclosure
-        size="sm"
+        size="md"
         className={cn("border-none", textColor)}
         icon="chevron"
         buttonProps={{ leftIcon: icon, className: cn(textColor) }}
