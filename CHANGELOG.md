@@ -1,3 +1,10 @@
+## [1.45.1](https://github.com/Neuvernetzung/design-system/compare/v1.45.0...v1.45.1) (2023-04-29)
+
+
+### Bug Fixes
+
+* **ui:** Sidenav subItems Überschrift-größe auf md festlegen [#607](https://github.com/Neuvernetzung/design-system/issues/607) ([097e76a](https://github.com/Neuvernetzung/design-system/commit/097e76a8c54698d4a19123c2d064dbce652a4ea2))
+
 # [1.45.0](https://github.com/Neuvernetzung/design-system/compare/v1.44.0...v1.45.0) (2023-04-28)
 
 
