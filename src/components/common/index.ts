@@ -4,4 +4,5 @@ export * from "./Footer";
 export * from "./Funnelform";
 export * from "./Navbar";
 export * from "./Pagination";
+export * from "./Searchbar";
 export * from "./ThemeSwitch";
