@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/Neuvernetzung/design-system/compare/v1.45.1...v1.46.0) (2023-04-29)
+
+
+### Features
+
+* **ui:** Searchbar hinzufügen [#610](https://github.com/Neuvernetzung/design-system/issues/610) ([cf61c8d](https://github.com/Neuvernetzung/design-system/commit/cf61c8d55137601a0765bc6367659ea2ca5c0f25))
+
 ## [1.45.1](https://github.com/Neuvernetzung/design-system/compare/v1.45.0...v1.45.1) (2023-04-29)
 
 
