@@ -16,7 +16,7 @@ import { Icon } from "../../ui/Icon";
 import { Select } from "../../ui/Select";
 import { Heading } from "../../ui/Typography/Heading";
 import { Navbar, NavbarProps, SideNavbar } from "./navbar";
-import { Menu } from "../../ui";
+import { Button, Menu } from "../../ui";
 import { borders } from "../../../styles";
 import cn from "classnames";
 
@@ -78,7 +78,11 @@ const baseProps: NavbarProps = {
       label: "Full",
       fullWidthPopover: true,
       tag: { label: "width", variant: "outline" },
-      child: "Test",
+      child: (
+        <div className="w-full">
+          <Button variant="ghost">Test</Button>
+        </div>
+      ),
     },
     {
       label: "Item 3",
