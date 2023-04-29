@@ -24,7 +24,7 @@ export const NavbarMobileSubItem = ({
     >
       <div>
         <div className={cn("flex flex-row items-center", gaps.sm)}>
-          <Text color="inherit" size="sm">
+          <Text color="inherit" size="md">
             {label}
           </Text>
           {tag && <Tag variant="solid" size="sm" {...tag} />}
