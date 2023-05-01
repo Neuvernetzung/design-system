@@ -27,6 +27,10 @@
     "semantic-release": "semantic-release"
   },
   "peerDependencies": {
+    "@dnd-kit/core": "^6",
+    "@dnd-kit/modifiers": "^6",
+    "@dnd-kit/sortable": "^7",
+    "@dnd-kit/utilities": "^3",
     "@headlessui/react": "^1",
     "@heroicons/react": "^2",
     "@popperjs/core": "^2",
@@ -70,6 +74,10 @@
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
+    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/modifiers": "^6.0.1",
+    "@dnd-kit/sortable": "^7.0.2",
+    "@dnd-kit/utilities": "^3.2.1",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.17",
     "@neuvernetzung/eslint-config-custom": "1.0.1",

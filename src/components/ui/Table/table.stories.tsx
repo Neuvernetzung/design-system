@@ -1,10 +1,10 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
-import { action } from "@storybook/addon-actions";
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
 
 import { IconButton } from "../Button";
-import { DataTable, SimpleTable } from ".";
+import { UseSortableChange } from "../Sortable";
+import { DataTable, SimpleTable, SortableTable } from ".";
 
 export default {
   title: "UI/Data Display/Table",
@@ -148,6 +148,34 @@ export const Data1Item = ({ ...args }) => {
       disclosureClassName="bg-accent-100"
       divideX
       items={[items[0]]}
+    />
+  );
+};
+
+export const Sortable = ({ ...args }) => {
+  const items = [
+    { id: "1", name: "Item 1", order: 23 },
+    { id: "2", name: "Item 2", order: 24 },
+    { id: "3", name: "Item 3", order: 29 },
+    { id: "4", name: "Item 4", order: 27 },
+    { id: "5", name: "Item 5", order: 28 },
+  ];
+
+  const handleChange: UseSortableChange<typeof items[number]> = () => {};
+
+  return (
+    <SortableTable
+      cols={[
+        { id: "id", title: "Id", shrink: true },
+        { id: "name", title: "Name" },
+        { id: "order", title: "Order" },
+      ]}
+      handle
+      divideX
+      handleChange={handleChange}
+      id="id"
+      items={items}
+      order="order"
     />
   );
 };
