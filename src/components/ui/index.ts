@@ -25,6 +25,7 @@ export * from "./Prose";
 export * from "./Radio";
 export * from "./RichText";
 export * from "./Select";
+export * from "./Sortable";
 export * from "./Switch";
 export * from "./Table";
 export * from "./Tabs";
