@@ -1,3 +1,10 @@
+## [1.47.1](https://github.com/Neuvernetzung/design-system/compare/v1.47.0...v1.47.1) (2023-05-01)
+
+
+### Bug Fixes
+
+* **ui:** Ids fixen bei Sortable [#616](https://github.com/Neuvernetzung/design-system/issues/616) ([6f90dc0](https://github.com/Neuvernetzung/design-system/commit/6f90dc0f81fb33a65c180511a256b8fdbc297917))
+
 # [1.47.0](https://github.com/Neuvernetzung/design-system/compare/v1.46.0...v1.47.0) (2023-05-01)
 
 
