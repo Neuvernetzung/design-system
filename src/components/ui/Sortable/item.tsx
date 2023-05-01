@@ -17,7 +17,6 @@ type FunctionChildrenProps<THandle extends boolean> = {
 export type SortableItemProps<THandle extends boolean> = {
   id: UniqueIdentifier;
   handle?: THandle;
-  className?: string;
   children:
     | ReactNode
     | (({ handle }: FunctionChildrenProps<THandle>) => ReactNode);
@@ -32,7 +31,6 @@ const SortableItemInner = <
   {
     id,
     handle,
-    className,
     as,
     children,
     ...props
@@ -53,7 +51,6 @@ const SortableItemInner = <
     <Component
       ref={mergeRefs([ref, setNodeRef])}
       style={style}
-      className={className}
       {...(handle ? {} : attributes)}
       {...(handle ? {} : listeners)}
       {...props}

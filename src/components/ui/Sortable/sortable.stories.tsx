@@ -1,7 +1,7 @@
 import { Meta, Story } from "@storybook/react/types-6-0";
 import React, { useState } from "react";
 
-import { Sortable, SortableChangeProps, SortableItem } from ".";
+import { Sortable, SortableItem, UseSortableChange } from ".";
 import { Text, IconButton, Button } from "..";
 import { Bars2Icon } from "@heroicons/react/24/outline";
 import cn from "classnames";
@@ -28,7 +28,7 @@ const itemClassName = cn(paddingsEvenly.md, bgColorsInteractive.white);
 export const Default = ({ ...args }) => {
   const [items, setItems] = useState<Item[]>(defaultItems);
 
-  const handleChange = ({ newItems }: SortableChangeProps<Item>) => {
+  const handleChange: UseSortableChange<Item> = ({ newItems }) => {
     setItems(newItems);
   };
 
@@ -50,7 +50,7 @@ export const Default = ({ ...args }) => {
 export const Controlled = ({ ...args }) => {
   const [changed, setChanged] = useState<Item[]>([]);
 
-  const handleChange = ({ totalChangedItems }: SortableChangeProps<Item>) => {
+  const handleChange: UseSortableChange<Item> = ({ totalChangedItems }) => {
     setChanged(totalChangedItems);
   };
 
@@ -91,7 +91,7 @@ export const Controlled = ({ ...args }) => {
 export const WithHandle = ({ ...args }) => {
   const [items, setItems] = useState<Item[]>(defaultItems);
 
-  const handleChange = ({ newItems }: SortableChangeProps<Item>) => {
+  const handleChange: UseSortableChange<Item> = ({ newItems }) => {
     setItems(newItems);
   };
 

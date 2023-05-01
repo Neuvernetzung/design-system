@@ -12,7 +12,7 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import isFunction from "lodash/isFunction";
-import { cloneElement, ReactElement, useState } from "react";
+import { Children, cloneElement, ReactElement, useState } from "react";
 
 import { typedMemo } from "../../../utils/internal";
 
@@ -22,14 +22,16 @@ export type SortableChangeProps<TItem extends Record<string, any>> = {
   totalChangedItems: TItem[];
 };
 
+export type UseSortableChange<TItem extends Record<string, any>> = ({
+  newItems,
+  changedItems,
+}: SortableChangeProps<TItem>) => void;
+
 export type SortableProps<TItem extends Record<string, any>> = {
   children: ReactElement[] | ((items: TItem[]) => ReactElement[]);
   items: TItem[];
   itemIds: UniqueIdentifier[];
-  handleChange: ({
-    newItems,
-    changedItems,
-  }: SortableChangeProps<TItem>) => void;
+  handleChange: UseSortableChange<TItem>;
   order?: string;
 };
 
@@ -51,6 +53,10 @@ const Sortable = <TItem extends Record<string, any> = Record<string, any>>({
   const [internalItemIds, setInternalItemIds] =
     useState<UniqueIdentifier[]>(itemIds);
   const [internalItems, setInternalItems] = useState<TItem[]>(items);
+
+  const arrayChildren = Children.toArray(
+    isFunction(children) ? children(internalItems) : children
+  );
 
   const returnChange = (
     newItems: TItem[],
@@ -128,17 +134,13 @@ const Sortable = <TItem extends Record<string, any> = Record<string, any>>({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={internalItemIds}>
-        {isFunction(children) ? children(internalItems) : children}
-      </SortableContext>
+      <SortableContext items={internalItemIds}>{arrayChildren}</SortableContext>
       <DragOverlay>
         {activeIndex !== undefined ? (
           <span className="opacity-50">
-            {cloneElement(
-              (isFunction(children) ? children(internalItems) : children)?.[
-                activeIndex
-              ]
-            )}
+            {arrayChildren?.[activeIndex]
+              ? cloneElement(arrayChildren[activeIndex] as ReactElement)
+              : null}
           </span>
         ) : null}
       </DragOverlay>
