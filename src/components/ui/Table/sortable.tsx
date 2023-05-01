@@ -77,6 +77,7 @@ export const SortableTableInner = <
       order={order}
       items={items}
       itemIds={items.map((item) => item[id])}
+      id={id}
       handleChange={handleChange}
     >
       {(items) =>
@@ -96,7 +97,7 @@ export const SortableTableInner = <
                       icon={Bars2Icon}
                       variant="ghost"
                       size="sm"
-                      ariaLabel={`drag_handle_${i}`}
+                      ariaLabel={`drag_handle_${item[id]}`}
                     />
                   </td>
                 )}

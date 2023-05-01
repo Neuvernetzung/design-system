@@ -31,6 +31,7 @@ export type SortableProps<TItem extends Record<string, any>> = {
   children: ReactElement[] | ((items: TItem[]) => ReactElement[]);
   items: TItem[];
   itemIds: UniqueIdentifier[];
+  id: string;
   handleChange: UseSortableChange<TItem>;
   order?: string;
 };
@@ -40,6 +41,7 @@ const Sortable = <TItem extends Record<string, any> = Record<string, any>>({
   items,
   handleChange,
   itemIds,
+  id,
   order,
 }: SortableProps<TItem>) => {
   const mouseSensor = useSensor(MouseSensor);
@@ -72,6 +74,7 @@ const Sortable = <TItem extends Record<string, any> = Record<string, any>>({
   const [activeIndex, setActiveIndex] = useState<number>();
 
   const handleDragStart = (event: DragStartEvent) => {
+    console.log(event.active.id);
     setActiveIndex(internalItemIds.indexOf(event.active.id));
   };
 
@@ -97,12 +100,12 @@ const Sortable = <TItem extends Record<string, any> = Record<string, any>>({
         }));
         const changedItems = orderedNewItems.filter(
           (item) =>
-            internalItems.find((_item) => _item.id === item.id)?.[order] !==
+            internalItems.find((_item) => _item[id] === item[id])?.[order] !==
             item[order]
         );
         const totalChangedItems = orderedNewItems.filter(
           (item) =>
-            initialItems.find((_item) => _item.id === item.id)?.[order] !==
+            initialItems.find((_item) => _item[id] === item[id])?.[order] !==
             item[order]
         );
         returnChange(
@@ -116,12 +119,12 @@ const Sortable = <TItem extends Record<string, any> = Record<string, any>>({
 
       const changedItems = newItems.filter(
         (item, i) =>
-          internalItems.findIndex((_item) => _item.id === item.id) !== i
+          internalItems.findIndex((_item) => _item[id] === item[id]) !== i
       );
 
       const totalChangedItems = newItems.filter(
         (item, i) =>
-          initialItems.findIndex((_item) => _item.id === item.id) !== i
+          initialItems.findIndex((_item) => _item[id] === item[id]) !== i
       );
 
       returnChange(newItems, changedItems, totalChangedItems, newItemIds);

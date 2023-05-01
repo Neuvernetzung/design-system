@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { IconButton } from "../Button";
 import { UseSortableChange } from "../Sortable";
 import { DataTable, SimpleTable, SortableTable } from ".";
+import { Text } from "../Typography";
 
 export default {
   title: "UI/Data Display/Table",
@@ -154,28 +155,46 @@ export const Data1Item = ({ ...args }) => {
 
 export const Sortable = ({ ...args }) => {
   const items = [
-    { id: "1", name: "Item 1", order: 23 },
-    { id: "2", name: "Item 2", order: 24 },
-    { id: "3", name: "Item 3", order: 29 },
-    { id: "4", name: "Item 4", order: 27 },
-    { id: "5", name: "Item 5", order: 28 },
+    { _id: "1", name: "Item 1", order: 23 },
+    { _id: "2", name: "Item 2", order: 24 },
+    { _id: "3", name: "Item 3", order: 25 },
+    { _id: "4", name: "Item 4", order: 27 },
+    { _id: "5", name: "Item 5", order: 28 },
   ];
 
-  const handleChange: UseSortableChange<typeof items[number]> = () => {};
+  const [changed, setChanged] = useState<typeof items[number][]>([]);
+
+  const handleChange: UseSortableChange<typeof items[number]> = ({
+    totalChangedItems,
+  }) => {
+    setChanged(totalChangedItems);
+  };
 
   return (
-    <SortableTable
-      cols={[
-        { id: "id", title: "Id", shrink: true },
-        { id: "name", title: "Name" },
-        { id: "order", title: "Order" },
-      ]}
-      handle
-      divideX
-      handleChange={handleChange}
-      id="id"
-      items={items}
-      order="order"
-    />
+    <div className="flex flex-col gap-8">
+      <SortableTable
+        cols={[
+          { id: "_id", title: "Id", shrink: true },
+          { id: "name", title: "Name" },
+          { id: "order", title: "Order" },
+        ]}
+        handle
+        divideX
+        handleChange={handleChange}
+        id="_id"
+        items={items}
+        order="order"
+      />
+      <div className="flex flex-col gap-2">
+        <Text>Geändert:</Text>
+        <div className="flex flex-col">
+          {changed.map((item) => (
+            <Text key={item._id}>
+              {item._id}: {item.order}
+            </Text>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
