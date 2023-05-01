@@ -1,3 +1,11 @@
+# [1.47.0](https://github.com/Neuvernetzung/design-system/compare/v1.46.0...v1.47.0) (2023-05-01)
+
+
+### Features
+
+* **ui:** DataTable sortieren mit Drag and Drop ermöglichen [#613](https://github.com/Neuvernetzung/design-system/issues/613) ([fd2c19a](https://github.com/Neuvernetzung/design-system/commit/fd2c19a3dbb80a536383f31504a702e0622f61d5))
+* **ui:** Drag and Drop Context und Item hinzugefügt [#613](https://github.com/Neuvernetzung/design-system/issues/613) ([c2eb41b](https://github.com/Neuvernetzung/design-system/commit/c2eb41bf8c6f8d3d4f4964953b356c9459e3899f))
+
 # [1.46.0](https://github.com/Neuvernetzung/design-system/compare/v1.45.1...v1.46.0) (2023-04-29)
 
 
