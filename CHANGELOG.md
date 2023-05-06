@@ -1,3 +1,10 @@
+## [1.47.2](https://github.com/Neuvernetzung/design-system/compare/v1.47.1...v1.47.2) (2023-05-06)
+
+
+### Bug Fixes
+
+* **theme:** Ohne config werden Farben nicht auf default gesetzt [#619](https://github.com/Neuvernetzung/design-system/issues/619) ([0601b5d](https://github.com/Neuvernetzung/design-system/commit/0601b5d6b2025a454a0369b04fdc11f6f698b11f))
+
 ## [1.47.1](https://github.com/Neuvernetzung/design-system/compare/v1.47.0...v1.47.1) (2023-05-01)
 
 
