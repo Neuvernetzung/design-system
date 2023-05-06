@@ -79,10 +79,11 @@ export const useTheme = (
 ) => {
   useEffect(() => {
     const localStorageColors = localStorage.getItem(LOCAL_COLOR_KEY);
+
     const parsedLocalStorageColors =
-      localStorageColors !== "undefined" &&
-      isString(localStorageColors) &&
-      JSON.parse(localStorageColors);
+      localStorageColors !== "undefined" && isString(localStorageColors)
+        ? JSON.parse(localStorageColors)
+        : {};
 
     const newColors = preferSetValuesBeforeConfig
       ? parsedLocalStorageColors || colors
