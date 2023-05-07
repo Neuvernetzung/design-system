@@ -1,44 +1,35 @@
 import "../globals.css";
-import * as NextImage from "next/image";
 
 import React from "react";
-import { addDecorator, addParameters } from "@storybook/react";
+import { Preview } from "@storybook/react";
 import { ThemeProvider } from "../src";
 import { ThemeSwitch } from "../src/components/common/ThemeSwitch";
 import config from "../themeConfig";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 
-const Theme = (Story) => {
+const Theme = ({ children }) => {
   return (
     <ThemeProvider config={config}>
       <div className="flex justify-end z-50">
         <ThemeSwitch />
       </div>
-      <Story />
+      {children}
     </ThemeProvider>
   );
 };
 
-addParameters({
-  options: {
+const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <Theme>
+        <Story />
+      </Theme>
+    ),
+  ],
+  parameters: {
     showPanel: true,
     sortStoriesByKind: true,
     panelPosition: "bottom",
   },
-});
-
-addDecorator(Theme);
-
-export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
-  nextRouter: {
-    Provider: RouterContext.Provider,
-  },
 };
 
-const OriginalNextImage = NextImage.default;
-
-Object.defineProperty(NextImage, "default", {
-  configurable: true,
-  value: (props) => <OriginalNextImage {...props} unoptimized />,
-});
+export default preview;
