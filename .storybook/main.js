@@ -1,12 +1,12 @@
 module.exports = {
-  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
     {
-      name: "@storybook/addon-postcss",
+      name: "@storybook/addon-styling",
       options: {
-        postcssLoaderOptions: {
-          implementation: require("postcss"),
-        },
+        // Check out https://github.com/storybookjs/addon-styling/blob/main/docs/api.md
+        // For more details on this addon's options.
+        postCss: true,
       },
     },
     "@storybook/addon-a11y",
@@ -18,11 +18,13 @@ module.exports = {
       },
     },
     "@storybook/addon-interactions",
-    "storybook-addon-next-router",
   ],
-  framework: "@storybook/react",
-  core: {
-    builder: "@storybook/builder-webpack5",
+  framework: {
+    name: "@storybook/nextjs",
+    options: {},
   },
   staticDirs: ["../public"],
+  docs: {
+    autodocs: true,
+  },
 };

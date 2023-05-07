@@ -1,4 +1,4 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
+import { Meta } from "@storybook/react";
 import React, { useRef } from "react";
 
 import { Heading, Text } from "../../ui/Typography";
