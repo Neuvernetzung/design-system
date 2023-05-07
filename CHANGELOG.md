@@ -1,3 +1,11 @@
+# [1.48.0](https://github.com/Neuvernetzung/design-system/compare/v1.47.2...v1.48.0) (2023-05-07)
+
+
+### Features
+
+* **deps:** Deps updaten [#623](https://github.com/Neuvernetzung/design-system/issues/623) ([4893c3c](https://github.com/Neuvernetzung/design-system/commit/4893c3cd5b81898b3fe32e59a88478dbc61f39dd))
+* **story:** Storybook v7 upgrade [#594](https://github.com/Neuvernetzung/design-system/issues/594) ([e013c23](https://github.com/Neuvernetzung/design-system/commit/e013c238c9841ebf28745ccafef5cc31133e2e20))
+
 ## [1.47.2](https://github.com/Neuvernetzung/design-system/compare/v1.47.1...v1.47.2) (2023-05-06)
 
 
