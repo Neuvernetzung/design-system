@@ -1,5 +1,5 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
-import { Meta, Story } from "@storybook/react/types-6-0";
+import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 
 import { IconButton } from "../Button";
@@ -162,9 +162,9 @@ export const Sortable = ({ ...args }) => {
     { _id: "5", name: "Item 5", order: 28 },
   ];
 
-  const [changed, setChanged] = useState<typeof items[number][]>([]);
+  const [changed, setChanged] = useState<(typeof items)[number][]>([]);
 
-  const handleChange: UseSortableChange<typeof items[number]> = ({
+  const handleChange: UseSortableChange<(typeof items)[number]> = ({
     totalChangedItems,
   }) => {
     setChanged(totalChangedItems);

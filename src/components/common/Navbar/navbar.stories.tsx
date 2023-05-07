@@ -6,7 +6,7 @@ import {
   TrashIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { Meta, Story } from "@storybook/react/types-6-0";
+import { Meta } from "@storybook/react";
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 
