@@ -1,3 +1,10 @@
+## [1.48.1](https://github.com/Neuvernetzung/design-system/compare/v1.48.0...v1.48.1) (2023-05-10)
+
+
+### Bug Fixes
+
+* **common:** Navbar subItem Fließtext linksbündig machen [#626](https://github.com/Neuvernetzung/design-system/issues/626) ([2772646](https://github.com/Neuvernetzung/design-system/commit/27726466b61b319c9e4c01c055a301858f14c0d8))
+
 # [1.48.0](https://github.com/Neuvernetzung/design-system/compare/v1.47.2...v1.48.0) (2023-05-07)
 
 
