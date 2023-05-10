@@ -36,6 +36,7 @@ import {
 import { CustomTextAlign } from "./Extensions/textAlign";
 import { MenuBar } from "./Menus/menuBar";
 import { returnTextSelection, TextTypeTags } from "./Menus/selectText";
+import { CustomHardBreak } from "./Extensions/hardBreak";
 
 export interface RichTextProps {
   label?: string;
@@ -92,6 +93,7 @@ export const RichText = <
       CustomLink,
       CustomBlockQuote,
       CustomHorizontalRule,
+      CustomHardBreak,
     ],
     editorProps: {
       attributes: {
