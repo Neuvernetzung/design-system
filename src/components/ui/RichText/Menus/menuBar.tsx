@@ -230,12 +230,6 @@ export const MenuBar = ({
           icon={MinusIcon}
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
         />
-        <RichTextMenuItem
-          id="richtext_menu_item_15"
-          ariaLabel="hard break"
-          icon={Break}
-          onClick={() => editor.chain().focus().setHardBreak().run()}
-        />
       </RichTextMenuGroup>
     </div>
   );
