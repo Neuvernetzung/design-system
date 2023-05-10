@@ -1,3 +1,10 @@
+# [1.49.0](https://github.com/Neuvernetzung/design-system/compare/v1.48.1...v1.49.0) (2023-05-10)
+
+
+### Features
+
+* **deps:** Deps updaten [#629](https://github.com/Neuvernetzung/design-system/issues/629) ([be9db4f](https://github.com/Neuvernetzung/design-system/commit/be9db4f3209e6b49d6204311f23048bd9a6a88c8))
+
 ## [1.48.1](https://github.com/Neuvernetzung/design-system/compare/v1.48.0...v1.48.1) (2023-05-10)
 
 
