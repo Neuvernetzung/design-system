@@ -20,7 +20,6 @@ import {
 } from "../../../../theme/icons";
 import {
   Bold,
-  Break,
   FormatClear,
   Italic,
   OrderedList,
