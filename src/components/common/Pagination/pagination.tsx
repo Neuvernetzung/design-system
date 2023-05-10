@@ -77,7 +77,11 @@ const Pagination = ({
   const { page: p = 1, ...restQuery }: any = router.query;
 
   const internalPage = setActivePage ? activePage : Number(p);
-  const internalLimit = setLimit ? limit : Number(router.query.limit);
+  const internalLimit = setLimit
+    ? limit
+    : router.query.limit
+    ? Number(router.query.limit)
+    : limits[0];
 
   const handlePage = (_page: number) => {
     rerender(); // Notwendig, damit mehrere Paginations synchron verwendet werden können.
