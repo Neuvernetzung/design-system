@@ -63,7 +63,9 @@ const baseProps: NavbarProps = {
         {
           label: "Sub Item 1",
           href: "#",
-          subLabel: { children: "Hier steht eine Beschreibung." },
+          subLabel: {
+            children: "Hier steht eine Beschreibung. Mit etwas längerem Text.",
+          },
         },
         {
           label: "Disabled Item",
