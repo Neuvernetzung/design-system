@@ -8,28 +8,56 @@ import { Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { updateQuery } from "../../../utils/internal/updateQuery";
 import { Button, ButtonGroup, IconButton, Select, Text } from "../../ui";
+import { create } from "zustand";
 
 export type PaginationProps = {
   limits?: number[];
   result?: number;
   emptyMessage?: string;
-  setActivePage?: Function;
-  setLimit?: Function;
   size?: keyof Sizes;
   containerClassName?: string;
   selectLimit?: boolean;
   variant?: "default" | "minimalistic";
-};
+} & SetActivePageProps &
+  SetLimitProps;
+
+type SetActivePageProps =
+  | {
+      activePage: number | undefined;
+      setActivePage: (page: number) => void;
+    }
+  | {
+      activePage?: never;
+      setActivePage?: never;
+    };
+
+type SetLimitProps =
+  | {
+      limit: number | undefined;
+      setLimit: (limit: number) => void;
+    }
+  | {
+      limit?: never;
+      setLimit?: never;
+    };
 
 type FormInputs = {
   limit: number;
 };
 
+const usePaginationStore = create<{
+  rerender: () => void;
+}>((set) => ({
+  rerender: () => set({}),
+}));
+
 const Pagination = ({
   limits = [10, 25, 50, 100],
   result = 0,
   emptyMessage,
+  activePage = 1,
   setActivePage,
+  limit = 10,
   setLimit,
   size = "md",
   containerClassName,
@@ -37,16 +65,22 @@ const Pagination = ({
   variant = "default",
 }: PaginationProps) => {
   const router = useRouter();
-  const [page, setPage] = useState<number>(1);
+  const { rerender } = usePaginationStore();
+
   const [initialLimit, setInitialLimit] = useState<Boolean>(true);
   const formMethods = useForm<FormInputs>({
-    defaultValues: { limit: limits[0] },
+    defaultValues: {
+      limit: setLimit ? limit : Number(router.query.limit) || limits[0],
+    },
   });
-  const limit = formMethods.watch("limit") as number;
+  const watchLimit = formMethods.watch("limit");
   const { page: p = 1, ...restQuery }: any = router.query;
 
+  const internalPage = setActivePage ? activePage : Number(p);
+  const internalLimit = setLimit ? limit : Number(router.query.limit);
+
   const handlePage = (_page: number) => {
-    setPage(_page);
+    rerender(); // Notwendig, damit mehrere Paginations synchron verwendet werden können.
     if (!setActivePage) {
       updateQuery({
         router,
@@ -59,19 +93,20 @@ const Pagination = ({
   };
 
   useEffect(() => {
-    if (limit !== limits[0] || !initialLimit) {
+    rerender(); // Notwendig, damit mehrere Paginations synchron verwendet werden können.
+    if (watchLimit !== limits[0] || !initialLimit) {
       setInitialLimit(false);
       if (!setLimit) {
         updateQuery({
           router,
           name: "limit",
-          value: limit,
+          value: watchLimit,
         });
       } else {
-        setLimit(limit);
+        setLimit(watchLimit);
       }
     }
-  }, [limit]);
+  }, [watchLimit]);
 
   const restQs = JSON.stringify(restQuery);
 
@@ -103,27 +138,27 @@ const Pagination = ({
         />
       )}
       {result !== 0 ? (
-        result > 1 * limit && (
+        result > 1 * internalLimit && (
           <ButtonGroup>
             <IconButton
               variant="ghost"
               type="button"
-              onClick={() => handlePage(page - 1)}
-              disabled={page === 1}
+              onClick={() => handlePage(internalPage - 1)}
+              disabled={internalPage === 1}
               icon={ChevronLeftIcon}
               ariaLabel="before page"
               size={size}
             />
 
             {variant === "default" &&
-              Array(Math.ceil(result / limit))
+              Array(Math.ceil(result / internalLimit))
                 .fill(1)
                 .map((_, i) =>
                   i === 0 ||
-                  i === Math.ceil(result / limit) - 1 ||
-                  (i >= page - 2 && i <= page) ? (
+                  i === Math.ceil(result / internalLimit) - 1 ||
+                  (i >= internalPage - 2 && i <= internalPage) ? (
                     <Button
-                      variant={i + 1 === page ? "filled" : "ghost"}
+                      variant={i + 1 === internalPage ? "filled" : "ghost"}
                       key={i}
                       type="button"
                       onClick={() => handlePage(i + 1)}
@@ -133,8 +168,8 @@ const Pagination = ({
                       {i + 1}
                     </Button>
                   ) : (
-                    i >= page - 3 &&
-                    i <= page + 1 && (
+                    i >= internalPage - 3 &&
+                    i <= internalPage + 1 && (
                       <Button variant="ghost" size={size} disabled key={i}>
                         ...
                       </Button>
@@ -143,16 +178,16 @@ const Pagination = ({
                 )}
             {variant === "minimalistic" && (
               <Button variant="ghost" className="pointer-events-none">
-                {page} / {Math.ceil(result / limit)}
+                {internalPage} / {Math.ceil(result / internalLimit)}
               </Button>
             )}
 
             <IconButton
               variant="ghost"
               type="button"
-              onClick={() => handlePage(page + 1)}
+              onClick={() => handlePage(internalPage + 1)}
               icon={ChevronRightIcon}
-              disabled={page === Math.ceil(result / limit)}
+              disabled={internalPage === Math.ceil(result / internalLimit)}
               ariaLabel="next page"
               size={size}
             />
