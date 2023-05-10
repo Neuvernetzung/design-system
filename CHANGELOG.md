@@ -1,3 +1,10 @@
+## [1.50.1](https://github.com/Neuvernetzung/design-system/compare/v1.50.0...v1.50.1) (2023-05-10)
+
+
+### Bug Fixes
+
+* **common:** Nicht verfügbaren Router Query Limit fixen in Pagination [#637](https://github.com/Neuvernetzung/design-system/issues/637) ([46612db](https://github.com/Neuvernetzung/design-system/commit/46612db0564469668e126705b233b00a62f824ce))
+
 # [1.50.0](https://github.com/Neuvernetzung/design-system/compare/v1.49.0...v1.50.0) (2023-05-10)
 
 
