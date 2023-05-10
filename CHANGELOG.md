@@ -1,3 +1,15 @@
+# [1.50.0](https://github.com/Neuvernetzung/design-system/compare/v1.49.0...v1.50.0) (2023-05-10)
+
+
+### Bug Fixes
+
+* **ui:** RichText Zeilenumbruch optimieren [#632](https://github.com/Neuvernetzung/design-system/issues/632) ([afef75e](https://github.com/Neuvernetzung/design-system/commit/afef75e0df9550d9f81bac399032083d3b71cc37))
+
+
+### Features
+
+* **common:** Pagination ohne Limits möglich und mehrere auf einer Seite ermöglichen [#633](https://github.com/Neuvernetzung/design-system/issues/633) ([891d78c](https://github.com/Neuvernetzung/design-system/commit/891d78c31e51e4cc5ed522458438008b1f9bb0b0))
+
 # [1.49.0](https://github.com/Neuvernetzung/design-system/compare/v1.48.1...v1.49.0) (2023-05-10)
 
 
