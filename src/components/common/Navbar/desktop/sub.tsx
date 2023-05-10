@@ -46,7 +46,10 @@ export const NavbarDesktopSubItem = ({
 
           {subLabel && (
             <div
-              className={cn(subLabel.hideOnMobile ? "hidden md:flex" : "flex")}
+              className={cn(
+                subLabel.hideOnMobile ? "hidden md:flex" : "flex",
+                "text-left"
+              )}
             >
               {isString(subLabel.children) ? (
                 <Text size="sm">{subLabel.children}</Text>
