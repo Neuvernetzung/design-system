@@ -46,6 +46,7 @@ const colorCondition = (
 };
 
 const blendColors = (color: HEX, customColors?: ExtendColors): Color => ({
+  "50": blendColor(color, customColors?.white || defaultColors.white, 0.9),
   "100": blendColor(color, customColors?.white || defaultColors.white, 0.8),
   "200": blendColor(color, customColors?.white || defaultColors.white, 0.6),
   "300": blendColor(color, customColors?.white || defaultColors.white, 0.4),
@@ -55,6 +56,7 @@ const blendColors = (color: HEX, customColors?: ExtendColors): Color => ({
   "700": blendColor(color, customColors?.black || defaultColors.black, 0.4),
   "800": blendColor(color, customColors?.black || defaultColors.black, 0.6),
   "900": blendColor(color, customColors?.black || defaultColors.black, 0.8),
+  "950": blendColor(color, customColors?.black || defaultColors.black, 0.9),
 });
 
 const defaultColors: Required<Colors> = {
