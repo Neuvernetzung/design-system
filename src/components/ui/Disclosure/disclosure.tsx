@@ -32,6 +32,38 @@ type ItemProps = {
 
 export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
 
+export const disclosureAnimationVariants = {
+  initial: {
+    height: 0,
+    opacity: 0,
+    display: "none",
+    overflow: "hidden",
+    transition: {
+      height: {
+        duration: 0.15,
+      },
+      opacity: {
+        duration: 0.15,
+        delay: 0.15,
+      },
+    },
+  },
+  animate: {
+    height: "auto",
+    opacity: 1,
+    overflow: "visible",
+    transition: {
+      height: {
+        duration: 0.3,
+      },
+      opacity: {
+        duration: 0.15,
+        delay: 0.15,
+      },
+    },
+  },
+};
+
 export const Disclosure = ({
   size = "md",
   color = "accent",
@@ -107,51 +139,23 @@ export const Disclosure = ({
                   </AnimatePresence>
                 </div>
               </HeadlessDisclosure.Button>
-              <motion.span
-                initial="initial"
-                animate={open ? "animate" : "initial"}
-                variants={{
-                  initial: {
-                    height: 0,
-                    opacity: 0,
-                    display: "none",
-                    overflow: "hidden",
-                    transition: {
-                      height: {
-                        duration: 0.15,
-                      },
-                      opacity: {
-                        duration: 0.15,
-                        delay: 0.15,
-                      },
-                    },
-                  },
-                  animate: {
-                    height: "auto",
-                    opacity: 1,
-                    overflow: "visible",
-                    transition: {
-                      height: {
-                        duration: 0.3,
-                      },
-                      opacity: {
-                        duration: 0.15,
-                        delay: 0.15,
-                      },
-                    },
-                  },
-                }}
-              >
-                <HeadlessDisclosure.Panel static>
-                  <div className={cn(paddings[size], panelClassName)}>
-                    {isString(content) ? (
-                      <Text size={size}>{content}</Text>
-                    ) : (
-                      content
-                    )}
-                  </div>
-                </HeadlessDisclosure.Panel>
-              </motion.span>
+              <AnimatePresence initial={false}>
+                <motion.span
+                  initial="initial"
+                  animate={open ? "animate" : "initial"}
+                  variants={disclosureAnimationVariants}
+                >
+                  <HeadlessDisclosure.Panel static>
+                    <div className={cn(paddings[size], panelClassName)}>
+                      {isString(content) ? (
+                        <Text size={size}>{content}</Text>
+                      ) : (
+                        content
+                      )}
+                    </div>
+                  </HeadlessDisclosure.Panel>
+                </motion.span>
+              </AnimatePresence>
             </>
           )}
         </HeadlessDisclosure>

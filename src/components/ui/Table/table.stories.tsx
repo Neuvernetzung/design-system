@@ -1,4 +1,4 @@
-import { PencilIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 
@@ -6,6 +6,8 @@ import { IconButton } from "../Button";
 import { UseSortableChange } from "../Sortable";
 import { DataTable, SimpleTable, SortableTable } from ".";
 import { Text } from "../Typography";
+import cn from "classnames";
+import { extendedBgColors } from "../../../styles";
 
 export default {
   title: "UI/Data Display/Table",
@@ -43,7 +45,6 @@ const items = [
     title: { test: "undefined" }["23"],
     name: 2,
     createdAt: new Date().toDateString(),
-    disclosure: "Test",
   },
   {
     _id: "_3",
@@ -95,10 +96,50 @@ export const Data = ({ ...args }) => {
       checkedValue="_id"
       checked={checked}
       setChecked={setChecked}
-      disclosureValue="disclosure"
-      disclosureClassName="bg-accent-100"
       divideX
       items={items}
+    />
+  );
+};
+
+export const Disclosure = ({ ...args }) => {
+  const [checked, setChecked] = useState<string[]>([]);
+  const [disclosure, setDisclosure] = useState<string>();
+  return (
+    <DataTable
+      cols={[
+        { id: "id", title: "Id", sortable: true, shrink: true },
+        { id: "disclosureButton" },
+        { id: "name", title: "Name", grow: true },
+        { id: "title", title: "Titel", grow: true },
+        { id: "image", title: "Bild" },
+        { id: "createdAt", title: "Erstellung", sortable: true },
+        { id: "options", title: "", shrink: true },
+      ]}
+      checkable
+      checkedValue="_id"
+      checked={checked}
+      disclosureValue="disclosure"
+      disclosureClassName={cn(extendedBgColors.subtile)}
+      setChecked={setChecked}
+      divideX
+      items={items.map((item) => ({
+        ...item,
+        disclosure: disclosure === item._id && "Test",
+        disclosureButton: (
+          <IconButton
+            onClick={() => {
+              if (disclosure === item._id) {
+                setDisclosure(undefined);
+                return;
+              }
+              setDisclosure(item._id);
+            }}
+            ariaLabel="open"
+            icon={ChevronDownIcon}
+          />
+        ),
+      }))}
     />
   );
 };
