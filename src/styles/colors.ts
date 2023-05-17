@@ -79,8 +79,9 @@ export const extendedBgColorsInteractive: ExtendedColors = {
   ...bgColorsInteractive,
   light: `${extendedBgColors.light} hover:bg-accent-200`,
   dark: `${extendedBgColors.dark} hover:bg-accent-800`,
-  filledSubtile: `${extendedBgColors.filledSubtile} hover:bg-accent-200 dark:hover:bg-accent-800`,
   filled: `${extendedBgColors.filled} hover:bg-accent-300 dark:hover:bg-accent-700`,
+  filledSubtile: `${extendedBgColors.filledSubtile} hover:bg-accent-200 dark:hover:bg-accent-800`,
+  subtile: `${extendedBgColors.filledSubtile} hover:bg-accent-100 dark:hover:bg-accent-900`,
 };
 
 export const fillColors: Colors = {
@@ -96,6 +97,6 @@ export const fillColors: Colors = {
 
 export const extendedFillColors: ExtendedColors = {
   ...fillColors,
-  filledSubtile: "fill-accent-100 dark:fill-accent-800",
   filled: "fill-accent-200 dark:fill-accent-700",
+  filledSubtile: "fill-accent-100 dark:fill-accent-800",
 };
