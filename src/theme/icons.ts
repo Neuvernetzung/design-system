@@ -27,6 +27,7 @@ import {
   XMarkIcon,
   MagnifyingGlassIcon,
   CloudArrowUpIcon as HeroCloudArrowUpIcon,
+  DocumentPlusIcon as HeroDocumentPlusIcon,
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
 
@@ -96,3 +97,4 @@ export const HomeIcon = null || HeroHomeIcon;
 export const ClockIcon = null || HeroClockIcon;
 export const SearchIcon = null || MagnifyingGlassIcon;
 export const CloudArrowUpIcon = null || HeroCloudArrowUpIcon;
+export const DocumentPlusIcon = null || HeroDocumentPlusIcon;
