@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/react/types-6-0";
+import { Meta } from "@storybook/react";
 import React from "react";
 
 import { Disclosure, sizes } from "./disclosure";
@@ -62,6 +62,19 @@ export const ChevronIcon = ({ ...args }) => (
       icon="chevron"
       items={[
         { title: `1`, content: "Content 1" },
+        { title: `2`, content: "Content 2" },
+        { title: `3`, content: "Content 3" },
+      ]}
+      {...args}
+    />
+  </Container>
+);
+
+export const DefaultOpen = ({ ...args }) => (
+  <Container>
+    <Disclosure
+      items={[
+        { title: `1`, content: "Content 1", defaultOpen: true },
         { title: `2`, content: "Content 2" },
         { title: `3`, content: "Content 3" },
       ]}
