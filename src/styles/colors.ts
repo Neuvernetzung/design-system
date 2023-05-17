@@ -59,8 +59,9 @@ export const extendedBgColors: ExtendedColors = {
   ...bgColors,
   light: "bg-accent-100 dark:bg-accent-100",
   dark: "bg-accent-900 dark:bg-accent-900",
-  filledSubtile: "bg-accent-100 dark:bg-accent-900",
   filled: "bg-accent-200 dark:bg-accent-800",
+  filledSubtile: "bg-accent-100 dark:bg-accent-900",
+  subtile: "bg-accent-50 dark:bg-accent-950",
 };
 
 export const bgColorsInteractive: Colors = {

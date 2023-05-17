@@ -1,10 +1,11 @@
 export const shades: Array<keyof Color> = [
-  100, 200, 300, 400, 500, 600, 700, 800, 900,
+  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
 ];
 
 export type HEX = `#${string}`;
 
 export type Color = {
+  50: HEX;
   100: HEX;
   200: HEX;
   300: HEX;
@@ -14,6 +15,7 @@ export type Color = {
   700: HEX;
   800: HEX;
   900: HEX;
+  950: HEX;
 };
 
 export const colors: Array<keyof Colors> = [
