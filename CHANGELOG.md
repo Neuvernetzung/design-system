@@ -1,3 +1,15 @@
+# [1.51.0](https://github.com/Neuvernetzung/design-system/compare/v1.50.1...v1.51.0) (2023-05-18)
+
+
+### Features
+
+* **colors:** 50 und 950 Farben generieren [#642](https://github.com/Neuvernetzung/design-system/issues/642) ([c3e026f](https://github.com/Neuvernetzung/design-system/commit/c3e026fc78c8c4bba9784e4ea0c86f034e3962f1))
+* **modal:** Modal Optik verbessert [#643](https://github.com/Neuvernetzung/design-system/issues/643) ([0492652](https://github.com/Neuvernetzung/design-system/commit/04926523ef7cb1244fdfd46c7c030efe86d3a453))
+* **ui:** Carousel nicht nur Image [#555](https://github.com/Neuvernetzung/design-system/issues/555) ([513c14d](https://github.com/Neuvernetzung/design-system/commit/513c14dccaa2aa4a68f6de32a64fdaaa4841b3d7))
+* **ui:** Datei Upload Komponente [#641](https://github.com/Neuvernetzung/design-system/issues/641) ([327d2e9](https://github.com/Neuvernetzung/design-system/commit/327d2e9ed76d43addd978c1970c10c1fe12322b9))
+* **ui:** File Komponente [#644](https://github.com/Neuvernetzung/design-system/issues/644) ([739cf9d](https://github.com/Neuvernetzung/design-system/commit/739cf9dec18f61984623661bc1c8fea6d7f8e046))
+* **ui:** Table Disclosure gleiche Transition einbauen wie bei normalem Disclosure [#640](https://github.com/Neuvernetzung/design-system/issues/640) ([b138bdf](https://github.com/Neuvernetzung/design-system/commit/b138bdf6636e8781eeaa84cc4369f732af260549))
+
 ## [1.50.1](https://github.com/Neuvernetzung/design-system/compare/v1.50.0...v1.50.1) (2023-05-10)
 
 
