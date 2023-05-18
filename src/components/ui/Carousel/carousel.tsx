@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import {
   A11y,
   Autoplay,
@@ -9,36 +9,43 @@ import {
   Pagination,
   Thumbs,
 } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
 import { AutoplayOptions } from "swiper/types";
 
+import { margins } from "../../../styles";
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
-import type { ImageProps } from "../Image";
-import { Image } from "../Image";
 import useSwiperRef from "./utils/useSwiperRef";
 
 export type CarouselAutoPlayOptions = AutoplayOptions;
 
+export type SlideProps = {
+  children: ReactElement;
+};
+
 export type CarouselProps = {
-  images: ImageProps[];
+  slides: SlideProps[];
   withThumbs?: boolean;
   withPagination?: boolean;
   loop?: boolean;
   autoplay?: boolean | AutoplayOptions;
   className?: string;
   thumbsClassName?: string;
+  swiperProps?: SwiperProps;
+  thumbsProps?: SwiperProps;
 };
 
 export const Carousel = ({
-  images = [],
+  slides = [],
   withThumbs = false,
   withPagination = false,
   loop = false,
   autoplay = false,
   className,
   thumbsClassName,
+  swiperProps,
+  thumbsProps,
 }: CarouselProps) => {
   const [thumbsSwiper, setThumbsSwiper]: any = useState(null);
   const [nextEl, nextElRef] = useSwiperRef<HTMLButtonElement>();
@@ -67,39 +74,40 @@ export const Carousel = ({
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }} // Workaround - cannot convert undefined or null to object - thumbs={{ swiper: thumbsSwiper }}
+        {...swiperProps}
       >
-        {images?.map(({ src, alt, ...imageProps }, i) => (
+        {slides?.map(({ children }, i) => (
           <SwiperSlide
             key={`Carousel Item ${i}`}
             className="bg-accent-1 overflow-hidden"
           >
-            <Image src={src} alt={alt} {...imageProps} />
+            {children}
           </SwiperSlide>
         ))}
         <IconButton
           variant="ghost"
-          color="primary"
           ariaLabel="previous Element"
           className={cn(
             withThumbs && "lg:hidden",
-            "absolute inset-y-0 left-0 z-[1] my-auto"
+            "absolute inset-y-0 left-0 z-[1] my-auto flex justify-center h-min",
+            margins.md
           )}
           ref={prevElRef}
           icon={ChevronLeftIcon}
         />
         <IconButton
           variant="ghost"
-          color="primary"
           ariaLabel="next Element"
           className={cn(
             withThumbs && "lg:hidden",
-            "absolute inset-y-0 right-0 z-[1] my-auto"
+            "absolute inset-y-0 right-0 z-[1] my-auto flex justify-center h-min",
+            margins.md
           )}
           ref={nextElRef}
           icon={ChevronRightIcon}
         />
       </Swiper>
-      {withThumbs && images?.length > 1 && (
+      {withThumbs && slides?.length > 1 && (
         <Swiper
           onSwiper={setThumbsSwiper}
           spaceBetween={8}
@@ -116,28 +124,27 @@ export const Carousel = ({
             "mt-2.5 hidden h-24 w-full rounded lg:block",
             thumbsClassName
           )}
+          {...thumbsProps}
         >
-          {images?.map(({ src, alt, ...imageProps }, i) => (
+          {slides?.map(({ children }, i) => (
             <SwiperSlide
               key={`Carousel Item ${i}`}
               className="bg-accent-1 aspect-video cursor-pointer overflow-hidden rounded"
             >
-              <Image src={src} alt={alt} {...imageProps} />
+              {children}
             </SwiperSlide>
           ))}
           <IconButton
             variant="ghost"
-            color="primary"
             ariaLabel="previous Thumb Element"
             icon={ChevronLeftIcon}
-            className="absolute inset-y-0 my-auto left-0 z-[1]"
+            className="absolute inset-y-0 my-auto left-0 z-[1] h-min"
             ref={prevElRefThumb}
           />
           <IconButton
             variant="ghost"
-            color="primary"
             ariaLabel="next Thumb Element"
-            className="absolute inset-y-0 my-auto right-0 z-[1]"
+            className="absolute inset-y-0 my-auto right-0 z-[1] h-min"
             ref={nextElRefThumb}
             icon={ChevronRightIcon}
           />

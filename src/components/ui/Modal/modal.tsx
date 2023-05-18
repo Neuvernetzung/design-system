@@ -5,10 +5,13 @@ import { FC, Fragment, MutableRefObject, ReactNode } from "react";
 
 import {
   bgColors,
+  borders,
+  extendedBgColors,
   paddingsEvenly,
   paddingsY,
   pagePaddings,
   roundings,
+  roundingsTop,
   shadows,
   transition,
   zIndexes,
@@ -28,6 +31,9 @@ export type ModalProps = {
   wrapper?: FC;
   onClose?: Function;
   forbidCancellation?: boolean;
+  headerClassName?: string;
+  contentClassName?: string;
+  footerClassName?: string;
 };
 
 export interface ModalSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
@@ -56,6 +62,9 @@ export const Modal = ({
   wrapper,
   onClose,
   forbidCancellation,
+  headerClassName,
+  contentClassName,
+  footerClassName,
 }: ModalProps) => {
   const handleClose = () => {
     if (forbidCancellation) return;
@@ -63,7 +72,7 @@ export const Modal = ({
     setOpen(false);
   };
 
-  const sectionStyles = cn("w-full flex", paddingsEvenly.sm);
+  const sectionStyles = cn("w-full flex", paddingsEvenly.lg);
 
   if (!open) return null;
 
@@ -98,27 +107,38 @@ export const Modal = ({
             >
               <Dialog.Panel
                 className={cn(
-                  "w-full flex flex-col",
+                  "w-full flex flex-col border",
                   transition,
                   sizes[size],
                   roundings.lg,
                   shadows.xl,
                   bgColors.white,
-                  paddingsEvenly.xl
+                  borders.accent
                 )}
               >
                 <Wrapper>
                   {header && (
-                    <div className={sectionStyles}>
+                    <div
+                      className={cn(
+                        sectionStyles,
+                        extendedBgColors.subtile,
+                        roundingsTop.lg,
+                        headerClassName
+                      )}
+                    >
                       {isString(header) ? <Heading>{header}</Heading> : header}
                     </div>
                   )}
                   {content && (
-                    <div className={cn(sectionStyles)}>
+                    <div className={cn(sectionStyles, contentClassName)}>
                       {isString(content) ? <Text>{content}</Text> : content}
                     </div>
                   )}
-                  {footer && <div className={sectionStyles}>{footer}</div>}
+                  {footer && (
+                    <div className={cn(sectionStyles, footerClassName)}>
+                      {footer}
+                    </div>
+                  )}
                 </Wrapper>
               </Dialog.Panel>
             </Transition.Child>

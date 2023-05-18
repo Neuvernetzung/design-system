@@ -6,6 +6,7 @@ const colorVariable = (color, key) => {
 };
 
 const colorVariables = (color) => ({
+  50: colorVariable(color, 50),
   100: colorVariable(color, 100),
   200: colorVariable(color, 200),
   300: colorVariable(color, 300),
@@ -15,6 +16,7 @@ const colorVariables = (color) => ({
   700: colorVariable(color, 700),
   800: colorVariable(color, 800),
   900: colorVariable(color, 900),
+  950: colorVariable(color, 950),
 });
 
 const radiusVariable = (size) => `var(--radius-${size})`;

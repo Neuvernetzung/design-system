@@ -18,6 +18,8 @@ import {
   TableHeadCell,
   TableRow,
 } from "./table";
+import { AnimatePresence, motion } from "framer-motion";
+import { disclosureAnimationVariants } from "../Disclosure/disclosure";
 
 export type DataTableProps<
   T extends string,
@@ -171,13 +173,27 @@ export const DataTableInner = <
                 />
               ))}
             </TableRow>
-            {disclosureValue && item[disclosureValue] && (
-              <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
-                <td colSpan={checkable ? cols.length + 1 : cols.length}>
-                  {item[disclosureValue]}
-                </td>
-              </tr>
-            )}
+
+            <AnimatePresence initial={false}>
+              {disclosureValue && item[disclosureValue] && (
+                <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
+                  <td colSpan={checkable ? cols.length + 1 : cols.length}>
+                    <motion.span
+                      initial="initial"
+                      animate={
+                        disclosureValue && item[disclosureValue]
+                          ? "animate"
+                          : "initial"
+                      }
+                      variants={disclosureAnimationVariants}
+                      className="w-full"
+                    >
+                      {item[disclosureValue]}
+                    </motion.span>
+                  </td>
+                </tr>
+              )}
+            </AnimatePresence>
           </>
         ))}
       </TableBody>
