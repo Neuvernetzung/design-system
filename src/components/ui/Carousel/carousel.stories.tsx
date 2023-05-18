@@ -2,11 +2,19 @@ import { Meta } from "@storybook/react";
 import React from "react";
 
 import { Carousel } from "./carousel";
+import { Image } from "../Image";
 
 export default {
   title: "UI/Media/Carousel",
   component: Carousel,
   argTypes: {},
+  parameters: {
+    docs: {
+      source: {
+        type: "code",
+      },
+    },
+  }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
 const Container = ({ ...props }) => (
@@ -16,9 +24,16 @@ const Container = ({ ...props }) => (
 export const Default = ({ ...args }) => (
   <Container>
     <Carousel
-      images={[
-        { src: "/testImage.jpg", alt: "Test Bild", isLocal: true },
-        { src: "/testImage-2.jpg", alt: "Test Bild 2", isLocal: true },
+      slides={[
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
+        {
+          children: (
+            <div className="w-full flex justify-center items-center h-full">
+              Test
+            </div>
+          ),
+        },
       ]}
       className="aspect-video h-96"
       {...args}
@@ -29,9 +44,9 @@ export const Default = ({ ...args }) => (
 export const Thumbnails = ({ ...args }) => (
   <Container>
     <Carousel
-      images={[
-        { src: "/testImage.jpg", alt: "Test Bild", isLocal: true },
-        { src: "/testImage-2.jpg", alt: "Test Bild 2", isLocal: true },
+      slides={[
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
       ]}
       className="aspect-video h-96"
       withThumbs
@@ -43,9 +58,9 @@ export const Thumbnails = ({ ...args }) => (
 export const Pagination = ({ ...args }) => (
   <Container>
     <Carousel
-      images={[
-        { src: "/testImage.jpg", alt: "Test Bild", isLocal: true },
-        { src: "/testImage-2.jpg", alt: "Test Bild 2", isLocal: true },
+      slides={[
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
       ]}
       className="aspect-video h-96"
       withPagination
@@ -57,9 +72,9 @@ export const Pagination = ({ ...args }) => (
 export const Loop = ({ ...args }) => (
   <Container>
     <Carousel
-      images={[
-        { src: "/testImage.jpg", alt: "Test Bild", isLocal: true },
-        { src: "/testImage-2.jpg", alt: "Test Bild 2", isLocal: true },
+      slides={[
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
       ]}
       className="aspect-video h-96"
       loop
@@ -71,9 +86,9 @@ export const Loop = ({ ...args }) => (
 export const Autoplay = ({ ...args }) => (
   <Container>
     <Carousel
-      images={[
-        { src: "/testImage.jpg", alt: "Test Bild", isLocal: true },
-        { src: "/testImage-2.jpg", alt: "Test Bild 2", isLocal: true },
+      slides={[
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
       ]}
       className="aspect-video h-96"
       autoplay
