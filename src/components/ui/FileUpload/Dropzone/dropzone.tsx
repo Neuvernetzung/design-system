@@ -21,6 +21,9 @@ import { FormElement, RequiredRule } from "../../Form";
 import { Icon } from "../../Icon";
 import { Text } from "../../Typography";
 import { fileListToArray } from "./utils/fileListToArray";
+import { useRouter } from "next/router";
+import { Locales } from "../../../../locales/getText";
+import { requiredInputRule } from "../../../../utils/internal/inputRule";
 
 export type DropzoneProps = {
   required?: RequiredRule;
@@ -48,67 +51,77 @@ const Dropzone = <
   helper,
   accept,
   flexRow,
-}: DropzoneProps & UseControllerProps<TFieldValues, TName>) => (
-  <Controller
-    control={control}
-    rules={{ required }}
-    name={name}
-    render={({ field: { onChange, value: files }, fieldState: { error } }) => (
-      <FormElement
-        size={size}
-        label={label}
-        helper={helper}
-        error={error}
-        name={name}
-      >
-        <label
-          htmlFor={name}
-          className={cn(
-            "flex flex-col items-center justify-center w-full border-dashed border cursor-pointer",
-            transition,
-            error ? bordersInteractive.danger : bordersInteractive.accent,
-            roundings[size]
-          )}
+}: DropzoneProps & UseControllerProps<TFieldValues, TName>) => {
+  const locale = useRouter().locale as Locales;
+
+  return (
+    <Controller
+      control={control}
+      rules={{ required: requiredInputRule(required, locale) }}
+      name={name}
+      render={({
+        field: { onChange, value: files },
+        fieldState: { error },
+      }) => (
+        <FormElement
+          size={size}
+          label={label}
+          helper={helper}
+          error={error}
+          name={name}
         >
-          <div
+          <label
+            htmlFor={name}
             className={cn(
-              "flex items-center justify-center select-none",
-              flexRow ? "flex-row" : "flex-col",
-              gaps[size],
-              paddingsEvenly[size]
+              "flex flex-col items-center justify-center w-full border-dashed border cursor-pointer",
+              transition,
+              error ? bordersInteractive.danger : bordersInteractive.accent,
+              roundings[size]
             )}
           >
-            <Icon
-              icon={CloudArrowUpIcon}
-              color={error ? "danger" : "subtile"}
-              size={size}
+            <div
+              className={cn(
+                "flex items-center justify-center select-none",
+                flexRow ? "flex-row" : "flex-col",
+                gaps[size],
+                paddingsEvenly[size]
+              )}
+            >
+              <Icon
+                icon={CloudArrowUpIcon}
+                color={error ? "danger" : "subtile"}
+                size={size}
+              />
+              <Text
+                color={error ? "danger" : "subtile"}
+                size={smallerSize(size)}
+              >
+                <span className="font-semibold">Zum hochladen klicken</span>{" "}
+                oder Medien hereinziehen.
+              </Text>
+            </div>
+            <input
+              id={name}
+              onChange={(e) => {
+                if (!e.target.files) {
+                  onChange([]);
+                  return;
+                }
+                const fileListArray = fileListToArray(e.target.files); // damit files als Array nutzbar sind, FileList kann nicht gemappt werden
+                const newFiles = [...(files || []), ...fileListArray];
+                onChange(newFiles);
+              }}
+              type="file"
+              accept={accept}
+              disabled={disabled}
+              className="hidden"
+              multiple
             />
-            <Text color={error ? "danger" : "subtile"} size={smallerSize(size)}>
-              <span className="font-semibold">Zum hochladen klicken</span> oder
-              Medien hereinziehen.
-            </Text>
-          </div>
-          <input
-            id={name}
-            onChange={(e) => {
-              if (!e.target.files) {
-                onChange([]);
-                return;
-              }
-              const fileListArray = fileListToArray(e.target.files); // damit files als Array nutzbar sind, FileList kann nicht gemappt werden
-              const newFiles = [...(files || []), ...fileListArray];
-              onChange(newFiles);
-            }}
-            type="file"
-            accept={accept}
-            disabled={disabled}
-            className="hidden"
-            multiple
-          />
-        </label>
-      </FormElement>
-    )}
-  />
-);
+          </label>
+        </FormElement>
+      )}
+    />
+  );
+};
 
 export default typedMemo(Dropzone);

@@ -20,6 +20,9 @@ import { typedMemo } from "../../../utils/internal";
 import { Button, ButtonProps, IconButtonProps } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { Text } from "../Typography";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../locales/getText";
 
 export type FileInputButtonProps<T extends boolean> = {
   required?: RequiredRule;
@@ -74,11 +77,12 @@ const FileInputButton = <
 }: FileInputButtonProps<TMultiple> &
   UseControllerProps<TFieldValues, TName>) => {
   const [open, setOpen] = useState<boolean>(false);
+  const locale = useRouter().locale as Locales;
 
   return (
     <Controller
       control={control}
-      rules={{ required }}
+      rules={{ required: requiredInputRule(required, locale) }}
       name={name}
       render={({
         field: { value: files, onChange: setFiles },

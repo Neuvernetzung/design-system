@@ -17,6 +17,10 @@ import { hexRegex } from "../../../utils/internal/regex/hex";
 import { Variants } from "../Button/button";
 import { FormElement, RequiredRule } from "../Form";
 import { Popover } from "../Popover";
+import {
+  patternInputRule,
+  requiredInputRule,
+} from "../../../utils/internal/inputRule";
 
 export type ColorPickerProps = {
   required?: RequiredRule;
@@ -42,15 +46,15 @@ export const ColorPicker = <
   variant = "outline",
   placeholder,
 }: ColorPickerProps & UseControllerProps<TFieldValues, TName>) => {
-  const { locale } = useRouter();
+  const locale = useRouter().locale as Locales;
 
   return (
     <Controller
       control={control}
       name={name}
       rules={{
-        required,
-        pattern: hexRegex,
+        required: requiredInputRule(required, locale),
+        pattern: patternInputRule(hexRegex, locale),
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <FormElement

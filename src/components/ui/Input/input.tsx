@@ -35,6 +35,17 @@ import { InputAddon } from "./InputAddon";
 import type { InputAddonProps } from "./InputAddon/inputAddon";
 import { InputElement } from "./InputElement";
 import type { InputElementProps } from "./InputElement/inputElement";
+import {
+  maxInputRule,
+  maxLengthInputRule,
+  minInputRule,
+  minLengthInputRule,
+  patternInputRule,
+  requiredInputRule,
+  validationInputResult,
+} from "../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../locales/getText";
 
 export const sizes = inputSizes;
 export const variants = inputVariants;
@@ -85,58 +96,62 @@ export const InputInner = <
     ...props
   }: InputProps & UseControllerProps<TFieldValues, TName>,
   ref: Ref<HTMLInputElement>
-) => (
-  <Controller
-    control={control}
-    name={name}
-    rules={{
-      required,
-      maxLength,
-      minLength,
-      max,
-      min,
-      pattern,
-      validate: (value) => {
-        if (type === "number" && step)
-          return (
-            (String(value).split(".")[1]?.length || 0) <=
-            (String(step).split(".")[1]?.length || 0)
-          );
-        return true;
-      },
-    }}
-    render={({ field: { value, onChange }, fieldState: { error } }) => (
-      <FormElement
-        error={error}
-        name={name}
-        label={label}
-        helper={helper}
-        size={size}
-        className={className}
-      >
-        <RawInput
-          containerClassName={containerClassName}
-          leftAddon={leftAddon}
+) => {
+  const locale = useRouter().locale as Locales;
+
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={{
+        required: requiredInputRule(required, locale),
+        maxLength: maxLengthInputRule(maxLength, locale),
+        minLength: minLengthInputRule(minLength, locale),
+        max: maxInputRule(max, locale),
+        min: minInputRule(min, locale),
+        pattern: patternInputRule(pattern, locale),
+        validate: (value) => {
+          if (type === "number" && step)
+            return validationInputResult(
+              (String(value).split(".")[1]?.length || 0) <=
+                (String(step).split(".")[1]?.length || 0)
+            );
+          return true;
+        },
+      }}
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
+        <FormElement
+          error={error}
+          name={name}
+          label={label}
+          helper={helper}
           size={size}
-          variant={variant}
-          leftElement={leftElement}
-          type={type}
-          id={name}
-          ref={ref}
-          value={value}
-          onChange={onChange}
-          error={!!error}
-          disabled={disabled}
-          rightAddon={rightAddon}
-          inputClassName={inputClassName}
-          rightElement={rightElement}
-          step={step}
-          {...props}
-        />
-      </FormElement>
-    )}
-  />
-);
+          className={className}
+        >
+          <RawInput
+            containerClassName={containerClassName}
+            leftAddon={leftAddon}
+            size={size}
+            variant={variant}
+            leftElement={leftElement}
+            type={type}
+            id={name}
+            ref={ref}
+            value={value}
+            onChange={onChange}
+            error={!!error}
+            disabled={disabled}
+            rightAddon={rightAddon}
+            inputClassName={inputClassName}
+            rightElement={rightElement}
+            step={step}
+            {...props}
+          />
+        </FormElement>
+      )}
+    />
+  );
+};
 
 const Input = forwardRef(InputInner) as <
   TFieldValues extends FieldValues,

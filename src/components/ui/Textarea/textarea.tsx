@@ -22,6 +22,14 @@ import {
   RequiredRule,
 } from "../Form";
 import { Text } from "../Typography";
+import {
+  maxLengthInputRule,
+  minLengthInputRule,
+  patternInputRule,
+  requiredInputRule,
+} from "../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../locales/getText";
 
 export const sizes = inputSizes;
 export const variants = inputVariants;
@@ -65,53 +73,57 @@ export const TextareaInner = <
     ...props
   }: TextareaProps & UseControllerProps<TFieldValues, TName>,
   ref: ForwardedRef<HTMLTextAreaElement>
-) => (
-  <Controller
-    control={control}
-    name={name}
-    rules={{
-      required,
-      maxLength,
-      minLength,
-      pattern,
-    }}
-    render={({ field: { value, onChange }, fieldState: { error } }) => (
-      <FormElement
-        error={error}
-        name={name}
-        label={label}
-        helper={helper}
-        size={size}
-      >
-        <div className="relative">
-          <textarea
-            id={name}
-            ref={ref}
-            value={value}
-            onChange={onChange}
-            className={cn(
-              getInputStyles({ size, variant, error: !!error, disabled }),
-              className
+) => {
+  const locale = useRouter().locale as Locales;
+
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={{
+        required: requiredInputRule(required, locale),
+        maxLength: maxLengthInputRule(maxLength, locale),
+        minLength: minLengthInputRule(minLength, locale),
+        pattern: patternInputRule(pattern, locale),
+      }}
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
+        <FormElement
+          error={error}
+          name={name}
+          label={label}
+          helper={helper}
+          size={size}
+        >
+          <div className="relative">
+            <textarea
+              id={name}
+              ref={ref}
+              value={value}
+              onChange={onChange}
+              className={cn(
+                getInputStyles({ size, variant, error: !!error, disabled }),
+                className
+              )}
+              disabled={disabled}
+              placeholder={placeholder}
+              rows={rows}
+              {...props}
+            />
+            {maxLength && showLength && (
+              <Text
+                size="xs"
+                color={(value?.length || 0) > maxLength ? "danger" : "accent"}
+                className={cn("absolute bottom-2 right-5 pointer-events-none")}
+              >
+                {value?.length || 0} / {maxLength}
+              </Text>
             )}
-            disabled={disabled}
-            placeholder={placeholder}
-            rows={rows}
-            {...props}
-          />
-          {maxLength && showLength && (
-            <Text
-              size="xs"
-              color={(value?.length || 0) > maxLength ? "danger" : "accent"}
-              className={cn("absolute bottom-2 right-5 pointer-events-none")}
-            >
-              {value?.length || 0} / {maxLength}
-            </Text>
-          )}
-        </div>
-      </FormElement>
-    )}
-  />
-);
+          </div>
+        </FormElement>
+      )}
+    />
+  );
+};
 
 const Textarea = forwardRef(TextareaInner) as <
   TFieldValues extends FieldValues,
