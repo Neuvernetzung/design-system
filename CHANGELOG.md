@@ -1,3 +1,10 @@
+## [1.52.1](https://github.com/Neuvernetzung/design-system/compare/v1.52.0...v1.52.1) (2023-05-19)
+
+
+### Bug Fixes
+
+* **ui:** FileInput und Upload exposen [#656](https://github.com/Neuvernetzung/design-system/issues/656) ([a3e3789](https://github.com/Neuvernetzung/design-system/commit/a3e37896743991d2e784834048ea9f288860bbd7))
+
 # [1.52.0](https://github.com/Neuvernetzung/design-system/compare/v1.51.0...v1.52.0) (2023-05-19)
 
 
