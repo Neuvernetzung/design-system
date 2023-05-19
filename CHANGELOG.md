@@ -1,3 +1,11 @@
+# [1.52.0](https://github.com/Neuvernetzung/design-system/compare/v1.51.0...v1.52.0) (2023-05-19)
+
+
+### Features
+
+* **image:** Image keine zwingende IMG_URL und Next Optimization verbessern [#652](https://github.com/Neuvernetzung/design-system/issues/652) ([708a4ec](https://github.com/Neuvernetzung/design-system/commit/708a4ec8eee9c05dd73f5be324882f21ef9e8a22))
+* **ui:** Genauere Error Messages hinzufügen für zB. minLength... [#507](https://github.com/Neuvernetzung/design-system/issues/507) ([f1099f3](https://github.com/Neuvernetzung/design-system/commit/f1099f3520540d16b8c4e4d559e2b3b712186a9d))
+
 # [1.51.0](https://github.com/Neuvernetzung/design-system/compare/v1.50.1...v1.51.0) (2023-05-18)
 
 
