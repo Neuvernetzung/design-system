@@ -69,6 +69,9 @@ import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement } from "../Form";
 import { Popover, PopoverButton } from "../Popover";
 import { Text } from "../Typography";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../locales/getText";
 
 export type DatepickerProps = {
   label?: string;
@@ -381,12 +384,14 @@ export const Datepicker = <
       return setPreselectedYear(endOfDecade(viewing));
   };
 
+  const locale = useRouter().locale as Locales;
+
   return (
     <Controller
       name={name}
       control={control}
       rules={{
-        required,
+        required: requiredInputRule(required, locale),
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <div className={cn()}>

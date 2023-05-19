@@ -37,6 +37,9 @@ import { CustomTextAlign } from "./Extensions/textAlign";
 import { MenuBar } from "./Menus/menuBar";
 import { returnTextSelection, TextTypeTags } from "./Menus/selectText";
 import { CustomHardBreak } from "./Extensions/hardBreak";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../locales/getText";
 
 export interface RichTextProps {
   label?: string;
@@ -65,6 +68,8 @@ export const RichText = <
   const {
     field: { value, onChange },
   } = useController({ control, name });
+
+  const locale = useRouter().locale as Locales;
 
   const [selectedTag, setSelectedTag] = useState<TextTypeTags>(TextTypeTags.P);
   const [lastMenuItem, setLastMenuItem] = useState<Number>(0);
@@ -133,7 +138,7 @@ export const RichText = <
       control={control}
       name={name}
       rules={{
-        required,
+        required: requiredInputRule(required, locale),
       }}
       render={({ fieldState: { error } }) => (
         <FormElement name={name} label={label} helper={helper} error={error}>

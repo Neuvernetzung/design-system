@@ -24,6 +24,9 @@ import { typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "../Form";
 import { FormElement } from "../Form";
 import { Text } from "../Typography";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../locales/getText";
 
 export const sizes: Sizes = heightsSmall;
 export const colors: (keyof Omit<Colors, "accent">)[] = [
@@ -62,69 +65,73 @@ export const SwitchInner = <
     disabled = false,
   }: SwitchProps & UseControllerProps<TFieldValues, TName>,
   ref: ForwardedRef<HTMLButtonElement>
-) => (
-  <Controller
-    control={control}
-    name={name}
-    rules={{
-      required,
-    }}
-    render={({ field: { value, onChange }, fieldState: { error } }) => (
-      <FormElement
-        error={error}
-        name={name}
-        label={label}
-        helper={helper}
-        size={size}
-      >
-        <div
-          className={cn(
-            "flex items-center",
-            !reverse
-              ? "flex-row justify-start"
-              : "flex-row-reverse justify-end",
-            gaps[size]
-          )}
+) => {
+  const locale = useRouter().locale as Locales;
+
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={{
+        required: requiredInputRule(required, locale),
+      }}
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
+        <FormElement
+          error={error}
+          name={name}
+          label={label}
+          helper={helper}
+          size={size}
         >
-          <HeadlessSwitch checked={value} as={Fragment} onChange={onChange}>
-            {({ checked }) => (
-              <button
-                ref={ref}
-                disabled={disabled}
-                type="button"
-                aria-label={name}
-                className={cn(
-                  checked
-                    ? bgColorsInteractive[color]
-                    : extendedBgColorsInteractive.filled,
-                  heightsSmall[size],
-                  focus[color],
-                  transition,
-                  disabled && "cursor-not-allowed",
-                  "relative inline-flex items-center w-min aspect-video rounded-full"
-                )}
-              >
-                <span
-                  className={cn(
-                    bgColors.white,
-                    checked
-                      ? "left-full -translate-x-[120%]"
-                      : "left-0 translate-x-[20%]",
-                    transition,
-                    error && bgColors.danger,
-                    disabled && extendedBgColors.filledSubtile,
-                    "transition-all absolute inline-block h-[80%] aspect-square rounded-full"
-                  )}
-                />
-              </button>
+          <div
+            className={cn(
+              "flex items-center",
+              !reverse
+                ? "flex-row justify-start"
+                : "flex-row-reverse justify-end",
+              gaps[size]
             )}
-          </HeadlessSwitch>
-          {isString(content) ? <Text size={size}>{content}</Text> : content}
-        </div>
-      </FormElement>
-    )}
-  />
-);
+          >
+            <HeadlessSwitch checked={value} as={Fragment} onChange={onChange}>
+              {({ checked }) => (
+                <button
+                  ref={ref}
+                  disabled={disabled}
+                  type="button"
+                  aria-label={name}
+                  className={cn(
+                    checked
+                      ? bgColorsInteractive[color]
+                      : extendedBgColorsInteractive.filled,
+                    heightsSmall[size],
+                    focus[color],
+                    transition,
+                    disabled && "cursor-not-allowed",
+                    "relative inline-flex items-center w-min aspect-video rounded-full"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      bgColors.white,
+                      checked
+                        ? "left-full -translate-x-[120%]"
+                        : "left-0 translate-x-[20%]",
+                      transition,
+                      error && bgColors.danger,
+                      disabled && extendedBgColors.filledSubtile,
+                      "transition-all absolute inline-block h-[80%] aspect-square rounded-full"
+                    )}
+                  />
+                </button>
+              )}
+            </HeadlessSwitch>
+            {isString(content) ? <Text size={size}>{content}</Text> : content}
+          </div>
+        </FormElement>
+      )}
+    />
+  );
+};
 
 SwitchInner.displayName = "Switch"; // muss bleiben sonst kommt docgen storybook plugin durcheinander
 

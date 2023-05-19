@@ -23,6 +23,9 @@ import { Button, ButtonGroup, IconButton } from "../../Button";
 import { FormElement, RequiredRule } from "../../Form";
 import { Text } from "../../Typography";
 import { InputAddon } from "../InputAddon";
+import { requiredInputRule } from "../../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../../locales/getText";
 
 export type InputWithTagsProps = HTMLAttributes<HTMLInputElement> & {
   required?: RequiredRule;
@@ -79,12 +82,14 @@ export const InputWithTagsInner = <
     return newValues;
   };
 
+  const locale = useRouter().locale as Locales;
+
   return (
     <Controller
       control={control}
       name={name}
       rules={{
-        required,
+        required: requiredInputRule(required, locale),
       }}
       render={({
         field: { value: values, onChange },
