@@ -22,7 +22,6 @@ export const Default = ({ ...args }) => (
     <Image
       src="/testImage.jpg"
       alt="test Bild"
-      isLocal
       className="aspect-video rounded-lg"
     />
   </Container>
@@ -33,7 +32,6 @@ export const Fallback = ({ ...args }) => (
     <Image
       src="wrong/path.jpg"
       alt="ohne Bild"
-      isLocal
       className="aspect-video rounded-lg"
     />
   </Container>
@@ -44,7 +42,6 @@ export const FallbackShrinked = ({ ...args }) => (
     <Image
       src="wrong/path.jpg"
       alt="ohne Bild"
-      isLocal
       className="aspect-video rounded-lg"
     />
   </Container>
