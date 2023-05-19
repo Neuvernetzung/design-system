@@ -52,6 +52,9 @@ import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
+import { Locales } from "../../../locales/getText";
+import { useRouter } from "next/router";
 
 export const sizes: Sizes = inputSizes;
 export const variants: InputVariants = inputVariants;
@@ -121,8 +124,9 @@ export const SelectInner = <
   }: SelectProps & UseControllerProps<TFieldValues, TName>,
   ref: ForwardedRef<HTMLButtonElement>
 ) => {
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLElement | null>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
+    null
+  );
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
   const {
     styles,
@@ -253,12 +257,14 @@ export const SelectInner = <
     isArray(selected) ? selected.includes(value) : selected === value;
   const _hideActive = multipleStyle !== "indicator" ? hideActive : false;
 
+  const locale = useRouter().locale as Locales;
+
   return (
     <Controller
       control={control}
       name={name}
       rules={{
-        required,
+        required: requiredInputRule(required, locale),
       }}
       render={({
         field: { value: values, onChange },

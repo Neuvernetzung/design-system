@@ -8,7 +8,7 @@ export enum Locales {
 
 const DEFAULT_LOCALE: Locales = Locales.DE;
 
-export const getText = (locale: Locales) => {
+export const getText = (locale: Locales | undefined) => {
   const locales = { de, en };
 
   return locales[locale || DEFAULT_LOCALE] || {};

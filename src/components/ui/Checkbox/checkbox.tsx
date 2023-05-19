@@ -30,6 +30,9 @@ import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { labelSizes } from "../Form/formElement";
 import { CheckboxIcon } from "./checkboxIcon";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
+import { useRouter } from "next/router";
+import { Locales } from "../../../locales/getText";
 
 export interface CheckboxVariants {
   default: any;
@@ -91,62 +94,66 @@ export const Checkbox = <
   options,
   disabled,
   className,
-}: CheckboxProps & UseControllerProps<TFieldValues, TName>) => (
-  <Controller
-    control={control}
-    name={name}
-    rules={{
-      required,
-    }}
-    render={({
-      field: { value: current, onChange },
-      fieldState: { error },
-    }) => (
-      <FormElement
-        error={error}
-        name={name}
-        label={label}
-        helper={helper}
-        size={size}
-      >
-        <div className={cn("flex flex-col", gapsSmall[size], className)}>
-          {options.map(
-            (
-              {
-                label,
-                value: _value,
-                disabled: singleDisabled,
-                icon: singleIcon,
-              },
-              i
-            ) => {
-              const _disabled = singleDisabled ?? disabled;
-              const _icon = singleIcon ?? icon;
+}: CheckboxProps & UseControllerProps<TFieldValues, TName>) => {
+  const locale = useRouter().locale as Locales;
 
-              return (
-                <CheckboxInner
-                  id={`checkbox_${name}_${i}`}
-                  key={`checkbox_${name}_${i}`}
-                  current={current}
-                  value={_value}
-                  label={label}
-                  disabled={_disabled}
-                  size={size}
-                  color={color}
-                  onChange={onChange}
-                  options={options.map((o) => o.value)}
-                  icon={_icon}
-                  variant={variant}
-                  error={error}
-                />
-              );
-            }
-          )}
-        </div>
-      </FormElement>
-    )}
-  />
-);
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={{
+        required: requiredInputRule(required, locale),
+      }}
+      render={({
+        field: { value: current, onChange },
+        fieldState: { error },
+      }) => (
+        <FormElement
+          error={error}
+          name={name}
+          label={label}
+          helper={helper}
+          size={size}
+        >
+          <div className={cn("flex flex-col", gapsSmall[size], className)}>
+            {options.map(
+              (
+                {
+                  label,
+                  value: _value,
+                  disabled: singleDisabled,
+                  icon: singleIcon,
+                },
+                i
+              ) => {
+                const _disabled = singleDisabled ?? disabled;
+                const _icon = singleIcon ?? icon;
+
+                return (
+                  <CheckboxInner
+                    id={`checkbox_${name}_${i}`}
+                    key={`checkbox_${name}_${i}`}
+                    current={current}
+                    value={_value}
+                    label={label}
+                    disabled={_disabled}
+                    size={size}
+                    color={color}
+                    onChange={onChange}
+                    options={options.map((o) => o.value)}
+                    icon={_icon}
+                    variant={variant}
+                    error={error}
+                  />
+                );
+              }
+            )}
+          </div>
+        </FormElement>
+      )}
+    />
+  );
+};
 
 const isChecked = (current: string | string[], value: any) =>
   isArray(current) ? current.includes(value) : !!current;
