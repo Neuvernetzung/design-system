@@ -9,17 +9,10 @@ import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
 export interface ImageProps extends NextImageProps {
-  isLocal?: boolean;
   alt: string;
 }
 
-export const Image = ({
-  src,
-  alt,
-  quality,
-  isLocal = false,
-  className,
-}: ImageProps) => {
+export const Image = ({ src, alt, quality, className }: ImageProps) => {
   const [error, setError] = useState<boolean>(false);
 
   return (
@@ -32,8 +25,9 @@ export const Image = ({
       {!error && src ? (
         <NextImage
           className="object-cover object-center"
-          src={`${!isLocal ? process.env.IMG_URL : ""}${src}`}
+          src={src}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           quality={quality || "75"}
           alt={alt}
           onError={() => setError(true)}

@@ -8,7 +8,6 @@ it("Image axe", async () => {
     <Image
       src="/testImage.jpg"
       alt="test Bild"
-      isLocal
       className="aspect-video rounded-lg"
     />
   );
