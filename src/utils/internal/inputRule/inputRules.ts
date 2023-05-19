@@ -4,7 +4,7 @@ import isRegExp from "lodash/isRegExp";
 import isString from "lodash/isString";
 import { ValidationRule } from "react-hook-form";
 
-import {
+import type {
   MaxLengthRule,
   MaxRule,
   MinLengthRule,
