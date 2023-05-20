@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { useRouter } from "next/router";
 import { FC, useState } from "react";
 import {
   Controller,
@@ -7,6 +8,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
+import { Locales } from "../../../locales/getText";
 import {
   borders,
   extendedBgColors,
@@ -17,12 +19,14 @@ import {
 import { DocumentPlusIcon } from "../../../theme/icons";
 import { Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
+import {
+  maxInputRule,
+  minInputRule,
+  requiredInputRule,
+} from "../../../utils/internal/inputRule";
 import { Button, ButtonProps, IconButtonProps } from "../Button";
-import { FormElement, RequiredRule } from "../Form";
+import { FormElement, MaxRule, MinRule, RequiredRule } from "../Form";
 import { Text } from "../Typography";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
 
 export type FileInputButtonProps<T extends boolean> = {
   required?: RequiredRule;
@@ -32,8 +36,10 @@ export type FileInputButtonProps<T extends boolean> = {
   size?: keyof Sizes;
   buttonTitle?: string;
   multiple?: T;
+  min?: MinRule;
+  max?: MaxRule;
   FileInput: FC<FileInputProps<T>>;
-  FilePreview?: FC<{ file: string }>;
+  FilePreview?: FC<FilePreviewProps<T>>;
 } & VariantProps;
 
 type VariantProps =
@@ -50,6 +56,13 @@ export type FileInputProps<T extends boolean> = {
   setFiles: (files: T extends true ? string[] : string) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
+  min?: MinRule;
+  max?: MaxRule;
+};
+
+export type FilePreviewProps<T extends boolean> = {
+  files: T extends true ? string[] : string;
+  setFiles: (files: T extends true ? string[] : string) => void;
 };
 
 const FileInputButton = <
@@ -61,6 +74,8 @@ const FileInputButton = <
   > = FieldPathByValue<TFieldValues, TMultiple extends true ? string[] : string>
 >({
   required,
+  min,
+  max,
   label,
   helper,
   control,
@@ -82,7 +97,11 @@ const FileInputButton = <
   return (
     <Controller
       control={control}
-      rules={{ required: requiredInputRule(required, locale) }}
+      rules={{
+        required: requiredInputRule(required, locale),
+        min: minInputRule(min, locale),
+        max: maxInputRule(max, locale),
+      }}
       name={name}
       render={({
         field: { value: files, onChange: setFiles },
@@ -107,30 +126,21 @@ const FileInputButton = <
                 {...buttonProps}
               >
                 {buttonTitle || "Datei auswählen"}
+                {files &&
+                  (multiple ? files.length > 0 : true) &&
+                  ` - ${multiple ? files?.length : files ? 1 : 0}`}
               </Button>
-              {files && (
+              {files && (multiple ? files.length > 0 : true) && FilePreview && (
                 <div
                   className={cn(
-                    "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 border w-full",
+                    "border w-full",
                     paddingsEvenly[size],
                     borders.accent,
                     roundings[size],
                     extendedBgColors.subtile
                   )}
                 >
-                  {multiple ? (
-                    files.map((file: string, i: number) =>
-                      FilePreview ? (
-                        <FilePreview file={file} key={`file_${name}_${i}`} />
-                      ) : (
-                        <Text key={`file_${name}_${i}`}>{file}</Text>
-                      )
-                    )
-                  ) : FilePreview ? (
-                    <FilePreview file={files} />
-                  ) : (
-                    <Text>{files}</Text>
-                  )}
+                  <FilePreview files={files} setFiles={setFiles} />
                 </div>
               )}
             </div>
@@ -174,6 +184,8 @@ const FileInputButton = <
             open={open}
             setOpen={setOpen}
             multiple={multiple}
+            min={min}
+            max={max}
           />
         </FormElement>
       )}
