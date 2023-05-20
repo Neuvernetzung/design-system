@@ -1,12 +1,14 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { FileInputButton } from ".";
 import { Modal } from "../Modal";
-import { Button } from "../Button";
-import { FileInputProps } from "./fileinput";
+import { Button, IconButton } from "../Button";
+import { FileInputProps, FilePreviewProps } from "./fileinput";
 import { isArray } from "lodash";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Form } from "../Form";
 
 export default {
   title: "UI/Form/FileInput",
@@ -28,23 +30,23 @@ export default {
 const dbFiles = [
   {
     name: "Datei 1",
-    _id: "1",
+    _id: "a1",
   },
   {
     name: "Datei 2",
-    _id: "2",
+    _id: "a2",
   },
   {
     name: "Datei 3",
-    _id: "3",
+    _id: "a3",
   },
   {
     name: "Datei 4",
-    _id: "4",
+    _id: "a4",
   },
   {
     name: "Datei 5",
-    _id: "5",
+    _id: "a5",
   },
 ];
 
@@ -56,17 +58,19 @@ const FileInput = <T extends boolean>({
   setFiles,
 }: FileInputProps<T>) => {
   const [internalFiles, setInternalFiles] = useState(files);
+  useEffect(() => {
+    setInternalFiles(files);
+  }, [files]);
 
-  const handleOnClick = (id: string, i: number) => {
+  const handleOnClick = (id: string) => {
     if (!multiple) {
       setInternalFiles(id as typeof files);
       return;
     }
     if (internalFiles && internalFiles.includes(id)) {
-      const newFiles = [...internalFiles];
-      newFiles.splice(i, 1);
+      const newFiles = [...internalFiles].filter((file) => file !== id);
 
-      setInternalFiles(newFiles.map((file) => file) as typeof files);
+      setInternalFiles(newFiles as typeof files);
     } else {
       setInternalFiles([...(internalFiles || []), id] as typeof files);
     }
@@ -89,7 +93,7 @@ const FileInput = <T extends boolean>({
           {dbFiles.map((file, i) => (
             <Button
               color={isActive(file._id) ? "primary" : "accent"}
-              onClick={() => handleOnClick(file._id, i)}
+              onClick={() => handleOnClick(file._id)}
               key={i}
             >
               {file.name}
@@ -114,6 +118,33 @@ const FileInput = <T extends boolean>({
   );
 };
 
+const FilePreview = <T extends boolean>({
+  files,
+  setFiles,
+}: FilePreviewProps<T>) => (
+  <div>
+    {isArray(files) &&
+      files.map((file, i) => (
+        <div
+          key={`delete_${i}`}
+          className="flex flex-row gap-4 items-center justify-start"
+        >
+          {file}
+          <IconButton
+            ariaLabel={`delete_${i}`}
+            color="danger"
+            variant="ghost"
+            size="sm"
+            icon={XMarkIcon}
+            onClick={() => {
+              setFiles(files.filter((f) => f !== file) as typeof files);
+            }}
+          />
+        </div>
+      ))}
+  </div>
+);
+
 export const Default = ({ ...args }) => {
   const formMethods = useForm();
 
@@ -125,8 +156,45 @@ export const Default = ({ ...args }) => {
       multiple
       name="file"
       FileInput={FileInput}
+      FilePreview={FilePreview}
       {...args}
     />
+  );
+};
+
+export const MinMax = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Form
+      className="flex flex-col gap-4"
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+    >
+      <FileInputButton
+        label="Min 3"
+        control={formMethods.control}
+        required
+        multiple
+        name="min"
+        min={3}
+        FileInput={FileInput}
+        FilePreview={FilePreview}
+        {...args}
+      />
+      <FileInputButton
+        label="Max 1"
+        control={formMethods.control}
+        required
+        multiple
+        name="max"
+        max={1}
+        FileInput={FileInput}
+        FilePreview={FilePreview}
+        {...args}
+      />
+      <Button type="submit">Bestätigen</Button>
+    </Form>
   );
 };
 
