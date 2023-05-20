@@ -1,3 +1,10 @@
+# [1.53.0](https://github.com/Neuvernetzung/design-system/compare/v1.52.1...v1.53.0) (2023-05-20)
+
+
+### Features
+
+* **ui:** FileInputProps exposen und FileInput verbessern [#659](https://github.com/Neuvernetzung/design-system/issues/659) ([c31dbf4](https://github.com/Neuvernetzung/design-system/commit/c31dbf4ff913500463346250ca35f5b9f0e21ebb))
+
 ## [1.52.1](https://github.com/Neuvernetzung/design-system/compare/v1.52.0...v1.52.1) (2023-05-19)
 
 
