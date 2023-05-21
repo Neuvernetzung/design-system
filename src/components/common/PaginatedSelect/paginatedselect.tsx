@@ -19,6 +19,7 @@ import {
 } from "../../ui";
 import { Pagination, PaginationProps } from "../Pagination";
 import { ModalSizes } from "../../ui/Modal/modal";
+import { typedMemo } from "../../../utils/internal";
 
 export type PaginatedSelectValue<TMultiple extends boolean> =
   TMultiple extends true ? string[] : string;
@@ -67,7 +68,7 @@ export type PaginatedSelectProps<TItem, TMultiple extends boolean> = {
   modalSize?: keyof ModalSizes;
 };
 
-export const PaginatedSelect = <
+const PaginatedSelect = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends Path<TFieldValues> = Path<TFieldValues>,
   TItem extends any = any,
@@ -188,7 +189,7 @@ export const PaginatedSelect = <
               <div className="flex flex-col gap-4 w-full">
                 <SelectItems
                   items={items}
-                  value={value}
+                  value={internalValue}
                   multiple={multiple}
                   handleSelect={handleSelect}
                   isActive={isActive}
@@ -216,3 +217,5 @@ export const PaginatedSelect = <
     />
   );
 };
+
+export default typedMemo(PaginatedSelect);
