@@ -1,4 +1,6 @@
 import cn from "classnames";
+import { useRouter } from "next/router";
+import { ReactElement } from "react";
 import {
   Controller,
   FieldPathByValue,
@@ -6,6 +8,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
+import { Locales } from "../../../../locales/getText";
 import {
   bordersInteractive,
   gaps,
@@ -17,13 +20,12 @@ import { CloudArrowUpIcon } from "../../../../theme/icons";
 import { Sizes } from "../../../../types";
 import { smallerSize } from "../../../../utils";
 import { typedMemo } from "../../../../utils/internal";
+import { requiredInputRule } from "../../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../../Form";
 import { Icon } from "../../Icon";
+import { Tag } from "../../Tag";
 import { Text } from "../../Typography";
 import { fileListToArray } from "./utils/fileListToArray";
-import { useRouter } from "next/router";
-import { Locales } from "../../../../locales/getText";
-import { requiredInputRule } from "../../../../utils/internal/inputRule";
 
 export type DropzoneProps = {
   required?: RequiredRule;
@@ -33,6 +35,7 @@ export type DropzoneProps = {
   helper?: string;
   accept?: string;
   flexRow?: boolean;
+  info?: ReactElement;
 };
 
 const Dropzone = <
@@ -51,6 +54,7 @@ const Dropzone = <
   helper,
   accept,
   flexRow,
+  info,
 }: DropzoneProps & UseControllerProps<TFieldValues, TName>) => {
   const locale = useRouter().locale as Locales;
 
@@ -92,13 +96,22 @@ const Dropzone = <
                 color={error ? "danger" : "subtile"}
                 size={size}
               />
-              <Text
-                color={error ? "danger" : "subtile"}
-                size={smallerSize(size)}
-              >
-                <span className="font-semibold">Zum hochladen klicken</span>{" "}
-                oder Medien hereinziehen.
-              </Text>
+              {info || (
+                <Text
+                  color={error ? "danger" : "subtile"}
+                  size={smallerSize(size)}
+                >
+                  <span className="font-semibold">Zum hochladen klicken</span>{" "}
+                  oder Medien hereinziehen.{" "}
+                  {files?.length > 0 && (
+                    <Tag
+                      size="xs"
+                      variant="subtile"
+                      label={`${files.length} ausgewählt.`}
+                    />
+                  )}
+                </Text>
+              )}
             </div>
             <input
               id={name}
