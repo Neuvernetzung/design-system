@@ -7,7 +7,6 @@ export * from "./ColorPicker";
 export * from "./Datepicker";
 export * from "./Disclosure";
 export * from "./Drawer";
-export * from "./FileInput";
 export * from "./FileUpload";
 export * from "./Form";
 export * from "./HorizontalRule";
