@@ -1,3 +1,10 @@
+## [1.54.2](https://github.com/Neuvernetzung/design-system/compare/v1.54.1...v1.54.2) (2023-05-21)
+
+
+### Bug Fixes
+
+* **ui:** value und multiple zu PaginatedSelectItems Type hinzufügen [#668](https://github.com/Neuvernetzung/design-system/issues/668) ([713f121](https://github.com/Neuvernetzung/design-system/commit/713f1217305df131933ddd643f90058c817cb203))
+
 ## [1.54.1](https://github.com/Neuvernetzung/design-system/compare/v1.54.0...v1.54.1) (2023-05-21)
 
 
