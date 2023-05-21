@@ -1,3 +1,10 @@
+## [1.54.1](https://github.com/Neuvernetzung/design-system/compare/v1.54.0...v1.54.1) (2023-05-21)
+
+
+### Bug Fixes
+
+* **ui:** FileUploadPreview exposen [#665](https://github.com/Neuvernetzung/design-system/issues/665) ([560736b](https://github.com/Neuvernetzung/design-system/commit/560736b46155bf192db9a462f52b1c51d6f41d3b))
+
 # [1.54.0](https://github.com/Neuvernetzung/design-system/compare/v1.53.0...v1.54.0) (2023-05-21)
 
 
