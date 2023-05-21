@@ -1,3 +1,10 @@
+# [1.54.0](https://github.com/Neuvernetzung/design-system/compare/v1.53.0...v1.54.0) (2023-05-21)
+
+
+### Features
+
+* **ui:** FileInput durch PaginatedSelect ersetzen [#662](https://github.com/Neuvernetzung/design-system/issues/662) ([044aaa6](https://github.com/Neuvernetzung/design-system/commit/044aaa6a8eadcefdd0925c1552c5690e86c9bfa4))
+
 # [1.53.0](https://github.com/Neuvernetzung/design-system/compare/v1.52.1...v1.53.0) (2023-05-20)
 
 
