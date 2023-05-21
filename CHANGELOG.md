@@ -1,3 +1,10 @@
+## [1.54.3](https://github.com/Neuvernetzung/design-system/compare/v1.54.2...v1.54.3) (2023-05-21)
+
+
+### Bug Fixes
+
+* **ui:** PaginatedSelectItems internalValue als value nutzen [#671](https://github.com/Neuvernetzung/design-system/issues/671) ([dd511f8](https://github.com/Neuvernetzung/design-system/commit/dd511f865a475837a04cd01e60d1b18d2bcb1da6))
+
 ## [1.54.2](https://github.com/Neuvernetzung/design-system/compare/v1.54.1...v1.54.2) (2023-05-21)
 
 
