@@ -9,7 +9,6 @@ import {
 
 import { Locales } from "../../../locales/getText";
 import { Sizes } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import {
   Button,
@@ -21,16 +20,19 @@ import {
 import { Pagination, PaginationProps } from "../Pagination";
 import { ModalSizes } from "../../ui/Modal/modal";
 
-export type PaginatedSelectValue<TMultiple> = TMultiple extends true
-  ? string[]
-  : string;
+export type PaginatedSelectValue<TMultiple extends boolean> =
+  TMultiple extends true ? string[] : string;
 
-export type PaginatedSelectItems<TItem> = ({
+export type PaginatedSelectItems<TItem, TMultiple extends boolean> = ({
   items,
+  value,
+  multiple,
   handleSelect,
   isActive,
 }: {
   items: TItem[];
+  value?: PaginatedSelectValue<TMultiple>;
+  multiple?: TMultiple;
   handleSelect: (item: string) => void;
   isActive: (item: string) => boolean;
 }) => ReactElement;
@@ -56,7 +58,7 @@ export type PaginatedSelectProps<TItem, TMultiple extends boolean> = {
   items: TItem[];
   pagination: PaginationProps;
   buttonProps?: ButtonProps;
-  SelectItems: PaginatedSelectItems<TItem>;
+  SelectItems: PaginatedSelectItems<TItem, TMultiple>;
   Preview?: PaginatedSelectPreview<TMultiple>;
   header?: ReactElement;
   multiple?: TMultiple;
@@ -65,7 +67,7 @@ export type PaginatedSelectProps<TItem, TMultiple extends boolean> = {
   modalSize?: keyof ModalSizes;
 };
 
-const PaginatedSelect = <
+export const PaginatedSelect = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends Path<TFieldValues> = Path<TFieldValues>,
   TItem extends any = any,
@@ -186,6 +188,8 @@ const PaginatedSelect = <
               <div className="flex flex-col gap-4 w-full">
                 <SelectItems
                   items={items}
+                  value={value}
+                  multiple={multiple}
                   handleSelect={handleSelect}
                   isActive={isActive}
                 />
@@ -212,5 +216,3 @@ const PaginatedSelect = <
     />
   );
 };
-
-export default typedMemo(PaginatedSelect);
