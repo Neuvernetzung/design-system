@@ -2,13 +2,13 @@ import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { SearchIcon, TrashIcon } from "../../../theme/icons";
 import { Button, Heading, Icon, Input } from "../../ui";
 import { PaginatedSelect } from ".";
 import {
   PaginatedSelectItems,
   PaginatedSelectPreview,
 } from "./paginatedselect";
-import { SearchIcon, TrashIcon } from "../../../theme/icons";
 
 export default {
   title: "COMMON/Paginated Select",
@@ -23,7 +23,9 @@ export default {
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
-const items = [
+type TestItem = { _id: number; name: string };
+
+const items: TestItem[] = [
   {
     _id: 1,
     name: "Item 1",
@@ -46,7 +48,7 @@ const items = [
   },
 ];
 
-const SelectItems: PaginatedSelectItems<(typeof items)[number]> = ({
+const SelectItems: PaginatedSelectItems<TestItem> = ({
   items,
   handleSelect,
   isActive,
