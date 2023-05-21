@@ -4,4 +4,4 @@ export type {
   PaginatedSelectProps,
   PaginatedSelectValue,
 } from "./paginatedselect";
-export { PaginatedSelect } from "./paginatedselect";
+export { default as PaginatedSelect } from "./paginatedselect";
