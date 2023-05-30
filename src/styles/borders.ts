@@ -1,4 +1,15 @@
-import type { Colors, ExtendedColors } from "../types";
+import type { Colors, ExtendedColors, Sizes } from "../types";
+
+export const borderVariants = [
+  "solid",
+  "dashed",
+  "dotted",
+  "double",
+  "hidden",
+] as const;
+
+export type BorderVariants = typeof borderVariants;
+export type BorderVariant = BorderVariants[number];
 
 export const borders: Colors = {
   brand: "border-brand-500 dark:border-brand-500",
@@ -14,6 +25,8 @@ export const borders: Colors = {
 export const extendedBorders: ExtendedColors = {
   ...borders,
   light: "border-accent-200",
+  filled: "border-accent-200 dark:border-accent-800",
+  filledSubtile: "border-accent-100 dark:border-accent-900",
   dark: "border-accent-800",
 };
 
@@ -32,6 +45,22 @@ export const extendedBordersInteractive: ExtendedColors = {
   ...bordersInteractive,
   light: `${extendedBorders.light} hover:border-accent-300`,
   dark: `${extendedBorders.dark} hover:border-accent-700`,
+};
+
+export const borderSizesLargeL: Sizes = {
+  xs: "border-l-[1px]",
+  sm: "border-l-2",
+  md: "border-l-4",
+  lg: "border-l-[6px]",
+  xl: "border-l-8",
+};
+
+export const borderSizesLargeB: Sizes = {
+  xs: "border-b-[1px]",
+  sm: "border-b-2",
+  md: "border-b-4",
+  lg: "border-b-[6px]",
+  xl: "border-b-8",
 };
 
 export const divides: Colors = {

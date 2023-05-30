@@ -4,7 +4,7 @@ import { useState } from "react";
 import { bgColors, gaps, paddingsEvenly, scrollbar } from "../../../../styles";
 import { CrossIcon, MenuIcon } from "../../../../theme/icons";
 import { Button } from "../../../ui/Button";
-import { Disclosure } from "../../../ui/Disclosure";
+import { DisclosureGroup } from "../../../ui/Disclosure";
 import { Icon } from "../../../ui/Icon";
 import { Tag } from "../../../ui/Tag";
 import { IconButton } from "../../../ui";
@@ -107,7 +107,7 @@ export const MobileNavItem = ({
             </div>
           </Button>
         ) : (
-          <Disclosure
+          <DisclosureGroup
             className="border-none"
             items={[
               {

@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 
-import { Disclosure } from ".";
+import { DisclosureGroup } from ".";
 
 it("Disclosure axe", async () => {
   const { container } = render(
-    <Disclosure
+    <DisclosureGroup
       items={[
         {
           title: "Test",

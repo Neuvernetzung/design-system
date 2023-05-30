@@ -12,25 +12,31 @@ import { Button, ButtonProps } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
-export type DisclosureProps = {
+export type DisclosureBaseProps = {
   size?: keyof Sizes;
   color?: keyof ExtendedColors;
-  items: ItemProps[];
   closeOthers?: boolean;
   className?: string;
   icon?: "default" | "chevron";
   buttonProps?: ButtonProps;
   disabled?: boolean;
+  variant?: DisclosureVariant;
 };
 
-type ItemProps = {
+export type DisclosureProps = DisclosureBaseProps & DisclosureItemProps;
+
+export type DisclosureGroupProps = DisclosureBaseProps & {
+  items: DisclosureItemProps[];
+  groupClassName?: string;
+};
+
+export type DisclosureItemProps = {
   title: string | ReactNode;
   content: string | ReactNode;
   className?: string;
   defaultOpen?: boolean;
+  panelClassName?: string;
 };
-
-export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
 
 export const disclosureAnimationVariants = {
   initial: {
@@ -64,104 +70,120 @@ export const disclosureAnimationVariants = {
   },
 };
 
-export const Disclosure = ({
+export const disclosureVariants = ["button", "border"] as const;
+export type DisclosureVariants = typeof disclosureVariants;
+export type DisclosureVariant = DisclosureVariants[number];
+
+export const DisclosureGroup = ({
+  items,
+  groupClassName,
+  variant = "border",
+  ...props
+}: DisclosureGroupProps) => (
+  <div className={cn("flex w-full flex-col", groupClassName)}>
+    {items.map((item, i) => (
+      <Disclosure
+        key={`disclosure_${i}`}
+        {...item}
+        {...props}
+        variant={variant}
+      />
+    ))}
+  </div>
+);
+
+const variants: Record<
+  DisclosureVariant,
+  { container: string; button: string }
+> = {
+  border: {
+    container: cn("flex flex-col last:border-b border-t", borders.accent),
+    button: cn("!justify-start rounded-none items-center", borders.accent),
+  },
+  button: { container: "", button: "" },
+};
+
+const Disclosure = ({
   size = "md",
-  color = "accent",
-  items = [],
-  closeOthers,
   className,
   icon = "default",
   disabled,
   buttonProps,
-  ...props
+  content,
+  title,
+  defaultOpen,
+  panelClassName,
+  variant = "border",
 }: DisclosureProps) => (
-  <div className="flex w-full flex-col" {...props}>
-    {items.map(
-      (
-        { title, content, className: panelClassName, defaultOpen }: ItemProps,
-        i
-      ) => (
-        <HeadlessDisclosure
-          key={`disclosure_${i}`}
-          as="div"
-          defaultOpen={defaultOpen}
-          className={cn(
-            "flex flex-col last:border-b border-t",
-            borders.accent,
-            className
-          )}
+  <HeadlessDisclosure
+    as="div"
+    defaultOpen={defaultOpen}
+    className={cn(variants[variant]?.container, className)}
+  >
+    {({ open }) => (
+      <>
+        <HeadlessDisclosure.Button
+          as={Button}
+          variant="ghost"
+          size={size}
+          disabled={disabled}
+          fullWidth
+          {...buttonProps}
+          className={cn(variants[variant]?.button, buttonProps?.className)}
         >
-          {({ open }) => (
-            <>
-              <HeadlessDisclosure.Button
-                as={Button}
-                variant="ghost"
-                size={size}
-                disabled={disabled}
-                fullWidth
-                {...buttonProps}
-                className={cn(
-                  "!justify-start rounded-none items-center",
-                  borders.accent,
-                  buttonProps?.className
-                )}
+          <div className="flex flex-row items-center justify-between w-full">
+            {isString(title) ? <Text>{title}</Text> : title}
+            <AnimatePresence initial={false} mode="wait">
+              <motion.span
+                initial="initial"
+                animate={open ? "animate" : "initial"}
+                variants={{
+                  initial: { rotate: icon === "chevron" ? 0 : 90 },
+                  animate: {
+                    zIndex: 1,
+                    rotate: icon === "chevron" ? 180 : 0,
+                    transition: {
+                      type: "tween",
+                      duration: 0.2,
+                      ease: "circOut",
+                    },
+                  },
+                }}
               >
-                <div className="flex flex-row items-center justify-between w-full">
-                  {isString(title) ? <Text>{title}</Text> : title}
-                  <AnimatePresence initial={false} mode="wait">
-                    <motion.span
-                      initial="initial"
-                      animate={open ? "animate" : "initial"}
-                      variants={{
-                        initial: { rotate: icon === "chevron" ? 0 : 90 },
-                        animate: {
-                          zIndex: 1,
-                          rotate: icon === "chevron" ? 180 : 0,
-                          transition: {
-                            type: "tween",
-                            duration: 0.2,
-                            ease: "circOut",
-                          },
-                        },
-                      }}
-                    >
-                      <Icon
-                        size={size}
-                        icon={
-                          icon === "chevron"
-                            ? ChevronDownIcon
-                            : !open
-                            ? PlusIcon
-                            : MinusIcon
-                        }
-                      />
-                    </motion.span>
-                  </AnimatePresence>
-                </div>
-              </HeadlessDisclosure.Button>
-              <AnimatePresence initial={false}>
-                <motion.span
-                  initial="initial"
-                  animate={open ? "animate" : "initial"}
-                  variants={disclosureAnimationVariants}
-                >
-                  <HeadlessDisclosure.Panel static>
-                    <div className={cn(paddings[size], panelClassName)}>
-                      {isString(content) ? (
-                        <Text size={size}>{content}</Text>
-                      ) : (
-                        content
-                      )}
-                    </div>
-                  </HeadlessDisclosure.Panel>
-                </motion.span>
-              </AnimatePresence>
-            </>
-          )}
-        </HeadlessDisclosure>
-      )
+                <Icon
+                  size={size}
+                  icon={
+                    icon === "chevron"
+                      ? ChevronDownIcon
+                      : !open
+                      ? PlusIcon
+                      : MinusIcon
+                  }
+                />
+              </motion.span>
+            </AnimatePresence>
+          </div>
+        </HeadlessDisclosure.Button>
+        <AnimatePresence initial={false}>
+          <motion.span
+            initial="initial"
+            animate={open ? "animate" : "initial"}
+            variants={disclosureAnimationVariants}
+          >
+            <HeadlessDisclosure.Panel static>
+              <div className={cn(paddings[size], panelClassName)}>
+                {isString(content) ? (
+                  <Text size={size}>{content}</Text>
+                ) : (
+                  content
+                )}
+              </div>
+            </HeadlessDisclosure.Panel>
+          </motion.span>
+        </AnimatePresence>
+      </>
     )}
-  </div>
+  </HeadlessDisclosure>
 );
 
 export default typedMemo(Disclosure);

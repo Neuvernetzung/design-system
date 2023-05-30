@@ -2,7 +2,7 @@ import cn from "classnames";
 import Link from "next/link";
 
 import { gaps } from "../../../../styles";
-import { Button, Disclosure, Tag, Text } from "../../../ui";
+import { Button, DisclosureGroup, Tag, Text } from "../../../ui";
 import { NavbarMobileSubItem } from "../mobile/sub";
 import type { NavItemProps } from "../navbar";
 
@@ -36,7 +36,7 @@ export const SideNavItem = ({
         </div>
       </Button>
     ) : (
-      <Disclosure
+      <DisclosureGroup
         size="md"
         className={cn("border-none", textColor)}
         icon="chevron"
