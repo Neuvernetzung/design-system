@@ -1,11 +1,12 @@
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { Disclosure, sizes } from "./disclosure";
+import { DisclosureGroup, disclosureVariants } from ".";
+import { sizes } from "../../../types";
 
 export default {
   title: "UI/Disclosures/Disclosure",
-  component: Disclosure,
+  component: DisclosureGroup,
   argTypes: {
     color: {
       control: { type: "select" },
@@ -28,7 +29,7 @@ const Container = ({ ...props }) => (
 
 export const Default = ({ ...args }) => (
   <Container>
-    <Disclosure
+    <DisclosureGroup
       items={[
         { title: "Disclosure 1", content: "Content 1" },
         { title: "Disclosure 2", content: "Content 2" },
@@ -42,7 +43,7 @@ export const Default = ({ ...args }) => (
 export const Sizes = ({ ...args }) => (
   <Container>
     {sizes.map((size) => (
-      <Disclosure
+      <DisclosureGroup
         key={size}
         size={size}
         items={[
@@ -56,9 +57,26 @@ export const Sizes = ({ ...args }) => (
   </Container>
 );
 
+export const Variants = ({ ...args }) => (
+  <Container>
+    {disclosureVariants.map((variant) => (
+      <DisclosureGroup
+        key={variant}
+        variant={variant}
+        items={[
+          { title: `${variant} 1`, content: "Content 1" },
+          { title: `${variant} 2`, content: "Content 2" },
+          { title: `${variant} 3`, content: "Content 3" },
+        ]}
+        {...args}
+      />
+    ))}
+  </Container>
+);
+
 export const ChevronIcon = ({ ...args }) => (
   <Container>
-    <Disclosure
+    <DisclosureGroup
       icon="chevron"
       items={[
         { title: `1`, content: "Content 1" },
@@ -72,7 +90,7 @@ export const ChevronIcon = ({ ...args }) => (
 
 export const DefaultOpen = ({ ...args }) => (
   <Container>
-    <Disclosure
+    <DisclosureGroup
       items={[
         { title: `1`, content: "Content 1", defaultOpen: true },
         { title: `2`, content: "Content 2" },
