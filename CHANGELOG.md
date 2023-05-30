@@ -1,3 +1,10 @@
+# [1.55.0](https://github.com/Neuvernetzung/design-system/compare/v1.54.3...v1.55.0) (2023-05-30)
+
+
+### Features
+
+* **ui:** Tree Komponente [#675](https://github.com/Neuvernetzung/design-system/issues/675) ([1f5360f](https://github.com/Neuvernetzung/design-system/commit/1f5360f59d658e9c6ac91e2bea03267d2441be24))
+
 ## [1.54.3](https://github.com/Neuvernetzung/design-system/compare/v1.54.2...v1.54.3) (2023-05-21)
 
 
