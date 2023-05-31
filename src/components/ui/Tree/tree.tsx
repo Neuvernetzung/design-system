@@ -1,34 +1,43 @@
 import cn from "classnames";
+import { FC, ReactNode } from "react";
+
+import {
+  borderSizesLargeB,
+  borderSizesLargeL,
+  BorderVariant,
+  extendedBorders,
+  heights,
+  paddingsX,
+  paddingsXSmall,
+  roundingsBottom,
+} from "../../../styles";
+import { Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import {
   Disclosure,
   DisclosureGroupProps,
   DisclosureItemProps,
 } from "../Disclosure";
-import {
-  BorderVariant,
-  borderSizesLargeB,
-  borderSizesLargeL,
-  extendedBorders,
-  gapsSmall,
-  heights,
-  paddingsXSmall,
-  roundingsBottom,
-} from "../../../styles";
 
-export type TreeItemProps = Omit<DisclosureItemProps, "content"> &
-  (
-    | {
-        items: TreeItemProps[];
-        content?: never;
-      }
-    | { items?: never; content: DisclosureItemProps["content"] }
-  );
+export type TreeItemProps<TItem extends {} = {}> = {
+  className?: string;
+  items?: TreeItemProps<TItem>[];
+  children?: ReactNode;
+} & TItem;
 
-export type TreeProps = Omit<DisclosureGroupProps, "items"> & {
-  items: TreeItemProps[];
+export type TreeProps<TItem extends {} = {}> = Omit<
+  DisclosureGroupProps,
+  "items"
+> & {
+  items: TreeItemProps<TItem>[];
   depth?: number;
   borderVariant?: BorderVariant;
+  disabledBorder?: boolean;
+  Item?: FC<{
+    size?: keyof Sizes;
+    children: string | ReactNode;
+    item: Omit<TreeItemProps<TItem>, "items">;
+  }>;
 };
 
 const getDepthStyles = (depth: number) => {
@@ -51,30 +60,31 @@ const borderVariants: Record<BorderVariant, string> = {
   hidden: "border-hidden",
 };
 
-const Tree = ({
+const Tree = <TItem extends {} = {}>({
   items,
-  variant = "button",
   size = "md",
   className,
   groupClassName,
   depth = 0,
   borderVariant = "solid",
+  disabledBorder,
+  Item,
   ...props
-}: TreeProps) => {
+}: TreeProps<TItem>) => {
   const depthStyles = getDepthStyles(depth);
+
+  const ItemWrapper = Item || "div";
 
   return (
     <div className={cn("flex flex-col w-full", groupClassName)}>
       {items.map(({ items: subItems, ...item }, i) => (
-        <div
-          key={`disclosure_${i}`}
-          className={cn("flex flex-row", gapsSmall[size])}
-        >
-          {depth !== 0 && (
+        <div key={`disclosure_${i}`} className={cn("flex flex-row")}>
+          {depth !== 0 && !disabledBorder && (
             <span
               className={cn(
                 "flex flex-row",
-                i + 1 >= items?.length && heights[size]
+                i + 1 >= items?.length && heights[size],
+                paddingsX[size]
               )}
             >
               {i + 1 < items?.length && (
@@ -109,31 +119,27 @@ const Tree = ({
               />
             </span>
           )}
-          <Disclosure
-            className="w-full"
+          <ItemWrapper
             size={size}
-            panelClassName="pr-0"
-            {...item}
-            {...props}
-            content={
-              subItems ? (
-                <div className={cn("h-full relative !pr-0")}>
-                  <Tree
-                    {...props}
-                    borderVariant={borderVariant}
-                    depth={depth + 1}
-                    variant={variant}
-                    size={size}
-                    items={subItems}
-                    groupClassName={groupClassName}
-                  />
-                </div>
-              ) : (
-                item.content
-              )
-            }
-            variant={variant}
-          />
+            item={item}
+            className={cn("w-full", item.className)}
+          >
+            {item.children && item.children}
+            {subItems && (
+              <div className={cn("h-full relative")}>
+                <Tree
+                  {...props}
+                  disabledBorder={disabledBorder}
+                  Item={Item}
+                  borderVariant={borderVariant}
+                  depth={depth + 1}
+                  size={size}
+                  items={subItems}
+                  groupClassName={groupClassName}
+                />
+              </div>
+            )}
+          </ItemWrapper>
         </div>
       ))}
     </div>
@@ -141,3 +147,28 @@ const Tree = ({
 };
 
 export default typedMemo(Tree);
+
+export type TreeDisclosureProps = TreeProps<
+  Omit<DisclosureItemProps, "content">
+>;
+
+const TreeDisclosureItem: TreeDisclosureProps["Item"] = ({
+  size,
+  item,
+  children,
+  ...props
+}) => (
+  <Disclosure
+    className="w-full"
+    size={size}
+    panelClassName="px-0"
+    {...item}
+    {...props}
+    content={children}
+    variant="button"
+  />
+);
+
+export const TreeDisclosure = ({ ...props }: TreeDisclosureProps) => (
+  <Tree Item={TreeDisclosureItem} {...props} />
+);
