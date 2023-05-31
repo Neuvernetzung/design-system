@@ -2,38 +2,40 @@ import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 
 import { Tree, TreeItemProps } from ".";
+import { DisclosureItemProps } from "../Disclosure";
 
-const items: TreeItemProps[] = [
+const items: TreeItemProps<Omit<DisclosureItemProps, "content">>[] = [
   {
     title: "Item 1",
-
+    children: "Überschrift",
     items: [
       {
         title: "Nested 1",
+        children: "Überschrift",
         items: [
-          { title: "Tief 1", content: "Tief content 1" },
-          { title: "Tief 2", content: "Tief content 2" },
+          { title: "Tief 1", children: "Tief content 1" },
+          { title: "Tief 2", children: "Tief content 2" },
         ],
       },
       {
         title: "Nested 2",
         items: [
-          { title: "Tief 1", content: "Tief content 1" },
-          { title: "Tief 2", content: "Tief content 2" },
+          { title: "Tief 1", children: "Tief content 1" },
+          { title: "Tief 2", children: "Tief content 2" },
         ],
       },
       {
         title: "Nested 3",
         items: [
-          { title: "Tief 1", content: "Tief content 1" },
-          { title: "Tief 2", content: "Tief content 2" },
+          { title: "Tief 1", children: "Tief content 1" },
+          { title: "Tief 2", children: "Tief content 2" },
         ],
       },
       {
         title: "Nested 4",
         items: [
-          { title: "Tief 1", content: "Tief content 1" },
-          { title: "Tief 2", content: "Tief content 2" },
+          { title: "Tief 1", children: "Tief content 1" },
+          { title: "Tief 2", children: "Tief content 2" },
         ],
       },
     ],
@@ -44,15 +46,15 @@ const items: TreeItemProps[] = [
       {
         title: "Nested 1",
         items: [
-          { title: "Tief 1", content: "Tief content 1" },
-          { title: "Tief 2", content: "Tief content 2" },
+          { title: "Tief 1", children: "Tief content 1" },
+          { title: "Tief 2", children: "Tief content 2" },
         ],
       },
       {
         title: "Nested 2",
         items: [
-          { title: "Tief 1", content: "Tief content 1" },
-          { title: "Tief 2", content: "Tief content 2" },
+          { title: "Tief 1", children: "Tief content 1" },
+          { title: "Tief 2", children: "Tief content 2" },
         ],
       },
     ],
