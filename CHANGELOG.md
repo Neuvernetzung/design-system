@@ -1,3 +1,10 @@
+## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
+
+
+### Bug Fixes
+
+* **ui:** Tree static hinzufügen [#678](https://github.com/Neuvernetzung/design-system/issues/678) ([ee8b5c8](https://github.com/Neuvernetzung/design-system/commit/ee8b5c88ebb69dbaf784b6314944871921c1ca51))
+
 # [1.55.0](https://github.com/Neuvernetzung/design-system/compare/v1.54.3...v1.55.0) (2023-05-30)
 
 
