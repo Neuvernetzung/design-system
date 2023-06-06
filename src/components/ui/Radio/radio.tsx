@@ -18,13 +18,13 @@ import {
   radioSizes,
   roundings,
   textColors,
+  textSizes,
   transition,
 } from "../../../styles";
 import type { Colors, Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
-import { labelSizes } from "../Form/formElement";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { useRouter } from "next/router";
 import { Locales } from "../../../locales/getText";
@@ -176,7 +176,7 @@ export const Radio = <
                                   ? styles.label
                                   : styles.labelDisabled,
                                 textColors.accent,
-                                labelSizes[size]
+                                textSizes[size]
                               )}
                             >
                               {label}

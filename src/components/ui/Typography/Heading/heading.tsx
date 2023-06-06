@@ -6,22 +6,9 @@ import type {
   PolymorphicPropsWithRef,
 } from "react-polymorphic-types";
 
-import { textSizes } from "../../../../styles";
+import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColors, ExtendedSizes } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
-
-export const sizes: Required<ExtendedSizes> = textSizes;
-
-export const colors: ExtendedColors = {
-  brand: "text-brand-500",
-  primary: "text-primary-500",
-  accent: "text-accent-800 dark:text-accent-100",
-  light: "text-accent-100",
-  dark: "text-accent-800",
-  success: "text-success-500",
-  warn: "text-warn-500",
-  danger: "text-danger-500",
-};
 
 export const tagMap: TagMap = {
   xs: "h6",
@@ -71,8 +58,8 @@ export const Heading: PolymorphicForwardRefExoticComponent<
         ref={ref}
         className={cn(
           "font-heading font-semibold",
-          sizes[size],
-          colors[color],
+          textSizes[size],
+          extendedTextColors[color],
           className
         )}
         {...props}

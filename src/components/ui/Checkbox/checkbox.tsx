@@ -22,13 +22,13 @@ import {
   roundings,
   roundingsSmall,
   textColors,
+  textSizes,
   transition,
 } from "../../../styles";
 import type { Colors, Sizes, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
-import { labelSizes } from "../Form/formElement";
 import { CheckboxIcon } from "./checkboxIcon";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { useRouter } from "next/router";
@@ -323,7 +323,7 @@ export const CheckboxInner = ({
               className={cn(
                 !disabled ? styles.label : styles.labelDisabled,
                 textColors.accent,
-                labelSizes[size]
+                textSizes[size]
               )}
             >
               {label}

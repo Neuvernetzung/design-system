@@ -13,6 +13,7 @@ import {
   focusRing,
   minHeights,
   roundings,
+  textSizes,
   transition,
 } from "../../../../styles";
 import { useThemeState } from "../../../../theme/useThemeState";
@@ -26,7 +27,6 @@ import {
 import { typedMemo } from "../../../../utils/internal";
 import { Icon } from "../../Icon";
 import { Spinner, useLoadingState } from "../../Loading/loading";
-import { sizes as textSizes } from "../../Typography/Text/text";
 import type { Variants } from "../button";
 import { colors, styles, variants } from "../button";
 
