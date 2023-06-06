@@ -79,6 +79,27 @@ export const Simple = ({ ...args }) => (
   />
 );
 
+export const DisabledHead = ({ ...args }) => (
+  <SimpleTable
+    disableHead
+    disabledBorder
+    hasStripes
+    cols={[
+      { id: "id", title: "Id", shrink: true },
+      { id: "name", title: "Name", grow: true },
+      { id: "title", title: "Titel", grow: true },
+      { id: "image", title: "Bild" },
+      {
+        id: "createdAt",
+        title: "Erstellung",
+      },
+      { id: "options", title: "", shrink: true },
+    ]}
+    divideY={false}
+    items={items}
+  />
+);
+
 export const Data = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
 

@@ -50,8 +50,11 @@ export const SortableTableInner = <
   disableHead = false,
   order,
   handle: hasHandle,
+  hasStripes = false,
+  disabledBorder = false,
+  divideY = true,
 }: SortableTableProps<T, TId, TItem>) => (
-  <TableContainer size={size}>
+  <TableContainer size={size} disabledBorder={disabledBorder} divideY={divideY}>
     {!disableHead && (
       <TableHead>
         <TableRow divideX={divideX}>
@@ -74,6 +77,7 @@ export const SortableTableInner = <
       </TableHead>
     )}
     <TableBodySortable
+      divideY={divideY}
       order={order}
       items={items}
       itemIds={items.map((item) => item[id])}
@@ -87,6 +91,8 @@ export const SortableTableInner = <
             id={item[id]}
             divideX={divideX}
             key={`row_${item[id]}`}
+            hasStripes={hasStripes}
+            index={i}
           >
             {({ handle }) => (
               <>

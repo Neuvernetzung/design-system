@@ -10,6 +10,7 @@ import type {
 } from "../components/ui/List";
 import type { HeadingProps } from "../components/ui/Typography/Heading/heading";
 import type { TextProps } from "../components/ui/Typography/Text";
+import type { ImageProps } from "../components/ui/Image";
 
 export enum ProseComponentTags {
   P = "p",
@@ -25,6 +26,7 @@ export enum ProseComponentTags {
   BLOCKQUOTE = "blockquote",
   A = "a",
   HR = "hr",
+  IMG = "img",
 }
 
 export interface ProseComponents {
@@ -41,9 +43,10 @@ export interface ProseComponents {
   blockquote: ProseComponent<BlockQuoteProps>;
   a: ProseComponent<NativeLinkProps>;
   hr: ProseComponent<HorizontalRuleProps>;
+  img: ProseComponent<ImageProps>;
 }
 
 interface ProseComponent<T> {
   component: string | FC;
-  props: T;
+  props: T & { className?: string };
 }

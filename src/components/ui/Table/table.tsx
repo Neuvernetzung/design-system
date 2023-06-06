@@ -2,7 +2,7 @@ import cn from "classnames";
 import get from "lodash/get";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
-import { ForwardedRef, ReactElement, ReactNode, forwardRef } from "react";
+import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
 import {
   borders,
@@ -15,7 +15,6 @@ import {
 import { Sizes } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
-
 import { Text } from "../Typography";
 
 export type SimpleTableProps<T extends string> = {
@@ -25,6 +24,9 @@ export type SimpleTableProps<T extends string> = {
   divideX?: boolean;
   uppercase?: boolean;
   disableHead?: boolean;
+  disabledBorder?: boolean;
+  hasStripes?: boolean;
+  divideY?: boolean;
 };
 
 export type SimpleTableCol<T> = {
@@ -43,8 +45,11 @@ export const SimpleTableInner = <T extends string>({
   divideX,
   uppercase = true,
   disableHead = false,
+  disabledBorder = false,
+  hasStripes = false,
+  divideY = true,
 }: SimpleTableProps<T>) => (
-  <TableContainer size={size}>
+  <TableContainer disabledBorder={disabledBorder} size={size} divideY={divideY}>
     {!disableHead && (
       <TableHead>
         <TableRow divideX={divideX}>
@@ -60,9 +65,14 @@ export const SimpleTableInner = <T extends string>({
         </TableRow>
       </TableHead>
     )}
-    <TableBody>
+    <TableBody divideY={divideY}>
       {items.map((item, i) => (
-        <TableRow divideX={divideX} key={`row_${i}`}>
+        <TableRow
+          divideX={divideX}
+          key={`row_${i}`}
+          index={i}
+          hasStripes={hasStripes}
+        >
           {cols.map((col) => (
             <TableDataCell
               item={item}
@@ -94,7 +104,14 @@ export const TableDataCell = ({
   const content = get(item, col.id);
 
   return (
-    <td className={cn(paddingsLarge[size], className)}>
+    <td
+      className={cn(
+        paddingsLarge[size],
+        col.grow && "w-[999rem]", // w-full funktioniert hier nicht.
+        col.shrink && "w-0",
+        className
+      )}
+    >
       {isString(content) || isNumber(content) ? (
         <Text size={smallerSize(size)}>{content}</Text>
       ) : (
@@ -108,15 +125,29 @@ export type TableRowProps = {
   divideX?: boolean;
   children: ReactNode;
   className?: string;
+  hasStripes?: boolean;
+  index?: number;
 };
 
 export const TableRow = forwardRef(
   (
-    { divideX, children, className, ...props }: TableRowProps,
+    {
+      divideX,
+      children,
+      className,
+      hasStripes,
+      index,
+      ...props
+    }: TableRowProps,
     ref: ForwardedRef<HTMLTableRowElement>
   ) => (
     <tr
-      className={cn(divideX && "divide-x", divides.accent, className)}
+      className={cn(
+        divideX && "divide-x",
+        divides.accent,
+        hasStripes && index && index % 2 && extendedBgColors.subtile,
+        className
+      )}
       ref={ref}
       {...props}
     >
@@ -129,10 +160,13 @@ TableRow.displayName = "TableRow";
 
 export type TableBodyProps = {
   children: ReactNode;
+  divideY?: boolean;
 };
 
-export const TableBody = ({ children }: TableBodyProps) => (
-  <tbody className={cn("divide-y", divides.accent)}>{children}</tbody>
+export const TableBody = ({ divideY = true, children }: TableBodyProps) => (
+  <tbody className={cn(divideY && "divide-y", divides.accent)}>
+    {children}
+  </tbody>
 );
 
 export type TableHeadCellProps = {
@@ -188,20 +222,27 @@ export const TableHead = ({ children }: TableHeadProps) => (
 export type TableContainerProps = {
   size?: keyof Sizes;
   children: ReactNode;
+  disabledBorder?: boolean;
+  divideY?: boolean;
 };
 
 export const TableContainer = ({
   size = "md",
+  disabledBorder,
+  divideY = true,
   children,
 }: TableContainerProps) => (
   <div
     className={cn(
-      "overflow-x-auto relative border",
-      borders.accent,
+      "overflow-x-auto relative",
+      !disabledBorder && "border",
+      !disabledBorder && borders.accent,
       roundings[size]
     )}
   >
-    <table className={cn("table-auto w-full divide-y", divides.accent)}>
+    <table
+      className={cn("table-auto w-full", divideY && "divide-y", divides.accent)}
+    >
       {children}
     </table>
   </div>

@@ -19,6 +19,7 @@ import {
   minHeights,
   paddings,
   roundings,
+  textSizes,
   transition,
 } from "../../../styles";
 import { useThemeState } from "../../../theme/useThemeState";
@@ -33,7 +34,6 @@ import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
 import { useLoadingState } from "../Loading/loading";
-import { sizes as textSizes } from "../Typography/Text/text";
 
 export const variants: Variants = {
   filled: "",

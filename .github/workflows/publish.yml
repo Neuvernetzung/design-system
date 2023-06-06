@@ -1,6 +1,8 @@
-name: Semantic release
-
-on: push
+name: Publish
+on:
+  push:
+    branches:
+      - "master"
 
 jobs:
   publish:
@@ -34,8 +36,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm run test
-
-      - name: Storybook builden
-        run: npm run build-storybook --quiet
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: npx changeset publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
