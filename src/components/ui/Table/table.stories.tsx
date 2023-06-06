@@ -82,6 +82,8 @@ export const Simple = ({ ...args }) => (
 export const DisabledHead = ({ ...args }) => (
   <SimpleTable
     disableHead
+    disabledBorder
+    hasStripes
     cols={[
       { id: "id", title: "Id", shrink: true },
       { id: "name", title: "Name", grow: true },
@@ -93,7 +95,7 @@ export const DisabledHead = ({ ...args }) => (
       },
       { id: "options", title: "", shrink: true },
     ]}
-    divideX
+    divideY={false}
     items={items}
   />
 );

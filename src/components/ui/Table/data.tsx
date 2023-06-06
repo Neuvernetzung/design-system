@@ -77,6 +77,9 @@ export const DataTableInner = <
   disclosureClassName,
   checked,
   setChecked,
+  hasStripes = false,
+  disabledBorder = false,
+  divideY = true,
 }: DataTableProps<T, K, D>) => {
   const router = useRouter();
 
@@ -99,7 +102,11 @@ export const DataTableInner = <
   };
 
   return (
-    <TableContainer size={size}>
+    <TableContainer
+      size={size}
+      disabledBorder={disabledBorder}
+      divideY={divideY}
+    >
       {!disableHead && (
         <TableHead>
           <TableRow divideX={divideX}>
@@ -145,10 +152,15 @@ export const DataTableInner = <
           </TableRow>
         </TableHead>
       )}
-      <TableBody>
+      <TableBody divideY={divideY}>
         {items.map((item, i) => (
           <>
-            <TableRow divideX={divideX} key={`row_${i}`}>
+            <TableRow
+              divideX={divideX}
+              key={`row_${i}`}
+              index={i}
+              hasStripes={hasStripes}
+            >
               {checkable && (
                 <td className={cn(paddingsEvenly[size])}>
                   <CheckboxInner
