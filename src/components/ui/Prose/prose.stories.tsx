@@ -26,7 +26,7 @@ const content = `<h1>HTML Ipsum Presents</h1>
 <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
 
 <h3>Header Level 3</h3>
-
+<img src="https://storybook.js.org/images/develop/vscode.svg" alt="Test-Bild" />
 <ul>
    <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
    <li>Aliquam tincidunt mauris eu risus.</li>
