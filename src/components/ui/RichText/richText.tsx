@@ -2,10 +2,10 @@
 import CharacterCount from "@tiptap/extension-character-count";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import cn from "classnames";
-import { KeyboardEvent, useRef, useState } from "react";
+import { KeyboardEvent, ReactNode, useRef, useState } from "react";
 import {
   Controller,
   FieldPath,
@@ -40,6 +40,7 @@ import { CustomHardBreak } from "./Extensions/hardBreak";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { useRouter } from "next/router";
 import { Locales } from "../../../locales/getText";
+import { CustomImage } from "./Extensions/image";
 
 export interface RichTextProps {
   label?: string;
@@ -49,6 +50,7 @@ export interface RichTextProps {
   maxLength?: number;
   showLength?: boolean;
   containerClassName?: string;
+  AdditionalMenuItems?: ({ editor }: { editor: Editor | null }) => ReactNode;
 }
 
 export const RichText = <
@@ -64,6 +66,7 @@ export const RichText = <
   maxLength,
   showLength,
   containerClassName,
+  AdditionalMenuItems,
 }: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     field: { value, onChange },
@@ -99,6 +102,7 @@ export const RichText = <
       CustomBlockQuote,
       CustomHorizontalRule,
       CustomHardBreak,
+      CustomImage,
     ],
     editorProps: {
       attributes: {
@@ -161,6 +165,9 @@ export const RichText = <
               selectedTag={selectedTag}
               setSelectedTag={setSelectedTag}
               setLastMenuItem={setLastMenuItem}
+              AdditionalMenuItems={
+                AdditionalMenuItems && AdditionalMenuItems({ editor })
+              }
             />
             <EditorContent
               onKeyDown={contentOnKeyDown}

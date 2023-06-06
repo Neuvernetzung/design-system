@@ -1,7 +1,7 @@
 import cn from "classnames";
 import type { ImageProps as NextImageProps } from "next/image";
 import NextImage from "next/image";
-import { useState } from "react";
+import { HTMLAttributes, useState } from "react";
 
 import { PhotoIcon } from "../../../theme/icons";
 import { typedMemo } from "../../../utils/internal";
@@ -11,6 +11,7 @@ import { Text } from "../Typography";
 export type ImageProps = NextImageProps & {
   alt: string;
   dynamicRatio?: boolean | "natural";
+  containerProps?: HTMLAttributes<HTMLDivElement>;
 };
 
 export const Image = ({
@@ -19,6 +20,7 @@ export const Image = ({
   quality,
   className,
   dynamicRatio,
+  containerProps,
 }: ImageProps) => {
   const [error, setError] = useState<boolean>(false);
   const [width, setWidth] = useState<number>();
@@ -26,8 +28,10 @@ export const Image = ({
 
   return (
     <div
+      {...containerProps}
       className={cn(
-        "relative w-full h-full flex items-center justify-center object-cover overflow-hidden",
+        "relative w-full flex items-center justify-center object-cover overflow-hidden",
+        !dynamicRatio && "h-full",
         className
       )}
     >
@@ -54,7 +58,7 @@ export const Image = ({
           }}
         />
       ) : (
-        <Fallback />
+        <Fallback src={String(src)} alt={alt} />
       )}
     </div>
   );
@@ -62,8 +66,14 @@ export const Image = ({
 
 export default typedMemo(Image);
 
-const Fallback = () => (
-  <div className="w-full h-full flex items-center justify-center bg-accent-100 dark:bg-accent-800">
+type FallbackProps = { src?: string; alt?: string };
+
+const Fallback = ({ src, alt }: FallbackProps) => (
+  <div
+    aria-describedby={src}
+    aria-label={alt}
+    className="w-full h-full flex items-center justify-center bg-accent-100 dark:bg-accent-800"
+  >
     <div className="p-2 truncate">
       <Icon size="sm" className="mx-auto" icon={PhotoIcon} />
       <Text size="xs" className="mx-auto">

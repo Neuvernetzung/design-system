@@ -3,8 +3,10 @@ import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Prose } from "..";
+import { Button, Prose } from "..";
 import { RichText } from ".";
+import { Editor } from "@tiptap/react";
+import { PhotoIcon } from "../../../theme/icons";
 
 export default {
   title: "UI/Form/RichText",
@@ -64,6 +66,41 @@ export const SelectOnTopOfEachOther = ({ ...args }) => {
     <Container>
       <RichText control={formMethods.control} name="RichText" />
       <RichText control={formMethods.control} name="RichText" />
+    </Container>
+  );
+};
+
+const MenuButtonItem = ({ editor }: { editor: Editor | null }) => (
+  <Button
+    size="sm"
+    leftIcon={PhotoIcon}
+    onClick={() => {
+      editor
+        ?.chain()
+        .focus()
+        .setImage({
+          src: "https://storybook.js.org/images/develop/vscode.svg",
+          alt: "Test",
+          title: "Image",
+        })
+        .run();
+    }}
+  >
+    Custom
+  </Button>
+);
+
+export const CustomMenuButtons = ({ ...args }) => {
+  const { control, watch } = useForm();
+
+  return (
+    <Container className="grid grid-cols-2">
+      <RichText
+        control={control}
+        AdditionalMenuItems={MenuButtonItem}
+        name="RichText"
+      />
+      <Prose content={watch("RichText")} />
     </Container>
   );
 };
