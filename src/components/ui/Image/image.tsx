@@ -8,12 +8,21 @@ import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
-export interface ImageProps extends NextImageProps {
+export type ImageProps = NextImageProps & {
   alt: string;
-}
+  dynamicRatio?: boolean | "natural";
+};
 
-export const Image = ({ src, alt, quality, className }: ImageProps) => {
+export const Image = ({
+  src,
+  alt,
+  quality,
+  className,
+  dynamicRatio,
+}: ImageProps) => {
   const [error, setError] = useState<boolean>(false);
+  const [width, setWidth] = useState<number>();
+  const [height, setHeight] = useState<number>();
 
   return (
     <div
@@ -26,11 +35,23 @@ export const Image = ({ src, alt, quality, className }: ImageProps) => {
         <NextImage
           className="object-cover object-center"
           src={src}
-          fill
+          {...(!width && !height && { fill: true })}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           quality={quality || "75"}
           alt={alt}
+          width={width}
+          height={height}
           onError={() => setError(true)}
+          onLoadingComplete={({
+            naturalWidth,
+            naturalHeight,
+            width,
+            height,
+          }) => {
+            if (!dynamicRatio) return;
+            setWidth(dynamicRatio === "natural" ? naturalWidth : width);
+            setHeight(dynamicRatio === "natural" ? naturalHeight : height);
+          }}
         />
       ) : (
         <Fallback />

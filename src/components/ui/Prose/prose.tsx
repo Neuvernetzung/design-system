@@ -8,6 +8,7 @@ import { ProseComponents, ProseComponentTags } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { BlockQuote } from "../BlockQuote";
 import { HorizontalRule } from "../HorizontalRule";
+import { Image } from "../Image";
 import { NativeLink } from "../Link";
 import { ListItem, OrderedList, UnorderedList } from "../List";
 import { Heading, Text } from "../Typography";
@@ -40,6 +41,14 @@ export const proseComponents: ProseComponents = {
     props: {},
   },
   hr: { component: HorizontalRule, props: {} },
+  img: {
+    component: Image as any,
+    props: {
+      alt: "",
+      src: "",
+      dynamicRatio: true,
+    },
+  },
 };
 
 interface CreateProseComponent {
@@ -60,7 +69,11 @@ export const createProseElement = ({
 
   return createElement(
     component,
-    { ...props, ...attributes, className },
+    {
+      ...props,
+      ...attributes,
+      className: cn(props.className, attributes?.className, className),
+    },
     children
   );
 };
