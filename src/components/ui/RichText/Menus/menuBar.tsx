@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Editor } from "@tiptap/react";
 import cn from "classnames";
-import { useRef, KeyboardEvent } from "react";
+import { useRef, KeyboardEvent, ReactNode } from "react";
 
 import {
   bordersInteractive,
@@ -36,6 +36,7 @@ type MenuBarProps = {
   selectedTag: TextTypeTags;
   setSelectedTag: (type: TextTypeTags) => void;
   setLastMenuItem: (index: Number) => void;
+  AdditionalMenuItems?: ReactNode;
 };
 
 export const MenuBar = ({
@@ -43,6 +44,7 @@ export const MenuBar = ({
   selectedTag,
   setSelectedTag,
   setLastMenuItem,
+  AdditionalMenuItems,
 }: MenuBarProps) => {
   const menuBarRef = useRef<HTMLDivElement>(null);
 
@@ -230,6 +232,9 @@ export const MenuBar = ({
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
         />
       </RichTextMenuGroup>
+      {AdditionalMenuItems && (
+        <RichTextMenuGroup>{AdditionalMenuItems}</RichTextMenuGroup>
+      )}
     </div>
   );
 };

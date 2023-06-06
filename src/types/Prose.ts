@@ -26,6 +26,7 @@ export enum ProseComponentTags {
   BLOCKQUOTE = "blockquote",
   A = "a",
   HR = "hr",
+  IMG = "img",
 }
 
 export interface ProseComponents {
