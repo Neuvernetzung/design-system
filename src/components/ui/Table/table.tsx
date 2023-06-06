@@ -94,7 +94,14 @@ export const TableDataCell = ({
   const content = get(item, col.id);
 
   return (
-    <td className={cn(paddingsLarge[size], className)}>
+    <td
+      className={cn(
+        paddingsLarge[size],
+        col.grow && "w-[999rem]", // w-full funktioniert hier nicht.
+        col.shrink && "w-0",
+        className
+      )}
+    >
       {isString(content) || isNumber(content) ? (
         <Text size={smallerSize(size)}>{content}</Text>
       ) : (
