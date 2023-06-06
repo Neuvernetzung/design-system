@@ -1,7 +1,8 @@
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { colors, Heading, sizes } from "./heading";
+import { Heading } from "./heading";
+import { extendedTextColors, textSizes } from "../../../../styles";
 
 export default {
   title: "UI/Typography/Heading",
@@ -21,7 +22,7 @@ const Container = ({ ...props }) => (
 );
 
 export const Sizes = ({ ...args }) => {
-  const _sizes = Object.keys(sizes).reverse();
+  const _sizes = Object.keys(textSizes).reverse();
 
   return (
     <Container>
@@ -38,7 +39,7 @@ Sizes.parameters = {
   controls: { exclude: "size" },
 };
 export const Colors = ({ ...args }) => {
-  const _colors = Object.keys(colors);
+  const _colors = Object.keys(extendedTextColors);
 
   return (
     <Container>

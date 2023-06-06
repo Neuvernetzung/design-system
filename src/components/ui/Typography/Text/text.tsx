@@ -10,10 +10,6 @@ import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColors, ExtendedSizes } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
 
-export const sizes: Required<ExtendedSizes> = textSizes;
-
-export const colors: ExtendedColors = extendedTextColors;
-
 const TextDefaultElement = "p";
 
 export interface TextOwnProps extends HTMLAttributes<HTMLParagraphElement> {
@@ -47,7 +43,7 @@ export const Text: PolymorphicForwardRefExoticComponent<
         ref={ref}
         className={cn(
           "font-body inline",
-          sizes[size],
+          textSizes[size],
           extendedTextColors[color],
           className
         )}
