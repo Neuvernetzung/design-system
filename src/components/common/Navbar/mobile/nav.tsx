@@ -33,13 +33,15 @@ export const MobileNav = ({
   return (
     <>
       <div className={cn("flex lg:hidden")}>
-        <IconButton
-          className={cn(textColor)}
-          icon={mobileNavOpen ? CrossIcon : MenuIcon}
-          variant="ghost"
-          ariaLabel="Toggle Navigation"
-          onClick={() => setMobileNavOpen(!mobileNavOpen)}
-        />
+        {navItems && navItems.length > 0 && (
+          <IconButton
+            className={cn(textColor)}
+            icon={mobileNavOpen ? CrossIcon : MenuIcon}
+            variant="ghost"
+            ariaLabel="Toggle Navigation"
+            onClick={() => setMobileNavOpen(!mobileNavOpen)}
+          />
+        )}
       </div>
       {mobileNavOpen && (
         <div
