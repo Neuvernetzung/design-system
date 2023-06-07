@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.56.1
+
+### Patch Changes
+
+- 7344b81: Label Text größe wieder eine größe kleiner als gewählte größe machen #698
+
 ## 1.56.0
 
 ### Minor Changes
