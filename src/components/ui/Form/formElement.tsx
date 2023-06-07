@@ -10,6 +10,7 @@ import type { Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
+import { smallerSize } from "../../../utils";
 
 export type FormElementProps = {
   error: any;
@@ -42,7 +43,7 @@ export const FormElement: FC<FormElementProps> = ({
     <span className={cn("flex flex-col gap-0.5", className)}>
       {label && (
         <label
-          className={cn(textColors.accent, textSizes[size])}
+          className={cn(textColors.accent, textSizes[smallerSize(size)])}
           htmlFor={name}
         >
           {label}
