@@ -12,6 +12,7 @@ export type ImageProps = NextImageProps & {
   alt: string;
   dynamicRatio?: boolean | "natural";
   containerProps?: HTMLAttributes<HTMLDivElement>;
+  containerClassName?: string;
 };
 
 export const Image = ({
@@ -19,6 +20,7 @@ export const Image = ({
   alt,
   quality,
   className,
+  containerClassName,
   dynamicRatio,
   containerProps,
 }: ImageProps) => {
@@ -32,12 +34,12 @@ export const Image = ({
       className={cn(
         "relative w-full flex items-center justify-center object-cover overflow-hidden",
         !dynamicRatio && "h-full",
-        className
+        containerClassName
       )}
     >
       {!error && src ? (
         <NextImage
-          className="object-cover object-center"
+          className={cn("object-cover object-center", className)}
           src={src}
           {...(!width && !height && { fill: true })}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
