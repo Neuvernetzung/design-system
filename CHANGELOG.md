@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.56.2
+
+### Patch Changes
+
+- 03eba96: Image ContainerClassName hinzufügen zu className #702
+- 4ca0443: Drawer Animation prüfen und zIndex über Navigation #703
+
 ## 1.56.1
 
 ### Patch Changes
