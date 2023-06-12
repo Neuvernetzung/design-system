@@ -55,19 +55,46 @@ type Placements = {
 
 const placements = (
   size: keyof DrawerSizes
-): Record<keyof Placements, string> => ({
-  right: cn(widths[size], "right-0 inset-y-0"),
-  left: cn(widths[size], "left-0 inset-y-0"),
-  top: cn("top-0 inset-x-0"),
-  bottom: cn("bottom-0 inset-x-0"),
+): Record<
+  keyof Placements,
+  {
+    className: string;
+    animate: Record<string, any>;
+    initial: Record<string, any>;
+  }
+> => ({
+  right: {
+    className: cn(widths[size], "right-0 inset-y-0"),
+    animate: { translateX: "0%" },
+    initial: { translateX: "100%" },
+  },
+  left: {
+    className: cn(widths[size], "left-0 inset-y-0"),
+    animate: { translateX: "0%" },
+    initial: { translateX: "-100%" },
+  },
+  top: {
+    className: cn("top-0 inset-x-0"),
+    animate: { translateY: "0%" },
+    initial: { translateY: "-100%" },
+  },
+  bottom: {
+    className: cn("bottom-0 inset-x-0"),
+    animate: { translateY: "0%" },
+    initial: { translateY: "100%" },
+  },
 });
 
-const animations = (open: boolean) => ({
+const animations = (
+  open: boolean,
+  size: keyof DrawerSizes,
+  placement: keyof Placements
+) => ({
   animate: open ? "animate" : "initial",
   initial: "initial",
   variants: {
-    animate: { translateX: "0%" },
-    initial: { translateX: "100%" },
+    animate: placements(size)[placement].animate,
+    initial: placements(size)[placement].initial,
   },
   transition: { duration: 0.075 },
 });
@@ -87,22 +114,22 @@ export const Drawer = ({
   <Dialog
     as="div"
     initialFocus={initialFocus}
-    className={cn(zIndexes.modal)}
     open={open}
     onClose={() => setOpen(false)}
   >
     <Backdrop />
 
     <MotionPanel
-      {...animations(open)}
+      {...animations(open, size, placement)}
       className={cn(
         transition,
         borders.accent,
         bgColors.white,
         paddingsLargeEvenly.lg,
         gaps.md,
-        placements(size)[placement],
+        placements(size)[placement].className,
         shadows.xl,
+        zIndexes.modal,
         "fixed overflow-y-hidden hover:overflow-y-auto w-full flex flex-col"
       )}
     >
