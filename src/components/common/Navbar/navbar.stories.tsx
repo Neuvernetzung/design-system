@@ -35,7 +35,7 @@ const baseProps: NavbarProps = {
       children: [
         {
           label: "Sub Item 1",
-          href: "#",
+          href: "1",
           subLabel: {
             children: "Hier steht eine Beschreibung.",
             hideOnMobile: true,
@@ -44,7 +44,7 @@ const baseProps: NavbarProps = {
         },
         {
           label: "Sub Item 2",
-          href: "#",
+          href: "2",
           subLabel: { children: "Hier steht eine Beschreibung." },
           tag: {
             label: "Neu",
@@ -62,14 +62,14 @@ const baseProps: NavbarProps = {
       children: [
         {
           label: "Sub Item 1",
-          href: "#",
+          href: "3",
           subLabel: {
             children: "Hier steht eine Beschreibung. Mit etwas längerem Text.",
           },
         },
         {
           label: "Disabled Item",
-          href: "#",
+          href: "4",
           subLabel: { children: "Dieses Item ist disabled." },
           disabled: true,
           icon: TrashIcon,
@@ -88,7 +88,7 @@ const baseProps: NavbarProps = {
     },
     {
       label: "Item 3",
-      href: "#",
+      href: "5",
     },
     {
       label: "Disabled",

@@ -1,17 +1,18 @@
 import cn from "classnames";
-import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { bgColors, gaps, paddingsEvenly, scrollbar } from "../../../../styles";
 import { CrossIcon, MenuIcon } from "../../../../theme/icons";
+import { useRefDimensions } from "../../../../utils/internal";
+import { IconButton } from "../../../ui";
 import { Button } from "../../../ui/Button";
 import { DisclosureGroup } from "../../../ui/Disclosure";
 import { Icon } from "../../../ui/Icon";
 import { Tag } from "../../../ui/Tag";
-import { IconButton } from "../../../ui";
 import type { NavbarProps, NavItemProps, SubNavProps } from "../navbar";
 import { NavbarMobileSubItem } from "./sub";
-import Link from "next/link";
-import { useRefDimensions } from "../../../../utils/internal";
 
 export const MobileNav = ({
   navItems,
@@ -23,6 +24,22 @@ export const MobileNav = ({
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const navbarHeight = useRefDimensions(navbarRef).height;
+
+  const router = useRouter();
+
+  useEffect(() => {
+    router.events.on(
+      "routeChangeStart",
+      () => mobileNavOpen && setMobileNavOpen(false)
+    );
+
+    return () => {
+      router.events.off(
+        "routeChangeStart",
+        () => mobileNavOpen && setMobileNavOpen(false)
+      );
+    };
+  }, []);
 
   const calcHeight = () => {
     if (!navbarHeight) return "100vh";
