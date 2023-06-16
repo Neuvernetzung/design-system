@@ -1,4 +1,10 @@
 import cn from "classnames";
+import {
+  AnimatePresence,
+  domAnimation,
+  LayoutGroup,
+  LazyMotion,
+} from "framer-motion";
 import { ElementType, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
@@ -86,22 +92,28 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
         zIndexes.notify
       )}
     >
-      {notificationArray.map(
-        ({ id, message, color = "accent", icon, variant }) => (
-          <Toast
-            key={id}
-            message={message}
-            color={color}
-            handleClose={() =>
-              setNotificationArray((oldArray) =>
-                oldArray.filter((item) => item.id !== id)
+      <LazyMotion features={domAnimation}>
+        <LayoutGroup>
+          <AnimatePresence>
+            {notificationArray.map(
+              ({ id, message, color = "accent", icon, variant }) => (
+                <Toast
+                  key={id}
+                  message={message}
+                  color={color}
+                  handleClose={() =>
+                    setNotificationArray((oldArray) =>
+                      oldArray.filter((item) => item.id !== id)
+                    )
+                  }
+                  variant={variant}
+                  icon={icon || icons[color]}
+                />
               )
-            }
-            variant={variant}
-            icon={icon || icons[color]}
-          />
-        )
-      )}
+            )}
+          </AnimatePresence>
+        </LayoutGroup>
+      </LazyMotion>
     </div>
   );
 };
