@@ -10,6 +10,7 @@ import {
   ExtendColors,
   setBorderRadius,
   setColors,
+  setDarkColors,
   ThemeProvider,
   useThemeState,
 } from ".";
@@ -77,6 +78,64 @@ export const Default = ({ ...args }) => {
   );
 };
 
+export const DarkTheme = ({ ...args }) => {
+  const { colorState } = useThemeState();
+
+  const { control, handleSubmit } = useForm<Partial<ExtendColors>>({
+    defaultValues: {
+      brand: colorState?.brand[500],
+    },
+  });
+  const { control: darkControl, handleSubmit: handleDarkSubmit } = useForm<
+    Partial<ExtendColors>
+  >({
+    defaultValues: {
+      brand: colorState?.primary[500],
+    },
+  });
+
+  const onSubmit = (data: Partial<ExtendColors>) => {
+    setColors(":root", data);
+  };
+
+  const onDarkSubmit = (data: Partial<ExtendColors>) => {
+    setDarkColors(`:root`, data);
+  };
+
+  return (
+    <Container>
+      <Form
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        className="flex flex-col gap-4"
+      >
+        <ColorPicker name="brand" label="brand" control={control} />
+        <Button type="submit" color="brand">
+          Bestätigen
+        </Button>
+      </Form>
+      <div
+        className={cn(
+          "flex flex-col gap-2 items-start p-4 border",
+          borders.accent
+        )}
+      >
+        <Tag color="brand" label=":root" />
+      </div>
+      <Form
+        handleSubmit={handleDarkSubmit}
+        onSubmit={onDarkSubmit}
+        className="flex flex-col gap-4"
+      >
+        <ColorPicker name="brand" label="brand" control={darkControl} />
+        <Button type="submit" color="brand">
+          Bestätigen
+        </Button>
+      </Form>
+    </Container>
+  );
+};
+
 export const NestedTheme = ({ ...args }) => {
   const { colorState } = useThemeState();
 
@@ -92,6 +151,12 @@ export const NestedTheme = ({ ...args }) => {
       brand: colorState?.primary[500],
     },
   });
+  const { control: nestedDarkControl, handleSubmit: handleNestedDarkSubmit } =
+    useForm<Partial<ExtendColors>>({
+      defaultValues: {
+        brand: colorState?.primary[500],
+      },
+    });
 
   const onSubmit = (data: Partial<ExtendColors>) => {
     setColors(":root", data);
@@ -99,6 +164,10 @@ export const NestedTheme = ({ ...args }) => {
 
   const onNestedSubmit = (data: Partial<ExtendColors>) => {
     setColors(".container", data);
+  };
+
+  const onNestedDarkSubmit = (data: Partial<ExtendColors>) => {
+    setDarkColors(".container", data);
   };
 
   return (
@@ -129,7 +198,25 @@ export const NestedTheme = ({ ...args }) => {
         onSubmit={onNestedSubmit}
         className="flex flex-col gap-4"
       >
-        <ColorPicker name="brand" label="brand" control={nestedControl} />
+        <ColorPicker
+          name="brand"
+          label="nested brand"
+          control={nestedControl}
+        />
+        <Button type="submit" color="brand">
+          Bestätigen
+        </Button>
+      </Form>
+      <Form
+        handleSubmit={handleNestedDarkSubmit}
+        onSubmit={onNestedDarkSubmit}
+        className="flex flex-col gap-4"
+      >
+        <ColorPicker
+          name="brand"
+          label="nested dark brand"
+          control={nestedDarkControl}
+        />
         <Button type="submit" color="brand">
           Bestätigen
         </Button>
