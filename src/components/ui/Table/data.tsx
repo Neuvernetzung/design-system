@@ -18,7 +18,7 @@ import {
   TableHeadCell,
   TableRow,
 } from "./table";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 import { disclosureAnimationVariants } from "../Disclosure/disclosure";
 
 export type DataTableProps<
@@ -185,27 +185,31 @@ export const DataTableInner = <
                 />
               ))}
             </TableRow>
-
-            <AnimatePresence initial={false}>
-              {disclosureValue && item[disclosureValue] && (
-                <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
-                  <td colSpan={checkable ? cols.length + 1 : cols.length}>
-                    <motion.span
-                      initial="initial"
-                      animate={
-                        disclosureValue && item[disclosureValue]
-                          ? "animate"
-                          : "initial"
-                      }
-                      variants={disclosureAnimationVariants}
-                      className="w-full"
-                    >
-                      {item[disclosureValue]}
-                    </motion.span>
-                  </td>
-                </tr>
-              )}
-            </AnimatePresence>
+            <LazyMotion features={domAnimation}>
+              <AnimatePresence initial={false}>
+                {disclosureValue && item[disclosureValue] && (
+                  <tr
+                    key={`row_${i}_disclosure`}
+                    className={disclosureClassName}
+                  >
+                    <td colSpan={checkable ? cols.length + 1 : cols.length}>
+                      <m.span
+                        initial="initial"
+                        animate={
+                          disclosureValue && item[disclosureValue]
+                            ? "animate"
+                            : "initial"
+                        }
+                        variants={disclosureAnimationVariants}
+                        className="w-full"
+                      >
+                        {item[disclosureValue]}
+                      </m.span>
+                    </td>
+                  </tr>
+                )}
+              </AnimatePresence>
+            </LazyMotion>
           </>
         ))}
       </TableBody>

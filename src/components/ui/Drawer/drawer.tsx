@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import cn from "classnames";
-import { motion } from "framer-motion";
+import { m, LazyMotion, domAnimation } from "framer-motion";
 import { MutableRefObject, ReactNode } from "react";
 
 import {
@@ -99,7 +99,7 @@ const animations = (
   transition: { duration: 0.075 },
 });
 
-const MotionPanel = motion(Dialog.Panel);
+const MotionPanel = m(Dialog.Panel);
 
 export const Drawer = ({
   open,
@@ -118,35 +118,36 @@ export const Drawer = ({
     onClose={() => setOpen(false)}
   >
     <Backdrop />
-
-    <MotionPanel
-      {...animations(open, size, placement)}
-      className={cn(
-        transition,
-        borders.accent,
-        bgColors.white,
-        paddingsLargeEvenly.lg,
-        gaps.md,
-        placements(size)[placement].className,
-        shadows.xl,
-        zIndexes.modal,
-        "fixed overflow-y-hidden hover:overflow-y-auto w-full flex flex-col"
-      )}
-    >
-      <div
-        className={cn(gaps.md, "flex flex-row justify-between items-center")}
+    <LazyMotion features={domAnimation}>
+      <MotionPanel
+        {...animations(open, size, placement)}
+        className={cn(
+          transition,
+          borders.accent,
+          bgColors.white,
+          paddingsLargeEvenly.lg,
+          gaps.md,
+          placements(size)[placement].className,
+          shadows.xl,
+          zIndexes.modal,
+          "fixed overflow-y-hidden hover:overflow-y-auto w-full flex flex-col"
+        )}
       >
-        {icon && <Icon icon={icon} />}
-        <Text size="lg">{title}</Text>
-        <IconButton
-          ariaLabel="closeDrawer"
-          icon={CrossIcon}
-          variant="ghost"
-          onClick={() => setOpen(false)}
-        />
-      </div>
-      {content}
-    </MotionPanel>
+        <div
+          className={cn(gaps.md, "flex flex-row justify-between items-center")}
+        >
+          {icon && <Icon icon={icon} />}
+          <Text size="lg">{title}</Text>
+          <IconButton
+            ariaLabel="closeDrawer"
+            icon={CrossIcon}
+            variant="ghost"
+            onClick={() => setOpen(false)}
+          />
+        </div>
+        {content}
+      </MotionPanel>
+    </LazyMotion>
   </Dialog>
 );
 
