@@ -1,4 +1,7 @@
+import get from "lodash/get";
+
 import type { Sizes } from "../types";
+import { getBorderRadiusVariable } from "../utils";
 
 export type BorderRadiusSizes = {
   none: any;
@@ -11,6 +14,16 @@ export type BorderRadiusSizes = {
   "3xl": any;
   full: any;
 };
+
+export const getBorderRadiusVariables = (
+  extendedBorderRadius: ReturnedBorderRadius
+) =>
+  (Object.keys(extendedBorderRadius) as Array<keyof BorderRadiusSizes>)
+    ?.map((radius) =>
+      getBorderRadiusVariable(get(extendedBorderRadius, radius), radius)
+    )
+    .flat()
+    .join(";");
 
 export type ReturnedBorderRadius = Record<keyof BorderRadiusSizes, string>;
 

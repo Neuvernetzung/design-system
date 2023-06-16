@@ -2,7 +2,7 @@ import cn from "classnames";
 import { gaps } from "../../../../styles";
 import { NavbarSubItemProps, NavLinkWrap } from "../desktop/sub";
 import { Text, Tag, Button } from "../../../ui";
-import { isString } from "lodash";
+import isString from "lodash/isString";
 
 export const NavbarMobileSubItem = ({
   disabled,
