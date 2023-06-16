@@ -1,5 +1,18 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.57.0
+
+### Minor Changes
+
+- 2eaac6c: Möglichkeit für Darkmode eigene Farben zu definieren #709
+
+### Patch Changes
+
+- 9c38af5: Datei droppen in Dropzone funktioniert nicht. #708
+- 73329b6: Notify animation hinzufügen #715
+- 5cca623: framer-motion bundle size einsparen #712
+- 10d4c1f: Tooltip animation #710
+
 ## 1.56.2
 
 ### Patch Changes
