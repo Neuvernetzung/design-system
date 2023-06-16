@@ -1,6 +1,6 @@
 import { Disclosure as HeadlessDisclosure } from "@headlessui/react";
 import cn from "classnames";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 import isString from "lodash/isString";
 import { ReactNode } from "react";
 
@@ -121,7 +121,7 @@ const Disclosure = ({
     className={cn(variants[variant]?.container, className)}
   >
     {({ open }) => (
-      <>
+      <LazyMotion features={domAnimation}>
         <HeadlessDisclosure.Button
           as={Button}
           variant="ghost"
@@ -134,7 +134,7 @@ const Disclosure = ({
           <div className="flex flex-row items-center justify-between w-full">
             {isString(title) ? <Text>{title}</Text> : title}
             <AnimatePresence initial={false} mode="wait">
-              <motion.span
+              <m.span
                 initial="initial"
                 animate={open ? "animate" : "initial"}
                 variants={{
@@ -160,12 +160,12 @@ const Disclosure = ({
                       : MinusIcon
                   }
                 />
-              </motion.span>
+              </m.span>
             </AnimatePresence>
           </div>
         </HeadlessDisclosure.Button>
         <AnimatePresence initial={false}>
-          <motion.span
+          <m.span
             initial="initial"
             animate={open ? "animate" : "initial"}
             variants={disclosureAnimationVariants}
@@ -179,9 +179,9 @@ const Disclosure = ({
                 )}
               </div>
             </HeadlessDisclosure.Panel>
-          </motion.span>
+          </m.span>
         </AnimatePresence>
-      </>
+      </LazyMotion>
     )}
   </HeadlessDisclosure>
 );
