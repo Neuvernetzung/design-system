@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.57.2
+
+### Patch Changes
+
+- 386e7c8: breakpoints als funktion bereitstellen #725
+- a01f081: Mobile Navbar wird bei Buttonclick nicht geschlossen #724
+
 ## 1.57.1
 
 ### Patch Changes
