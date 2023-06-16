@@ -57,7 +57,7 @@ export const Tag = ({
   const { colorState } = useThemeState();
 
   return (
-    <div
+    <span
       className={cn(
         "h-min flex-0 inline-flex flex-row items-center select-none",
         variants(color, colorState)[variant],
@@ -73,7 +73,7 @@ export const Tag = ({
       {leftIcon && <Icon size={capSize(size, "md")} icon={leftIcon} />}
       {label}
       {rightIcon && <Icon size={capSize(size, "md")} icon={rightIcon} />}
-    </div>
+    </span>
   );
 };
 
