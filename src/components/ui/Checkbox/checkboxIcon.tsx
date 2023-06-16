@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 
 import { CheckIcon, MinusIcon } from "../../../theme/icons";
 import { Sizes, SvgType } from "../../../types";
@@ -17,22 +17,24 @@ export const CheckboxIcon = ({
   icon,
   isIndeterminate,
 }: CheckboxIconProps) => (
-  <CheckboxTransition open={isChecked || isIndeterminate}>
-    {isChecked ? (
-      <Icon size={size} icon={icon ?? CheckIconAnimation} />
-    ) : (
-      isIndeterminate && (
-        <Icon size={size} icon={CheckIndeterminateIconAnimation} />
-      )
-    )}
-  </CheckboxTransition>
+  <LazyMotion features={domAnimation}>
+    <CheckboxTransition open={isChecked || isIndeterminate}>
+      {isChecked ? (
+        <Icon size={size} icon={icon ?? CheckIconAnimation} />
+      ) : (
+        isIndeterminate && (
+          <Icon size={size} icon={CheckIndeterminateIconAnimation} />
+        )
+      )}
+    </CheckboxTransition>
+  </LazyMotion>
 );
 
 function CheckboxTransition({ open, children }: any) {
   return (
     <AnimatePresence initial={false}>
       {open && (
-        <motion.div
+        <m.div
           variants={{
             unchecked: { scale: 0.5 },
             checked: { scale: 1 },
@@ -43,7 +45,7 @@ function CheckboxTransition({ open, children }: any) {
           className="flex h-full items-center justify-center"
         >
           {children}
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );
@@ -67,7 +69,7 @@ const animationStyle = {
   strokeDasharray: "100%",
 };
 
-const MotionCheckIcon = motion(CheckIcon);
+const MotionCheckIcon = m(CheckIcon);
 
 function CheckIconAnimation(props: any) {
   return (
@@ -79,7 +81,7 @@ function CheckIconAnimation(props: any) {
   );
 }
 
-const MotionCheckIndeterminateIcon = motion(MinusIcon);
+const MotionCheckIndeterminateIcon = m(MinusIcon);
 
 function CheckIndeterminateIconAnimation(props: any) {
   return (

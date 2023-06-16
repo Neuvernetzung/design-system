@@ -1,5 +1,6 @@
 import { Placement } from "@popperjs/core";
 import cn from "classnames";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import {
   ForwardedRef,
   forwardRef,
@@ -21,6 +22,7 @@ export type TooltipProps = {
   label?: ReactNode;
   size?: keyof Sizes;
   placement?: Placement;
+  delay?: number;
 };
 
 export const Tooltip = ({
@@ -28,10 +30,12 @@ export const Tooltip = ({
   children,
   size = "sm",
   placement = "top",
+  delay = 0,
 }: TooltipProps) => {
   const [hover, setHover] = useState<boolean>(false);
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLElement | null>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
+    null
+  );
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
@@ -50,23 +54,28 @@ export const Tooltip = ({
   return (
     <>
       <span
-        onMouseEnter={() => setHover(true)}
+        onMouseEnter={() => setTimeout(() => setHover(true), delay)}
         onMouseLeave={() => setHover(false)}
         ref={setReferenceElement}
       >
         {children}
       </span>
-      {hover &&
-        createPortal(
-          <TooltipInner
-            ref={setPopperElement}
-            styles={styles.popper}
-            attributes={attributes.popper}
-            size={size}
-            label={label}
-          />,
+      <LazyMotion features={domAnimation}>
+        {createPortal(
+          <AnimatePresence>
+            {hover && (
+              <TooltipInner
+                ref={setPopperElement}
+                styles={styles.popper}
+                attributes={attributes.popper}
+                size={size}
+                label={label}
+              />
+            )}
+          </AnimatePresence>,
           document.body
         )}
+      </LazyMotion>
     </>
   );
 };
@@ -94,7 +103,10 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
     );
 
     return (
-      <span
+      <m.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         role="tooltip"
         ref={ref || setInnerPopperElement}
         className={cn(
@@ -111,7 +123,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
         <Text size={size} color="filled">
           {label}
         </Text>
-      </span>
+      </m.span>
     );
   }
 );

@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { ReactElement } from "react";
+import { DragEvent, ReactElement, useRef, useState } from "react";
 import {
   Controller,
   FieldPathByValue,
@@ -21,10 +21,10 @@ import { Sizes } from "../../../../types";
 import { smallerSize } from "../../../../utils";
 import { typedMemo } from "../../../../utils/internal";
 import { requiredInputRule } from "../../../../utils/internal/inputRule";
+import { Button } from "../../Button";
 import { FormElement, RequiredRule } from "../../Form";
 import { Icon } from "../../Icon";
 import { Tag } from "../../Tag";
-import { Text } from "../../Typography";
 import { fileListToArray } from "./utils/fileListToArray";
 
 export type DropzoneProps = {
@@ -58,13 +58,51 @@ const Dropzone = <
 }: DropzoneProps & UseControllerProps<TFieldValues, TName>) => {
   const locale = useRouter().locale as Locales;
 
+  const [dragActive, setDragActive] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleDrag = (e: DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: DragEvent<HTMLLabelElement>, currentFiles: File[]) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer?.files && e.dataTransfer.files[0]) {
+      return handleChange(e.dataTransfer.files, currentFiles);
+    }
+    return undefined;
+  };
+
+  const handleChange = (files: FileList | null, currentFiles: File[]) => {
+    if (!files) {
+      return [];
+    }
+    const fileListArray = fileListToArray(files); // damit files als Array nutzbar sind, FileList kann nicht gemappt werden
+    const newFiles = [...(currentFiles || []), ...fileListArray];
+
+    return newFiles;
+  };
+
+  const onButtonClick = () => {
+    inputRef.current?.click();
+  };
+
   return (
     <Controller
       control={control}
       rules={{ required: requiredInputRule(required, locale) }}
       name={name}
       render={({
-        field: { onChange, value: files },
+        field: { onChange, value: currentFiles },
         fieldState: { error },
       }) => (
         <FormElement
@@ -75,11 +113,19 @@ const Dropzone = <
           name={name}
         >
           <label
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={(e) => onChange(handleDrop(e, currentFiles))}
             htmlFor={name}
             className={cn(
               "flex flex-col items-center justify-center w-full border-dashed border cursor-pointer",
               transition,
-              error ? bordersInteractive.danger : bordersInteractive.accent,
+              dragActive
+                ? bordersInteractive.primary
+                : error
+                ? bordersInteractive.danger
+                : bordersInteractive.accent,
               roundings[size]
             )}
           >
@@ -97,33 +143,31 @@ const Dropzone = <
                 size={size}
               />
               {info || (
-                <Text
-                  color={error ? "danger" : "subtile"}
+                <Button
+                  onClick={onButtonClick}
+                  className="pointer-events-none"
+                  variant="ghost"
+                  color={error ? "danger" : "accent"}
                   size={smallerSize(size)}
                 >
                   <span className="font-semibold">Zum hochladen klicken</span>{" "}
                   oder Medien hereinziehen.{" "}
-                  {files?.length > 0 && (
+                  {currentFiles?.length > 0 && (
                     <Tag
                       size="xs"
                       variant="subtile"
-                      label={`${files.length} ausgewählt.`}
+                      label={`${currentFiles.length} ausgewählt.`}
                     />
                   )}
-                </Text>
+                </Button>
               )}
             </div>
             <input
+              ref={inputRef}
               id={name}
-              onChange={(e) => {
-                if (!e.target.files) {
-                  onChange([]);
-                  return;
-                }
-                const fileListArray = fileListToArray(e.target.files); // damit files als Array nutzbar sind, FileList kann nicht gemappt werden
-                const newFiles = [...(files || []), ...fileListArray];
-                onChange(newFiles);
-              }}
+              onChange={(e) =>
+                onChange(handleChange(e.target.files, currentFiles))
+              }
               type="file"
               accept={accept}
               disabled={disabled}

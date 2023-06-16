@@ -3,12 +3,14 @@ import { extendBorderRadius, ReturnedBorderRadius } from "./extendBorderRadius";
 
 import { extendColors, ReturnedColors } from "./extendColors";
 
-type ColorState = {
+type ThemeState = {
   colorState: ReturnedColors | undefined;
+  darkColorState: ReturnedColors | undefined;
   borderRadiusState: ReturnedBorderRadius | undefined;
 };
 
-export const useThemeState = create<ColorState>(() => ({
+export const useThemeState = create<ThemeState>(() => ({
   colorState: extendColors(),
+  darkColorState: undefined,
   borderRadiusState: extendBorderRadius(),
 }));
