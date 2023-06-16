@@ -18,6 +18,7 @@ import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
+import { m } from "framer-motion";
 
 export type ToastProps = {
   message: string;
@@ -67,7 +68,10 @@ export const Toast = ({
   const { colorState } = useThemeState();
 
   return (
-    <div
+    <m.div
+      initial={{ y: 5, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 10 }}
       role="dialog"
       aria-label={color}
       className={cn(
@@ -105,7 +109,7 @@ export const Toast = ({
         icon={CrossIcon}
         className={cn(variants(color, colorState)[variant].close)}
       />
-    </div>
+    </m.div>
   );
 };
 
