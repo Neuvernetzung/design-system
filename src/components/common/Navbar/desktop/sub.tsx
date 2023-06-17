@@ -36,9 +36,12 @@ export const NavbarDesktopSubItem = ({
       className={cn("!justify-start !items-start group")}
     >
       <div
-        className={cn("flex flex-row items-center justify-between", gaps.md)}
+        className={cn(
+          "flex flex-row items-center justify-between w-full",
+          gaps.md
+        )}
       >
-        <div>
+        <div className="w-full">
           <div className={cn("flex flex-row items-center", gaps.sm)}>
             <Heading as="h4">{label}</Heading>
             {tag && <Tag variant="solid" size="sm" {...tag} />}
