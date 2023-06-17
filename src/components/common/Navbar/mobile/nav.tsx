@@ -32,10 +32,10 @@ export const MobileNav = ({
   };
 
   useEffect(() => {
-    router.events.on("routeChangeStart", handleMobileClose);
+    router.events.on("beforeHistoryChange", handleMobileClose);
 
     return () => {
-      router.events.off("routeChangeStart", handleMobileClose);
+      router.events.off("beforeHistoryChange", handleMobileClose);
     };
   }, [router]);
 
