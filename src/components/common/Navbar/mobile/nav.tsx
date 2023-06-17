@@ -27,19 +27,17 @@ export const MobileNav = ({
 
   const router = useRouter();
 
+  const handleMobileClose = () => {
+    if (mobileNavOpen) setMobileNavOpen(false);
+  };
+
   useEffect(() => {
-    router.events.on(
-      "routeChangeStart",
-      () => mobileNavOpen && setMobileNavOpen(false)
-    );
+    router.events.on("routeChangeStart", handleMobileClose);
 
     return () => {
-      router.events.off(
-        "routeChangeStart",
-        () => mobileNavOpen && setMobileNavOpen(false)
-      );
+      router.events.off("routeChangeStart", handleMobileClose);
     };
-  }, []);
+  }, [router]);
 
   const calcHeight = () => {
     if (!navbarHeight) return "100vh";
