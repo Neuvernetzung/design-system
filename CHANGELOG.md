@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.57.3
+
+### Patch Changes
+
+- fdf821b: MobileNav schließen bei Route wechsel funktioniert noch nicht. #730
+
 ## 1.57.2
 
 ### Patch Changes
