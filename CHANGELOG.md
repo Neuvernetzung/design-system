@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.57.5
+
+### Patch Changes
+
+- 3aa38b8: Funktion in useEffect hinzufügen #730
+
 ## 1.57.4
 
 ### Patch Changes
