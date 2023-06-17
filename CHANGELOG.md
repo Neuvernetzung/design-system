@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.57.6
+
+### Patch Changes
+
+- c09e6d2: routeChangeStart wieder verwenden #730
+
 ## 1.57.5
 
 ### Patch Changes
