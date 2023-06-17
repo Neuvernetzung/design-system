@@ -27,11 +27,11 @@ export const MobileNav = ({
 
   const router = useRouter();
 
-  const handleMobileClose = () => {
-    if (mobileNavOpen) setMobileNavOpen(false);
-  };
-
   useEffect(() => {
+    const handleMobileClose = () => {
+      setMobileNavOpen(false);
+    };
+
     router.events.on("beforeHistoryChange", handleMobileClose);
 
     return () => {
