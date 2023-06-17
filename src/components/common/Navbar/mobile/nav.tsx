@@ -28,14 +28,15 @@ export const MobileNav = ({
   const router = useRouter();
 
   useEffect(() => {
+    // Ermöglicht das schließen des Nav Menüs, wenn ein Navlink geklickt wurde.
     const handleMobileClose = () => {
       setMobileNavOpen(false);
     };
 
-    router.events.on("beforeHistoryChange", handleMobileClose);
+    router.events.on("routeChangeStart", handleMobileClose);
 
     return () => {
-      router.events.off("beforeHistoryChange", handleMobileClose);
+      router.events.off("routeChangeStart", handleMobileClose);
     };
   }, [router]);
 
