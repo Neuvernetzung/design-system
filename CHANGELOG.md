@@ -1,5 +1,14 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.57.7
+
+### Patch Changes
+
+- 63caa11: chore(deps-dev): bump webpack from 5.85.1 to 5.87.0
+- 826f5ca: chore(deps-dev): bump @types/node from 20.2.5 to 20.3.1
+- 844e7e3: chore(deps-dev): bump @storybook/addon-interactions from 7.0.18 to 7.0.22
+- 653e223: Create dependabot.yml
+
 ## 1.57.6
 
 ### Patch Changes
