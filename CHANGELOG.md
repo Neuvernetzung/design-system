@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.57.8
+
+### Patch Changes
+
+- 9dd9a28: chore(deps-dev): bump swiper from 9.3.2 to 9.4.1
+
 ## 1.57.7
 
 ### Patch Changes
