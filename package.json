@@ -149,7 +149,7 @@
     "typescript": "5.0.4",
     "use-lilius": "^2.0.3",
     "uuid": "^9.0.0",
-    "webpack": "^5.85.1",
+    "webpack": "^5.87.0",
     "zustand": "^4.3.8"
   },
   "repository": {
