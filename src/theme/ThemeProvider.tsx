@@ -20,6 +20,7 @@ import {
 import { Icons } from "./icons";
 import { useThemeState } from "./useThemeState";
 import { parseLocalStorageJson } from "../utils/internal/localStorage/parseJSON";
+import keys from "lodash/keys";
 
 const LOCAL_COLOR_KEY = "colors";
 const LOCAL_DARK_COLOR_KEY = "dark_colors";
@@ -32,6 +33,7 @@ type ThemeProviderProps = {
 
 export type ConfigProps = {
   colors?: Partial<ExtendColors>;
+  darkColors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
   borderRadius?: keyof Sizes;
   defaultTheme?: "system" | "light" | "dark";
@@ -122,7 +124,7 @@ export const useTheme = (
       ? parsedLocalStorageColors || colors
       : colors || parsedLocalStorageColors;
 
-    if (newColors) setColors(selector, newColors);
+    if (keys(newColors).length > 0) setColors(selector, newColors);
   }, [colors]);
 
   useEffect(() => {
@@ -135,7 +137,7 @@ export const useTheme = (
       ? parsedLocalStorageDarkColors || darkColors
       : darkColors || parsedLocalStorageDarkColors;
 
-    if (newColors) setDarkColors(selector, newColors);
+    if (keys(newColors).length > 0) setDarkColors(selector, newColors);
   }, [darkColors]);
 
   useEffect(() => {
@@ -150,7 +152,8 @@ export const useTheme = (
       ? parsedLocalStorageBorderRadius || borderRadius
       : borderRadius || parsedLocalStorageBorderRadius;
 
-    if (newBorderRadius) setBorderRadius(selector, newBorderRadius);
+    if (keys(newBorderRadius).length > 0)
+      setBorderRadius(selector, newBorderRadius);
   }, [borderRadius]);
 };
 
