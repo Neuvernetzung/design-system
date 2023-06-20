@@ -34,9 +34,11 @@ export const MobileNav = ({
     };
 
     router.events.on("routeChangeStart", handleMobileClose);
+    router.events.on("hashChangeStart", handleMobileClose);
 
     return () => {
       router.events.off("routeChangeStart", handleMobileClose);
+      router.events.off("hashChangeStart", handleMobileClose);
     };
   }, [router]);
 
