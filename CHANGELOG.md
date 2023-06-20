@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.58.0
+
+### Minor Changes
+
+- 92bcccb: Neue Option disallow Theme change #748
+
+### Patch Changes
+
+- 4f65bce: Wenn keine dunklen Farben festgelegt, dann default nehmen. Außerdem ThemeProviderConfig dunkle farben ermöglichen #749
+
 ## 1.57.8
 
 ### Patch Changes
