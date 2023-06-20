@@ -23,6 +23,7 @@ export const Image = ({
   containerClassName,
   dynamicRatio,
   containerProps,
+  ...imageProps
 }: ImageProps) => {
   const [error, setError] = useState<boolean>(false);
   const [width, setWidth] = useState<number>();
@@ -58,6 +59,7 @@ export const Image = ({
             setWidth(dynamicRatio === "natural" ? naturalWidth : width);
             setHeight(dynamicRatio === "natural" ? naturalHeight : height);
           }}
+          {...imageProps}
         />
       ) : (
         <Fallback src={String(src)} alt={alt} />
