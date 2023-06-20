@@ -1,3 +1,4 @@
+import keys from "lodash/keys";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { ReactNode, useEffect } from "react";
 
@@ -7,6 +8,7 @@ import { Notify } from "../components/ui/Notify";
 import { GeneralNotifyProps } from "../components/ui/Notify/notify";
 import { Sizes } from "../types";
 import { createCSSSelector } from "../utils/internal";
+import { parseLocalStorageJson } from "../utils/internal/localStorage/parseJSON";
 import {
   extendBorderRadius,
   getBorderRadiusVariables,
@@ -19,7 +21,6 @@ import {
 } from "./extendColors";
 import { Icons } from "./icons";
 import { useThemeState } from "./useThemeState";
-import { parseLocalStorageJson } from "../utils/internal/localStorage/parseJSON";
 
 const LOCAL_COLOR_KEY = "colors";
 const LOCAL_DARK_COLOR_KEY = "dark_colors";
@@ -32,12 +33,15 @@ type ThemeProviderProps = {
 
 export type ConfigProps = {
   colors?: Partial<ExtendColors>;
+  darkColors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
   borderRadius?: keyof Sizes;
   defaultTheme?: "system" | "light" | "dark";
   allowConfirmation?: boolean;
   allowGlobalLoading?: boolean;
   preferSetValuesBeforeConfig?: boolean;
+  forcedTheme?: "system" | "light" | "dark";
+  disableSetTheme?: boolean;
 } & NotificationConfigProps;
 
 type NotificationConfigProps =
@@ -57,9 +61,16 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     allowConfirmation,
     allowGlobalLoading,
     preferSetValuesBeforeConfig,
+    forcedTheme,
+    disableSetTheme,
   } = config || {};
 
-  useTheme(":root", { colors, borderRadius, preferSetValuesBeforeConfig });
+  useTheme(":root", {
+    colors,
+    borderRadius,
+    preferSetValuesBeforeConfig,
+    disableSetTheme,
+  });
 
   const { colorState, darkColorState, borderRadiusState } = useThemeState();
 
@@ -85,6 +96,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
       </style>
       <NextThemeProvider
         attribute="class"
+        forcedTheme={forcedTheme}
         defaultTheme={defaultTheme || "system"}
       >
         {allowNotification && <Notify {...(notifyProps || {})} />}
@@ -101,6 +113,7 @@ type UseThemeProps = {
   darkColors?: Partial<ExtendColors>;
   borderRadius?: keyof Sizes;
   preferSetValuesBeforeConfig?: boolean;
+  disableSetTheme?: boolean;
 };
 
 export const useTheme = (
@@ -110,6 +123,7 @@ export const useTheme = (
     darkColors,
     borderRadius,
     preferSetValuesBeforeConfig,
+    disableSetTheme,
   }: UseThemeProps
 ) => {
   useEffect(() => {
@@ -118,11 +132,14 @@ export const useTheme = (
     const parsedLocalStorageColors =
       parseLocalStorageJson(localStorageColors) || {};
 
-    const newColors = preferSetValuesBeforeConfig
-      ? parsedLocalStorageColors || colors
-      : colors || parsedLocalStorageColors;
+    const newColors = getPreferredValue({
+      disableSetTheme,
+      value: colors,
+      localStorageValue: parsedLocalStorageColors,
+      preferSetValuesBeforeConfig,
+    });
 
-    if (newColors) setColors(selector, newColors);
+    if (keys(newColors).length > 0) setColors(selector, newColors);
   }, [colors]);
 
   useEffect(() => {
@@ -131,11 +148,14 @@ export const useTheme = (
     const parsedLocalStorageDarkColors =
       parseLocalStorageJson(localStorageDarkColors) || {};
 
-    const newColors = preferSetValuesBeforeConfig
-      ? parsedLocalStorageDarkColors || darkColors
-      : darkColors || parsedLocalStorageDarkColors;
+    const newColors = getPreferredValue({
+      disableSetTheme,
+      value: darkColors,
+      localStorageValue: parsedLocalStorageDarkColors,
+      preferSetValuesBeforeConfig,
+    });
 
-    if (newColors) setDarkColors(selector, newColors);
+    if (keys(newColors).length > 0) setDarkColors(selector, newColors);
   }, [darkColors]);
 
   useEffect(() => {
@@ -146,13 +166,36 @@ export const useTheme = (
       localStorageBorderRadius
     );
 
-    const newBorderRadius = preferSetValuesBeforeConfig
-      ? parsedLocalStorageBorderRadius || borderRadius
-      : borderRadius || parsedLocalStorageBorderRadius;
+    const newBorderRadius = getPreferredValue({
+      disableSetTheme,
+      value: borderRadius,
+      localStorageValue: parsedLocalStorageBorderRadius,
+      preferSetValuesBeforeConfig,
+    });
 
-    if (newBorderRadius) setBorderRadius(selector, newBorderRadius);
+    if (keys(newBorderRadius).length > 0)
+      setBorderRadius(selector, newBorderRadius);
   }, [borderRadius]);
 };
+
+type GetPreferredValueProps = {
+  value: any;
+  localStorageValue: any;
+  disableSetTheme: ConfigProps["disableSetTheme"];
+  preferSetValuesBeforeConfig: ConfigProps["preferSetValuesBeforeConfig"];
+};
+
+const getPreferredValue = ({
+  disableSetTheme,
+  value,
+  localStorageValue,
+  preferSetValuesBeforeConfig,
+}: GetPreferredValueProps) =>
+  disableSetTheme
+    ? value
+    : preferSetValuesBeforeConfig
+    ? localStorageValue || value
+    : value || localStorageValue;
 
 export const setColors = (
   selector: ":root" | string,
