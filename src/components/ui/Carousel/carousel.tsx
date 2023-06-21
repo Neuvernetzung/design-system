@@ -34,6 +34,10 @@ export type CarouselProps = {
   thumbsClassName?: string;
   swiperProps?: SwiperProps;
   thumbsProps?: SwiperProps;
+  previousButtonClassName?: string;
+  nextButtonClassName?: string;
+  previousThumbButtonClassName?: string;
+  nextThumbButtonClassName?: string;
 };
 
 export const Carousel = ({
@@ -46,6 +50,10 @@ export const Carousel = ({
   thumbsClassName,
   swiperProps,
   thumbsProps,
+  previousButtonClassName,
+  nextButtonClassName,
+  previousThumbButtonClassName,
+  nextThumbButtonClassName,
 }: CarouselProps) => {
   const [thumbsSwiper, setThumbsSwiper]: any = useState(null);
   const [nextEl, nextElRef] = useSwiperRef<HTMLButtonElement>();
@@ -90,7 +98,8 @@ export const Carousel = ({
           className={cn(
             withThumbs && "lg:hidden",
             "absolute inset-y-0 left-0 z-[1] my-auto flex justify-center h-min",
-            margins.md
+            margins.md,
+            previousButtonClassName
           )}
           ref={prevElRef}
           icon={ChevronLeftIcon}
@@ -101,7 +110,8 @@ export const Carousel = ({
           className={cn(
             withThumbs && "lg:hidden",
             "absolute inset-y-0 right-0 z-[1] my-auto flex justify-center h-min",
-            margins.md
+            margins.md,
+            nextButtonClassName
           )}
           ref={nextElRef}
           icon={ChevronRightIcon}
@@ -138,13 +148,19 @@ export const Carousel = ({
             variant="ghost"
             ariaLabel="previous Thumb Element"
             icon={ChevronLeftIcon}
-            className="absolute inset-y-0 my-auto left-0 z-[1] h-min"
+            className={cn(
+              "absolute inset-y-0 my-auto left-0 z-[1] h-min",
+              previousThumbButtonClassName
+            )}
             ref={prevElRefThumb}
           />
           <IconButton
             variant="ghost"
             ariaLabel="next Thumb Element"
-            className="absolute inset-y-0 my-auto right-0 z-[1] h-min"
+            className={cn(
+              "absolute inset-y-0 my-auto right-0 z-[1] h-min",
+              nextThumbButtonClassName
+            )}
             ref={nextElRefThumb}
             icon={ChevronRightIcon}
           />
