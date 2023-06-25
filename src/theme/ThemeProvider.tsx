@@ -20,11 +20,12 @@ import {
   ReturnedColors,
 } from "./extendColors";
 import { Icons } from "./icons";
-import { useThemeState } from "./useThemeState";
-
-const LOCAL_COLOR_KEY = "colors";
-const LOCAL_DARK_COLOR_KEY = "dark_colors";
-const LOCAL_BORDER_RADIUS_KEY = "radii";
+import {
+  LOCAL_BORDER_RADIUS_KEY,
+  LOCAL_COLOR_KEY,
+  LOCAL_DARK_COLOR_KEY,
+  useThemeState,
+} from "./useThemeState";
 
 type ThemeProviderProps = {
   config?: ConfigProps;
