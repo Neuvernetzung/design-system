@@ -9,6 +9,8 @@ export const LOCAL_COLOR_KEY = "colors";
 export const LOCAL_DARK_COLOR_KEY = "dark_colors";
 export const LOCAL_BORDER_RADIUS_KEY = "radii";
 
+const isServer = typeof window === "undefined";
+
 type ThemeState = {
   colorState: ReturnedColors | undefined;
   darkColorState: ReturnedColors | undefined;
@@ -17,17 +19,21 @@ type ThemeState = {
 
 export const useThemeState = create<ThemeState>(() => ({
   colorState: extendColors(
-    parseLocalStorageJson(localStorage.getItem(LOCAL_COLOR_KEY)) || {}
+    isServer
+      ? {}
+      : parseLocalStorageJson(localStorage.getItem(LOCAL_COLOR_KEY)) || {}
   ),
-  darkColorState:
-    keys(parseLocalStorageJson(localStorage.getItem(LOCAL_DARK_COLOR_KEY)))
-      ?.length > 0
-      ? extendColors(
-          parseLocalStorageJson(localStorage.getItem(LOCAL_DARK_COLOR_KEY)) ||
-            {}
-        )
-      : undefined,
+  darkColorState: isServer
+    ? undefined
+    : keys(parseLocalStorageJson(localStorage.getItem(LOCAL_DARK_COLOR_KEY)))
+        ?.length > 0
+    ? extendColors(
+        parseLocalStorageJson(localStorage.getItem(LOCAL_DARK_COLOR_KEY)) || {}
+      )
+    : undefined,
   borderRadiusState: extendBorderRadius(
-    parseLocalStorageJson(localStorage.getItem(LOCAL_BORDER_RADIUS_KEY))
+    isServer
+      ? {}
+      : parseLocalStorageJson(localStorage.getItem(LOCAL_BORDER_RADIUS_KEY))
   ),
 }));
