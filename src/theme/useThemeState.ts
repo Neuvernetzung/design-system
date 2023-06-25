@@ -1,7 +1,13 @@
+import keys from "lodash/keys";
 import { create } from "zustand";
-import { extendBorderRadius, ReturnedBorderRadius } from "./extendBorderRadius";
 
+import { parseLocalStorageJson } from "../utils/internal/localStorage/parseJSON";
+import { extendBorderRadius, ReturnedBorderRadius } from "./extendBorderRadius";
 import { extendColors, ReturnedColors } from "./extendColors";
+
+export const LOCAL_COLOR_KEY = "colors";
+export const LOCAL_DARK_COLOR_KEY = "dark_colors";
+export const LOCAL_BORDER_RADIUS_KEY = "radii";
 
 type ThemeState = {
   colorState: ReturnedColors | undefined;
@@ -10,7 +16,18 @@ type ThemeState = {
 };
 
 export const useThemeState = create<ThemeState>(() => ({
-  colorState: extendColors(),
-  darkColorState: undefined,
-  borderRadiusState: extendBorderRadius(),
+  colorState: extendColors(
+    parseLocalStorageJson(localStorage.getItem(LOCAL_COLOR_KEY)) || {}
+  ),
+  darkColorState:
+    keys(parseLocalStorageJson(localStorage.getItem(LOCAL_DARK_COLOR_KEY)))
+      ?.length > 0
+      ? extendColors(
+          parseLocalStorageJson(localStorage.getItem(LOCAL_DARK_COLOR_KEY)) ||
+            {}
+        )
+      : undefined,
+  borderRadiusState: extendBorderRadius(
+    parseLocalStorageJson(localStorage.getItem(LOCAL_BORDER_RADIUS_KEY))
+  ),
 }));
