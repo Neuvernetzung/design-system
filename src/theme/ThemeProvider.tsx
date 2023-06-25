@@ -55,6 +55,7 @@ type NotificationConfigProps =
 export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
   const {
     colors,
+    darkColors,
     borderRadius,
     defaultTheme,
     allowNotification,
@@ -68,6 +69,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
 
   useTheme(":root", {
     colors,
+    darkColors,
     borderRadius,
     preferSetValuesBeforeConfig,
     disableSetTheme,
