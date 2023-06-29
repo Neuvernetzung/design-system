@@ -34,6 +34,7 @@ export type ModalProps = {
   headerClassName?: string;
   contentClassName?: string;
   footerClassName?: string;
+  wrapperClassName?: string;
 };
 
 export interface ModalSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
@@ -65,6 +66,7 @@ export const Modal = ({
   headerClassName,
   contentClassName,
   footerClassName,
+  wrapperClassName,
 }: ModalProps) => {
   const handleClose = () => {
     if (forbidCancellation) return;
@@ -113,7 +115,8 @@ export const Modal = ({
                   roundings.lg,
                   shadows.xl,
                   bgColors.white,
-                  borders.accent
+                  borders.accent,
+                  wrapperClassName
                 )}
               >
                 <Wrapper>
