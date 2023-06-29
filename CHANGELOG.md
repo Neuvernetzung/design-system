@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.58.6
+
+### Patch Changes
+
+- 538e425: chore(deps-dev): bump @storybook/addon-styling from 1.0.8 to 1.3.0
+- f835699: Modal Wrapper Element classname hinzufügen #781
+- 9b41733: chore(deps-dev): bump @storybook/addon-essentials from 7.0.18 to 7.0.23
+- b30518b: chore(deps-dev): bump storybook from 7.0.18 to 7.0.23
+- a2deeed: chore(deps-dev): bump @storybook/react from 7.0.18 to 7.0.23
+
 ## 1.58.5
 
 ### Patch Changes
