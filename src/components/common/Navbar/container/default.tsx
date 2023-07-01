@@ -38,6 +38,7 @@ const NavbarContainer = forwardRef(
       justifyDesktopNav,
       footer,
       footerClassName,
+      mobileNavClassName,
     }: NavbarProps & NavbarContainerProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -81,6 +82,7 @@ const NavbarContainer = forwardRef(
             navItems={navItems}
             footer={footer}
             footerClassName={footerClassName}
+            mobileNavClassName={mobileNavClassName}
           />
         </div>
       </div>
