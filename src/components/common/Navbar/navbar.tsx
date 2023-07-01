@@ -55,6 +55,7 @@ export type NavbarProps = {
   color?: keyof ExtendedColors;
   footer?: ReactNode;
   footerClassName?: string;
+  mobileNavClassName?: string;
 };
 
 export type LogoProps = {
@@ -87,6 +88,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       pagePaddingSize = "md",
       footer,
       footerClassName,
+      mobileNavClassName,
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -112,6 +114,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
         footer={footer}
         footerClassName={footerClassName}
         justifyDesktopNav={justifyDesktopNav}
+        mobileNavClassName={mobileNavClassName}
       />
     );
   }
@@ -139,6 +142,7 @@ export const SideNavbar = forwardRef<
       footer,
       footerClassName,
       sidenavRef,
+      mobileNavClassName,
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -175,6 +179,7 @@ export const SideNavbar = forwardRef<
           navItems={navItems}
           footer={footer}
           footerClassName={footerClassName}
+          mobileNavClassName={mobileNavClassName}
         />
       </>
     );

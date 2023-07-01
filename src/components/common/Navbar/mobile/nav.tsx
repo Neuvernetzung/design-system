@@ -19,8 +19,10 @@ export const MobileNav = ({
   navbarRef,
   footer,
   footerClassName,
+  mobileNavClassName,
   textColor,
-}: SubNavProps & Pick<NavbarProps, "footer" | "footerClassName">) => {
+}: SubNavProps &
+  Pick<NavbarProps, "footer" | "footerClassName" | "mobileNavClassName">) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const navbarHeight = useRefDimensions(navbarRef).height;
@@ -65,7 +67,8 @@ export const MobileNav = ({
         <div
           className={cn(
             bgColors.white,
-            "fixed inset-x-0 flex flex-col justify-between lg:hidden"
+            "fixed inset-x-0 flex flex-col justify-between lg:hidden",
+            mobileNavClassName
           )}
           style={{ top: navbarHeight, height: calcHeight() }}
         >
