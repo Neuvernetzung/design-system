@@ -111,7 +111,7 @@
     "@types/node": "20.3.1",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
-    "@types/uuid": "^9.0.1",
+    "@types/uuid": "^9.0.2",
     "autoprefixer": "^10.4.14",
     "axe-playwright": "^1.2.3",
     "bytes": "^3.1.2",
