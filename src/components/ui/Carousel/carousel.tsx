@@ -8,8 +8,8 @@ import {
   Navigation,
   Pagination,
   Thumbs,
-} from "swiper";
-import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
+} from "swiper/modules";
+import { Swiper, type SwiperProps, SwiperSlide } from "swiper/react";
 import { AutoplayOptions } from "swiper/types";
 
 import { margins } from "../../../styles";
