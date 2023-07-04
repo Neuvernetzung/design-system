@@ -10,7 +10,7 @@
     "tailwind.config.js",
     "globals.css"
   ],
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.mts",
   "private": false,
   "sideEffects": false,
   "resolutions": {
