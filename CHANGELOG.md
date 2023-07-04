@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.59.1
+
+### Patch Changes
+
+- c105aff: Types in Package zu .mts ändern #799
+
 ## 1.59.0
 
 ### Minor Changes
