@@ -34,6 +34,7 @@ export const Default = ({ ...args }) => {
 
   return (
     <Sortable
+      id="id"
       items={items}
       handleChange={handleChange}
       itemIds={items.map((item) => item.id)}
@@ -58,6 +59,7 @@ export const Controlled = ({ ...args }) => {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <Sortable
+          id="id"
           items={defaultItems}
           handleChange={handleChange}
           itemIds={defaultItems.map((item) => item.id)}
@@ -97,6 +99,7 @@ export const WithHandle = ({ ...args }) => {
 
   return (
     <Sortable
+      id="id"
       items={items}
       handleChange={handleChange}
       itemIds={items.map((item) => item.id)}
@@ -105,6 +108,7 @@ export const WithHandle = ({ ...args }) => {
         <SortableItem
           className={itemClassName}
           handle
+          indicator
           id={item.id}
           key={item.id}
         >
