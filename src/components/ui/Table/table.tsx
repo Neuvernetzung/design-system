@@ -2,9 +2,16 @@ import cn from "classnames";
 import get from "lodash/get";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
-import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ForwardedRef,
+  forwardRef,
+  ReactElement,
+  ReactNode,
+} from "react";
 
 import {
+  bgColors,
   borders,
   divides,
   extendedBgColors,
@@ -127,7 +134,7 @@ export type TableRowProps = {
   className?: string;
   hasStripes?: boolean;
   index?: number;
-};
+} & ComponentPropsWithoutRef<"tr">;
 
 export const TableRow = forwardRef(
   (
@@ -164,7 +171,7 @@ export type TableBodyProps = {
 };
 
 export const TableBody = ({ divideY = true, children }: TableBodyProps) => (
-  <tbody className={cn(divideY && "divide-y", divides.accent)}>
+  <tbody className={cn(divideY && "divide-y", divides.accent, bgColors.white)}>
     {children}
   </tbody>
 );

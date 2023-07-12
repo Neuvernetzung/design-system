@@ -1,6 +1,6 @@
 import { ChevronDownIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { IconButton } from "../Button";
 import { UseSortableChange } from "../Sortable";
@@ -216,13 +216,20 @@ export const Data1Item = ({ ...args }) => {
 };
 
 export const Sortable = ({ ...args }) => {
-  const items = [
+  const initialItems = [
     { _id: "1", name: "Item 1", order: 23 },
     { _id: "2", name: "Item 2", order: 24 },
     { _id: "3", name: "Item 3", order: 25 },
     { _id: "4", name: "Item 4", order: 27 },
     { _id: "5", name: "Item 5", order: 28 },
   ];
+
+  const [items, setItems] = useState<typeof initialItems>([]);
+  useEffect(() => {
+    setTimeout(() => {
+      setItems(initialItems);
+    }, 200);
+  }, []); // simuliert das asynchrone laden
 
   const [changed, setChanged] = useState<(typeof items)[number][]>([]);
 
@@ -241,7 +248,8 @@ export const Sortable = ({ ...args }) => {
           { id: "order", title: "Order" },
         ]}
         handle
-        divideX
+        indicator
+        hasStripes
         handleChange={handleChange}
         id="_id"
         items={items}
