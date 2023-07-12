@@ -7,6 +7,8 @@ import { PolymorphicPropsWithoutRef } from "react-polymorphic-types";
 
 import { mergeRefs, typedMemo } from "../../../utils/internal";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { DragIndicator } from "./Indicator";
+import cn from "classnames";
 
 type FunctionChildrenProps<THandle extends boolean> = {
   handle: THandle extends true
@@ -17,6 +19,7 @@ type FunctionChildrenProps<THandle extends boolean> = {
 export type SortableItemProps<THandle extends boolean> = {
   id: UniqueIdentifier;
   handle?: THandle;
+  indicator?: boolean;
   children:
     | ReactNode
     | (({ handle }: FunctionChildrenProps<THandle>) => ReactNode);
@@ -31,21 +34,32 @@ const SortableItemInner = <
   {
     id,
     handle,
+    indicator,
     as,
     children,
+    className,
     ...props
   }: PolymorphicPropsWithoutRef<SortableItemProps<THandle>, T>,
   ref: ForwardedRef<HTMLElement>
 ) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
   };
 
   const Component: ElementType = as || SortableItemDefaultElement;
+
+  if (isDragging && indicator)
+    return <DragIndicator setNodeRef={setNodeRef} style={style} />;
 
   return (
     <Component
@@ -53,6 +67,7 @@ const SortableItemInner = <
       style={style}
       {...(handle ? {} : attributes)}
       {...(handle ? {} : listeners)}
+      className={cn(isDragging && "opacity-50", className)}
       {...props}
     >
       {isFunction(children)

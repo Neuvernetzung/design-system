@@ -1,152 +1,104 @@
 import {
   DndContext,
-  DragEndEvent,
   DragOverlay,
-  DragStartEvent,
-  KeyboardSensor,
-  MouseSensor,
-  TouchSensor,
+  Modifiers,
   UniqueIdentifier,
-  useSensor,
-  useSensors,
 } from "@dnd-kit/core";
-import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  SortingStrategy,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import cn from "classnames";
 import isFunction from "lodash/isFunction";
-import { Children, cloneElement, ReactElement, useState } from "react";
+import { Children, cloneElement, ReactElement } from "react";
+import { createPortal } from "react-dom";
 
 import { typedMemo } from "../../../utils/internal";
+import {
+  AnySortableItem,
+  handleDragEnd,
+  UseSortableChange,
+} from "./utils/handleDragEnd";
+import { handleDragStart } from "./utils/handleDragStart";
+import { useSortableProps } from "./utils/useSortableProps";
 
-export type SortableChangeProps<TItem extends Record<string, any>> = {
-  newItems: TItem[];
-  changedItems: TItem[];
-  totalChangedItems: TItem[];
-};
-
-export type UseSortableChange<TItem extends Record<string, any>> = ({
-  newItems,
-  changedItems,
-}: SortableChangeProps<TItem>) => void;
-
-export type SortableProps<TItem extends Record<string, any>> = {
+export type SortableProps<TItem extends AnySortableItem> = {
   children: ReactElement[] | ((items: TItem[]) => ReactElement[]);
   items: TItem[];
   itemIds: UniqueIdentifier[];
-  id: string;
+  id?: string;
   handleChange: UseSortableChange<TItem>;
   order?: string;
+  dragOverlayClassName?: string;
+  strategy?: SortingStrategy;
+  modifiers?: Modifiers;
 };
 
-const Sortable = <TItem extends Record<string, any> = Record<string, any>>({
+const Sortable = <TItem extends AnySortableItem = AnySortableItem>({
   children,
   items,
   handleChange,
   itemIds,
-  id,
+  id = "id",
   order,
+  dragOverlayClassName,
+  strategy,
+  modifiers,
 }: SortableProps<TItem>) => {
-  const mouseSensor = useSensor(MouseSensor);
-  const touchSensor = useSensor(TouchSensor);
-  const keyboardSensor = useSensor(KeyboardSensor);
-
-  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
-
-  const [initialItems] = useState<TItem[]>(items);
-
-  const [internalItemIds, setInternalItemIds] =
-    useState<UniqueIdentifier[]>(itemIds);
-  const [internalItems, setInternalItems] = useState<TItem[]>(items);
+  const {
+    internalItems,
+    setInternalItemIds,
+    setInternalItems,
+    sensors,
+    internalItemIds,
+    activeIndex,
+    setActiveIndex,
+  } = useSortableProps({ items, itemIds });
 
   const arrayChildren = Children.toArray(
     isFunction(children) ? children(internalItems) : children
   );
 
-  const returnChange = (
-    newItems: TItem[],
-    changedItems: TItem[],
-    totalChangedItems: TItem[],
-    newItemIds: UniqueIdentifier[]
-  ) => {
-    handleChange({ newItems, changedItems, totalChangedItems });
-    setInternalItems(newItems);
-    setInternalItemIds(newItemIds);
-  };
-
-  const [activeIndex, setActiveIndex] = useState<number>();
-
-  const handleDragStart = (event: DragStartEvent) => {
-    console.log(event.active.id);
-    setActiveIndex(internalItemIds.indexOf(event.active.id));
-  };
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (active.id !== over?.id) {
-      setActiveIndex(undefined);
-      if (!over?.id) return;
-      const oldIndex = internalItemIds.indexOf(active.id);
-      const newIndex = internalItemIds.indexOf(over.id);
-
-      const newItems = arrayMove(internalItems, oldIndex, newIndex);
-      const newItemIds = arrayMove(internalItemIds, oldIndex, newIndex);
-
-      if (order) {
-        const orderValues = newItems
-          .map((item) => item[order])
-          .sort((a, b) => a - b);
-        const orderedNewItems = newItems.map((item, i) => ({
-          ...item,
-          [order]: orderValues[i],
-        }));
-        const changedItems = orderedNewItems.filter(
-          (item) =>
-            internalItems.find((_item) => _item[id] === item[id])?.[order] !==
-            item[order]
-        );
-        const totalChangedItems = orderedNewItems.filter(
-          (item) =>
-            initialItems.find((_item) => _item[id] === item[id])?.[order] !==
-            item[order]
-        );
-        returnChange(
-          orderedNewItems,
-          changedItems,
-          totalChangedItems,
-          newItemIds
-        );
-        return;
-      }
-
-      const changedItems = newItems.filter(
-        (item, i) =>
-          internalItems.findIndex((_item) => _item[id] === item[id]) !== i
-      );
-
-      const totalChangedItems = newItems.filter(
-        (item, i) =>
-          initialItems.findIndex((_item) => _item[id] === item[id]) !== i
-      );
-
-      returnChange(newItems, changedItems, totalChangedItems, newItemIds);
-    }
-  };
-
   return (
     <DndContext
+      modifiers={modifiers}
       sensors={sensors}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
+      onDragStart={(e) =>
+        handleDragStart(e, { internalItemIds, setActiveIndex })
+      }
+      onDragEnd={(e) =>
+        handleDragEnd(e, {
+          handleChange,
+          id,
+          internalItemIds,
+          internalItems,
+          items,
+          setActiveIndex,
+          setInternalItemIds,
+          setInternalItems,
+          order,
+        })
+      }
     >
-      <SortableContext items={internalItemIds}>{arrayChildren}</SortableContext>
-      <DragOverlay>
-        {activeIndex !== undefined ? (
-          <span className="opacity-50">
-            {arrayChildren?.[activeIndex]
-              ? cloneElement(arrayChildren[activeIndex] as ReactElement)
-              : null}
-          </span>
-        ) : null}
-      </DragOverlay>
+      <SortableContext
+        strategy={strategy || verticalListSortingStrategy}
+        items={internalItemIds}
+      >
+        {arrayChildren}
+      </SortableContext>
+      {createPortal(
+        <DragOverlay>
+          {activeIndex !== undefined ? (
+            <span className={cn("w-full", dragOverlayClassName)}>
+              {arrayChildren?.[activeIndex]
+                ? cloneElement(arrayChildren[activeIndex] as ReactElement)
+                : null}
+            </span>
+          ) : null}
+        </DragOverlay>,
+        document.body
+      )}
     </DndContext>
   );
 };
