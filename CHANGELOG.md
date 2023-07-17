@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.60.1
+
+### Patch Changes
+
+- 0f5bdad: rhf updaten #817
+
 ## 1.60.0
 
 ### Minor Changes
