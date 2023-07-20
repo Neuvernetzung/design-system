@@ -14,7 +14,7 @@ export default {
 } as Meta;
 
 const Container = ({ ...props }) => (
-  <div className="flex flex-col gap-5" {...props} />
+  <div className="flex flex-col gap-5 w-64 aspect-video" {...props} />
 );
 
 export const Default = ({ ...args }) => (
