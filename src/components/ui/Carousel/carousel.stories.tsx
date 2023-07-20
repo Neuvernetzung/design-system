@@ -25,8 +25,8 @@ export const Default = ({ ...args }) => (
   <Container>
     <Carousel
       slides={[
-        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
-        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" /> },
         {
           children: (
             <div className="w-full flex justify-center items-center h-full">
@@ -45,8 +45,8 @@ export const Thumbnails = ({ ...args }) => (
   <Container>
     <Carousel
       slides={[
-        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
-        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" /> },
       ]}
       className="aspect-video h-96"
       withThumbs
@@ -59,8 +59,8 @@ export const Pagination = ({ ...args }) => (
   <Container>
     <Carousel
       slides={[
-        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
-        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" /> },
       ]}
       className="aspect-video h-96"
       withPagination
@@ -73,8 +73,8 @@ export const Loop = ({ ...args }) => (
   <Container>
     <Carousel
       slides={[
-        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
-        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" /> },
       ]}
       className="aspect-video h-96"
       loop
@@ -87,8 +87,8 @@ export const Autoplay = ({ ...args }) => (
   <Container>
     <Carousel
       slides={[
-        { children: <Image src="/testImage.jpg" alt="Test-Bild" isLocal /> },
-        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" isLocal /> },
+        { children: <Image src="/testImage.jpg" alt="Test-Bild" /> },
+        { children: <Image src="/testImage-2.jpg" alt="Test-Bild" /> },
       ]}
       className="aspect-video h-96"
       autoplay
