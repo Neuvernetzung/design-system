@@ -5,6 +5,7 @@ import { FC, ReactNode } from "react";
 
 import { extendedTextColors, fillColors, textColors } from "../../../styles";
 import { TooltipInner } from "../../ui/Tooltip";
+import { getChartColor } from "../utils/colors";
 
 export type ChartTooltipProps = {
   tooltipLeft: number;
@@ -24,7 +25,6 @@ export const ChartTooltip = ({
   <AnimatePresence>
     {tooltipData !== undefined ? (
       <TooltipInPortal
-        // key={Math.random()}
         left={tooltipLeft}
         top={tooltipTop}
         style={{}}
@@ -52,6 +52,7 @@ export type ChartTooltipHoverProps = {
   hoverLineHorizontalProps?: SVGMotionProps<SVGLineElement>;
   hoverLineVerticalProps?: SVGMotionProps<SVGLineElement>;
   hoverCircleProps?: SVGMotionProps<SVGCircleElement>;
+  color?: string;
 };
 
 export const ChartTooltipHover = ({
@@ -67,6 +68,7 @@ export const ChartTooltipHover = ({
   hoverLineHorizontalProps,
   hoverLineVerticalProps,
   hoverCircleProps,
+  color = getChartColor(0),
 }: ChartTooltipHoverOwnProps & ChartTooltipHoverProps) => (
   <AnimatePresence>
     {tooltipData !== undefined ? (
@@ -138,7 +140,7 @@ export const ChartTooltipHover = ({
             cx={tooltipLeft}
             cy={tooltipTop}
             r={4}
-            stroke="currentColor"
+            stroke={color}
             strokeWidth={2}
             pointerEvents="none"
             className={cn(textColors.primary, fillColors.white)}

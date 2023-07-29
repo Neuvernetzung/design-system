@@ -1,25 +1,18 @@
 import { ResizeObserver } from "@juggle/resize-observer";
-import { Axis, AxisScale } from "@visx/axis";
-import type { AxisProps } from "@visx/axis/lib/axis/Axis";
+import { Axis } from "@visx/axis";
 import { localPoint } from "@visx/event";
 import { GridColumns, GridRows } from "@visx/grid";
-import type { AllGridColumnsProps } from "@visx/grid/lib/grids/GridColumns";
-import type { AllGridRowsProps } from "@visx/grid/lib/grids/GridRows";
 import { AreaClosed, LinePath } from "@visx/shape";
-import type { AreaClosedProps } from "@visx/shape/lib/shapes/AreaClosed";
-import type { LinePathProps } from "@visx/shape/lib/shapes/LinePath";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { bisector, extent, max, min } from "@visx/vendor/d3-array";
-import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
 import cn from "classnames";
-import type { CurveFactory } from "d3-shape";
 import { domAnimation, LazyMotion } from "framer-motion";
+import compact from "lodash/compact";
 import isFunction from "lodash/isFunction";
 import {
   ForwardedRef,
   forwardRef,
   MouseEvent,
-  ReactNode,
   TouchEvent,
   useRef,
 } from "react";
@@ -27,11 +20,7 @@ import {
 import { extendedTextColors } from "../../../styles";
 import { mergeRefs, useRefDimensions } from "../../../utils/internal";
 import { ChartTickXComponent, ChartTickYComponent } from "../components/ticks";
-import {
-  ChartTooltip,
-  ChartTooltipHover,
-  ChartTooltipHoverProps,
-} from "../components/tooltip";
+import { ChartTooltip, ChartTooltipHover } from "../components/tooltip";
 import {
   ChartAreaWrapper,
   ChartMargin,
@@ -40,72 +29,30 @@ import {
   ChartYAxisWrapper,
 } from "../components/wrapper";
 import {
-  ChartScale,
   chartScales,
   filterMissingChartData,
   getInnerDimensions,
-  MissingValueBehaviour,
 } from "../utils";
 import { getChartColor } from "../utils/colors";
+import {
+  LinechartDataFieldProps,
+  LinechartDataProps,
+  LinechartProps,
+} from "./linechart";
 
-export type LinechartDataFieldProps = { x: number | Date; y: number | null };
+export type LineSerieschartProps = {
+  series: LinechartDataProps[];
+} & Omit<LinechartProps, "data">;
 
-export type LinechartDataProps = {
-  data: LinechartDataFieldProps[];
-  color?: string;
+export type LinechartIndexedDataFieldProps = LinechartDataFieldProps & {
+  i: number;
 };
 
-export type LinechartProps = LinechartDataProps & {
-  id?: string;
-  curve?: CurveFactory;
-  hoverProps?: ChartTooltipHoverProps;
-  showLineArea?: boolean;
-  showGridColumns?: boolean;
-  gridColumnProps?: AllGridColumnsProps<AxisScale>;
-  showGridRows?: boolean;
-  gridRowProps?: AllGridRowsProps<AxisScale>;
-  allowTooltip?: boolean;
-  allowTooltipHover?: boolean;
-  xAxisProps?: Partial<AxisProps<AxisScale>>;
-  yAxisProps?: Partial<AxisProps<AxisScale>>;
-  margin?: ChartMargin;
-  lineAreaProps?: AreaClosedProps<LinechartDataFieldProps>;
-  lineProps?: LinePathProps<LinechartDataFieldProps>;
-  missingValueBehaviour?: MissingValueBehaviour;
-  xScaleType?: ChartScale;
-  yScaleType?: ChartScale;
-  formatTooltip?: (d?: LinechartDataFieldProps) => ReactNode;
-  children?:
-    | ReactNode
-    | (({
-        width,
-        innerWidth,
-        height,
-        innerHeight,
-        yScale,
-        xScale,
-        margin,
-      }: {
-        width: number;
-        innerWidth: number;
-        height: number;
-        innerHeight: number;
-        yScale:
-          | ScaleLinear<number, number, never>
-          | ScaleTime<number, number, never>;
-        xScale:
-          | ScaleLinear<number, number, never>
-          | ScaleTime<number, number, never>;
-        margin: ChartMargin;
-      }) => ReactNode);
-};
-
-export const Linechart = forwardRef(
+export const LineSerieschart = forwardRef(
   (
     {
       id,
-      data,
-      color = getChartColor(0),
+      series,
       curve,
       showLineArea = true,
       hoverProps = {
@@ -127,7 +74,7 @@ export const Linechart = forwardRef(
       gridRowProps,
       formatTooltip,
       children,
-    }: LinechartProps,
+    }: LineSerieschartProps,
     ref: ForwardedRef<SVGSVGElement>
   ) => {
     const wrapperRef = useRef(null);
@@ -141,7 +88,7 @@ export const Linechart = forwardRef(
     const getY = (d: LinechartDataFieldProps) => d.y;
 
     const allData = filterMissingChartData({
-      data,
+      data: series.map(({ data }) => data).flat(),
       getY,
       missingValueBehaviour,
     });
@@ -177,7 +124,7 @@ export const Linechart = forwardRef(
       tooltipTop = 0,
       showTooltip,
       hideTooltip,
-    } = useTooltip<LinechartDataFieldProps>();
+    } = useTooltip<LinechartIndexedDataFieldProps>();
     const { TooltipInPortal, containerRef } = useTooltipInPortal({
       detectBounds: true,
       scroll: true,
@@ -187,29 +134,46 @@ export const Linechart = forwardRef(
 
     const handleTooltip = (event: MouseEvent | TouchEvent) => {
       if (!allowTooltip && !allowTooltipHover) return;
-      const { x } = localPoint(event) || { x: 0 };
+
+      const { x, y } = localPoint(event) || { x: 0, y: 0 };
 
       const x0 = xScale.invert(x);
+      const y0 = yScale.invert(y);
 
-      const index = bisectDate(allData, x0, 1);
+      const points = compact(
+        series.map(({ data }, i) => {
+          const index = bisectDate(data, x0, 1);
 
-      const d0 = allData[index - 1];
-      const d1 = allData[index];
-      let d = d0;
-      // ist der vorherige Punkt verfügbar und wenn ja, welcher Punkt ist näher?
-      if (d1 && getX(d1)) {
-        d =
-          x0.valueOf() - getX(d0).valueOf() > getX(d1).valueOf() - x0.valueOf()
-            ? d1
-            : d0;
-      }
-      const y = getY(d);
-      if (missingValueBehaviour !== "zero" && y === null) return;
+          const d0 = data[index - 1];
+          const d1 = data[index];
+          let d = d0;
+          // ist der vorherige Punkt verfügbar und wenn ja, welcher Punkt ist näher?
+          if (d1 && getX(d1)) {
+            d =
+              x0.valueOf() - getX(d0).valueOf() >
+              getX(d1).valueOf() - x0.valueOf()
+                ? d1
+                : d0;
+          }
+          const realY = getY(d);
+          if (missingValueBehaviour !== "zero" && realY === null) return;
+
+          return { ...d, i };
+        })
+      );
+
+      const distance = (d: LinechartIndexedDataFieldProps) =>
+        Math.sqrt(
+          (xScale(x0) - xScale(getX(d))) ** 2 +
+            (yScale(y0) - yScale(getY(d) || 0)) ** 2
+        );
+
+      const d = points.reduce((a, b) => (distance(a) < distance(b) ? a : b));
 
       showTooltip({
-        tooltipData: { x: d.x, y: y || 0 },
+        tooltipData: { x: d.x, y: d.y || 0, i: d.i },
         tooltipLeft: xScale(getX(d)),
-        tooltipTop: yScale(y || 0),
+        tooltipTop: yScale(d.y || 0),
       });
     };
 
@@ -249,37 +213,43 @@ export const Linechart = forwardRef(
                 {...yAxisProps}
               />
             </ChartYAxisWrapper>
-            <LinePath
-              data={allData}
-              x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
-              y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
-              stroke={color}
-              fill="none"
-              strokeWidth="2"
-              vectorEffect="non-scaling-stroke"
-              curve={curve}
-              defined={(d) => {
-                if (missingValueBehaviour === "zero") return true;
-                return getY(d) !== null;
-              }}
-              {...lineProps}
-            />
-            {showLineArea && (
-              <AreaClosed
-                data={allData}
-                x={(d) => xScale(getX(d))}
-                y={(d) => yScale(getY(d) || 0)}
-                yScale={yScale}
-                curve={curve}
-                fill={color}
-                opacity={0.1}
-                defined={(d) => {
-                  if (missingValueBehaviour === "zero") return true;
-                  return getY(d) !== null;
-                }}
-                {...lineAreaProps}
-              />
-            )}
+            {series.map(({ data, color }, i) => (
+              <>
+                <LinePath
+                  key={`line-path-${i}`}
+                  data={data}
+                  x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
+                  y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
+                  stroke={color || getChartColor(i)}
+                  fill="none"
+                  strokeWidth="2"
+                  vectorEffect="non-scaling-stroke"
+                  curve={curve}
+                  defined={(d) => {
+                    if (missingValueBehaviour === "zero") return true;
+                    return getY(d) !== null;
+                  }}
+                  {...lineProps}
+                />
+                {showLineArea && (
+                  <AreaClosed
+                    key={`area-closed-${i}`}
+                    data={data}
+                    x={(d) => xScale(getX(d))}
+                    y={(d) => yScale(getY(d) || 0)}
+                    yScale={yScale}
+                    curve={curve}
+                    fill={color || getChartColor(i)}
+                    opacity={0.1}
+                    defined={(d) => {
+                      if (missingValueBehaviour === "zero") return true;
+                      return getY(d) !== null;
+                    }}
+                    {...lineAreaProps}
+                  />
+                )}
+              </>
+            ))}
             {allowTooltipHover && (
               <ChartTooltipHover
                 width={width}
@@ -287,6 +257,7 @@ export const Linechart = forwardRef(
                 tooltipData={tooltipData}
                 tooltipLeft={tooltipLeft}
                 tooltipTop={tooltipTop}
+                color={getChartColor(tooltipData?.i || 0)}
                 {...hoverProps}
               />
             )}
@@ -346,4 +317,4 @@ export const Linechart = forwardRef(
   }
 );
 
-Linechart.displayName = "Linechart";
+LineSerieschart.displayName = "LineSerieschart";
