@@ -1,6 +1,6 @@
 import { useEffect, useState, MutableRefObject } from "react";
 
-export const useRefDimensions = (ref?: MutableRefObject<any>) => {
+export const useRefDimensions = (ref?: MutableRefObject<Element | null>) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   const recalculateDimensions = () => {

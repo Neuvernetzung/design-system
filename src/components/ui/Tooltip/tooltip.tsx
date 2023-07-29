@@ -104,9 +104,9 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
 
     return (
       <m.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1, transition: { duration: 0.1 } }}
+        exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.1 } }}
         role="tooltip"
         ref={ref || setInnerPopperElement}
         className={cn(
