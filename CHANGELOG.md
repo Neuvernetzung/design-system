@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.62.0
+
+### Minor Changes
+
+- 3e5f121: onError Input focusen #755
+
+### Patch Changes
+
+- 960fc1d: Hardbreak bei Überschriften fixen #836
+
 ## 1.61.0
 
 ### Minor Changes
