@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.62.2
+
+### Patch Changes
+
+- f1ceaf2: TypeScript updaten #751
+
 ## 1.62.1
 
 ### Patch Changes
