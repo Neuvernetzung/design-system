@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { SearchIcon, TrashIcon } from "../../../theme/icons";
-import { Button, Heading, Icon, Input } from "../../ui";
+import { Button, Form, Heading, Icon, Input } from "../../ui";
 import { PaginatedSelect } from ".";
 import {
   PaginatedSelectItems,
@@ -92,6 +92,28 @@ export const Default = ({ ...args }) => {
       Preview={Preview}
       {...args}
     />
+  );
+};
+
+export const Error = ({ ...args }) => {
+  const { control, handleSubmit } = useForm();
+  const [page, setPage] = useState(1);
+
+  return (
+    <Form handleSubmit={handleSubmit} onSubmit={() => {}}>
+      <PaginatedSelect
+        required
+        items={items}
+        pagination={{ result: 21, activePage: page, setActivePage: setPage }}
+        control={control}
+        label="Paginated Select"
+        name="select"
+        SelectItems={SelectItems}
+        Preview={Preview}
+        {...args}
+      />
+      <Button type="submit">Bestätigen</Button>
+    </Form>
   );
 };
 
