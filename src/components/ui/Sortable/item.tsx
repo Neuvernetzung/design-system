@@ -3,7 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import isFunction from "lodash/isFunction";
 import { ElementType, ForwardedRef, forwardRef, ReactNode } from "react";
-import { PolymorphicPropsWithoutRef } from "react-polymorphic-types";
+import type { PolymorphicPropsWithoutRef } from "../../../utils/internal/polymorphic";
 
 import { mergeRefs, typedMemo } from "../../../utils/internal";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";

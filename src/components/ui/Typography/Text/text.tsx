@@ -1,14 +1,14 @@
 import cn from "classnames";
 import { ElementType, ForwardedRef, forwardRef, HTMLAttributes } from "react";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "react-polymorphic-types";
 
 import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColors, ExtendedSizes } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "../../../../utils/internal/polymorphic";
 
 const TextDefaultElement = "p";
 
