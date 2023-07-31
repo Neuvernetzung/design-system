@@ -5,6 +5,7 @@ import Underline from "@tiptap/extension-underline";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import cn from "classnames";
+import { useRouter } from "next/router";
 import { KeyboardEvent, ReactNode, useRef, useState } from "react";
 import {
   Controller,
@@ -14,6 +15,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
+import { Locales } from "../../../locales/getText";
 import {
   bordersInteractive,
   paddings,
@@ -21,6 +23,7 @@ import {
   transition,
 } from "../../../styles";
 import { focusById, typedMemo } from "../../../utils/internal";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
 import { Text } from "../Typography";
 import {
@@ -33,14 +36,11 @@ import {
   CustomOrderedList,
   CustomParagraph,
 } from "./Extensions";
+import { CustomHardBreak } from "./Extensions/hardBreak";
+import { CustomImage } from "./Extensions/image";
 import { CustomTextAlign } from "./Extensions/textAlign";
 import { MenuBar } from "./Menus/menuBar";
 import { returnTextSelection, TextTypeTags } from "./Menus/selectText";
-import { CustomHardBreak } from "./Extensions/hardBreak";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
-import { CustomImage } from "./Extensions/image";
 
 export interface RichTextProps {
   label?: string;
@@ -75,7 +75,7 @@ export const RichText = <
   const locale = useRouter().locale as Locales;
 
   const [selectedTag, setSelectedTag] = useState<TextTypeTags>(TextTypeTags.P);
-  const [lastMenuItem, setLastMenuItem] = useState<Number>(0);
+  const [lastMenuItem, setLastMenuItem] = useState<number>(0);
 
   const editor = useEditor({
     onSelectionUpdate({ editor }) {
