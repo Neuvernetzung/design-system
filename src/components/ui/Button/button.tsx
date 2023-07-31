@@ -6,7 +6,7 @@ import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
   PolymorphicPropsWithRef,
-} from "react-polymorphic-types";
+} from "../../../utils/internal/polymorphic";
 
 import {
   adjustedTextColors,

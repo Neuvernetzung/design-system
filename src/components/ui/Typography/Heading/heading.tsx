@@ -4,7 +4,7 @@ import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
   PolymorphicPropsWithRef,
-} from "react-polymorphic-types";
+} from "../../../../utils/internal/polymorphic";
 
 import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColors, ExtendedSizes } from "../../../../types";
