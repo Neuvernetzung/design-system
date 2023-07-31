@@ -9,6 +9,7 @@ import {
 
 import { Locales } from "../../../locales/getText";
 import { Sizes } from "../../../types";
+import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import {
   Button,
@@ -17,9 +18,8 @@ import {
   Modal,
   RequiredRule,
 } from "../../ui";
-import { Pagination, PaginationProps } from "../Pagination";
 import { ModalSizes } from "../../ui/Modal/modal";
-import { typedMemo } from "../../../utils/internal";
+import { Pagination, PaginationProps } from "../Pagination";
 
 export type PaginatedSelectValue<TMultiple extends boolean> =
   TMultiple extends true ? string[] : string;
@@ -151,7 +151,7 @@ const PaginatedSelect = <
       control={control}
       name={name}
       rules={{ required: requiredInputRule(required, locale) }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <>
           <FormElement
             name={name}
@@ -162,12 +162,14 @@ const PaginatedSelect = <
           >
             <div className="flex flex-col gap-2">
               <Button
+                ref={ref}
                 disabled={disabled}
                 onClick={() => {
                   onOpen(value);
                 }}
                 size={size}
                 {...buttonProps}
+                {...(error && { color: "danger" })}
               >
                 {buttonProps?.children || `Items auswählen`}
               </Button>
