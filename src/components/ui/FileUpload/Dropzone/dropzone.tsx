@@ -102,7 +102,7 @@ const Dropzone = <
       rules={{ required: requiredInputRule(required, locale) }}
       name={name}
       render={({
-        field: { onChange, value: currentFiles },
+        field: { onChange, value: currentFiles, ref: controllerRef },
         fieldState: { error },
       }) => (
         <FormElement
@@ -144,6 +144,7 @@ const Dropzone = <
               />
               {info || (
                 <Button
+                  ref={controllerRef}
                   onClick={onButtonClick}
                   className="pointer-events-none"
                   variant="ghost"

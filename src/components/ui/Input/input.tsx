@@ -21,7 +21,7 @@ import {
   inputVariants,
 } from "../../../styles/groups";
 import type { InputVariants, Sizes } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
+import { mergeRefs, typedMemo } from "../../../utils/internal";
 import {
   FormElement,
   MaxLengthRule,
@@ -119,7 +119,10 @@ export const InputInner = <
           return true;
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({
+        field: { value, onChange, ref: controllerRef },
+        fieldState: { error },
+      }) => (
         <FormElement
           error={error}
           name={name}
@@ -136,7 +139,7 @@ export const InputInner = <
             leftElement={leftElement}
             type={type}
             id={name}
-            ref={ref}
+            ref={mergeRefs([ref, controllerRef])}
             value={value}
             onChange={onChange}
             error={!!error}
@@ -175,7 +178,6 @@ export type RawInputProps = HTMLAttributes<HTMLInputElement> & {
     "children" | "className" | "pointerEvents"
   >;
   id?: string;
-  ref?: Ref<HTMLInputElement>;
   value?: string;
   onChange?: (...event: any[]) => void;
   error?: boolean;
@@ -190,85 +192,91 @@ export type RawInputProps = HTMLAttributes<HTMLInputElement> & {
   type?: HTMLInputElement["type"];
 };
 
-export const RawInput = ({
-  containerClassName,
-  leftAddon,
-  leftElement,
-  id,
-  type = "text",
-  size = "md",
-  variant = "outline",
-  ref,
-  value,
-  onChange,
-  error,
-  disabled = false,
-  rightAddon,
-  inputClassName,
-  rightElement,
-  step,
-  ...props
-}: RawInputProps) => {
-  const leftElementRef: any = useRef(null);
-  const rightElementRef: any = useRef(null);
-  const [leftElementWidth, setleftElementWidth] = useState<number>();
-  const [rightElementWidth, setRightElementWidth] = useState<number>();
-  useEffect(() => {
-    setleftElementWidth(leftElementRef?.current?.clientWidth);
-    setRightElementWidth(rightElementRef?.current?.clientWidth);
-  }, []);
+export const RawInput = forwardRef(
+  (
+    {
+      containerClassName,
+      leftAddon,
+      leftElement,
+      id,
+      type = "text",
+      size = "md",
+      variant = "outline",
+      value,
+      onChange,
+      error,
+      disabled = false,
+      rightAddon,
+      inputClassName,
+      rightElement,
+      step,
+      ...props
+    }: RawInputProps,
+    ref: ForwardedRef<HTMLInputElement>
+  ) => {
+    const leftElementRef = useRef<HTMLDivElement>(null);
+    const rightElementRef = useRef<HTMLDivElement>(null);
+    const [leftElementWidth, setleftElementWidth] = useState<number>();
+    const [rightElementWidth, setRightElementWidth] = useState<number>();
+    useEffect(() => {
+      setleftElementWidth(leftElementRef?.current?.clientWidth);
+      setRightElementWidth(rightElementRef?.current?.clientWidth);
+    }, []);
 
-  return (
-    <div className={cn(styles.containerBase, containerClassName)}>
-      {leftAddon && (
-        <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
-      )}
-      {leftElement && (
-        <InputElement
-          size={size}
-          isLeft
-          ref={leftElementRef}
-          {...leftElement}
-        />
-      )}
-      <input
-        type={type}
-        id={id}
-        ref={ref}
-        value={value}
-        onChange={onChange}
-        onWheel={(e: any) => e.target?.type === "number" && e.target?.blur()} // damit beim scrollen die zahl nicht versehentlich verändert wird
-        className={cn(
-          getInputStyles({
-            size,
-            variant,
-            error: !!error,
-            disabled,
-            leftAddon,
-            rightAddon,
-          }),
-          inputClassName
+    return (
+      <div className={cn(styles.containerBase, containerClassName)}>
+        {leftAddon && (
+          <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
         )}
-        style={{
-          paddingLeft: leftElement && leftElementWidth,
-          paddingRight: rightElement && rightElementWidth,
-        }}
-        step={step}
-        disabled={disabled}
-        {...props}
-      />
-
-      {rightAddon && (
-        <InputAddon size={size} variant={variant} isRight {...rightAddon} />
-      )}
-      {rightElement && (
-        <InputElement
-          size={size}
-          isRight
-          ref={rightElementRef}
-          {...rightElement}
+        {leftElement && (
+          <InputElement
+            size={size}
+            isLeft
+            ref={leftElementRef}
+            {...leftElement}
+          />
+        )}
+        <input
+          type={type}
+          id={id}
+          ref={ref}
+          value={value}
+          onChange={onChange}
+          onWheel={(e: any) => e.target?.type === "number" && e.target?.blur()} // damit beim scrollen die zahl nicht versehentlich verändert wird
+          className={cn(
+            getInputStyles({
+              size,
+              variant,
+              error: !!error,
+              disabled,
+              leftAddon,
+              rightAddon,
+            }),
+            inputClassName
+          )}
+          style={{
+            paddingLeft: leftElement && leftElementWidth,
+            paddingRight: rightElement && rightElementWidth,
+          }}
+          step={step}
+          disabled={disabled}
+          {...props}
         />
-      )}
-    </div>
-  );
-};
+
+        {rightAddon && (
+          <InputAddon size={size} variant={variant} isRight {...rightAddon} />
+        )}
+        {rightElement && (
+          <InputElement
+            size={size}
+            isRight
+            ref={rightElementRef}
+            {...rightElement}
+          />
+        )}
+      </div>
+    );
+  }
+);
+
+RawInput.displayName = "RawInput";

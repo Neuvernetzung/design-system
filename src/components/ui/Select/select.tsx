@@ -267,7 +267,7 @@ export const SelectInner = <
         required: requiredInputRule(required, locale),
       }}
       render={({
-        field: { value: values, onChange },
+        field: { value: values, onChange, ref: controllerRef },
         fieldState: { error },
       }) => (
         <FormElement
@@ -302,7 +302,12 @@ export const SelectInner = <
                   style={{
                     paddingRight: rightElementWidth,
                   }}
-                  ref={mergeRefs([buttonRef, ref, setReferenceElement])}
+                  ref={mergeRefs([
+                    buttonRef,
+                    ref,
+                    setReferenceElement,
+                    controllerRef,
+                  ])}
                   onKeyUp={(e: any) => handleLeftAndRightArrow(e)}
                 >
                   {!multiple

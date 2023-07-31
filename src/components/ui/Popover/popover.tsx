@@ -72,8 +72,9 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
     const buttonRef = useRef<ExtendedButton>(null);
     const [referenceElement, setReferenceElement] =
       useState<HTMLElement | null>(null);
-    const [popperElement, setPopperElement] =
-      useState<HTMLElement | null>(null);
+    const [popperElement, setPopperElement] = useState<HTMLElement | null>(
+      null
+    );
     const { styles, attributes } = usePopper(
       _referenceElement?.current || referenceElement,
       popperElement,

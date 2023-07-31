@@ -22,7 +22,7 @@ import {
   roundings,
   transition,
 } from "../../../styles";
-import { focusById, typedMemo } from "../../../utils/internal";
+import { focusById, mergeRefs, typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
 import { Text } from "../Typography";
@@ -144,10 +144,10 @@ export const RichText = <
       rules={{
         required: requiredInputRule(required, locale),
       }}
-      render={({ fieldState: { error } }) => (
+      render={({ field: { ref }, fieldState: { error } }) => (
         <FormElement name={name} label={label} helper={helper} error={error}>
           <div
-            ref={containerRef}
+            ref={mergeRefs([containerRef, ref])}
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
             onKeyDown={containerOnKeyDown}

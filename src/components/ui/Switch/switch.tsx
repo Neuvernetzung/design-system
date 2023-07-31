@@ -20,7 +20,7 @@ import {
   transition,
 } from "../../../styles";
 import { Colors, Sizes } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
+import { mergeRefs, typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "../Form";
 import { FormElement } from "../Form";
 import { Text } from "../Typography";
@@ -75,7 +75,10 @@ export const SwitchInner = <
       rules={{
         required: requiredInputRule(required, locale),
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({
+        field: { value, onChange, ref: controllerRef },
+        fieldState: { error },
+      }) => (
         <FormElement
           error={error}
           name={name}
@@ -95,7 +98,7 @@ export const SwitchInner = <
             <HeadlessSwitch checked={value} as={Fragment} onChange={onChange}>
               {({ checked }) => (
                 <button
-                  ref={ref}
+                  ref={mergeRefs([ref, controllerRef])}
                   disabled={disabled}
                   type="button"
                   aria-label={name}

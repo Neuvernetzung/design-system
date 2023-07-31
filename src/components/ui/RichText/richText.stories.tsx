@@ -7,6 +7,7 @@ import { Button, Prose } from "..";
 import { RichText } from ".";
 import { Editor } from "@tiptap/react";
 import { PhotoIcon } from "../../../theme/icons";
+import { Form } from "../Form/form";
 
 export default {
   title: "UI/Form/RichText",
@@ -37,6 +38,31 @@ export const Default = ({ ...args }) => {
         showLength
       />
     </Container>
+  );
+};
+
+export const Error = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={(data) => {
+        console.log(data);
+      }}
+    >
+      <Container>
+        <RichText
+          required
+          maxLength={120}
+          control={formMethods.control}
+          name="RichText"
+          placeholder="Schreib etwas..."
+          showLength
+        />
+        <Button type="submit">Bestätigen</Button>
+      </Container>
+    </Form>
   );
 };
 

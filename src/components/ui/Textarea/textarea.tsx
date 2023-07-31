@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, ReactNode, forwardRef } from "react";
 import {
   Controller,
   FieldPath,
@@ -13,7 +13,7 @@ import {
   inputVariants,
 } from "../../../styles/groups";
 import type { InputVariants, Sizes } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
+import { mergeRefs, typedMemo } from "../../../utils/internal";
 import {
   FormElement,
   MaxLengthRule,
@@ -36,7 +36,7 @@ export const variants = inputVariants;
 
 export type TextareaProps = {
   label?: string;
-  helper?: any;
+  helper?: ReactNode;
   size?: keyof Sizes;
   variant?: keyof InputVariants;
   placeholder?: string;
@@ -86,7 +86,10 @@ export const TextareaInner = <
         minLength: minLengthInputRule(minLength, locale),
         pattern: patternInputRule(pattern, locale),
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({
+        field: { value, onChange, ref: controllerRef },
+        fieldState: { error },
+      }) => (
         <FormElement
           error={error}
           name={name}
@@ -97,7 +100,7 @@ export const TextareaInner = <
           <div className="relative">
             <textarea
               id={name}
-              ref={ref}
+              ref={mergeRefs([ref, controllerRef])}
               value={value}
               onChange={onChange}
               className={cn(
