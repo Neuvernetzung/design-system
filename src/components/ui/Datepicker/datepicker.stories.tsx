@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { Sizes as SizesT } from "../../../types";
 import { Form } from "../Form";
 import { Datepicker } from ".";
+import { Button } from "../Button";
 
 export default {
   title: "UI/Form/Datepicker",
@@ -203,6 +204,27 @@ export const DefaultValue = ({ ...args }) => {
         placeholder="Datum auswählen"
         {...args}
       />
+    </Form>
+  );
+};
+export const Error = ({ ...args }) => {
+  const formMethods = useForm({});
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Datepicker
+        required
+        name="date"
+        label="Date"
+        control={formMethods.control}
+        placeholder="Datum auswählen"
+        {...args}
+      />
+      <Button type="submit">Bestätigen</Button>
     </Form>
   );
 };

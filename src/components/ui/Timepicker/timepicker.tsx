@@ -85,7 +85,10 @@ export const Timepicker = <
           return true;
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({
+        field: { value, onChange, ref: controllerRef },
+        fieldState: { error },
+      }) => (
         <FormElement
           name={name}
           error={error}
@@ -94,6 +97,7 @@ export const Timepicker = <
           size={size}
         >
           <RawInput
+            ref={controllerRef}
             type="time"
             variant={inputVariant}
             placeholder={placeholder}

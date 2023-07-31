@@ -56,7 +56,7 @@ export const ColorPicker = <
         required: requiredInputRule(required, locale),
         pattern: patternInputRule(hexRegex, locale),
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <FormElement
           error={error}
           name={name}
@@ -65,6 +65,7 @@ export const ColorPicker = <
           size={size}
         >
           <Popover
+            ref={ref}
             buttonProps={{
               variant,
               size,

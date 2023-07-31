@@ -233,7 +233,7 @@ export const Error = ({ ...args }) => {
       <Radio
         control={formMethods.control}
         variant="button"
-        name="radio_error"
+        name="radio_error_2"
         label="Alle Error"
         required
         options={[

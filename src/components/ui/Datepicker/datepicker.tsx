@@ -393,7 +393,7 @@ export const Datepicker = <
       rules={{
         required: requiredInputRule(required, locale),
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <div className={cn()}>
           <FormElement
             name={name}
@@ -403,6 +403,7 @@ export const Datepicker = <
             size={size}
           >
             <Popover
+              ref={ref}
               focus
               buttonAs="button"
               placement="bottom"
