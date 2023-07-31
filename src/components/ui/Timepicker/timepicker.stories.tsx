@@ -41,6 +41,28 @@ export const Default = ({ ...args }) => {
     </Form>
   );
 };
+export const Error = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Timepicker
+        required
+        control={formMethods.control}
+        name="Timepicker-1"
+        label="Timepicker"
+        removeAll
+        placeholder="Zeit auswählen"
+        {...args}
+      />
+      <Button type="submit">Bestätigen</Button>
+    </Form>
+  );
+};
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
 

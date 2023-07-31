@@ -18,7 +18,7 @@ import { getInputStyles } from "../../../../styles/groups";
 import { CrossIcon, PlusIcon } from "../../../../theme/icons";
 import { InputVariants, Sizes } from "../../../../types";
 import { capSize } from "../../../../utils";
-import { typedMemo } from "../../../../utils/internal";
+import { mergeRefs, typedMemo } from "../../../../utils/internal";
 import { Button, ButtonGroup, IconButton } from "../../Button";
 import { FormElement, RequiredRule } from "../../Form";
 import { Text } from "../../Typography";
@@ -92,7 +92,7 @@ export const InputWithTagsInner = <
         required: requiredInputRule(required, locale),
       }}
       render={({
-        field: { value: values, onChange },
+        field: { value: values, onChange, ref: controlleRef },
         fieldState: { error },
       }) => (
         <FormElement
@@ -108,7 +108,7 @@ export const InputWithTagsInner = <
               <input
                 type={type}
                 id={name}
-                ref={ref}
+                ref={mergeRefs([ref, controlleRef])}
                 value={inputState}
                 onChange={(e) => setInputState(e.target.value)}
                 onWheel={(e: any) =>

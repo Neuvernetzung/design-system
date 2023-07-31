@@ -1,5 +1,6 @@
 import { RadioGroup } from "@headlessui/react";
 import cn from "classnames";
+import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import {
   Controller,
@@ -8,6 +9,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
+import { Locales } from "../../../locales/getText";
 import {
   borders,
   bordersInteractive,
@@ -23,11 +25,9 @@ import {
 } from "../../../styles";
 import type { Colors, Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
 
 export const checkedColors: Colors = {
   brand:
@@ -59,7 +59,7 @@ export interface RadioVariants {
 export type RadioProps = {
   variant?: keyof RadioVariants;
   label?: string;
-  helper?: any;
+  helper?: ReactNode;
   options: RadioOptionProps[];
   required?: RequiredRule;
   size?: keyof Sizes;
@@ -110,7 +110,7 @@ export const Radio = <
       rules={{
         required: requiredInputRule(required, locale),
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <FormElement
           error={error}
           name={name}
@@ -133,6 +133,7 @@ export const Radio = <
 
                 return (
                   <RadioGroup.Option
+                    ref={ref}
                     id={`${name}_option_${i}`}
                     key={value}
                     disabled={_disabled}

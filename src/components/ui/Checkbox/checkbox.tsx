@@ -1,7 +1,13 @@
 import cn from "classnames";
 import isArray from "lodash/isArray";
 import isString from "lodash/isString";
-import { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import {
+  ForwardedRef,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  forwardRef,
+} from "react";
 import {
   Controller,
   FieldError,
@@ -105,7 +111,7 @@ export const Checkbox = <
         required: requiredInputRule(required, locale),
       }}
       render={({
-        field: { value: current, onChange },
+        field: { value: current, onChange, ref },
         fieldState: { error },
       }) => (
         <FormElement
@@ -131,6 +137,7 @@ export const Checkbox = <
 
                 return (
                   <CheckboxInner
+                    ref={ref}
                     id={`checkbox_${name}_${i}`}
                     key={`checkbox_${name}_${i}`}
                     current={current}
@@ -212,139 +219,147 @@ type CheckboxInnerIndeterminateProps =
     }
   | { allowIndetermination?: false; value: string };
 
-export const CheckboxInner = ({
-  current,
-  id,
-  value,
-  label,
-  disabled,
-  size = "md",
-  variant = "default",
-  color = "primary",
-  onChange,
-  options,
-  icon,
-  error,
-  allowIndetermination,
-}: CheckboxInnerProps) => {
-  const _isIndeterminate = allowIndetermination
-    ? isIndeterminate(current, options)
-    : undefined;
-  const _isChecked = allowIndetermination
-    ? isIndeterminateChecked(current, options)
-    : isChecked(current, value);
-  const _onChange = () =>
-    onChange(
-      !allowIndetermination
-        ? handleChange(current, options, value)
-        : handleChangeIndeterminate(options, _isChecked, _isIndeterminate)
-    );
-
-  return (
-    <div
-      key={id}
-      role="checkbox"
-      aria-checked={
-        _isChecked
-          ? true
-          : allowIndetermination && _isIndeterminate
-          ? "mixed"
-          : false
-      }
-      aria-label={
+export const CheckboxInner = forwardRef(
+  (
+    {
+      current,
+      id,
+      value,
+      label,
+      disabled,
+      size = "md",
+      variant = "default",
+      color = "primary",
+      onChange,
+      options,
+      icon,
+      error,
+      allowIndetermination,
+    }: CheckboxInnerProps,
+    ref: ForwardedRef<any>
+  ) => {
+    const _isIndeterminate = allowIndetermination
+      ? isIndeterminate(current, options)
+      : undefined;
+    const _isChecked = allowIndetermination
+      ? isIndeterminateChecked(current, options)
+      : isChecked(current, value);
+    const _onChange = () =>
+      onChange(
         !allowIndetermination
-          ? isString(label)
-            ? label
-            : value
-          : "indeterminationCheckbox"
-      }
-      aria-disabled={disabled ? true : undefined}
-      tabIndex={(() => {
-        if (disabled) return -1;
-        return 0;
-      })()}
-      className={cn(
-        "w-fit",
-        styles.base,
-        gapsSmall[size],
-        focus[color],
-        roundings[size]
-      )}
-      onClick={(e: MouseEvent) => {
-        if (disabled) return;
-        e.preventDefault();
-        e.stopPropagation();
-        _onChange();
-      }}
-      onKeyDown={(e: KeyboardEvent) => {
-        if (disabled) return;
-        if (e.key === " " || e.key === "Enter") {
-          // " " ist Space
+          ? handleChange(current, options, value)
+          : handleChangeIndeterminate(options, _isChecked, _isIndeterminate)
+      );
+
+    return (
+      <div
+        ref={ref}
+        key={id}
+        role="checkbox"
+        aria-checked={
+          _isChecked
+            ? true
+            : allowIndetermination && _isIndeterminate
+            ? "mixed"
+            : false
+        }
+        aria-label={
+          !allowIndetermination
+            ? isString(label)
+              ? label
+              : value
+            : "indeterminationCheckbox"
+        }
+        aria-disabled={disabled ? true : undefined}
+        tabIndex={(() => {
+          if (disabled) return -1;
+          return 0;
+        })()}
+        className={cn(
+          "w-fit",
+          styles.base,
+          gapsSmall[size],
+          focus[color],
+          roundings[size]
+        )}
+        onClick={(e: MouseEvent) => {
+          if (disabled) return;
           e.preventDefault();
           e.stopPropagation();
           _onChange();
-        }
-      }}
-    >
-      {variant === "default" && (
-        <div className={cn("flex flex-row items-center", gaps[size])}>
-          <div
-            className={cn(
-              "aspect-square flex items-center justify-center",
-              roundingsSmall[size],
-              transition,
-              !disabled ? styles.input : styles.inputDisabled,
-              checkboxSizes[size],
-              bordersInteractive.accent,
-              !disabled &&
-                (_isChecked || _isIndeterminate) &&
-                `${checkedColors[color]} border-none`,
-              error && styles.inputError
+        }}
+        onKeyDown={(e: KeyboardEvent) => {
+          if (disabled) return;
+          if (e.key === " " || e.key === "Enter") {
+            // " " ist Space
+            e.preventDefault();
+            e.stopPropagation();
+            _onChange();
+          }
+        }}
+      >
+        {variant === "default" && (
+          <div className={cn("flex flex-row items-center", gaps[size])}>
+            <div
+              className={cn(
+                "aspect-square flex items-center justify-center",
+                roundingsSmall[size],
+                transition,
+                !disabled ? styles.input : styles.inputDisabled,
+                checkboxSizes[size],
+                bordersInteractive.accent,
+                !disabled &&
+                  (_isChecked || _isIndeterminate) &&
+                  `${checkedColors[color]} border-none`,
+                error && styles.inputError
+              )}
+            >
+              <span
+                className={cn(
+                  "scale-50",
+                  styles.iconWrapper,
+                  extendedTextColors.filled
+                )}
+              >
+                <CheckboxIcon
+                  isChecked={_isChecked}
+                  size={size}
+                  icon={icon}
+                  isIndeterminate={_isIndeterminate}
+                />
+              </span>
+            </div>
+            {label && (
+              <label
+                htmlFor={id}
+                className={cn(
+                  !disabled ? styles.label : styles.labelDisabled,
+                  textColors.accent,
+                  textSizes[size]
+                )}
+              >
+                {label}
+              </label>
             )}
-          >
-            <span
-              className={cn(
-                "scale-50",
-                styles.iconWrapper,
-                extendedTextColors.filled
-              )}
-            >
-              <CheckboxIcon
-                isChecked={_isChecked}
-                size={size}
-                icon={icon}
-                isIndeterminate={_isIndeterminate}
-              />
-            </span>
           </div>
-          {label && (
-            <label
-              htmlFor={id}
-              className={cn(
-                !disabled ? styles.label : styles.labelDisabled,
-                textColors.accent,
-                textSizes[size]
-              )}
-            >
-              {label}
-            </label>
-          )}
-        </div>
-      )}
-      {variant === "button" && (
-        <Button
-          disabled={disabled}
-          variant={_isChecked ? "filled" : "outline"}
-          color={!error ? color : "danger"}
-          size={size}
-          as="span"
-          className={cn(!disabled ? "cursor-pointer" : "cursor-not-allowed")}
-        >
-          {label}
-        </Button>
-      )}
-    </div>
-  );
-};
+        )}
+        {variant === "button" && (
+          <Button
+            disabled={disabled}
+            variant={_isChecked ? "filled" : "outline"}
+            color={!error ? color : "danger"}
+            size={size}
+            as="span"
+            className={cn(!disabled ? "cursor-pointer" : "cursor-not-allowed")}
+          >
+            {label}
+          </Button>
+        )}
+      </div>
+    );
+  }
+);
+
+CheckboxInner.displayName = "CheckboxInner";
 
 export default typedMemo(Checkbox);
