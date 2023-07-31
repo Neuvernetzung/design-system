@@ -35,7 +35,7 @@ type MenuBarProps = {
   editor: Editor | null;
   selectedTag: TextTypeTags;
   setSelectedTag: (type: TextTypeTags) => void;
-  setLastMenuItem: (index: Number) => void;
+  setLastMenuItem: (index: number) => void;
   AdditionalMenuItems?: ReactNode;
 };
 
