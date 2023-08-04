@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.62.4
+
+### Patch Changes
+
+- c2d51e0: Workaround für https://github.com/vercel/next.js/issues/52216 #854
+
 ## 1.62.3
 
 ### Patch Changes
