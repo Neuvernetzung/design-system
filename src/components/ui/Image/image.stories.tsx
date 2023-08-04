@@ -1,7 +1,7 @@
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { Image } from "./image";
+import { Image } from "./index";
 
 export default {
   title: "UI/Media/Image",
@@ -20,6 +20,16 @@ const Container = ({ ...props }) => (
 export const Default = ({ ...args }) => (
   <Container>
     <Image
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1920px-Google_2015_logo.svg.png"
+      alt="test Bild"
+      className="aspect-video rounded-lg"
+    />
+  </Container>
+);
+
+export const Internal = ({ ...args }) => (
+  <Container>
+    <Image
       src="/testImage.jpg"
       alt="test Bild"
       className="aspect-video rounded-lg"
@@ -30,7 +40,7 @@ export const Default = ({ ...args }) => (
 export const Fallback = ({ ...args }) => (
   <Container>
     <Image
-      src="wrong/path.jpg"
+      src="https://play.min.io:9000/upload/Gruppe%2027.png123"
       alt="ohne Bild"
       className="aspect-video rounded-lg"
     />
@@ -40,9 +50,20 @@ export const Fallback = ({ ...args }) => (
 export const FallbackShrinked = ({ ...args }) => (
   <Container className="max-w-[6rem]">
     <Image
-      src="wrong/path.jpg"
+      src="https://play.min.io:9000/upload/Gruppe%2027.png123"
       alt="ohne Bild"
       className="aspect-video rounded-lg"
+    />
+  </Container>
+);
+
+export const DynamicRatio = ({ ...args }) => (
+  <Container className="">
+    <Image
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1920px-Google_2015_logo.svg.png"
+      alt="ohne Bild"
+      className="object-contain"
+      dynamicRatio
     />
   </Container>
 );
