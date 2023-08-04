@@ -8,6 +8,14 @@ import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
+// TODO: Remove once https://github.com/vercel/next.js/issues/52216 is resolved.
+// `next/image` seems to be affected by a default + named export bundling bug.
+let ResolvedImage = NextImage;
+if ("default" in ResolvedImage) {
+  ResolvedImage = (ResolvedImage as unknown as { default: typeof NextImage })
+    .default;
+}
+
 export type ImageProps = NextImageProps & {
   alt: string;
   dynamicRatio?: boolean | "natural";
@@ -39,7 +47,7 @@ export const Image = ({
       )}
     >
       {!error && src ? (
-        <NextImage
+        <ResolvedImage
           className={cn("object-cover object-center", className)}
           src={src}
           {...(!width && !height && { fill: true })}
@@ -62,7 +70,7 @@ export const Image = ({
           {...imageProps}
         />
       ) : (
-        <Fallback src={String(src)} alt={alt} />
+        <Fallback src={String(src)} alt={alt} className={className} />
       )}
     </div>
   );
@@ -70,13 +78,16 @@ export const Image = ({
 
 export default typedMemo(Image);
 
-type FallbackProps = { src?: string; alt?: string };
+type FallbackProps = { src?: string; alt?: string; className?: string };
 
-const Fallback = ({ src, alt }: FallbackProps) => (
+const Fallback = ({ src, alt, className }: FallbackProps) => (
   <div
     aria-describedby={src}
     aria-label={alt}
-    className="w-full h-full flex items-center justify-center bg-accent-100 dark:bg-accent-800"
+    className={cn(
+      "w-full h-full flex items-center justify-center bg-accent-100 dark:bg-accent-800",
+      className
+    )}
   >
     <div className="p-2 truncate">
       <Icon size="sm" className="mx-auto" icon={PhotoIcon} />
