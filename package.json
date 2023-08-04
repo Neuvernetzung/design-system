@@ -151,7 +151,7 @@
     "use-lilius": "^2.0.3",
     "uuid": "^9.0.0",
     "webpack": "^5.88.2",
-    "zustand": "^4.3.9"
+    "zustand": "^4.4.0"
   },
   "repository": {
     "type": "git",
