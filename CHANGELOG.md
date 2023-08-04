@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.62.3
+
+### Patch Changes
+
+- 9786f7b: BarList hinzufügen #850
+
 ## 1.62.2
 
 ### Patch Changes
