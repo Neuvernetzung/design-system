@@ -9,6 +9,7 @@ import {
   heights,
   paddings,
   roundings,
+  textColors,
 } from "../../../styles";
 import { Colors, Sizes } from "../../../types";
 import { Text } from "../../ui/Typography/Text";
@@ -68,6 +69,8 @@ export const BarList = ({
     [data]
   );
 
+  const isShort = (value: number) => (100 / maxValue) * value < 8;
+
   return (
     <div className={cn("flex flex-col", gapsSmall[size])}>
       {sortedData.map(({ name, value, children }, i) => (
@@ -75,34 +78,46 @@ export const BarList = ({
           key={`bar_${i}_${name}`}
           className={cn("flex flex-row items-center", gaps[size], justifyValue)}
         >
-          <div
-            className={cn(
-              "relative",
-              roundings[size],
-              heights[size],
-              bgColors[color],
-              barVariantProps[variant]
-            )}
-            style={{ width: `${(100 / maxValue) * value}%` }}
-          >
+          <div className="flex flex-row w-full">
             <div
               className={cn(
-                "absolute max-w-full inset-y-0 flex items-center justify-center"
+                "relative",
+                roundings[size],
+                heights[size],
+                bgColors[color],
+                barVariantProps[variant]
               )}
+              style={{ width: `${(100 / maxValue) * value}%` }}
             >
-              {children || (
+              <div
+                className={cn(
+                  "absolute max-w-full inset-y-0 flex items-center"
+                )}
+              >
+                {!isShort(value) &&
+                  (children || (
+                    <Text
+                      size={size}
+                      className={cn(
+                        paddings[size],
+                        variant === "default" &&
+                          adjustedTextColors(colorState)[color]
+                      )}
+                    >
+                      {name}
+                    </Text>
+                  ))}
+              </div>
+            </div>
+            {isShort(value) &&
+              (children || (
                 <Text
                   size={size}
-                  className={cn(
-                    paddings[size],
-                    variant === "default" &&
-                      adjustedTextColors(colorState)[color]
-                  )}
+                  className={cn(paddings[size], textColors.accent)}
                 >
                   {name}
                 </Text>
-              )}
-            </div>
+              ))}
           </div>
           {showValue && (
             <div>
