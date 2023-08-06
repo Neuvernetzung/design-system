@@ -19,7 +19,7 @@ const data = [
   },
   { name: "Facebook", value: 285 },
   { name: "YouTube", value: 503 },
-  { name: "LinkedIn", value: 125 },
+  { name: "LinkedIn", value: 80 },
   { name: "Instagram", value: 1055 },
 ];
 
