@@ -96,7 +96,7 @@
     "@neuvernetzung/eslint-config-custom": "1.1.5",
     "@neuvernetzung/tsconfig": "1.0.2",
     "@popperjs/core": "^2.11.8",
-    "@storybook/addon-a11y": "^7.1.1",
+    "@storybook/addon-a11y": "^7.2.1",
     "@storybook/addon-actions": "^7.1.1",
     "@storybook/addon-essentials": "^7.1.1",
     "@storybook/addon-interactions": "^7.1.1",
