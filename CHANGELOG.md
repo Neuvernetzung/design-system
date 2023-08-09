@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.62.5
+
+### Patch Changes
+
+- eef0ecd: BarList Item als Link Möglichkeit #859
+- 8808d59: BarList Item overflow Fehler #858
+
 ## 1.62.4
 
 ### Patch Changes
