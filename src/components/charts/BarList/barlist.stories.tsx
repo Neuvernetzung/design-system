@@ -18,9 +18,9 @@ const data = [
     value: 300,
   },
   { name: "Facebook", value: 285 },
-  { name: "YouTube", value: 503 },
+  { name: "YouTube", value: 503, href: "https://www.youtube.com" },
   { name: "LinkedIn", value: 80 },
-  { name: "Instagram", value: 1055 },
+  { name: "Instagram", value: 1055, href: "https://www.instagram.de" },
 ];
 
 export const Default = ({ ...args }) => (
