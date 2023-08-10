@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.62.6
+
+### Patch Changes
+
+- 07658b0: BarList Link Hover Darkmode hinzufügen #867
+
 ## 1.62.5
 
 ### Patch Changes
