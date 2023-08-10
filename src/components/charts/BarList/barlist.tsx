@@ -169,7 +169,7 @@ const BarListItemWrapper = ({
           focusRing[color],
           roundings[size],
           transition,
-          "hover:bg-black/10"
+          "hover:bg-black/10 dark:hover:bg-white/10"
         )}
       >
         {children}
