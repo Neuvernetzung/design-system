@@ -87,7 +87,7 @@ export const LineSerieschart = forwardRef(
     const getX = (d: LinechartDataFieldProps) => d.x;
     const getY = (d: LinechartDataFieldProps) => d.y;
 
-    const allData = filterMissingChartData({
+    const allData = filterMissingChartData<LinechartDataFieldProps>({
       data: series.map(({ data }) => data).flat(),
       getY,
       missingValueBehaviour,

@@ -1,20 +1,18 @@
-import type { LinechartDataFieldProps } from "../Linechart";
-
 const missingValueBehaviours = ["skip", "zero", "undefined"] as const;
 
 export type MissingValueBehaviour = (typeof missingValueBehaviours)[number];
 
-type FilterMissingChartDataProps = {
-  data: LinechartDataFieldProps[];
-  getY: (d: LinechartDataFieldProps) => number | null;
+type FilterMissingChartDataProps<TData> = {
+  data: TData[];
+  getY: (d: TData) => number | null;
   missingValueBehaviour: MissingValueBehaviour;
 };
 
-export const filterMissingChartData = ({
+export const filterMissingChartData = <TData>({
   data,
   getY,
   missingValueBehaviour,
-}: FilterMissingChartDataProps) =>
+}: FilterMissingChartDataProps<TData>) =>
   data.filter((d) => {
     if (missingValueBehaviour === "skip") return getY(d) !== null;
     return true;

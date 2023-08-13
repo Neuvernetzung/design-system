@@ -1,28 +1,21 @@
 import { ResizeObserver } from "@juggle/resize-observer";
 import { Axis, AxisScale } from "@visx/axis";
 import type { AxisProps } from "@visx/axis/lib/axis/Axis";
-import { localPoint } from "@visx/event";
 import { GridColumns, GridRows } from "@visx/grid";
 import type { AllGridColumnsProps } from "@visx/grid/lib/grids/GridColumns";
 import type { AllGridRowsProps } from "@visx/grid/lib/grids/GridRows";
-import { AreaClosed, LinePath } from "@visx/shape";
-import type { AreaClosedProps } from "@visx/shape/lib/shapes/AreaClosed";
-import type { LinePathProps } from "@visx/shape/lib/shapes/LinePath";
+import { Group } from "@visx/group";
+import { scaleBand } from "@visx/scale";
+import { Bar } from "@visx/shape";
+import { BarProps } from "@visx/shape/lib/shapes/Bar";
+import { AddSVGProps, AnyScaleBand } from "@visx/shape/lib/types";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
-import { bisector, extent, max, min } from "@visx/vendor/d3-array";
+import { max, min } from "@visx/vendor/d3-array";
 import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
 import cn from "classnames";
-import type { CurveFactory } from "d3-shape";
 import { domAnimation, LazyMotion } from "framer-motion";
-import isFunction from "lodash/isFunction";
-import {
-  ForwardedRef,
-  forwardRef,
-  MouseEvent,
-  ReactNode,
-  TouchEvent,
-  useRef,
-} from "react";
+import { isFunction } from "lodash";
+import { ForwardedRef, forwardRef, ReactNode, useRef } from "react";
 
 import { extendedTextColors } from "../../../styles";
 import { mergeRefs, useRefDimensions } from "../../../utils/internal";
@@ -48,33 +41,30 @@ import {
 } from "../utils";
 import { getChartColor } from "../utils/colors";
 
-export type LinechartDataFieldProps = { x: number | Date; y: number | null };
+export type BarchartDataFieldProps = { x: number | Date; y: number | null };
 
-export type LinechartDataProps = {
-  data: LinechartDataFieldProps[];
+export type BarchartDataProps = {
+  data: BarchartDataFieldProps[];
   color?: string;
 };
 
-export type LinechartProps = LinechartDataProps & {
+export type BarchartProps = BarchartDataProps & {
+  margin?: ChartMargin;
   id?: string;
-  curve?: CurveFactory;
-  hoverProps?: ChartTooltipHoverProps;
-  showLineArea?: boolean;
+  missingValueBehaviour?: MissingValueBehaviour;
   showGridColumns?: boolean;
   gridColumnProps?: AllGridColumnsProps<AxisScale>;
   showGridRows?: boolean;
   gridRowProps?: AllGridRowsProps<AxisScale>;
+  hoverProps?: ChartTooltipHoverProps;
   allowTooltip?: boolean;
   allowTooltipHover?: boolean;
   xAxisProps?: Partial<AxisProps<AxisScale>>;
   yAxisProps?: Partial<AxisProps<AxisScale>>;
-  margin?: ChartMargin;
-  lineAreaProps?: AreaClosedProps<LinechartDataFieldProps>;
-  lineProps?: LinePathProps<LinechartDataFieldProps>;
-  missingValueBehaviour?: MissingValueBehaviour;
   xScaleType?: ChartScale;
   yScaleType?: ChartScale;
-  formatTooltip?: (d?: LinechartDataFieldProps) => ReactNode;
+  barProps?: AddSVGProps<BarProps, SVGRectElement>;
+  formatTooltip?: (d?: BarchartDataFieldProps) => ReactNode;
   children?:
     | ReactNode
     | (({
@@ -93,33 +83,18 @@ export type LinechartProps = LinechartDataProps & {
         yScale:
           | ScaleLinear<number, number, never>
           | ScaleTime<number, number, never>;
-        xScale:
-          | ScaleLinear<number, number, never>
-          | ScaleTime<number, number, never>;
+        xScale: AnyScaleBand;
         margin: ChartMargin;
       }) => ReactNode);
 };
 
-export const Linechart = forwardRef(
+export const Barchart = forwardRef(
   (
     {
-      id,
       data,
-      color = getChartColor(0),
-      curve,
-      showLineArea = true,
-      hoverProps = {
-        disableHorizontalHoverLine: true,
-      },
-      allowTooltip = true,
-      allowTooltipHover = true,
-      xAxisProps,
-      yAxisProps,
       margin: newMargin,
-      lineAreaProps,
-      lineProps,
+      id,
       missingValueBehaviour = "undefined",
-      xScaleType = "linear",
       yScaleType = "linear",
       showGridColumns = true,
       showGridRows,
@@ -127,7 +102,16 @@ export const Linechart = forwardRef(
       gridRowProps,
       formatTooltip,
       children,
-    }: LinechartProps,
+      hoverProps = {
+        disableHorizontalHoverLine: true,
+      },
+      allowTooltip = true,
+      allowTooltipHover = true,
+      color = getChartColor(0),
+      xAxisProps,
+      yAxisProps,
+      barProps,
+    }: BarchartProps,
     ref: ForwardedRef<SVGSVGElement>
   ) => {
     const wrapperRef = useRef(null);
@@ -137,10 +121,10 @@ export const Linechart = forwardRef(
     const yAxisRef = useRef(null);
     const { width: yAxisWidth } = useRefDimensions(yAxisRef);
 
-    const getX = (d: LinechartDataFieldProps) => d.x;
-    const getY = (d: LinechartDataFieldProps) => d.y;
+    const getX = (d: BarchartDataFieldProps) => d.x;
+    const getY = (d: BarchartDataFieldProps) => d.y;
 
-    const allData = filterMissingChartData<LinechartDataFieldProps>({
+    const allData = filterMissingChartData<BarchartDataFieldProps>({
       data,
       getY,
       missingValueBehaviour,
@@ -159,9 +143,11 @@ export const Linechart = forwardRef(
       height,
     });
 
-    const xScale = chartScales[xScaleType]<number>({
-      domain: extent(allData, getX) as [Date, Date],
+    const xScale = scaleBand<number | Date>({
+      domain: data.map(getX) as [number | Date, number | Date],
       range: [0, innerWidth],
+      round: true,
+      padding: 0.2,
     });
 
     const minValue = min(allData, getY) || 0;
@@ -177,40 +163,25 @@ export const Linechart = forwardRef(
       tooltipTop = 0,
       showTooltip,
       hideTooltip,
-    } = useTooltip<LinechartDataFieldProps>();
+    } = useTooltip<BarchartDataFieldProps>();
 
     const { TooltipInPortal, containerRef } = useTooltipInPortal({
       detectBounds: true,
       scroll: true,
       polyfill: ResizeObserver,
     });
-    const bisectDate = bisector((d: LinechartDataFieldProps) => getX(d)).left;
 
-    const handleTooltip = (event: MouseEvent | TouchEvent) => {
+    const handleTooltip = (bar: BarchartDataFieldProps) => {
       if (!allowTooltip && !allowTooltipHover) return;
-      const { x } = localPoint(event) || { x: 0 };
+      const left = (xScale(getX(bar)) ?? 0) + xScale.bandwidth() / 2;
 
-      const x0 = xScale.invert(x);
-
-      const index = bisectDate(allData, x0, 1);
-
-      const d0 = allData[index - 1];
-      const d1 = allData[index];
-      let d = d0;
-      // ist der vorherige Punkt verfügbar und wenn ja, welcher Punkt ist näher?
-      if (d1 && getX(d1)) {
-        d =
-          x0.valueOf() - getX(d0).valueOf() > getX(d1).valueOf() - x0.valueOf()
-            ? d1
-            : d0;
-      }
-      const y = getY(d);
-      if (missingValueBehaviour !== "zero" && y === null) return;
+      const y = getY(bar);
+      if (y === null) return;
 
       showTooltip({
-        tooltipData: { x: d.x, y: y || 0 },
-        tooltipLeft: xScale(getX(d)),
-        tooltipTop: yScale(y || 0),
+        tooltipData: bar,
+        tooltipLeft: left,
+        tooltipTop: yScale(y),
       });
     };
 
@@ -223,10 +194,6 @@ export const Linechart = forwardRef(
             height={innerHeight}
             width={innerWidth}
             margin={margin}
-            onTouchStart={(e) => handleTooltip(e)}
-            onTouchMove={(e) => handleTooltip(e)}
-            onMouseMove={(e) => handleTooltip(e)}
-            onMouseLeave={() => hideTooltip()}
           >
             <ChartXAxisWrapper ref={xAxisRef}>
               <Axis
@@ -250,37 +217,30 @@ export const Linechart = forwardRef(
                 {...yAxisProps}
               />
             </ChartYAxisWrapper>
-            <LinePath
-              data={allData}
-              x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
-              y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
-              stroke={color}
-              fill="none"
-              strokeWidth="2"
-              vectorEffect="non-scaling-stroke"
-              curve={curve}
-              defined={(d) => {
-                if (missingValueBehaviour === "zero") return true;
-                return getY(d) !== null;
-              }}
-              {...lineProps}
-            />
-            {showLineArea && (
-              <AreaClosed
-                data={allData}
-                x={(d) => xScale(getX(d))}
-                y={(d) => yScale(getY(d) || 0)}
-                yScale={yScale}
-                curve={curve}
-                fill={color}
-                opacity={0.1}
-                defined={(d) => {
-                  if (missingValueBehaviour === "zero") return true;
-                  return getY(d) !== null;
-                }}
-                {...lineAreaProps}
-              />
-            )}
+            <Group>
+              {data.map((d) => {
+                const x = getX(d);
+                const barWidth = xScale.bandwidth();
+                const barHeight = innerHeight - yScale(getY(d) ?? 0);
+                const barX = xScale(x);
+                const barY = innerHeight - barHeight;
+                return (
+                  <Bar
+                    key={`bar-${x}`}
+                    x={barX}
+                    y={barY}
+                    width={barWidth}
+                    height={barHeight}
+                    fill={color}
+                    onTouchStart={() => handleTooltip(d)}
+                    onTouchMove={() => handleTooltip(d)}
+                    onMouseMove={() => handleTooltip(d)}
+                    onMouseLeave={() => hideTooltip()}
+                    {...barProps}
+                  />
+                );
+              })}
+            </Group>
             {allowTooltipHover && (
               <ChartTooltipHover
                 width={width}
@@ -347,4 +307,4 @@ export const Linechart = forwardRef(
   }
 );
 
-Linechart.displayName = "Linechart";
+Barchart.displayName = "Barchart";
