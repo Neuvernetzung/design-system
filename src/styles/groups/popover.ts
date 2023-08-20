@@ -25,7 +25,7 @@ export const getPopoverContainerStyles = ({
 }: PopoverContainerStyleProps) =>
   cn(
     styles.base,
-    "absolute left-0 max-h-[60vh] overflow-y-auto border",
+    "absolute left-0 max-h-[75vh] overflow-y-auto border",
     borders.accent,
     bgColors.white,
     zIndexes.dropdown,

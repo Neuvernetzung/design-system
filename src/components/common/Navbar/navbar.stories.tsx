@@ -126,6 +126,11 @@ const baseProps: NavbarProps = {
       }}
     />
   ),
+  startItems: [
+    <Tooltip key="Tooltip" label="zIndex Test">
+      <Icon icon={SwatchIcon} />
+    </Tooltip>,
+  ],
   allowDarkMode: "desktop",
   footerClassName: cn("border-t !p-0", borders.accent),
 };
@@ -141,9 +146,6 @@ export const ZIndexTest = ({ ...args }) => {
         {...baseProps}
         {...args}
         endItems={[
-          <Tooltip key="Tooltip" label="zIndex Test">
-            <Icon icon={SwatchIcon} />
-          </Tooltip>,
           <IconButton
             ariaLabel="cart"
             key="cart"
