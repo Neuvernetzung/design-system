@@ -75,7 +75,16 @@ const NavbarContainer = forwardRef(
           )}
         >
           {endItems && endItems}
-          {allowDarkMode && <ThemeSwitch textColor={textColor} />}
+          {allowDarkMode && (
+            <span
+              className={cn(
+                allowDarkMode === "mobile" && "block md:hidden",
+                allowDarkMode === "desktop" && "hidden md:block"
+              )}
+            >
+              <ThemeSwitch textColor={textColor} />
+            </span>
+          )}
           <MobileNav
             textColor={textColor}
             navbarRef={navBarInternalRef}

@@ -18,10 +18,9 @@ import { Icon } from "../../ui/Icon";
 import { Select } from "../../ui/Select";
 import { Heading } from "../../ui/Typography/Heading";
 import { Navbar, NavbarProps, SideNavbar } from "./navbar";
-import { Button, Drawer, Menu, Tooltip } from "../../ui";
+import { Button, Drawer, Menu, Tooltip, IconButton } from "../../ui";
 import { borders } from "../../../styles";
 import cn from "classnames";
-import IconButton from "../../ui/Button/IconButton/iconButton";
 
 export default {
   title: "COMMON/Navbar",
@@ -127,6 +126,7 @@ const baseProps: NavbarProps = {
       }}
     />
   ),
+  allowDarkMode: "desktop",
   footerClassName: cn("border-t !p-0", borders.accent),
 };
 
