@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.63.2
+
+### Patch Changes
+
+- 6e7a10a: adjustedTextColor anpassen, alle Textfarben unterstützen und DarkColors einbeziehen #904
+
 ## 1.63.1
 
 ### Patch Changes
