@@ -58,8 +58,15 @@ const NavbarContainer = forwardRef(
           gaps[gapSize]
         )}
       >
-        <NavLogo logo={logo} logoProps={logoProps} textColor={textColor} />
-        {startItems && startItems}
+        <div
+          className={cn(
+            "flex flex-row items-center justify-start",
+            gaps[gapSize]
+          )}
+        >
+          <NavLogo logo={logo} logoProps={logoProps} textColor={textColor} />
+          {startItems && startItems}
+        </div>
         <DesktopItems
           textColor={textColor}
           navbarRef={navBarInternalRef}
