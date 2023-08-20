@@ -3,11 +3,13 @@ import {
   ArrowLeftOnRectangleIcon,
   ArrowPathRoundedSquareIcon,
   BoltIcon,
+  ShoppingCartIcon,
+  SwatchIcon,
   TrashIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Logo } from "../../../../public/Logo";
@@ -16,9 +18,10 @@ import { Icon } from "../../ui/Icon";
 import { Select } from "../../ui/Select";
 import { Heading } from "../../ui/Typography/Heading";
 import { Navbar, NavbarProps, SideNavbar } from "./navbar";
-import { Button, Menu } from "../../ui";
+import { Button, Drawer, Menu, Tooltip } from "../../ui";
 import { borders } from "../../../styles";
 import cn from "classnames";
+import IconButton from "../../ui/Button/IconButton/iconButton";
 
 export default {
   title: "COMMON/Navbar",
@@ -129,6 +132,31 @@ const baseProps: NavbarProps = {
 
 export const Default = ({ ...args }) => <Navbar {...baseProps} {...args} />;
 
+export const ZIndexTest = ({ ...args }) => {
+  const [openSide, setOpenSide] = useState(false);
+
+  return (
+    <>
+      <Navbar
+        {...baseProps}
+        {...args}
+        endItems={[
+          <Tooltip key="Tooltip" label="zIndex Test">
+            <Icon icon={SwatchIcon} />
+          </Tooltip>,
+          <IconButton
+            ariaLabel="cart"
+            key="cart"
+            onClick={() => setOpenSide(true)}
+            icon={ShoppingCartIcon}
+          />,
+        ]}
+      />
+      <Drawer open={openSide} setOpen={setOpenSide} />
+    </>
+  );
+};
+
 export const Size = ({ ...args }) => {
   const navbarRef = useRef(null);
   const { control, watch } = useForm();
@@ -137,6 +165,7 @@ export const Size = ({ ...args }) => {
   return (
     <>
       <Navbar ref={navbarRef} size={size} {...baseProps} {...args} />
+
       <PageContainer navbarRef={navbarRef}>
         <Select
           control={control}

@@ -11,7 +11,13 @@ import {
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 
-import { bgColors, paddingsSmall, roundings, shadows } from "../../../styles";
+import {
+  bgColors,
+  paddingsSmall,
+  roundings,
+  shadows,
+  zIndexes,
+} from "../../../styles";
 import { popperOffset } from "../../../styles/popper/offset";
 import { Sizes } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
@@ -105,6 +111,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
     return (
       <span
         role="tooltip"
+        className={cn(zIndexes.tooltip)}
         ref={ref || setInnerPopperElement}
         style={styles || innerStyles}
         {...(attributes || innerAttributes)} // Animationen können nicht im selben Span sein, da durch Scale usePopper nicht ordentlich funktioniert.
@@ -117,6 +124,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
             "pointer-events-none bg-opacity-75 flex",
             paddingsSmall[size],
             roundings[size],
+
             bgColors.black,
             shadows.sm,
             className
