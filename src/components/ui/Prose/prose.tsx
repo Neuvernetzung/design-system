@@ -48,6 +48,7 @@ export const proseComponents: ProseComponents = {
       src: "",
       dynamicRatio: true,
     },
+    isVoid: true,
   },
 };
 
@@ -55,7 +56,7 @@ interface CreateProseComponent {
   name: ProseComponentTags;
   attributes?: any;
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const createProseElement = ({
@@ -65,7 +66,14 @@ export const createProseElement = ({
   children,
 }: CreateProseComponent) => {
   if (!proseComponents[name]) return null;
-  const { component, props } = proseComponents[name];
+  const { component, props, isVoid } = proseComponents[name];
+
+  if (isVoid)
+    return createElement(component, {
+      ...props,
+      ...attributes,
+      className: cn(props.className, attributes?.className, className),
+    });
 
   return createElement(
     component,

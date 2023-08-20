@@ -49,4 +49,5 @@ export interface ProseComponents {
 interface ProseComponent<T> {
   component: string | FC;
   props: T & { className?: string };
+  isVoid?: boolean;
 }
