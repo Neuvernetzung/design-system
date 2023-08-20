@@ -26,6 +26,7 @@ import {
   LOCAL_DARK_COLOR_KEY,
   useThemeState,
 } from "./useThemeState";
+import { adjustedTextColors } from "../styles";
 
 type ThemeProviderProps = {
   config?: ConfigProps;
@@ -76,6 +77,12 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
   });
 
   const { colorState, darkColorState, borderRadiusState } = useThemeState();
+
+  useEffect(() => {
+    useThemeState.setState({
+      adjustedTextColorState: adjustedTextColors(colorState, darkColorState),
+    });
+  }, [colorState, darkColorState]);
 
   const cssColorVariables = colorState && getColorVariables(colorState);
   const cssDarkColorVariables =

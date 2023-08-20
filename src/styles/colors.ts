@@ -1,5 +1,6 @@
-import type { Colors, ExtendedColors } from "../types";
+import type { Colors, ExtendedColors, HEX } from "../types";
 import { colorIsBright } from "../utils/colorIsBright";
+import cn from "classnames";
 
 export const textColors: Colors = {
   brand: "text-brand-500",
@@ -22,27 +23,57 @@ export const extendedTextColors: ExtendedColors = {
   filled: "text-accent-100 dark:text-accent-900",
 };
 
+const adjustTextColor = (color: HEX, darkColor: HEX, differentColor?: HEX) =>
+  cn(
+    colorIsBright(color) ? "text-white" : "text-black",
+    colorIsBright(darkColor || differentColor || color)
+      ? "dark:text-white"
+      : "dark:text-black"
+  );
+
 export const adjustedTextColors = (
-  colorState?: ExtendedColors
+  colorState?: ExtendedColors,
+  darkColorState?: ExtendedColors
 ): ExtendedColors => ({
-  brand: colorIsBright(colorState?.brand[500]) ? "text-white" : "text-black",
-  primary: colorIsBright(colorState?.primary[500])
-    ? "text-white"
-    : "text-black",
-  white: colorIsBright(colorState?.white)
-    ? "text-white dark:text-black"
-    : "text-black dark:text-white",
-  black: colorIsBright(colorState?.black)
-    ? "text-white dark:text-black"
-    : "text-black dark:text-white",
-  accent: colorIsBright(colorState?.accent[500]) ? "text-white" : "text-black",
-  success: colorIsBright(colorState?.success[500])
-    ? "text-white"
-    : "text-black",
-  warn: colorIsBright(colorState?.warn[500]) ? "text-white" : "text-black",
-  danger: colorIsBright(colorState?.danger[500]) ? "text-white" : "text-black",
-  light: colorIsBright(colorState?.accent[100]) ? "text-white" : "text-black",
-  dark: colorIsBright(colorState?.accent[900]) ? "text-white" : "text-black",
+  brand: adjustTextColor(colorState?.brand[500], darkColorState?.brand[500]),
+  primary: adjustTextColor(
+    colorState?.primary[500],
+    darkColorState?.primary[500]
+  ),
+  white: adjustTextColor(
+    colorState?.white,
+    darkColorState?.black,
+    colorState?.black
+  ),
+  black: adjustTextColor(
+    colorState?.black,
+    darkColorState?.white,
+    colorState?.white
+  ),
+  accent: adjustTextColor(colorState?.accent[600], darkColorState?.accent[600]),
+  success: adjustTextColor(
+    colorState?.success[500],
+    darkColorState?.success[500]
+  ),
+  warn: adjustTextColor(colorState?.warn[500], darkColorState?.warn[500]),
+  danger: adjustTextColor(colorState?.danger[500], darkColorState?.danger[500]),
+  light: adjustTextColor(colorState?.accent[100], darkColorState?.accent[100]),
+  dark: adjustTextColor(colorState?.accent[900], darkColorState?.accent[900]),
+  filled: adjustTextColor(
+    colorState?.accent[200],
+    darkColorState?.accent[800],
+    colorState?.accent[800]
+  ),
+  filledSubtile: adjustTextColor(
+    colorState?.accent[100],
+    darkColorState?.accent[900],
+    colorState?.accent[900]
+  ),
+  subtile: adjustTextColor(
+    colorState?.accent[50],
+    darkColorState?.accent[950],
+    colorState?.accent[950]
+  ),
 });
 
 export const bgColors: Colors = {

@@ -2,7 +2,6 @@ import cn from "classnames";
 import { ReactElement } from "react";
 
 import {
-  adjustedTextColors,
   bgColors,
   borders,
   gapsSmall,
@@ -13,7 +12,7 @@ import {
   textSizes,
 } from "../../../styles";
 import { useThemeState } from "../../../theme/useThemeState";
-import type { Colors, Sizes, SvgType } from "../../../types";
+import type { Colors, ExtendedColors, Sizes, SvgType } from "../../../types";
 import { capSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
@@ -37,10 +36,10 @@ type Variants = {
 
 export const variants = (
   color: keyof Colors,
-  colorState?: Colors
+  adjustedTextColorState: ExtendedColors
 ): Variants => ({
   outline: cn("border", borders[color], textColors[color]),
-  solid: cn(bgColors[color], adjustedTextColors(colorState)[color]),
+  solid: cn(bgColors[color], adjustedTextColorState[color]),
   subtile: cn(bgColors[color], "bg-opacity-25", textColors[color]),
 });
 
@@ -54,13 +53,13 @@ export const Tag = ({
   rounded,
   className,
 }: TagProps) => {
-  const { colorState } = useThemeState();
+  const { adjustedTextColorState } = useThemeState();
 
   return (
     <span
       className={cn(
         "h-min flex-0 inline-flex flex-row items-center select-none",
-        variants(color, colorState)[variant],
+        variants(color, adjustedTextColorState)[variant],
 
         label ? paddingsSmall[size] : paddingsSmallEvenly[size],
         gapsSmall[size],

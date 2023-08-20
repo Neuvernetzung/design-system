@@ -7,7 +7,6 @@ import {
   ReactNode,
   RefObject,
 } from "react";
-import { adjustedTextColors } from "../../../styles";
 import { useThemeState } from "../../../theme";
 
 import { ExtendedColors, Sizes, SvgType } from "../../../types";
@@ -92,9 +91,9 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const { colorState } = useThemeState();
+    const { adjustedTextColorState } = useThemeState();
 
-    const textColor = adjustedTextColors(colorState)[color];
+    const textColor = adjustedTextColorState[color];
 
     return (
       <NavbarContainer
@@ -146,9 +145,9 @@ export const SideNavbar = forwardRef<
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const { colorState } = useThemeState();
+    const { adjustedTextColorState } = useThemeState();
 
-    const textColor = adjustedTextColors(colorState)[color];
+    const textColor = adjustedTextColorState[color];
 
     return (
       <>

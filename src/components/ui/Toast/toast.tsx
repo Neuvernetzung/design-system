@@ -2,7 +2,6 @@ import cn from "classnames";
 import { MouseEventHandler } from "react";
 
 import {
-  adjustedTextColors,
   bgColors,
   borders,
   gaps,
@@ -13,7 +12,7 @@ import {
 } from "../../../styles";
 import { CrossIcon } from "../../../theme/icons";
 import { useThemeState } from "../../../theme/useThemeState";
-import { Colors, SvgType } from "../../../types";
+import { Colors, ExtendedColors, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
@@ -30,7 +29,7 @@ export type ToastProps = {
 
 export const variants = (
   color: keyof Colors,
-  colorState?: Colors
+  adjustedTextColorState: ExtendedColors
 ): Record<keyof ToastVariants, VariantProps> => ({
   outline: {
     container: cn(bgColors.white, borders.accent, "border"),
@@ -40,9 +39,9 @@ export const variants = (
   },
   solid: {
     container: cn(bgColors[color]),
-    icon: cn(adjustedTextColors(colorState)[color], "flex"),
-    text: cn(adjustedTextColors(colorState)[color]),
-    close: cn(adjustedTextColors(colorState)[color]),
+    icon: cn(adjustedTextColorState[color], "flex"),
+    text: cn(adjustedTextColorState[color]),
+    close: cn(adjustedTextColorState[color]),
   },
 });
 
@@ -65,7 +64,7 @@ export const Toast = ({
   color = "accent",
   icon,
 }: ToastProps) => {
-  const { colorState } = useThemeState();
+  const { adjustedTextColorState } = useThemeState();
 
   return (
     <m.div
@@ -80,19 +79,23 @@ export const Toast = ({
         shadows.lg,
         gaps.xl,
         paddingsEvenly.lg,
-        variants(color, colorState)[variant].container
+        variants(color, adjustedTextColorState)[variant].container
       )}
     >
       <div className={cn("flex flex-row justify-start", gaps.md)}>
         {icon && (
-          <div className={cn(variants(color, colorState)[variant].icon)}>
+          <div
+            className={cn(
+              variants(color, adjustedTextColorState)[variant].icon
+            )}
+          >
             <Icon size="sm" icon={icon} />
           </div>
         )}
         <Text
           size="sm"
           className={cn(
-            variants(color, colorState)[variant].text,
+            variants(color, adjustedTextColorState)[variant].text,
             "w-36 break-words overflow-hidden"
           )}
           color="inherit"
@@ -107,7 +110,7 @@ export const Toast = ({
         onClick={handleClose}
         color="inherit"
         icon={CrossIcon}
-        className={cn(variants(color, colorState)[variant].close)}
+        className={cn(variants(color, adjustedTextColorState)[variant].close)}
       />
     </m.div>
   );
