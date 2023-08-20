@@ -21,6 +21,7 @@ import { Navbar, NavbarProps, SideNavbar } from "./navbar";
 import { Button, Drawer, Menu, Tooltip, IconButton } from "../../ui";
 import { borders } from "../../../styles";
 import cn from "classnames";
+import { loading, Loading } from "../../ui/Loading";
 
 export default {
   title: "COMMON/Navbar",
@@ -206,6 +207,17 @@ export const ZIndexTest = ({ ...args }) => {
         ]}
       />
       <Drawer open={openSide} setOpen={setOpenSide} />
+      <Button
+        className="mt-5"
+        onClick={() => {
+          loading(true);
+          console.log("loading");
+          setTimeout(() => loading(false), 1500);
+        }}
+      >
+        Loading
+      </Button>
+      <Loading />
     </>
   );
 };
