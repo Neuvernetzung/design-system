@@ -3,10 +3,11 @@ import cn from "classnames";
 import { InputVariants, Sizes } from "../../types";
 import {
   bgColors,
-  borders,
   bordersInteractive,
   extendedBgColors,
   extendedBgColorsInteractive,
+  extendedBorders,
+  extendedTextColors,
   focus,
   minHeights,
   paddings,
@@ -46,26 +47,26 @@ type VariantProps = {
 export const inputVariants: Record<keyof InputVariants, VariantProps> = {
   outline: {
     base: `${bgColors.white} border ${placeholder.outline}`,
-    default: `${bordersInteractive.accent}`,
+    default: `${bordersInteractive.accent} ${textColors.accent}`,
     error: `${bordersInteractive.danger}`,
-    disabled: `${borders.accent} ${extendedBgColors.filledSubtile}`,
+    disabled: `${extendedBorders.filled} ${extendedBgColors.filledSubtile} ${extendedTextColors.filledSubtile}`,
   },
   filled: {
     base: `border-none ${placeholder.filled}`,
-    default: `${extendedBgColorsInteractive.filled}`,
+    default: `${extendedBgColorsInteractive.filled} ${textColors.accent}`,
     error: `${extendedBgColorsInteractive.danger} ${placeholder.filledError}`,
-    disabled: `${extendedBgColors.filled}`,
+    disabled: `${extendedBgColors.filled} ${extendedTextColors.filledSubtile}`,
   },
   ghost: {
     base: `${extendedBgColorsInteractive.white} bg-opacity-0 dark:bg-opacity-0 border-none ${placeholder.ghost}`,
-    default: "",
+    default: `${textColors.accent}`,
     error: `${extendedBgColorsInteractive.danger} hover:bg-opacity-10 dark:hover:bg-opacity-10`,
-    disabled: `${extendedBgColors.filledSubtile}`,
+    disabled: `${extendedBgColors.filledSubtile} ${extendedTextColors.filledSubtile}`,
   },
 };
 
 const styles = {
-  inputBase: `appearance-none outline-none w-full ${textColors.accent}`,
+  inputBase: `appearance-none outline-none w-full`,
 };
 
 export const getInputStyles = ({
@@ -87,6 +88,7 @@ export const getInputStyles = ({
       ? !disabled && inputVariants[variant]?.default
       : inputVariants[variant]?.error,
     disabled && `cursor-not-allowed ${inputVariants[variant]?.disabled}`,
+    !disabled,
     !leftAddon && !rightAddon && roundings[size],
     !leftAddon && roundingsLeft[size],
     !rightAddon && roundingsRight[size]

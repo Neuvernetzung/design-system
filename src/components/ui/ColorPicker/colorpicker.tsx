@@ -76,10 +76,7 @@ export const ColorPicker = <
                 getText(locale as Locales).colorpicker_placeholder,
               className: cn(
                 "w-full",
-                value &&
-                  (colorIsBright(value)
-                    ? "text-accent-100 dark:text-accent-100"
-                    : "text-accent-900 dark:text-accent-900")
+                value && (colorIsBright(value) ? "text-white" : "text-black")
               ),
               color: !error ? "accent" : "danger",
               style: {
