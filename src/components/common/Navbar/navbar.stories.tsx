@@ -56,6 +56,7 @@ const baseProps: NavbarProps = {
           icon: ArrowPathRoundedSquareIcon,
         },
       ],
+      child: <div className="w-full bg-red-100">Test</div>,
       icon: BoltIcon,
     },
     {
@@ -82,6 +83,56 @@ const baseProps: NavbarProps = {
       label: "Full",
       fullWidthPopover: true,
       tag: { label: "width", variant: "outline" },
+      children: [
+        {
+          label: "Sub Item 1",
+          href: "1",
+          subLabel: {
+            children: "Hier steht eine Beschreibung.",
+            hideOnMobile: true,
+          },
+          icon: AcademicCapIcon,
+        },
+        {
+          label: "Sub Item 2",
+          href: "2",
+          subLabel: { children: "Hier steht eine Beschreibung." },
+          tag: {
+            label: "Neu",
+            color: "success",
+            size: "xs",
+          },
+          icon: ArrowPathRoundedSquareIcon,
+        },
+        {
+          label: "Sub Item 1",
+          href: "3",
+          subLabel: {
+            children: "Hier steht eine Beschreibung. Mit etwas längerem Text.",
+          },
+        },
+        {
+          label: "Disabled Item",
+          href: "4",
+          subLabel: { children: "Dieses Item ist disabled." },
+          disabled: true,
+          icon: TrashIcon,
+        },
+        {
+          label: "Sub Item 1",
+          href: "5",
+          subLabel: {
+            children: "Hier steht eine Beschreibung. Mit etwas längerem Text.",
+          },
+        },
+        {
+          label: "Disabled Item",
+          href: "6",
+          subLabel: { children: "Dieses Item ist disabled." },
+          disabled: true,
+          icon: TrashIcon,
+        },
+      ],
       child: (
         <div className="w-full">
           <Button variant="ghost">Test</Button>
