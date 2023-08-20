@@ -103,27 +103,30 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
     );
 
     return (
-      <m.span
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1, transition: { duration: 0.1 } }}
-        exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.1 } }}
+      <span
         role="tooltip"
         ref={ref || setInnerPopperElement}
-        className={cn(
-          "pointer-events-none bg-opacity-75 flex",
-          paddingsSmall[size],
-          roundings[size],
-          bgColors.black,
-          shadows.sm,
-          className
-        )}
         style={styles || innerStyles}
-        {...(attributes || innerAttributes)}
+        {...(attributes || innerAttributes)} // Animationen können nicht im selben Span sein, da durch Scale usePopper nicht ordentlich funktioniert.
       >
-        <Text size={size} color="filled">
-          {label}
-        </Text>
-      </m.span>
+        <m.span
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1, transition: { duration: 0.1 } }}
+          exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.1 } }}
+          className={cn(
+            "pointer-events-none bg-opacity-75 flex",
+            paddingsSmall[size],
+            roundings[size],
+            bgColors.black,
+            shadows.sm,
+            className
+          )}
+        >
+          <Text size={size} color="filled">
+            {label}
+          </Text>
+        </m.span>
+      </span>
     );
   }
 );
