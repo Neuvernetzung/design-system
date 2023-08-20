@@ -58,8 +58,15 @@ const NavbarContainer = forwardRef(
           gaps[gapSize]
         )}
       >
-        <NavLogo logo={logo} logoProps={logoProps} textColor={textColor} />
-        {startItems && startItems}
+        <div
+          className={cn(
+            "flex flex-row items-center justify-start",
+            gaps[gapSize]
+          )}
+        >
+          <NavLogo logo={logo} logoProps={logoProps} textColor={textColor} />
+          {startItems && startItems}
+        </div>
         <DesktopItems
           textColor={textColor}
           navbarRef={navBarInternalRef}
@@ -75,7 +82,16 @@ const NavbarContainer = forwardRef(
           )}
         >
           {endItems && endItems}
-          {allowDarkMode && <ThemeSwitch textColor={textColor} />}
+          {allowDarkMode && (
+            <span
+              className={cn(
+                allowDarkMode === "mobile" && "block md:hidden",
+                allowDarkMode === "desktop" && "hidden md:block"
+              )}
+            >
+              <ThemeSwitch textColor={textColor} />
+            </span>
+          )}
           <MobileNav
             textColor={textColor}
             navbarRef={navBarInternalRef}

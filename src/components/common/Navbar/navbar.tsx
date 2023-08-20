@@ -44,7 +44,7 @@ export type NavbarProps = {
   navItems: NavItemProps[];
   logo?: ReactNode;
   logoProps?: LogoProps;
-  allowDarkMode?: boolean;
+  allowDarkMode?: boolean | "desktop" | "mobile";
   navbarClassName?: string;
   justifyDesktopNav?: "start" | "center" | "end";
   startItems?: ReactNode;

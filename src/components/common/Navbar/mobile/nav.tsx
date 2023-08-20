@@ -146,14 +146,17 @@ export const MobileNavItem = ({
                   </div>
                 ),
                 defaultOpen,
-                content: fullWidthPopover
-                  ? child
-                  : children?.map((child, i) => (
+                content: (
+                  <>
+                    {children?.map((child, i) => (
                       <NavbarMobileSubItem
                         key={`navbar_subitem_${i}`}
                         {...child}
                       />
-                    )),
+                    ))}
+                    {child}
+                  </>
+                ),
               },
             ]}
           />

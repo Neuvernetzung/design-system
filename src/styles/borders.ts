@@ -27,6 +27,7 @@ export const extendedBorders: ExtendedColors = {
   light: "border-accent-200",
   filled: "border-accent-200 dark:border-accent-800",
   filledSubtile: "border-accent-100 dark:border-accent-900",
+  subtile: "border-accent-50 dark:border-accent-950",
   dark: "border-accent-800",
 };
 
