@@ -1,6 +1,5 @@
 import ImageExtension from "@tiptap/extension-image";
 import {
-  NodeViewContent,
   NodeViewProps,
   NodeViewWrapper,
   ReactNodeViewRenderer,
@@ -24,7 +23,6 @@ const ImageComponent = ({ node }: NodeViewProps) => {
             // contentEditable: false,
           },
         },
-        children: <NodeViewContent />,
       })}
     </NodeViewWrapper>
   );
