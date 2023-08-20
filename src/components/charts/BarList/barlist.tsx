@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ReactNode, useMemo } from "react";
 
 import {
-  adjustedTextColors,
   bgColors,
   bgColorsInteractive,
   focusBase,
@@ -58,7 +57,7 @@ export const BarList = ({
   formatValue,
   variant = "default",
 }: BarListProps) => {
-  const { colorState } = useThemeState();
+  const { adjustedTextColorState } = useThemeState();
 
   const sortedData = useMemo(
     () =>
@@ -116,8 +115,7 @@ export const BarList = ({
                         size={size}
                         className={cn(
                           paddings[size],
-                          variant === "default" &&
-                            adjustedTextColors(colorState)[color]
+                          variant === "default" && adjustedTextColorState[color]
                         )}
                       >
                         {name}

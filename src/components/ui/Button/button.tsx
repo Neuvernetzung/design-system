@@ -9,7 +9,6 @@ import type {
 } from "../../../utils/internal/polymorphic";
 
 import {
-  adjustedTextColors,
   extendedBgColors,
   extendedBgColorsInteractive,
   extendedBorders,
@@ -54,12 +53,12 @@ export type Variants = {
 
 export const colors = (
   color: keyof (Colors & Pick<ExtendedColors, "light" | "dark" | "inherit">),
-  colorState?: Colors
+  adjustedTextColorState: ExtendedColors
 ): ColorProps => ({
   base: cn(extendedBgColorsInteractive[color], extendedBorders[color]),
   disabled: cn(extendedBgColors[color], extendedBorders[color], "opacity-50"),
   text: {
-    filled: adjustedTextColors(colorState)[color],
+    filled: adjustedTextColorState[color],
     outline: extendedTextColors[color],
     ghost: extendedTextColors[color],
     subtile: extendedTextColors[color],
@@ -129,7 +128,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
   ) => {
     const Component = as || ButtonDefaultElement;
 
-    const { colorState } = useThemeState();
+    const { adjustedTextColorState } = useThemeState();
 
     const loadingState = useLoadingState((state) => state);
     const isLoading = isString(loadingState) && loadingState === loadingId;
@@ -151,9 +150,9 @@ export const Button: PolymorphicForwardRefExoticComponent<
           minHeights[size],
           textSizes[size],
           disabled && "cursor-not-allowed",
-          !_disabled && colors(color, colorState)?.base,
-          _disabled && colors(color, colorState)?.disabled,
-          colors(color, colorState)?.text[variant],
+          !_disabled && colors(color, adjustedTextColorState)?.base,
+          _disabled && colors(color, adjustedTextColorState)?.disabled,
+          colors(color, adjustedTextColorState)?.text[variant],
           { [styles.fullWidth]: fullWidth, [styles.rounded]: rounded },
           className
         )}

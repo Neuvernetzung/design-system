@@ -81,7 +81,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
   ) => {
     const Component = as || IconButtonDefaultElement;
 
-    const { colorState } = useThemeState();
+    const { adjustedTextColorState } = useThemeState();
 
     const loadingState = useLoadingState((state) => state);
     const isLoading = isString(loadingState) && loadingState === loadingId;
@@ -103,9 +103,9 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
           roundings[size],
           minHeights[size],
           textSizes[size],
-          !_disabled && colors(color, colorState)?.base,
-          _disabled && colors(color, colorState)?.disabled,
-          colors(color, colorState)?.text[variant],
+          !_disabled && colors(color, adjustedTextColorState)?.base,
+          _disabled && colors(color, adjustedTextColorState)?.disabled,
+          colors(color, adjustedTextColorState)?.text[variant],
           { [styles.rounded]: rounded },
           className
         )}

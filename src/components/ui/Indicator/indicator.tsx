@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { ReactNode } from "react";
 
-import { adjustedTextColors, bgColors, paddingsSmall } from "../../../styles";
+import { bgColors, paddingsSmall } from "../../../styles";
 import { useThemeState } from "../../../theme";
 import { Colors } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
@@ -14,7 +14,7 @@ export type IndicatorProps = {
 };
 
 const Indicator = ({ color = "primary", value, children }: IndicatorProps) => {
-  const { colorState } = useThemeState();
+  const { adjustedTextColorState } = useThemeState();
 
   return (
     <div className="relative">
@@ -25,7 +25,7 @@ const Indicator = ({ color = "primary", value, children }: IndicatorProps) => {
           !value && "aspect-square",
           bgColors[color],
           paddingsSmall.sm,
-          adjustedTextColors(colorState)[color]
+          adjustedTextColorState[color]
         )}
       >
         <Text color="inherit" size="xs">

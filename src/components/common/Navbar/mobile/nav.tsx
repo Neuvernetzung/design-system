@@ -108,7 +108,6 @@ export const MobileNavItem = ({
   tag,
   disabled,
   icon,
-  fullWidthPopover,
   defaultOpen,
   child,
 }: NavItemProps) => {
