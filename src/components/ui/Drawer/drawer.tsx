@@ -115,6 +115,7 @@ export const Drawer = ({
     as="div"
     initialFocus={initialFocus}
     open={open}
+    className={cn("relative", zIndexes.modal)}
     onClose={() => setOpen(false)}
   >
     <Backdrop />
@@ -129,7 +130,7 @@ export const Drawer = ({
           gaps.md,
           placements(size)[placement].className,
           shadows.xl,
-          zIndexes.modal,
+
           "fixed overflow-y-hidden hover:overflow-y-auto w-full flex flex-col"
         )}
       >
