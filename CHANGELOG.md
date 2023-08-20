@@ -1,5 +1,19 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.63.0
+
+### Minor Changes
+
+- dbccce1: Navbar Themeswitch Option um bei Mobile zu verstecken #888
+- 9ce21db: Navbar Popover zeigt Child nicht korrekt an, wenn nicht fullWidth verwendet wird #891
+
+### Patch Changes
+
+- 32e8a8c: Subtile Border Color hinzufügen #892
+- f2b8074: NavBar startItems sind nicht korrekt ausgerichtet bei Mobile #890
+- c332c62: Navbar Z-Index prüfen. #887
+- 880aaec: Menü, Select disabled fixen #886
+
 ## 1.62.8
 
 ### Patch Changes
