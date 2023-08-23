@@ -38,6 +38,7 @@ export type NotifyProps = {
   variant?: keyof ToastVariants;
   message: string;
   icon?: ElementType<SVGElement>;
+  duration?: number;
 };
 
 export type GeneralNotifyProps = Pick<NotifyProps, "variant">;
@@ -72,7 +73,7 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
         setNotificationArray((oldArray) =>
           oldArray.filter((item) => item.id !== id)
         );
-      }, 5000);
+      }, notification.duration || 5000);
     }
   }, [notification]);
 
