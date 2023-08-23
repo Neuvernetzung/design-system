@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.63.3
+
+### Patch Changes
+
+- d9205d0: NavItemProps updaten #909
+- c0d5bf7: Zeit zu notification hinzufügbar #907
+
 ## 1.63.2
 
 ### Patch Changes
