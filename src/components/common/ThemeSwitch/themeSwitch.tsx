@@ -2,12 +2,14 @@ import { useTheme } from "next-themes";
 
 import { ComputerDesktopIcon, MoonIcon, SunIcon } from "../../../theme/icons";
 import { IconButton, Menu } from "../../ui";
+import { Sizes } from "../../../types";
 
 type ThemeSwitchProps = {
   textColor?: string;
+  size?: keyof Sizes;
 };
 
-export const ThemeSwitch = ({ textColor }: ThemeSwitchProps) => {
+export const ThemeSwitch = ({ textColor, size = "md" }: ThemeSwitchProps) => {
   const { setTheme, resolvedTheme } = useTheme();
 
   const handleSwitchTheme = () => {
@@ -17,6 +19,7 @@ export const ThemeSwitch = ({ textColor }: ThemeSwitchProps) => {
 
   return (
     <IconButton
+      size={size}
       onClick={handleSwitchTheme}
       variant="ghost"
       ariaLabel="theme-switch"
@@ -26,7 +29,10 @@ export const ThemeSwitch = ({ textColor }: ThemeSwitchProps) => {
   );
 };
 
-export const ThemeSwitchMenu = ({ textColor }: ThemeSwitchProps) => {
+export const ThemeSwitchMenu = ({
+  textColor,
+  size = "md",
+}: ThemeSwitchProps) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   return (
@@ -35,6 +41,7 @@ export const ThemeSwitchMenu = ({ textColor }: ThemeSwitchProps) => {
       buttonType="icon"
       buttonProps={{
         ariaLabel: "theme-switch",
+        size,
         icon: resolvedTheme === "light" ? SunIcon : MoonIcon,
         variant: "ghost",
         className: textColor,
