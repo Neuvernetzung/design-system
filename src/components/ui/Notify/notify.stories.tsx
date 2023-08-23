@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/react";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
@@ -100,3 +100,21 @@ export const CancelLoading = () => {
     </ThemeProvider>
   );
 };
+
+export const Duration = () => (
+  <ThemeProvider config={{ allowNotification: true, allowGlobalLoading: true }}>
+    <Container>
+      <Button
+        variant="outline"
+        onClick={() =>
+          notify({
+            message: "Verschwindet in einer statt 5 Sekunden.",
+            duration: 1000,
+          })
+        }
+      >
+        1 Sekunde
+      </Button>
+    </Container>
+  </ThemeProvider>
+);

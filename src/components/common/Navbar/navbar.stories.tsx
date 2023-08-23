@@ -120,10 +120,11 @@ const baseProps: NavbarProps = {
           icon: TrashIcon,
         },
         {
-          label: "Sub Item 1",
+          label: "Extern",
           href: "5",
+          external: true,
           subLabel: {
-            children: "Hier steht eine Beschreibung. Mit etwas längerem Text.",
+            children: "Dies ist ein externes Item",
           },
         },
         {
@@ -141,8 +142,9 @@ const baseProps: NavbarProps = {
       ),
     },
     {
-      label: "Item 3",
-      href: "5",
+      label: "Extern",
+      href: "https://www.google.de",
+      external: true,
     },
     {
       label: "Disabled",

@@ -18,6 +18,7 @@ export type NavbarSubItemProps = {
   subLabel?: NavSubLabelProps;
   color?: keyof ExtendedColors;
   textColor?: string;
+  external?: boolean;
 };
 
 export const NavbarDesktopSubItem = ({
@@ -27,8 +28,9 @@ export const NavbarDesktopSubItem = ({
   label,
   tag,
   subLabel,
+  external,
 }: NavbarSubItemProps) => (
-  <NavLinkWrap href={href} disabled={disabled}>
+  <NavLinkWrap href={href} disabled={disabled} external={external}>
     <Button
       leftIcon={icon}
       disabled={disabled}
@@ -75,10 +77,21 @@ type LinkKWrapProps = {
   disabled?: boolean;
   href?: string;
   children: ReactElement;
+  external?: boolean;
 };
 
-export const NavLinkWrap = ({ disabled, href, children }: LinkKWrapProps) => {
-  if (!disabled) return <Link href={href || "#"}>{children}</Link>;
+export const NavLinkWrap = ({
+  disabled,
+  href,
+  external,
+  children,
+}: LinkKWrapProps) => {
+  if (!disabled)
+    return (
+      <Link href={href || "#"} {...(external ? { target: "_blank" } : {})}>
+        {children}
+      </Link>
+    );
 
   return children;
 };

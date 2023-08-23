@@ -12,8 +12,9 @@ export const NavbarMobileSubItem = ({
   tag,
   subLabel,
   textColor,
+  external,
 }: NavbarSubItemProps) => (
-  <NavLinkWrap href={href} disabled={disabled}>
+  <NavLinkWrap href={href} disabled={disabled} external={external}>
     <Button
       as={!disabled ? "span" : "button"}
       variant="ghost"
