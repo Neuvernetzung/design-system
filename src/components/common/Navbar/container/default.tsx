@@ -89,7 +89,7 @@ const NavbarContainer = forwardRef(
                 allowDarkMode === "desktop" && "hidden md:block"
               )}
             >
-              <ThemeSwitch textColor={textColor} />
+              <ThemeSwitch size={size} textColor={textColor} />
             </span>
           )}
           <MobileNav
