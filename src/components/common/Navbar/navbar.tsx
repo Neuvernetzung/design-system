@@ -18,21 +18,17 @@ export type NavItemProps = {
   tag?: TagProps;
   subLabel?: NavSubLabelProps;
   children?: NavItemProps[];
+  child?: ReactNode;
+  fullWidthPopover?: boolean;
   href?: string;
+  external?: boolean;
   disabled?: boolean;
   icon?: SvgType;
   hideChevron?: boolean;
   color?: keyof ExtendedColors;
   textColor?: string;
   defaultOpen?: boolean;
-} & NavFullPopoverProps;
-
-type NavFullPopoverProps =
-  | {
-      fullWidthPopover?: true;
-      child: ReactNode;
-    }
-  | { fullWidthPopover?: false; child?: never };
+};
 
 export type NavSubLabelProps = {
   children: string | ReactElement;

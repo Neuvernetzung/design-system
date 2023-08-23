@@ -38,6 +38,7 @@ export const DesktopItems = ({
           icon,
           hideChevron,
           fullWidthPopover,
+          external,
         }: NavItemProps) => (
           <div key={label}>
             {!disabled ? (
@@ -45,6 +46,7 @@ export const DesktopItems = ({
                 <Button
                   as={Link}
                   href={href || "#"}
+                  {...(external ? { target: "_blank" } : {})}
                   leftIcon={icon}
                   size={minSize(size, "sm")}
                   variant="ghost"

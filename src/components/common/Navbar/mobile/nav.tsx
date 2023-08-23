@@ -110,12 +110,19 @@ export const MobileNavItem = ({
   icon,
   defaultOpen,
   child,
+  external,
 }: NavItemProps) => {
   if (!disabled)
     return (
       <div>
         {!children && !child ? (
-          <Button as={Link} href={href || "#"} variant="ghost" fullWidth>
+          <Button
+            as={Link}
+            href={href || "#"}
+            {...(external ? { target: "_blank" } : {})}
+            variant="ghost"
+            fullWidth
+          >
             {icon && (
               <div className="flex">
                 <Icon color="accent" icon={icon} />

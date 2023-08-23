@@ -17,6 +17,7 @@ export const SideNavItem = ({
   defaultOpen,
   child,
   textColor = "black",
+  external,
 }: NavItemProps) => (
   <div>
     {!children && !child ? (
@@ -25,6 +26,7 @@ export const SideNavItem = ({
         size="md"
         as={Link}
         href={href || "#"}
+        {...(external ? { target: "_blank" } : {})}
         variant="ghost"
         fullWidth
         className={cn(textColor)}
