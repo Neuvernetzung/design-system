@@ -36,3 +36,14 @@ export const Default = ({ ...args }) => (
     />
   </div>
 );
+
+export const Empty = ({ ...args }) => (
+  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+    <Linechart
+      data={[]}
+      xScaleType="time"
+      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+      {...args}
+    />
+  </div>
+);

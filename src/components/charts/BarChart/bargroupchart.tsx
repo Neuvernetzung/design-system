@@ -126,7 +126,7 @@ export const Bargroupchart = forwardRef(
         .map((key) => d[key])
         .reduce((prev, next) => ((prev ?? 0) > (next ?? 0) ? prev : next), 0);
 
-    const keys = Object.keys(data[0]).filter((d) => d !== "x");
+    const keys = Object.keys(data[0] || {}).filter((d) => d !== "x");
 
     const allData = filterMissingChartData<BargroupchartDataFieldProps>({
       data,
