@@ -38,6 +38,7 @@ export type CarouselProps = {
   nextButtonClassName?: string;
   previousThumbButtonClassName?: string;
   nextThumbButtonClassName?: string;
+  slideClassName?: string;
 };
 
 export const Carousel = ({
@@ -54,6 +55,7 @@ export const Carousel = ({
   nextButtonClassName,
   previousThumbButtonClassName,
   nextThumbButtonClassName,
+  slideClassName,
 }: CarouselProps) => {
   const [thumbsSwiper, setThumbsSwiper]: any = useState(null);
   const [nextEl, nextElRef] = useSwiperRef<HTMLButtonElement>();
@@ -87,7 +89,7 @@ export const Carousel = ({
         {slides?.map(({ children }, i) => (
           <SwiperSlide
             key={`Carousel Item ${i}`}
-            className="bg-accent-1 overflow-hidden"
+            className={cn("overflow-hidden", slideClassName)}
           >
             {children}
           </SwiperSlide>
