@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 1.64.0
+
+### Minor Changes
+
+- c529c70: Deps updaten #923
+
+### Patch Changes
+
+- 2a6a4ff: Carousel SwiperSlide className hinzufügen #922
+
 ## 1.63.5
 
 ### Patch Changes
