@@ -1,8 +1,8 @@
 import cn from "classnames";
 import { BlockquoteHTMLAttributes } from "react";
 
-import { borders, paddings } from "../../../styles";
-import { typedMemo } from "../../../utils/internal";
+import { borders, paddings } from "../../../../styles";
+import { typedMemo } from "../../../../utils/internal";
 
 export type BlockQuoteProps = BlockquoteHTMLAttributes<HTMLQuoteElement> & {};
 

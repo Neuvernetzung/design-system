@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react";
 import React from "react";
 
 import { Button } from "../Button";
-import { Link, NativeLink as NativeLinkComponent } from "./link";
+import { Link } from "./link";
 
 export default {
   title: "UI/Buttons/Link",
@@ -34,11 +34,5 @@ export const Disabled = ({ ...args }) => (
     <Link href="/" disabled>
       Link
     </Link>
-  </Container>
-);
-
-export const NativeLink = ({ ...args }) => (
-  <Container>
-    <NativeLinkComponent href="/">Link</NativeLinkComponent>
   </Container>
 );

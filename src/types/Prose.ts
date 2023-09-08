@@ -1,8 +1,7 @@
 import { FC } from "react";
 
-import type { BlockQuoteProps } from "../components/ui/BlockQuote";
+import type { BlockQuoteProps } from "../components/ui/Typography/BlockQuote";
 import type { HorizontalRuleProps } from "../components/ui/HorizontalRule";
-import type { NativeLinkProps } from "../components/ui/Link";
 import type {
   ListItemProps,
   OrderedListProps,
@@ -11,6 +10,7 @@ import type {
 import type { HeadingProps } from "../components/ui/Typography/Heading/heading";
 import type { TextProps } from "../components/ui/Typography/Text";
 import type { ImageProps } from "../components/ui/Image";
+import type { AnchorProps } from "../components";
 
 export const proseComponentTags = [
   "p",
@@ -43,7 +43,7 @@ export type ProseComponents = {
   ul: ProseComponent<UnorderedListProps>;
   li: ProseComponent<ListItemProps>;
   blockquote: ProseComponent<BlockQuoteProps>;
-  a: ProseComponent<NativeLinkProps>;
+  a: ProseComponent<AnchorProps>;
   hr: ProseComponent<HorizontalRuleProps>;
   img: ProseComponent<ImageProps>;
 };
