@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { Sizes } from "../../types";
+import type { Size } from "../../types";
 import { capSize, minSize } from "../../utils";
 import {
   bgColors,
@@ -20,7 +20,7 @@ import {
 } from "..";
 
 type DropdownContainerStyleProps = {
-  size: keyof Sizes;
+  size: Size;
 };
 
 const containerStyles = {
@@ -39,7 +39,7 @@ export const getDropdownContainerStyles = ({
   );
 
 type DropdownOptionsStyleProps = {
-  size: keyof Sizes;
+  size: Size;
   active?: boolean;
   disabled?: boolean;
 };
@@ -67,7 +67,7 @@ export const getDropDownOptionsStyles = ({
   );
 
 type DropdownGroupStyleProps = {
-  size: keyof Sizes;
+  size: Size;
 };
 
 const groupStyles = {
@@ -78,7 +78,7 @@ export const getDropdownGroupStyles = ({ size }: DropdownGroupStyleProps) =>
   cn(groupStyles.base, paddingsYSmall[capSize(size, "md")]);
 
 type DropdownGroupHeaderStyleProps = {
-  size: keyof Sizes;
+  size: Size;
 };
 
 const groupHeaderStyles = {

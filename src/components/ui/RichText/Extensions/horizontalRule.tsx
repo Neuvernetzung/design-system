@@ -5,13 +5,12 @@ import {
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 
-import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
 
 const HorizontalRuleComponent = () => (
   <NodeViewWrapper>
     {createProseElement({
-      name: ProseComponentTags.HR,
+      name: "hr",
       children: <NodeViewContent />,
     })}
   </NodeViewWrapper>

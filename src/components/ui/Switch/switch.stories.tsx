@@ -2,10 +2,10 @@ import { Meta } from "@storybook/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Sizes as SizesType } from "../../../types";
+import { Color, Size, colors, sizes } from "../../../types";
 import { Button, Form } from "..";
 import { Switch } from ".";
-import { colors, SwitchInner } from "./switch";
+import { SwitchInner } from "./switch";
 
 export default {
   title: "UI/Form/Switch",
@@ -26,17 +26,8 @@ export default {
 
 const formClassName = "flex flex-col gap-5";
 
-interface ISizes {
-  select_xs: any;
-  select_sm: any;
-  select_md: any;
-  select_lg: any;
-  select_xl: any;
-}
-
 export const Sizes = ({ ...args }) => {
-  const formMethods = useForm<ISizes>();
-  const sizes: Array<keyof SizesType> = ["xs", "sm", "md", "lg", "xl"];
+  const formMethods = useForm<Record<Size, string>>();
 
   return (
     <Form
@@ -44,12 +35,12 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {sizes.map((size: keyof SizesType) => (
+      {sizes.map((size) => (
         <Switch
           key={size}
           control={formMethods.control}
           size={size}
-          name={`select_${size}`}
+          name={size}
           content={size}
           {...args}
         />
@@ -64,7 +55,6 @@ Sizes.parameters = {
 
 export const Colors = ({ ...args }) => {
   const formMethods = useForm();
-  const _colors = colors;
 
   return (
     <Form
@@ -72,7 +62,12 @@ export const Colors = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_colors.map((color: any) => (
+      {(
+        colors.filter((v) => v !== ("accent" as const)) as Exclude<
+          Color,
+          "accent"
+        >[]
+      ).map((color) => (
         <Switch
           key={color}
           control={formMethods.control}

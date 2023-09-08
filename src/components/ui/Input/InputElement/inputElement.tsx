@@ -1,19 +1,19 @@
 import cn from "classnames";
-import { forwardRef, ReactNode } from "react";
+import { CSSProperties, forwardRef, ReactNode } from "react";
 
 import { textColors } from "../../../../styles";
 import { inputSizes } from "../../../../styles/groups";
-import type { Sizes } from "../../../../types";
+import type { Size } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
 
 export type InputElementProps = {
   className?: string;
   children: ReactNode;
-  size: keyof Sizes;
+  size: Size;
   isLeft?: boolean;
   isRight?: boolean;
   pointerEvents?: boolean;
-  style?: any;
+  style?: CSSProperties;
 };
 
 const styles = {

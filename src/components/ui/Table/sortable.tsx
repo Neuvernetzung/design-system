@@ -30,7 +30,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { createPortal } from "react-dom";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { DragOverlay as DragOverlayComponent } from "../Sortable/Overlay";
 import { ForwardedRef, forwardRef } from "react";
 
@@ -170,7 +170,7 @@ type SortableTableRowProps = TableRowProps & {
   id: UniqueIdentifier;
   handle?: boolean;
   indicator?: boolean;
-  size: keyof Sizes;
+  size: Size;
 };
 
 const SortableTableRow = forwardRef(

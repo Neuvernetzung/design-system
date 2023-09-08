@@ -1,17 +1,18 @@
-export const sizes: (keyof Sizes)[] = ["xs", "sm", "md", "lg", "xl"];
+export const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
 
-export type Sizes = {
-  xs: any;
-  sm: any;
-  md: any;
-  lg: any;
-  xl: any;
-};
+export type Sizes = typeof sizes;
 
-export interface ExtendedSizes extends Sizes {
-  "2xl": any;
-  "3xl": any;
-  "4xl": any;
-  "5xl": any;
-  "6xl": any;
-}
+export type Size = Sizes[number];
+
+export const extendedSizes = [
+  ...sizes,
+  "2xl",
+  "3xl",
+  "4xl",
+  "5xl",
+  "6xl",
+] as const;
+
+export type ExtendedSizes = typeof extendedSizes;
+
+export type ExtendedSize = ExtendedSizes[number];

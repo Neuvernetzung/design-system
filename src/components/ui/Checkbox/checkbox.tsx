@@ -1,12 +1,13 @@
 import cn from "classnames";
 import isArray from "lodash/isArray";
 import isString from "lodash/isString";
+import { useRouter } from "next/router";
 import {
   ForwardedRef,
+  forwardRef,
   KeyboardEvent,
   MouseEvent,
   ReactNode,
-  forwardRef,
 } from "react";
 import {
   Controller,
@@ -16,6 +17,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
+import type { Locale } from "../../../locales/getText";
 import {
   borders,
   bordersInteractive,
@@ -31,32 +33,25 @@ import {
   textSizes,
   transition,
 } from "../../../styles";
-import type { Colors, Sizes, SvgType } from "../../../types";
+import type { CheckboxVariant, Color, Size, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 import { CheckboxIcon } from "./checkboxIcon";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
 
-export interface CheckboxVariants {
-  default: any;
-  button: any;
-}
-
-export interface CheckboxProps {
-  variant?: keyof CheckboxVariants;
+export type CheckboxProps = {
+  variant?: CheckboxVariant;
   label?: string;
-  helper?: any;
+  helper?: ReactNode;
   options: OptionProps[];
   required?: RequiredRule;
-  size?: keyof Sizes;
-  color?: keyof Colors;
+  size?: Size;
+  color?: Color;
   icon?: SvgType;
   disabled?: boolean;
   className?: string;
-}
+};
 
 type OptionProps = {
   label: ReactNode;
@@ -75,13 +70,15 @@ const styles = {
   iconWrapper: "pointer-events-none flex items-center justify-center",
 };
 
-export const checkedColors: Colors = {
+export const checkedColors: Record<Color, string> = {
   brand: "bg-brand-500 hover:bg-brand-600 dark:hover:bg-brand-400",
   primary: "bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-400",
   accent: "bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400",
   success: "bg-success-500 hover:bg-success-600 dark:hover:bg-success-400",
   warn: "bg-warn-500 hover:bg-warn-600 dark:hover:bg-warn-400",
   danger: "bg-danger-500 hover:bg-danger-600 dark:hover:bg-danger-400",
+  black: "bg-black hover:bg-accent-900 dark:hover:bg-accent-900",
+  white: "bg-white hover:bg-accent-100 dark:hover:bg-accent-100",
 };
 
 export const Checkbox = <
@@ -101,7 +98,7 @@ export const Checkbox = <
   disabled,
   className,
 }: CheckboxProps & UseControllerProps<TFieldValues, TName>) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -203,9 +200,9 @@ type CheckboxInnerProps = {
   id?: string;
   label?: ReactNode;
   disabled?: boolean;
-  size?: keyof Sizes;
-  variant?: keyof CheckboxVariants;
-  color?: keyof Colors;
+  size?: Size;
+  variant?: CheckboxVariant;
+  color?: Color;
   onChange: (...event: any[]) => void;
   options: string[];
   icon?: SvgType;
@@ -236,7 +233,7 @@ export const CheckboxInner = forwardRef(
       error,
       allowIndetermination,
     }: CheckboxInnerProps,
-    ref: ForwardedRef<any>
+    ref: ForwardedRef<HTMLDivElement>
   ) => {
     const _isIndeterminate = allowIndetermination
       ? isIndeterminate(current, options)

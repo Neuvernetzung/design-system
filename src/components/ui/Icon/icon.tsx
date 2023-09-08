@@ -13,10 +13,10 @@ import type {
 } from "../../../utils/internal/polymorphic";
 
 import { extendedTextColors } from "../../../styles";
-import { ExtendedColors, Sizes, SvgType } from "../../../types";
+import type { ExtendedColor, Size, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 
-export const sizes: Sizes = {
+export const iconDimensions: Record<Size, string> = {
   xs: "h-4 w-4",
   sm: "h-5 w-5",
   md: "h-6 w-6",
@@ -24,16 +24,14 @@ export const sizes: Sizes = {
   xl: "h-10 w-10",
 };
 
-export const colors: ExtendedColors = extendedTextColors;
-
 const IconDefaultElement = "svg";
 
-export interface IconOwnProps extends HTMLAttributes<HTMLElement> {
-  size?: keyof Sizes;
-  color?: keyof ExtendedColors;
+export type IconOwnProps = HTMLAttributes<HTMLElement> & {
+  size?: Size;
+  color?: ExtendedColor;
   icon: SvgType;
   className?: string;
-}
+};
 
 export type IconProps<T extends ElementType = typeof IconDefaultElement> =
   PolymorphicPropsWithRef<IconOwnProps, T>;
@@ -53,7 +51,12 @@ export const Icon: PolymorphicForwardRefExoticComponent<
   ) => (
     <span
       ref={ref}
-      className={cn("flex", sizes[size], colors[color], className)}
+      className={cn(
+        "flex",
+        iconDimensions[size],
+        extendedTextColors[color],
+        className
+      )}
     >
       {icon && createElement(icon)}
     </span>

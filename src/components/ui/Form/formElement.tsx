@@ -1,12 +1,12 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
-import { FieldError, Message, ValidationRule } from "react-hook-form";
+import type { FieldError, Message, ValidationRule } from "react-hook-form";
 
-import { Locales, getText } from "../../../locales/getText";
+import { type Locale, getText } from "../../../locales/getText";
 import { gapsSmall, textColors, textSizes } from "../../../styles";
 import { ExclamationTriangleIcon } from "../../../theme/icons";
-import type { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -18,7 +18,7 @@ export type FormElementProps = {
   label?: ReactNode;
   helper?: ReactNode;
   name: string;
-  size?: keyof Sizes;
+  size?: Size;
   children: ReactNode;
   className?: string;
 };
@@ -55,7 +55,7 @@ export const FormElement: FC<FormElementProps> = ({
         <span className={cn("flex flex-row items-center", gapsSmall.md)}>
           <Icon icon={ExclamationTriangleIcon} color="danger" size="xs" />
           <Text size="xs" color="danger">
-            {error?.message || getText(locale as Locales).required}
+            {error?.message || getText(locale as Locale).required}
           </Text>
         </span>
       )}

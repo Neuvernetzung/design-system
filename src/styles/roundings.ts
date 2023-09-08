@@ -1,6 +1,6 @@
-import type { Sizes } from "../types";
+import type { Size } from "../types";
 
-export const roundings: Sizes = {
+export const roundings: Record<Size, string> = {
   xs: "rounded-sm",
   sm: "rounded",
   md: "rounded-md",
@@ -8,7 +8,7 @@ export const roundings: Sizes = {
   xl: "rounded-lg",
 };
 
-export const roundingsLeft: Sizes = {
+export const roundingsLeft: Record<Size, string> = {
   xs: "rounded-l-sm",
   sm: "rounded-l",
   md: "rounded-l-md",
@@ -16,7 +16,7 @@ export const roundingsLeft: Sizes = {
   xl: "rounded-l-lg",
 };
 
-export const roundingsRight: Sizes = {
+export const roundingsRight: Record<Size, string> = {
   xs: "rounded-r-sm",
   sm: "rounded-r",
   md: "rounded-r-md",
@@ -24,7 +24,7 @@ export const roundingsRight: Sizes = {
   xl: "rounded-r-lg",
 };
 
-export const roundingsTop: Sizes = {
+export const roundingsTop: Record<Size, string> = {
   xs: "rounded-t-sm",
   sm: "rounded-t",
   md: "rounded-t-md",
@@ -32,7 +32,7 @@ export const roundingsTop: Sizes = {
   xl: "rounded-t-lg",
 };
 
-export const roundingsBottom: Sizes = {
+export const roundingsBottom: Record<Size, string> = {
   xs: "rounded-b-sm",
   sm: "rounded-b",
   md: "rounded-b-md",
@@ -40,7 +40,7 @@ export const roundingsBottom: Sizes = {
   xl: "rounded-b-lg",
 };
 
-export const roundingsSmall: Sizes = {
+export const roundingsSmall: Record<Size, string> = {
   xs: "rounded-sm",
   sm: "rounded-sm",
   md: "rounded",

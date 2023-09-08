@@ -1,7 +1,7 @@
 import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
 import React from "react";
-import { colors, sizes } from "../../../types";
+import { colors } from "../../../types";
 
 import { Indicator } from ".";
 import { IconButton } from "../Button";
@@ -39,7 +39,7 @@ export const Default = ({ ...args }) => (
 
 export const Colors = ({ ...args }) => (
   <Container>
-    {colors.map((color: any) => (
+    {colors.map((color) => (
       <Indicator key={color} color={color} value={23}>
         <IconButton ariaLabel="Test" icon={HomeIcon} {...args} />
       </Indicator>

@@ -8,11 +8,15 @@ import { Meta } from "@storybook/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { colors, Sizes as SizesType } from "../../../types";
+import {
+  checkboxVariants,
+  colors,
+  sizes,
+  Sizes as SizesType,
+} from "../../../types";
 import { Button, Form } from "..";
 import { Icon as IconComponent } from "../Icon";
 import { Checkbox } from ".";
-import { CheckboxVariants } from "./checkbox";
 
 export default {
   title: "UI/Form/Checkbox",
@@ -65,7 +69,6 @@ export const Default = ({ ...args }) => {
 
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
-  const sizes: Array<keyof SizesType> = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Form
@@ -73,7 +76,7 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {sizes.map((size: any) => (
+      {sizes.map((size) => (
         <Checkbox
           key={size}
           control={formMethods.control}
@@ -104,7 +107,7 @@ export const Colors = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {colors.map((color: any) => (
+      {colors.map((color) => (
         <Checkbox
           key={color}
           control={formMethods.control}
@@ -128,7 +131,6 @@ Colors.parameters = {
 
 export const Variants = ({ ...args }) => {
   const formMethods = useForm();
-  const variants: Array<keyof CheckboxVariants> = ["default", "button"];
 
   return (
     <Form
@@ -136,7 +138,7 @@ export const Variants = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {variants.map((variant: any) => (
+      {checkboxVariants.map((variant) => (
         <Checkbox
           key={variant}
           control={formMethods.control}
@@ -204,13 +206,13 @@ export const Icon = ({ ...args }) => {
   );
 };
 
-interface IDisabled {
+type DisabledProps = {
   checkbox_disabled: any;
   checkbox_disabled_single: any;
-}
+};
 
 export const Disabled = ({ ...args }) => {
-  const formMethods = useForm<IDisabled>({
+  const formMethods = useForm<DisabledProps>({
     defaultValues: { checkbox_disabled: ["option-2"] },
   });
 
@@ -245,9 +247,9 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
-interface ErrorProps {
+type ErrorProps = {
   checkbox_error: any;
-}
+};
 
 export const Error = ({ ...args }) => {
   const formMethods = useForm<ErrorProps>();

@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { MutableRefObject, ReactNode, useRef } from "react";
 import { create } from "zustand";
 
-import { getText, Locales } from "../../../locales/getText";
+import { getText, type Locale } from "../../../locales/getText";
 import { gaps } from "../../../styles";
-import { Colors, SvgType } from "../../../types";
+import type { Color, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { Tag } from "../Tag";
@@ -28,7 +28,7 @@ export type ConfirmationModalProps = {
   icon?: SvgType;
   heading: string;
   content?: string | ReactNode;
-  color?: keyof Colors;
+  color?: Color;
   confirm: Function;
   cancel?: Function;
   confirmButton?: ReactNode;
@@ -37,7 +37,7 @@ export type ConfirmationModalProps = {
 };
 
 export const ConfirmationModal = () => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   const confirmationState = useConfirmationState((state) => state.confirmation);
 

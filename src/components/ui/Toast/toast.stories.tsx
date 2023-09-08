@@ -2,8 +2,8 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { colors } from "../../../types";
-import { Toast, ToastVariants } from "./toast";
+import { colors, toastVariants } from "../../../types";
+import { Toast } from "./toast";
 
 export default {
   title: "UI/Overlay/Toast",
@@ -19,24 +19,20 @@ const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
 );
 
-export const Variants = ({ ...args }) => {
-  const variants: (keyof ToastVariants)[] = ["outline", "solid"];
-
-  return (
-    <Container>
-      {variants.map((variant) => (
-        <Toast
-          variant={variant}
-          key={variant}
-          icon={ExclamationTriangleIcon}
-          message={`Dies ist eine ${variant} Benachrichtigung`}
-          handleClose={() => {}}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Variants = ({ ...args }) => (
+  <Container>
+    {toastVariants.map((variant) => (
+      <Toast
+        variant={variant}
+        key={variant}
+        icon={ExclamationTriangleIcon}
+        message={`Dies ist eine ${variant} Benachrichtigung`}
+        handleClose={() => {}}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 export const Colors = ({ ...args }) => (
   <Container>

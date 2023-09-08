@@ -1,17 +1,17 @@
 import cn from "classnames";
-import { HTMLAttributes, MutableRefObject } from "react";
+import type { HTMLAttributes, MutableRefObject } from "react";
 import { pagePaddings } from "../../../styles";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { useRefDimensions, useWindowSize } from "../../../utils/internal";
 
-interface PageContainerProps extends HTMLAttributes<HTMLDivElement> {
+type PageContainerProps = HTMLAttributes<HTMLDivElement> & {
   navbarRef?: MutableRefObject<any>;
   sidenavRef?: MutableRefObject<any>;
   footerRef?: MutableRefObject<any>;
-  pagePaddingSize?: keyof Sizes;
+  pagePaddingSize?: Size;
   enablePagePadding?: boolean;
   className?: string;
-}
+};
 
 export const PageContainer = ({
   navbarRef,

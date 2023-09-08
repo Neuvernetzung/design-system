@@ -9,12 +9,12 @@ import {
 import { IconButton } from "../../Button/IconButton";
 import { Text } from "../../Typography/Text";
 import cn from "classnames";
-import { Sizes } from "../../../../types";
+import type { Size } from "../../../../types";
 import { Tag } from "../../Tag";
 import { smallerSize } from "../../../../utils";
 
 type DragOverlayProps = {
-  size?: keyof Sizes;
+  size?: Size;
   handle?: boolean;
   itemCount?: number;
 };

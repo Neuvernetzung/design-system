@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { extendBorderRadius, ReturnedBorderRadius } from "./extendBorderRadius";
 import { extendColors, ReturnedColors } from "./extendColors";
 import { adjustedTextColors } from "../styles";
-import type { ExtendedColors } from "../types";
+import type { ExtendedColor } from "../types";
 
 export const LOCAL_COLOR_KEY = "colors";
 export const LOCAL_DARK_COLOR_KEY = "dark_colors";
@@ -12,7 +12,7 @@ type ThemeState = {
   colorState: ReturnedColors | undefined;
   darkColorState: ReturnedColors | undefined;
   borderRadiusState: ReturnedBorderRadius | undefined;
-  adjustedTextColorState: ExtendedColors;
+  adjustedTextColorState: Record<ExtendedColor, string>;
 };
 
 export const useThemeState = create<ThemeState>(() => {
@@ -22,6 +22,6 @@ export const useThemeState = create<ThemeState>(() => {
     colorState: defaultColors,
     darkColorState: undefined,
     borderRadiusState: extendBorderRadius(),
-    adjustedTextColorState: adjustedTextColors(defaultColors),
+    adjustedTextColorState: adjustedTextColors(defaultColors, defaultColors),
   };
 });

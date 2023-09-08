@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { Sizes } from "../../types";
+import type { Size } from "../../types";
 import {
   bgColors,
   borders,
@@ -13,7 +13,7 @@ import {
 } from "..";
 
 type PopoverContainerStyleProps = {
-  size: keyof Sizes;
+  size: Size;
 };
 
 const styles = {

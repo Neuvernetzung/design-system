@@ -19,29 +19,20 @@ import {
   heightsSmall,
   transition,
 } from "../../../styles";
-import { Colors, Sizes } from "../../../types";
+import type { Color, Size } from "../../../types";
 import { mergeRefs, typedMemo } from "../../../utils/internal";
 import type { RequiredRule } from "../Form";
 import { FormElement } from "../Form";
 import { Text } from "../Typography";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
-
-export const sizes: Sizes = heightsSmall;
-export const colors: (keyof Omit<Colors, "accent">)[] = [
-  "brand",
-  "primary",
-  "success",
-  "warn",
-  "danger",
-];
+import type { Locale } from "../../../locales/getText";
 
 export type SwitchProps = {
   label?: string;
   helper?: string;
-  size?: keyof Sizes;
-  color?: keyof Omit<Colors, "accent">;
+  size?: Size;
+  color?: Exclude<Color, "accent">;
   required?: RequiredRule;
   content?: ReactNode;
   reverse?: boolean;
@@ -66,7 +57,7 @@ export const SwitchInner = <
   }: SwitchProps & UseControllerProps<TFieldValues, TName>,
   ref: ForwardedRef<HTMLButtonElement>
 ) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller

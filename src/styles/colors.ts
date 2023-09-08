@@ -1,8 +1,10 @@
-import type { Colors, ExtendedColors, HEX } from "../types";
-import { colorIsBright } from "../utils/colorIsBright";
 import cn from "classnames";
 
-export const textColors: Colors = {
+import type { ReturnedColors } from "../theme/extendColors";
+import type { Color, ExtendedColor, HEX } from "../types";
+import { colorIsBright } from "../utils/colorIsBright";
+
+export const textColors: Record<Color, string> = {
   brand: "text-brand-500",
   primary: "text-primary-500",
   white: "text-white dark:text-black",
@@ -13,7 +15,7 @@ export const textColors: Colors = {
   danger: "text-danger-500",
 };
 
-export const extendedTextColors: ExtendedColors = {
+export const extendedTextColors: Record<ExtendedColor, string> = {
   ...textColors,
   inherit: "",
   light: "text-accent-100 dark:text-accent-100",
@@ -32,9 +34,9 @@ const adjustTextColor = (color: HEX, darkColor: HEX, differentColor?: HEX) =>
   );
 
 export const adjustedTextColors = (
-  colorState?: ExtendedColors,
-  darkColorState?: ExtendedColors
-): ExtendedColors => ({
+  colorState: ReturnedColors,
+  darkColorState: ReturnedColors
+): Record<ExtendedColor, string> => ({
   brand: adjustTextColor(colorState?.brand[500], darkColorState?.brand[500]),
   primary: adjustTextColor(
     colorState?.primary[500],
@@ -57,6 +59,7 @@ export const adjustedTextColors = (
   ),
   warn: adjustTextColor(colorState?.warn[500], darkColorState?.warn[500]),
   danger: adjustTextColor(colorState?.danger[500], darkColorState?.danger[500]),
+  inherit: "",
   light: adjustTextColor(colorState?.accent[100], darkColorState?.accent[100]),
   dark: adjustTextColor(colorState?.accent[900], darkColorState?.accent[900]),
   filled: adjustTextColor(
@@ -76,7 +79,7 @@ export const adjustedTextColors = (
   ),
 });
 
-export const bgColors: Colors = {
+export const bgColors: Record<Color, string> = {
   brand: "bg-brand-500",
   primary: "bg-primary-500",
   white: "bg-white dark:bg-black",
@@ -87,8 +90,9 @@ export const bgColors: Colors = {
   danger: "bg-danger-500",
 };
 
-export const extendedBgColors: ExtendedColors = {
+export const extendedBgColors: Record<ExtendedColor, string> = {
   ...bgColors,
+  inherit: "bg-inherit dark:bg-inherit",
   light: "bg-accent-100 dark:bg-accent-100",
   dark: "bg-accent-900 dark:bg-accent-900",
   filled: "bg-accent-200 dark:bg-accent-800",
@@ -96,7 +100,7 @@ export const extendedBgColors: ExtendedColors = {
   subtile: "bg-accent-50 dark:bg-accent-950",
 };
 
-export const bgColorsInteractive: Colors = {
+export const bgColorsInteractive: Record<Color, string> = {
   brand: `${bgColors.brand} hover:bg-brand-600 dark:hover:bg-brand-400`,
   primary: `${bgColors.primary} hover:bg-primary-600 dark:hover:bg-primary-400`,
   white: `${bgColors.white} hover:bg-accent-100 dark:hover:bg-accent-900`,
@@ -107,8 +111,9 @@ export const bgColorsInteractive: Colors = {
   danger: `${bgColors.danger} hover:bg-danger-600 dark:hover:bg-danger-400`,
 };
 
-export const extendedBgColorsInteractive: ExtendedColors = {
+export const extendedBgColorsInteractive: Record<ExtendedColor, string> = {
   ...bgColorsInteractive,
+  inherit: extendedBgColors.inherit,
   light: `${extendedBgColors.light} hover:bg-accent-200`,
   dark: `${extendedBgColors.dark} hover:bg-accent-800`,
   filled: `${extendedBgColors.filled} hover:bg-accent-300 dark:hover:bg-accent-700`,
@@ -116,7 +121,7 @@ export const extendedBgColorsInteractive: ExtendedColors = {
   subtile: `${extendedBgColors.filledSubtile} hover:bg-accent-100 dark:hover:bg-accent-900`,
 };
 
-export const fillColors: Colors = {
+export const fillColors: Record<Color, string> = {
   brand: "fill-brand-500",
   primary: "fill-primary-500",
   white: "fill-white dark:fill-black",
@@ -127,8 +132,11 @@ export const fillColors: Colors = {
   danger: "fill-danger-500",
 };
 
-export const extendedFillColors: ExtendedColors = {
+export const extendedFillColors: Record<ExtendedColor, string> = {
   ...fillColors,
+  inherit: "fill-inherit dark:fill-inherit",
+  light: "fill-accent-100 dark:fill-accent-100",
+  dark: "fill-accent-900 dark:fill-accent-900",
   subtile: "fill-accent-600 dark:fill-accent-400",
   filled: "fill-accent-200 dark:fill-accent-700",
   filledSubtile: "fill-accent-100 dark:fill-accent-800",

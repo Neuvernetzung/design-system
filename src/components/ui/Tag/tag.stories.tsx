@@ -2,8 +2,8 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { Sizes as SizesType, colors } from "../../../types";
-import { Tag, variants } from "./tag";
+import { colors, sizes, tagVariants } from "../../../types";
+import { Tag } from "./tag";
 
 export default {
   title: "UI/Data Display/Tag",
@@ -14,33 +14,25 @@ const Container = ({ ...props }) => (
   <div className="flex flex-row gap-5" {...props} />
 );
 
-export const Sizes = ({ ...args }) => {
-  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
-
-  return (
-    <Container>
-      {sizes.map((size) => (
-        <Tag key={size} label={size} size={size} {...args} />
-      ))}
-    </Container>
-  );
-};
+export const Sizes = ({ ...args }) => (
+  <Container>
+    {sizes.map((size) => (
+      <Tag key={size} label={size} size={size} {...args} />
+    ))}
+  </Container>
+);
 
 Sizes.parameters = {
   controls: { exclude: "color" },
 };
 
-export const Variants = ({ ...args }) => {
-  const _variants = Object.keys(variants("accent"));
-
-  return (
-    <Container>
-      {_variants.map((variant: any) => (
-        <Tag key={variant} label={variant} variant={variant} {...args} />
-      ))}
-    </Container>
-  );
-};
+export const Variants = ({ ...args }) => (
+  <Container>
+    {tagVariants.map((variant: any) => (
+      <Tag key={variant} label={variant} variant={variant} {...args} />
+    ))}
+  </Container>
+);
 
 Variants.parameters = {
   controls: { exclude: "variant" },

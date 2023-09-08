@@ -1,6 +1,6 @@
-import type { ExtendedSizes, Sizes } from "../types/Sizes";
+import type { ExtendedSize, Size } from "../types/Sizes";
 
-export const heights: Sizes = {
+export const heights: Record<Size, string> = {
   xs: "h-5",
   sm: "h-7",
   md: "h-10",
@@ -8,7 +8,7 @@ export const heights: Sizes = {
   xl: "h-16",
 };
 
-export const heightsSmall: Sizes = {
+export const heightsSmall: Record<Size, string> = {
   xs: "h-3",
   sm: "h-5",
   md: "h-7",
@@ -16,7 +16,7 @@ export const heightsSmall: Sizes = {
   xl: "h-14",
 };
 
-export const minHeights: Sizes = {
+export const minHeights: Record<Size, string> = {
   xs: "min-h-[20px]",
   sm: "min-h-[28px]",
   md: "min-h-[40px]",
@@ -24,7 +24,7 @@ export const minHeights: Sizes = {
   xl: "min-h-[64px]",
 };
 
-export const checkboxSizes: Sizes = {
+export const checkboxSizes: Record<Size, string> = {
   xs: "h-2.5 w-2.5",
   sm: "h-3 w-3",
   md: "h-4 w-4",
@@ -32,11 +32,11 @@ export const checkboxSizes: Sizes = {
   xl: "h-6 w-6",
 };
 
-export const radioSizes: Sizes = {
+export const radioSizes: Record<Size, string> = {
   ...checkboxSizes,
 };
 
-export const textSizes: Required<ExtendedSizes> = {
+export const textSizes: Record<ExtendedSize, string> = {
   xs: "text-xs",
   sm: "text-sm",
   md: "text-md",
@@ -49,7 +49,7 @@ export const textSizes: Required<ExtendedSizes> = {
   "6xl": "lg:text-6xl md:text-5xl text-4xl",
 };
 
-export const popoverMaxSizes: Sizes = {
+export const popoverMaxSizes: Record<Size, string> = {
   xs: "max-w-xs",
   sm: "max-w-xs sm:max-w-sm",
   md: "max-w-xs sm:max-w-sm lg:max-w-md",

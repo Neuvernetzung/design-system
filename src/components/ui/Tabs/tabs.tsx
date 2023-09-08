@@ -3,7 +3,7 @@ import cn from "classnames";
 import { Fragment, ReactNode } from "react";
 
 import { gaps, paddings } from "../../../styles";
-import { Colors, Sizes, SvgType } from "../../../types";
+import type { Color, Size, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 
@@ -16,14 +16,14 @@ export type TabGroupProps = TabListProps &
 export type TabListProps = {
   items: TabItemProps[];
   listClassName?: string;
-  size?: keyof Sizes;
-  color?: keyof Colors;
+  size?: Size;
+  color?: Color;
 };
 
 export type TabPanelsProps = {
   items: TabItemProps[];
   panelsClassName?: string;
-  size?: keyof Sizes;
+  size?: Size;
   unmount?: boolean;
 };
 
@@ -93,7 +93,7 @@ export const TabList = ({
 
 export type StandaloneTabListProps = {
   listClassName?: string;
-  size?: keyof Sizes;
+  size?: Size;
   children?: ReactNode;
 };
 
@@ -152,7 +152,7 @@ export const TabPanels = ({
 
 export type StandaloneTabPanelsProps = {
   panelsClassName?: string;
-  size?: keyof Sizes;
+  size?: Size;
   children?: ReactNode;
 };
 

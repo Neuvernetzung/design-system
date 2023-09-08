@@ -1,14 +1,15 @@
 import de from "./de";
 import en from "./en";
 
-export enum Locales {
-  DE = "de",
-  EN = "en",
-}
+export const locales = ["de", "en"] as const;
 
-const DEFAULT_LOCALE: Locales = Locales.DE;
+export type Locales = typeof locales;
 
-export const getText = (locale: Locales | undefined) => {
+export type Locale = Locales[number];
+
+const DEFAULT_LOCALE: Locale = "de";
+
+export const getText = (locale: Locale | undefined) => {
   const locales = { de, en };
 
   return locales[locale || DEFAULT_LOCALE] || {};

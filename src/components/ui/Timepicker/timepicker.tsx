@@ -1,33 +1,33 @@
 import cn from "classnames";
+import isNumber from "lodash/isNumber";
+import { useRouter } from "next/router";
+import { MouseEvent } from "react";
 import {
   Controller,
   FieldPath,
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
-import { MouseEvent } from "react";
 
+import { getText, type Locale } from "../../../locales/getText";
 import { divides, marginsXSmall } from "../../../styles";
 import { ClockIcon, CrossIcon } from "../../../theme/icons";
-import { InputVariants, Sizes } from "../../../types";
+import type { InputVariant, Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { FormElement } from "../Form";
 import { RawInput } from "../Input";
-import isNumber from "lodash/isNumber";
-import { getText, Locales } from "../../../locales/getText";
-import { useRouter } from "next/router";
 
 export type TimepickerProps = {
   required?: boolean;
   disabled?: boolean;
   removeAll?: boolean;
-  inputVariant?: keyof InputVariants;
+  inputVariant?: InputVariant;
   inputClassName?: string;
   label?: string;
   placeholder?: string;
-  size?: keyof Sizes;
+  size?: Size;
   helper?: string;
   min?: string;
   max?: string;
@@ -51,7 +51,7 @@ export const Timepicker = <
   min,
   max,
 }: TimepickerProps & UseControllerProps<TFieldValues, TName>) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller

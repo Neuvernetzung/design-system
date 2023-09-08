@@ -23,7 +23,7 @@ import {
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
 import { CrossIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps, IconButtonProps } from "../Button";
@@ -34,7 +34,7 @@ export type PopoverProps = {
   buttonProps?: ButtonProps | IconButtonProps;
   buttonAs?: ElementType<any>;
   buttonComponent?: ReactNode;
-  size?: keyof Sizes;
+  size?: Size;
   trigger?: "click" | "hover";
   placement?: Placement;
   disabled?: boolean;
@@ -45,10 +45,10 @@ export type PopoverProps = {
   disabledOffset?: boolean;
 };
 
-interface ExtendedButton extends HTMLButtonElement {
+type ExtendedButton = HTMLButtonElement & {
   click(): any;
   dispatchEvent: any;
-}
+};
 
 export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
   (

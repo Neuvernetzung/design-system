@@ -2,7 +2,7 @@ import cn from "classnames";
 import { ElementType, ForwardedRef, forwardRef, HTMLAttributes } from "react";
 
 import { extendedTextColors, textSizes } from "../../../../styles";
-import type { ExtendedColors, ExtendedSizes } from "../../../../types";
+import type { ExtendedColor, ExtendedSize } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
 import type {
   PolymorphicForwardRefExoticComponent,
@@ -12,11 +12,11 @@ import type {
 
 const TextDefaultElement = "p";
 
-export interface TextOwnProps extends HTMLAttributes<HTMLParagraphElement> {
-  size?: keyof ExtendedSizes;
-  color?: keyof ExtendedColors;
+export type TextOwnProps = HTMLAttributes<HTMLParagraphElement> & {
+  size?: ExtendedSize;
+  color?: ExtendedColor;
   className?: string;
-}
+};
 
 export type TextProps<T extends ElementType = typeof TextDefaultElement> =
   PolymorphicPropsWithRef<TextOwnProps, T>;

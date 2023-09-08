@@ -2,7 +2,7 @@ import cn from "classnames";
 import { forwardRef, ReactElement, ReactNode } from "react";
 
 import { gaps, paddingsX, paddingsY, pagePaddings } from "../../../styles";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { Link } from "../../ui/Link";
 import { Text } from "../../ui/Typography/Text";
 
@@ -11,8 +11,8 @@ type FooterProps = {
   cols?: LinkGroupProps[];
   copyright?: string;
   className?: string;
-  pagePaddingSize?: keyof Sizes;
-  size?: keyof Sizes;
+  pagePaddingSize?: Size;
+  size?: Size;
 };
 
 type LinkGroupProps = {

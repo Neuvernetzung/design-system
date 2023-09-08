@@ -16,7 +16,7 @@ import {
   transition,
   zIndexes,
 } from "../../../styles";
-import { ExtendedSizes, Sizes } from "../../../types";
+import { ExtendedSize } from "../../../types";
 import { Backdrop } from "../Backdrop";
 import { Heading, Text } from "../Typography";
 
@@ -26,7 +26,7 @@ export type ModalProps = {
   header?: string | ReactNode;
   content?: string | ReactNode;
   footer?: ReactNode;
-  size?: keyof ModalSizes;
+  size?: ModalSize;
   initialFocus?: MutableRefObject<HTMLElement | null>;
   wrapper?: FC;
   onClose?: Function;
@@ -37,11 +37,9 @@ export type ModalProps = {
   wrapperClassName?: string;
 };
 
-export interface ModalSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
-  full: any;
-}
+export type ModalSize = Exclude<ExtendedSize, "4xl" | "5xl" | "6xl"> | "full";
 
-const sizes: ModalSizes = {
+const sizes: Record<ModalSize, string> = {
   xs: "max-w-md",
   sm: "max-w-lg",
   md: "max-w-xl",

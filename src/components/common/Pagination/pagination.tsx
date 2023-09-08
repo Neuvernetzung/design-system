@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { updateQuery } from "../../../utils/internal/updateQuery";
 import { Button, ButtonGroup, IconButton, Select, Text } from "../../ui";
@@ -14,7 +14,7 @@ export type PaginationProps = {
   limits?: number[];
   result?: number;
   emptyMessage?: string;
-  size?: keyof Sizes;
+  size?: Size;
   containerClassName?: string;
   selectLimit?: boolean;
   variant?: "default" | "minimalistic";
@@ -67,7 +67,7 @@ const Pagination = ({
   const router = useRouter();
   const { rerender } = usePaginationStore();
 
-  const [initialLimit, setInitialLimit] = useState<Boolean>(true);
+  const [initialLimit, setInitialLimit] = useState<boolean>(true);
   const formMethods = useForm<FormInputs>({
     defaultValues: {
       limit: setLimit ? limit : Number(router.query.limit) || limits[0],

@@ -39,13 +39,11 @@ import {
   getDropdownGroupStyles,
   getDropDownOptionsStyles,
   getInputStyles,
-  inputSizes,
-  inputVariants,
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
 import { CheckIcon, ChevronUpDownIcon, CrossIcon } from "../../../theme/icons";
-import { InputVariants, Sizes } from "../../../types";
-import { capSize } from "../../../utils";
+import type { InputVariant, Size } from "../../../types";
+import { capSize, smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import { Button, ButtonGroup, IconButton } from "../Button";
@@ -53,16 +51,13 @@ import { FormElement, RequiredRule } from "../Form";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { Locales } from "../../../locales/getText";
+import type { Locale } from "../../../locales/getText";
 import { useRouter } from "next/router";
-
-export const sizes: Sizes = inputSizes;
-export const variants: InputVariants = inputVariants;
 
 export type SelectProps = {
   options: SelectOptionProps[];
-  size?: keyof Sizes;
-  variant?: keyof InputVariants;
+  size?: Size;
+  variant?: InputVariant;
   disabled?: boolean;
   buttonClassName?: string;
   optionsClassName?: string;
@@ -86,14 +81,6 @@ export type SelectOptionProps = {
   disabled?: boolean;
   children: ReactNode;
   options?: SelectOptionProps[];
-};
-
-const iconButtonSizes: Sizes = {
-  xs: "xs",
-  sm: "xs",
-  md: "sm",
-  lg: "md",
-  xl: "lg",
 };
 
 export const SelectInner = <
@@ -202,11 +189,7 @@ export const SelectInner = <
     return [];
   };
 
-  interface Focusable extends HTMLButtonElement {
-    focus(): void;
-  }
-
-  const buttonRef = useRef<Focusable>(null);
+  const buttonRef = useRef<HTMLButtonElement>();
   const removeButtonRefs: any =
     isArray(selected) &&
     selected?.map((value: any) => ({
@@ -247,8 +230,8 @@ export const SelectInner = <
     }
   };
 
-  const rightElementRef: any = useRef(null);
-  const [rightElementWidth, setRightElementWidth] = useState();
+  const rightElementRef = useRef<HTMLSpanElement>(null);
+  const [rightElementWidth, setRightElementWidth] = useState<number>();
   useEffect(() => {
     setRightElementWidth(rightElementRef?.current?.clientWidth);
   }, []);
@@ -257,7 +240,7 @@ export const SelectInner = <
     isArray(selected) ? selected.includes(value) : selected === value;
   const _hideActive = multipleStyle !== "indicator" ? hideActive : false;
 
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -308,7 +291,7 @@ export const SelectInner = <
                     setReferenceElement,
                     controllerRef,
                   ])}
-                  onKeyUp={(e: any) => handleLeftAndRightArrow(e)}
+                  onKeyUp={(e: KeyboardEvent) => handleLeftAndRightArrow(e)}
                 >
                   {!multiple
                     ? selected
@@ -367,7 +350,7 @@ export const SelectInner = <
                   {removeAll &&
                     (multiple ? selected?.length > 0 : selected) && (
                       <IconButton
-                        size={iconButtonSizes[size]}
+                        size={smallerSize(size)}
                         variant="ghost"
                         ariaLabel={`delete_select_${name}`}
                         icon={CrossIcon}
@@ -386,7 +369,7 @@ export const SelectInner = <
                     )}
                   >
                     <Icon
-                      size={iconButtonSizes[size]}
+                      size={smallerSize(size)}
                       icon={ChevronUpDownIcon}
                       className={cn(
                         "pointer-events-none flex",
@@ -544,10 +527,10 @@ const Select = forwardRef(SelectInner) as <
 export default typedMemo(Select);
 
 type TagProps = {
-  size: keyof Sizes;
+  size: Size;
   onClick: MouseEventHandler;
   onKeyUp: KeyboardEventHandler;
-  children: any;
+  children: ReactNode;
 };
 
 const Tag = forwardRef(
@@ -556,11 +539,7 @@ const Tag = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => (
     <ButtonGroup>
-      <Button
-        as="div"
-        size={iconButtonSizes[size]}
-        className="pointer-events-none"
-      >
+      <Button as="div" size={smallerSize(size)} className="pointer-events-none">
         {children}
       </Button>
       <IconButton
@@ -570,7 +549,7 @@ const Tag = forwardRef(
         tabIndex={-1}
         role="button"
         ariaLabel="remove"
-        size={iconButtonSizes[size]}
+        size={smallerSize(size)}
         icon={CrossIcon}
         onClick={onClick}
         onKeyUp={onKeyUp}
@@ -582,7 +561,7 @@ const Tag = forwardRef(
 Tag.displayName = "Tag";
 
 type NoOptionsProps = {
-  size: keyof Sizes;
+  size: Size;
   message: string | ReactNode;
 };
 

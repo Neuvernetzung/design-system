@@ -6,7 +6,7 @@ import {
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 
-import { ProseComponentTags } from "../../../../types";
+import { ProseComponentTag } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
 
 const HeaderComponent = ({ node }: NodeViewProps) => {
@@ -15,7 +15,7 @@ const HeaderComponent = ({ node }: NodeViewProps) => {
   return (
     <NodeViewWrapper>
       {createProseElement({
-        name: `h${attrs.level}` as ProseComponentTags,
+        name: `h${attrs.level}` as ProseComponentTag,
         className: attrs.textAlign,
         children: <NodeViewContent />,
       })}

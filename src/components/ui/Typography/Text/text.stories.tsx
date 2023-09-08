@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react";
 import React from "react";
 
 import { Text } from "./text";
-import { extendedTextColors, textSizes } from "../../../../styles";
+import { colors, sizes } from "../../../../types";
 
 export default {
   title: "UI/Typography/Text",
@@ -21,36 +21,28 @@ const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
 );
 
-export const Sizes = ({ ...args }) => {
-  const _sizes = Object.keys(textSizes).reverse();
-
-  return (
-    <Container>
-      {_sizes.map((size: any) => (
-        <Text size={size} key={size} {...args}>
-          {size}
-        </Text>
-      ))}
-    </Container>
-  );
-};
+export const Sizes = ({ ...args }) => (
+  <Container>
+    {sizes.map((size) => (
+      <Text size={size} key={size} {...args}>
+        {size}
+      </Text>
+    ))}
+  </Container>
+);
 
 Sizes.parameters = {
   controls: { exclude: "size" },
 };
-export const Colors = ({ ...args }) => {
-  const _colors = Object.keys(extendedTextColors);
-
-  return (
-    <Container>
-      {_colors.map((color: any) => (
-        <Text color={color} key={color} {...args}>
-          {color}
-        </Text>
-      ))}
-    </Container>
-  );
-};
+export const Colors = ({ ...args }) => (
+  <Container>
+    {colors.map((color) => (
+      <Text color={color} key={color} {...args}>
+        {color}
+      </Text>
+    ))}
+  </Container>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },

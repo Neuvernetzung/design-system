@@ -13,7 +13,7 @@ import {
   getDropDownOptionsStyles,
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
-import { Colors, Sizes, SvgType } from "../../../types";
+import type { Color, Size, SvgType } from "../../../types";
 import { capSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
@@ -23,7 +23,7 @@ import { Text } from "../Typography";
 
 export type MenuProps = {
   items: MenuItemProps[];
-  size?: keyof Sizes;
+  size?: Size;
   disabled?: boolean;
   dropdownClassName?: string;
   placement?: Placement;
@@ -58,7 +58,7 @@ type OptionalItemProps =
 export type MenuItemProps = {
   children?: ReactNode;
   disabled?: boolean;
-  color?: keyof Colors;
+  color?: Color;
 } & OptionalItemProps;
 
 export const Menu = forwardRef<HTMLButtonElement, MenuProps>(

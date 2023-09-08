@@ -5,8 +5,9 @@ import { ReactNode, useEffect } from "react";
 import { Loading } from "../components/ui/Loading";
 import { ConfirmationModal } from "../components/ui/Modal/confirmation";
 import { Notify } from "../components/ui/Notify";
-import { GeneralNotifyProps } from "../components/ui/Notify/notify";
-import { Sizes } from "../types";
+import type { GeneralNotifyProps } from "../components/ui/Notify/notify";
+import { adjustedTextColors } from "../styles";
+import type { Size } from "../types";
 import { createCSSSelector } from "../utils/internal";
 import { parseLocalStorageJson } from "../utils/internal/localStorage/parseJSON";
 import {
@@ -26,7 +27,6 @@ import {
   LOCAL_DARK_COLOR_KEY,
   useThemeState,
 } from "./useThemeState";
-import { adjustedTextColors } from "../styles";
 
 type ThemeProviderProps = {
   config?: ConfigProps;
@@ -37,7 +37,7 @@ export type ConfigProps = {
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
-  borderRadius?: keyof Sizes;
+  borderRadius?: Size;
   defaultTheme?: "system" | "light" | "dark";
   allowConfirmation?: boolean;
   allowGlobalLoading?: boolean;
@@ -79,9 +79,13 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
   const { colorState, darkColorState, borderRadiusState } = useThemeState();
 
   useEffect(() => {
-    useThemeState.setState({
-      adjustedTextColorState: adjustedTextColors(colorState, darkColorState),
-    });
+    if (colorState)
+      useThemeState.setState({
+        adjustedTextColorState: adjustedTextColors(
+          colorState,
+          darkColorState || colorState
+        ),
+      });
   }, [colorState, darkColorState]);
 
   const cssColorVariables = colorState && getColorVariables(colorState);
@@ -121,7 +125,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
 type UseThemeProps = {
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
-  borderRadius?: keyof Sizes;
+  borderRadius?: Size;
   preferSetValuesBeforeConfig?: boolean;
   disableSetTheme?: boolean;
 };
@@ -243,7 +247,7 @@ export const setDarkColors = (
 
 export const setBorderRadius = (
   selector: ":root" | string,
-  borderRadius?: keyof Sizes
+  borderRadius?: Size
 ) => {
   const extendedBorderRadius = extendBorderRadius(borderRadius);
 

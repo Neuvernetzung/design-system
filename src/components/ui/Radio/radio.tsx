@@ -9,7 +9,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { Locales } from "../../../locales/getText";
+import type { Locale } from "../../../locales/getText";
 import {
   borders,
   bordersInteractive,
@@ -23,13 +23,13 @@ import {
   textSizes,
   transition,
 } from "../../../styles";
-import type { Colors, Sizes } from "../../../types";
+import type { Color, RadioVariant, Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
 
-export const checkedColors: Colors = {
+export const checkedColors: Record<Color, string> = {
   brand:
     "border-brand-500 dark:border-brand-500 hover:border-brand-600 dark:hover:border-brand-400",
   primary:
@@ -41,9 +41,13 @@ export const checkedColors: Colors = {
   warn: "border-warn-500 dark:border-warn-500 hover:border-warn-600 dark:hover:border-warn-400",
   danger:
     "border-danger-500 dark:border-danger-500 hover:border-danger-600 dark:hover:border-danger-400",
+  white:
+    "border-white dark:border-white hover:border-accent-100 dark:hover:border-accent-100",
+  black:
+    "border-black dark:border-black hover:border-accent-900 dark:hover:border-accent-900",
 };
 
-export const radioBorderSizes: Sizes = {
+export const radioBorderSizes: Record<Size, string> = {
   xs: "border-4",
   sm: "border-4",
   md: "border-[5px]",
@@ -51,19 +55,14 @@ export const radioBorderSizes: Sizes = {
   xl: "border-8",
 };
 
-export interface RadioVariants {
-  default: any;
-  button: any;
-}
-
 export type RadioProps = {
-  variant?: keyof RadioVariants;
+  variant?: RadioVariant;
   label?: string;
   helper?: ReactNode;
   options: RadioOptionProps[];
   required?: RequiredRule;
-  size?: keyof Sizes;
-  color?: keyof Colors;
+  size?: Size;
+  color?: Color;
   disabled?: boolean;
   className?: string;
 };
@@ -101,7 +100,7 @@ export const Radio = <
   disabled,
   className,
 }: RadioProps & UseControllerProps<TFieldValues, TName>) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller

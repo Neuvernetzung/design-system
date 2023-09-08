@@ -28,6 +28,7 @@ import {
   subYears,
 } from "date-fns";
 import de from "date-fns/locale/de";
+import { useRouter } from "next/router";
 import {
   KeyboardEvent,
   MouseEvent,
@@ -45,6 +46,7 @@ import {
 } from "react-hook-form";
 import { Day, useLilius } from "use-lilius";
 
+import type { Locale } from "../../../locales/getText";
 import {
   divides,
   gaps,
@@ -61,36 +63,32 @@ import {
   ChevronRightIcon,
   CrossIcon,
 } from "../../../theme/icons";
-import { InputVariants, Sizes } from "../../../types";
+import type { InputVariant, Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
 import type { RequiredRule } from "..";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement } from "../Form";
 import { Popover, PopoverButton } from "../Popover";
 import { Text } from "../Typography";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
 
 export type DatepickerProps = {
   label?: string;
   required?: RequiredRule;
   placeholder?: string;
-  size?: keyof Sizes;
+  size?: Size;
   helper?: string;
-  inputVariant?: keyof InputVariants;
+  inputVariant?: InputVariant;
   disabled?: boolean;
   removeAll?: boolean;
   minDate?: Date;
   maxDate?: Date;
 };
 
-enum Views {
-  DATES = "dates",
-  MONTHS = "months",
-  YEARS = "years",
-}
+const views = ["dates", "months", "years"] as const;
+
+type Views = (typeof views)[number];
 
 export const Datepicker = <
   TFieldValues extends FieldValues = FieldValues,
@@ -162,7 +160,7 @@ export const Datepicker = <
   const [preselectedMonth, setPreselectedMonth] = useState<Date>(new Date());
   const [preselectedYear, setPreselectedYear] = useState<Date>(new Date());
 
-  const [currentView, setCurrentView] = useState<Views>(Views.DATES);
+  const [currentView, setCurrentView] = useState<Views>("dates");
 
   useEffect(() => {
     if (isValid(preselectedDate)) {
@@ -384,7 +382,7 @@ export const Datepicker = <
       return setPreselectedYear(endOfDecade(viewing));
   };
 
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -466,7 +464,7 @@ export const Datepicker = <
               }}
               content={
                 <>
-                  {currentView === Views.DATES && (
+                  {currentView === "dates" && (
                     <div
                       role="button"
                       tabIndex={-1}
@@ -502,7 +500,7 @@ export const Datepicker = <
                         rightArrowDisabled={
                           maxDate && isAfter(lastDayOfMonth(viewing), maxDate)
                         }
-                        titleFunction={() => setCurrentView(Views.MONTHS)}
+                        titleFunction={() => setCurrentView("months")}
                         title={format(viewing, "MMMM yyyy")}
                       />
 
@@ -606,7 +604,7 @@ export const Datepicker = <
                       </ButtonGroup>
                     </div>
                   )}
-                  {currentView === Views.MONTHS && (
+                  {currentView === "months" && (
                     <div
                       role="button"
                       tabIndex={-1}
@@ -629,7 +627,7 @@ export const Datepicker = <
                         rightArrowDisabled={
                           maxDate && isAfter(setMonth(viewing, 12), maxDate)
                         }
-                        titleFunction={() => setCurrentView(Views.YEARS)}
+                        titleFunction={() => setCurrentView("years")}
                         title={format(viewing, "yyyy")}
                       />
                       <div
@@ -681,7 +679,7 @@ export const Datepicker = <
                               }
                               onClick={() => {
                                 setViewing(monthDate);
-                                setCurrentView(Views.DATES);
+                                setCurrentView("dates");
                               }}
                               data-id={format(monthDate, "MM.yyyy")}
                               disabled={
@@ -701,7 +699,7 @@ export const Datepicker = <
                       </div>
                     </div>
                   )}
-                  {currentView === Views.YEARS && (
+                  {currentView === "years" && (
                     <div
                       role="button"
                       tabIndex={-1}
@@ -780,7 +778,7 @@ export const Datepicker = <
                             }
                             onClick={() => {
                               setViewing(year);
-                              setCurrentView(Views.MONTHS);
+                              setCurrentView("months");
                             }}
                             data-id={format(year, "yyyy")}
                             disabled={

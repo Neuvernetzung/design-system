@@ -1,4 +1,5 @@
-export type Focuses = {
-  ring?: any;
-  bg?: any;
-};
+export const focusesVariants = ["ring", "bg"] as const;
+
+export type FocusVariants = typeof focusesVariants;
+
+export type FocusVariant = FocusVariants[number];

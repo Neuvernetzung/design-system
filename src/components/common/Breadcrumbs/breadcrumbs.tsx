@@ -2,13 +2,12 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 
 import { ChevronRightIcon, HomeIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
+import type { ButtonVariant, Size } from "../../../types";
 import { Button, Icon, IconButton, Link } from "../../ui";
-import { Variants } from "../../ui/Button/button";
 
 type BreadcrumbsT = {
-  size?: keyof Sizes;
-  variant?: keyof Variants;
+  size?: Size;
+  variant?: ButtonVariant;
   transform?: (item?: string) => string;
   shorten?: number;
 };
