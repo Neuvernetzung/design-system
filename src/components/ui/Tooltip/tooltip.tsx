@@ -43,13 +43,16 @@ export const Tooltip = ({
     null
   );
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
+
+  const offset = popperOffset({ size });
+
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
     modifiers: [
       {
         name: "offset",
         options: {
-          offset: popperOffset,
+          offset,
         },
       },
     ],
