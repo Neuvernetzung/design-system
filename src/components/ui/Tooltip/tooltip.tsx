@@ -121,7 +121,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
           animate={{ opacity: 1, scale: 1, transition: { duration: 0.1 } }}
           exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.1 } }}
           className={cn(
-            "pointer-events-none bg-opacity-75 flex",
+            "pointer-events-none flex",
             paddingsSmall[size],
             roundings[size],
 

@@ -6,12 +6,11 @@ import { createElement, ReactNode } from "react";
 import { prose } from "../../../styles";
 import type { ProseComponents, ProseComponentTag } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
-import { BlockQuote } from "../BlockQuote";
+import { BlockQuote } from "../Typography/BlockQuote";
 import { HorizontalRule } from "../HorizontalRule";
 import { Image } from "../Image";
-import { NativeLink } from "../Link";
 import { ListItem, OrderedList, UnorderedList } from "../List";
-import { Heading, Text } from "../Typography";
+import { Anchor, Heading, Text } from "../Typography";
 
 export type ProseProps = {
   content: string | undefined;
@@ -37,7 +36,7 @@ export const proseComponents: ProseComponents = {
     props: {},
   },
   a: {
-    component: NativeLink,
+    component: Anchor,
     props: {},
   },
   hr: { component: HorizontalRule, props: {} },
