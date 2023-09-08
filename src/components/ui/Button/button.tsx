@@ -2,19 +2,13 @@
 import cn from "classnames";
 import isString from "lodash/isString";
 import { ElementType, ForwardedRef, forwardRef, ReactNode } from "react";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "../../../utils/internal/polymorphic";
 
 import {
   extendedBgColors,
   extendedBgColorsInteractive,
   extendedBorders,
+  extendedFocuses,
   extendedTextColors,
-  focusBg,
-  focusRing,
   minHeights,
   paddings,
   roundings,
@@ -23,18 +17,23 @@ import {
 } from "../../../styles";
 import { useThemeState } from "../../../theme/useThemeState";
 import type {
-  Colors,
-  ExtendedColors,
-  Focuses,
-  Sizes,
+  ButtonVariant,
+  ExtendedColor,
+  FocusVariant,
+  Size,
   SvgType,
 } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "../../../utils/internal/polymorphic";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
 import { useLoadingState } from "../Loading/loading";
 
-export const variants: Variants = {
+export const buttonVariantStyles: Record<ButtonVariant, string> = {
   filled: "",
   outline:
     "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10  dark:disabled:hover:bg-opacity-0 border",
@@ -44,16 +43,9 @@ export const variants: Variants = {
     "bg-opacity-30 dark:bg-opacity-30 hover:bg-opacity-40 hover:dark:bg-opacity-40 disabled:hover:bg-opacity-30 dark:disabled:hover:bg-opacity-30",
 };
 
-export type Variants = {
-  filled: string;
-  outline: string;
-  ghost: string;
-  subtile: string;
-};
-
-export const colors = (
-  color: keyof (Colors & Pick<ExtendedColors, "light" | "dark" | "inherit">),
-  adjustedTextColorState: ExtendedColors
+export const getButtonColorStyle = (
+  color: ExtendedColor,
+  adjustedTextColorState: Record<ExtendedColor, string>
 ): ColorProps => ({
   base: cn(extendedBgColorsInteractive[color], extendedBorders[color]),
   disabled: cn(extendedBgColors[color], extendedBorders[color], "opacity-50"),
@@ -68,15 +60,10 @@ export const colors = (
 type ColorProps = {
   base: string;
   disabled: string;
-  text: Variants;
+  text: Record<ButtonVariant, string>;
 };
 
-export const focuses: Focuses = {
-  ring: focusRing,
-  bg: focusBg,
-};
-
-export const styles = {
+export const buttonBaseStyles = {
   base: "appearance-none flex items-center justify-center select-none gap-2 font-semibold disabled:cursor-not-allowed text-ellipsis",
   fullWidth: "w-full",
   rounded: "!rounded-full",
@@ -85,10 +72,10 @@ export const styles = {
 export const ButtonDefaultElement = "button";
 
 export type ButtonOwnProps = {
-  variant?: keyof Variants;
-  color?: keyof (Colors & Pick<ExtendedColors, "dark" | "light" | "inherit">);
-  size?: keyof Sizes;
-  focus?: keyof Focuses;
+  variant?: ButtonVariant;
+  color?: ExtendedColor;
+  size?: Size;
+  focus?: FocusVariant;
   fullWidth?: boolean;
   rounded?: boolean;
   leftIcon?: SvgType;
@@ -124,9 +111,9 @@ export const Button: PolymorphicForwardRefExoticComponent<
       children,
       ...props
     }: PolymorphicPropsWithoutRef<ButtonOwnProps, T>,
-    ref: ForwardedRef<any>
+    ref: ForwardedRef<Element>
   ) => {
-    const Component = as || ButtonDefaultElement;
+    const Component: ElementType = as || ButtonDefaultElement;
 
     const { adjustedTextColorState } = useThemeState();
 
@@ -141,19 +128,24 @@ export const Button: PolymorphicForwardRefExoticComponent<
         type={type}
         disabled={_disabled}
         className={cn(
-          focuses[focus][color],
-          styles.base,
+          extendedFocuses[focus][color],
+          buttonBaseStyles.base,
           transition,
-          variants[variant],
+          buttonVariantStyles[variant],
           paddings[size],
           roundings[size],
           minHeights[size],
           textSizes[size],
           disabled && "cursor-not-allowed",
-          !_disabled && colors(color, adjustedTextColorState)?.base,
-          _disabled && colors(color, adjustedTextColorState)?.disabled,
-          colors(color, adjustedTextColorState)?.text[variant],
-          { [styles.fullWidth]: fullWidth, [styles.rounded]: rounded },
+          !_disabled &&
+            getButtonColorStyle(color, adjustedTextColorState)?.base,
+          _disabled &&
+            getButtonColorStyle(color, adjustedTextColorState)?.disabled,
+          getButtonColorStyle(color, adjustedTextColorState)?.text[variant],
+          {
+            [buttonBaseStyles.fullWidth]: fullWidth,
+            [buttonBaseStyles.rounded]: rounded,
+          },
           className
         )}
         {...props}

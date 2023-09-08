@@ -5,10 +5,10 @@ import { AnchorHTMLAttributes, ReactElement } from "react";
 import { linkStyle } from "../../../styles/link";
 import { hrefRegex, pathRegex } from "../../../utils/internal/regex";
 
-export interface LinkProps extends NextLinkProps {
+export type LinkProps = NextLinkProps & {
   children: ReactElement | string;
   disabled?: boolean;
-}
+};
 
 export const Link = ({ as, href, disabled, ...props }: LinkProps) => {
   if (disabled) return <span {...props} />;
@@ -17,11 +17,10 @@ export const Link = ({ as, href, disabled, ...props }: LinkProps) => {
 
 export default Link;
 
-export interface NativeLinkProps
-  extends AnchorHTMLAttributes<HTMLAnchorElement> {
+export type NativeLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href?: string;
   children?: ReactElement | string;
-}
+};
 
 export const NativeLink = ({
   href,

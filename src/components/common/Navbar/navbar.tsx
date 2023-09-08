@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useThemeState } from "../../../theme";
 
-import { ExtendedColors, Sizes, SvgType } from "../../../types";
+import type { ExtendedColor, Size, SvgType } from "../../../types";
 import type { TagProps } from "../../ui/Tag";
 import { NavbarContainer, NavbarSideContainer } from "./container";
 
@@ -25,7 +25,7 @@ export type NavItemProps = {
   disabled?: boolean;
   icon?: SvgType;
   hideChevron?: boolean;
-  color?: keyof ExtendedColors;
+  color?: ExtendedColor;
   textColor?: string;
   defaultOpen?: boolean;
 };
@@ -44,10 +44,10 @@ export type NavbarProps = {
   justifyDesktopNav?: "start" | "center" | "end";
   startItems?: ReactNode;
   endItems?: ReactNode;
-  gapSize?: keyof Sizes;
-  size?: keyof Sizes;
-  pagePaddingSize?: keyof Sizes;
-  color?: keyof ExtendedColors;
+  gapSize?: Size;
+  size?: Size;
+  pagePaddingSize?: Size;
+  color?: ExtendedColor;
   footer?: ReactNode;
   footerClassName?: string;
   mobileNavClassName?: string;

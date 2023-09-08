@@ -3,12 +3,12 @@ import { ReactNode } from "react";
 
 import { bgColors, paddingsSmall } from "../../../styles";
 import { useThemeState } from "../../../theme";
-import { Colors } from "../../../types";
+import type { Color } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type IndicatorProps = {
-  color?: keyof Colors;
+  color?: Color;
   value?: string | number;
   children: ReactNode;
 };

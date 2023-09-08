@@ -12,7 +12,13 @@ import {
   textSizes,
 } from "../../../styles";
 import { useThemeState } from "../../../theme/useThemeState";
-import type { Colors, ExtendedColors, Sizes, SvgType } from "../../../types";
+import type {
+  Color,
+  ExtendedColor,
+  Size,
+  SvgType,
+  TagVariant,
+} from "../../../types";
 import { capSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
@@ -21,23 +27,17 @@ export type TagProps = {
   label?: string | ReactElement;
   leftIcon?: SvgType;
   rightIcon?: SvgType;
-  size?: keyof Sizes;
-  color?: keyof Colors;
-  variant?: keyof Variants;
+  size?: Size;
+  color?: Color;
+  variant?: TagVariant;
   rounded?: boolean;
   className?: string;
 };
 
-type Variants = {
-  outline: any;
-  solid: any;
-  subtile: any;
-};
-
 export const variants = (
-  color: keyof Colors,
-  adjustedTextColorState: ExtendedColors
-): Variants => ({
+  color: Color,
+  adjustedTextColorState: Record<ExtendedColor, string>
+): Record<TagVariant, string> => ({
   outline: cn("border", borders[color], textColors[color]),
   solid: cn(bgColors[color], adjustedTextColorState[color]),
   subtile: cn(bgColors[color], "bg-opacity-25", textColors[color]),

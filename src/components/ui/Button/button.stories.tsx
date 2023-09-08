@@ -1,13 +1,18 @@
 import { HomeIcon } from "@heroicons/react/24/outline";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import React from "react";
+import React, { ElementType } from "react";
 
 import { ThemeProvider } from "../../../theme";
-import { colors, Sizes as SizesType } from "../../../types";
+import {
+  buttonVariants,
+  extendedColors,
+  focusesVariants,
+  sizes,
+} from "../../../types";
 import { loading } from "../Loading";
 import { notify } from "../Notify";
-import { Button, focuses, variants } from "./button";
+import { Button } from "./button";
 
 export default {
   title: "UI/Buttons/Button",
@@ -32,19 +37,15 @@ const Container = ({ ...props }) => (
   <div className="flex flex-row items-start gap-5" {...props} />
 );
 
-export const Variants = ({ ...args }) => {
-  const _variants = Object.keys(variants);
-
-  return (
-    <Container>
-      {_variants.map((variant: any) => (
-        <Button variant={variant} key={variant} {...args}>
-          {variant}
-        </Button>
-      ))}
-    </Container>
-  );
-};
+export const Variants = ({ ...args }) => (
+  <Container>
+    {buttonVariants.map((variant) => (
+      <Button variant={variant} key={variant} {...args}>
+        {variant}
+      </Button>
+    ))}
+  </Container>
+);
 
 Variants.parameters = {
   controls: { exclude: "variant" },
@@ -52,7 +53,7 @@ Variants.parameters = {
 
 export const Colors = ({ ...args }) => (
   <Container>
-    {[...colors, "light", "dark"].map((color: any) => (
+    {extendedColors.map((color) => (
       <Button color={color} key={color} {...args}>
         {color}
       </Button>
@@ -64,50 +65,42 @@ Colors.parameters = {
   controls: { exclude: "color" },
 };
 
-export const Focuses = ({ ...args }) => {
-  const _focuses = Object.keys(focuses);
-
-  return (
-    <Container>
-      {_focuses.map((focus: any) => (
-        <Button focus={focus} key={focus} {...args}>
-          {focus}
-        </Button>
-      ))}
-    </Container>
-  );
-};
+export const Focuses = ({ ...args }) => (
+  <Container>
+    {focusesVariants.map((focus) => (
+      <Button focus={focus} key={focus} {...args}>
+        {focus}
+      </Button>
+    ))}
+  </Container>
+);
 
 Focuses.parameters = {
   controls: { exclude: "focus" },
 };
 
-export const Sizes = ({ ...args }) => {
-  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
-
-  return (
-    <Container>
-      {sizes.map((size: any) => (
-        <Button size={size} key={size} {...args}>
-          {size}
-        </Button>
-      ))}
-    </Container>
-  );
-};
+export const Sizes = ({ ...args }) => (
+  <Container>
+    {sizes.map((size) => (
+      <Button size={size} key={size} {...args}>
+        {size}
+      </Button>
+    ))}
+  </Container>
+);
 
 Sizes.parameters = {
   controls: { exclude: "size" },
 };
 
 export const AsComponent = ({ ...args }) => {
-  const components = ["button", "a"];
+  const components: ElementType[] = ["button", "a"];
 
   return (
     <Container>
-      {components.map((component: any) => (
-        <Button as={component} href="#" key={component} {...args}>
-          {component}
+      {components.map((component) => (
+        <Button as={component} href="#" key={String(component)} {...args}>
+          {String(component)}
         </Button>
       ))}
     </Container>

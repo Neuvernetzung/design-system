@@ -4,8 +4,7 @@ import { BlockquoteHTMLAttributes } from "react";
 import { borders, paddings } from "../../../styles";
 import { typedMemo } from "../../../utils/internal";
 
-export interface BlockQuoteProps
-  extends BlockquoteHTMLAttributes<HTMLQuoteElement> {}
+export type BlockQuoteProps = BlockquoteHTMLAttributes<HTMLQuoteElement> & {};
 
 export const BlockQuote = ({ className, ...props }: BlockQuoteProps) => (
   <blockquote

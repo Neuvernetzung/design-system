@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 
 import { Sortable, SortableItem, UseSortableChange } from ".";
-import { Text, IconButton, Button } from "..";
+import { Text, IconButton } from "..";
 import { Bars2Icon } from "@heroicons/react/24/outline";
 import cn from "classnames";
 import { bgColorsInteractive, paddingsEvenly } from "../../../styles";

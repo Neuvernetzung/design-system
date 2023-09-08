@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { Button, ColorPicker, Form, Select, Tag } from "../components/ui";
 import { borders } from "../styles";
-import { Sizes, sizes } from "../types";
+import { Size, sizes } from "../types";
 import {
   ExtendColors,
   setBorderRadius,
@@ -34,7 +34,7 @@ const Container = ({ ...props }) => (
 
 type FormProps = {
   colors: Partial<ExtendColors>;
-  radius: keyof Sizes;
+  radius: Size;
 };
 
 export const Default = ({ ...args }) => {

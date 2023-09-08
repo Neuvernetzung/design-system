@@ -3,7 +3,7 @@ import { addDays, addMonths, subDays, subMonths } from "date-fns";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Sizes as SizesT } from "../../../types";
+import { sizes } from "../../../types";
 import { Form } from "../Form";
 import { Datepicker } from ".";
 import { Button } from "../Button";
@@ -44,8 +44,6 @@ export const Default = ({ ...args }) => {
 
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
-
-  const sizes: Array<keyof SizesT> = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Form

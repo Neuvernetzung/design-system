@@ -9,7 +9,7 @@ import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { Sizes as SizesType } from "../../../types";
+import { sizes } from "../../../types";
 import { ButtonGroup } from "../Button";
 import { MenuItemProps, Menu } from "./menu";
 
@@ -103,8 +103,6 @@ export const Sizes = ({ ...args }) => {
     },
     { children: "Option 6", href: "#" },
   ];
-
-  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Container>

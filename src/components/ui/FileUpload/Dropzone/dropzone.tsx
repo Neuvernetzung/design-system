@@ -8,7 +8,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { Locales } from "../../../../locales/getText";
+import type { Locale } from "../../../../locales/getText";
 import {
   bordersInteractive,
   gaps,
@@ -17,7 +17,7 @@ import {
   transition,
 } from "../../../../styles";
 import { CloudArrowUpIcon } from "../../../../theme/icons";
-import { Sizes } from "../../../../types";
+import type { Size } from "../../../../types";
 import { smallerSize } from "../../../../utils";
 import { typedMemo } from "../../../../utils/internal";
 import { requiredInputRule } from "../../../../utils/internal/inputRule";
@@ -30,7 +30,7 @@ import { fileListToArray } from "./utils/fileListToArray";
 export type DropzoneProps = {
   required?: RequiredRule;
   disabled?: boolean;
-  size?: keyof Sizes;
+  size?: Size;
   label?: string;
   helper?: string;
   accept?: string;
@@ -56,7 +56,7 @@ const Dropzone = <
   flexRow,
   info,
 }: DropzoneProps & UseControllerProps<TFieldValues, TName>) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   const [dragActive, setDragActive] = useState(false);
 

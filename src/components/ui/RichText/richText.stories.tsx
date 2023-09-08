@@ -66,9 +66,9 @@ export const Error = ({ ...args }) => {
   );
 };
 
-interface CompareProps {
+type CompareProps = {
   RichTextCompare: string;
-}
+};
 
 export const CompareToProse = ({ ...args }) => {
   const { control, watch } = useForm<CompareProps>({

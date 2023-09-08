@@ -1,7 +1,7 @@
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 
-import type { Colors as ColorsType, Sizes as SizesType } from "../../../types";
+import { sizes, colors } from "../../../types";
 import { Button } from "../Button";
 import { Text } from "../Typography/Text";
 import {
@@ -37,53 +37,39 @@ export const Default = ({ ...args }) => (
   </Container>
 );
 
-export const Sizes = ({ ...args }) => {
-  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
+export const Sizes = ({ ...args }) => (
+  <Container>
+    {sizes.map((size) => (
+      <Tabs
+        key={size}
+        size={size}
+        items={[
+          { title: "Tab 1", content: "Content 1" },
+          { title: "Tab 2", content: "Content 2" },
+          { title: "Tab 3", content: "Content 3" },
+        ]}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
-  return (
-    <Container>
-      {sizes.map((size) => (
-        <Tabs
-          key={size}
-          size={size}
-          items={[
-            { title: "Tab 1", content: "Content 1" },
-            { title: "Tab 2", content: "Content 2" },
-            { title: "Tab 3", content: "Content 3" },
-          ]}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
-
-export const Colors = ({ ...args }) => {
-  const colors: (keyof ColorsType)[] = [
-    "primary",
-    "accent",
-    "success",
-    "warn",
-    "danger",
-  ];
-
-  return (
-    <Container>
-      {colors.map((color) => (
-        <Tabs
-          key={color}
-          color={color}
-          items={[
-            { title: "Tab 1", content: "Content 1" },
-            { title: "Tab 2", content: "Content 2" },
-            { title: "Tab 3", content: "Content 3" },
-          ]}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Colors = ({ ...args }) => (
+  <Container>
+    {colors.map((color) => (
+      <Tabs
+        key={color}
+        color={color}
+        items={[
+          { title: "Tab 1", content: "Content 1" },
+          { title: "Tab 2", content: "Content 2" },
+          { title: "Tab 3", content: "Content 3" },
+        ]}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },

@@ -5,13 +5,12 @@ import {
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 
-import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
 
 const BulletListComponent = () => (
   <NodeViewWrapper>
     {createProseElement({
-      name: ProseComponentTags.UL,
+      name: "ul",
       children: <NodeViewContent />,
     })}
   </NodeViewWrapper>

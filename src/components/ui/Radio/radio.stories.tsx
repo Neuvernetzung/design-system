@@ -2,10 +2,9 @@ import { Meta } from "@storybook/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { colors, Sizes as SizesType } from "../../../types";
+import { colors, radioVariants, Sizes as SizesType } from "../../../types";
 import { Button, Form } from "..";
 import { Radio } from ".";
-import { RadioVariants } from "./radio";
 
 export default {
   title: "UI/Form/Radio",
@@ -58,7 +57,6 @@ export const Default = ({ ...args }) => {
 
 export const Variants = ({ ...args }) => {
   const formMethods = useForm();
-  const variants: Array<keyof RadioVariants> = ["default", "button"];
 
   return (
     <Form
@@ -66,7 +64,7 @@ export const Variants = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {variants.map((variant: any) => (
+      {radioVariants.map((variant: any) => (
         <Radio
           key={variant}
           control={formMethods.control}

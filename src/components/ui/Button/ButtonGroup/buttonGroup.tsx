@@ -1,10 +1,10 @@
 import cn from "classnames";
 import { HTMLAttributes, ReactNode } from "react";
 
-export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
+export type ButtonGroupProps = HTMLAttributes<HTMLDivElement> & {
   className?: string;
   children?: ReactNode;
-}
+};
 
 const ButtonGroup = ({ className, children, ...props }: ButtonGroupProps) => (
   <div

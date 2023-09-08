@@ -3,7 +3,6 @@ import React from "react";
 
 import { Logo } from "../../../../public/Logo";
 import { Icon } from "../../ui/Icon";
-import { Heading } from "../../ui/Typography/Heading";
 import { Footer } from "./footer";
 
 export default {

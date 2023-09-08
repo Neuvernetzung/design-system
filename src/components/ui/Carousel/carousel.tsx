@@ -10,7 +10,7 @@ import {
   Thumbs,
 } from "swiper/modules";
 import { Swiper, type SwiperProps, SwiperSlide } from "swiper/react";
-import { AutoplayOptions } from "swiper/types";
+import { AutoplayOptions, Swiper as SwiperType } from "swiper/types";
 
 import { margins } from "../../../styles";
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
@@ -57,7 +57,7 @@ export const Carousel = ({
   nextThumbButtonClassName,
   slideClassName,
 }: CarouselProps) => {
-  const [thumbsSwiper, setThumbsSwiper]: any = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [nextEl, nextElRef] = useSwiperRef<HTMLButtonElement>();
   const [prevEl, prevElRef] = useSwiperRef<HTMLButtonElement>();
   const [nextElThumb, nextElRefThumb] = useSwiperRef<HTMLButtonElement>();

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ReactElement } from "react";
 
 import { gaps, transitionFast } from "../../../../styles";
-import { ExtendedColors, SvgType } from "../../../../types";
+import type { ExtendedColor, SvgType } from "../../../../types";
 import { Button, Heading, Icon, Tag, TagProps, Text } from "../../../ui";
 import type { NavSubLabelProps } from "../navbar";
 
@@ -16,7 +16,7 @@ export type NavbarSubItemProps = {
   label: string;
   tag?: TagProps;
   subLabel?: NavSubLabelProps;
-  color?: keyof ExtendedColors;
+  color?: ExtendedColor;
   textColor?: string;
   external?: boolean;
 };

@@ -1,11 +1,11 @@
 import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 
 import { CheckIcon, MinusIcon } from "../../../theme/icons";
-import { Sizes, SvgType } from "../../../types";
+import type { Size, SvgType } from "../../../types";
 import { Icon } from "../Icon";
 
 type CheckboxIconProps = {
-  size?: keyof Sizes;
+  size?: Size;
   isChecked: boolean;
   icon?: SvgType;
   isIndeterminate?: boolean;

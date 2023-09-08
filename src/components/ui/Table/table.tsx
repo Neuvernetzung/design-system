@@ -19,14 +19,14 @@ import {
   paddingsLargeEvenly,
   roundings,
 } from "../../../styles";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type SimpleTableProps<T extends string> = {
   items?: Array<Partial<Record<T, any>>>;
-  size?: keyof Sizes;
+  size?: Size;
   cols: SimpleTableCol<T>[];
   divideX?: boolean;
   uppercase?: boolean;
@@ -98,7 +98,7 @@ export const SimpleTableInner = <T extends string>({
 export type TableDataCellProps = {
   item: Record<string, any>;
   col: SimpleTableCol<string>;
-  size?: keyof Sizes;
+  size?: Size;
   className?: string;
 };
 
@@ -178,7 +178,7 @@ export const TableBody = ({ divideY = true, children }: TableBodyProps) => (
 
 export type TableHeadCellProps = {
   col: SimpleTableCol<string>;
-  size?: keyof Sizes;
+  size?: Size;
   attachment?: ReactNode;
   uppercase?: boolean;
   className?: string;
@@ -227,7 +227,7 @@ export const TableHead = ({ children }: TableHeadProps) => (
 );
 
 export type TableContainerProps = {
-  size?: keyof Sizes;
+  size?: Size;
   children: ReactNode;
   disabledBorder?: boolean;
   divideY?: boolean;

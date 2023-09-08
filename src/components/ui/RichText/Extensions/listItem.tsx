@@ -5,13 +5,12 @@ import {
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 
-import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
 
 const ListItemComponent = () => (
   <NodeViewWrapper>
     {createProseElement({
-      name: ProseComponentTags.LI,
+      name: "li",
       children: <NodeViewContent />,
     })}
   </NodeViewWrapper>

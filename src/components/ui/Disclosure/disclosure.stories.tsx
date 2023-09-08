@@ -1,8 +1,8 @@
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { DisclosureGroup, disclosureVariants } from ".";
-import { sizes } from "../../../types";
+import { DisclosureGroup } from ".";
+import { disclosureVariants, sizes } from "../../../types";
 
 export default {
   title: "UI/Disclosures/Disclosure",

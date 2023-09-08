@@ -15,7 +15,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { Locales } from "../../../locales/getText";
+import type { Locale } from "../../../locales/getText";
 import {
   bordersInteractive,
   paddings,
@@ -40,9 +40,9 @@ import { CustomHardBreak } from "./Extensions/hardBreak";
 import { CustomImage } from "./Extensions/image";
 import { CustomTextAlign } from "./Extensions/textAlign";
 import { MenuBar } from "./Menus/menuBar";
-import { returnTextSelection, TextTypeTags } from "./Menus/selectText";
+import { returnTextSelection, type TextTypeTags } from "./Menus/selectText";
 
-export interface RichTextProps {
+export type RichTextProps = {
   label?: string;
   helper?: string;
   required?: RequiredRule;
@@ -51,7 +51,7 @@ export interface RichTextProps {
   showLength?: boolean;
   containerClassName?: string;
   AdditionalMenuItems?: ({ editor }: { editor: Editor | null }) => ReactNode;
-}
+};
 
 export const RichText = <
   TFieldValues extends FieldValues = FieldValues,
@@ -72,9 +72,9 @@ export const RichText = <
     field: { value, onChange },
   } = useController({ control, name });
 
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
-  const [selectedTag, setSelectedTag] = useState<TextTypeTags>(TextTypeTags.P);
+  const [selectedTag, setSelectedTag] = useState<TextTypeTags>("p");
   const [lastMenuItem, setLastMenuItem] = useState<number>(0);
 
   const editor = useEditor({

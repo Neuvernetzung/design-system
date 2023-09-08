@@ -14,22 +14,22 @@ import { Switch } from "../../Switch";
 import { Tooltip } from "../../Tooltip";
 import { Heading } from "../../Typography";
 
-interface AddLinkButtonProps {
+type AddLinkButtonProps = {
   editor: Editor;
   id: string;
-}
+};
 
-interface LinkForm {
+type LinkFormProps = {
   href?: string;
   external: boolean;
-}
+};
 
 export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
   const [open, setOpen] = useState(false);
 
   const currentHref = editor.getAttributes("link").href;
 
-  const { control, handleSubmit, setValue, watch } = useForm<LinkForm>({
+  const { control, handleSubmit, setValue, watch } = useForm<LinkFormProps>({
     defaultValues: { href: undefined, external: true },
   });
   const setFormState = (value?: string) => setValue("href", value);
@@ -39,7 +39,7 @@ export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
 
   const active = editor.isActive("link");
 
-  const onSubmit = ({ href }: LinkForm) => {
+  const onSubmit = ({ href }: LinkFormProps) => {
     if (!href) {
       return;
     }

@@ -19,14 +19,14 @@ import {
   zIndexes,
 } from "../../../styles";
 import { popperOffset } from "../../../styles/popper/offset";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type TooltipProps = {
   children: ReactElement;
   label?: ReactNode;
-  size?: keyof Sizes;
+  size?: Size;
   placement?: Placement;
   delay?: number;
 };
@@ -91,7 +91,7 @@ export default typedMemo(Tooltip);
 type TooltipInnerT = {
   styles?: object;
   attributes?: object;
-  size?: keyof Sizes;
+  size?: Size;
   label: ReactNode;
   className?: string;
 };

@@ -1,6 +1,6 @@
-import { Sizes } from "../types";
+import type { Size } from "../types";
 
-export const margins: Sizes = {
+export const margins: Record<Size, string> = {
   xs: "m-0.5",
   sm: "m-1",
   md: "m-2",
@@ -8,7 +8,7 @@ export const margins: Sizes = {
   xl: "m-5",
 };
 
-export const marginsX: Sizes = {
+export const marginsX: Record<Size, string> = {
   xs: "mx-0.5",
   sm: "mx-1",
   md: "mx-2",
@@ -16,7 +16,7 @@ export const marginsX: Sizes = {
   xl: "mx-5",
 };
 
-export const marginsY: Sizes = {
+export const marginsY: Record<Size, string> = {
   xs: "my-0.5",
   sm: "my-1",
   md: "my-2",
@@ -24,7 +24,7 @@ export const marginsY: Sizes = {
   xl: "my-5",
 };
 
-export const marginsSmall: Sizes = {
+export const marginsSmall: Record<Size, string> = {
   xs: "m-0.5",
   sm: "m-0.5",
   md: "m-1",
@@ -32,7 +32,7 @@ export const marginsSmall: Sizes = {
   xl: "m-2",
 };
 
-export const marginsXSmall: Sizes = {
+export const marginsXSmall: Record<Size, string> = {
   xs: "mx-0.5",
   sm: "mx-0.5",
   md: "mx-1",
@@ -40,7 +40,7 @@ export const marginsXSmall: Sizes = {
   xl: "mx-2",
 };
 
-export const marginsYSmall: Sizes = {
+export const marginsYSmall: Record<Size, string> = {
   xs: "my-0.5",
   sm: "my-0.5",
   md: "my-1",

@@ -6,7 +6,6 @@ import {
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 
-import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
 
 const ParagraphComponent = ({ node }: NodeViewProps) => {
@@ -15,7 +14,7 @@ const ParagraphComponent = ({ node }: NodeViewProps) => {
   return (
     <NodeViewWrapper>
       {createProseElement({
-        name: ProseComponentTags.P,
+        name: "p",
         className: attrs.textAlign,
         children: <NodeViewContent />,
       })}

@@ -4,12 +4,11 @@ import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Sizes as SizesType } from "../../../types";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { Select } from "../Select";
 import { TabGroup, TabList, TabPanels } from "../Tabs";
 import { Heading } from "../Typography";
-import { Modal, ModalSizes } from "./modal";
+import { Modal, ModalSize } from "./modal";
 
 export default {
   title: "UI/Overlay/Modal",
@@ -56,6 +55,7 @@ export const Default = ({ ...args }) => {
               Bestätigen
             </Button>
             <IconButton
+              ariaLabel="icon"
               icon={CheckIcon}
               onClick={() => {
                 action("click-icon");
@@ -73,7 +73,7 @@ export const Default = ({ ...args }) => {
 };
 
 export const Sizes = ({ ...args }) => {
-  const sizes: Array<keyof ModalSizes> = [
+  const sizes: Array<ModalSize> = [
     "xs",
     "sm",
     "md",
@@ -110,6 +110,7 @@ export const Sizes = ({ ...args }) => {
                     Bestätigen
                   </Button>
                   <IconButton
+                    ariaLabel="icon"
                     icon={CheckIcon}
                     onClick={() => {
                       action("click-icon");
@@ -200,6 +201,7 @@ export const LargeContainer = ({ ...args }) => {
               Bestätigen
             </Button>
             <IconButton
+              ariaLabel="icon"
               icon={CheckIcon}
               onClick={() => {
                 action("click-icon");

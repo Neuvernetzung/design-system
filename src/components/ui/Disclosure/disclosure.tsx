@@ -6,15 +6,15 @@ import { ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
 import { ChevronDownIcon, MinusIcon, PlusIcon } from "../../../theme/icons";
-import { ExtendedColors, Sizes } from "../../../types";
+import type { DisclosureVariant, ExtendedColor, Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button, ButtonProps } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
 export type DisclosureBaseProps = {
-  size?: keyof Sizes;
-  color?: keyof ExtendedColors;
+  size?: Size;
+  color?: ExtendedColor;
   closeOthers?: boolean;
   className?: string;
   icon?: "default" | "chevron";
@@ -69,10 +69,6 @@ export const disclosureAnimationVariants = {
     },
   },
 };
-
-export const disclosureVariants = ["button", "border"] as const;
-export type DisclosureVariants = typeof disclosureVariants;
-export type DisclosureVariant = DisclosureVariants[number];
 
 export const DisclosureGroup = ({
   items,

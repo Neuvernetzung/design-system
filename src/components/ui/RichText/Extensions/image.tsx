@@ -5,7 +5,6 @@ import {
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 
-import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
 
 const ImageComponent = ({ node }: NodeViewProps) => {
@@ -14,7 +13,7 @@ const ImageComponent = ({ node }: NodeViewProps) => {
   return (
     <NodeViewWrapper>
       {createProseElement({
-        name: ProseComponentTags.IMG,
+        name: "img",
         attributes: {
           ...attrs,
           containerProps: {
