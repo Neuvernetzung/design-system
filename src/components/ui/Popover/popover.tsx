@@ -32,7 +32,7 @@ import { Button, IconButton } from "../Button";
 export type PopoverProps = {
   content: ReactNode;
   buttonProps?: ButtonProps | IconButtonProps;
-  buttonAs?: ElementType<any>;
+  buttonAs?: ElementType;
   buttonComponent?: ReactNode;
   size?: Size;
   trigger?: "click" | "hover";
@@ -43,11 +43,6 @@ export type PopoverProps = {
   fullScreenOnMobile?: boolean;
   referenceElement?: MutableRefObject<HTMLElement | null>;
   disabledOffset?: boolean;
-};
-
-type ExtendedButton = HTMLButtonElement & {
-  click(): any;
-  dispatchEvent: any;
 };
 
 export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
@@ -69,12 +64,15 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
     },
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
-    const buttonRef = useRef<ExtendedButton>(null);
+    const buttonRef = useRef<HTMLButtonElement>();
     const [referenceElement, setReferenceElement] =
       useState<HTMLElement | null>(null);
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
+
+    const offset = popperOffset({ size });
+
     const { styles, attributes } = usePopper(
       _referenceElement?.current || referenceElement,
       popperElement,
@@ -84,7 +82,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
           {
             name: "offset",
             options: {
-              offset: disabledOffset ? [0, 0] : popperOffset,
+              offset: disabledOffset ? [0, 0] : offset,
             },
           },
         ],

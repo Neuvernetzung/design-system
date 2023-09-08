@@ -115,13 +115,16 @@ export const SelectInner = <
     null
   );
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
+
+  const offset = popperOffset({ size });
+
   const {
     styles,
     attributes,
     update: updatePopper,
   } = usePopper(referenceElement, popperElement, {
     placement,
-    modifiers: [{ name: "offset", options: { offset: popperOffset } }],
+    modifiers: [{ name: "offset", options: { offset } }],
   });
 
   const formValue = useWatch({ control, name });

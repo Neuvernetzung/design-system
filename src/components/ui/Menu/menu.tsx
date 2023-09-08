@@ -1,7 +1,13 @@
 import { Menu as HeadlessMenu } from "@headlessui/react";
 import type { Placement } from "@popperjs/core";
 import cn from "classnames";
-import { ForwardedRef, forwardRef, ReactNode, useState } from "react";
+import {
+  ElementType,
+  ForwardedRef,
+  forwardRef,
+  ReactNode,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 
@@ -41,7 +47,7 @@ type MenuButtonProps =
 
 type OptionalFunctionProps =
   | { href: string; onClick?: never }
-  | { href?: never; onClick: Function };
+  | { href?: never; onClick: () => void };
 
 type OptionalItemProps =
   | {
@@ -61,6 +67,12 @@ export type MenuItemProps = {
   color?: Color;
 } & OptionalItemProps;
 
+type AsProps = {
+  as: ElementType;
+  href?: string;
+  onClick?: () => void;
+};
+
 export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   (
     {
@@ -79,9 +91,11 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
+    const offset = popperOffset({ size });
+
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
       placement,
-      modifiers: [{ name: "offset", options: { offset: popperOffset } }],
+      modifiers: [{ name: "offset", options: { offset } }],
     });
 
     const ButtonComponent = { icon: IconButton, button: Button };
@@ -141,7 +155,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                           }: MenuItemProps,
                           _i
                         ) => {
-                          const asProps: any = _href
+                          const asProps: AsProps = _href
                             ? { as: "a", href: _href }
                             : _onClick
                             ? { as: "button", onClick: _onClick }
@@ -186,7 +200,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                   );
                 if (_items?.length === 0) return null;
 
-                const asProps: any = href
+                const asProps: AsProps = href
                   ? { as: "a", href }
                   : onClick
                   ? { as: "button", onClick }
