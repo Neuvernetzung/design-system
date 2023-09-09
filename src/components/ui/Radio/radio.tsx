@@ -111,6 +111,7 @@ export const Radio = <
       }}
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

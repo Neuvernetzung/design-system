@@ -90,6 +90,7 @@ export const Timepicker = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           name={name}
           error={error}
           label={label}

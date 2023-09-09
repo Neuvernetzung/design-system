@@ -3,7 +3,7 @@ import { createStore, useStore } from "zustand";
 import { persist } from "zustand/middleware";
 
 import { adjustedTextColors } from "../styles";
-import type { ExtendedColor, Size } from "../types";
+import type { ExtendedColor, RequiredInfoVariant, Size } from "../types";
 import { extendBorderRadius, ReturnedBorderRadius } from "./extendBorderRadius";
 import { ExtendColors, extendColors, ReturnedColors } from "./extendColors";
 
@@ -14,18 +14,21 @@ export type ThemeState = {
   darkColorState: ReturnedColors | undefined;
   borderRadiusState: ReturnedBorderRadius | undefined;
   adjustedTextColorState: Record<ExtendedColor, string>;
+  requiredInfoVariant: RequiredInfoVariant;
 };
 
 export type CreateThemeStoreProps = {
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
   borderRadius?: Size;
+  requiredInfoVariant?: RequiredInfoVariant;
 };
 
 export const createThemeStore = ({
   colors,
   darkColors,
   borderRadius,
+  requiredInfoVariant = "star",
 }: CreateThemeStoreProps) =>
   createStore(
     persist(
@@ -41,6 +44,7 @@ export const createThemeStore = ({
             defaultColors,
             defaultDarkColors
           ),
+          requiredInfoVariant,
         };
       },
       {
@@ -55,9 +59,20 @@ export const ThemeContext = createContext<ThemeStore | null>(null);
 
 export const useThemeStore = () => useContext(ThemeContext);
 
+const missingErrorMessage = "Missing ThemeContext.Provider in the tree";
+
 export const useThemeState = () => {
   const store = useContext(ThemeContext);
-  if (!store) throw new Error("Missing ThemeContext.Provider in the tree");
+  if (!store) throw new Error(missingErrorMessage);
 
   return useStore(store);
+};
+
+export const useThemeStateValue = <T>(
+  selector: (state: ThemeState) => T
+): T => {
+  const store = useContext(ThemeContext);
+  if (!store) throw new Error(missingErrorMessage);
+
+  return useStore(store, selector);
 };

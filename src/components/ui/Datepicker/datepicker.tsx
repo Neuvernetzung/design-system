@@ -394,6 +394,7 @@ export const Datepicker = <
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <div className={cn()}>
           <FormElement
+            required={required}
             name={name}
             error={error}
             label={label}

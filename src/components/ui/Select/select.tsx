@@ -257,6 +257,7 @@ export const SelectInner = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

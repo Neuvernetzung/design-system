@@ -44,3 +44,9 @@ export const radioVariants = ["default", "button"] as const;
 export type RadioVariants = typeof radioVariants;
 
 export type RadioVariant = RadioVariants[number];
+
+export const requiredInfoVariants = ["star", "text", "optional"] as const;
+
+export type RequiredInfoVariants = typeof requiredInfoVariants;
+
+export type RequiredInfoVariant = RequiredInfoVariants[number];

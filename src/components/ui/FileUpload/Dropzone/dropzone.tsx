@@ -106,6 +106,7 @@ const Dropzone = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           size={size}
           label={label}
           helper={helper}

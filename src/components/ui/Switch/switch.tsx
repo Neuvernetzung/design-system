@@ -71,6 +71,7 @@ export const SwitchInner = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

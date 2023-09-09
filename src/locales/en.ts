@@ -1,5 +1,7 @@
 export default {
   required: "This field is required!",
+  requiredInfo: "(required)",
+  optionalInfo: "(optional)",
   cancel: "Cancel",
   confirm: "Confirm",
   loading: "Loading...",
