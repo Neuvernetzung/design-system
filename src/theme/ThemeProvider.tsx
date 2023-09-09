@@ -39,6 +39,7 @@ export type ConfigProps = {
   icons?: "outline" | "solid" | Icons;
   borderRadius?: Size;
   requiredInfoVariant?: RequiredInfoVariant;
+  pagePadding?: Size;
   defaultTheme?: "system" | "light" | "dark";
   allowConfirmation?: boolean;
   allowGlobalLoading?: boolean;
@@ -65,10 +66,17 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     allowGlobalLoading,
     forcedTheme,
     requiredInfoVariant,
+    pagePadding,
   } = config || {};
 
   const store = useRef(
-    createThemeStore({ colors, darkColors, borderRadius, requiredInfoVariant })
+    createThemeStore({
+      colors,
+      darkColors,
+      borderRadius,
+      requiredInfoVariant,
+      pagePadding,
+    })
   ).current;
 
   useTheme(":root", {
