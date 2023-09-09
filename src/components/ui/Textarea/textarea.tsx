@@ -84,6 +84,7 @@ export const TextareaInner = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

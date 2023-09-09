@@ -154,6 +154,7 @@ const PaginatedSelect = <
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <>
           <FormElement
+            required={required}
             name={name}
             error={error}
             helper={helper}

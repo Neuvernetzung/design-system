@@ -145,7 +145,13 @@ export const RichText = <
         required: requiredInputRule(required, locale),
       }}
       render={({ field: { ref }, fieldState: { error } }) => (
-        <FormElement name={name} label={label} helper={helper} error={error}>
+        <FormElement
+          required={required}
+          name={name}
+          label={label}
+          helper={helper}
+          error={error}
+        >
           <div
             ref={mergeRefs([containerRef, ref])}
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex

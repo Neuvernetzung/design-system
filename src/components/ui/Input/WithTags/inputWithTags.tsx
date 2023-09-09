@@ -96,6 +96,7 @@ export const InputWithTagsInner = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

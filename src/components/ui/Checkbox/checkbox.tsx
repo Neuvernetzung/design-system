@@ -112,6 +112,7 @@ export const Checkbox = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

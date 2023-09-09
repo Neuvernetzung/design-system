@@ -1,20 +1,22 @@
 import cn from "classnames";
+import isString from "lodash/isString";
 import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 import type { FieldError, Message, ValidationRule } from "react-hook-form";
 
-import { type Locale, getText } from "../../../locales/getText";
+import { getText, type Locale } from "../../../locales/getText";
 import { gapsSmall, textColors, textSizes } from "../../../styles";
+import { useThemeStateValue } from "../../../theme";
 import { ExclamationTriangleIcon } from "../../../theme/icons";
-import type { Size } from "../../../types";
+import type { RequiredInfoVariant, Size } from "../../../types";
+import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
-import { smallerSize } from "../../../utils";
-import isString from "lodash/isString";
 
 export type FormElementProps = {
   error: FieldError | undefined;
+  required: RequiredRule | undefined;
   label?: ReactNode;
   helper?: ReactNode;
   name: string;
@@ -30,8 +32,24 @@ export type MaxRule = ValidationRule<number | string>;
 export type MinRule = ValidationRule<number | string>;
 export type PatternRule = ValidationRule<RegExp>;
 
+const requiredSymbols = (
+  locale: Locale
+): Record<RequiredInfoVariant, string> => ({
+  star: "*",
+  text: getText(locale as Locale).requiredInfo,
+  optional: "",
+});
+const optionalSymbols = (
+  locale: Locale
+): Record<RequiredInfoVariant, string> => ({
+  star: "",
+  text: "",
+  optional: getText(locale as Locale).optionalInfo,
+});
+
 export const FormElement: FC<FormElementProps> = ({
   error,
+  required,
   label = null,
   helper = null,
   name,
@@ -40,6 +58,10 @@ export const FormElement: FC<FormElementProps> = ({
   className,
 }: FormElementProps) => {
   const { locale } = useRouter();
+  const requiredInfoVariant = useThemeStateValue(
+    (state) => state.requiredInfoVariant
+  );
+
   return (
     <span className={cn("flex flex-col gap-0.5", className)}>
       {label && (
@@ -48,6 +70,9 @@ export const FormElement: FC<FormElementProps> = ({
           htmlFor={name}
         >
           {label}
+          {required
+            ? ` ${requiredSymbols(locale as Locale)[requiredInfoVariant]}`
+            : ` ${optionalSymbols(locale as Locale)[requiredInfoVariant]}`}
         </label>
       )}
       {children}

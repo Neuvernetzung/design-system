@@ -7,7 +7,7 @@ import { ConfirmationModal } from "../components/ui/Modal/confirmation";
 import { Notify } from "../components/ui/Notify";
 import type { GeneralNotifyProps } from "../components/ui/Notify/notify";
 import { adjustedTextColors } from "../styles";
-import type { Size } from "../types";
+import type { RequiredInfoVariant, Size } from "../types";
 import { createCSSSelector } from "../utils/internal";
 import {
   extendBorderRadius,
@@ -38,6 +38,7 @@ export type ConfigProps = {
   darkColors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
   borderRadius?: Size;
+  requiredInfoVariant?: RequiredInfoVariant;
   defaultTheme?: "system" | "light" | "dark";
   allowConfirmation?: boolean;
   allowGlobalLoading?: boolean;
@@ -63,10 +64,11 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     allowConfirmation,
     allowGlobalLoading,
     forcedTheme,
+    requiredInfoVariant,
   } = config || {};
 
   const store = useRef(
-    createThemeStore({ colors, darkColors, borderRadius })
+    createThemeStore({ colors, darkColors, borderRadius, requiredInfoVariant })
   ).current;
 
   useTheme(":root", {
