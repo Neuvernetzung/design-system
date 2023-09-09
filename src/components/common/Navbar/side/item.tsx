@@ -2,7 +2,10 @@ import cn from "classnames";
 import Link from "next/link";
 
 import { gaps } from "../../../../styles";
-import { Button, DisclosureGroup, Tag, Text } from "../../../ui";
+import { Button } from "../../../ui/Button";
+import { DisclosureGroup } from "../../../ui/Disclosure";
+import { Tag } from "../../../ui/Tag";
+import { Text } from "../../../ui/Typography/Text";
 import { NavbarMobileSubItem } from "../mobile/sub";
 import type { NavItemProps } from "../navbar";
 
@@ -19,7 +22,7 @@ export const SideNavItem = ({
   textColor = "black",
   external,
 }: NavItemProps) => (
-  <div>
+  <li>
     {!children && !child ? (
       <Button
         disabled={disabled}
@@ -52,18 +55,22 @@ export const SideNavItem = ({
               </div>
             ),
             defaultOpen,
-            content: fullWidthPopover
-              ? child
-              : children?.map((child, i) => (
+            content: fullWidthPopover ? (
+              child
+            ) : (
+              <ul>
+                {children?.map((child, i) => (
                   <NavbarMobileSubItem
                     key={`navbar_subitem_${i}`}
                     textColor={textColor}
                     {...child}
                   />
-                )),
+                ))}
+              </ul>
+            ),
           },
         ]}
       />
     )}
-  </div>
+  </li>
 );

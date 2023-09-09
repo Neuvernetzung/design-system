@@ -47,7 +47,8 @@ const NavbarContainer = forwardRef(
     const pagePadding = useThemeStateValue((state) => state.pagePadding);
 
     return (
-      <div
+      <nav
+        aria-label="Main Navigation"
         ref={mergeRefs([ref, navBarInternalRef])}
         className={cn(
           "flex flex-row items-center justify-between fixed top-0 inset-x-0 w-full border-b",
@@ -102,7 +103,7 @@ const NavbarContainer = forwardRef(
             mobileNavClassName={mobileNavClassName}
           />
         </div>
-      </div>
+      </nav>
     );
   }
 );

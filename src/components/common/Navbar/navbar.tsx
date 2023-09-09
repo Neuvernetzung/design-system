@@ -1,11 +1,11 @@
 import cn from "classnames";
 import {
-  ForwardedRef,
+  type ForwardedRef,
   forwardRef,
-  MutableRefObject,
-  ReactElement,
-  ReactNode,
-  RefObject,
+  type MutableRefObject,
+  type ReactElement,
+  type ReactNode,
+  type RefObject,
 } from "react";
 
 import { useThemeState } from "../../../theme";
