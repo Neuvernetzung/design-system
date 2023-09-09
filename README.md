@@ -1,9 +1,13 @@
-# Design System
+# Neuvernetzung - Design System
+
+Ein design system für React und Next.js
+
+[![neuvernetzung-logo](https://github.com/Neuvernetzung/design-system/tree/master/public/LogoFull.png)](https://neuvernetzung.de)
 
 ## Einrichtung
 
 ```
-npm i @neuvernetzung/design-system && npm i -D tailwindcss postcss autoprefixer classnames swiper
+npm i @neuvernetzung/design-system && npm i -D tailwindcss postcss autoprefixer classnames
 ```
 
 ### \_app.tsx mit ThemeProvider wrappen. Und Globale CSS Datei importieren.
