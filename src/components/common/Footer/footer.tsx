@@ -30,7 +30,7 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
     const pagePadding = useThemeStateValue((state) => state.pagePadding);
 
     return (
-      <div
+      <footer
         ref={ref}
         className={cn(
           "bg-white dark:bg-black flex flex-col",
@@ -53,19 +53,19 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
           >
             {cols &&
               cols?.map(({ label, links }, i) => (
-                <div
+                <ul
                   className="items-start flex flex-col"
                   key={`footerlinkgroup_${i}`}
                 >
-                  <Text size="sm" className="font-semibold">
+                  <Text as="li" size="sm" className="font-semibold">
                     {label}
                   </Text>
                   {links.map(({ label, href }, _i) => (
-                    <Text size="sm" key={`footergroup_${i}_el_${_i}`}>
+                    <Text as="li" size="sm" key={`footergroup_${i}_el_${_i}`}>
                       <Link href={href}>{label}</Link>
                     </Text>
                   ))}
-                </div>
+                </ul>
               ))}
           </div>
         </div>
@@ -82,7 +82,7 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
             <Text size="xs">{copyright}</Text>
           </div>
         )}
-      </div>
+      </footer>
     );
   }
 );
