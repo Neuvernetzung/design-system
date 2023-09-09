@@ -29,7 +29,7 @@ export type ModalProps = {
   size?: ModalSize;
   initialFocus?: MutableRefObject<HTMLElement | null>;
   wrapper?: FC;
-  onClose?: Function;
+  onClose?: () => void;
   forbidCancellation?: boolean;
   headerClassName?: string;
   contentClassName?: string;
