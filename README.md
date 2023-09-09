@@ -2,7 +2,7 @@
 
 Ein design system für React und Next.js
 
-[![neuvernetzung-logo](https://github.com/Neuvernetzung/design-system/tree/master/public/LogoFull.png)](https://neuvernetzung.de)
+[![neuvernetzung-logo](https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/LogoFull.png)](https://neuvernetzung.de)
 
 ## Einrichtung
 
