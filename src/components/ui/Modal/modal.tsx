@@ -16,6 +16,7 @@ import {
   transition,
   zIndexes,
 } from "../../../styles";
+import { useThemeStateValue } from "../../../theme/useThemeState";
 import { ExtendedSize } from "../../../types";
 import { Backdrop } from "../Backdrop";
 import { Heading, Text } from "../Typography";
@@ -72,6 +73,8 @@ export const Modal = ({
     setOpen(false);
   };
 
+  const pagePadding = useThemeStateValue((state) => state.pagePadding);
+
   const sectionStyles = cn("w-full flex", paddingsEvenly.lg);
 
   if (!open) return null;
@@ -92,7 +95,7 @@ export const Modal = ({
           <div
             className={cn(
               "flex min-h-full items-center justify-center",
-              pagePaddings.md,
+              pagePaddings[pagePadding],
               paddingsY.lg
             )}
           >

@@ -7,6 +7,7 @@ import { Carousel, CarouselController, CarouselProps } from "./carousel";
 import { IconButton } from "../Button";
 import { CrossIcon } from "../../../theme/icons";
 import { Swiper as SwiperType } from "swiper/types";
+import { useThemeStateValue } from "../../../theme";
 
 export type CarouselModalController = {
   open: boolean;
@@ -77,6 +78,8 @@ export const CarouselModal = ({
     controller?.setOpen(false);
   };
 
+  const pagePadding = useThemeStateValue((state) => state.pagePadding);
+
   return (
     <Transition appear show={controller?.open} as={Fragment}>
       <Dialog
@@ -91,7 +94,7 @@ export const CarouselModal = ({
           <div
             className={cn(
               "h-full items-center justify-center",
-              pagePaddings.md,
+              pagePaddings[pagePadding],
               paddingsY.lg
             )}
           >

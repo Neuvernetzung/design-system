@@ -7,8 +7,8 @@ import {
   ReactNode,
   RefObject,
 } from "react";
-import { useThemeState } from "../../../theme";
 
+import { useThemeState } from "../../../theme";
 import type { ExtendedColor, Size, SvgType } from "../../../types";
 import type { TagProps } from "../../ui/Tag";
 import { NavbarContainer, NavbarSideContainer } from "./container";
@@ -46,7 +46,6 @@ export type NavbarProps = {
   endItems?: ReactNode;
   gapSize?: Size;
   size?: Size;
-  pagePaddingSize?: Size;
   color?: ExtendedColor;
   footer?: ReactNode;
   footerClassName?: string;
@@ -58,10 +57,7 @@ export type LogoProps = {
   containerClassName?: string;
 };
 
-export type SubNavProps = Pick<
-  NavbarProps,
-  "navItems" | "size" | "pagePaddingSize"
-> & {
+export type SubNavProps = Pick<NavbarProps, "navItems" | "size"> & {
   textColor?: string;
   navbarRef?: MutableRefObject<HTMLElement | null>;
 };
@@ -80,7 +76,6 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       gapSize = "md",
       size = "md",
       color = "white",
-      pagePaddingSize = "md",
       footer,
       footerClassName,
       mobileNavClassName,
@@ -99,7 +94,6 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
         textColor={textColor}
         size={size}
         gapSize={gapSize}
-        pagePaddingSize={pagePaddingSize}
         startItems={startItems}
         allowDarkMode={allowDarkMode}
         endItems={endItems}
@@ -133,7 +127,6 @@ export const SideNavbar = forwardRef<
       gapSize = "md",
       size = "md",
       color = "white",
-      pagePaddingSize = "md",
       footer,
       footerClassName,
       sidenavRef,
@@ -167,7 +160,6 @@ export const SideNavbar = forwardRef<
           textColor={textColor}
           size={size}
           gapSize={gapSize}
-          pagePaddingSize={pagePaddingSize}
           allowDarkMode={allowDarkMode}
           logo={logo}
           logoProps={logoProps}
