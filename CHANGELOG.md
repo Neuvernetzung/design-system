@@ -1,5 +1,27 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.0.0
+
+### Major Changes
+
+- 822b271: bei useThemeState initialisieren direkt den statischen Wert nehmen#934
+- edb2092: Enums und interfaces durch const und types ersetzen#930
+
+### Minor Changes
+
+- 8d9975d: Symbol für Required hinzufügen (style definierbar im global State)#933
+- 109fd59: Tabs Style verbessern#936
+- 2bb7ef2: popperOffset verbessern durch verschiedene Größen#932
+- ce74258: Typography erweitern durch Anchor, ...#931
+- 1f1e827: Carousel Modal hinzufügen #877
+- 86730c6: pagePaddings zu ThemeState hinzufügen#941
+
+### Patch Changes
+
+- 795c01d: Storybook BrandImage und Theme hinzufügen#944
+- d2db15b: Navbar korrekte Tags verwenden und best-practises für aria-tags verwenden #942
+- 0255ccd: Footer korrekte Tags verwenden und best-practises für aria-tags#946
+
 ## 1.64.0
 
 ### Minor Changes
