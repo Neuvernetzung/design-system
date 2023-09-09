@@ -2,24 +2,24 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import { create } from "zustand";
 
-import { getText, Locales } from "../../../locales/getText";
+import { getText, type Locale } from "../../../locales/getText";
 import {
   extendedFillColors,
   extendedTextColors,
   gaps,
   zIndexes,
 } from "../../../styles";
-import { ExtendedColors, Sizes } from "../../../types";
+import type { ExtendedColor, Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
-import { sizes as iconSizes } from "../Icon/icon";
 import { Text } from "../Typography";
+import { iconDimensions } from "../Icon/icon";
 
 export const useLoadingState = create<string | boolean>(() => false);
 
-interface LoadingOptions {
+type LoadingOptions = {
   id?: string;
-}
+};
 
 export const loading = (loading: boolean, { id }: LoadingOptions = {}) => {
   useLoadingState.setState(id || loading);
@@ -31,7 +31,7 @@ export const isLoading = (id?: string) => {
 };
 
 export const Loading = () => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
   const isLoading = useLoadingState((state) => state);
 
   if (isLoading === true)
@@ -52,10 +52,10 @@ export const Loading = () => {
 
 export default typedMemo(Loading);
 
-interface SpinnerProps {
-  color?: keyof ExtendedColors;
-  size?: keyof Sizes;
-}
+type SpinnerProps = {
+  color?: ExtendedColor;
+  size?: Size;
+};
 
 export const Spinner = ({
   color = "filledSubtile",
@@ -63,7 +63,7 @@ export const Spinner = ({
 }: SpinnerProps) => (
   <svg
     className={cn(
-      iconSizes[size],
+      iconDimensions[size],
       "aspect-square animate-spin",
       extendedTextColors.filled,
       extendedFillColors[color]

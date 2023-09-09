@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { Button, ColorPicker, Form, Select, Tag } from "../components/ui";
 import { borders } from "../styles";
-import { Sizes, sizes } from "../types";
+import { Size, sizes } from "../types";
 import {
   ExtendColors,
   setBorderRadius,
@@ -13,6 +13,7 @@ import {
   setDarkColors,
   ThemeProvider,
   useThemeState,
+  useThemeStore,
 } from ".";
 
 export default {
@@ -34,11 +35,12 @@ const Container = ({ ...props }) => (
 
 type FormProps = {
   colors: Partial<ExtendColors>;
-  radius: keyof Sizes;
+  radius: Size;
 };
 
 export const Default = ({ ...args }) => {
   const { colorState } = useThemeState();
+  const themeStore = useThemeStore();
 
   const { control, handleSubmit } = useForm<FormProps>({
     values: {
@@ -51,8 +53,9 @@ export const Default = ({ ...args }) => {
   });
 
   const onSubmit = (data: FormProps) => {
-    setColors(":root", data.colors);
-    setBorderRadius(":root", data.radius);
+    if (!themeStore) return;
+    setColors(themeStore, ":root", data.colors);
+    setBorderRadius(themeStore, ":root", data.radius);
   };
 
   return (
@@ -80,6 +83,7 @@ export const Default = ({ ...args }) => {
 
 export const DarkTheme = ({ ...args }) => {
   const { colorState } = useThemeState();
+  const themeStore = useThemeStore();
 
   const { control, handleSubmit } = useForm<Partial<ExtendColors>>({
     defaultValues: {
@@ -95,11 +99,13 @@ export const DarkTheme = ({ ...args }) => {
   });
 
   const onSubmit = (data: Partial<ExtendColors>) => {
-    setColors(":root", data);
+    if (!themeStore) return;
+    setColors(themeStore, ":root", data);
   };
 
   const onDarkSubmit = (data: Partial<ExtendColors>) => {
-    setDarkColors(`:root`, data);
+    if (!themeStore) return;
+    setDarkColors(themeStore, `:root`, data);
   };
 
   return (
@@ -138,6 +144,7 @@ export const DarkTheme = ({ ...args }) => {
 
 export const NestedTheme = ({ ...args }) => {
   const { colorState } = useThemeState();
+  const themeStore = useThemeStore();
 
   const { control, handleSubmit } = useForm<Partial<ExtendColors>>({
     defaultValues: {
@@ -159,15 +166,18 @@ export const NestedTheme = ({ ...args }) => {
     });
 
   const onSubmit = (data: Partial<ExtendColors>) => {
-    setColors(":root", data);
+    if (!themeStore) return;
+    setColors(themeStore, ":root", data);
   };
 
   const onNestedSubmit = (data: Partial<ExtendColors>) => {
-    setColors(".container", data);
+    if (!themeStore) return;
+    setColors(themeStore, ".container", data);
   };
 
   const onNestedDarkSubmit = (data: Partial<ExtendColors>) => {
-    setDarkColors(".container", data);
+    if (!themeStore) return;
+    setDarkColors(themeStore, ".container", data);
   };
 
   return (

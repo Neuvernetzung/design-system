@@ -2,15 +2,9 @@
 import cn from "classnames";
 import isString from "lodash/isString";
 import { ElementType, ForwardedRef, forwardRef } from "react";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "../../../../utils/internal/polymorphic";
 
 import {
-  focusBg,
-  focusRing,
+  extendedFocuses,
   minHeights,
   roundings,
   textSizes,
@@ -18,30 +12,33 @@ import {
 } from "../../../../styles";
 import { useThemeState } from "../../../../theme/useThemeState";
 import {
-  Colors,
-  ExtendedColors,
-  Focuses,
-  Sizes,
+  ButtonVariant,
+  ExtendedColor,
+  FocusVariant,
+  Size,
   SvgType,
 } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
+import type {
+  PolymorphicForwardRefExoticComponent,
+  PolymorphicPropsWithoutRef,
+  PolymorphicPropsWithRef,
+} from "../../../../utils/internal/polymorphic";
 import { Icon } from "../../Icon";
 import { Spinner, useLoadingState } from "../../Loading/loading";
-import type { Variants } from "../button";
-import { colors, styles, variants } from "../button";
-
-export const focuses: Focuses = {
-  ring: focusRing,
-  bg: focusBg,
-};
+import {
+  buttonBaseStyles,
+  buttonVariantStyles,
+  getButtonColorStyle,
+} from "../button";
 
 const IconButtonDefaultElement = "button";
 
 export type IconButtonOwnProps = {
-  variant?: keyof Variants;
-  color?: keyof (Colors & Pick<ExtendedColors, "light" | "dark" | "inherit">);
-  size?: keyof Sizes;
-  focus?: keyof Focuses;
+  variant?: ButtonVariant;
+  color?: ExtendedColor;
+  size?: Size;
+  focus?: FocusVariant;
   rounded?: boolean;
   icon: SvgType;
   disabled?: boolean;
@@ -77,9 +74,9 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
       as,
       ...props
     }: PolymorphicPropsWithoutRef<IconButtonOwnProps, T>,
-    ref: ForwardedRef<any>
+    ref: ForwardedRef<Element>
   ) => {
-    const Component = as || IconButtonDefaultElement;
+    const Component: ElementType = as || IconButtonDefaultElement;
 
     const { adjustedTextColorState } = useThemeState();
 
@@ -96,17 +93,19 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
         aria-label={ariaLabel}
         className={cn(
           "aspect-square",
-          styles.base,
+          buttonBaseStyles.base,
           transition,
-          focuses[focus][color],
-          variants[variant],
+          extendedFocuses[focus][color],
+          buttonVariantStyles[variant],
           roundings[size],
           minHeights[size],
           textSizes[size],
-          !_disabled && colors(color, adjustedTextColorState)?.base,
-          _disabled && colors(color, adjustedTextColorState)?.disabled,
-          colors(color, adjustedTextColorState)?.text[variant],
-          { [styles.rounded]: rounded },
+          !_disabled &&
+            getButtonColorStyle(color, adjustedTextColorState)?.base,
+          _disabled &&
+            getButtonColorStyle(color, adjustedTextColorState)?.disabled,
+          getButtonColorStyle(color, adjustedTextColorState)?.text[variant],
+          { [buttonBaseStyles.rounded]: rounded },
           className
         )}
         {...props}

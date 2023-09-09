@@ -1,8 +1,7 @@
 import { FC } from "react";
 
-import type { BlockQuoteProps } from "../components/ui/BlockQuote";
+import type { BlockQuoteProps } from "../components/ui/Typography/BlockQuote";
 import type { HorizontalRuleProps } from "../components/ui/HorizontalRule";
-import type { NativeLinkProps } from "../components/ui/Link";
 import type {
   ListItemProps,
   OrderedListProps,
@@ -11,25 +10,28 @@ import type {
 import type { HeadingProps } from "../components/ui/Typography/Heading/heading";
 import type { TextProps } from "../components/ui/Typography/Text";
 import type { ImageProps } from "../components/ui/Image";
+import type { AnchorProps } from "../components";
 
-export enum ProseComponentTags {
-  P = "p",
-  H1 = "h1",
-  H2 = "h2",
-  H3 = "h3",
-  H4 = "h4",
-  H5 = "h5",
-  H6 = "h6",
-  OL = "ol",
-  UL = "ul",
-  LI = "li",
-  BLOCKQUOTE = "blockquote",
-  A = "a",
-  HR = "hr",
-  IMG = "img",
-}
+export const proseComponentTags = [
+  "p",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "ol",
+  "ul",
+  "li",
+  "blockquote",
+  "a",
+  "hr",
+  "img",
+] as const;
 
-export interface ProseComponents {
+export type ProseComponentTag = (typeof proseComponentTags)[number];
+
+export type ProseComponents = {
   p: ProseComponent<TextProps>;
   h1: ProseComponent<HeadingProps<"h1">>;
   h2: ProseComponent<HeadingProps<"h2">>;
@@ -41,13 +43,13 @@ export interface ProseComponents {
   ul: ProseComponent<UnorderedListProps>;
   li: ProseComponent<ListItemProps>;
   blockquote: ProseComponent<BlockQuoteProps>;
-  a: ProseComponent<NativeLinkProps>;
+  a: ProseComponent<AnchorProps>;
   hr: ProseComponent<HorizontalRuleProps>;
   img: ProseComponent<ImageProps>;
-}
+};
 
-interface ProseComponent<T> {
+type ProseComponent<T> = {
   component: string | FC;
   props: T & { className?: string };
   isVoid?: boolean;
-}
+};

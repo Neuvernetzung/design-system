@@ -16,7 +16,7 @@ import {
 } from "../../../../styles";
 import { getInputStyles } from "../../../../styles/groups";
 import { CrossIcon, PlusIcon } from "../../../../theme/icons";
-import { InputVariants, Sizes } from "../../../../types";
+import type { InputVariant, Size } from "../../../../types";
 import { capSize } from "../../../../utils";
 import { mergeRefs, typedMemo } from "../../../../utils/internal";
 import { Button, ButtonGroup, IconButton } from "../../Button";
@@ -25,7 +25,7 @@ import { Text } from "../../Typography";
 import { InputAddon } from "../InputAddon";
 import { requiredInputRule } from "../../../../utils/internal/inputRule";
 import { useRouter } from "next/router";
-import { Locales } from "../../../../locales/getText";
+import type { Locale } from "../../../../locales/getText";
 
 export type InputWithTagsProps = HTMLAttributes<HTMLInputElement> & {
   required?: RequiredRule;
@@ -33,10 +33,10 @@ export type InputWithTagsProps = HTMLAttributes<HTMLInputElement> & {
   disabled?: boolean;
   label?: string;
   helper?: string;
-  size?: keyof Sizes;
+  size?: Size;
   className?: string;
   containerClassName?: string;
-  variant?: keyof InputVariants;
+  variant?: InputVariant;
   inputClassName?: string;
   step?: number;
   notFoundText?: string;
@@ -82,7 +82,7 @@ export const InputWithTagsInner = <
     return newValues;
   };
 
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -96,6 +96,7 @@ export const InputWithTagsInner = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

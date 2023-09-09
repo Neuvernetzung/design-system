@@ -1,34 +1,23 @@
 import get from "lodash/get";
 import isString from "lodash/isString";
 
-import type { Color, Colors, HEX } from "../types";
+import type { Color, ColorObject, HEX } from "../types";
 import { getRGBColorVariable } from "../utils";
 import { blendColor } from "../utils/internal";
 
 export type ExtendColors = Partial<
-  Record<keyof Omit<Colors, "white" | "black">, Color | HEX> & {
-    white: HEX;
-    black: HEX;
-  }
+  Omit<Record<Color, ColorObject | HEX>, "white" | "black"> &
+    Pick<Record<Color, HEX>, "white" | "black">
 >;
 
-export type ReturnedColors = Record<
-  keyof Omit<Colors, "white" | "black">,
-  Color
-> & {
-  white: HEX;
-  black: HEX;
-};
+export type ReturnedColors = Omit<
+  Record<Color, ColorObject>,
+  "white" | "black"
+> &
+  Pick<Record<Color, HEX>, "white" | "black">;
 
 export const getColorVariables = (extendedColors: ReturnedColors) =>
-  (
-    Object.keys(extendedColors) as Array<
-      keyof (Record<keyof Omit<Colors, "white" | "black">, Color> & {
-        white: HEX;
-        black: HEX;
-      })
-    >
-  )
+  (Object.keys(extendedColors) as Array<keyof ReturnedColors>)
     ?.map((color) => {
       if (isString(get(extendedColors, color)))
         return getRGBColorVariable(get(extendedColors, color) as HEX, color);
@@ -55,22 +44,22 @@ export const extendColors = (customColors?: ExtendColors): ReturnedColors => ({
 });
 
 const colorCondition = (
-  color: keyof Omit<Colors, "white" | "black">,
+  color: Exclude<Color, "white" | "black">,
   customColors?: ExtendColors
 ) => {
   if (!customColors?.[color]) {
     if (isString(defaultColors[color])) {
       return blendColors(defaultColors[color] as HEX, customColors);
     }
-    return defaultColors[color] as Color;
+    return defaultColors[color] as ColorObject;
   }
   if (isString(customColors[color])) {
     return blendColors(customColors[color] as HEX, customColors);
   }
-  return customColors[color] as Color;
+  return customColors[color] as ColorObject;
 };
 
-const blendColors = (color: HEX, customColors?: ExtendColors): Color => ({
+const blendColors = (color: HEX, customColors?: ExtendColors): ColorObject => ({
   "50": blendColor(color, customColors?.white || defaultColors.white, 0.9),
   "100": blendColor(color, customColors?.white || defaultColors.white, 0.8),
   "200": blendColor(color, customColors?.white || defaultColors.white, 0.6),
@@ -84,11 +73,15 @@ const blendColors = (color: HEX, customColors?: ExtendColors): Color => ({
   "950": blendColor(color, customColors?.black || defaultColors.black, 0.9),
 });
 
-const defaultColors: Required<Colors> = {
+type DefaultColorStrings = "white" | "black" | "brand" | "accent";
+
+const defaultColors: Omit<Record<Color, ColorObject>, DefaultColorStrings> &
+  Pick<Record<Color, HEX>, DefaultColorStrings> = {
   white: "#fafafa",
   black: "#0D0D0D",
   brand: "#00a8ff",
   primary: {
+    "50": "#eff6ff",
     "100": "#dbeafe",
     "200": "#bfdbfe",
     "300": "#93c5fd",
@@ -98,9 +91,11 @@ const defaultColors: Required<Colors> = {
     "700": "#1d4ed8",
     "800": "#1e40af",
     "900": "#1e3a8a",
+    "950": "#172554",
   },
   accent: "#737373",
   success: {
+    "50": "#f0fdf4",
     "100": "#dcfce7",
     "200": "#bbf7d0",
     "300": "#86efac",
@@ -110,8 +105,10 @@ const defaultColors: Required<Colors> = {
     "700": "#15803d",
     "800": "#166534",
     "900": "#14532d",
+    "950": "#052e16",
   },
   warn: {
+    "50": "#fefce8",
     "100": "#fef9c3",
     "200": "#fef08a",
     "300": "#fde047",
@@ -121,8 +118,10 @@ const defaultColors: Required<Colors> = {
     "700": "#a16207",
     "800": "#854d0e",
     "900": "#713f12",
+    "950": "#422006",
   },
   danger: {
+    "50": "#fef2f2",
     "100": "#fee2e2",
     "200": "#fecaca",
     "300": "#fca5a5",
@@ -132,5 +131,6 @@ const defaultColors: Required<Colors> = {
     "700": "#b91c1c",
     "800": "#991b1b",
     "900": "#7f1d1d",
+    "950": "#450a0a",
   },
 };

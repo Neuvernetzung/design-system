@@ -7,10 +7,10 @@ import type {
 } from "../../../../utils/internal/polymorphic";
 
 import { extendedTextColors, textSizes } from "../../../../styles";
-import type { ExtendedColors, ExtendedSizes } from "../../../../types";
+import type { ExtendedColor, ExtendedSize } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
 
-export const tagMap: TagMap = {
+export const tagMap: Record<ExtendedSize, keyof JSX.IntrinsicElements> = {
   xs: "h6",
   sm: "h5",
   md: "h4",
@@ -23,15 +23,13 @@ export const tagMap: TagMap = {
   "6xl": "h1",
 };
 
-const HeadingDefaultElement = "h2";
+const HeadingDefaultElement: keyof JSX.IntrinsicElements = "h2";
 
-type TagMap = Record<keyof ExtendedSizes, keyof JSX.IntrinsicElements>;
-
-export interface HeadingOwnProps extends HTMLAttributes<HTMLHeadingElement> {
-  size?: keyof ExtendedSizes;
-  color?: keyof ExtendedColors;
+export type HeadingOwnProps = HTMLAttributes<HTMLHeadingElement> & {
+  size?: ExtendedSize;
+  color?: ExtendedColor;
   className?: string;
-}
+};
 
 export type HeadingProps<T extends ElementType = typeof HeadingDefaultElement> =
   PolymorphicPropsWithRef<HeadingOwnProps, T>;

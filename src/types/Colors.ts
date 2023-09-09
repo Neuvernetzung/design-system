@@ -1,24 +1,16 @@
-export const shades: Array<keyof Color> = [
+export const colorShades = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
-];
+] as const;
+
+export type ColorShades = typeof colorShades;
+
+export type ColorShade = ColorShades[number];
 
 export type HEX = `#${string}`;
 
-export type Color = {
-  50: HEX;
-  100: HEX;
-  200: HEX;
-  300: HEX;
-  400: HEX;
-  500: HEX;
-  600: HEX;
-  700: HEX;
-  800: HEX;
-  900: HEX;
-  950: HEX;
-};
+export type ColorObject = Record<ColorShade, HEX>;
 
-export const colors: Array<keyof Colors> = [
+export const colors = [
   "brand",
   "primary",
   "accent",
@@ -27,24 +19,22 @@ export const colors: Array<keyof Colors> = [
   "danger",
   "white",
   "black",
-];
+] as const;
 
-export type Colors = {
-  white?: any;
-  black?: any;
-  brand: any;
-  primary: any;
-  accent: any;
-  success: any;
-  warn: any;
-  danger: any;
-};
+export type Colors = typeof colors;
 
-export interface ExtendedColors extends Colors {
-  inherit?: any;
-  subtile?: any;
-  light?: any;
-  dark?: any;
-  filled?: any;
-  filledSubtile?: any;
-}
+export type Color = Colors[number];
+
+export const extendedColors = [
+  ...colors,
+  "inherit",
+  "subtile",
+  "light",
+  "dark",
+  "filled",
+  "filledSubtile",
+] as const;
+
+export type ExtendedColors = typeof extendedColors;
+
+export type ExtendedColor = ExtendedColors[number];

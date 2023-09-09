@@ -1,6 +1,6 @@
-import { Sizes } from "../types";
+import type { Size } from "../types";
 
-export const gapsSmall: Sizes = {
+export const gapsSmall: Record<Size, string> = {
   xs: "gap-0.5",
   sm: "gap-1",
   md: "gap-1.5",
@@ -8,7 +8,7 @@ export const gapsSmall: Sizes = {
   xl: "gap-3",
 };
 
-export const gaps: Sizes = {
+export const gaps: Record<Size, string> = {
   xs: "gap-2",
   sm: "gap-3",
   md: "gap-4",
@@ -16,7 +16,7 @@ export const gaps: Sizes = {
   xl: "gap-6",
 };
 
-export const gapsLarge: Sizes = {
+export const gapsLarge: Record<Size, string> = {
   xs: "gap-4",
   sm: "gap-5",
   md: "gap-6",

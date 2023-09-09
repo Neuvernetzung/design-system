@@ -1,11 +1,10 @@
-import { PhoneIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, Form, Icon } from "..";
+import { Button, Form } from "..";
 import { Textarea } from ".";
-import { sizes, variants } from "./textarea";
+import { inputVariants, sizes } from "../../../types";
 
 export default {
   title: "UI/Form/Textarea",
@@ -27,7 +26,6 @@ export default {
 const formClassName = "flex flex-col gap-5";
 
 export const Variants = ({ ...args }) => {
-  const _variants = Object.keys(variants);
   const formMethods = useForm();
 
   return (
@@ -36,7 +34,7 @@ export const Variants = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_variants.map((variant: any, i) => (
+      {inputVariants.map((variant, i) => (
         <Textarea
           control={formMethods.control}
           name={`${variant}_textarea_${i}`}
@@ -55,7 +53,6 @@ Variants.parameters = {
 };
 
 export const Sizes = ({ ...args }) => {
-  const _sizes = Object.keys(sizes);
   const formMethods = useForm();
 
   return (
@@ -64,7 +61,7 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_sizes.map((size: any, i) => (
+      {sizes.map((size, i) => (
         <Textarea
           control={formMethods.control}
           name={`${size}_textarea_${i}`}
@@ -83,7 +80,6 @@ Sizes.parameters = {
 };
 
 export const Error = ({ ...args }) => {
-  const _variants = Object.keys(variants);
   const formMethods = useForm();
 
   return (
@@ -92,7 +88,7 @@ export const Error = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_variants.map((variant: any, i) => (
+      {inputVariants.map((variant, i) => (
         <Textarea
           control={formMethods.control}
           name={`${variant}_textarea_${i}`}
@@ -128,12 +124,12 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
-interface IMaxLength {
+type MaxLengthProps = {
   textarea_max_length: any;
-}
+};
 
 export const MaxLength = ({ ...args }) => {
-  const formMethods = useForm<IMaxLength>();
+  const formMethods = useForm<MaxLengthProps>();
 
   return (
     <Form

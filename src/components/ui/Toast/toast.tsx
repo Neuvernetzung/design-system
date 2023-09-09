@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { m } from "framer-motion";
 import { MouseEventHandler } from "react";
 
 import {
@@ -12,25 +13,29 @@ import {
 } from "../../../styles";
 import { CrossIcon } from "../../../theme/icons";
 import { useThemeState } from "../../../theme/useThemeState";
-import { Colors, ExtendedColors, SvgType } from "../../../types";
+import type {
+  Color,
+  ExtendedColor,
+  SvgType,
+  ToastVariant,
+} from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
-import { m } from "framer-motion";
 
 export type ToastProps = {
   message: string;
-  color?: keyof Colors;
+  color?: Color;
   icon?: SvgType;
   handleClose: MouseEventHandler;
-  variant?: keyof ToastVariants;
+  variant?: ToastVariant;
 };
 
 export const variants = (
-  color: keyof Colors,
-  adjustedTextColorState: ExtendedColors
-): Record<keyof ToastVariants, VariantProps> => ({
+  color: Color,
+  adjustedTextColorState: Record<ExtendedColor, string>
+): Record<ToastVariant, VariantProps> => ({
   outline: {
     container: cn(bgColors.white, borders.accent, "border"),
     icon: cn(textColors[color], "flex"),
@@ -44,11 +49,6 @@ export const variants = (
     close: cn(adjustedTextColorState[color]),
   },
 });
-
-export type ToastVariants = {
-  outline: any;
-  solid: any;
-};
 
 type VariantProps = {
   container: string;

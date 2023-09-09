@@ -1,7 +1,13 @@
 import { Menu as HeadlessMenu } from "@headlessui/react";
 import type { Placement } from "@popperjs/core";
 import cn from "classnames";
-import { ForwardedRef, forwardRef, ReactNode, useState } from "react";
+import {
+  ElementType,
+  ForwardedRef,
+  forwardRef,
+  ReactNode,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 
@@ -13,7 +19,7 @@ import {
   getDropDownOptionsStyles,
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
-import { Colors, Sizes, SvgType } from "../../../types";
+import type { Color, Size, SvgType } from "../../../types";
 import { capSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
@@ -23,7 +29,7 @@ import { Text } from "../Typography";
 
 export type MenuProps = {
   items: MenuItemProps[];
-  size?: keyof Sizes;
+  size?: Size;
   disabled?: boolean;
   dropdownClassName?: string;
   placement?: Placement;
@@ -41,7 +47,7 @@ type MenuButtonProps =
 
 type OptionalFunctionProps =
   | { href: string; onClick?: never }
-  | { href?: never; onClick: Function };
+  | { href?: never; onClick: () => void };
 
 type OptionalItemProps =
   | {
@@ -58,8 +64,14 @@ type OptionalItemProps =
 export type MenuItemProps = {
   children?: ReactNode;
   disabled?: boolean;
-  color?: keyof Colors;
+  color?: Color;
 } & OptionalItemProps;
+
+type AsProps = {
+  as: ElementType;
+  href?: string;
+  onClick?: () => void;
+};
 
 export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   (
@@ -79,9 +91,11 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
+    const offset = popperOffset({ size });
+
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
       placement,
-      modifiers: [{ name: "offset", options: { offset: popperOffset } }],
+      modifiers: [{ name: "offset", options: { offset } }],
     });
 
     const ButtonComponent = { icon: IconButton, button: Button };
@@ -141,7 +155,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                           }: MenuItemProps,
                           _i
                         ) => {
-                          const asProps: any = _href
+                          const asProps: AsProps = _href
                             ? { as: "a", href: _href }
                             : _onClick
                             ? { as: "button", onClick: _onClick }
@@ -186,7 +200,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
                   );
                 if (_items?.length === 0) return null;
 
-                const asProps: any = href
+                const asProps: AsProps = href
                   ? { as: "a", href }
                   : onClick
                   ? { as: "button", onClick }

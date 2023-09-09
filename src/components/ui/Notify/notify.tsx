@@ -5,7 +5,7 @@ import {
   LayoutGroup,
   LazyMotion,
 } from "framer-motion";
-import { ElementType, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
 
@@ -15,11 +15,10 @@ import {
   ExclamationCircleIcon,
   InformationCircleIcon,
 } from "../../../theme/icons";
-import { Colors } from "../../../types";
+import type { Color, SvgType, ToastVariant } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { isLoading, loading } from "../Loading/loading";
 import { Toast } from "../Toast";
-import { ToastVariants } from "../Toast/toast";
 
 type NotifyState = {
   notification?: NotifyProps;
@@ -34,10 +33,10 @@ export const notify = (notification: NotifyProps) => {
 };
 
 export type NotifyProps = {
-  color?: keyof Colors;
-  variant?: keyof ToastVariants;
+  color?: Color;
+  variant?: ToastVariant;
   message: string;
-  icon?: ElementType<SVGElement>;
+  icon?: SvgType;
   duration?: number;
 };
 
@@ -77,13 +76,15 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
     }
   }, [notification]);
 
-  const icons: Colors = {
+  const icons: Record<Color, SvgType> = {
     brand: CheckCircleIcon,
     primary: CheckCircleIcon,
     accent: InformationCircleIcon,
     success: CheckCircleIcon,
     warn: ExclamationCircleIcon,
     danger: ExclamationCircleIcon,
+    black: InformationCircleIcon,
+    white: InformationCircleIcon,
   };
 
   return (

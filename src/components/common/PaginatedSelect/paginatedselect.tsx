@@ -7,8 +7,8 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { Locales } from "../../../locales/getText";
-import { Sizes } from "../../../types";
+import type { Locale } from "../../../locales/getText";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import {
@@ -16,9 +16,9 @@ import {
   ButtonProps,
   FormElement,
   Modal,
+  type ModalProps,
   RequiredRule,
 } from "../../ui";
-import { ModalSizes } from "../../ui/Modal/modal";
 import { Pagination, PaginationProps } from "../Pagination";
 
 export type PaginatedSelectValue<TMultiple extends boolean> =
@@ -55,7 +55,7 @@ export type PaginatedSelectPreview<TMultiple extends boolean = boolean> = ({
 export type PaginatedSelectProps<TItem, TMultiple extends boolean> = {
   label?: string;
   helper?: string;
-  size?: keyof Sizes;
+  size?: Size;
   items: TItem[];
   pagination: PaginationProps;
   buttonProps?: ButtonProps;
@@ -65,7 +65,7 @@ export type PaginatedSelectProps<TItem, TMultiple extends boolean> = {
   multiple?: TMultiple;
   disabled?: boolean;
   required?: RequiredRule;
-  modalSize?: keyof ModalSizes;
+  modalSize?: ModalProps["size"];
 };
 
 const PaginatedSelect = <
@@ -144,7 +144,7 @@ const PaginatedSelect = <
     );
   };
 
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -154,6 +154,7 @@ const PaginatedSelect = <
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <>
           <FormElement
+            required={required}
             name={name}
             error={error}
             helper={helper}

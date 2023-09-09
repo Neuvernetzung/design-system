@@ -1,5 +1,6 @@
 import cn from "classnames";
-import { ForwardedRef, ReactNode, forwardRef } from "react";
+import { useRouter } from "next/router";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
 import {
   Controller,
   FieldPath,
@@ -7,13 +8,16 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import {
-  getInputStyles,
-  inputSizes,
-  inputVariants,
-} from "../../../styles/groups";
-import type { InputVariants, Sizes } from "../../../types";
+import type { Locale } from "../../../locales/getText";
+import { getInputStyles } from "../../../styles/groups";
+import type { InputVariant, Size } from "../../../types";
 import { mergeRefs, typedMemo } from "../../../utils/internal";
+import {
+  maxLengthInputRule,
+  minLengthInputRule,
+  patternInputRule,
+  requiredInputRule,
+} from "../../../utils/internal/inputRule";
 import {
   FormElement,
   MaxLengthRule,
@@ -22,23 +26,12 @@ import {
   RequiredRule,
 } from "../Form";
 import { Text } from "../Typography";
-import {
-  maxLengthInputRule,
-  minLengthInputRule,
-  patternInputRule,
-  requiredInputRule,
-} from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
-
-export const sizes = inputSizes;
-export const variants = inputVariants;
 
 export type TextareaProps = {
   label?: string;
   helper?: ReactNode;
-  size?: keyof Sizes;
-  variant?: keyof InputVariants;
+  size?: Size;
+  variant?: InputVariant;
   placeholder?: string;
   required?: RequiredRule;
   maxLength?: MaxLengthRule;
@@ -74,7 +67,7 @@ export const TextareaInner = <
   }: TextareaProps & UseControllerProps<TFieldValues, TName>,
   ref: ForwardedRef<HTMLTextAreaElement>
 ) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -91,6 +84,7 @@ export const TextareaInner = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}

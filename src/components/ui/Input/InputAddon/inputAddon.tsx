@@ -9,19 +9,19 @@ import {
   textColors,
 } from "../../../../styles";
 import { inputSizes } from "../../../../styles/groups";
-import type { InputVariants, Sizes } from "../../../../types";
+import type { InputVariant, Size } from "../../../../types";
 import { typedMemo } from "../../../../utils/internal";
 
 export type InputAddonProps = {
   className?: string;
   children: ReactNode;
-  size: keyof Sizes;
-  variant: keyof InputVariants;
+  size: Size;
+  variant: InputVariant;
   isLeft?: boolean;
   isRight?: boolean;
 };
 
-export const addonVariant: Record<keyof InputVariants, string> = {
+export const addonVariant: Record<InputVariant, string> = {
   outline: `border-y ${borders.accent}`,
   filled: `${extendedBgColors.filled}`,
   ghost: `${extendedBgColors.filled} bg-opacity-0 border-none`,

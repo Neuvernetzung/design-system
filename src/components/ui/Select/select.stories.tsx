@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 
 import { Button, Form } from "..";
 import { Select } from ".";
-import { sizes, variants } from "./select";
 import { Disclosure } from "../Disclosure";
+import { inputVariants, sizes } from "../../../types";
 
 export default {
   title: "UI/Form/Select",
@@ -31,7 +31,6 @@ const formClassName = "flex flex-col gap-5";
 
 export const Variants = ({ ...args }) => {
   const formMethods = useForm();
-  const _variants = Object.keys(variants);
 
   return (
     <Form
@@ -53,7 +52,7 @@ export const Variants = ({ ...args }) => {
           />
         </div>
       </div>
-      {_variants.map((variant: any) => (
+      {inputVariants.map((variant) => (
         <Select
           key={variant}
           removeAll
@@ -77,7 +76,6 @@ Variants.parameters = {
 
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
-  const _sizes = Object.keys(sizes);
 
   return (
     <Form
@@ -85,7 +83,7 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_sizes.map((size: any) => (
+      {sizes.map((size) => (
         <Select
           key={size}
           removeAll
@@ -320,10 +318,10 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
-interface OtherValueReturnedProps {
+type OtherValueReturnedProps = {
   _id_returned: any;
   _id_returned_multiple;
-}
+};
 
 export const OtherValueReturned = ({ ...args }) => {
   const formMethods = useForm<OtherValueReturnedProps>();

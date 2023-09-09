@@ -8,27 +8,26 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { getText, Locales } from "../../../locales/getText";
+import { getText, type Locale } from "../../../locales/getText";
 import { getInputStyles } from "../../../styles/groups";
-import { Sizes } from "../../../types";
+import type { ButtonVariant, Size } from "../../../types";
 import { colorIsBright } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
-import { hexRegex } from "../../../utils/internal/regex/hex";
-import { Variants } from "../Button/button";
-import { FormElement, RequiredRule } from "../Form";
-import { Popover } from "../Popover";
 import {
   patternInputRule,
   requiredInputRule,
 } from "../../../utils/internal/inputRule";
+import { hexRegex } from "../../../utils/internal/regex/hex";
+import { FormElement, RequiredRule } from "../Form";
+import { Popover } from "../Popover";
 
 export type ColorPickerProps = {
   required?: RequiredRule;
   label?: string;
   helper?: string;
-  size?: keyof Sizes;
+  size?: Size;
   disabled?: boolean;
-  variant?: keyof Variants;
+  variant?: ButtonVariant;
   placeholder?: string;
 };
 
@@ -46,7 +45,7 @@ export const ColorPicker = <
   variant = "outline",
   placeholder,
 }: ColorPickerProps & UseControllerProps<TFieldValues, TName>) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -58,6 +57,7 @@ export const ColorPicker = <
       }}
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}
@@ -71,9 +71,7 @@ export const ColorPicker = <
               size,
               disabled,
               children:
-                value ||
-                placeholder ||
-                getText(locale as Locales).colorpicker_placeholder,
+                value || placeholder || getText(locale).colorpicker_placeholder,
               className: cn(
                 "w-full",
                 value && (colorIsBright(value) ? "text-white" : "text-black")

@@ -4,7 +4,7 @@ import React from "react";
 import { BlockQuote } from ".";
 
 export default {
-  title: "UI/Data Display/BlockQuote",
+  title: "UI/Typography/BlockQuote",
   component: BlockQuote,
   argTypes: {},
 } as Meta;

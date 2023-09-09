@@ -1,16 +1,16 @@
 import cn from "classnames";
 
 import { bgColors, extendedBgColors, roundingsSmall } from "../../../styles";
-import { Colors, Sizes } from "../../../types";
+import type { Color, Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 
 type ProgressBarProps = {
-  size?: keyof Sizes;
-  color?: keyof Colors;
+  size?: Size;
+  color?: Color;
   progress: number;
 };
 
-const progressBarHeights: Sizes = {
+const progressBarHeights: Record<Size, string> = {
   xs: "h-0.5",
   sm: "h-1",
   md: "h-2",

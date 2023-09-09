@@ -12,7 +12,7 @@ import type {
   PatternRule,
   RequiredRule,
 } from "../../../components";
-import { getText, Locales } from "../../../locales/getText";
+import { getText, type Locale } from "../../../locales/getText";
 
 export const baseInputRule = <T extends ValidationRule>(
   rule: T | undefined,
@@ -29,12 +29,12 @@ export const baseInputRule = <T extends ValidationRule>(
   return rule;
 };
 
-export const requiredInputRule = (required?: RequiredRule, locale?: Locales) =>
+export const requiredInputRule = (required?: RequiredRule, locale?: Locale) =>
   baseInputRule<RequiredRule>(required, getText(locale).required);
 
 export const minLengthInputRule = (
   minLength?: MinLengthRule,
-  locale?: Locales
+  locale?: Locale
 ) =>
   baseInputRule<MinLengthRule>(
     minLength,
@@ -45,7 +45,7 @@ export const minLengthInputRule = (
 
 export const maxLengthInputRule = (
   maxLength?: MaxLengthRule,
-  locale?: Locales
+  locale?: Locale
 ) =>
   baseInputRule<MaxLengthRule>(
     maxLength,
@@ -54,7 +54,7 @@ export const maxLengthInputRule = (
     )
   );
 
-export const minInputRule = (min?: MinRule, locale?: Locales) =>
+export const minInputRule = (min?: MinRule, locale?: Locale) =>
   baseInputRule<MinRule>(
     min,
     getText(locale).min(
@@ -62,7 +62,7 @@ export const minInputRule = (min?: MinRule, locale?: Locales) =>
     )
   );
 
-export const maxInputRule = (max?: MaxRule, locale?: Locales) =>
+export const maxInputRule = (max?: MaxRule, locale?: Locale) =>
   baseInputRule<MaxRule>(
     max,
     getText(locale).max(
@@ -70,7 +70,7 @@ export const maxInputRule = (max?: MaxRule, locale?: Locales) =>
     )
   );
 
-export const patternInputRule = (pattern?: PatternRule, locale?: Locales) =>
+export const patternInputRule = (pattern?: PatternRule, locale?: Locale) =>
   baseInputRule<PatternRule>(pattern, getText(locale).pattern);
 
 export const validationInputResult = <T>(value: T, message?: string) => {

@@ -1,23 +1,22 @@
 import cn from "classnames";
-import { HTMLAttributes, MutableRefObject } from "react";
+import type { HTMLAttributes, MutableRefObject } from "react";
+
 import { pagePaddings } from "../../../styles";
-import { Sizes } from "../../../types";
+import { useThemeStateValue } from "../../../theme";
 import { useRefDimensions, useWindowSize } from "../../../utils/internal";
 
-interface PageContainerProps extends HTMLAttributes<HTMLDivElement> {
+type PageContainerProps = HTMLAttributes<HTMLDivElement> & {
   navbarRef?: MutableRefObject<any>;
   sidenavRef?: MutableRefObject<any>;
   footerRef?: MutableRefObject<any>;
-  pagePaddingSize?: keyof Sizes;
   enablePagePadding?: boolean;
   className?: string;
-}
+};
 
 export const PageContainer = ({
   navbarRef,
   sidenavRef,
   footerRef,
-  pagePaddingSize = "md",
   enablePagePadding = true,
   className,
   ...props
@@ -25,6 +24,8 @@ export const PageContainer = ({
   const navbarHeight = useRefDimensions(navbarRef).height;
   const footerHeight = useRefDimensions(footerRef).height;
   const sidenavWidth = useRefDimensions(sidenavRef).width;
+
+  const pagePadding = useThemeStateValue((state) => state.pagePadding);
 
   const windowWidth = useWindowSize().width;
 
@@ -46,7 +47,7 @@ export const PageContainer = ({
     <main
       className={cn(
         "overflow-x-hidden flex flex-col",
-        enablePagePadding && pagePaddings[pagePaddingSize],
+        enablePagePadding && pagePaddings[pagePadding],
         className
       )}
       style={{

@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { InputVariants, Sizes } from "../../types";
+import type { InputVariant, Size } from "../../types";
 import {
   bgColors,
   bordersInteractive,
@@ -21,15 +21,15 @@ import {
 } from "..";
 
 type InputStyleProps = {
-  size: keyof Sizes;
-  variant: keyof InputVariants;
+  size: Size;
+  variant: InputVariant;
   leftAddon?: any;
   rightAddon?: any;
   disabled: boolean;
   error: boolean;
 };
 
-export const inputSizes: Required<Sizes> = {
+export const inputSizes: Record<Size, string> = {
   xs: `${paddings.xs} ${minHeights.xs} ${textSizes.xs}`,
   sm: `${paddings.sm} ${minHeights.sm} ${textSizes.sm}`,
   md: `${paddings.md} ${minHeights.md} ${textSizes.md}`,
@@ -44,7 +44,7 @@ type VariantProps = {
   disabled: string;
 };
 
-export const inputVariants: Record<keyof InputVariants, VariantProps> = {
+export const inputVariants: Record<InputVariant, VariantProps> = {
   outline: {
     base: `${bgColors.white} border ${placeholder.outline}`,
     default: `${bordersInteractive.accent} ${textColors.accent}`,

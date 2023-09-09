@@ -4,15 +4,9 @@ import { Editor } from "@tiptap/react";
 import { ChevronUpDownIcon } from "../../../../theme/icons";
 import { Menu } from "../../Menu";
 
-export enum TextTypeTags {
-  P = "p",
-  H1 = "h1",
-  H2 = "h2",
-  H3 = "h3",
-  H4 = "h4",
-  H5 = "h5",
-  H6 = "h6",
-}
+export const textTypeTags = ["p", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
+
+export type TextTypeTags = (typeof textTypeTags)[number];
 
 const tags: Record<TextTypeTags, string> = {
   p: "Paragraph - p",
@@ -37,24 +31,24 @@ type returnTextSelectionProps = {
 
 export const returnTextSelection = ({ editor }: returnTextSelectionProps) => {
   if (editor.isActive("heading", { level: 1 })) {
-    return TextTypeTags.H1;
+    return "h1";
   }
   if (editor.isActive("heading", { level: 2 })) {
-    return TextTypeTags.H2;
+    return "h2";
   }
   if (editor.isActive("heading", { level: 3 })) {
-    return TextTypeTags.H3;
+    return "h3";
   }
   if (editor.isActive("heading", { level: 4 })) {
-    return TextTypeTags.H4;
+    return "h4";
   }
   if (editor.isActive("heading", { level: 5 })) {
-    return TextTypeTags.H5;
+    return "h5";
   }
   if (editor.isActive("heading", { level: 6 })) {
-    return TextTypeTags.H6;
+    return "h6";
   }
-  return TextTypeTags.P;
+  return "p";
 };
 
 export const SelectText = ({
@@ -70,7 +64,7 @@ export const SelectText = ({
     buttonProps={{
       id,
       tabIndex: -1,
-      children: tags[selectedTag || TextTypeTags.P],
+      children: tags[selectedTag || "p"],
       className: "truncate w-36",
       variant: "ghost",
       size: "sm",
@@ -84,7 +78,7 @@ export const SelectText = ({
             children: tags.p,
             onClick: () => {
               editor?.chain().focus().setParagraph().run();
-              setSelectedTag(TextTypeTags.P);
+              setSelectedTag("p");
             },
           },
         ],
@@ -96,42 +90,42 @@ export const SelectText = ({
             children: tags.h1,
             onClick: () => {
               editor?.chain().focus().toggleHeading({ level: 1 }).run();
-              setSelectedTag(TextTypeTags.H1);
+              setSelectedTag("h1");
             },
           },
           {
             children: tags.h2,
             onClick: () => {
               editor?.chain().focus().toggleHeading({ level: 2 }).run();
-              setSelectedTag(TextTypeTags.H2);
+              setSelectedTag("h2");
             },
           },
           {
             children: tags.h3,
             onClick: () => {
               editor?.chain().focus().toggleHeading({ level: 3 }).run();
-              setSelectedTag(TextTypeTags.H3);
+              setSelectedTag("h3");
             },
           },
           {
             children: tags.h4,
             onClick: () => {
               editor?.chain().focus().toggleHeading({ level: 4 }).run();
-              setSelectedTag(TextTypeTags.H4);
+              setSelectedTag("h4");
             },
           },
           {
             children: tags.h5,
             onClick: () => {
               editor?.chain().focus().toggleHeading({ level: 5 }).run();
-              setSelectedTag(TextTypeTags.H5);
+              setSelectedTag("h5");
             },
           },
           {
             children: tags.h6,
             onClick: () => {
               editor?.chain().focus().toggleHeading({ level: 6 }).run();
-              setSelectedTag(TextTypeTags.H6);
+              setSelectedTag("h6");
             },
           },
         ],

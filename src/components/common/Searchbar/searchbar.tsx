@@ -3,25 +3,25 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { SearchIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { updateQuery } from "../../../utils/internal";
 import { Icon, Input } from "../../ui";
 
 type SearchbarProps = {
-  size?: keyof Sizes;
+  size?: Size;
   setSearch?: (search: string | undefined) => void;
 };
 
-interface ISearchProps {
+type SearchProps = {
   search?: string;
-}
+};
 
 export const Searchbar = ({ size = "md", setSearch }: SearchbarProps) => {
   const router = useRouter();
 
   const [initialValue, setInitialValue] = useState(true);
 
-  const { control, watch } = useForm<ISearchProps>({
+  const { control, watch } = useForm<SearchProps>({
     defaultValues: { search: undefined },
   });
   const search = watch("search");

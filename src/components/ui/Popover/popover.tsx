@@ -23,7 +23,7 @@ import {
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
 import { CrossIcon } from "../../../theme/icons";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps, IconButtonProps } from "../Button";
@@ -32,9 +32,9 @@ import { Button, IconButton } from "../Button";
 export type PopoverProps = {
   content: ReactNode;
   buttonProps?: ButtonProps | IconButtonProps;
-  buttonAs?: ElementType<any>;
+  buttonAs?: ElementType;
   buttonComponent?: ReactNode;
-  size?: keyof Sizes;
+  size?: Size;
   trigger?: "click" | "hover";
   placement?: Placement;
   disabled?: boolean;
@@ -44,11 +44,6 @@ export type PopoverProps = {
   referenceElement?: MutableRefObject<HTMLElement | null>;
   disabledOffset?: boolean;
 };
-
-interface ExtendedButton extends HTMLButtonElement {
-  click(): any;
-  dispatchEvent: any;
-}
 
 export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
   (
@@ -69,12 +64,15 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
     },
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
-    const buttonRef = useRef<ExtendedButton>(null);
+    const buttonRef = useRef<HTMLButtonElement>();
     const [referenceElement, setReferenceElement] =
       useState<HTMLElement | null>(null);
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
+
+    const offset = popperOffset({ size });
+
     const { styles, attributes } = usePopper(
       _referenceElement?.current || referenceElement,
       popperElement,
@@ -84,7 +82,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
           {
             name: "offset",
             options: {
-              offset: disabledOffset ? [0, 0] : popperOffset,
+              offset: disabledOffset ? [0, 0] : offset,
             },
           },
         ],

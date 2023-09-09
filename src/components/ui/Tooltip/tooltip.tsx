@@ -19,14 +19,14 @@ import {
   zIndexes,
 } from "../../../styles";
 import { popperOffset } from "../../../styles/popper/offset";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type TooltipProps = {
   children: ReactElement;
   label?: ReactNode;
-  size?: keyof Sizes;
+  size?: Size;
   placement?: Placement;
   delay?: number;
 };
@@ -43,13 +43,16 @@ export const Tooltip = ({
     null
   );
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
+
+  const offset = popperOffset({ size });
+
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement,
     modifiers: [
       {
         name: "offset",
         options: {
-          offset: popperOffset,
+          offset,
         },
       },
     ],
@@ -91,7 +94,7 @@ export default typedMemo(Tooltip);
 type TooltipInnerT = {
   styles?: object;
   attributes?: object;
-  size?: keyof Sizes;
+  size?: Size;
   label: ReactNode;
   className?: string;
 };
@@ -121,7 +124,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
           animate={{ opacity: 1, scale: 1, transition: { duration: 0.1 } }}
           exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.1 } }}
           className={cn(
-            "pointer-events-none bg-opacity-75 flex",
+            "pointer-events-none flex",
             paddingsSmall[size],
             roundings[size],
 

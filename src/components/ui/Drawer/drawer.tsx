@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import cn from "classnames";
-import { m, LazyMotion, domAnimation } from "framer-motion";
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import { MutableRefObject, ReactNode } from "react";
 
 import {
@@ -13,7 +13,7 @@ import {
   zIndexes,
 } from "../../../styles";
 import { CrossIcon } from "../../../theme/icons";
-import { ExtendedSizes, Sizes, SvgType } from "../../../types";
+import type { ExtendedSize, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
 import { IconButton } from "../Button";
@@ -24,18 +24,16 @@ export type DrawerProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   initialFocus?: MutableRefObject<HTMLElement>;
-  size?: keyof DrawerSizes;
+  size?: DrawerSize;
   icon?: SvgType;
   title?: string;
   content?: ReactNode;
-  placement?: keyof Placements;
+  placement?: DrawerPlacement;
 };
 
-export interface DrawerSizes extends Sizes, Pick<ExtendedSizes, "2xl" | "3xl"> {
-  full: any;
-}
+export type DrawerSize = Exclude<ExtendedSize, "4xl" | "5xl" | "6xl"> | "full";
 
-const widths: DrawerSizes = {
+const widths: Record<DrawerSize, string> = {
   xs: "max-w-md",
   sm: "max-w-lg",
   md: "max-w-xl",
@@ -46,17 +44,14 @@ const widths: DrawerSizes = {
   full: "max-w-none",
 };
 
-type Placements = {
-  top: any;
-  bottom: any;
-  left: any;
-  right: any;
-};
+const drawerPlacements = ["top", "bottom", "left", "right"] as const;
+
+type DrawerPlacement = (typeof drawerPlacements)[number];
 
 const placements = (
-  size: keyof DrawerSizes
+  size: DrawerSize
 ): Record<
-  keyof Placements,
+  DrawerPlacement,
   {
     className: string;
     animate: Record<string, any>;
@@ -87,8 +82,8 @@ const placements = (
 
 const animations = (
   open: boolean,
-  size: keyof DrawerSizes,
-  placement: keyof Placements
+  size: DrawerSize,
+  placement: DrawerPlacement
 ) => ({
   animate: open ? "animate" : "initial",
   initial: "initial",

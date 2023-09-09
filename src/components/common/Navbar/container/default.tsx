@@ -15,6 +15,7 @@ import { DesktopItems } from "../desktop/items";
 import { NavLogo } from "../logo";
 import { MobileNav } from "../mobile/nav";
 import type { NavbarProps } from "../navbar";
+import { useThemeStateValue } from "../../../../theme";
 
 export type NavbarContainerProps = {
   textColor?: string;
@@ -27,7 +28,6 @@ const NavbarContainer = forwardRef(
       color = "white",
       textColor = "text-black",
       size = "md",
-      pagePaddingSize = "md",
       gapSize = "md",
       logo,
       logoProps,
@@ -44,8 +44,11 @@ const NavbarContainer = forwardRef(
   ) => {
     const navBarInternalRef = useRef<HTMLElement>(null);
 
+    const pagePadding = useThemeStateValue((state) => state.pagePadding);
+
     return (
-      <div
+      <nav
+        aria-label="Main Navigation"
         ref={mergeRefs([ref, navBarInternalRef])}
         className={cn(
           "flex flex-row items-center justify-between fixed top-0 inset-x-0 w-full border-b",
@@ -54,7 +57,7 @@ const NavbarContainer = forwardRef(
           zIndexes.nav,
           navbarClassName,
           paddingsY[size],
-          pagePaddings[pagePaddingSize],
+          pagePaddings[pagePadding],
           gaps[gapSize]
         )}
       >
@@ -72,7 +75,6 @@ const NavbarContainer = forwardRef(
           navbarRef={navBarInternalRef}
           size={size}
           navItems={navItems}
-          pagePaddingSize={pagePaddingSize}
           justifyDesktopNav={justifyDesktopNav}
         />
         <div
@@ -101,7 +103,7 @@ const NavbarContainer = forwardRef(
             mobileNavClassName={mobileNavClassName}
           />
         </div>
-      </div>
+      </nav>
     );
   }
 );

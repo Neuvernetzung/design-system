@@ -4,14 +4,13 @@ import parse, { domToReact } from "html-react-parser";
 import { createElement, ReactNode } from "react";
 
 import { prose } from "../../../styles";
-import { ProseComponents, ProseComponentTags } from "../../../types";
+import type { ProseComponents, ProseComponentTag } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
-import { BlockQuote } from "../BlockQuote";
+import { BlockQuote } from "../Typography/BlockQuote";
 import { HorizontalRule } from "../HorizontalRule";
 import { Image } from "../Image";
-import { NativeLink } from "../Link";
 import { ListItem, OrderedList, UnorderedList } from "../List";
-import { Heading, Text } from "../Typography";
+import { Anchor, Heading, Text } from "../Typography";
 
 export type ProseProps = {
   content: string | undefined;
@@ -37,7 +36,7 @@ export const proseComponents: ProseComponents = {
     props: {},
   },
   a: {
-    component: NativeLink,
+    component: Anchor,
     props: {},
   },
   hr: { component: HorizontalRule, props: {} },
@@ -52,12 +51,12 @@ export const proseComponents: ProseComponents = {
   },
 };
 
-interface CreateProseComponent {
-  name: ProseComponentTags;
+type CreateProseComponent = {
+  name: ProseComponentTag;
   attributes?: any;
   className?: string;
   children?: ReactNode;
-}
+};
 
 export const createProseElement = ({
   name,
@@ -90,8 +89,7 @@ const options: HTMLReactParserOptions = {
   replace: (domNode) => {
     const typedDomNode = domNode as Element;
     if (typedDomNode.attribs) {
-      const name = (typedDomNode.name ||
-        ProseComponentTags.P) as ProseComponentTags;
+      const name = (typedDomNode.name || "p") as ProseComponentTag;
       const { class: className, ...attributes } = typedDomNode.attribs;
 
       return createProseElement({

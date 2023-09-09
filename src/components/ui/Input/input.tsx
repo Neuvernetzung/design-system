@@ -1,8 +1,10 @@
 import cn from "classnames";
+import { useRouter } from "next/router";
 import {
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
+  ReactNode,
   Ref,
   useEffect,
   useRef,
@@ -15,13 +17,19 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import {
-  getInputStyles,
-  inputSizes,
-  inputVariants,
-} from "../../../styles/groups";
-import type { InputVariants, Sizes } from "../../../types";
+import { type Locale } from "../../../locales/getText";
+import { getInputStyles } from "../../../styles/groups";
+import type { InputVariant, Size } from "../../../types";
 import { mergeRefs, typedMemo } from "../../../utils/internal";
+import {
+  maxInputRule,
+  maxLengthInputRule,
+  minInputRule,
+  minLengthInputRule,
+  patternInputRule,
+  requiredInputRule,
+  validationInputResult,
+} from "../../../utils/internal/inputRule";
 import {
   FormElement,
   MaxLengthRule,
@@ -35,24 +43,10 @@ import { InputAddon } from "./InputAddon";
 import type { InputAddonProps } from "./InputAddon/inputAddon";
 import { InputElement } from "./InputElement";
 import type { InputElementProps } from "./InputElement/inputElement";
-import {
-  maxInputRule,
-  maxLengthInputRule,
-  minInputRule,
-  minLengthInputRule,
-  patternInputRule,
-  requiredInputRule,
-  validationInputResult,
-} from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import { Locales } from "../../../locales/getText";
-
-export const sizes = inputSizes;
-export const variants = inputVariants;
 
 export type InputProps = RawInputProps & {
   label?: string;
-  helper?: any;
+  helper?: ReactNode;
   required?: RequiredRule;
   maxLength?: MaxLengthRule;
   minLength?: MinLengthRule;
@@ -97,7 +91,7 @@ export const InputInner = <
   }: InputProps & UseControllerProps<TFieldValues, TName>,
   ref: Ref<HTMLInputElement>
 ) => {
-  const locale = useRouter().locale as Locales;
+  const locale = useRouter().locale as Locale;
 
   return (
     <Controller
@@ -124,6 +118,7 @@ export const InputInner = <
         fieldState: { error },
       }) => (
         <FormElement
+          required={required}
           error={error}
           name={name}
           label={label}
@@ -171,15 +166,15 @@ export default typedMemo(Input);
 export type RawInputProps = HTMLAttributes<HTMLInputElement> & {
   containerClassName?: string;
   leftAddon?: Pick<InputAddonProps, "children" | "className">;
-  size?: keyof Sizes;
-  variant?: keyof InputVariants;
+  size?: Size;
+  variant?: InputVariant;
   leftElement?: Pick<
     InputElementProps,
     "children" | "className" | "pointerEvents"
   >;
   id?: string;
   value?: string;
-  onChange?: (...event: any[]) => void;
+  onChange?: (...event: unknown[]) => void;
   error?: boolean;
   disabled?: boolean;
   rightAddon?: Pick<InputAddonProps, "children" | "className">;

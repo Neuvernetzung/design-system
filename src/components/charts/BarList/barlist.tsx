@@ -17,7 +17,7 @@ import {
   transition,
 } from "../../../styles";
 import { useThemeState } from "../../../theme";
-import { Colors, Sizes } from "../../../types";
+import { Color, Size } from "../../../types";
 import { Text } from "../../ui/Typography/Text";
 
 export type BarListItemProps = {
@@ -34,8 +34,8 @@ export type BarListVariant = (typeof barListVariants)[number];
 export type BarListProps = {
   data: BarListItemProps[];
   sort?: false | "ASC" | "DESC";
-  size?: keyof Sizes;
-  color?: keyof Colors;
+  size?: Size;
+  color?: Color;
   showValue?: boolean;
   justifyValue?: "justify-between" | "justify-start";
   formatValue?: (value: number) => string | number;

@@ -4,7 +4,7 @@ import { ForwardedRef, forwardRef, LiHTMLAttributes } from "react";
 import { textColors } from "../../../styles";
 import { typedMemo } from "../../../utils/internal";
 
-export interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {}
+export type ListItemProps = LiHTMLAttributes<HTMLLIElement> & {};
 
 export const ListItem = forwardRef(
   (

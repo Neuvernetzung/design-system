@@ -8,7 +8,7 @@ export const CustomLink = LinkExtension.extend({
     return [
       "a",
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
-        class: linkStyle,
+        class: linkStyle({}),
       }),
       0,
     ];

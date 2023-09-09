@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { ReactElement, useState } from "react";
+import { ReactNode, useState } from "react";
 import {
   A11y,
   Autoplay,
@@ -8,9 +8,10 @@ import {
   Navigation,
   Pagination,
   Thumbs,
+  Controller,
 } from "swiper/modules";
 import { Swiper, type SwiperProps, SwiperSlide } from "swiper/react";
-import { AutoplayOptions } from "swiper/types";
+import { AutoplayOptions, Swiper as SwiperType } from "swiper/types";
 
 import { margins } from "../../../styles";
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
@@ -21,7 +22,12 @@ import useSwiperRef from "./utils/useSwiperRef";
 export type CarouselAutoPlayOptions = AutoplayOptions;
 
 export type SlideProps = {
-  children: ReactElement;
+  children: ReactNode;
+};
+
+export type CarouselController = {
+  swiper: SwiperType | undefined;
+  setSwiper: ((swiper: SwiperType) => void) | undefined;
 };
 
 export type CarouselProps = {
@@ -39,6 +45,7 @@ export type CarouselProps = {
   previousThumbButtonClassName?: string;
   nextThumbButtonClassName?: string;
   slideClassName?: string;
+  controller?: CarouselController;
 };
 
 export const Carousel = ({
@@ -56,8 +63,9 @@ export const Carousel = ({
   previousThumbButtonClassName,
   nextThumbButtonClassName,
   slideClassName,
+  controller,
 }: CarouselProps) => {
-  const [thumbsSwiper, setThumbsSwiper]: any = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [nextEl, nextElRef] = useSwiperRef<HTMLButtonElement>();
   const [prevEl, prevElRef] = useSwiperRef<HTMLButtonElement>();
   const [nextElThumb, nextElRefThumb] = useSwiperRef<HTMLButtonElement>();
@@ -67,11 +75,21 @@ export const Carousel = ({
     <>
       <Swiper
         className={cn("w-full rounded-lg", className)}
-        modules={[Navigation, Autoplay, A11y, Thumbs, Keyboard, Pagination]}
+        modules={[
+          Navigation,
+          Autoplay,
+          A11y,
+          Thumbs,
+          Keyboard,
+          Pagination,
+          ...(controller ? [Controller] : []),
+        ]}
         spaceBetween={0}
         slidesPerView={1}
         autoplay={autoplay}
         loop={loop}
+        onSwiper={controller ? controller.setSwiper : undefined}
+        controller={controller ? { control: controller?.swiper } : undefined}
         pagination={{
           enabled: withPagination,
           clickable: true,

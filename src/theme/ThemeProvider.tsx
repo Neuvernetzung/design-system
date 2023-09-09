@@ -1,32 +1,32 @@
 import keys from "lodash/keys";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 
 import { Loading } from "../components/ui/Loading";
 import { ConfirmationModal } from "../components/ui/Modal/confirmation";
 import { Notify } from "../components/ui/Notify";
-import { GeneralNotifyProps } from "../components/ui/Notify/notify";
-import { Sizes } from "../types";
+import type { GeneralNotifyProps } from "../components/ui/Notify/notify";
+import { adjustedTextColors } from "../styles";
+import type { RequiredInfoVariant, Size } from "../types";
 import { createCSSSelector } from "../utils/internal";
-import { parseLocalStorageJson } from "../utils/internal/localStorage/parseJSON";
 import {
   extendBorderRadius,
   getBorderRadiusVariables,
 } from "./extendBorderRadius";
 import {
-  ExtendColors,
+  type ExtendColors,
   extendColors,
   getColorVariables,
-  ReturnedColors,
+  type ReturnedColors,
 } from "./extendColors";
 import { Icons } from "./icons";
 import {
-  LOCAL_BORDER_RADIUS_KEY,
-  LOCAL_COLOR_KEY,
-  LOCAL_DARK_COLOR_KEY,
+  createThemeStore,
+  ThemeContext,
+  type ThemeStore,
   useThemeState,
+  useThemeStore,
 } from "./useThemeState";
-import { adjustedTextColors } from "../styles";
 
 type ThemeProviderProps = {
   config?: ConfigProps;
@@ -37,11 +37,12 @@ export type ConfigProps = {
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
   icons?: "outline" | "solid" | Icons;
-  borderRadius?: keyof Sizes;
+  borderRadius?: Size;
+  requiredInfoVariant?: RequiredInfoVariant;
+  pagePadding?: Size;
   defaultTheme?: "system" | "light" | "dark";
   allowConfirmation?: boolean;
   allowGlobalLoading?: boolean;
-  preferSetValuesBeforeConfig?: boolean;
   forcedTheme?: "system" | "light" | "dark";
   disableSetTheme?: boolean;
 } & NotificationConfigProps;
@@ -63,47 +64,30 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     notifyProps,
     allowConfirmation,
     allowGlobalLoading,
-    preferSetValuesBeforeConfig,
     forcedTheme,
-    disableSetTheme,
+    requiredInfoVariant,
+    pagePadding,
   } = config || {};
+
+  const store = useRef(
+    createThemeStore({
+      colors,
+      darkColors,
+      borderRadius,
+      requiredInfoVariant,
+      pagePadding,
+    })
+  ).current;
 
   useTheme(":root", {
     colors,
     darkColors,
     borderRadius,
-    preferSetValuesBeforeConfig,
-    disableSetTheme,
   });
 
-  const { colorState, darkColorState, borderRadiusState } = useThemeState();
-
-  useEffect(() => {
-    useThemeState.setState({
-      adjustedTextColorState: adjustedTextColors(colorState, darkColorState),
-    });
-  }, [colorState, darkColorState]);
-
-  const cssColorVariables = colorState && getColorVariables(colorState);
-  const cssDarkColorVariables =
-    darkColorState && getColorVariables(darkColorState);
-  const cssRadiiVariables =
-    borderRadiusState && getBorderRadiusVariables(borderRadiusState);
-
   return (
-    <>
-      <style>
-        {`
-        :root {
-          ${cssColorVariables}
-          ${cssRadiiVariables}
-        }
-        
-        html.dark {
-          ${cssDarkColorVariables}
-        }
-        `}
-      </style>
+    <ThemeContext.Provider value={store}>
+      <ThemeStyles />
       <NextThemeProvider
         attribute="class"
         forcedTheme={forcedTheme}
@@ -114,109 +98,85 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
         {allowGlobalLoading && <Loading />}
         {children}
       </NextThemeProvider>
-    </>
+    </ThemeContext.Provider>
+  );
+};
+
+export const ThemeStyles = () => {
+  const { colorState, darkColorState, borderRadiusState } = useThemeState();
+
+  const themeStore = useThemeStore();
+
+  useEffect(() => {
+    if (colorState)
+      themeStore?.setState({
+        adjustedTextColorState: adjustedTextColors(
+          colorState,
+          darkColorState || colorState
+        ),
+      });
+  }, [colorState, darkColorState]);
+
+  const cssColorVariables = colorState && getColorVariables(colorState);
+  const cssDarkColorVariables =
+    darkColorState && getColorVariables(darkColorState);
+  const cssRadiiVariables =
+    borderRadiusState && getBorderRadiusVariables(borderRadiusState);
+
+  return (
+    <style>
+      {`
+  :root {
+    ${cssColorVariables}
+    ${cssRadiiVariables}
+  }
+  
+  html.dark {
+    ${cssDarkColorVariables}
+  }
+  `}
+    </style>
   );
 };
 
 type UseThemeProps = {
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
-  borderRadius?: keyof Sizes;
-  preferSetValuesBeforeConfig?: boolean;
-  disableSetTheme?: boolean;
+  borderRadius?: Size;
 };
 
 export const useTheme = (
   selector: ":root" | string,
-  {
-    colors,
-    darkColors,
-    borderRadius,
-    preferSetValuesBeforeConfig,
-    disableSetTheme,
-  }: UseThemeProps
+  { colors, darkColors, borderRadius }: UseThemeProps
 ) => {
-  useEffect(() => {
-    const localStorageColors = localStorage.getItem(LOCAL_COLOR_KEY);
-
-    const parsedLocalStorageColors =
-      parseLocalStorageJson(localStorageColors) || {};
-
-    const newColors = getPreferredValue({
-      disableSetTheme,
-      value: colors,
-      localStorageValue: parsedLocalStorageColors,
-      preferSetValuesBeforeConfig,
-    });
-
-    if (keys(newColors).length > 0) setColors(selector, newColors);
-  }, [colors]);
+  const themeStore = useThemeStore();
 
   useEffect(() => {
-    const localStorageDarkColors = localStorage.getItem(LOCAL_DARK_COLOR_KEY);
-
-    const parsedLocalStorageDarkColors =
-      parseLocalStorageJson(localStorageDarkColors) || {};
-
-    const newColors = getPreferredValue({
-      disableSetTheme,
-      value: darkColors,
-      localStorageValue: parsedLocalStorageDarkColors,
-      preferSetValuesBeforeConfig,
-    });
-
-    if (keys(newColors).length > 0) setDarkColors(selector, newColors);
-  }, [darkColors]);
+    if (!themeStore) return;
+    if (keys(colors).length > 0) setColors(themeStore, selector, colors);
+  }, [colors, themeStore]);
 
   useEffect(() => {
-    const localStorageBorderRadius = localStorage.getItem(
-      LOCAL_BORDER_RADIUS_KEY
-    );
-    const parsedLocalStorageBorderRadius = parseLocalStorageJson(
-      localStorageBorderRadius
-    );
+    if (!themeStore) return;
+    if (keys(darkColors).length > 0)
+      setDarkColors(themeStore, selector, darkColors);
+  }, [darkColors, themeStore]);
 
-    const newBorderRadius = getPreferredValue({
-      disableSetTheme,
-      value: borderRadius,
-      localStorageValue: parsedLocalStorageBorderRadius,
-      preferSetValuesBeforeConfig,
-    });
-
-    if (keys(newBorderRadius).length > 0)
-      setBorderRadius(selector, newBorderRadius);
-  }, [borderRadius]);
+  useEffect(() => {
+    if (!themeStore) return;
+    if (borderRadius) setBorderRadius(themeStore, selector, borderRadius);
+  }, [borderRadius, themeStore]);
 };
-
-type GetPreferredValueProps = {
-  value: any;
-  localStorageValue: any;
-  disableSetTheme: ConfigProps["disableSetTheme"];
-  preferSetValuesBeforeConfig: ConfigProps["preferSetValuesBeforeConfig"];
-};
-
-const getPreferredValue = ({
-  disableSetTheme,
-  value,
-  localStorageValue,
-  preferSetValuesBeforeConfig,
-}: GetPreferredValueProps) =>
-  disableSetTheme
-    ? value
-    : preferSetValuesBeforeConfig
-    ? localStorageValue || value
-    : value || localStorageValue;
 
 export const setColors = (
+  themeStore: ThemeStore,
   selector: ":root" | string,
   colors?: Partial<ExtendColors>
 ) => {
   const extendedColors: ReturnedColors = extendColors(colors);
 
   if (selector === ":root") {
-    useThemeState.setState({ colorState: extendedColors });
-
-    localStorage.setItem(LOCAL_COLOR_KEY, JSON.stringify(colors));
+    themeStore.setState({ colorState: extendedColors });
   } else {
     const cssColorVariables = getColorVariables(extendedColors);
 
@@ -225,15 +185,14 @@ export const setColors = (
 };
 
 export const setDarkColors = (
+  themeStore: ThemeStore,
   selector: ":root" | string,
   colors?: Partial<ExtendColors>
 ) => {
   const extendedColors: ReturnedColors = extendColors(colors);
 
   if (selector === ":root") {
-    useThemeState.setState({ darkColorState: extendedColors });
-
-    localStorage.setItem(LOCAL_DARK_COLOR_KEY, JSON.stringify(colors));
+    themeStore.setState({ darkColorState: extendedColors });
   } else {
     const cssColorVariables = getColorVariables(extendedColors);
 
@@ -242,15 +201,14 @@ export const setDarkColors = (
 };
 
 export const setBorderRadius = (
+  themeStore: ThemeStore,
   selector: ":root" | string,
-  borderRadius?: keyof Sizes
+  borderRadius?: Size
 ) => {
   const extendedBorderRadius = extendBorderRadius(borderRadius);
 
   if (selector === ":root") {
-    useThemeState.setState({ borderRadiusState: extendedBorderRadius });
-
-    localStorage.setItem(LOCAL_BORDER_RADIUS_KEY, JSON.stringify(borderRadius));
+    themeStore.setState({ borderRadiusState: extendedBorderRadius });
   } else {
     const cssBorderRadiusVariables =
       getBorderRadiusVariables(extendedBorderRadius);

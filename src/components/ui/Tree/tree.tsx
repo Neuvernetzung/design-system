@@ -11,7 +11,7 @@ import {
   paddingsXSmall,
   roundingsBottom,
 } from "../../../styles";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import {
   Disclosure,
@@ -34,7 +34,7 @@ export type TreeProps<TItem extends {} = {}> = Omit<
   borderVariant?: BorderVariant;
   disabledBorder?: boolean;
   Item?: FC<{
-    size?: keyof Sizes;
+    size?: Size;
     children: string | ReactNode;
     item: Omit<TreeItemProps<TItem>, "items">;
   }>;

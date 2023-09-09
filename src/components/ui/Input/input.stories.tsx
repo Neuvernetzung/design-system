@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { Button, Form, Icon, Text } from "..";
 import { Input } from ".";
-import { sizes, variants } from "./input";
+import { inputVariants, sizes } from "../../../types";
 
 export default {
   title: "UI/Form/Input",
@@ -28,7 +28,6 @@ export default {
 const formClassName = "flex flex-col gap-5";
 
 export const Variants = ({ ...args }) => {
-  const _variants = Object.keys(variants);
   const formMethods = useForm();
 
   return (
@@ -37,7 +36,7 @@ export const Variants = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_variants.map((variant: any, i) => (
+      {inputVariants.map((variant, i) => (
         <Input
           control={formMethods.control}
           name={`${variant}_input_${i}`}
@@ -56,7 +55,6 @@ Variants.parameters = {
 };
 
 export const Sizes = ({ ...args }) => {
-  const _sizes = Object.keys(sizes);
   const formMethods = useForm();
 
   return (
@@ -65,7 +63,7 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_sizes.map((size: any, i) => (
+      {sizes.map((size, i) => (
         <Input
           control={formMethods.control}
           name={`${size}_input_${i}`}
@@ -84,7 +82,6 @@ Sizes.parameters = {
 };
 
 export const Error = ({ ...args }) => {
-  const _variants = Object.keys(variants);
   const formMethods = useForm();
 
   return (
@@ -93,7 +90,7 @@ export const Error = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {_variants.map((variant: any, i) => (
+      {inputVariants.map((variant, i) => (
         <Input
           control={formMethods.control}
           name={`${variant}_input_${i}`}
@@ -230,7 +227,7 @@ export const DefaultValue = ({ ...args }) => {
 export const Types = ({ ...args }) => {
   const formMethods = useForm();
 
-  const types: any = ["text", "number", "password", "url"];
+  const types = ["text", "number", "password", "url"] as const;
 
   return (
     <Form
@@ -288,16 +285,16 @@ export const NumberType = ({ ...args }) => {
   );
 };
 
-interface ITestForm {
+type TestFormProps = {
   email: string;
   name: string;
   nachname: string;
   straße: string;
   hausnummer: number;
-}
+};
 
 export const TestForm = ({ ...args }) => {
-  const { control, handleSubmit } = useForm<ITestForm>();
+  const { control, handleSubmit } = useForm<TestFormProps>();
 
   return (
     <Form

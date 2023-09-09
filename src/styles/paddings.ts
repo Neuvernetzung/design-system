@@ -1,6 +1,6 @@
-import type { Sizes } from "../types";
+import type { Size } from "../types";
 
-export const paddingsX: Sizes = {
+export const paddingsX: Record<Size, string> = {
   xs: "px-2",
   sm: "px-2",
   md: "px-3",
@@ -8,7 +8,7 @@ export const paddingsX: Sizes = {
   xl: "px-8",
 };
 
-export const paddingsY: Sizes = {
+export const paddingsY: Record<Size, string> = {
   xs: "py-0.5",
   sm: "py-1",
   md: "py-2",
@@ -16,7 +16,7 @@ export const paddingsY: Sizes = {
   xl: "py-4",
 };
 
-export const paddings: Sizes = {
+export const paddings: Record<Size, string> = {
   xs: `${paddingsX.xs} ${paddingsY.xs}`,
   sm: `${paddingsX.sm} ${paddingsY.sm}`,
   md: `${paddingsX.md} ${paddingsY.md}`,
@@ -24,7 +24,7 @@ export const paddings: Sizes = {
   xl: `${paddingsX.xl} ${paddingsY.xl}`,
 };
 
-export const paddingsXSmall: Sizes = {
+export const paddingsXSmall: Record<Size, string> = {
   xs: "px-1",
   sm: "px-1",
   md: "px-1.5",
@@ -32,7 +32,7 @@ export const paddingsXSmall: Sizes = {
   xl: "px-4",
 };
 
-export const paddingsYSmall: Sizes = {
+export const paddingsYSmall: Record<Size, string> = {
   xs: "py-px",
   sm: "py-0.5",
   md: "py-1",
@@ -40,7 +40,7 @@ export const paddingsYSmall: Sizes = {
   xl: "py-2",
 };
 
-export const paddingsSmall: Sizes = {
+export const paddingsSmall: Record<Size, string> = {
   xs: `${paddingsXSmall.xs} ${paddingsYSmall.xs}`,
   sm: `${paddingsXSmall.sm} ${paddingsYSmall.sm}`,
   md: `${paddingsXSmall.md} ${paddingsYSmall.md}`,
@@ -48,7 +48,7 @@ export const paddingsSmall: Sizes = {
   xl: `${paddingsXSmall.xl} ${paddingsYSmall.xl}`,
 };
 
-export const paddingsXLarge: Sizes = {
+export const paddingsXLarge: Record<Size, string> = {
   xs: "px-1",
   sm: "px-2",
   md: "px-4",
@@ -56,7 +56,7 @@ export const paddingsXLarge: Sizes = {
   xl: "px-8",
 };
 
-export const paddingsYLarge: Sizes = {
+export const paddingsYLarge: Record<Size, string> = {
   xs: "py-0.5",
   sm: "py-1",
   md: "py-2",
@@ -64,7 +64,7 @@ export const paddingsYLarge: Sizes = {
   xl: "py-4",
 };
 
-export const paddingsLarge: Sizes = {
+export const paddingsLarge: Record<Size, string> = {
   xs: `${paddingsXLarge.xs} ${paddingsYLarge.xs}`,
   sm: `${paddingsXLarge.sm} ${paddingsYLarge.sm}`,
   md: `${paddingsXLarge.md} ${paddingsYLarge.md}`,
@@ -72,7 +72,7 @@ export const paddingsLarge: Sizes = {
   xl: `${paddingsXLarge.xl} ${paddingsYLarge.xl}`,
 };
 
-export const paddingsSmallEvenly: Sizes = {
+export const paddingsSmallEvenly: Record<Size, string> = {
   xs: "p-px",
   sm: "p-0.5",
   md: "p-1",
@@ -80,7 +80,7 @@ export const paddingsSmallEvenly: Sizes = {
   xl: "p-2",
 };
 
-export const paddingsEvenly: Sizes = {
+export const paddingsEvenly: Record<Size, string> = {
   xs: "p-0.5",
   sm: "p-1",
   md: "p-2",
@@ -88,7 +88,7 @@ export const paddingsEvenly: Sizes = {
   xl: "p-4",
 };
 
-export const paddingsLargeEvenly: Sizes = {
+export const paddingsLargeEvenly: Record<Size, string> = {
   xs: "p-1",
   sm: "p-2",
   md: "p-4",
@@ -96,7 +96,7 @@ export const paddingsLargeEvenly: Sizes = {
   xl: "p-8",
 };
 
-export const pagePaddings: Sizes = {
+export const pagePaddings: Record<Size, string> = {
   xs: "px-2 lg:px-4",
   sm: "px-4 lg:px-8",
   md: "px-4 sm:px-6 lg:px-12",
@@ -104,7 +104,7 @@ export const pagePaddings: Sizes = {
   xl: "px-4 sm:px-6 md:px-12 lg:px-24",
 };
 
-export const negatePagePaddings: Sizes = {
+export const negatePagePaddings: Record<Size, string> = {
   xs: "-mx-2 lg:-mx-4",
   sm: "-mx-4 lg:-mx-8",
   md: "-mx-4 sm:-mx-6 lg:-mx-12",

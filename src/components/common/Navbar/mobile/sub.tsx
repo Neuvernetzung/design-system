@@ -1,7 +1,9 @@
 import cn from "classnames";
 import { gaps } from "../../../../styles";
 import { NavbarSubItemProps, NavLinkWrap } from "../desktop/sub";
-import { Text, Tag, Button } from "../../../ui";
+import { Text } from "../../../ui/Typography/Text";
+import { Tag } from "../../../ui/Tag";
+import { Button } from "../../../ui/Button";
 import isString from "lodash/isString";
 
 export const NavbarMobileSubItem = ({

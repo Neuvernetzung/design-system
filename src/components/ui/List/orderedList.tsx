@@ -4,7 +4,7 @@ import { ForwardedRef, forwardRef, OlHTMLAttributes } from "react";
 import { listStyle } from "../../../styles";
 import { typedMemo } from "../../../utils/internal";
 
-export interface OrderedListProps extends OlHTMLAttributes<HTMLOListElement> {}
+export type OrderedListProps = OlHTMLAttributes<HTMLOListElement> & {};
 
 export const OrderedList = forwardRef(
   (

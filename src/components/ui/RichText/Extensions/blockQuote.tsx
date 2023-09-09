@@ -5,13 +5,12 @@ import {
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 
-import { ProseComponentTags } from "../../../../types";
 import { createProseElement } from "../../Prose/prose";
 
 const BlockQuoteComponent = () => (
   <NodeViewWrapper>
     {createProseElement({
-      name: ProseComponentTags.BLOCKQUOTE,
+      name: "blockquote",
       children: <NodeViewContent />,
     })}
   </NodeViewWrapper>

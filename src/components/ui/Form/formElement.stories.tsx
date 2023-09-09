@@ -26,14 +26,14 @@ export default {
 
 const formClassName = "flex flex-col gap-5";
 
-interface ILabel {
+type LabelProps = {
   input_1: any;
-}
+};
 
 export const Label = ({ ...args }) => {
-  const formMethods = useForm<ILabel>();
+  const formMethods = useForm<LabelProps>();
 
-  const onSubmit = (data: ILabel) => data;
+  const onSubmit = (data: LabelProps) => data;
 
   return (
     <Form

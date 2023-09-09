@@ -5,8 +5,12 @@ import Link from "next/link";
 import { ReactElement } from "react";
 
 import { gaps, transitionFast } from "../../../../styles";
-import { ExtendedColors, SvgType } from "../../../../types";
-import { Button, Heading, Icon, Tag, TagProps, Text } from "../../../ui";
+import type { ExtendedColor, SvgType } from "../../../../types";
+import { Text } from "../../../ui/Typography/Text";
+import { Button } from "../../../ui/Button";
+import { Heading } from "../../../ui/Typography/Heading";
+import { Icon } from "../../../ui/Icon";
+import { Tag, type TagProps } from "../../../ui/Tag";
 import type { NavSubLabelProps } from "../navbar";
 
 export type NavbarSubItemProps = {
@@ -16,7 +20,7 @@ export type NavbarSubItemProps = {
   label: string;
   tag?: TagProps;
   subLabel?: NavSubLabelProps;
-  color?: keyof ExtendedColors;
+  color?: ExtendedColor;
   textColor?: string;
   external?: boolean;
 };
@@ -88,10 +92,12 @@ export const NavLinkWrap = ({
 }: LinkKWrapProps) => {
   if (!disabled)
     return (
-      <Link href={href || "#"} {...(external ? { target: "_blank" } : {})}>
-        {children}
-      </Link>
+      <li>
+        <Link href={href || "#"} {...(external ? { target: "_blank" } : {})}>
+          {children}
+        </Link>
+      </li>
     );
 
-  return children;
+  return <li>{children}</li>;
 };

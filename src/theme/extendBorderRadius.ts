@@ -1,37 +1,40 @@
 import get from "lodash/get";
 
-import type { Sizes } from "../types";
+import type { Size } from "../types";
 import { getBorderRadiusVariable } from "../utils";
 
-export type BorderRadiusSizes = {
-  none: any;
-  sm: any;
-  DEFAULT: any;
-  md: any;
-  lg: any;
-  xl: any;
-  "2xl": any;
-  "3xl": any;
-  full: any;
-};
+export const borderRadiusSizes = [
+  "none",
+  "sm",
+  "DEFAULT",
+  "md",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+  "full",
+] as const;
+
+export type BorderRadiusSizes = typeof borderRadiusSizes;
+
+export type BorderRadiusSize = BorderRadiusSizes[number];
 
 export const getBorderRadiusVariables = (
   extendedBorderRadius: ReturnedBorderRadius
 ) =>
-  (Object.keys(extendedBorderRadius) as Array<keyof BorderRadiusSizes>)
+  borderRadiusSizes
     ?.map((radius) =>
       getBorderRadiusVariable(get(extendedBorderRadius, radius), radius)
     )
     .flat()
     .join(";");
 
-export type ReturnedBorderRadius = Record<keyof BorderRadiusSizes, string>;
+export type ReturnedBorderRadius = Record<BorderRadiusSize, string>;
 
-export const extendBorderRadius = (
-  customRadius?: keyof Sizes
-): ReturnedBorderRadius => defaultRadii[customRadius || "md"];
+export const extendBorderRadius = (customRadius?: Size): ReturnedBorderRadius =>
+  defaultRadii[customRadius || "md"];
 
-const defaultRadii: Record<keyof Sizes, BorderRadiusSizes> = {
+const defaultRadii: Record<Size, Record<BorderRadiusSize, string>> = {
   xs: {
     none: "0px",
     sm: "0px",

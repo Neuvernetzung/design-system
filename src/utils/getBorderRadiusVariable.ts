@@ -1,8 +1,8 @@
-import type { BorderRadiusSizes } from "../theme";
+import type { BorderRadiusSize } from "../theme";
 
 export const getBorderRadiusVariable = (
   size: string,
-  radius: keyof BorderRadiusSizes
+  radius: BorderRadiusSize
 ) => {
   if (!radius) return null;
 

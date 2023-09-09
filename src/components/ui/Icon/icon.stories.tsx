@@ -2,7 +2,8 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { colors, Icon, sizes } from "./icon";
+import { Icon } from "./icon";
+import { colors, sizes } from "../../../types";
 
 export default {
   title: "UI/Media/Icon",
@@ -18,33 +19,25 @@ const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
 );
 
-export const Sizes = ({ ...args }) => {
-  const _sizes = Object.keys(sizes).reverse();
-
-  return (
-    <Container>
-      {_sizes.map((size: any) => (
-        <Icon size={size} key={size} icon={HomeIcon} {...args} />
-      ))}
-    </Container>
-  );
-};
+export const Sizes = ({ ...args }) => (
+  <Container>
+    {sizes.map((size) => (
+      <Icon size={size} key={size} icon={HomeIcon} {...args} />
+    ))}
+  </Container>
+);
 
 Sizes.parameters = {
   controls: { exclude: "size" },
 };
 
-export const Colors = ({ ...args }) => {
-  const _colors = Object.keys(colors);
-
-  return (
-    <Container>
-      {_colors.map((color: any) => (
-        <Icon color={color} key={color} icon={HomeIcon} {...args} />
-      ))}
-    </Container>
-  );
-};
+export const Colors = ({ ...args }) => (
+  <Container>
+    {colors.map((color) => (
+      <Icon color={color} key={color} icon={HomeIcon} {...args} />
+    ))}
+  </Container>
+);
 
 Colors.parameters = {
   controls: { exclude: "color" },

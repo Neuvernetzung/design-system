@@ -2,11 +2,11 @@ import { useTheme } from "next-themes";
 
 import { ComputerDesktopIcon, MoonIcon, SunIcon } from "../../../theme/icons";
 import { IconButton, Menu } from "../../ui";
-import { Sizes } from "../../../types";
+import type { Size } from "../../../types";
 
 type ThemeSwitchProps = {
   textColor?: string;
-  size?: keyof Sizes;
+  size?: Size;
 };
 
 export const ThemeSwitch = ({ textColor, size = "md" }: ThemeSwitchProps) => {
