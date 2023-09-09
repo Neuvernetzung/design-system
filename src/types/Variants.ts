@@ -50,3 +50,9 @@ export const requiredInfoVariants = ["star", "text", "optional"] as const;
 export type RequiredInfoVariants = typeof requiredInfoVariants;
 
 export type RequiredInfoVariant = RequiredInfoVariants[number];
+
+export const tabListVariants = ["default", "buttonList"] as const;
+
+export type TabListVariants = typeof tabListVariants;
+
+export type TabListVariant = TabListVariants[number];

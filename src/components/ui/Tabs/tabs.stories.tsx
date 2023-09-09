@@ -1,19 +1,11 @@
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 
-import { sizes, colors } from "../../../types";
-import { Button } from "../Button";
-import { Text } from "../Typography/Text";
-import {
-  StandaloneTabList,
-  StandaloneTabPanels,
-  TabButton,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from ".";
+import { CrossIcon } from "../../../theme/icons";
+import { colors, sizes, tabListVariants } from "../../../types";
+import { Button, IconButton } from "../Button";
+import { Tag } from "../Tag";
+import { TabGroup, TabItemProps, TabList, TabPanels, Tabs } from ".";
 
 export default {
   title: "UI/Disclosures/Tabs",
@@ -21,7 +13,7 @@ export default {
 } as Meta;
 
 const Container = ({ ...props }) => (
-  <div className="flex flex-row gap-5" {...props} />
+  <div className="flex flex-col gap-5" {...props} />
 );
 
 export const Default = ({ ...args }) => (
@@ -75,6 +67,52 @@ Colors.parameters = {
   controls: { exclude: "color" },
 };
 
+export const AdditionalHeadElements = ({ ...args }) => (
+  <Container>
+    <Tabs
+      headerEndElement={
+        <IconButton
+          variant="ghost"
+          ariaLabel="close"
+          icon={CrossIcon}
+          size="sm"
+        />
+      }
+      headerStartElement={
+        <Tag
+          label="nicht klickbar"
+          variant="subtile"
+          color="primary"
+          size="sm"
+        />
+      }
+      items={[
+        { title: "Tab 1", content: "Content 1" },
+        { title: "Tab 2", content: "Content 2" },
+        { title: "Tab 3", content: "Content 3" },
+      ]}
+      {...args}
+    />
+  </Container>
+);
+
+export const ListVariants = ({ ...args }) => (
+  <Container>
+    {tabListVariants.map((variant) => (
+      <Tabs
+        key={variant}
+        tabListVariant={variant}
+        items={[
+          { title: "Tab 1", content: "Content 1" },
+          { title: "Tab 2", content: "Content 2" },
+          { title: "Tab 3", content: "Content 3" },
+        ]}
+        {...args}
+      />
+    ))}
+  </Container>
+);
+
 export const Separate = ({ ...args }) => {
   const items = [
     { title: "Tab 1", content: "Content 1" },
@@ -92,56 +130,31 @@ export const Separate = ({ ...args }) => {
   );
 };
 
-export const SeparateButtons = ({ ...args }) => {
-  const items = [
+export const WithSpace = ({ ...args }) => {
+  const items: TabItemProps[] = [
     { title: "Tab 1", content: "Content 1" },
     { title: "Tab 2", content: "Content 2" },
+    { isSpace: true, title: undefined, content: undefined },
     { title: "Tab 3", content: "Content 3" },
+    { isSpace: true, title: undefined, content: undefined },
+    { title: "Tab 4", content: "Content 4" },
   ];
 
   return (
     <Container>
-      <TabGroup>
-        <StandaloneTabList>
-          <TabButton {...items[0]} {...args} />
-          <TabButton {...items[1]} {...args} />
-        </StandaloneTabList>
-        <TabPanels items={items} {...args} />
-        <StandaloneTabList>
-          <TabButton {...items[2]} {...args} />
-        </StandaloneTabList>
-      </TabGroup>
+      <Tabs
+        headerEndElement={
+          <IconButton
+            ariaLabel="close"
+            icon={CrossIcon}
+            size="sm"
+            variant="ghost"
+          />
+        }
+        items={items}
+        {...args}
+      />
     </Container>
-  );
-};
-
-export const SeparatePanels = ({ ...args }) => {
-  const items = [
-    { title: "Tab 1", content: "Content 1" },
-    { title: "Tab 2", content: "Content 2" },
-    { title: "Tab 3", content: "Content 3" },
-  ];
-
-  return (
-    <>
-      <Text size="xs">
-        Hinweis: Panels müssen trotzdem in der richtigen Reihenfolge sein!
-      </Text>
-      <Container>
-        <TabGroup>
-          <StandaloneTabPanels {...args}>
-            <TabPanel content={items[0].content} />
-          </StandaloneTabPanels>
-          <TabList items={items} />
-          <StandaloneTabPanels {...args}>
-            <TabPanel content={items[1].content} />
-          </StandaloneTabPanels>
-          <StandaloneTabPanels {...args}>
-            <TabPanel content={items[2].content} />
-          </StandaloneTabPanels>
-        </TabGroup>
-      </Container>
-    </>
   );
 };
 
@@ -162,9 +175,7 @@ export const Controlled = ({ ...args }) => {
         Nächster Tab
       </Button>
       <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-        <TabButton className="hidden" {...items[0]} {...args} />
-        <TabButton className="hidden" {...items[1]} {...args} />
-        <TabButton className="hidden" {...items[2]} {...args} />
+        <TabList items={items} listClassName="hidden" />
         <TabPanels items={items} {...args} />
       </TabGroup>
     </Container>
