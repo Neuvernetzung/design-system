@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { bgColors, gaps, paddingsEvenly, scrollbar } from "../../../../styles";
 import { CrossIcon, MenuIcon } from "../../../../theme/icons";
 import { useRefDimensions } from "../../../../utils/internal";
-import { IconButton } from "../../../ui";
-import { Button } from "../../../ui/Button";
+import { Button, IconButton } from "../../../ui/Button";
 import { DisclosureGroup } from "../../../ui/Disclosure";
 import { Icon } from "../../../ui/Icon";
 import { Tag } from "../../../ui/Tag";
@@ -72,7 +71,7 @@ export const MobileNav = ({
           )}
           style={{ top: navbarHeight, height: calcHeight() }}
         >
-          <div
+          <ul
             className={cn(
               "h-full overflow-y-auto",
               scrollbar,
@@ -82,7 +81,7 @@ export const MobileNav = ({
             {navItems.map((navItem) => (
               <MobileNavItem key={navItem.label} {...navItem} />
             ))}
-          </div>
+          </ul>
           {footer && (
             <div
               className={cn(
@@ -114,7 +113,7 @@ export const MobileNavItem = ({
 }: NavItemProps) => {
   if (!disabled)
     return (
-      <div>
+      <li>
         {!children && !child ? (
           <Button
             as={Link}
@@ -167,7 +166,7 @@ export const MobileNavItem = ({
             ]}
           />
         )}
-      </div>
+      </li>
     );
 
   return (

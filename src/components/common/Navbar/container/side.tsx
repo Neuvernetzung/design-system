@@ -14,7 +14,7 @@ import { typedMemo } from "../../../../utils/internal";
 import type { NavbarProps } from "..";
 import { NavLogo } from "../logo";
 import { SideNavItem } from "../side/item";
-import { NavbarContainerProps } from "./default";
+import type { NavbarContainerProps } from "./default";
 
 export type SidenavProps = Omit<
   NavbarProps,
@@ -38,7 +38,8 @@ const NavbarSideContainer = forwardRef(
     }: SidenavProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => (
-    <div
+    <nav
+      aria-label="Main Navigation"
       ref={ref}
       className={cn(
         "group left-0 inset-y-0 fixed h-full w-64 flex-col overflow-hidden border-r",
@@ -54,7 +55,7 @@ const NavbarSideContainer = forwardRef(
           <NavLogo logo={logo} {...logoProps} textColor={textColor} />
         </div>
       )}
-      <div
+      <ul
         className={cn(
           "h-full flex flex-col overflow-y-hidden group-hover:overflow-y-auto",
           scrollbar,
@@ -69,7 +70,7 @@ const NavbarSideContainer = forwardRef(
             {...navItem}
           />
         ))}
-      </div>
+      </ul>
       {footer && (
         <div
           className={cn("flex w-full", paddingsEvenly[size], footerClassName)}
@@ -77,7 +78,7 @@ const NavbarSideContainer = forwardRef(
           {footer}
         </div>
       )}
-    </div>
+    </nav>
   )
 );
 

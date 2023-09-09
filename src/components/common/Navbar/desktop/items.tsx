@@ -1,16 +1,16 @@
 import cn from "classnames";
 
 import { gaps, pagePaddings } from "../../../../styles";
+import { useThemeStateValue } from "../../../../theme";
 import { ChevronDownIcon } from "../../../../theme/icons";
 import { minSize, smallerSize } from "../../../../utils";
+import { Text } from "../../../ui/Typography/Text";
 import { Button } from "../../../ui/Button";
 import { Link } from "../../../ui/Link";
 import { Popover, PopoverGroup } from "../../../ui/Popover";
 import { Tag } from "../../../ui/Tag";
-import { Text } from "../../../ui";
 import type { NavbarProps, NavItemProps, SubNavProps } from "../navbar";
 import { NavbarDesktopSubItem } from "./sub";
-import { useThemeStateValue } from "../../../../theme";
 
 export const DesktopItems = ({
   navItems,
@@ -22,14 +22,14 @@ export const DesktopItems = ({
   const pagePadding = useThemeStateValue((state) => state.pagePadding);
 
   return (
-    <div
+    <PopoverGroup
       className={cn("hidden lg:flex w-full flex-1", {
         "justify-start": justifyDesktopNav === "start",
         "justify-center": justifyDesktopNav === "center",
         "justify-end": justifyDesktopNav === "end",
       })}
     >
-      <PopoverGroup className={cn("flex flex-row items-center", gaps.sm)}>
+      <ul className={cn("flex flex-row items-center", gaps.sm)}>
         {navItems.map(
           ({
             label,
@@ -43,7 +43,7 @@ export const DesktopItems = ({
             fullWidthPopover,
             external,
           }: NavItemProps) => (
-            <div key={label}>
+            <li key={label}>
               {!disabled ? (
                 !child && !children ? (
                   <Button
@@ -91,7 +91,7 @@ export const DesktopItems = ({
                     }}
                     trigger="hover"
                     content={
-                      <div className={cn("flex flex-col", gaps.md)}>
+                      <ul className={cn("flex flex-col", gaps.md)}>
                         {children && children.length > 0 && (
                           <div
                             className={cn(
@@ -111,7 +111,7 @@ export const DesktopItems = ({
                           </div>
                         )}
                         {child}
-                      </div>
+                      </ul>
                     }
                   />
                 )
@@ -129,10 +129,10 @@ export const DesktopItems = ({
                   )}
                 </Button>
               )}
-            </div>
+            </li>
           )
         )}
-      </PopoverGroup>
-    </div>
+      </ul>
+    </PopoverGroup>
   );
 };
