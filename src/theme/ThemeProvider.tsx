@@ -45,6 +45,7 @@ export type ConfigProps = {
   allowGlobalLoading?: boolean;
   forcedTheme?: "system" | "light" | "dark";
   disableSetTheme?: boolean;
+  preferSetValuesOverConfig?: boolean;
 } & NotificationConfigProps;
 
 type NotificationConfigProps =
@@ -67,6 +68,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     forcedTheme,
     requiredInfoVariant,
     pagePadding,
+    preferSetValuesOverConfig,
   } = config || {};
 
   const store = useRef(
@@ -80,9 +82,11 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
   ).current;
 
   useTheme(":root", {
+    store,
     colors,
     darkColors,
     borderRadius,
+    preferSetValuesOverConfig,
   });
 
   return (
@@ -120,6 +124,7 @@ export const ThemeStyles = () => {
   const cssColorVariables = colorState && getColorVariables(colorState);
   const cssDarkColorVariables =
     darkColorState && getColorVariables(darkColorState);
+
   const cssRadiiVariables =
     borderRadiusState && getBorderRadiusVariables(borderRadiusState);
 
@@ -140,32 +145,37 @@ export const ThemeStyles = () => {
 };
 
 type UseThemeProps = {
+  store: ThemeStore;
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
   borderRadius?: Size;
+  preferSetValuesOverConfig?: boolean;
 };
 
 export const useTheme = (
   selector: ":root" | string,
-  { colors, darkColors, borderRadius }: UseThemeProps
+  {
+    store,
+    colors,
+    darkColors,
+    borderRadius,
+    preferSetValuesOverConfig,
+  }: UseThemeProps
 ) => {
-  const themeStore = useThemeStore();
+  useEffect(() => {
+    if (preferSetValuesOverConfig) return;
+    if (keys(colors).length > 0) setColors(store, selector, colors);
+  }, [colors, store]);
 
   useEffect(() => {
-    if (!themeStore) return;
-    if (keys(colors).length > 0) setColors(themeStore, selector, colors);
-  }, [colors, themeStore]);
+    if (preferSetValuesOverConfig) return;
+    setDarkColors(store, selector, darkColors);
+  }, [darkColors, store]);
 
   useEffect(() => {
-    if (!themeStore) return;
-    if (keys(darkColors).length > 0)
-      setDarkColors(themeStore, selector, darkColors);
-  }, [darkColors, themeStore]);
-
-  useEffect(() => {
-    if (!themeStore) return;
-    if (borderRadius) setBorderRadius(themeStore, selector, borderRadius);
-  }, [borderRadius, themeStore]);
+    if (preferSetValuesOverConfig) return;
+    if (borderRadius) setBorderRadius(store, selector, borderRadius);
+  }, [borderRadius, store]);
 };
 
 export const setColors = (
@@ -189,11 +199,13 @@ export const setDarkColors = (
   selector: ":root" | string,
   colors?: Partial<ExtendColors>
 ) => {
-  const extendedColors: ReturnedColors = extendColors(colors);
+  const extendedColors: ReturnedColors | undefined = colors
+    ? extendColors(colors)
+    : undefined;
 
   if (selector === ":root") {
     themeStore.setState({ darkColorState: extendedColors });
-  } else {
+  } else if (extendedColors) {
     const cssColorVariables = getColorVariables(extendedColors);
 
     createCSSSelector(`html.dark ${selector}`, cssColorVariables);
