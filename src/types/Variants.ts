@@ -56,3 +56,9 @@ export const tabListVariants = ["default", "buttonList"] as const;
 export type TabListVariants = typeof tabListVariants;
 
 export type TabListVariant = TabListVariants[number];
+
+export const codeVariants = ["solid", "subtile", "ghost", "outline"] as const;
+
+export type CodeVariants = typeof codeVariants;
+
+export type CodeVariant = CodeVariants[number];
