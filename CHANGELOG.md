@@ -1,5 +1,13 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.0.1
+
+### Patch Changes
+
+- 37b82c3: Keybind zu Typography hinzufügen #956
+- e801c2a: Wenn keine Darkcolors festgelegt werden bei den theme Einstellungen, dann Farben nicht wie colors #954
+- 0d93251: Code zu Typography hinzufügen #955
+
 ## 2.0.0
 
 ### Major Changes
