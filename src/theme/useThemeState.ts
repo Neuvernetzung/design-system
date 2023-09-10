@@ -37,7 +37,9 @@ export const createThemeStore = ({
     persist(
       () => {
         const defaultColors = extendColors(colors);
-        const defaultDarkColors = extendColors(darkColors);
+        const defaultDarkColors = darkColors
+          ? extendColors(darkColors)
+          : undefined;
 
         return {
           colorState: defaultColors,
@@ -45,7 +47,7 @@ export const createThemeStore = ({
           borderRadiusState: extendBorderRadius(borderRadius),
           adjustedTextColorState: adjustedTextColors(
             defaultColors,
-            defaultDarkColors
+            defaultDarkColors || defaultColors
           ),
           requiredInfoVariant,
           pagePadding,
