@@ -1,4 +1,4 @@
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { IconInfoCircle } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
 import React from "react";
@@ -23,7 +23,7 @@ export const Default = ({ ...args }) => (
       <Button
         onClick={() =>
           confirmation({
-            icon: InformationCircleIcon,
+            icon: IconInfoCircle,
             heading: "Bestätigung erforderlich",
             content: "Wollen Sie die Bestätigung wirklich bestätigen?",
             cancel: action("cancel"),
@@ -46,7 +46,7 @@ export const Colors = ({ ...args }) => (
           color={color}
           onClick={() =>
             confirmation({
-              icon: InformationCircleIcon,
+              icon: IconInfoCircle,
               heading: `${color} - Bestätigung`,
               content: "Wollen Sie die Bestätigung wirklich bestätigen?",
               cancel: action("cancel"),
@@ -75,7 +75,7 @@ export const ForbidCancellation = ({ ...args }) => (
       <Button
         onClick={() =>
           confirmation({
-            icon: InformationCircleIcon,
+            icon: IconInfoCircle,
             forbidCancellation: true,
             cancel: action("cancel"),
             confirm: action("confirm"),

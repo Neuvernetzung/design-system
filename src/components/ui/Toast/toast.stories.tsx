@@ -1,4 +1,4 @@
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { IconAlertTriangle } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import React from "react";
 
@@ -25,7 +25,7 @@ export const Variants = ({ ...args }) => (
       <Toast
         variant={variant}
         key={variant}
-        icon={ExclamationTriangleIcon}
+        icon={IconAlertTriangle}
         message={`Dies ist eine ${variant} Benachrichtigung`}
         handleClose={() => {}}
         {...args}
@@ -40,7 +40,7 @@ export const Colors = ({ ...args }) => (
       <Toast
         color={color}
         key={color}
-        icon={ExclamationTriangleIcon}
+        icon={IconAlertTriangle}
         message={`Dies ist eine ${color} Benachrichtigung`}
         handleClose={() => {}}
         {...args}
@@ -55,13 +55,13 @@ Colors.parameters = {
 export const LongWords = ({ ...args }) => (
   <Container>
     <Toast
-      icon={ExclamationTriangleIcon}
+      icon={IconAlertTriangle}
       message="Dies ist eine seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehr lange Benachrichtigung"
       handleClose={() => {}}
       {...args}
     />
     <Toast
-      icon={ExclamationTriangleIcon}
+      icon={IconAlertTriangle}
       message="Dies ist eine error Benachrichtigung für den Pfad test.pfad.irgendwas.langes"
       handleClose={() => {}}
       {...args}

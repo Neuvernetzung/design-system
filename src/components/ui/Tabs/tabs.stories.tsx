@@ -1,7 +1,6 @@
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
-
-import { CrossIcon } from "../../../theme/icons";
+import { IconX } from "@tabler/icons-react";
 import { colors, sizes, tabListVariants } from "../../../types";
 import { Button, IconButton } from "../Button";
 import { Tag } from "../Tag";
@@ -71,12 +70,7 @@ export const AdditionalHeadElements = ({ ...args }) => (
   <Container>
     <Tabs
       headerEndElement={
-        <IconButton
-          variant="ghost"
-          ariaLabel="close"
-          icon={CrossIcon}
-          size="sm"
-        />
+        <IconButton variant="ghost" ariaLabel="close" icon={IconX} size="sm" />
       }
       headerStartElement={
         <Tag
@@ -146,7 +140,7 @@ export const WithSpace = ({ ...args }) => {
         headerEndElement={
           <IconButton
             ariaLabel="close"
-            icon={CrossIcon}
+            icon={IconX}
             size="sm"
             variant="ghost"
           />

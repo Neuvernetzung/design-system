@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { paddingsEvenly, transition } from "../../../styles";
-import { ChevronDownIcon } from "../../../theme/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 import { typedMemo, updateQuery } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { CheckboxInner } from "../Checkbox/checkbox";
@@ -133,7 +133,7 @@ export const DataTableInner = <
                   col.sortable && (
                     <IconButton
                       ariaLabel={`sort_${col.id}`}
-                      icon={ChevronDownIcon}
+                      icon={IconChevronDown}
                       onClick={() => handleSort(col.id)}
                       className={cn("collapse group-hover:visible", {
                         "!visible": normalizedSort === col.id,

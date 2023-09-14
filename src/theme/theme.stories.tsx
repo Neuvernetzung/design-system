@@ -3,7 +3,15 @@ import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, ColorPicker, Form, Select, Tag } from "../components/ui";
+import {
+  Button,
+  ColorPicker,
+  Form,
+  Icon,
+  Select,
+  Tag,
+  Text,
+} from "../components/ui";
 import { borders } from "../styles";
 import { Size, sizes } from "../types";
 import {
@@ -15,6 +23,7 @@ import {
   useThemeState,
   useThemeStore,
 } from ".";
+import { Icon360, IconHome, IconPlus, IconUpload } from "@tabler/icons-react";
 
 export default {
   title: "THEME/ThemeProvider",
@@ -231,6 +240,54 @@ export const NestedTheme = ({ ...args }) => {
           Bestätigen
         </Button>
       </Form>
+    </Container>
+  );
+};
+
+export const IconStrokeWidth = ({ ...args }) => {
+  const { iconStrokeWidth } = useThemeState();
+  const themeStore = useThemeStore();
+
+  return (
+    <Container>
+      <div>
+        <div className="flex flex-row gap-2">
+          <Icon icon={Icon360} />
+          <Icon icon={IconPlus} />
+          <Icon icon={IconHome} />
+          <Icon icon={IconUpload} />
+        </div>{" "}
+        <Text>Größe: {iconStrokeWidth}</Text>
+      </div>
+      <div className="flex flex-row gap-2">
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 0.5 })}>
+          0.5
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 0.75 })}>
+          0.75
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 1 })}>
+          1
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 1.25 })}>
+          1.25
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 1.5 })}>
+          1.5
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 1.75 })}>
+          1.75
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 2 })}>
+          2
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 2.25 })}>
+          2.25
+        </Button>
+        <Button onClick={() => themeStore?.setState({ iconStrokeWidth: 2.5 })}>
+          2.5
+        </Button>
+      </div>
     </Container>
   );
 };

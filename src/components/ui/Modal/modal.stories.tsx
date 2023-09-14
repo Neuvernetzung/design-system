@@ -1,4 +1,4 @@
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { IconCheck } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
@@ -56,7 +56,7 @@ export const Default = ({ ...args }) => {
             </Button>
             <IconButton
               ariaLabel="icon"
-              icon={CheckIcon}
+              icon={IconCheck}
               onClick={() => {
                 action("click-icon");
                 setOpen(false);
@@ -111,7 +111,7 @@ export const Sizes = ({ ...args }) => {
                   </Button>
                   <IconButton
                     ariaLabel="icon"
-                    icon={CheckIcon}
+                    icon={IconCheck}
                     onClick={() => {
                       action("click-icon");
                       setOpen(false);
@@ -202,7 +202,7 @@ export const LargeContainer = ({ ...args }) => {
             </Button>
             <IconButton
               ariaLabel="icon"
-              icon={CheckIcon}
+              icon={IconCheck}
               onClick={() => {
                 action("click-icon");
                 setOpen(false);

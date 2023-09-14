@@ -1,13 +1,14 @@
 import {
-  AcademicCapIcon,
-  ArrowLeftOnRectangleIcon,
-  ArrowPathRoundedSquareIcon,
-  BoltIcon,
-  ShoppingCartIcon,
-  SwatchIcon,
-  TrashIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
+  IconLogout,
+  IconRoute,
+  IconBolt,
+  IconShoppingCart,
+  IconColorSwatch,
+  IconTrash,
+  IconUser,
+  Icon360,
+} from "@tabler/icons-react";
+
 import { Meta } from "@storybook/react";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -43,7 +44,7 @@ const baseProps: NavbarProps = {
             children: "Hier steht eine Beschreibung.",
             hideOnMobile: true,
           },
-          icon: AcademicCapIcon,
+          icon: Icon360,
         },
         {
           label: "Sub Item 2",
@@ -54,11 +55,11 @@ const baseProps: NavbarProps = {
             color: "success",
             size: "xs",
           },
-          icon: ArrowPathRoundedSquareIcon,
+          icon: IconRoute,
         },
       ],
       child: <div className="w-full bg-red-100">Test</div>,
-      icon: BoltIcon,
+      icon: IconBolt,
     },
     {
       label: "Item 2",
@@ -76,7 +77,7 @@ const baseProps: NavbarProps = {
           href: "4",
           subLabel: { children: "Dieses Item ist disabled." },
           disabled: true,
-          icon: TrashIcon,
+          icon: IconTrash,
         },
       ],
     },
@@ -92,7 +93,7 @@ const baseProps: NavbarProps = {
             children: "Hier steht eine Beschreibung.",
             hideOnMobile: true,
           },
-          icon: AcademicCapIcon,
+          icon: Icon360,
         },
         {
           label: "Sub Item 2",
@@ -103,7 +104,7 @@ const baseProps: NavbarProps = {
             color: "success",
             size: "xs",
           },
-          icon: ArrowPathRoundedSquareIcon,
+          icon: IconRoute,
         },
         {
           label: "Sub Item 1",
@@ -117,7 +118,7 @@ const baseProps: NavbarProps = {
           href: "4",
           subLabel: { children: "Dieses Item ist disabled." },
           disabled: true,
-          icon: TrashIcon,
+          icon: IconTrash,
         },
         {
           label: "Extern",
@@ -132,7 +133,7 @@ const baseProps: NavbarProps = {
           href: "6",
           subLabel: { children: "Dieses Item ist disabled." },
           disabled: true,
-          icon: TrashIcon,
+          icon: IconTrash,
         },
       ],
       child: (
@@ -165,7 +166,7 @@ const baseProps: NavbarProps = {
       items={[
         {
           children: "Logout",
-          icon: ArrowLeftOnRectangleIcon,
+          icon: IconLogout,
           onClick: () => {},
         },
       ]}
@@ -176,13 +177,13 @@ const baseProps: NavbarProps = {
         variant: "ghost",
         children: "Benutzer",
         className: "w-full",
-        leftIcon: UserIcon,
+        leftIcon: IconUser,
       }}
     />
   ),
   startItems: [
     <Tooltip key="Tooltip" label="zIndex Test">
-      <Icon icon={SwatchIcon} />
+      <Icon icon={IconColorSwatch} />
     </Tooltip>,
   ],
   allowDarkMode: "desktop",
@@ -204,7 +205,7 @@ export const ZIndexTest = ({ ...args }) => {
             ariaLabel="cart"
             key="cart"
             onClick={() => setOpenSide(true)}
-            icon={ShoppingCartIcon}
+            icon={IconShoppingCart}
           />,
         ]}
       />

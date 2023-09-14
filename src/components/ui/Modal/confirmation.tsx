@@ -9,7 +9,7 @@ import type { Color, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { Tag } from "../Tag";
-import { Heading } from "../Typography";
+import { Heading } from "../Typography/Heading";
 import { Modal } from "./modal";
 
 type ConfirmationState = {

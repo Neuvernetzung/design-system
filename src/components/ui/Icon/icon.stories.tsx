@@ -1,4 +1,4 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
+import { IconHome } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import React from "react";
 
@@ -22,7 +22,7 @@ const Container = ({ ...props }) => (
 export const Sizes = ({ ...args }) => (
   <Container>
     {sizes.map((size) => (
-      <Icon size={size} key={size} icon={HomeIcon} {...args} />
+      <Icon size={size} key={size} icon={IconHome} {...args} />
     ))}
   </Container>
 );
@@ -34,7 +34,7 @@ Sizes.parameters = {
 export const Colors = ({ ...args }) => (
   <Container>
     {colors.map((color) => (
-      <Icon color={color} key={color} icon={HomeIcon} {...args} />
+      <Icon color={color} key={color} icon={IconHome} {...args} />
     ))}
   </Container>
 );

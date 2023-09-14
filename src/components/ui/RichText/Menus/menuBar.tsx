@@ -11,22 +11,21 @@ import {
   transition,
 } from "../../../../styles";
 import {
-  AlignCenterIcon,
-  AlignJustifyIcon,
-  AlignLeftIcon,
-  AlignRightIcon,
-  ListBulletIcon,
-  MinusIcon,
-} from "../../../../theme/icons";
-import {
-  Bold,
-  FormatClear,
-  Italic,
-  OrderedList,
-  Quote,
-  Strikethrough,
-  UnderlineIcon,
-} from "../icons";
+  IconAlignCenter,
+  IconAlignJustified,
+  IconAlignLeft,
+  IconAlignRight,
+  IconList,
+  IconSeparator,
+  IconBold,
+  IconClearFormatting,
+  IconItalic,
+  IconListNumbers,
+  IconQuote,
+  IconStrikethrough,
+  IconUnderline,
+} from "@tabler/icons-react";
+
 import { AddLinkButton } from "./addLink";
 import { RichTextMenuGroup, RichTextMenuItem } from "./menuItem";
 import { SelectText, TextTypeTags } from "./selectText";
@@ -117,28 +116,28 @@ export const MenuBar = ({
         <RichTextMenuItem
           id="richtext_menu_item_0"
           ariaLabel="bold"
-          icon={Bold}
+          icon={IconBold}
           onClick={() => editor.chain().focus().toggleBold().run()}
           active={editor.isActive("bold")}
         />
         <RichTextMenuItem
           id="richtext_menu_item_1"
           ariaLabel="italic"
-          icon={Italic}
+          icon={IconItalic}
           onClick={() => editor.chain().focus().toggleItalic().run()}
           active={editor.isActive("italic")}
         />
         <RichTextMenuItem
           id="richtext_menu_item_2"
           ariaLabel="underline"
-          icon={UnderlineIcon}
+          icon={IconUnderline}
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           active={editor.isActive("underline")}
         />
         <RichTextMenuItem
           id="richtext_menu_item_3"
           ariaLabel="strikthrough"
-          icon={Strikethrough}
+          icon={IconStrikethrough}
           onClick={() => editor.chain().focus().toggleStrike().run()}
           active={editor.isActive("strike")}
         />
@@ -147,7 +146,7 @@ export const MenuBar = ({
         <RichTextMenuItem
           id="richtext_menu_item_4"
           ariaLabel="formatclear"
-          icon={FormatClear}
+          icon={IconClearFormatting}
           tooltip="Styles entfernen"
           onClick={() => {
             editor.chain().focus().unsetAllMarks().run();
@@ -171,14 +170,14 @@ export const MenuBar = ({
         <RichTextMenuItem
           id="richtext_menu_item_7"
           ariaLabel="align left"
-          icon={AlignLeftIcon}
+          icon={IconAlignLeft}
           onClick={() => editor.chain().focus().setTextAlign("text-left").run()}
           active={editor.isActive({ textAlign: "text-left" })}
         />
         <RichTextMenuItem
           id="richtext_menu_item_8"
           ariaLabel="align center"
-          icon={AlignCenterIcon}
+          icon={IconAlignCenter}
           onClick={() =>
             editor.chain().focus().setTextAlign("text-center").run()
           }
@@ -187,7 +186,7 @@ export const MenuBar = ({
         <RichTextMenuItem
           id="richtext_menu_item_9"
           ariaLabel="align right"
-          icon={AlignRightIcon}
+          icon={IconAlignRight}
           onClick={() =>
             editor.chain().focus().setTextAlign("text-right").run()
           }
@@ -196,7 +195,7 @@ export const MenuBar = ({
         <RichTextMenuItem
           id="richtext_menu_item_10"
           ariaLabel="align justify"
-          icon={AlignJustifyIcon}
+          icon={IconAlignJustified}
           onClick={() =>
             editor.chain().focus().setTextAlign("text-justify").run()
           }
@@ -207,28 +206,28 @@ export const MenuBar = ({
         <RichTextMenuItem
           id="richtext_menu_item_11"
           ariaLabel="bulletlist"
-          icon={ListBulletIcon}
+          icon={IconList}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           active={editor.isActive("bulletList")}
         />
         <RichTextMenuItem
           id="richtext_menu_item_12"
           ariaLabel="orderedlist"
-          icon={OrderedList}
+          icon={IconListNumbers}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           active={editor.isActive("orderedList")}
         />
         <RichTextMenuItem
           id="richtext_menu_item_13"
           ariaLabel="quote"
-          icon={Quote}
+          icon={IconQuote}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           active={editor.isActive("blockquote")}
         />
         <RichTextMenuItem
           id="richtext_menu_item_14"
           ariaLabel="horizontal rule"
-          icon={MinusIcon}
+          icon={IconSeparator}
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
         />
       </RichTextMenuGroup>

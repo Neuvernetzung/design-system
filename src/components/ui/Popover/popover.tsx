@@ -22,12 +22,12 @@ import {
   getPopoverFullScreenStyles,
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
-import { CrossIcon } from "../../../theme/icons";
 import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps, IconButtonProps } from "../Button";
 import { Button, IconButton } from "../Button";
+import { IconX } from "@tabler/icons-react";
 
 export type PopoverProps = {
   content: ReactNode;
@@ -175,7 +175,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
                   <div className={cn(getPopoverFullScreenHeaderStyles())}>
                     <IconButton
                       ariaLabel="close_popover"
-                      icon={CrossIcon}
+                      icon={IconX}
                       variant="ghost"
                       onClick={() => close()} // wenn hier ein PopoverButton verwendet wird, dann lässt sich Button nicht mehr per Klick schließen
                     />

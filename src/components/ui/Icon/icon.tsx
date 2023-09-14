@@ -15,6 +15,7 @@ import type {
 import { extendedTextColors } from "../../../styles";
 import type { ExtendedColor, Size, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
+import { useThemeStateValue } from "../../../theme";
 
 export const iconDimensions: Record<Size, string> = {
   xs: "h-4 w-4",
@@ -48,19 +49,29 @@ export const Icon: PolymorphicForwardRefExoticComponent<
       className,
     }: PolymorphicPropsWithoutRef<IconOwnProps, T>,
     ref: ForwardedRef<HTMLElement>
-  ) => (
-    <span
-      ref={ref}
-      className={cn(
-        "flex",
-        iconDimensions[size],
-        extendedTextColors[color],
-        className
-      )}
-    >
-      {icon && createElement(icon)}
-    </span>
-  )
+  ) => {
+    const iconStrokeWidth = useThemeStateValue(
+      (values) => values.iconStrokeWidth
+    );
+
+    return (
+      <span
+        ref={ref}
+        className={cn(
+          "flex",
+          iconDimensions[size],
+          extendedTextColors[color],
+          className
+        )}
+      >
+        {icon &&
+          createElement(icon, {
+            className: iconDimensions[size],
+            strokeWidth: iconStrokeWidth || 1.5,
+          })}
+      </span>
+    );
+  }
 );
 
 export default typedMemo(Icon);

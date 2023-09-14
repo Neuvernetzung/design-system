@@ -1,6 +1,5 @@
 import { useTheme } from "next-themes";
-
-import { ComputerDesktopIcon, MoonIcon, SunIcon } from "../../../theme/icons";
+import { IconDeviceDesktop, IconMoon, IconSun } from "@tabler/icons-react";
 import { IconButton, Menu } from "../../ui";
 import type { Size } from "../../../types";
 
@@ -24,7 +23,7 @@ export const ThemeSwitch = ({ textColor, size = "md" }: ThemeSwitchProps) => {
       variant="ghost"
       ariaLabel="theme-switch"
       className={textColor}
-      icon={resolvedTheme === "light" ? SunIcon : MoonIcon}
+      icon={resolvedTheme === "light" ? IconSun : IconMoon}
     />
   );
 };
@@ -42,25 +41,25 @@ export const ThemeSwitchMenu = ({
       buttonProps={{
         ariaLabel: "theme-switch",
         size,
-        icon: resolvedTheme === "light" ? SunIcon : MoonIcon,
+        icon: resolvedTheme === "light" ? IconSun : IconMoon,
         variant: "ghost",
         className: textColor,
       }}
       items={[
         {
-          icon: ComputerDesktopIcon,
+          icon: IconDeviceDesktop,
           children: "System",
           onClick: () => setTheme("system"),
           color: theme === "system" ? "primary" : "accent",
         },
         {
-          icon: SunIcon,
+          icon: IconSun,
           children: "Light",
           onClick: () => setTheme("light"),
           color: theme === "light" ? "primary" : "accent",
         },
         {
-          icon: MoonIcon,
+          icon: IconMoon,
           children: "Dark",
           onClick: () => setTheme("dark"),
           color: theme === "dark" ? "primary" : "accent",

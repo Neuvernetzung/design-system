@@ -41,7 +41,7 @@ import {
   getInputStyles,
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
-import { CheckIcon, ChevronUpDownIcon, CrossIcon } from "../../../theme/icons";
+import { IconCheck, IconSelector, IconX } from "@tabler/icons-react";
 import type { InputVariant, Size } from "../../../types";
 import { capSize, smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
@@ -357,7 +357,7 @@ export const SelectInner = <
                         size={smallerSize(size)}
                         variant="ghost"
                         ariaLabel={`delete_select_${name}`}
-                        icon={CrossIcon}
+                        icon={IconX}
                         className={cn(
                           "pointer-events-auto",
                           marginsXSmall[size]
@@ -374,7 +374,7 @@ export const SelectInner = <
                   >
                     <Icon
                       size={smallerSize(size)}
-                      icon={ChevronUpDownIcon}
+                      icon={IconSelector}
                       className={cn(
                         "pointer-events-none flex",
                         open ? "rotate-180" : "rotate-0",
@@ -453,7 +453,7 @@ export const SelectInner = <
                                   <Icon
                                     size={capSize(size, "md")}
                                     color="primary"
-                                    icon={CheckIcon}
+                                    icon={IconCheck}
                                     className={
                                       isChecked(
                                         returnValue({
@@ -493,7 +493,7 @@ export const SelectInner = <
                           <Icon
                             size={capSize(size, "md")}
                             color="primary"
-                            icon={CheckIcon}
+                            icon={IconCheck}
                             className={
                               isChecked(returnValue({ value, ...props }))
                                 ? "visible"
@@ -554,7 +554,7 @@ const Tag = forwardRef(
         role="button"
         ariaLabel="remove"
         size={smallerSize(size)}
-        icon={CrossIcon}
+        icon={IconX}
         onClick={onClick}
         onKeyUp={onKeyUp}
       />

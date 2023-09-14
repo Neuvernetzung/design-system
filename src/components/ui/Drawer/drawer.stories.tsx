@@ -1,4 +1,4 @@
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { IconShoppingCart } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 
@@ -22,7 +22,7 @@ export const Default = ({ ...args }) => {
       <Button onClick={() => setOpen(true)}>Öffnen</Button>
       <Drawer
         title="Test"
-        icon={ShoppingCartIcon}
+        icon={IconShoppingCart}
         open={open}
         setOpen={setOpen}
         content="Drawer Content"

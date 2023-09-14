@@ -1,6 +1,4 @@
-import { PhoneIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
-import cn from "classnames";
 import React from "react";
 import { useForm } from "react-hook-form";
 

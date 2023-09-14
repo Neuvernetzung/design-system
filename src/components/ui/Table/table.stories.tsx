@@ -1,4 +1,4 @@
-import { ChevronDownIcon, PencilIcon } from "@heroicons/react/24/outline";
+import { IconChevronDown, IconPencil } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import React, { useEffect, useState } from "react";
 
@@ -34,7 +34,7 @@ const items = [
         size="sm"
         variant="ghost"
         color="primary"
-        icon={PencilIcon}
+        icon={IconPencil}
       />
     ),
     createdAt: new Date().toDateString(),
@@ -57,7 +57,7 @@ const items = [
         size="sm"
         variant="ghost"
         color="primary"
-        icon={PencilIcon}
+        icon={IconPencil}
       />
     ),
     createdAt: new Date().toDateString(),
@@ -157,7 +157,7 @@ export const Disclosure = ({ ...args }) => {
               setDisclosure(item._id);
             }}
             ariaLabel="open"
-            icon={ChevronDownIcon}
+            icon={IconChevronDown}
           />
         ),
       }))}

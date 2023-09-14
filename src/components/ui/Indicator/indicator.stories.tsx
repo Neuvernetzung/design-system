@@ -1,4 +1,4 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
+import { IconHome } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import React from "react";
 import { colors } from "../../../types";
@@ -23,16 +23,16 @@ const Container = ({ ...props }) => (
 export const Default = ({ ...args }) => (
   <Container>
     <Indicator>
-      <IconButton ariaLabel="Test" icon={HomeIcon} {...args} />
+      <IconButton ariaLabel="Test" icon={IconHome} {...args} />
     </Indicator>
     <Indicator value={2}>
-      <IconButton ariaLabel="Test" icon={HomeIcon} {...args} />
+      <IconButton ariaLabel="Test" icon={IconHome} {...args} />
     </Indicator>
     <Indicator value={33}>
-      <IconButton ariaLabel="Test" icon={HomeIcon} {...args} />
+      <IconButton ariaLabel="Test" icon={IconHome} {...args} />
     </Indicator>
     <Indicator value="Text">
-      <IconButton ariaLabel="Test" icon={HomeIcon} {...args} />
+      <IconButton ariaLabel="Test" icon={IconHome} {...args} />
     </Indicator>
   </Container>
 );
@@ -41,7 +41,7 @@ export const Colors = ({ ...args }) => (
   <Container>
     {colors.map((color) => (
       <Indicator key={color} color={color} value={23}>
-        <IconButton ariaLabel="Test" icon={HomeIcon} {...args} />
+        <IconButton ariaLabel="Test" icon={IconHome} {...args} />
       </Indicator>
     ))}
   </Container>

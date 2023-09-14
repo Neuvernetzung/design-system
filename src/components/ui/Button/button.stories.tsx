@@ -1,4 +1,4 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
+import { IconHome } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
 import React, { ElementType } from "react";
@@ -136,10 +136,10 @@ export const Rounded = ({ ...args }) => (
 
 export const WithIcon = ({ ...args }) => (
   <Container>
-    <Button leftIcon={HomeIcon} {...args}>
+    <Button leftIcon={IconHome} {...args}>
       left Icon
     </Button>
-    <Button rightIcon={HomeIcon} {...args}>
+    <Button rightIcon={IconHome} {...args}>
       right Icon
     </Button>
   </Container>
@@ -171,10 +171,10 @@ export const VeryLong = ({ ...args }) => (
       aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       diese Zeile trotzdem anzeigen
     </Button>
-    <Button leftIcon={HomeIcon} {...args}>
+    <Button leftIcon={IconHome} {...args}>
       aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     </Button>
-    <Button leftIcon={HomeIcon} {...args}>
+    <Button leftIcon={IconHome} {...args}>
       aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       diese Zeile trotzdem anzeigen
     </Button>

@@ -1,19 +1,15 @@
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  HomeIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
+  IconChevronDown,
+  IconChevronUp,
+  IconHome,
+  IconPlus,
+} from "@tabler/icons-react";
+
 import { Meta } from "@storybook/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import {
-  checkboxVariants,
-  colors,
-  sizes,
-  Sizes as SizesType,
-} from "../../../types";
+import { checkboxVariants, colors, sizes } from "../../../types";
 import { Button, Form } from "..";
 import { Icon as IconComponent } from "../Icon";
 import { Checkbox } from ".";
@@ -180,7 +176,7 @@ export const Icon = ({ ...args }) => {
         control={formMethods.control}
         name="checkbox_icons_plus"
         label="Plus"
-        icon={PlusIcon}
+        icon={IconPlus}
         options={[{ label: "Plus", value: "option-1" }]}
         {...args}
       />
@@ -188,7 +184,7 @@ export const Icon = ({ ...args }) => {
         control={formMethods.control}
         name="checkbox_icons_home"
         label="Home"
-        icon={HomeIcon}
+        icon={IconHome}
         options={[{ label: "Home", value: "option-1" }]}
         {...args}
       />
@@ -198,7 +194,7 @@ export const Icon = ({ ...args }) => {
         label="Einzelnd"
         options={[
           { label: "Default", value: "option-1" },
-          { label: "Plus", value: "option-2", icon: PlusIcon },
+          { label: "Plus", value: "option-2", icon: IconPlus },
         ]}
         {...args}
       />
@@ -318,11 +314,11 @@ export const ElementAsLabel = ({ ...args }) => {
         required
         options={[
           {
-            label: <IconComponent icon={ChevronDownIcon} />,
+            label: <IconComponent icon={IconChevronUp} />,
             value: "option-1",
           },
           {
-            label: <IconComponent icon={ChevronUpIcon} />,
+            label: <IconComponent icon={IconChevronDown} />,
             value: "option-2",
           },
         ]}

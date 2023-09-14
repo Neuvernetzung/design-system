@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { IconChevronRight } from "@tabler/icons-react";
 import cn from "classnames";
 import isString from "lodash/isString";
 import Link from "next/link";
@@ -69,7 +69,7 @@ export const NavbarDesktopSubItem = ({
           )}
         </div>
         <Icon
-          icon={ChevronRightIcon}
+          icon={IconChevronRight}
           className={cn("group-hover:translate-x-1", transitionFast)}
         />
       </div>
