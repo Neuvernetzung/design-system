@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.1.0
+
+### Minor Changes
+
+- ab0136f: Tabler Icons verwenden #967
+
 ## 2.0.1
 
 ### Patch Changes
