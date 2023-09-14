@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
-import { SearchIcon } from "../../../theme/icons";
+import { IconSearch } from "@tabler/icons-react";
 import type { Size } from "../../../types";
 import { updateQuery } from "../../../utils/internal";
 import { Icon, Input } from "../../ui";
@@ -48,7 +47,7 @@ export const Searchbar = ({ size = "md", setSearch }: SearchbarProps) => {
       name="search"
       placeholder="Suche"
       rightElement={{
-        children: <Icon size={size} color="subtile" icon={SearchIcon} />,
+        children: <Icon size={size} color="subtile" icon={IconSearch} />,
       }}
     />
   );

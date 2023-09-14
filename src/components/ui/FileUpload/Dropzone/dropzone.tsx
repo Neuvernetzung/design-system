@@ -16,7 +16,7 @@ import {
   roundings,
   transition,
 } from "../../../../styles";
-import { CloudArrowUpIcon } from "../../../../theme/icons";
+import { IconCloudUpload } from "@tabler/icons-react";
 import type { Size } from "../../../../types";
 import { smallerSize } from "../../../../utils";
 import { typedMemo } from "../../../../utils/internal";
@@ -139,7 +139,7 @@ const Dropzone = <
               )}
             >
               <Icon
-                icon={CloudArrowUpIcon}
+                icon={IconCloudUpload}
                 color={error ? "danger" : "subtile"}
                 size={size}
               />

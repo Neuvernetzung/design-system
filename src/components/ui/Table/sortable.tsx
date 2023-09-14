@@ -1,4 +1,4 @@
-import { Bars2Icon } from "@heroicons/react/24/outline";
+import { IconGripVertical } from "@tabler/icons-react";
 import cn from "classnames";
 
 import { paddingsEvenly } from "../../../styles";
@@ -225,7 +225,7 @@ const SortableTableRow = forwardRef(
           <IconButton
             {...(handle ? { ...attributes } : {})}
             {...(handle ? { ...listeners } : {})}
-            icon={Bars2Icon}
+            icon={IconGripVertical}
             variant="ghost"
             size="sm"
             ariaLabel={`drag_handle_${id}`}

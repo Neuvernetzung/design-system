@@ -5,7 +5,7 @@ import { paddingsY, pagePaddings, zIndexes } from "../../../styles";
 import { Fragment, MutableRefObject, useState } from "react";
 import { Carousel, CarouselController, CarouselProps } from "./carousel";
 import { IconButton } from "../Button";
-import { CrossIcon } from "../../../theme/icons";
+import { IconX } from "@tabler/icons-react";
 import { Swiper as SwiperType } from "swiper/types";
 import { useThemeStateValue } from "../../../theme";
 
@@ -114,7 +114,7 @@ export const CarouselModal = ({
               >
                 <IconButton
                   onClick={handleClose}
-                  icon={CrossIcon}
+                  icon={IconX}
                   ariaLabel="close_carousel_modal"
                   className="h-min -translate-y-12"
                   variant="ghost"

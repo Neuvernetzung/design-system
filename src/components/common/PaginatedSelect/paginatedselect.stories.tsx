@@ -1,8 +1,7 @@
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
-import { SearchIcon, TrashIcon } from "../../../theme/icons";
+import { IconTrash, IconSearch } from "@tabler/icons-react";
 import { Button, Form, Heading, Icon, Input } from "../../ui";
 import { PaginatedSelect } from ".";
 import {
@@ -70,7 +69,7 @@ const Preview: PaginatedSelectPreview<false> = ({ value, setValue }) =>
   value ? (
     <Button
       variant="outline"
-      leftIcon={TrashIcon}
+      leftIcon={IconTrash}
       onClick={() => setValue(undefined)}
     >
       {value}
@@ -124,7 +123,7 @@ const MultiplePreview: PaginatedSelectPreview<true> = ({ value, setValue }) => (
         variant="outline"
         onClick={() => setValue(value.filter((v) => v !== item))}
         key={i}
-        leftIcon={TrashIcon}
+        leftIcon={IconTrash}
       >
         {item}
       </Button>
@@ -154,7 +153,7 @@ export const Multiple = ({ ...args }) => {
             control={control}
             name="TestSearch"
             value={undefined}
-            rightElement={{ children: <Icon icon={SearchIcon} /> }}
+            rightElement={{ children: <Icon icon={IconSearch} /> }}
             onChange={() => {}}
           />
           <Button size="sm" color="primary">

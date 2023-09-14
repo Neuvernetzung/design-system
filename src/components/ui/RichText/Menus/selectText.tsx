@@ -1,7 +1,6 @@
 import { Editor as CoreEditor } from "@tiptap/core";
 import { Editor } from "@tiptap/react";
-
-import { ChevronUpDownIcon } from "../../../../theme/icons";
+import { IconSelector } from "@tabler/icons-react";
 import { Menu } from "../../Menu";
 
 export const textTypeTags = ["p", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
@@ -68,7 +67,7 @@ export const SelectText = ({
       className: "truncate w-36",
       variant: "ghost",
       size: "sm",
-      rightIcon: ChevronUpDownIcon,
+      rightIcon: IconSelector,
     }}
     items={[
       {

@@ -19,7 +19,8 @@ import {
 import { useThemeStateValue } from "../../../theme/useThemeState";
 import { ExtendedSize } from "../../../types";
 import { Backdrop } from "../Backdrop";
-import { Heading, Text } from "../Typography";
+import { Text } from "../Typography/Text";
+import { Heading } from "../Typography/Heading";
 
 export type ModalProps = {
   open: boolean;

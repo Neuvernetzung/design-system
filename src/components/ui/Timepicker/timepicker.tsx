@@ -11,7 +11,7 @@ import {
 
 import { getText, type Locale } from "../../../locales/getText";
 import { divides, marginsXSmall } from "../../../styles";
-import { ClockIcon, CrossIcon } from "../../../theme/icons";
+import { IconClock, IconX } from "@tabler/icons-react";
 import type { InputVariant, Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
@@ -123,7 +123,7 @@ export const Timepicker = <
                       size={smallerSize(size)}
                       variant="ghost"
                       ariaLabel="delete_selected_date"
-                      icon={CrossIcon}
+                      icon={IconX}
                       className={cn("pointer-events-auto", marginsXSmall[size])}
                       onClick={async (e: MouseEvent) => {
                         e.preventDefault();
@@ -139,7 +139,7 @@ export const Timepicker = <
                       role="button"
                       ariaLabel="clock"
                       size={smallerSize(size)}
-                      icon={ClockIcon}
+                      icon={IconClock}
                       variant="ghost"
                       className={cn(
                         "pointer-events-none flex max-h-6",

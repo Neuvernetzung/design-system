@@ -1,10 +1,11 @@
 import {
-  AcademicCapIcon,
-  ArrowDownTrayIcon,
-  ArrowRightOnRectangleIcon,
-  EllipsisVerticalIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+  IconDownload,
+  IconLogout,
+  IconDotsVertical,
+  IconTrash,
+  Icon360,
+} from "@tabler/icons-react";
+
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
 import React from "react";
@@ -29,11 +30,11 @@ export const Default = ({ ...args }) => {
       items: [
         {
           children: "Option 1",
-          icon: AcademicCapIcon,
+          icon: Icon360,
           onClick: action("Option-1"),
           color: "primary",
         },
-        { children: "Option 2", icon: ArrowDownTrayIcon, href: "#" },
+        { children: "Option 2", icon: IconDownload, href: "#" },
       ],
     },
     {
@@ -47,10 +48,10 @@ export const Default = ({ ...args }) => {
     },
     {
       children: "Option 5",
-      icon: ArrowRightOnRectangleIcon,
+      icon: IconLogout,
       onClick: action("Option-5"),
     },
-    { children: "Trash", icon: TrashIcon, href: "#", color: "danger" },
+    { children: "Trash", icon: IconTrash, href: "#", color: "danger" },
   ];
 
   return (
@@ -65,7 +66,7 @@ export const Default = ({ ...args }) => {
         <Menu
           items={items}
           buttonType="icon"
-          buttonProps={{ icon: EllipsisVerticalIcon, ariaLabel: "test" }}
+          buttonProps={{ icon: IconDotsVertical, ariaLabel: "test" }}
           {...args}
         />
       </ButtonGroup>
@@ -80,10 +81,10 @@ export const Sizes = ({ ...args }) => {
       items: [
         {
           children: "Option 1",
-          icon: AcademicCapIcon,
+          icon: Icon360,
           onClick: action("Option-1"),
         },
-        { children: "Option 2", icon: ArrowDownTrayIcon, href: "#" },
+        { children: "Option 2", icon: IconDownload, href: "#" },
       ],
     },
     {
@@ -98,7 +99,7 @@ export const Sizes = ({ ...args }) => {
     },
     {
       children: "Option 5",
-      icon: ArrowRightOnRectangleIcon,
+      icon: IconLogout,
       onClick: action("Option-5"),
     },
     { children: "Option 6", href: "#" },
@@ -129,17 +130,17 @@ export const Disabled = ({ ...args }) => {
       items: [
         {
           children: "Disabled",
-          icon: AcademicCapIcon,
+          icon: Icon360,
           disabled: true,
           onClick: action("Option-1"),
         },
-        { children: "Option 2", icon: ArrowDownTrayIcon, href: "#" },
+        { children: "Option 2", icon: IconDownload, href: "#" },
       ],
     },
     {
       children: "Option 5",
       disabled: true,
-      icon: ArrowRightOnRectangleIcon,
+      icon: IconLogout,
       onClick: action("Option-5"),
     },
     { children: "Option 6", href: "#" },
@@ -158,7 +159,7 @@ export const Disabled = ({ ...args }) => {
         <Menu
           items={items}
           buttonType="icon"
-          buttonProps={{ icon: EllipsisVerticalIcon, ariaLabel: "test" }}
+          buttonProps={{ icon: IconDotsVertical, ariaLabel: "test" }}
           {...args}
         />
       </ButtonGroup>

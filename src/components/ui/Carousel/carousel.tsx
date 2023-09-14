@@ -12,9 +12,8 @@ import {
 } from "swiper/modules";
 import { Swiper, type SwiperProps, SwiperSlide } from "swiper/react";
 import { AutoplayOptions, Swiper as SwiperType } from "swiper/types";
-
+import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react";
 import { margins } from "../../../styles";
-import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import useSwiperRef from "./utils/useSwiperRef";
@@ -122,7 +121,7 @@ export const Carousel = ({
             previousButtonClassName
           )}
           ref={prevElRef}
-          icon={ChevronLeftIcon}
+          icon={IconChevronLeft}
         />
         <IconButton
           variant="ghost"
@@ -134,7 +133,7 @@ export const Carousel = ({
             nextButtonClassName
           )}
           ref={nextElRef}
-          icon={ChevronRightIcon}
+          icon={IconChevronRight}
         />
       </Swiper>
       {withThumbs && slides?.length > 1 && (
@@ -167,7 +166,7 @@ export const Carousel = ({
           <IconButton
             variant="ghost"
             ariaLabel="previous Thumb Element"
-            icon={ChevronLeftIcon}
+            icon={IconChevronLeft}
             className={cn(
               "absolute inset-y-0 my-auto left-0 z-[1] h-min",
               previousThumbButtonClassName
@@ -182,7 +181,7 @@ export const Carousel = ({
               nextThumbButtonClassName
             )}
             ref={nextElRefThumb}
-            icon={ChevronRightIcon}
+            icon={IconChevronRight}
           />
         </Swiper>
       )}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { gaps } from "../../../../styles";
-import { LinkIcon, TrashIcon } from "../../../../theme/icons";
+import { IconLink, IconTrash } from "@tabler/icons-react";
 import { hrefRegex, pathRegex } from "../../../../utils/internal/regex";
 import { Button, IconButton } from "../../Button";
 import { Form } from "../../Form";
@@ -72,7 +72,7 @@ export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
         <IconButton
           id={id}
           tabIndex={-1}
-          icon={LinkIcon}
+          icon={IconLink}
           size="sm"
           ariaLabel={!active ? "add_link" : "remove_link"}
           variant={!active ? "ghost" : "subtile"}
@@ -106,7 +106,7 @@ export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
                 size="sm"
                 variant="ghost"
                 color="danger"
-                icon={TrashIcon}
+                icon={IconTrash}
                 ariaLabel="delete_link"
                 onClick={onDelete}
               />

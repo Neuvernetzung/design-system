@@ -15,7 +15,7 @@ import {
   roundings,
 } from "../../../../styles";
 import { getInputStyles } from "../../../../styles/groups";
-import { CrossIcon, PlusIcon } from "../../../../theme/icons";
+import { IconX, IconPlus } from "@tabler/icons-react";
 import type { InputVariant, Size } from "../../../../types";
 import { capSize } from "../../../../utils";
 import { mergeRefs, typedMemo } from "../../../../utils/internal";
@@ -139,7 +139,7 @@ export const InputWithTagsInner = <
                 <IconButton
                   ariaLabel="add-tag"
                   size={size}
-                  icon={PlusIcon}
+                  icon={IconPlus}
                   variant="ghost"
                   disabled={disabled}
                   onClick={() => onChange(handleAddTag(values))}
@@ -171,7 +171,7 @@ export const InputWithTagsInner = <
                       size={capSize(size, "sm")}
                       color={v === inputState ? "danger" : "accent"}
                       disabled={disabled}
-                      icon={CrossIcon}
+                      icon={IconX}
                       onClick={() => onChange(handleDeleteTag(v, values))}
                     />
                   </ButtonGroup>

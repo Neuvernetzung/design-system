@@ -2,8 +2,7 @@ import cn from "classnames";
 import type { ImageProps as NextImageProps } from "next/image";
 import NextImage from "next/image";
 import { HTMLAttributes, useState } from "react";
-
-import { PhotoIcon } from "../../../theme/icons";
+import { IconPhotoOff } from "@tabler/icons-react";
 import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -90,7 +89,7 @@ const Fallback = ({ src, alt, className }: FallbackProps) => (
     )}
   >
     <div className="p-2 truncate">
-      <Icon size="sm" className="mx-auto" icon={PhotoIcon} />
+      <Icon size="sm" className="mx-auto" icon={IconPhotoOff} />
       <Text size="xs" className="mx-auto">
         Bild konnte nicht geladen werden.
       </Text>

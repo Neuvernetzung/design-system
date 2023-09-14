@@ -1,4 +1,4 @@
-import { Bars2Icon } from "@heroicons/react/24/outline";
+import { IconGripVertical } from "@tabler/icons-react";
 import {
   bgColors,
   borders,
@@ -36,7 +36,7 @@ export const DragOverlay = ({
   >
     {handle && (
       <IconButton
-        icon={Bars2Icon}
+        icon={IconGripVertical}
         variant="ghost"
         size="sm"
         ariaLabel="drag_overlay_handle"

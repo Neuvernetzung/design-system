@@ -1,8 +1,7 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
 import { Meta } from "@storybook/react";
 import React from "react";
 
-import { CrossIcon } from "../../../../theme/icons";
+import { IconX, IconHome } from "@tabler/icons-react";
 import { Button, IconButton } from "../..";
 import ButtonGroup from "./buttonGroup";
 
@@ -34,7 +33,7 @@ export const Variants = ({ ...args }) => (
     <ButtonGroup>
       <Button {...args}>Button 1</Button>
       <Button {...args}>Button 2</Button>
-      <IconButton ariaLabel="home" icon={HomeIcon} {...args} />
+      <IconButton ariaLabel="home" icon={IconHome} {...args} />
     </ButtonGroup>
   </Container>
 );
@@ -45,7 +44,7 @@ export const DifferentSizes = ({ ...args }) => (
       <Button className="h-12" {...args}>
         Close
       </Button>
-      <IconButton size="sm" ariaLabel="home" icon={CrossIcon} {...args} />
+      <IconButton size="sm" ariaLabel="home" icon={IconX} {...args} />
     </ButtonGroup>
   </Container>
 );

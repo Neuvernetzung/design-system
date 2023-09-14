@@ -1,7 +1,6 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-
-import { ChevronRightIcon, HomeIcon } from "../../../theme/icons";
+import { IconChevronRight, IconHome } from "@tabler/icons-react";
 import type { ButtonVariant, Size } from "../../../types";
 import { Button, Icon, IconButton, Link } from "../../ui";
 
@@ -42,7 +41,7 @@ export const Breadcrumbs = ({
   return (
     <div className="flex flex-row items-center">
       <IconButton
-        icon={HomeIcon}
+        icon={IconHome}
         ariaLabel="home"
         size={size}
         variant={variant}
@@ -57,7 +56,7 @@ export const Breadcrumbs = ({
             key={i}
             className={cn("pl-1 flex flex-row justify-center items-center")}
           >
-            <Icon size="xs" icon={ChevronRightIcon} color="subtile" />
+            <Icon size="xs" icon={IconChevronRight} color="subtile" />
 
             <Button
               size={size}

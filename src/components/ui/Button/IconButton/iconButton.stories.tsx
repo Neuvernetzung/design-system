@@ -1,13 +1,18 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
+import { IconHome } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import React from "react";
 
 import { ThemeProvider } from "../../../../theme";
-import { colors, Sizes as SizesType } from "../../../../types";
+import {
+  buttonVariants,
+  colors,
+  focusesVariants,
+  sizes,
+  Sizes as SizesType,
+} from "../../../../types";
 import { loading } from "../../Loading";
 import { notify } from "../../Notify";
-import { variants } from "../button";
-import { focuses, IconButton } from "./iconButton";
+import { IconButton } from "./iconButton";
 
 export default {
   title: "UI/Buttons/IconButton",
@@ -32,23 +37,19 @@ const Container = ({ ...props }) => (
   <div className="flex flex-row items-start gap-5" {...props} />
 );
 
-export const Variants = ({ ...args }) => {
-  const _variants = Object.keys(variants);
-
-  return (
-    <Container>
-      {_variants.map((variant: any) => (
-        <IconButton
-          ariaLabel="home"
-          variant={variant}
-          key={variant}
-          icon={HomeIcon}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Variants = ({ ...args }) => (
+  <Container>
+    {buttonVariants.map((variant) => (
+      <IconButton
+        ariaLabel="home"
+        variant={variant}
+        key={variant}
+        icon={IconHome}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 Variants.parameters = {
   controls: { exclude: "variant" },
@@ -56,12 +57,12 @@ Variants.parameters = {
 
 export const Colors = ({ ...args }) => (
   <Container>
-    {[...colors, "light", "dark"].map((color: any) => (
+    {colors.map((color) => (
       <IconButton
         ariaLabel="home"
         color={color}
         key={color}
-        icon={HomeIcon}
+        icon={IconHome}
         {...args}
       />
     ))}
@@ -72,45 +73,37 @@ Colors.parameters = {
   controls: { exclude: "color" },
 };
 
-export const Focuses = ({ ...args }) => {
-  const _focuses = Object.keys(focuses);
-
-  return (
-    <Container>
-      {_focuses.map((focus: any) => (
-        <IconButton
-          ariaLabel="home"
-          focus={focus}
-          key={focus}
-          icon={HomeIcon}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Focuses = ({ ...args }) => (
+  <Container>
+    {focusesVariants.map((focus) => (
+      <IconButton
+        ariaLabel="home"
+        focus={focus}
+        key={focus}
+        icon={IconHome}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 Focuses.parameters = {
   controls: { exclude: "focus" },
 };
 
-export const Sizes = ({ ...args }) => {
-  const sizes: (keyof SizesType)[] = ["xs", "sm", "md", "lg", "xl"];
-
-  return (
-    <Container>
-      {sizes.map((size: any) => (
-        <IconButton
-          ariaLabel="home"
-          size={size}
-          key={size}
-          icon={HomeIcon}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const Sizes = ({ ...args }) => (
+  <Container>
+    {sizes.map((size: any) => (
+      <IconButton
+        ariaLabel="home"
+        size={size}
+        key={size}
+        icon={IconHome}
+        {...args}
+      />
+    ))}
+  </Container>
+);
 
 Sizes.parameters = {
   controls: { exclude: "size" },
@@ -127,7 +120,7 @@ export const AsComponent = ({ ...args }) => {
           as={component}
           href="#"
           key={component}
-          icon={HomeIcon}
+          icon={IconHome}
           {...args}
         />
       ))}
@@ -137,32 +130,32 @@ export const AsComponent = ({ ...args }) => {
 
 export const Rounded = ({ ...args }) => (
   <Container>
-    <IconButton ariaLabel="home" rounded icon={HomeIcon} {...args} />
+    <IconButton ariaLabel="home" rounded icon={IconHome} {...args} />
   </Container>
 );
 
 export const Disabled = ({ ...args }) => (
   <Container>
-    <IconButton ariaLabel="home" disabled icon={HomeIcon} {...args} />
+    <IconButton ariaLabel="home" disabled icon={IconHome} {...args} />
     <IconButton
       variant="ghost"
       ariaLabel="home"
       disabled
-      icon={HomeIcon}
+      icon={IconHome}
       {...args}
     />
     <IconButton
       variant="outline"
       ariaLabel="home"
       disabled
-      icon={HomeIcon}
+      icon={IconHome}
       {...args}
     />
     <IconButton
       variant="subtile"
       ariaLabel="home"
       disabled
-      icon={HomeIcon}
+      icon={IconHome}
       {...args}
     />
   </Container>
@@ -181,7 +174,7 @@ export const IsLoading = ({ ...args }) => {
       <Container className="flex">
         <IconButton
           ariaLabel="button"
-          icon={HomeIcon}
+          icon={IconHome}
           onClick={() => {
             load("button");
           }}

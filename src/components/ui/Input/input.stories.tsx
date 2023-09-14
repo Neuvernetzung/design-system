@@ -1,4 +1,4 @@
-import { PhoneIcon } from "@heroicons/react/24/outline";
+import { IconPhone } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import cn from "classnames";
 import React from "react";
@@ -158,7 +158,7 @@ export const Elements = ({ ...args }) => {
         control={formMethods.control}
         name="input-left-element"
         placeholder="left Element"
-        leftElement={{ children: <Icon icon={PhoneIcon} /> }}
+        leftElement={{ children: <Icon icon={IconPhone} /> }}
         required
         {...args}
       />
@@ -166,7 +166,7 @@ export const Elements = ({ ...args }) => {
         control={formMethods.control}
         name="input-right-element"
         placeholder="right Element"
-        rightElement={{ children: <Icon icon={PhoneIcon} /> }}
+        rightElement={{ children: <Icon icon={IconPhone} /> }}
         required
         {...args}
       />
@@ -174,8 +174,8 @@ export const Elements = ({ ...args }) => {
         control={formMethods.control}
         name="input-both-elements"
         placeholder="both Elements"
-        leftElement={{ children: <Icon icon={PhoneIcon} /> }}
-        rightElement={{ children: <Icon icon={PhoneIcon} /> }}
+        leftElement={{ children: <Icon icon={IconPhone} /> }}
+        rightElement={{ children: <Icon icon={IconPhone} /> }}
         required
         {...args}
       />

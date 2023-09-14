@@ -7,7 +7,7 @@ import type { FieldError, Message, ValidationRule } from "react-hook-form";
 import { getText, type Locale } from "../../../locales/getText";
 import { gapsSmall, textColors, textSizes } from "../../../styles";
 import { useThemeStateValue } from "../../../theme";
-import { ExclamationTriangleIcon } from "../../../theme/icons";
+import { IconAlertTriangle } from "@tabler/icons-react";
 import type { RequiredInfoVariant, Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
@@ -78,7 +78,7 @@ export const FormElement: FC<FormElementProps> = ({
       {children}
       {error && (
         <span className={cn("flex flex-row items-center", gapsSmall.md)}>
-          <Icon icon={ExclamationTriangleIcon} color="danger" size="xs" />
+          <Icon icon={IconAlertTriangle} color="danger" size="xs" />
           <Text size="xs" color="danger">
             {error?.message || getText(locale as Locale).required}
           </Text>
