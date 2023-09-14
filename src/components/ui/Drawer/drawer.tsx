@@ -12,7 +12,7 @@ import {
   transition,
   zIndexes,
 } from "../../../styles";
-import { CrossIcon } from "../../../theme/icons";
+import { IconX } from "@tabler/icons-react";
 import type { ExtendedSize, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
@@ -136,7 +136,7 @@ export const Drawer = ({
           <Text size="lg">{title}</Text>
           <IconButton
             ariaLabel="closeDrawer"
-            icon={CrossIcon}
+            icon={IconX}
             variant="ghost"
             onClick={() => setOpen(false)}
           />

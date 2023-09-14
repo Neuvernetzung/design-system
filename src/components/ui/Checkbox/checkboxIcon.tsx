@@ -1,6 +1,5 @@
 import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
-
-import { CheckIcon, MinusIcon } from "../../../theme/icons";
+import { IconCheck, IconMinus } from "@tabler/icons-react";
 import type { Size, SvgType } from "../../../types";
 import { Icon } from "../Icon";
 
@@ -69,7 +68,7 @@ const animationStyle = {
   strokeDasharray: "100%",
 };
 
-const MotionCheckIcon = m(CheckIcon);
+const MotionCheckIcon = m(IconCheck);
 
 function CheckIconAnimation(props: any) {
   return (
@@ -81,7 +80,7 @@ function CheckIconAnimation(props: any) {
   );
 }
 
-const MotionCheckIndeterminateIcon = m(MinusIcon);
+const MotionCheckIndeterminateIcon = m(IconMinus);
 
 function CheckIndeterminateIconAnimation(props: any) {
   return (

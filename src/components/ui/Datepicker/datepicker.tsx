@@ -57,12 +57,12 @@ import {
 } from "../../../styles";
 import { getInputStyles } from "../../../styles/groups";
 import {
-  BackArrowIcon,
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CrossIcon,
-} from "../../../theme/icons";
+  IconArrowBack,
+  IconCalendar,
+  IconChevronLeft,
+  IconChevronRight,
+  IconX,
+} from "@tabler/icons-react";
 import type { InputVariant, Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
@@ -433,7 +433,7 @@ export const Datepicker = <
                           size={smallerSize(size)}
                           variant="ghost"
                           ariaLabel="delete_selected_date"
-                          icon={CrossIcon}
+                          icon={IconX}
                           className={cn(
                             "pointer-events-auto",
                             marginsXSmall[size]
@@ -451,7 +451,7 @@ export const Datepicker = <
                           as="span"
                           ariaLabel="calendar"
                           size={smallerSize(size)}
-                          icon={CalendarIcon}
+                          icon={IconCalendar}
                           variant="ghost"
                           className={cn(
                             "pointer-events-none flex max-h-6",
@@ -597,7 +597,7 @@ export const Datepicker = <
                             onClick={viewToday}
                             size="sm"
                             variant="outline"
-                            leftIcon={BackArrowIcon}
+                            leftIcon={IconArrowBack}
                           >
                             Zurück zum aktuellen Monat
                           </Button>
@@ -847,7 +847,7 @@ const CalendarHeader = ({
     <IconButton
       variant="ghost"
       ariaLabel={leftAriaLabel}
-      icon={ChevronLeftIcon}
+      icon={IconChevronLeft}
       onClick={leftArrowFunction}
       size="sm"
       disabled={leftArrowDisabled}
@@ -865,7 +865,7 @@ const CalendarHeader = ({
     <IconButton
       variant="ghost"
       ariaLabel={rightAriaLabel}
-      icon={ChevronRightIcon}
+      icon={IconChevronRight}
       onClick={rightArrowFunction}
       size="sm"
       disabled={rightArrowDisabled}

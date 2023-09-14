@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { bgColors, gaps, paddingsEvenly, scrollbar } from "../../../../styles";
-import { CrossIcon, MenuIcon } from "../../../../theme/icons";
+import { IconX, IconMenu2 } from "@tabler/icons-react";
 import { useRefDimensions } from "../../../../utils/internal";
 import { Button, IconButton } from "../../../ui/Button";
 import { DisclosureGroup } from "../../../ui/Disclosure";
@@ -55,7 +55,7 @@ export const MobileNav = ({
         {navItems && navItems.length > 0 && (
           <IconButton
             className={cn(textColor)}
-            icon={mobileNavOpen ? CrossIcon : MenuIcon}
+            icon={mobileNavOpen ? IconX : IconMenu2}
             variant="ghost"
             ariaLabel="Toggle Navigation"
             onClick={() => setMobileNavOpen(!mobileNavOpen)}

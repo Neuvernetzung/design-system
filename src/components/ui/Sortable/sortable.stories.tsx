@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { Sortable, SortableItem, UseSortableChange } from ".";
 import { Text, IconButton } from "..";
-import { Bars2Icon } from "@heroicons/react/24/outline";
+import { IconGripVertical } from "@tabler/icons-react";
 import cn from "classnames";
 import { bgColorsInteractive, paddingsEvenly } from "../../../styles";
 
@@ -119,7 +119,7 @@ export const WithHandle = ({ ...args }) => {
                 ariaLabel={`drag_handle_${i}`}
                 size="sm"
                 variant="ghost"
-                icon={Bars2Icon}
+                icon={IconGripVertical}
               />
               <Text>{item.content}</Text>
             </div>

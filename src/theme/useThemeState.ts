@@ -16,6 +16,7 @@ export type ThemeState = {
   adjustedTextColorState: Record<ExtendedColor, string>;
   requiredInfoVariant: RequiredInfoVariant;
   pagePadding: Size;
+  iconStrokeWidth: number;
 };
 
 export type CreateThemeStoreProps = {
@@ -24,6 +25,7 @@ export type CreateThemeStoreProps = {
   borderRadius?: Size;
   requiredInfoVariant?: RequiredInfoVariant;
   pagePadding?: Size;
+  iconStrokeWidth?: number;
 };
 
 export const createThemeStore = ({
@@ -32,6 +34,7 @@ export const createThemeStore = ({
   borderRadius = "md",
   requiredInfoVariant = "star",
   pagePadding = "md",
+  iconStrokeWidth = 1.5,
 }: CreateThemeStoreProps) =>
   createStore(
     persist(
@@ -51,6 +54,7 @@ export const createThemeStore = ({
           ),
           requiredInfoVariant,
           pagePadding,
+          iconStrokeWidth,
         };
       },
       {

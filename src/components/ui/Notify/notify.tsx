@@ -11,10 +11,11 @@ import { create } from "zustand";
 
 import { zIndexes } from "../../../styles";
 import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  InformationCircleIcon,
-} from "../../../theme/icons";
+  IconCircleCheck,
+  IconAlertTriangle,
+  IconInfoSquareRounded,
+} from "@tabler/icons-react";
+
 import type { Color, SvgType, ToastVariant } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { isLoading, loading } from "../Loading/loading";
@@ -77,14 +78,14 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
   }, [notification]);
 
   const icons: Record<Color, SvgType> = {
-    brand: CheckCircleIcon,
-    primary: CheckCircleIcon,
-    accent: InformationCircleIcon,
-    success: CheckCircleIcon,
-    warn: ExclamationCircleIcon,
-    danger: ExclamationCircleIcon,
-    black: InformationCircleIcon,
-    white: InformationCircleIcon,
+    brand: IconCircleCheck,
+    primary: IconCircleCheck,
+    accent: IconInfoSquareRounded,
+    success: IconCircleCheck,
+    warn: IconAlertTriangle,
+    danger: IconAlertTriangle,
+    black: IconInfoSquareRounded,
+    white: IconInfoSquareRounded,
   };
 
   return (

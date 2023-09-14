@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Button, Prose } from "..";
 import { RichText } from ".";
 import { Editor } from "@tiptap/react";
-import { PhotoIcon } from "../../../theme/icons";
+import { IconPhoto } from "@tabler/icons-react";
 import { Form } from "../Form/form";
 
 export default {
@@ -99,7 +99,7 @@ export const SelectOnTopOfEachOther = ({ ...args }) => {
 const MenuButtonItem = ({ editor }: { editor: Editor | null }) => (
   <Button
     size="sm"
-    leftIcon={PhotoIcon}
+    leftIcon={IconPhoto}
     onClick={() => {
       editor
         ?.chain()

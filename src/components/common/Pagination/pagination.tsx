@@ -2,8 +2,7 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
-import { ChevronLeftIcon, ChevronRightIcon } from "../../../theme/icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { updateQuery } from "../../../utils/internal/updateQuery";
@@ -149,7 +148,7 @@ const Pagination = ({
               type="button"
               onClick={() => handlePage(internalPage - 1)}
               disabled={internalPage === 1}
-              icon={ChevronLeftIcon}
+              icon={IconChevronLeft}
               ariaLabel="before page"
               size={size}
             />
@@ -190,7 +189,7 @@ const Pagination = ({
               variant="ghost"
               type="button"
               onClick={() => handlePage(internalPage + 1)}
-              icon={ChevronRightIcon}
+              icon={IconChevronRight}
               disabled={internalPage === Math.ceil(result / internalLimit)}
               ariaLabel="next page"
               size={size}

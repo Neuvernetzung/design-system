@@ -12,7 +12,7 @@ import {
 import type { ExtendedColor, Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
-import { Text } from "../Typography";
+import { Text } from "../Typography/Text";
 import { iconDimensions } from "../Icon/icon";
 
 export const useLoadingState = create<string | boolean>(() => false);

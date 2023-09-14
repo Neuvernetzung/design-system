@@ -19,7 +19,6 @@ import {
   getColorVariables,
   type ReturnedColors,
 } from "./extendColors";
-import { Icons } from "./icons";
 import {
   createThemeStore,
   ThemeContext,
@@ -36,7 +35,6 @@ type ThemeProviderProps = {
 export type ConfigProps = {
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
-  icons?: "outline" | "solid" | Icons;
   borderRadius?: Size;
   requiredInfoVariant?: RequiredInfoVariant;
   pagePadding?: Size;
@@ -46,6 +44,7 @@ export type ConfigProps = {
   forcedTheme?: "system" | "light" | "dark";
   disableSetTheme?: boolean;
   preferSetValuesOverConfig?: boolean;
+  iconStrokeWidth?: number;
 } & NotificationConfigProps;
 
 type NotificationConfigProps =
@@ -69,6 +68,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     requiredInfoVariant,
     pagePadding,
     preferSetValuesOverConfig,
+    iconStrokeWidth,
   } = config || {};
 
   const store = useRef(
@@ -78,6 +78,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
       borderRadius,
       requiredInfoVariant,
       pagePadding,
+      iconStrokeWidth,
     })
   ).current;
 
@@ -86,6 +87,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     colors,
     darkColors,
     borderRadius,
+    iconStrokeWidth,
     preferSetValuesOverConfig,
   });
 
@@ -149,6 +151,7 @@ type UseThemeProps = {
   colors?: Partial<ExtendColors>;
   darkColors?: Partial<ExtendColors>;
   borderRadius?: Size;
+  iconStrokeWidth?: number;
   preferSetValuesOverConfig?: boolean;
 };
 
@@ -159,6 +162,7 @@ export const useTheme = (
     colors,
     darkColors,
     borderRadius,
+    iconStrokeWidth,
     preferSetValuesOverConfig,
   }: UseThemeProps
 ) => {
@@ -176,6 +180,11 @@ export const useTheme = (
     if (preferSetValuesOverConfig) return;
     if (borderRadius) setBorderRadius(store, selector, borderRadius);
   }, [borderRadius, store]);
+
+  useEffect(() => {
+    if (preferSetValuesOverConfig) return;
+    if (iconStrokeWidth) setIconStrokeWidth(store, selector, iconStrokeWidth);
+  }, [iconStrokeWidth, store]);
 };
 
 export const setColors = (
@@ -226,5 +235,15 @@ export const setBorderRadius = (
       getBorderRadiusVariables(extendedBorderRadius);
 
     createCSSSelector(selector, cssBorderRadiusVariables);
+  }
+};
+
+export const setIconStrokeWidth = (
+  themeStore: ThemeStore,
+  selector: ":root" | string,
+  iconStrokeWidth?: number
+) => {
+  if (selector === ":root") {
+    themeStore.setState({ iconStrokeWidth });
   }
 };

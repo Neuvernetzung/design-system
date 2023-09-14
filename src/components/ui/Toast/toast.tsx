@@ -11,7 +11,7 @@ import {
   shadows,
   textColors,
 } from "../../../styles";
-import { CrossIcon } from "../../../theme/icons";
+import { IconX } from "@tabler/icons-react";
 import { useThemeState } from "../../../theme/useThemeState";
 import type {
   Color,
@@ -22,7 +22,7 @@ import type {
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
-import { Text } from "../Typography";
+import { Text } from "../Typography/Text";
 
 export type ToastProps = {
   message: string;
@@ -109,7 +109,7 @@ export const Toast = ({
         ariaLabel="close-dialog"
         onClick={handleClose}
         color="inherit"
-        icon={CrossIcon}
+        icon={IconX}
         className={cn(variants(color, adjustedTextColorState)[variant].close)}
       />
     </m.div>

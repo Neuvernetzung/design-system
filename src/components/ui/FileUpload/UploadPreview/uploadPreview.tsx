@@ -1,4 +1,4 @@
-import { CrossIcon } from "../../../../theme/icons";
+import { IconX } from "@tabler/icons-react";
 import { formatBytes } from "../../../../utils/internal";
 import { IconButton } from "../../Button";
 import { ProgressBar } from "../../Progress";
@@ -38,7 +38,7 @@ export const FileUploadPreview = ({
             onClick={() => remove()}
             variant="ghost"
             size="sm"
-            icon={CrossIcon}
+            icon={IconX}
           />
         )}
       </div>

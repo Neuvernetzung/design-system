@@ -2,7 +2,7 @@ import cn from "classnames";
 
 import { gaps, pagePaddings } from "../../../../styles";
 import { useThemeStateValue } from "../../../../theme";
-import { ChevronDownIcon } from "../../../../theme/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 import { minSize, smallerSize } from "../../../../utils";
 import { Text } from "../../../ui/Typography/Text";
 import { Button } from "../../../ui/Button";
@@ -71,7 +71,7 @@ export const DesktopItems = ({
                     referenceElement={fullWidthPopover ? navbarRef : undefined}
                     buttonProps={{
                       leftIcon: icon,
-                      ...(!hideChevron ? { rightIcon: ChevronDownIcon } : {}),
+                      ...(!hideChevron ? { rightIcon: IconChevronDown } : {}),
                       variant: "ghost",
                       disabled,
                       size: minSize(size, "sm"),

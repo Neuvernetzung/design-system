@@ -5,7 +5,7 @@ import isString from "lodash/isString";
 import { ReactNode } from "react";
 
 import { borders, paddings } from "../../../styles";
-import { ChevronDownIcon, MinusIcon, PlusIcon } from "../../../theme/icons";
+import { IconChevronDown, IconMinus, IconPlus } from "@tabler/icons-react";
 import type { DisclosureVariant, ExtendedColor, Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { Button, ButtonProps } from "../Button";
@@ -150,10 +150,10 @@ const Disclosure = ({
                   size={size}
                   icon={
                     icon === "chevron"
-                      ? ChevronDownIcon
+                      ? IconChevronDown
                       : !open
-                      ? PlusIcon
-                      : MinusIcon
+                      ? IconPlus
+                      : IconMinus
                   }
                 />
               </m.span>

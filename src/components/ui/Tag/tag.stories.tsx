@@ -1,4 +1,4 @@
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { IconSettings } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
 import React from "react";
 
@@ -28,7 +28,7 @@ Sizes.parameters = {
 
 export const Variants = ({ ...args }) => (
   <Container>
-    {tagVariants.map((variant: any) => (
+    {tagVariants.map((variant) => (
       <Tag key={variant} label={variant} variant={variant} {...args} />
     ))}
   </Container>
@@ -40,7 +40,7 @@ Variants.parameters = {
 
 export const Colors = ({ ...args }) => (
   <Container>
-    {colors.map((color: any) => (
+    {colors.map((color) => (
       <Tag key={color} label={color} color={color} {...args} />
     ))}
   </Container>
@@ -52,17 +52,17 @@ Colors.parameters = {
 
 export const WithIcon = ({ ...args }) => (
   <Container>
-    <Tag label="left" leftIcon={Cog6ToothIcon} {...args} />
-    <Tag label="left" rightIcon={Cog6ToothIcon} {...args} />
-    <Tag leftIcon={Cog6ToothIcon} {...args} />
+    <Tag label="left" leftIcon={IconSettings} {...args} />
+    <Tag label="left" rightIcon={IconSettings} {...args} />
+    <Tag leftIcon={IconSettings} {...args} />
   </Container>
 );
 
 export const Rounded = ({ ...args }) => (
   <Container>
     <Tag rounded label="rounded" {...args} />
-    <Tag rounded label="rounded" leftIcon={Cog6ToothIcon} {...args} />
-    <Tag rounded leftIcon={Cog6ToothIcon} {...args} />
+    <Tag rounded label="rounded" leftIcon={IconSettings} {...args} />
+    <Tag rounded leftIcon={IconSettings} {...args} />
   </Container>
 );
 export const Element = ({ ...args }) => (
