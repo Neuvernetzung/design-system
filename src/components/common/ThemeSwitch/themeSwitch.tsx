@@ -1,7 +1,8 @@
-import { useTheme } from "next-themes";
 import { IconDeviceDesktop, IconMoon, IconSun } from "@tabler/icons-react";
-import { IconButton, Menu } from "../../ui";
+import { useTheme } from "next-themes";
+
 import type { Size } from "../../../types";
+import { IconButton, Menu } from "../../ui";
 
 type ThemeSwitchProps = {
   textColor?: string;
@@ -15,6 +16,8 @@ export const ThemeSwitch = ({ textColor, size = "md" }: ThemeSwitchProps) => {
     if (resolvedTheme === "light") setTheme("dark");
     if (resolvedTheme === "dark") setTheme("light");
   };
+
+  if (!resolvedTheme) return null; // Serverside
 
   return (
     <IconButton
