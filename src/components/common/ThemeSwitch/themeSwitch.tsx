@@ -33,8 +33,6 @@ export const ThemeSwitch = ({ textColor, size = "md" }: ThemeSwitchProps) => {
     if (resolvedTheme === "dark") setTheme("light");
   };
 
-  if (!resolvedTheme) return null; // Serverside
-
   return (
     <IconButton
       size={size}
