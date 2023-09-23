@@ -1,16 +1,32 @@
 import { IconDeviceDesktop, IconMoon, IconSun } from "@tabler/icons-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 import type { Size } from "../../../types";
-import { IconButton, Menu } from "../../ui";
+import { IconButton } from "../../ui/Button";
+import { Menu } from "../../ui/Menu";
 
 type ThemeSwitchProps = {
   textColor?: string;
   size?: Size;
 };
 
+const useThemeSwitcher = () => {
+  // Zusätzlicher hook mit useEffect wird nur benötigt, da sonst ein Hydration mismatch auftreten kann.
+  const [resolved, setResolved] = useState<string | undefined>();
+  const [theme_, setTheme_] = useState<string | undefined>();
+  const { theme, resolvedTheme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setTheme_(theme);
+    setResolved(resolvedTheme);
+  }, [resolvedTheme]);
+
+  return { theme: theme_, resolvedTheme: resolved, setTheme };
+};
+
 export const ThemeSwitch = ({ textColor, size = "md" }: ThemeSwitchProps) => {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useThemeSwitcher();
 
   const handleSwitchTheme = () => {
     if (resolvedTheme === "light") setTheme("dark");
@@ -35,7 +51,7 @@ export const ThemeSwitchMenu = ({
   textColor,
   size = "md",
 }: ThemeSwitchProps) => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useThemeSwitcher();
 
   return (
     <Menu

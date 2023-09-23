@@ -134,7 +134,7 @@ export const ThemeStyles = () => {
     <style>
       {`
   :root {
-    ${cssColorVariables}
+    ${cssColorVariables};
     ${cssRadiiVariables}
   }
   
