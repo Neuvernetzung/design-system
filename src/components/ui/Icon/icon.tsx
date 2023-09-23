@@ -15,7 +15,7 @@ import type {
 import { extendedTextColors } from "../../../styles";
 import type { ExtendedColor, Size, SvgType } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
-import { useThemeStateValue } from "../../../theme";
+import { useThemeStateValue } from "../../../theme/useThemeState";
 
 export const iconDimensions: Record<Size, string> = {
   xs: "h-4 w-4",

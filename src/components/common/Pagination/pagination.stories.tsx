@@ -1,7 +1,7 @@
 import { Meta } from "@storybook/react";
 import React, { useState } from "react";
 
-import { Modal, Text } from "../../ui";
+import { Button, Modal, Text } from "../../ui";
 import { Pagination } from ".";
 
 export default {
@@ -13,8 +13,8 @@ export default {
 export const Default = ({ ...args }) => <Pagination result={10000} {...args} />;
 
 export const WithState = ({ ...args }) => {
-  const [page, setPage] = useState<number>();
-  const [limit, setLimit] = useState<number>();
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
 
   return (
     <div>
@@ -84,6 +84,18 @@ export const Multiple = ({ ...args }) => {
         result={10000}
         {...args}
       />
+    </div>
+  );
+};
+
+export const ToLastPage = ({ ...args }) => {
+  const [result, setResult] = useState(50);
+
+  return (
+    <div>
+      <Button onClick={() => setResult(50)}>50</Button>
+      <Button onClick={() => setResult(100)}>100</Button>
+      <Pagination result={result} />
     </div>
   );
 };
