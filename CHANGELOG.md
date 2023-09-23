@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.1.1
+
+### Patch Changes
+
+- 077b3c1: keyboard=true zu Carousel hinzufügen #983
+- baee87f: ThemeSwitch nur in client anzeigen #985
+- dc4ecd6: Tooltip Delay Props fehlerhaft #982
+- a806b39: Anchor props "as" hinzufügen #979
+- 1aceba4: Pagination optimieren #981
+
 ## 2.1.0
 
 ### Minor Changes
