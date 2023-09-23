@@ -11,7 +11,7 @@ import { create } from "zustand";
 
 export type PaginationProps = {
   limits?: number[];
-  result?: number;
+  result: number;
   emptyMessage?: string;
   size?: Size;
   containerClassName?: string;
@@ -73,7 +73,7 @@ const Pagination = ({
     },
   });
   const watchLimit = formMethods.watch("limit");
-  const { page: p = 1, ...restQuery }: any = router.query;
+  const p = router.query.page !== undefined ? Number(router.query.page) : 1;
 
   const internalPage = setActivePage ? activePage : Number(p);
   const internalLimit = setLimit
@@ -111,13 +111,12 @@ const Pagination = ({
     }
   }, [watchLimit]);
 
-  const restQs = JSON.stringify(restQuery);
-
   useEffect(() => {
-    if (p && Number(p) !== 1) {
-      handlePage(1);
-    }
-  }, [restQs]);
+    // Wenn sich das Result oder Limit ändert z.B. durch Filtern einer anderen Funktion oä. wird automatisch zur letzten Seite gesprungen.
+    if (internalPage * internalLimit <= result) return;
+
+    handlePage(Math.ceil(result / internalLimit));
+  }, [result, internalLimit]);
 
   return (
     <div
