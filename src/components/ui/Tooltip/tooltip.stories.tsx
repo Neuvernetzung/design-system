@@ -43,3 +43,11 @@ export const TooltipInnerView = ({ ...args }) => (
     <TooltipInner label="test" {...args} />
   </Container>
 );
+
+export const Delay = ({ ...args }) => (
+  <Container>
+    <Tooltip placement="top" label="Dies ist ein Tooltip" delay={500} {...args}>
+      <Button>500ms</Button>
+    </Tooltip>
+  </Container>
+);

@@ -6,6 +6,7 @@ import {
   forwardRef,
   ReactElement,
   ReactNode,
+  useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
@@ -39,9 +40,13 @@ export const Tooltip = ({
   delay = 0,
 }: TooltipProps) => {
   const [hover, setHover] = useState<boolean>(false);
+  const isEntering = useRef<boolean>(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
     null
   );
+
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
 
   const offset = popperOffset({ size });
@@ -60,11 +65,26 @@ export const Tooltip = ({
 
   if (!label) return children;
 
+  const handleMouseEnter = () => {
+    isEntering.current = true;
+    timeoutRef.current = setTimeout(() => {
+      if (isEntering.current === true) setHover(true);
+    }, delay);
+  };
+
+  const handleMouseLeave = () => {
+    isEntering.current = false;
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setHover(false);
+  };
+
   return (
     <>
       <span
-        onMouseEnter={() => setTimeout(() => setHover(true), delay)}
-        onMouseLeave={() => setHover(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         ref={setReferenceElement}
       >
         {children}
