@@ -3,8 +3,9 @@ import NextLink from "next/link";
 import { AnchorHTMLAttributes, ReactElement } from "react";
 
 import { linkStyle } from "../../../../styles/link";
-import { hrefRegex, pathRegex } from "../../../../utils/internal";
 import { Color } from "../../../../types";
+import { Icon } from "../../Icon";
+import { IconExternalLink } from "@tabler/icons-react";
 
 export type AnchorProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href?: string;
@@ -25,46 +26,29 @@ export const Anchor = ({
         {children}
       </span>
     );
-  if (hrefRegex.test(href))
-    return (
-      <AnchorInner href={href} className={className}>
-        {children}
-      </AnchorInner>
-    );
-  if (pathRegex.test(href))
-    return (
-      <NextLink href={href}>
-        <span className={cn(linkStyle({ color }), className)} {...props}>
-          {children}
-        </span>
-      </NextLink>
-    );
+
+  const isExternal = isValidHttpUrl(href);
+
   return (
-    <AnchorInner href={href} className={className}>
+    <NextLink
+      href={href}
+      rel={isExternal ? "noopener noreferrer nofollow" : undefined}
+      className={cn(linkStyle({ color }), "inline-flex", className)}
+      {...props}
+    >
       {children}
-    </AnchorInner>
+      {isExternal && (
+        <Icon icon={IconExternalLink} color={color} className="!inline" />
+      )}
+    </NextLink>
   );
 };
 
-type AnchorInnerProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  href?: string;
-  children?: ReactElement | string;
-  color?: Color;
+const isValidHttpUrl = (href: string) => {
+  try {
+    const url = new URL(href);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch (_) {
+    return false;
+  }
 };
-
-const AnchorInner = ({
-  href,
-  className,
-  children,
-  color = "accent",
-  ...props
-}: AnchorInnerProps) => (
-  <a
-    href={href}
-    rel="noopener noreferrer nofollow"
-    className={cn(linkStyle({ color }), className)}
-    {...props}
-  >
-    {children}
-  </a>
-);
