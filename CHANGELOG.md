@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.1.3
+
+### Patch Changes
+
+- b11005a: ThemeSwitch nicht ausblenden #995
+
 ## 2.1.2
 
 ### Patch Changes
