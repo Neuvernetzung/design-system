@@ -85,6 +85,7 @@ export const Carousel = ({
         ]}
         spaceBetween={0}
         slidesPerView={1}
+        keyboard
         autoplay={autoplay}
         loop={loop}
         onSwiper={controller ? controller.setSwiper : undefined}
