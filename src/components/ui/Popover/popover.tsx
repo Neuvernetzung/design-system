@@ -25,7 +25,7 @@ import {
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
+import { typedMemo, useOutsideClick } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps, IconButtonProps } from "../Button";
 import { Button, IconButton } from "../Button";
@@ -86,11 +86,16 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
     const buttonRef = useRef<HTMLButtonElement>();
+    const panelRef = useRef<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] =
       useState<HTMLElement | null>(null);
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
+
+    useOutsideClick(panelRef, () => {
+      if (isControlled) controller.close();
+    });
 
     const isControlled = !isNil(controller);
 
@@ -195,6 +200,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
                 as="span"
                 focus={focus}
                 static={isControlled}
+                ref={panelRef}
               >
                 <div
                   ref={setPopperElement}
