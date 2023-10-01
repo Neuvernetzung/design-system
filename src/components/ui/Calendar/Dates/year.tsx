@@ -13,7 +13,13 @@ import {
   startOfDecade,
   subYears,
 } from "date-fns";
-import { type KeyboardEvent, useEffect, useRef, useState } from "react";
+import {
+  type KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+  WheelEvent,
+} from "react";
 
 import { ARROW_KEYS } from "../../../../constants";
 import { gaps } from "../../../../styles";
@@ -133,7 +139,17 @@ export const CalendarDateYearView = ({
         titleFunction={headerTitleFunction}
         onKeyDown={focusFromOutsideYears}
       />
-      <div ref={yearsRef} className="grid grid-cols-5">
+      <div
+        ref={yearsRef}
+        className="grid grid-cols-5"
+        onWheel={(e: WheelEvent) => {
+          if (e.deltaY > 0) {
+            setViewing(addYears(viewing, 10));
+          } else {
+            setViewing(subYears(viewing, 10));
+          }
+        }}
+      >
         {eachYearOfInterval({
           start: startOfDecade(viewing),
           end: endOfDecade(viewing),

@@ -14,7 +14,8 @@ import {
   startOfMonth,
   subDays,
 } from "date-fns";
-import { type KeyboardEvent, useEffect, useRef, useState } from "react";
+import type { KeyboardEvent, WheelEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ARROW_KEYS } from "../../../../constants";
 import { gaps, transitionFast } from "../../../../styles";
@@ -185,7 +186,17 @@ export const CalendarDateDayView = ({
           ))}
         </div>
 
-        <div ref={daysRef} className="grid grid-cols-7">
+        <div
+          ref={daysRef}
+          className="grid grid-cols-7"
+          onWheel={(e: WheelEvent) => {
+            if (e.deltaY > 0) {
+              viewNextMonth();
+            } else {
+              viewPreviousMonth();
+            }
+          }}
+        >
           {calendar[0].map((week) =>
             week.map((day) => (
               <Button
