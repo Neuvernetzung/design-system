@@ -24,6 +24,7 @@ import { Text } from "../../Typography/Text";
 import { useCalendar } from "../hooks/useCalendar";
 import type { CalendarProps } from ".";
 import { CalendarHeader } from "./header";
+import { Indicator } from "../../Indicator";
 
 export type CalenderDateDayViewProps = CalendarProps & {
   headerTitleFunction?: () => void;
@@ -35,6 +36,7 @@ export const CalendarDateDayView = ({
   maxDate,
   headerTitleFunction,
   calendarProps: _calendarProps,
+  indicators,
 }: CalenderDateDayViewProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -235,6 +237,7 @@ export const CalendarDateDayView = ({
                 variant={!isSelected(day) ? "ghost" : "filled"}
                 color={!isSelected(day) ? "accent" : "primary"}
                 className={cn(
+                  "relative",
                   !inRange(day, startOfMonth(viewing), endOfMonth(viewing)) &&
                     "opacity-50",
                   transitionFast
@@ -257,7 +260,20 @@ export const CalendarDateDayView = ({
                   (maxDate && isAfter(day, clearTime(maxDate)))
                 }
               >
-                {dayFormatter.format(day)}
+                {indicators?.find(
+                  (date) =>
+                    dataIdFormatter.format(date) === dataIdFormatter.format(day)
+                ) ? (
+                  <>
+                    {dayFormatter.format(day)}
+                    <Indicator
+                      size="sm"
+                      wrapperClassName="!absolute bottom-1"
+                    />
+                  </>
+                ) : (
+                  dayFormatter.format(day)
+                )}
               </Button>
             ))
           )}

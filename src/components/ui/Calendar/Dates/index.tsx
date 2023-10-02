@@ -15,6 +15,7 @@ export type CalendarProps = {
   calendarProps?: UseCalendarProps;
   minDate?: Date;
   maxDate?: Date;
+  indicators?: Date[];
 };
 
 export const calendarViews = ["dates", "months", "years"] as const;
@@ -26,6 +27,7 @@ export const Calendar = ({
   minDate,
   maxDate,
   calendarProps: _calendarProps,
+  indicators,
 }: CalendarProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -43,6 +45,7 @@ export const Calendar = ({
           maxDate={maxDate}
           headerTitleFunction={() => setCurrentView("months")}
           calendarProps={calendarProps}
+          indicators={indicators}
         />
       )}
       {currentView === "months" && (
@@ -55,6 +58,7 @@ export const Calendar = ({
           maxDate={maxDate}
           headerTitleFunction={() => setCurrentView("years")}
           calendarProps={calendarProps}
+          indicators={indicators}
         />
       )}
       {currentView === "years" && (
@@ -66,6 +70,7 @@ export const Calendar = ({
           minDate={minDate}
           maxDate={maxDate}
           calendarProps={calendarProps}
+          indicators={indicators}
         />
       )}
     </>

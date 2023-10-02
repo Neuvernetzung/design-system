@@ -15,7 +15,13 @@ import {
   subMonths,
   subYears,
 } from "date-fns";
-import { type KeyboardEvent, useEffect, useRef, useState } from "react";
+import {
+  type KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+  type WheelEvent,
+} from "react";
 
 import { ARROW_KEYS } from "../../../../constants";
 import { gaps } from "../../../../styles";
@@ -23,6 +29,7 @@ import { Button } from "../../Button";
 import { useCalendar } from "../hooks/useCalendar";
 import type { CalendarProps } from ".";
 import { CalendarHeader } from "./header";
+import { Indicator } from "../../Indicator";
 
 export type CalenderDateMonthViewProps = Omit<CalendarProps, "onClick"> & {
   onMonthClick?: (value: Date) => void;
@@ -35,6 +42,7 @@ export const CalendarDateMonthView = ({
   maxDate,
   headerTitleFunction,
   calendarProps: _calendarProps,
+  indicators,
 }: CalenderDateMonthViewProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -116,7 +124,8 @@ export const CalendarDateMonthView = ({
   });
 
   const dataIdFormatter = new Intl.DateTimeFormat(undefined, {
-    dateStyle: "short",
+    month: "2-digit",
+    year: "numeric",
   });
 
   useEffect(() => {
@@ -141,7 +150,17 @@ export const CalendarDateMonthView = ({
         title={titleFormatter.format(viewing)}
         onKeyDown={focusFromOutsideMonths}
       />
-      <div ref={monthsRef} className="grid grid-cols-4">
+      <div
+        ref={monthsRef}
+        className="grid grid-cols-4"
+        onWheel={(e: WheelEvent) => {
+          if (e.deltaY > 0) {
+            setViewing(addYears(viewing, 1));
+          } else {
+            setViewing(subYears(viewing, 1));
+          }
+        }}
+      >
         {new Array(12).fill(null).map((_, i) => {
           const monthDate = setMonth(setDate(clearTime(viewing), 1), i);
 
@@ -180,6 +199,7 @@ export const CalendarDateMonthView = ({
                   ? "filled"
                   : "ghost"
               }
+              className="relative"
               onClick={() => onMonthClick?.(monthDate)}
               data-id={dataIdFormatter.format(monthDate)}
               disabled={
@@ -188,7 +208,18 @@ export const CalendarDateMonthView = ({
                 (maxDate && isAfter(monthDate, lastDayOfMonth(maxDate)))
               }
             >
-              {monthFormatter.format(monthDate)}
+              {indicators?.find(
+                (date) =>
+                  dataIdFormatter.format(date) ===
+                  dataIdFormatter.format(monthDate)
+              ) ? (
+                <>
+                  {monthFormatter.format(monthDate)}
+                  <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
+                </>
+              ) : (
+                monthFormatter.format(monthDate)
+              )}
             </Button>
           );
         })}

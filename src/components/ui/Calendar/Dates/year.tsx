@@ -27,6 +27,7 @@ import { Button } from "../../Button";
 import { useCalendar } from "../hooks/useCalendar";
 import type { CalendarProps } from ".";
 import { CalendarHeader } from "./header";
+import { Indicator } from "../../Indicator";
 
 export type CalenderDateYearViewProps = Omit<CalendarProps, "onClick"> & {
   onYearClick?: (value: Date) => void;
@@ -39,6 +40,7 @@ export const CalendarDateYearView = ({
   maxDate,
   headerTitleFunction,
   calendarProps: _calendarProps,
+  indicators,
 }: CalenderDateYearViewProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -190,6 +192,7 @@ export const CalendarDateYearView = ({
                 ? "filled"
                 : "ghost"
             }
+            className="relative"
             onClick={() => {
               onYearClick?.(year);
             }}
@@ -207,7 +210,17 @@ export const CalendarDateYearView = ({
                 ))
             }
           >
-            {yearFormatter.format(year)}
+            {indicators?.find(
+              (date) =>
+                yearFormatter.format(date) === yearFormatter.format(year)
+            ) ? (
+              <>
+                {yearFormatter.format(year)}
+                <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
+              </>
+            ) : (
+              yearFormatter.format(year)
+            )}
           </Button>
         ))}
       </div>
