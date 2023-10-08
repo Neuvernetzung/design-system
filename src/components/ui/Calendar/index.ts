@@ -1,2 +1,3 @@
 export * from "./Dates";
-export * from "./Events";
+export * from "./Schedule";
+export * from "./hooks";

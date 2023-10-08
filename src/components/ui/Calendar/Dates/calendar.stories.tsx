@@ -8,6 +8,7 @@ import {
   CalendarDateYearView,
 } from ".";
 import { addDays, subDays } from "date-fns";
+import { useCalendar } from "../hooks/useCalendar";
 
 export default {
   title: "UI/Data Display/Calendar",
@@ -27,14 +28,35 @@ export const Default = ({ ...args }) => (
   <Calendar indicators={indicators} {...args} />
 );
 
-export const Days = ({ ...args }) => (
-  <CalendarDateDayView indicators={indicators} {...args} />
-);
+export const Days = ({ ...args }) => {
+  const calendarProps = useCalendar();
+  return (
+    <CalendarDateDayView
+      indicators={indicators}
+      calendarProps={calendarProps}
+      {...args}
+    />
+  );
+};
 
-export const Months = ({ ...args }) => (
-  <CalendarDateMonthView indicators={indicators} {...args} />
-);
+export const Months = ({ ...args }) => {
+  const calendarProps = useCalendar();
+  return (
+    <CalendarDateMonthView
+      indicators={indicators}
+      calendarProps={calendarProps}
+      {...args}
+    />
+  );
+};
 
-export const Years = ({ ...args }) => (
-  <CalendarDateYearView indicators={indicators} {...args} />
-);
+export const Years = ({ ...args }) => {
+  const calendarProps = useCalendar();
+  return (
+    <CalendarDateYearView
+      indicators={indicators}
+      calendarProps={calendarProps}
+      {...args}
+    />
+  );
+};

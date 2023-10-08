@@ -24,27 +24,27 @@ import {
 import { ARROW_KEYS } from "../../../../constants";
 import { gaps } from "../../../../styles";
 import { Button } from "../../Button";
-import { useCalendar } from "../hooks/useCalendar";
 import type { CalendarProps } from ".";
 import { CalendarHeader } from "./header";
 import { Indicator } from "../../Indicator";
 
-export type CalenderDateYearViewProps = Omit<CalendarProps, "onClick"> & {
-  onYearClick?: (value: Date) => void;
-  headerTitleFunction?: () => void;
-};
+export type CalenderDateYearViewProps = Omit<
+  CalendarProps,
+  "calendarProps" | "onClick"
+> &
+  Required<Pick<CalendarProps, "calendarProps">> & {
+    onYearClick?: (value: Date) => void;
+    headerTitleFunction?: () => void;
+  };
 
 export const CalendarDateYearView = ({
   onYearClick,
   minDate,
   maxDate,
   headerTitleFunction,
-  calendarProps: _calendarProps,
+  calendarProps,
   indicators,
 }: CalenderDateYearViewProps) => {
-  const cal = useCalendar();
-  const calendarProps = _calendarProps || cal;
-
   const { inRange, selected, viewing, clearTime, setViewing } = calendarProps;
 
   const [preselectedYear, setPreselectedYear] = useState<Date>(new Date());

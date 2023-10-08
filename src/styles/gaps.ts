@@ -8,6 +8,14 @@ export const gapsSmall: Record<Size, string> = {
   xl: "gap-3",
 };
 
+export const gapsXSmall: Record<Size, string> = {
+  xs: "gap-x-0.5",
+  sm: "gap-x-1",
+  md: "gap-x-1.5",
+  lg: "gap-x-2",
+  xl: "gap-x-3",
+};
+
 export const gaps: Record<Size, string> = {
   xs: "gap-2",
   sm: "gap-3",

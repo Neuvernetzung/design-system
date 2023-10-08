@@ -21,26 +21,23 @@ import { ARROW_KEYS } from "../../../../constants";
 import { gaps, transitionFast } from "../../../../styles";
 import { Button, ButtonGroup } from "../../Button";
 import { Text } from "../../Typography/Text";
-import { useCalendar } from "../hooks/useCalendar";
 import type { CalendarProps } from ".";
 import { CalendarHeader } from "./header";
 import { Indicator } from "../../Indicator";
 
-export type CalenderDateDayViewProps = CalendarProps & {
-  headerTitleFunction?: () => void;
-};
+export type CalenderDateDayViewProps = Omit<CalendarProps, "calendarProps"> &
+  Required<Pick<CalendarProps, "calendarProps">> & {
+    headerTitleFunction?: () => void;
+  };
 
 export const CalendarDateDayView = ({
   onChange,
   minDate,
   maxDate,
   headerTitleFunction,
-  calendarProps: _calendarProps,
+  calendarProps,
   indicators,
 }: CalenderDateDayViewProps) => {
-  const cal = useCalendar();
-  const calendarProps = _calendarProps || cal;
-
   const {
     inRange,
     selected,
