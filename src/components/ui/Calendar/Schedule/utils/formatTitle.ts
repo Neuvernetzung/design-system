@@ -1,5 +1,9 @@
 import { isSameMonth, isSameYear } from "date-fns";
 
+export const timeFormatter = new Intl.DateTimeFormat(undefined, {
+  timeStyle: "short",
+});
+
 const dayFormatter = new Intl.DateTimeFormat(undefined, { day: "numeric" });
 
 const dayAndMonthFormatter = new Intl.DateTimeFormat(undefined, {

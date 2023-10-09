@@ -1,10 +1,12 @@
 import cn from "classnames";
-import { Calendar } from "../Dates";
 import { useState } from "react";
-import { ScheduleDayView } from "./day";
-import { divides, gaps, paddingsEvenly } from "../../../../styles";
-import { UseCalendarProps, useCalendar } from "../hooks/useCalendar";
 import type { VEvent } from "ts-ics";
+
+import { divides, gaps, paddingsEvenly } from "../../../../styles";
+import { Calendar } from "../Dates";
+import { useCalendar, UseCalendarProps } from "../hooks/useCalendar";
+import { ScheduleDayView } from "./day";
+import { ScheduleMonthView } from "./month";
 import { ScheduleWeekView } from "./week";
 
 export * from "./day";
@@ -13,16 +15,23 @@ export const scheduleViews = ["day", "week", "month"] as const;
 
 export type ScheduleView = (typeof scheduleViews)[number];
 
+export type ScheduleDisplayDaytime = {
+  start: number;
+  end: number;
+};
+
 export type ScheduleProps = {
   calendarProps?: UseCalendarProps;
   events?: VEvent[];
   rowsEachHour?: number;
+  displayDayTime?: ScheduleDisplayDaytime;
 };
 
 export const Schedule = ({
   calendarProps: _calendarProps,
   events = [],
   rowsEachHour,
+  displayDayTime,
 }: ScheduleProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -49,6 +58,7 @@ export const Schedule = ({
             setCurrentView={setCurrentView}
             calendarProps={calendarProps}
             rowsEachHour={rowsEachHour}
+            displayDayTime={displayDayTime}
           />
         )}
         {currentView === "week" && (
@@ -58,6 +68,15 @@ export const Schedule = ({
             setCurrentView={setCurrentView}
             calendarProps={calendarProps}
             rowsEachHour={rowsEachHour}
+            displayDayTime={displayDayTime}
+          />
+        )}
+        {currentView === "month" && (
+          <ScheduleMonthView
+            events={events}
+            currentView={currentView}
+            setCurrentView={setCurrentView}
+            calendarProps={calendarProps}
           />
         )}
       </div>

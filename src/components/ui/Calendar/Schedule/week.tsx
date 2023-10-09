@@ -8,19 +8,15 @@ import {
   extendedBorders,
   scrollbar,
 } from "../../../../styles";
-import type { ScheduleProps } from ".";
+import type { ScheduleDayViewProps } from ".";
 import { DayScheduleHead, ScheduleDay } from "./day";
 import { ScheduleDayGrid } from "./DayGrid";
-import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
+import { ScheduleHeader } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisWeeksEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
 
-export type ScheduleWeekViewProps = Omit<ScheduleProps, "calendarProps"> &
-  Required<Pick<ScheduleProps, "calendarProps">> &
-  Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
-    precisionInMinutes?: number;
-  };
+export type ScheduleWeekViewProps = ScheduleDayViewProps;
 
 export const ScheduleWeekView = ({
   currentView,
@@ -29,6 +25,7 @@ export const ScheduleWeekView = ({
   events,
   rowsEachHour = 2,
   precisionInMinutes = 5,
+  displayDayTime,
 }: ScheduleWeekViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
@@ -68,6 +65,8 @@ export const ScheduleWeekView = ({
         >
           {new Array(7).fill(null).map((_, i) => (
             <DayScheduleHead
+              setCurrentView={setCurrentView}
+              setViewing={setViewing}
               key={`week_day_head_${i}`}
               day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
             />
@@ -76,12 +75,15 @@ export const ScheduleWeekView = ({
         <div
           ref={gridInnerRef}
           className={cn(
-            "grid grid-cols-7 auto-rows-auto ml-12 border",
+            "grid grid-cols-7 auto-rows-auto ml-12 border-x border-b",
             extendedBgColors.subtile,
             extendedBorders.filled
           )}
         >
-          <ScheduleDayGrid rowsEachHour={rowsEachHour} />
+          <ScheduleDayGrid
+            rowsEachHour={rowsEachHour}
+            displayDayTime={displayDayTime}
+          />
 
           {new Array(7).fill(null).map((_, i) => (
             <ScheduleDay

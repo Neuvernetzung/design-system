@@ -13,6 +13,7 @@ import {
   subDays,
 } from "date-fns";
 import { ScheduleWeekView } from "./week";
+import { ScheduleMonthView } from "./month";
 
 export default {
   title: "UI/Data Display/Schedule",
@@ -141,9 +142,19 @@ const events: VEvent[] = [
     stamp: { date: setHours(date, 23) },
     duration: { hours: 3 },
   },
+  {
+    summary: "7 Tage lang",
+    uid: "123",
+    start: { date: setHours(date, 23) },
+    created: { date: setHours(date, 23) },
+    stamp: { date: setHours(date, 23) },
+    duration: { days: 7 },
+  },
 ];
 
-export const Default = ({ ...args }) => <Schedule events={events} {...args} />;
+export const Default = ({ ...args }) => (
+  <Schedule displayDayTime={{ start: 8, end: 18 }} events={events} {...args} />
+);
 
 export const Days = ({ ...args }) => {
   const calendarProps = useCalendar();
@@ -159,9 +170,16 @@ export const Weeks = ({ ...args }) => {
   );
 };
 
-// export const Months = ({ ...args }) => (
-//   <CalendarDateMonthView indicators={indicators} {...args} />
-// );
+export const Months = ({ ...args }) => {
+  const calendarProps = useCalendar();
+  return (
+    <ScheduleMonthView
+      events={events}
+      calendarProps={calendarProps}
+      {...args}
+    />
+  );
+};
 
 // export const Years = ({ ...args }) => (
 //   <CalendarDateYearView indicators={indicators} {...args} />

@@ -21,6 +21,8 @@ import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisDaysEvents } from "./utils/filterEvents";
 import { titleFormatter } from "./utils/formatTitle";
+import { Button } from "../../Button";
+import isFunction from "lodash/isFunction";
 
 export type ScheduleDayViewProps = Omit<ScheduleProps, "calendarProps"> &
   Required<Pick<ScheduleProps, "calendarProps">> &
@@ -35,6 +37,7 @@ export const ScheduleDayView = ({
   events,
   rowsEachHour = 2,
   precisionInMinutes = 5,
+  displayDayTime,
 }: ScheduleDayViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
@@ -61,7 +64,7 @@ export const ScheduleDayView = ({
       >
         <div
           className={cn(
-            "sticky z-[1] top-0 grid grid-cols-1 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",
+            "sticky z-[1] top-0 grid grid-cols-1 border ml-12 divide-x divide-opacity-50 dark:divide-opacity-50",
             extendedBorders.filled
           )}
         >
@@ -70,12 +73,15 @@ export const ScheduleDayView = ({
         <div
           ref={gridInnerRef}
           className={cn(
-            "grid grid-cols-1 grid-rows-1 ml-12 border",
+            "grid grid-cols-1 grid-rows-1 ml-12 border-x border-b",
             extendedBgColors.subtile,
             extendedBorders.filled
           )}
         >
-          <ScheduleDayGrid rowsEachHour={rowsEachHour} />
+          <ScheduleDayGrid
+            rowsEachHour={rowsEachHour}
+            displayDayTime={displayDayTime}
+          />
           <ScheduleDay
             events={events}
             day={viewing}
@@ -87,9 +93,16 @@ export const ScheduleDayView = ({
   );
 };
 
-export type DayScheduleHeadProps = { day: Date };
+export type DayScheduleHeadProps = {
+  day: Date;
+  setViewing?: (viewing: Date) => void;
+} & Pick<ScheduleHeaderProps, "setCurrentView">;
 
-export const DayScheduleHead = ({ day }: DayScheduleHeadProps) => {
+export const DayScheduleHead = ({
+  day,
+  setCurrentView,
+  setViewing,
+}: DayScheduleHeadProps) => {
   const dayTitleFormatter = new Intl.DateTimeFormat(undefined, {
     weekday: "short",
     day: "numeric",
@@ -106,9 +119,23 @@ export const DayScheduleHead = ({ day }: DayScheduleHeadProps) => {
         heights.md
       )}
     >
-      <Text color={today ? "primary" : "accent"} size="sm">
-        {dayTitleFormatter.format(day)}
-      </Text>
+      {isFunction(setCurrentView) ? (
+        <Button
+          onClick={() => {
+            setCurrentView?.("day");
+            setViewing?.(day);
+          }}
+          variant="ghost"
+          color={today ? "primary" : "accent"}
+          size="sm"
+        >
+          {dayTitleFormatter.format(day)}
+        </Button>
+      ) : (
+        <Text color={today ? "primary" : "accent"} size="sm">
+          {dayTitleFormatter.format(day)}
+        </Text>
+      )}
     </div>
   );
 };
