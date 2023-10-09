@@ -8,16 +8,19 @@ import {
   extendedBgColors,
   extendedBorders,
   gapsXSmall,
+  heights,
   paddingsXSmall,
   paddingsYSmall,
   scrollbar,
 } from "../../../../styles";
+import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
 import { layoutDayEvents, ScheduleDayGrid } from "./DayGrid";
 import { Event } from "./Event";
 import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisDaysEvents } from "./utils/filterEvents";
+import { titleFormatter } from "./utils/formatTitle";
 
 export type ScheduleDayViewProps = Omit<ScheduleProps, "calendarProps"> &
   Required<Pick<ScheduleProps, "calendarProps">> &
@@ -38,10 +41,6 @@ export const ScheduleDayView = ({
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const gridInnerRef = useRef<HTMLDivElement>(null);
 
-  const titleFormatter = new Intl.DateTimeFormat(undefined, {
-    dateStyle: "full",
-  });
-
   useScrollToTime({ gridContainerRef, gridInnerRef });
 
   return (
@@ -58,8 +57,16 @@ export const ScheduleDayView = ({
       />
       <div
         ref={gridContainerRef}
-        className={cn("overflow-y-scroll", scrollbar)}
+        className={cn("overflow-y-scroll relative", scrollbar)}
       >
+        <div
+          className={cn(
+            "sticky z-[1] top-0 grid grid-cols-1 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",
+            extendedBorders.filled
+          )}
+        >
+          <DayScheduleHead day={viewing} />
+        </div>
         <div
           ref={gridInnerRef}
           className={cn(
@@ -71,7 +78,7 @@ export const ScheduleDayView = ({
           <ScheduleDayGrid rowsEachHour={rowsEachHour} />
           <ScheduleDay
             events={events}
-            calendarProps={calendarProps}
+            day={viewing}
             precisionInMinutes={precisionInMinutes}
           />
         </div>
@@ -80,21 +87,49 @@ export const ScheduleDayView = ({
   );
 };
 
+export type DayScheduleHeadProps = { day: Date };
+
+export const DayScheduleHead = ({ day }: DayScheduleHeadProps) => {
+  const dayTitleFormatter = new Intl.DateTimeFormat(undefined, {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
+
+  const today = isToday(day);
+
+  return (
+    <div
+      className={cn(
+        "flex justify-center items-center",
+        bgColors.white,
+        heights.md
+      )}
+    >
+      <Text color={today ? "primary" : "accent"} size="sm">
+        {dayTitleFormatter.format(day)}
+      </Text>
+    </div>
+  );
+};
+
 export type ScheduleDayProps = Pick<
   ScheduleDayViewProps,
-  "calendarProps" | "events" | "precisionInMinutes"
->;
+  "events" | "precisionInMinutes"
+> & {
+  dayOfWeek?: number;
+  day: Date;
+};
 
 export const ScheduleDay = ({
-  calendarProps,
   events,
   precisionInMinutes,
+  day,
+  dayOfWeek,
 }: ScheduleDayProps) => {
-  const { viewing } = calendarProps;
-
   const { layout, rows } = layoutDayEvents(
-    getThisDaysEvents(events || [], viewing),
-    viewing,
+    getThisDaysEvents(events || [], day),
+    day,
     {
       return: "columns",
       precisionInMinutes,
@@ -104,21 +139,22 @@ export const ScheduleDay = ({
   return (
     <ol
       className={cn(
-        "grid col-start-1 col-span-1 row-span-1 row-start-1 relative",
+        "grid col-span-1 row-span-1 row-start-1 relative",
         paddingsXSmall.md,
         gapsXSmall.md
       )}
       style={{
+        gridColumnStart: dayOfWeek ?? 1,
         gridTemplateRows: `repeat(${rows}, minmax(0px, 1fr)) auto`,
         gridTemplateColumns: `repeat(auto, minmax(0px, 1fr))`,
       }}
     >
-      {isToday(viewing) ? (
+      {isToday(day) ? (
         <span
           className={cn("absolute w-full h-px", bgColors.primary)}
           style={{
             top: `${
-              (100 / 24) * (getHours(viewing) + getMinutes(viewing) / 60)
+              (100 / 24) * (getHours(new Date()) + getMinutes(new Date()) / 60)
             }%`,
           }}
         >
@@ -139,6 +175,7 @@ export const ScheduleDay = ({
           <li
             key={`${event.uid}-${i}`}
             className={cn(
+              "w-full",
               paddingsYSmall.md,
               beginsBeforeThisDay && "!pt-0",
               endsAfterThisDay && "!pb-0"

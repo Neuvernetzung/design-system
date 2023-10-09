@@ -5,7 +5,7 @@ import { ScheduleDayView } from "./day";
 import { divides, gaps, paddingsEvenly } from "../../../../styles";
 import { UseCalendarProps, useCalendar } from "../hooks/useCalendar";
 import type { VEvent } from "ts-ics";
-// import { ScheduleWeekView } from "./week";
+import { ScheduleWeekView } from "./week";
 
 export * from "./day";
 
@@ -51,7 +51,7 @@ export const Schedule = ({
             rowsEachHour={rowsEachHour}
           />
         )}
-        {/* {currentView === "week" && (
+        {currentView === "week" && (
           <ScheduleWeekView
             events={events}
             currentView={currentView}
@@ -59,7 +59,7 @@ export const Schedule = ({
             calendarProps={calendarProps}
             rowsEachHour={rowsEachHour}
           />
-        )} */}
+        )}
       </div>
     </div>
   );

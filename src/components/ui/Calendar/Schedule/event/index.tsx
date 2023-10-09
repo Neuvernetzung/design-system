@@ -22,15 +22,16 @@ export const Event = ({
 }: EventProps) => (
   <div
     className={cn(
-      "h-full overflow-hidden",
+      "flex h-full overflow-hidden relative truncate",
       bgColors.primary,
       paddingsEvenly.sm,
       !beginsBeforeThisDay && roundingsTop.md,
       !endsAfterThisDay && roundingsBottom.md
     )}
   >
-    <Text size="sm" className="whitespace-nowrap">
-      {event.summary}
-    </Text>
+    <div className="absolute overflow-hidden">
+      {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
+      <Text size="sm">{event.summary}</Text>
+    </div>
   </div>
 );

@@ -12,7 +12,7 @@ import {
   setMinutes,
   subDays,
 } from "date-fns";
-// import { ScheduleWeekView } from "./week";
+import { ScheduleWeekView } from "./week";
 
 export default {
   title: "UI/Data Display/Schedule",
@@ -152,12 +152,12 @@ export const Days = ({ ...args }) => {
   );
 };
 
-// export const Weeks = ({ ...args }) => {
-//   const calendarProps = useCalendar();
-//   return (
-//     <ScheduleWeekView events={events} calendarProps={calendarProps} {...args} />
-//   );
-// };
+export const Weeks = ({ ...args }) => {
+  const calendarProps = useCalendar();
+  return (
+    <ScheduleWeekView events={events} calendarProps={calendarProps} {...args} />
+  );
+};
 
 // export const Months = ({ ...args }) => (
 //   <CalendarDateMonthView indicators={indicators} {...args} />
