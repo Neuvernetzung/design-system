@@ -1,17 +1,23 @@
-import cn from "classnames";
-import type { ScheduleProps, ScheduleView } from ".";
-import { gaps } from "../../../../styles";
 import {
   IconCalendarEvent,
   IconChevronLeft,
   IconChevronRight,
+  IconPlus,
 } from "@tabler/icons-react";
+import cn from "classnames";
+import type { MouseEventHandler } from "react";
+
+import { gaps } from "../../../../styles";
 import { Button, IconButton } from "../../Button";
 import { Tooltip } from "../../Tooltip";
-import type { MouseEventHandler } from "react";
 import { Text } from "../../Typography";
+import type { ScheduleProps, ScheduleView } from ".";
+import type { UseEditEventProps } from "./Event/edit";
 
-export type ScheduleHeaderProps = Omit<ScheduleProps, "calendarProps"> &
+export type ScheduleHeaderProps = Omit<
+  ScheduleProps,
+  "calendarProps" | "onCreate" | "onUpdate" | "onDelete"
+> &
   Required<Pick<ScheduleProps, "calendarProps">> & {
     currentView?: ScheduleView;
     setCurrentView?: (value: ScheduleView) => void;
@@ -22,6 +28,7 @@ export type ScheduleHeaderProps = Omit<ScheduleProps, "calendarProps"> &
     rightAriaLabel: string;
     rightArrowDisabled?: boolean;
     title: string;
+    editEventProps?: UseEditEventProps;
   };
 
 export const ScheduleHeader = ({
@@ -35,11 +42,17 @@ export const ScheduleHeader = ({
   leftArrowDisabled,
   rightArrowDisabled,
   title,
+  editEventProps,
 }: ScheduleHeaderProps) => {
   const { viewToday } = calendarProps;
 
   return (
-    <div className={cn("flex flex-row justify-between items-center", gaps.md)}>
+    <div
+      className={cn(
+        "flex flex-col md:flex-row justify-between items-center",
+        gaps.md
+      )}
+    >
       <div className={cn("flex flex-row items-center", gaps.md)}>
         <div className={cn("flex flex-row", gaps.xs)}>
           <IconButton
@@ -101,6 +114,18 @@ export const ScheduleHeader = ({
             Monat
           </Button>
         </div>
+      )}
+      {editEventProps && (
+        <Button
+          size="sm"
+          color="primary"
+          leftIcon={IconPlus}
+          onClick={() => {
+            editEventProps.setEdit();
+          }}
+        >
+          Termin hinzufügen
+        </Button>
       )}
     </div>
   );

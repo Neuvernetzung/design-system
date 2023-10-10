@@ -26,6 +26,8 @@ export const ScheduleWeekView = ({
   rowsEachHour = 2,
   precisionInMinutes = 5,
   displayDayTime,
+  viewEventProps,
+  editEventProps,
 }: ScheduleWeekViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
@@ -50,6 +52,7 @@ export const ScheduleWeekView = ({
           startOfWeek(viewing, { weekStartsOn: 1 }),
           endOfWeek(viewing, { weekStartsOn: 1 })
         )}
+        editEventProps={editEventProps}
       />
 
       <div
@@ -92,6 +95,7 @@ export const ScheduleWeekView = ({
               events={thisWeeksEvents}
               day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
               precisionInMinutes={precisionInMinutes}
+              viewEventProps={viewEventProps}
             />
           ))}
         </div>

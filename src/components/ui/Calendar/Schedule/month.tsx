@@ -1,4 +1,3 @@
-import { IconX } from "@tabler/icons-react";
 import cn from "classnames";
 import {
   addDays,
@@ -29,27 +28,34 @@ import {
   paddingsXSmall,
   scrollbar,
 } from "../../../../styles";
-import { Button, IconButton } from "../../Button";
-import { Modal } from "../../Modal";
+import { Button } from "../../Button";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
 import { EventSmall } from "./Event";
 import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
 import { getThisDaysEvents, getThisMonthEvents } from "./utils/filterEvents";
-import { formatTitle, titleFormatter } from "./utils/formatTitle";
+import { formatTitle } from "./utils/formatTitle";
+import type { UseViewEventProps } from "./Event/view";
+import { EventListModal } from "./Event/list";
+import type { UseEditEventProps } from "./Event/edit";
 
 export type ScheduleMonthViewProps = Omit<
   ScheduleProps,
-  "calendarProps" | "rowsEachHour"
+  "calendarProps" | "rowsEachHour" | "onDelete" | "onUpdate" | "onCreate"
 > &
   Required<Pick<ScheduleProps, "calendarProps">> &
-  Pick<ScheduleHeaderProps, "currentView" | "setCurrentView">;
+  Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
+    viewEventProps?: UseViewEventProps;
+    editEventProps?: UseEditEventProps;
+  };
 
 export const ScheduleMonthView = ({
   currentView,
   setCurrentView,
   calendarProps,
   events,
+  viewEventProps,
+  editEventProps,
 }: ScheduleMonthViewProps) => {
   const { setViewing, viewing, calendar, inRange } = calendarProps;
 
@@ -66,6 +72,7 @@ export const ScheduleMonthView = ({
         rightAriaLabel="next_week"
         rightArrowFunction={() => setViewing(addMonths(viewing, 1))}
         title={formatTitle(startOfMonth(viewing), endOfMonth(viewing))}
+        editEventProps={editEventProps}
       />
       <div className={cn("overflow-y-scroll relative", scrollbar)}>
         <div
@@ -136,6 +143,7 @@ export const ScheduleMonthView = ({
                     events={eventsByRows[i]}
                     setCurrentView={setCurrentView}
                     setViewing={setViewing}
+                    viewEventProps={viewEventProps}
                   />
                 ))}
               </div>
@@ -172,6 +180,7 @@ export type ScheduleMonthDay = {
   isInRange?: boolean;
   events: VEvent[];
   setViewing?: (viewing: Date) => void;
+  viewEventProps?: UseViewEventProps;
 } & Pick<ScheduleHeaderProps, "setCurrentView">;
 
 export const ScheduleMonthDay = ({
@@ -180,6 +189,7 @@ export const ScheduleMonthDay = ({
   events,
   setViewing,
   setCurrentView,
+  viewEventProps,
 }: ScheduleMonthDay) => {
   const thisDaysEvents = getThisDaysEvents(events, day)
     .sort((a, b) => compareAsc(a.start.date, b.start.date))
@@ -253,47 +263,18 @@ export const ScheduleMonthDay = ({
                 beginsBeforeThisDay={beginsBeforeThisDay}
                 endsAfterThisDay={endsAfterThisDay}
                 event={event}
+                viewEventProps={viewEventProps}
               />
             )
           )}
         </div>
       </div>
-      <Modal
+      <EventListModal
         open={allEventsOpen}
         setOpen={setAllEventsOpen}
-        header={
-          <div
-            className={cn(
-              "flex flex-row w-full justify-between align-center",
-              gaps.md
-            )}
-          >
-            <Text>{titleFormatter.format(day)}</Text>
-            <IconButton
-              onClick={() => {
-                setAllEventsOpen(false);
-              }}
-              icon={IconX}
-              variant="ghost"
-              size="sm"
-              ariaLabel="close_modal"
-            />
-          </div>
-        }
-        content={
-          <div className={cn("flex flex-col w-full", gapsSmall.sm)}>
-            {thisDaysEvents.map(
-              ({ event, beginsBeforeThisDay, endsAfterThisDay }, i) => (
-                <EventSmall
-                  key={`event_${event.summary}_${i}`}
-                  beginsBeforeThisDay={beginsBeforeThisDay}
-                  endsAfterThisDay={endsAfterThisDay}
-                  event={event}
-                />
-              )
-            )}
-          </div>
-        }
+        events={thisDaysEvents}
+        day={day}
+        viewEventProps={viewEventProps}
       />
     </>
   );

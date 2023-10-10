@@ -1,5 +1,6 @@
 import cn from "classnames";
 import { addDays, getHours, getMinutes, isToday, subDays } from "date-fns";
+import isFunction from "lodash/isFunction";
 import { useRef } from "react";
 
 import {
@@ -13,21 +14,27 @@ import {
   paddingsYSmall,
   scrollbar,
 } from "../../../../styles";
+import { Button } from "../../Button";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
 import { layoutDayEvents, ScheduleDayGrid } from "./DayGrid";
 import { Event } from "./Event";
+import { UseEditEventProps } from "./Event/edit";
+import type { UseViewEventProps } from "./Event/view";
 import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisDaysEvents } from "./utils/filterEvents";
 import { titleFormatter } from "./utils/formatTitle";
-import { Button } from "../../Button";
-import isFunction from "lodash/isFunction";
 
-export type ScheduleDayViewProps = Omit<ScheduleProps, "calendarProps"> &
+export type ScheduleDayViewProps = Omit<
+  ScheduleProps,
+  "calendarProps" | "onCreate" | "onUpdate" | "onDelete"
+> &
   Required<Pick<ScheduleProps, "calendarProps">> &
   Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
     precisionInMinutes?: number;
+    viewEventProps?: UseViewEventProps;
+    editEventProps?: UseEditEventProps;
   };
 
 export const ScheduleDayView = ({
@@ -38,6 +45,8 @@ export const ScheduleDayView = ({
   rowsEachHour = 2,
   precisionInMinutes = 5,
   displayDayTime,
+  viewEventProps,
+  editEventProps,
 }: ScheduleDayViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
@@ -57,6 +66,7 @@ export const ScheduleDayView = ({
         rightAriaLabel="next_day"
         rightArrowFunction={() => setViewing(addDays(viewing, 1))}
         title={titleFormatter.format(viewing)}
+        editEventProps={editEventProps}
       />
       <div
         ref={gridContainerRef}
@@ -86,6 +96,7 @@ export const ScheduleDayView = ({
             events={events}
             day={viewing}
             precisionInMinutes={precisionInMinutes}
+            viewEventProps={viewEventProps}
           />
         </div>
       </div>
@@ -146,6 +157,7 @@ export type ScheduleDayProps = Pick<
 > & {
   dayOfWeek?: number;
   day: Date;
+  viewEventProps?: UseViewEventProps;
 };
 
 export const ScheduleDay = ({
@@ -153,6 +165,7 @@ export const ScheduleDay = ({
   precisionInMinutes,
   day,
   dayOfWeek,
+  viewEventProps,
 }: ScheduleDayProps) => {
   const { layout, rows } = layoutDayEvents(
     getThisDaysEvents(events || [], day),
@@ -217,6 +230,7 @@ export const ScheduleDay = ({
               beginsBeforeThisDay={beginsBeforeThisDay}
               endsAfterThisDay={endsAfterThisDay}
               event={event}
+              viewEventProps={viewEventProps}
             />
           </li>
         )

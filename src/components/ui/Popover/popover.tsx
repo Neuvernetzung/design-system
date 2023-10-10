@@ -2,7 +2,7 @@ import { Popover as HeadlessPopover, Transition } from "@headlessui/react";
 import type { Placement } from "@popperjs/core";
 import { IconX } from "@tabler/icons-react";
 import cn from "classnames";
-import { isNil } from "lodash";
+import isNil from "lodash/isNil";
 import {
   ElementType,
   ForwardedRef,
