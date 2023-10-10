@@ -214,7 +214,6 @@ export const ZIndexTest = ({ ...args }) => {
         className="mt-5"
         onClick={() => {
           loading(true);
-          console.log("loading");
           setTimeout(() => loading(false), 1500);
         }}
       >

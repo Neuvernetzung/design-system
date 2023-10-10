@@ -209,7 +209,7 @@ export const EventEdit = ({
         }
         footer={
           <div className="flex flex-row justify-between w-full">
-            <Button size="sm" onClick={onClose}>
+            <Button size="sm" variant="ghost" onClick={onClose}>
               Abbrechen
             </Button>
             <Button

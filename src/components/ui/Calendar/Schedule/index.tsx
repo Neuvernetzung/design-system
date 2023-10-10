@@ -76,6 +76,7 @@ export const Schedule = ({
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
               eventColor={eventColor}
+              onUpdate={onUpdate}
             />
           )}
           {currentView === "week" && (
@@ -89,6 +90,7 @@ export const Schedule = ({
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
               eventColor={eventColor}
+              onUpdate={onUpdate}
             />
           )}
           {currentView === "month" && (
@@ -100,6 +102,7 @@ export const Schedule = ({
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
               eventColor={eventColor}
+              onUpdate={onUpdate}
             />
           )}
         </div>

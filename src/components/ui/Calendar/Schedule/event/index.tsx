@@ -1,9 +1,12 @@
+import { useDraggable } from "@dnd-kit/core";
+import { CSS, Coordinates } from "@dnd-kit/utilities";
 import {
   IconArrowBarRight,
   IconArrowBarToRight,
   IconArrowNarrowRight,
 } from "@tabler/icons-react";
 import cn from "classnames";
+import { addDays, addHours, addMinutes } from "date-fns";
 import { getEventEnd, type VEvent } from "ts-ics";
 
 import {
@@ -16,12 +19,14 @@ import {
   roundings,
   roundingsBottom,
   roundingsTop,
+  shadows,
   transitionFast,
 } from "../../../../../styles";
 import { useThemeStateValue } from "../../../../../theme";
 import type { Color } from "../../../../../types";
 import { Icon } from "../../../Icon";
 import { Text } from "../../../Typography";
+import { dayGridDeltaToTime } from "../DayGrid/dragAndDrop";
 import { timeFormatter } from "../utils/formatTitle";
 import type { UseViewEventProps } from "./view";
 
@@ -31,6 +36,76 @@ export type EventProps = {
   endsAfterThisDay?: boolean;
   viewEventProps?: UseViewEventProps;
   color?: Color;
+  className?: string;
+};
+
+export const DraggableEvent = ({ ...props }: EventProps) => {
+  const { attributes, isDragging, listeners, setNodeRef, transform } =
+    useDraggable({
+      id: props.event.uid,
+    });
+
+  return (
+    <span
+      {...attributes}
+      {...listeners}
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Translate.toString(transform),
+      }}
+    >
+      <Event {...props} className={cn(isDragging && "opacity-50")} />
+    </span>
+  );
+};
+
+export type DragOverLayEventProps = Partial<Pick<EventProps, "event">> & {
+  innerHeight: number;
+  precisionInMinutes: number;
+  delta: Coordinates;
+  innerWidth: number;
+  cols: number;
+};
+
+export const DragOverlayEvent = ({
+  event,
+  innerHeight,
+  precisionInMinutes,
+  delta,
+  cols,
+  innerWidth,
+}: DragOverLayEventProps) => {
+  if (!event) return null;
+
+  const { days, hours, minutes } = dayGridDeltaToTime({
+    delta,
+    innerWidth,
+    cols,
+    innerHeight,
+    precisionInMinutes,
+  });
+
+  const newEvent = {
+    ...event,
+    start: {
+      ...event.start,
+      date: addDays(
+        addHours(addMinutes(event.start.date, minutes), hours),
+        days
+      ),
+    },
+    end: !event.duration
+      ? {
+          ...event.end,
+          date: addDays(
+            addHours(addMinutes(event.end.date, minutes), hours),
+            days
+          ),
+        }
+      : undefined,
+  } as VEvent;
+
+  return <Event event={newEvent} className={cn(shadows.xl)} />;
 };
 
 export const Event = ({
@@ -39,6 +114,7 @@ export const Event = ({
   endsAfterThisDay,
   viewEventProps,
   color = "primary",
+  className,
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
@@ -58,13 +134,14 @@ export const Event = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex w-full h-full overflow-hidden relative truncate",
+        "flex w-full h-full relative overflow-hidden truncate",
         viewEventProps ? bgColorsInteractive[color] : bgColors[color],
         transitionFast,
         viewEventProps && focusBg[color],
         paddingsEvenly.sm,
         !beginsBeforeThisDay && roundingsTop.md,
-        !endsAfterThisDay && roundingsBottom.md
+        !endsAfterThisDay && roundingsBottom.md,
+        className
       )}
     >
       <div
@@ -119,6 +196,7 @@ export const EventSmall = ({
   endsAfterThisDay,
   viewEventProps,
   color = "primary",
+  className,
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
@@ -144,7 +222,8 @@ export const EventSmall = ({
         viewEventProps && focusBg[color],
         paddingsEvenly.sm,
         heights.md,
-        roundings.md
+        roundings.md,
+        className
       )}
     >
       <div className={cn("flex flex-row items-center truncate", gapsSmall.sm)}>

@@ -10,11 +10,14 @@ import {
 } from "../../../../styles";
 import type { ScheduleDayViewProps } from ".";
 import { DayScheduleHead, ScheduleDay } from "./day";
-import { ScheduleDayGrid } from "./DayGrid";
+import { ScheduleDayGrid, calcDayRows } from "./DayGrid";
 import { ScheduleHeader } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisWeeksEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
+import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
+import { DragOverlay } from "@dnd-kit/core";
+import { DragOverlayEvent } from "./Event";
 
 export type ScheduleWeekViewProps = ScheduleDayViewProps;
 
@@ -28,6 +31,7 @@ export const ScheduleWeekView = ({
   displayDayTime,
   viewEventProps,
   editEventProps,
+  onUpdate,
 }: ScheduleWeekViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
@@ -37,6 +41,28 @@ export const ScheduleWeekView = ({
   const thisWeeksEvents = getThisWeeksEvents(events || [], viewing);
 
   useScrollToTime({ gridContainerRef, gridInnerRef });
+
+  const rows = calcDayRows({
+    return: "columns",
+    precisionInMinutes,
+  });
+
+  const cols = 7;
+
+  const {
+    innerHeight,
+    modifiers,
+    sensors,
+    setActiveItem,
+    innerWidth,
+    activeItem,
+    setTransformDelta,
+    transformDelta,
+  } = useDayGridDraggable({
+    gridInnerRef,
+    cols,
+    rows,
+  });
 
   return (
     <>
@@ -75,30 +101,56 @@ export const ScheduleWeekView = ({
             />
           ))}
         </div>
-        <div
-          ref={gridInnerRef}
-          className={cn(
-            "grid grid-cols-7 auto-rows-auto ml-12 border-x border-b",
-            extendedBgColors.subtile,
-            extendedBorders.filled
-          )}
+        <DayGridDndContext
+          innerHeight={innerHeight}
+          modifiers={modifiers}
+          sensors={sensors}
+          setActiveItem={setActiveItem}
+          innerWidth={innerWidth}
+          precisionInMinutes={precisionInMinutes}
+          onUpdate={onUpdate}
+          events={events}
+          setTransformDelta={setTransformDelta}
+          cols={cols}
         >
-          <ScheduleDayGrid
-            rowsEachHour={rowsEachHour}
-            displayDayTime={displayDayTime}
-          />
-
-          {new Array(7).fill(null).map((_, i) => (
-            <ScheduleDay
-              key={`week_day_${i}`}
-              dayOfWeek={i + 1}
-              events={thisWeeksEvents}
-              day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
-              precisionInMinutes={precisionInMinutes}
-              viewEventProps={viewEventProps}
+          <div
+            ref={gridInnerRef}
+            className={cn(
+              "grid grid-cols-7 auto-rows-auto ml-12 border-x border-b",
+              extendedBgColors.subtile,
+              extendedBorders.filled
+            )}
+          >
+            <ScheduleDayGrid
+              rowsEachHour={rowsEachHour}
+              displayDayTime={displayDayTime}
             />
-          ))}
-        </div>
+
+            {new Array(7).fill(null).map((_, i) => (
+              <ScheduleDay
+                key={`week_day_${i}`}
+                dayOfWeek={i + 1}
+                events={thisWeeksEvents}
+                day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
+                precisionInMinutes={precisionInMinutes}
+                viewEventProps={viewEventProps}
+                rows={rows}
+              />
+            ))}
+          </div>
+          <DragOverlay>
+            {activeItem ? (
+              <DragOverlayEvent
+                innerHeight={innerHeight}
+                innerWidth={innerWidth}
+                precisionInMinutes={precisionInMinutes}
+                event={events?.find((event) => event.uid === activeItem)}
+                delta={transformDelta}
+                cols={cols}
+              />
+            ) : undefined}
+          </DragOverlay>
+        </DayGridDndContext>
       </div>
     </>
   );

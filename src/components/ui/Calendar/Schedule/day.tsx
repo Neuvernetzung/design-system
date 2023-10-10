@@ -18,18 +18,25 @@ import { Color } from "../../../../types";
 import { Button } from "../../Button";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
-import { layoutDayEvents, ScheduleDayGrid } from "./DayGrid";
-import { Event } from "./Event";
+import {
+  calcDayRows,
+  DEFAULT_PRECISION_IN_MINUTES,
+  ScheduleDayGrid,
+  useLayoutDayEvents,
+} from "./DayGrid";
+import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
+import { DraggableEvent, DragOverlayEvent } from "./Event";
 import { UseEditEventProps } from "./Event/edit";
 import type { UseViewEventProps } from "./Event/view";
 import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisDaysEvents } from "./utils/filterEvents";
 import { titleFormatter } from "./utils/formatTitle";
+import { DragOverlay } from "@dnd-kit/core";
 
 export type ScheduleDayViewProps = Omit<
   ScheduleProps,
-  "calendarProps" | "onCreate" | "onUpdate" | "onDelete"
+  "calendarProps" | "onCreate" | "onDelete"
 > &
   Required<Pick<ScheduleProps, "calendarProps">> &
   Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
@@ -44,16 +51,39 @@ export const ScheduleDayView = ({
   calendarProps,
   events,
   rowsEachHour = 2,
-  precisionInMinutes = 5,
+  precisionInMinutes = DEFAULT_PRECISION_IN_MINUTES,
   displayDayTime,
   viewEventProps,
   editEventProps,
   eventColor,
+  onUpdate,
 }: ScheduleDayViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const gridInnerRef = useRef<HTMLDivElement>(null);
+
+  const rows = calcDayRows({
+    return: "columns",
+    precisionInMinutes,
+  });
+
+  const cols = 1;
+
+  const {
+    innerHeight,
+    modifiers,
+    sensors,
+    setActiveItem,
+    innerWidth,
+    activeItem,
+    setTransformDelta,
+    transformDelta,
+  } = useDayGridDraggable({
+    gridInnerRef,
+    cols,
+    rows,
+  });
 
   useScrollToTime({ gridContainerRef, gridInnerRef });
 
@@ -82,26 +112,52 @@ export const ScheduleDayView = ({
         >
           <DayScheduleHead day={viewing} />
         </div>
-        <div
-          ref={gridInnerRef}
-          className={cn(
-            "grid grid-cols-1 grid-rows-1 ml-12 border-x border-b",
-            extendedBgColors.subtile,
-            extendedBorders.filled
-          )}
+        <DayGridDndContext
+          innerHeight={innerHeight}
+          modifiers={modifiers}
+          sensors={sensors}
+          setActiveItem={setActiveItem}
+          innerWidth={innerWidth}
+          precisionInMinutes={precisionInMinutes}
+          onUpdate={onUpdate}
+          events={events}
+          setTransformDelta={setTransformDelta}
+          cols={cols}
         >
-          <ScheduleDayGrid
-            rowsEachHour={rowsEachHour}
-            displayDayTime={displayDayTime}
-          />
-          <ScheduleDay
-            events={events}
-            day={viewing}
-            precisionInMinutes={precisionInMinutes}
-            viewEventProps={viewEventProps}
-            eventColor={eventColor}
-          />
-        </div>
+          <div
+            ref={gridInnerRef}
+            className={cn(
+              "grid grid-cols-1 grid-rows-1 ml-12 border-x border-b",
+              extendedBgColors.subtile,
+              extendedBorders.filled
+            )}
+          >
+            <ScheduleDayGrid
+              rowsEachHour={rowsEachHour}
+              displayDayTime={displayDayTime}
+            />
+            <ScheduleDay
+              events={events}
+              day={viewing}
+              precisionInMinutes={precisionInMinutes}
+              viewEventProps={viewEventProps}
+              eventColor={eventColor}
+              rows={rows}
+            />
+          </div>
+          <DragOverlay>
+            {activeItem ? (
+              <DragOverlayEvent
+                innerHeight={innerHeight}
+                innerWidth={innerWidth}
+                cols={cols}
+                precisionInMinutes={precisionInMinutes}
+                event={events?.find((event) => event.uid === activeItem)}
+                delta={transformDelta}
+              />
+            ) : undefined}
+          </DragOverlay>
+        </DayGridDndContext>
       </div>
     </>
   );
@@ -162,6 +218,7 @@ export type ScheduleDayProps = Pick<
   day: Date;
   viewEventProps?: UseViewEventProps;
   eventColor?: Color;
+  rows: number;
 };
 
 export const ScheduleDay = ({
@@ -171,15 +228,12 @@ export const ScheduleDay = ({
   dayOfWeek,
   viewEventProps,
   eventColor,
+  rows,
 }: ScheduleDayProps) => {
-  const { layout, rows } = layoutDayEvents(
-    getThisDaysEvents(events || [], day),
-    day,
-    {
-      return: "columns",
-      precisionInMinutes,
-    }
-  );
+  const layout = useLayoutDayEvents(getThisDaysEvents(events || [], day), day, {
+    return: "columns",
+    precisionInMinutes,
+  });
 
   return (
     <ol
@@ -231,7 +285,7 @@ export const ScheduleDay = ({
               gridColumn: `span ${width}`,
             }}
           >
-            <Event
+            <DraggableEvent
               beginsBeforeThisDay={beginsBeforeThisDay}
               endsAfterThisDay={endsAfterThisDay}
               event={event}

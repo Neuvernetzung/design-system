@@ -6,6 +6,7 @@ import {
   isBefore,
   isSameDay,
 } from "date-fns";
+import { useMemo } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
 
 type DayLayout = {
@@ -36,78 +37,78 @@ const intervalOverlapping = (a: VEvent, b: VEvent) =>
     { start: b.start.date, end: getEventEnd(b) }
   );
 
-export const layoutDayEvents = (
+export const calcDayRows = (options?: DayLayoutEventOptionProps) =>
+  options?.return === "columns"
+    ? totalRows(options?.precisionInMinutes || 5)
+    : 1;
+
+export const useLayoutDayEvents = (
   events: VEvent[],
   day: Date,
   options?: DayLayoutEventOptionProps
-) => {
-  const layout: DayLayoutWithoutTime[] = [];
-  let highestColumns = 0;
+) =>
+  useMemo(() => {
+    const layout: DayLayoutWithoutTime[] = [];
+    let highestColumns = 0;
 
-  let columns: DayLayoutWithoutTime[][] = [];
+    let columns: DayLayoutWithoutTime[][] = [];
 
-  let lastEventEnding: Date | null = null;
+    let lastEventEnding: Date | null = null;
 
-  // Sort it by starting time, and then by ending time.
-  const sortedEvents = events.sort((a, b) => {
-    if (a.start.date < b.start.date) return -1;
-    if (a.start.date > b.start.date) return 1;
-    if (getEventEnd(a) < getEventEnd(b)) return -1;
-    if (getEventEnd(a) > getEventEnd(b)) return 1;
-    return 0;
-  });
+    // Sort it by starting time, and then by ending time.
+    const sortedEvents = events.sort((a, b) => {
+      if (a.start.date < b.start.date) return -1;
+      if (a.start.date > b.start.date) return 1;
+      if (getEventEnd(a) < getEventEnd(b)) return -1;
+      if (getEventEnd(a) > getEventEnd(b)) return 1;
+      return 0;
+    });
 
-  // Iterate over the sorted array
-  sortedEvents.forEach((currentEvent) => {
-    if (
-      lastEventEnding !== null &&
-      !isBefore(currentEvent.start.date, lastEventEnding)
-    ) {
+    // Iterate over the sorted array
+    sortedEvents.forEach((currentEvent) => {
+      if (
+        lastEventEnding !== null &&
+        !isBefore(currentEvent.start.date, lastEventEnding)
+      ) {
+        layout.push(...packEvents(columns).flat());
+        if (columns.length > highestColumns) highestColumns = columns.length;
+        columns = [];
+        lastEventEnding = null;
+      }
+
+      let placed = false;
+      for (let i = 0; i < columns.length; i += 1) {
+        const col = columns[i];
+        if (!intervalOverlapping(col[col.length - 1]?.event, currentEvent)) {
+          col.push({ event: currentEvent, width: 1, left: 0 });
+          placed = true;
+          break;
+        }
+      }
+
+      if (!placed) {
+        columns.push([{ event: currentEvent, width: 1, left: 0 }]);
+      }
+
+      if (
+        lastEventEnding === null ||
+        isAfter(getEventEnd(currentEvent), lastEventEnding)
+      ) {
+        lastEventEnding = getEventEnd(currentEvent);
+      }
+    });
+
+    if (columns.length > 0) {
       layout.push(...packEvents(columns).flat());
       if (columns.length > highestColumns) highestColumns = columns.length;
-      columns = [];
-      lastEventEnding = null;
     }
 
-    let placed = false;
-    for (let i = 0; i < columns.length; i += 1) {
-      const col = columns[i];
-      if (!intervalOverlapping(col[col.length - 1]?.event, currentEvent)) {
-        col.push({ event: currentEvent, width: 1, left: 0 });
-        placed = true;
-        break;
-      }
-    }
+    const finalLayout = layout.map((item) =>
+      setStartAndEndOfEvent(item, day, highestColumns, options)
+    );
 
-    if (!placed) {
-      columns.push([{ event: currentEvent, width: 1, left: 0 }]);
-    }
-
-    if (
-      lastEventEnding === null ||
-      isAfter(getEventEnd(currentEvent), lastEventEnding)
-    ) {
-      lastEventEnding = getEventEnd(currentEvent);
-    }
-  });
-
-  if (columns.length > 0) {
-    layout.push(...packEvents(columns).flat());
-    if (columns.length > highestColumns) highestColumns = columns.length;
-  }
-
-  const finalLayout = layout.map((item) =>
-    setStartAndEndOfEvent(item, day, highestColumns, options)
-  );
-
-  return {
-    layout: finalLayout,
-    rows:
-      options?.return === "columns"
-        ? totalRows(options?.precisionInMinutes || 5)
-        : 1,
-  };
-};
+    return finalLayout;
+  }, [events, day, options]);
 
 const packEvents = (columns: DayLayoutWithoutTime[][]) => {
   const n = columns.length;
@@ -122,7 +123,7 @@ const packEvents = (columns: DayLayoutWithoutTime[][]) => {
 
 const HOURS_A_DAY = 24;
 
-const defaultPrecisionInMinutes = 5;
+export const DEFAULT_PRECISION_IN_MINUTES = 5;
 
 const totalRows = (precisionInMinutes: number) =>
   HOURS_A_DAY * (60 / precisionInMinutes);
@@ -131,7 +132,7 @@ const calcRow = (timeInHours: number, options?: DayLayoutEventOptionProps) =>
   options?.return === "columns"
     ? Math.ceil(
         Math.min(timeInHours, HOURS_A_DAY) *
-          (60 / (options?.precisionInMinutes || defaultPrecisionInMinutes))
+          (60 / (options?.precisionInMinutes || DEFAULT_PRECISION_IN_MINUTES))
       ) + 1
     : (1 / 24) * Math.min(timeInHours, HOURS_A_DAY);
 
