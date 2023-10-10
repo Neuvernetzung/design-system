@@ -1,5 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
-import { CSS, Coordinates } from "@dnd-kit/utilities";
+import { Coordinates, CSS } from "@dnd-kit/utilities";
 import {
   IconArrowBarRight,
   IconArrowBarToRight,
@@ -190,6 +190,28 @@ export const Event = ({
   );
 };
 
+export const DraggableEventSmall = ({ ...props }: EventProps) => {
+  const { attributes, isDragging, listeners, setNodeRef } = useDraggable({
+    id: props.event.uid,
+  });
+
+  return (
+    <span {...attributes} {...listeners} ref={setNodeRef}>
+      <EventSmall {...props} className={cn(isDragging && "opacity-50")} />
+    </span>
+  );
+};
+
+export type DragOverLayEventSmallProps = Partial<Pick<EventProps, "event">>;
+
+export const DragOverlayEventSmall = ({
+  event,
+}: DragOverLayEventSmallProps) => {
+  if (!event) return null;
+
+  return <EventSmall event={event} className={cn(shadows.xl)} />;
+};
+
 export const EventSmall = ({
   event,
   beginsBeforeThisDay,
@@ -216,7 +238,7 @@ export const EventSmall = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex-shrink-0 flex flex-col justify-center relative",
+        "flex-shrink-0 w-full flex flex-col justify-center relative truncate",
         viewEventProps ? bgColorsInteractive[color] : bgColors[color],
         transitionFast,
         viewEventProps && focusBg[color],

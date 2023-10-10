@@ -1,3 +1,4 @@
+import { DragOverlay, useDroppable } from "@dnd-kit/core";
 import cn from "classnames";
 import {
   addDays,
@@ -13,11 +14,12 @@ import {
   subMonths,
 } from "date-fns";
 import isFunction from "lodash/isFunction";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
 
 import {
   bgColors,
+  borders,
   divides,
   extendedBgColors,
   extendedBorders,
@@ -26,22 +28,27 @@ import {
   heights,
   paddingsSmallEvenly,
   paddingsXSmall,
+  roundings,
   scrollbar,
 } from "../../../../styles";
 import { Button } from "../../Button";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
-import { EventSmall } from "./Event";
+import { DraggableEventSmall, DragOverlayEventSmall } from "./Event";
 import type { UseEditEventProps } from "./Event/edit";
 import { EventListModal } from "./Event/list";
 import type { UseViewEventProps } from "./Event/view";
 import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
+import {
+  MonthGridDndContext,
+  useMonthGridDraggable,
+} from "./MonthGrid/dragAndDrop";
 import { getThisDaysEvents, getThisMonthEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
 
 export type ScheduleMonthViewProps = Omit<
   ScheduleProps,
-  "calendarProps" | "rowsEachHour" | "onDelete" | "onUpdate" | "onCreate"
+  "calendarProps" | "rowsEachHour" | "onDelete" | "onCreate"
 > &
   Required<Pick<ScheduleProps, "calendarProps">> &
   Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
@@ -57,10 +64,15 @@ export const ScheduleMonthView = ({
   viewEventProps,
   editEventProps,
   eventColor,
+  onUpdate,
 }: ScheduleMonthViewProps) => {
   const { setViewing, viewing, calendar, inRange } = calendarProps;
 
+  const gridInnerRef = useRef<HTMLDivElement>(null);
+
   const eventsByRows = getThisMonthEvents(events || [], calendar);
+
+  const { sensors, setActiveItem, activeItem } = useMonthGridDraggable();
 
   return (
     <>
@@ -90,68 +102,83 @@ export const ScheduleMonthView = ({
             />
           ))}
         </div>
-        <div
-          className={cn(
-            "grid grid-cols-1 ml-12 border-x border-b divide-y divide-opacity-50 dark:divide-opacity-50",
-            divides.accent,
-            extendedBorders.filled
-          )}
+        <MonthGridDndContext
+          onUpdate={onUpdate}
+          sensors={sensors}
+          setActiveItem={setActiveItem}
+          events={events}
         >
-          {calendar[0].map((row, i) => (
-            <div className="relative" key={`month_week_${i}`}>
-              {isFunction(setCurrentView) ? (
-                <Button
-                  size="xs"
-                  color="subtile"
-                  variant="ghost"
-                  onClick={() => {
-                    setCurrentView?.("week");
-                  }}
-                  className={cn(
-                    "absolute left-0 top-0 -translate-x-full",
-                    paddingsXSmall.md
-                  )}
-                >
-                  {getWeek(row[0])}
-                </Button>
-              ) : (
-                <Text
-                  size="xs"
-                  color="subtile"
-                  className={cn(
-                    "absolute left-0 top-0 -translate-x-full",
-                    paddingsXSmall.md
-                  )}
-                >
-                  {getWeek(row[0])}
-                </Text>
-              )}
-              <div
-                className={cn(
-                  "grid grid-cols-7 relative h-full divide-x divide-opacity-50 dark:divide-opacity-50",
-                  divides.accent
-                )}
-              >
-                {row.map((day, j) => (
-                  <ScheduleMonthDay
-                    key={`month_week_${i}_day_${j}`}
-                    day={day}
-                    isInRange={inRange(
-                      day,
-                      startOfMonth(viewing),
-                      endOfMonth(viewing)
+          <div
+            ref={gridInnerRef}
+            className={cn(
+              "grid grid-cols-1 ml-12 border-x border-b divide-y divide-opacity-50 dark:divide-opacity-50",
+              divides.accent,
+              extendedBorders.filled
+            )}
+          >
+            {calendar[0].map((row, i) => (
+              <div className="relative" key={`month_week_${i}`}>
+                {isFunction(setCurrentView) ? (
+                  <Button
+                    size="xs"
+                    color="subtile"
+                    variant="ghost"
+                    onClick={() => {
+                      setCurrentView?.("week");
+                    }}
+                    className={cn(
+                      "absolute left-0 top-0 -translate-x-full",
+                      paddingsXSmall.md
                     )}
-                    events={eventsByRows[i]}
-                    setCurrentView={setCurrentView}
-                    setViewing={setViewing}
-                    viewEventProps={viewEventProps}
-                    eventColor={eventColor}
-                  />
-                ))}
+                  >
+                    {getWeek(row[0])}
+                  </Button>
+                ) : (
+                  <Text
+                    size="xs"
+                    color="subtile"
+                    className={cn(
+                      "absolute left-0 top-0 -translate-x-full",
+                      paddingsXSmall.md
+                    )}
+                  >
+                    {getWeek(row[0])}
+                  </Text>
+                )}
+                <div
+                  className={cn(
+                    "grid grid-cols-7 relative h-full divide-x divide-opacity-50 dark:divide-opacity-50",
+                    divides.accent
+                  )}
+                >
+                  {row.map((day, j) => (
+                    <ScheduleMonthDay
+                      key={`month_week_${i}_day_${j}`}
+                      day={day}
+                      isInRange={inRange(
+                        day,
+                        startOfMonth(viewing),
+                        endOfMonth(viewing)
+                      )}
+                      events={eventsByRows[i]}
+                      setCurrentView={setCurrentView}
+                      setViewing={setViewing}
+                      viewEventProps={viewEventProps}
+                      eventColor={eventColor}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+          <DragOverlay>
+            {activeItem ? (
+              <DragOverlayEventSmall
+                event={events?.find((event) => event.uid === activeItem)}
+              />
+            ) : undefined}
+          </DragOverlay>
+        </MonthGridDndContext>
       </div>
     </>
   );
@@ -202,11 +229,14 @@ export const ScheduleMonthDay = ({
       endsAfterThisDay: !isSameDay(getEventEnd(event), day),
     }));
 
+  const { isOver, setNodeRef } = useDroppable({ id: day.toISOString() });
+
   const [allEventsOpen, setAllEventsOpen] = useState<boolean>(false);
 
   return (
     <>
       <div
+        ref={setNodeRef}
         className={cn(
           "h-full flex flex-col aspect-video overflow-hidden",
           gaps.xs,
@@ -215,18 +245,20 @@ export const ScheduleMonthDay = ({
         )}
       >
         <div className="flex flex-row justify-between items-center">
-          {thisDaysEvents.length > 0 && (
-            <Button
-              size="xs"
-              variant="subtile"
-              onClick={() => {
-                setAllEventsOpen(true);
-              }}
-              aria-label={`open_modal_${day}`}
-            >
-              {thisDaysEvents.length}
-            </Button>
-          )}
+          <div>
+            {thisDaysEvents.length > 0 && (
+              <Button
+                size="xs"
+                variant="subtile"
+                onClick={() => {
+                  setAllEventsOpen(true);
+                }}
+                aria-label={`open_modal_${day}`}
+              >
+                {thisDaysEvents.length}
+              </Button>
+            )}
+          </div>
           {isFunction(setCurrentView) ? (
             <Button
               size="sm"
@@ -254,14 +286,24 @@ export const ScheduleMonthDay = ({
         </div>
         <div
           className={cn(
-            "flex flex-col overflow-y-hidden hover:overflow-y-auto overflow-x-hidden",
+            "flex flex-col overflow-y-hidden hover:overflow-y-auto overflow-x-hidden hover:overflow-x-hidden",
             gapsSmall.sm,
             scrollbar
           )}
         >
+          {isOver && (
+            <div
+              className={cn(
+                "h-10 flex-shrink-0 w-full bg-opacity-20 border-2 border-dashed",
+                borders.primary,
+                roundings.md,
+                bgColors.primary
+              )}
+            />
+          )}
           {thisDaysEvents.map(
             ({ event, beginsBeforeThisDay, endsAfterThisDay }, i) => (
-              <EventSmall
+              <DraggableEventSmall
                 key={`event_${event.summary}_${i}`}
                 beginsBeforeThisDay={beginsBeforeThisDay}
                 endsAfterThisDay={endsAfterThisDay}

@@ -1,7 +1,6 @@
 import {
   DndContext,
   KeyboardSensor,
-  type Modifier,
   type Modifiers,
   MouseSensor,
   type SensorDescriptor,
@@ -24,6 +23,8 @@ import { type ReactNode, RefObject, useMemo, useState } from "react";
 import { useRefDimensions } from "../../../../../utils/internal";
 import type { ScheduleDayViewProps, ScheduleProps } from "..";
 import { DEFAULT_PRECISION_IN_MINUTES } from "./layoutDayEvents";
+import { createSnapModifier } from "../utils/snapModifier";
+import { activationConstraint } from "../utils/activationConstraint";
 
 export type UseDayGridDraggableProps = {
   gridInnerRef: RefObject<HTMLDivElement>;
@@ -42,30 +43,16 @@ export type UseDayGridDraggablePropsReturn = {
   setTransformDelta: (transformDelta: Coordinates) => void;
 };
 
-export const createSnapModifier =
-  (rows: number, cols: number): Modifier =>
-  ({ transform }) => ({
-    ...transform,
-    x: Math.ceil(transform.x / cols) * cols,
-    y: Math.ceil(transform.y / rows) * rows,
-  });
-
 export const useDayGridDraggable = ({
   gridInnerRef,
   cols,
   rows,
 }: UseDayGridDraggableProps): UseDayGridDraggablePropsReturn => {
   const mouseSensor = useSensor(MouseSensor, {
-    activationConstraint: {
-      delay: 100,
-      tolerance: 5,
-    },
+    activationConstraint,
   });
   const touchSensor = useSensor(TouchSensor, {
-    activationConstraint: {
-      delay: 100,
-      tolerance: 5,
-    },
+    activationConstraint,
   });
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
@@ -154,7 +141,7 @@ export const DayGridDndContext = ({
     }}
     onDragEnd={({ active, delta }) => {
       const id = active.id;
-      if (!id || delta.y === 0) {
+      if (!id || (delta.y === 0 && delta.x === 0)) {
         setActiveItem(undefined);
         setTransformDelta({ x: 0, y: 0 });
         return;
@@ -186,7 +173,7 @@ export const DayGridDndContext = ({
         set(
           newEvent,
           "end.date",
-          addDays(addHours(addMinutes(event.start.date, minutes), hours), days)
+          addDays(addHours(addMinutes(event.end.date, minutes), hours), days)
         );
       }
 
