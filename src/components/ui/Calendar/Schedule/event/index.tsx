@@ -8,14 +8,18 @@ import { getEventEnd, type VEvent } from "ts-ics";
 
 import {
   bgColors,
-  focus,
+  bgColorsInteractive,
+  focusBg,
   gapsSmall,
   heights,
   paddingsEvenly,
   roundings,
   roundingsBottom,
   roundingsTop,
+  transitionFast,
 } from "../../../../../styles";
+import { useThemeStateValue } from "../../../../../theme";
+import type { Color } from "../../../../../types";
 import { Icon } from "../../../Icon";
 import { Text } from "../../../Typography";
 import { timeFormatter } from "../utils/formatTitle";
@@ -26,6 +30,7 @@ export type EventProps = {
   beginsBeforeThisDay?: boolean;
   endsAfterThisDay?: boolean;
   viewEventProps?: UseViewEventProps;
+  color?: Color;
 };
 
 export const Event = ({
@@ -33,11 +38,14 @@ export const Event = ({
   beginsBeforeThisDay,
   endsAfterThisDay,
   viewEventProps,
+  color = "primary",
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
   const Component = viewEventProps ? "button" : "div";
+
+  const adjustedTextColor = useThemeStateValue((v) => v.adjustedTextColorState);
 
   return (
     <Component
@@ -51,8 +59,9 @@ export const Event = ({
       type={viewEventProps ? "button" : undefined}
       className={cn(
         "flex w-full h-full overflow-hidden relative truncate",
-        bgColors.primary,
-        focus.primary,
+        viewEventProps ? bgColorsInteractive[color] : bgColors[color],
+        transitionFast,
+        viewEventProps && focusBg[color],
         paddingsEvenly.sm,
         !beginsBeforeThisDay && roundingsTop.md,
         !endsAfterThisDay && roundingsBottom.md
@@ -64,6 +73,8 @@ export const Event = ({
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
         {!startsAndEndsOnSameDay && (
           <Icon
+            className={cn(adjustedTextColor[color])}
+            color="inherit"
             size="sm"
             icon={
               beginsBeforeThisDay && endsAfterThisDay
@@ -75,7 +86,11 @@ export const Event = ({
           />
         )}
         {showTime && (
-          <Text size="sm">
+          <Text
+            size="sm"
+            className={cn(adjustedTextColor[color])}
+            color="inherit"
+          >
             {showTime &&
               (beginsBeforeThisDay
                 ? timeFormatter.format(getEventEnd(event))
@@ -86,7 +101,13 @@ export const Event = ({
             {" - "}
           </Text>
         )}
-        <Text size="sm">{event.summary}</Text>
+        <Text
+          size="sm"
+          className={cn(adjustedTextColor[color])}
+          color="inherit"
+        >
+          {event.summary}
+        </Text>
       </div>
     </Component>
   );
@@ -97,11 +118,14 @@ export const EventSmall = ({
   beginsBeforeThisDay,
   endsAfterThisDay,
   viewEventProps,
+  color = "primary",
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
   const Component = viewEventProps ? "button" : "div";
+
+  const adjustedTextColor = useThemeStateValue((v) => v.adjustedTextColorState);
 
   return (
     <Component
@@ -115,8 +139,9 @@ export const EventSmall = ({
       type={viewEventProps ? "button" : undefined}
       className={cn(
         "flex-shrink-0 flex flex-col justify-center relative",
-        bgColors.primary,
-        focus.primary,
+        viewEventProps ? bgColorsInteractive[color] : bgColors[color],
+        transitionFast,
+        viewEventProps && focusBg[color],
         paddingsEvenly.sm,
         heights.md,
         roundings.md
@@ -126,6 +151,8 @@ export const EventSmall = ({
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
         {!startsAndEndsOnSameDay && (
           <Icon
+            className={cn(adjustedTextColor[color])}
+            color="inherit"
             size="sm"
             icon={
               beginsBeforeThisDay && endsAfterThisDay
@@ -137,7 +164,11 @@ export const EventSmall = ({
           />
         )}
         {showTime && (
-          <Text size="sm">
+          <Text
+            size="sm"
+            className={cn(adjustedTextColor[color])}
+            color="inherit"
+          >
             {showTime &&
               (beginsBeforeThisDay
                 ? timeFormatter.format(getEventEnd(event))
@@ -148,7 +179,13 @@ export const EventSmall = ({
             {" - "}
           </Text>
         )}
-        <Text size="sm">{event.summary}</Text>
+        <Text
+          size="sm"
+          className={cn(adjustedTextColor[color])}
+          color="inherit"
+        >
+          {event.summary}
+        </Text>
       </div>
     </Component>
   );

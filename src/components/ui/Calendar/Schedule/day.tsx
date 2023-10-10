@@ -14,6 +14,7 @@ import {
   paddingsYSmall,
   scrollbar,
 } from "../../../../styles";
+import { Color } from "../../../../types";
 import { Button } from "../../Button";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
@@ -47,6 +48,7 @@ export const ScheduleDayView = ({
   displayDayTime,
   viewEventProps,
   editEventProps,
+  eventColor,
 }: ScheduleDayViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
@@ -97,6 +99,7 @@ export const ScheduleDayView = ({
             day={viewing}
             precisionInMinutes={precisionInMinutes}
             viewEventProps={viewEventProps}
+            eventColor={eventColor}
           />
         </div>
       </div>
@@ -158,6 +161,7 @@ export type ScheduleDayProps = Pick<
   dayOfWeek?: number;
   day: Date;
   viewEventProps?: UseViewEventProps;
+  eventColor?: Color;
 };
 
 export const ScheduleDay = ({
@@ -166,6 +170,7 @@ export const ScheduleDay = ({
   day,
   dayOfWeek,
   viewEventProps,
+  eventColor,
 }: ScheduleDayProps) => {
   const { layout, rows } = layoutDayEvents(
     getThisDaysEvents(events || [], day),
@@ -231,6 +236,7 @@ export const ScheduleDay = ({
               endsAfterThisDay={endsAfterThisDay}
               event={event}
               viewEventProps={viewEventProps}
+              color={eventColor}
             />
           </li>
         )

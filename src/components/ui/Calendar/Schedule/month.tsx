@@ -32,12 +32,12 @@ import { Button } from "../../Button";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
 import { EventSmall } from "./Event";
+import type { UseEditEventProps } from "./Event/edit";
+import { EventListModal } from "./Event/list";
+import type { UseViewEventProps } from "./Event/view";
 import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
 import { getThisDaysEvents, getThisMonthEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
-import type { UseViewEventProps } from "./Event/view";
-import { EventListModal } from "./Event/list";
-import type { UseEditEventProps } from "./Event/edit";
 
 export type ScheduleMonthViewProps = Omit<
   ScheduleProps,
@@ -56,6 +56,7 @@ export const ScheduleMonthView = ({
   events,
   viewEventProps,
   editEventProps,
+  eventColor,
 }: ScheduleMonthViewProps) => {
   const { setViewing, viewing, calendar, inRange } = calendarProps;
 
@@ -144,6 +145,7 @@ export const ScheduleMonthView = ({
                     setCurrentView={setCurrentView}
                     setViewing={setViewing}
                     viewEventProps={viewEventProps}
+                    eventColor={eventColor}
                   />
                 ))}
               </div>
@@ -175,7 +177,7 @@ export const MonthScheduleHead = ({ day }: MonthScheduleHeadProps) => {
   );
 };
 
-export type ScheduleMonthDay = {
+export type ScheduleMonthDay = Pick<ScheduleProps, "eventColor"> & {
   day: Date;
   isInRange?: boolean;
   events: VEvent[];
@@ -190,6 +192,7 @@ export const ScheduleMonthDay = ({
   setViewing,
   setCurrentView,
   viewEventProps,
+  eventColor,
 }: ScheduleMonthDay) => {
   const thisDaysEvents = getThisDaysEvents(events, day)
     .sort((a, b) => compareAsc(a.start.date, b.start.date))
@@ -264,6 +267,7 @@ export const ScheduleMonthDay = ({
                 endsAfterThisDay={endsAfterThisDay}
                 event={event}
                 viewEventProps={viewEventProps}
+                color={eventColor}
               />
             )
           )}
@@ -275,6 +279,7 @@ export const ScheduleMonthDay = ({
         events={thisDaysEvents}
         day={day}
         viewEventProps={viewEventProps}
+        eventColor={eventColor}
       />
     </>
   );

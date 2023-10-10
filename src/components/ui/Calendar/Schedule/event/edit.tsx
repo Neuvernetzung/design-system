@@ -1,6 +1,5 @@
 import { IconLink, IconPencil, IconUnlink, IconX } from "@tabler/icons-react";
 import cn from "classnames";
-import { addHours } from "date-fns";
 import { type MouseEvent, useState } from "react";
 import {
   FieldPathByValue,
@@ -35,7 +34,6 @@ import { Switch } from "../../../Switch";
 import { TabGroup, TabItemProps, TabList, TabPanels } from "../../../Tabs";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
-import { v4 as uuid } from "uuid";
 
 export type UseEditEventProps = {
   open: boolean;
@@ -51,13 +49,13 @@ export const useEditEvent = (): UseEditEventProps => {
   const [event, setEvent] = useState<VEvent>();
 
   const setEdit = (event?: VEvent) => {
+    setEvent(event);
     setOpen(true);
-    if (event) setEvent(event);
   };
 
   const onClose = () => {
-    setOpen(false);
     setEvent(undefined);
+    setOpen(false);
   };
 
   return { open, setOpen, event, setEvent, setEdit, onClose };
@@ -75,13 +73,13 @@ export const EventEdit = ({
   const isEdit = !!editEventProps.event;
 
   const { control, handleSubmit, watch, setValue } = useForm<VEvent>({
-    defaultValues: {
-      uid: uuid(),
-      start: { date: new Date() },
-      end: { date: addHours(new Date(), 1) },
-    },
     values: editEventProps.event ? { ...editEventProps.event } : undefined,
   });
+
+  const onClose = () => {
+    editEventProps.onClose();
+    setTab(0);
+  };
 
   const { end, duration, start } = watch();
 
@@ -180,10 +178,7 @@ export const EventEdit = ({
         open={editEventProps.open}
         headerClassName="pb-0 px-0"
         setOpen={editEventProps.setOpen}
-        onClose={() => {
-          editEventProps.onClose();
-          setTab(0);
-        }}
+        onClose={onClose}
         header={
           <div className={cn("w-full flex flex-col", gaps.sm)}>
             <div
@@ -201,10 +196,7 @@ export const EventEdit = ({
               <IconButton
                 icon={IconX}
                 ariaLabel="close_edit_modal"
-                onClick={() => {
-                  editEventProps.onClose();
-                  setTab(0);
-                }}
+                onClick={onClose}
                 variant="ghost"
                 size="sm"
               />
@@ -217,13 +209,7 @@ export const EventEdit = ({
         }
         footer={
           <div className="flex flex-row justify-between w-full">
-            <Button
-              size="sm"
-              onClick={() => {
-                editEventProps.onClose();
-                setTab(0);
-              }}
-            >
+            <Button size="sm" onClick={onClose}>
               Abbrechen
             </Button>
             <Button
@@ -232,12 +218,11 @@ export const EventEdit = ({
               onClick={(e: MouseEvent) => {
                 handleSubmit((event) => {
                   if (isEdit) {
-                    onCreate(event);
-                  } else {
                     onUpdate(event);
+                  } else {
+                    onCreate(event);
                   }
-                  editEventProps.onClose();
-                  setTab(0);
+                  onClose();
                 })(e);
               }}
             >

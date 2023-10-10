@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { VEvent } from "ts-ics";
 
 import { divides, gaps, paddingsEvenly } from "../../../../styles";
+import type { Color } from "../../../../types";
 import { Calendar } from "../Dates";
 import { useCalendar, UseCalendarProps } from "../hooks/useCalendar";
 import { ScheduleDayView } from "./day";
@@ -30,6 +31,7 @@ export type ScheduleProps = {
   onCreate: (event: VEvent) => void;
   onUpdate: (event: VEvent) => void;
   onDelete: (event: VEvent) => void;
+  eventColor?: Color;
 };
 
 export const Schedule = ({
@@ -40,6 +42,7 @@ export const Schedule = ({
   onCreate,
   onUpdate,
   onDelete,
+  eventColor,
 }: ScheduleProps) => {
   const cal = useCalendar();
   const viewEventProps = useViewEvent();
@@ -72,6 +75,7 @@ export const Schedule = ({
               displayDayTime={displayDayTime}
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
+              eventColor={eventColor}
             />
           )}
           {currentView === "week" && (
@@ -84,6 +88,7 @@ export const Schedule = ({
               displayDayTime={displayDayTime}
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
+              eventColor={eventColor}
             />
           )}
           {currentView === "month" && (
@@ -94,6 +99,7 @@ export const Schedule = ({
               calendarProps={calendarProps}
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
+              eventColor={eventColor}
             />
           )}
         </div>

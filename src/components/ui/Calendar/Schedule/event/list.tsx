@@ -9,8 +9,9 @@ import { Text } from "../../../Typography";
 import { titleFormatter } from "../utils/formatTitle";
 import { EventSmall } from ".";
 import { type UseViewEventProps } from "./view";
+import type { ScheduleProps } from "..";
 
-export type EventListModal = {
+export type EventListModal = Pick<ScheduleProps, "eventColor"> & {
   open: boolean;
   setOpen: (open: boolean) => void;
   events: {
@@ -28,6 +29,7 @@ export const EventListModal = ({
   events,
   day,
   viewEventProps,
+  eventColor,
 }: EventListModal) => (
   <Modal
     open={open}
@@ -60,6 +62,7 @@ export const EventListModal = ({
             endsAfterThisDay={endsAfterThisDay}
             event={event}
             viewEventProps={viewEventProps}
+            color={eventColor}
           />
         ))}
       </div>

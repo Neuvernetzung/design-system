@@ -163,10 +163,14 @@ export const Default = ({ ...args }) => {
         setEvents((events) => [...events, event]);
       }}
       onUpdate={(event) => {
-        setEvents((events) => [
-          ...events.filter((e) => e.uid !== event.uid),
-          event,
-        ]);
+        console.log(event);
+        setEvents((events) => {
+          console.log(
+            events,
+            events.filter((e) => e.uid !== event.uid)
+          );
+          return [...events.filter((e) => e.uid !== event.uid), event];
+        });
       }}
       onDelete={(event) => {
         setEvents((events) => events.filter((e) => e.uid !== event.uid));

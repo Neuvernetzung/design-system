@@ -13,6 +13,8 @@ import { Tooltip } from "../../Tooltip";
 import { Text } from "../../Typography";
 import type { ScheduleProps, ScheduleView } from ".";
 import type { UseEditEventProps } from "./Event/edit";
+import { v4 as uuid } from "uuid";
+import { addHours } from "date-fns";
 
 export type ScheduleHeaderProps = Omit<
   ScheduleProps,
@@ -121,7 +123,14 @@ export const ScheduleHeader = ({
           color="primary"
           leftIcon={IconPlus}
           onClick={() => {
-            editEventProps.setEdit();
+            editEventProps.setEdit({
+              uid: uuid(),
+              start: { date: new Date() },
+              created: { date: new Date() },
+              stamp: { date: new Date() },
+              end: { date: addHours(new Date(), 1) },
+              summary: "",
+            });
           }}
         >
           Termin hinzufügen

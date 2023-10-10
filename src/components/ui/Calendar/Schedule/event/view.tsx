@@ -25,13 +25,13 @@ export const useViewEvent = (): UseViewEventProps => {
   const [event, setEvent] = useState<VEvent>();
 
   const setView = (event: VEvent) => {
-    setOpen(true);
     if (event) setEvent(event);
+    setOpen(true);
   };
 
   const onClose = () => {
-    setOpen(false);
     setEvent(undefined);
+    setOpen(false);
   };
 
   return { open, setOpen, event, setEvent, setView, onClose };
