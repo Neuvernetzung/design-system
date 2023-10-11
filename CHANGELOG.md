@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.0
+
+### Minor Changes
+
+- 9dc471a: Headless UI Popover durch Radix-ui ersetzen #1008
+- 6bc80b3: Schedule Komponente hinzugefügt #1004
+
 ## 2.1.3
 
 ### Patch Changes
