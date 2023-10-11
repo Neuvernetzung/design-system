@@ -1,3 +1,4 @@
+export * from "./animation";
 export * from "./borders";
 export * from "./colors";
 export * from "./focus";

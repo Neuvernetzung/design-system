@@ -90,6 +90,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
         ref={ref}
         type={type}
         disabled={_disabled}
+        aria-disabled={_disabled}
         aria-label={ariaLabel}
         className={cn(
           "aspect-square",

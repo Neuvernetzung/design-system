@@ -65,7 +65,7 @@ export const Datepicker = <
   const { clearSelected, clearTime, select, selected, setViewing } =
     calendarProps;
 
-  const popoverControler = usePopover({});
+  const popoverControler = usePopover();
 
   // Initial Value für useLilius select setzen
   const {
@@ -126,17 +126,20 @@ export const Datepicker = <
             <Popover
               controller={popoverControler}
               ref={ref}
-              focus
-              buttonAs="button"
-              placement="bottom"
-              buttonProps={{
-                className: getInputStyles({
-                  size,
-                  variant: inputVariant,
-                  error: !!error,
-                  disabled,
-                }),
-                children: (
+              side="bottom"
+              buttonComponent={
+                <button
+                  type="button"
+                  className={cn(
+                    "relative",
+                    getInputStyles({
+                      size,
+                      variant: inputVariant,
+                      error: !!error,
+                      disabled,
+                    })
+                  )}
+                >
                   <div className="flex flex-row justify-between items-center">
                     {value ? (
                       dateFormatter.format(new Date(value))
@@ -184,8 +187,8 @@ export const Datepicker = <
                       </div>
                     </span>
                   </div>
-                ),
-              }}
+                </button>
+              }
               content={
                 <Calendar
                   calendarProps={calendarProps}
