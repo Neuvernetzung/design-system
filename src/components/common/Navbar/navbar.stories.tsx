@@ -1,28 +1,27 @@
+import { Meta } from "@storybook/react";
 import {
+  Icon360,
+  IconBolt,
+  IconColorSwatch,
   IconLogout,
   IconRoute,
-  IconBolt,
   IconShoppingCart,
-  IconColorSwatch,
   IconTrash,
   IconUser,
-  Icon360,
 } from "@tabler/icons-react";
-
-import { Meta } from "@storybook/react";
+import cn from "classnames";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Logo } from "../../../../public/Logo";
-import { PageContainer } from "../Container";
+import { borders } from "../../../styles";
+import { Button, Drawer, IconButton, Menu, Tooltip } from "../../ui";
 import { Icon } from "../../ui/Icon";
+import { Loading, loading } from "../../ui/Loading";
 import { Select } from "../../ui/Select";
 import { Heading } from "../../ui/Typography/Heading";
+import { PageContainer } from "../Container";
 import { Navbar, NavbarProps, SideNavbar } from "./navbar";
-import { Button, Drawer, Menu, Tooltip, IconButton } from "../../ui";
-import { borders } from "../../../styles";
-import cn from "classnames";
-import { loading, Loading } from "../../ui/Loading";
 
 export default {
   title: "COMMON/Navbar",

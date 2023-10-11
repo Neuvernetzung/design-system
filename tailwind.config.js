@@ -56,6 +56,20 @@ module.exports = {
         warn: colorVariables("warn"),
         danger: colorVariables("danger"),
       },
+      animation: {
+        popover: "popover 100ms linear",
+        popoverOut: "popoverOut 50ms linear",
+      },
+      keyframes: {
+        popover: {
+          "0%": { transform: "scale(95%) translateY(5px)", opacity: 0 },
+          "100%": { transform: "scale(100%) translateY(0px)", opacity: 1 },
+        },
+        popoverOut: {
+          "0%": { transform: "scale(100%) translateY(0px)", opacity: 1 },
+          "100%": { transform: "scale(95%) translateY(5px)", opacity: 0 },
+        },
+      },
     },
   },
   variants: {

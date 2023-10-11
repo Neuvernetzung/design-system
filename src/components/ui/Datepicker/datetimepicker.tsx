@@ -119,17 +119,20 @@ export const Datetimepicker = <
             <Popover
               controller={popoverControler}
               ref={ref}
-              focus
-              buttonAs="button"
-              placement="bottom"
-              buttonProps={{
-                className: getInputStyles({
-                  size,
-                  variant: inputVariant,
-                  error: !!error,
-                  disabled,
-                }),
-                children: (
+              side="bottom"
+              buttonComponent={
+                <button
+                  type="button"
+                  className={cn(
+                    "relative",
+                    getInputStyles({
+                      size,
+                      variant: inputVariant,
+                      error: !!error,
+                      disabled,
+                    })
+                  )}
+                >
                   <div className="flex flex-row justify-between items-center">
                     {value ? (
                       dateFormatter.format(new Date(value))
@@ -177,8 +180,8 @@ export const Datetimepicker = <
                       </div>
                     </span>
                   </div>
-                ),
-              }}
+                </button>
+              }
               content={
                 <div>
                   <Calendar
