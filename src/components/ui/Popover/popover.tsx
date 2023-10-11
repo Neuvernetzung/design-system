@@ -1,204 +1,123 @@
-import { Popover as HeadlessPopover, Transition } from "@headlessui/react";
-import type { Placement } from "@popperjs/core";
+import {
+  Close as PopoverClose,
+  Content as PopoverContent,
+  PopperContentProps,
+  Portal as PopoverPortal,
+  Root as PopoverRoot,
+  Trigger as PopoverTrigger,
+} from "@radix-ui/react-popover";
 import cn from "classnames";
 import {
-  ElementType,
   ForwardedRef,
   forwardRef,
-  Fragment,
-  MouseEvent,
-  MutableRefObject,
+  ReactElement,
   ReactNode,
-  useRef,
   useState,
 } from "react";
-import { usePopper } from "react-popper";
 
 import { focus as focusStyle } from "../../../styles";
-import {
-  getPopoverContainerStyles,
-  getPopoverFullScreenContainerStyles,
-  getPopoverFullScreenHeaderStyles,
-  getPopoverFullScreenStyles,
-} from "../../../styles/groups";
-import { popperOffset } from "../../../styles/popper/offset";
+import { getPopoverContainerStyles } from "../../../styles/groups";
+import { offsetSizes } from "../../../styles/popper/offset";
 import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
-import { mergeRefs } from "../../../utils/internal/mergeRefs";
-import type { ButtonProps, IconButtonProps } from "../Button";
-import { Button, IconButton } from "../Button";
-import { IconX } from "@tabler/icons-react";
+import type { ButtonProps } from "../Button";
+import { Button } from "../Button";
+import { popoverAnimation } from "../../../styles/animation";
+
+export type UsePopoverProps = { defaultValue?: boolean };
+
+export type ControlledPopoverProps = {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  close: () => void;
+};
+
+export const usePopover = (props?: UsePopoverProps): ControlledPopoverProps => {
+  const [open, setOpen] = useState<boolean>(props?.defaultValue ?? false);
+
+  const close = () => setOpen(false);
+
+  return { open, close, setOpen };
+};
 
 export type PopoverProps = {
   content: ReactNode;
-  buttonProps?: ButtonProps | IconButtonProps;
-  buttonAs?: ElementType;
-  buttonComponent?: ReactNode;
+  controller?: ControlledPopoverProps;
   size?: Size;
-  trigger?: "click" | "hover";
-  placement?: Placement;
+  align?: PopperContentProps["align"];
+  side?: PopperContentProps["side"];
   disabled?: boolean;
-  focus?: boolean;
   panelClassName?: string;
-  fullScreenOnMobile?: boolean;
-  referenceElement?: MutableRefObject<HTMLElement | null>;
-  disabledOffset?: boolean;
-};
+} & PopoverTriggerProps;
+
+export type PopoverTriggerProps =
+  | { buttonProps?: ButtonProps; buttonComponent?: never }
+  | { buttonProps?: never; buttonComponent: ReactNode };
 
 export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
   (
     {
       content,
+      controller,
       buttonProps,
-      buttonAs,
       buttonComponent,
       size = "md",
-      trigger = "click",
-      placement = "bottom",
+      align = "center",
+      side = "bottom",
       disabled,
-      focus = false,
       panelClassName,
-      fullScreenOnMobile = false,
-      referenceElement: _referenceElement,
-      disabledOffset = false,
     },
     ref: ForwardedRef<HTMLButtonElement>
-  ) => {
-    const buttonRef = useRef<HTMLButtonElement>();
-    const [referenceElement, setReferenceElement] =
-      useState<HTMLElement | null>(null);
-    const [popperElement, setPopperElement] = useState<HTMLElement | null>(
-      null
-    );
-
-    const offset = popperOffset({ size });
-
-    const { styles, attributes } = usePopper(
-      _referenceElement?.current || referenceElement,
-      popperElement,
-      {
-        placement,
-        modifiers: [
-          {
-            name: "offset",
-            options: {
-              offset: disabledOffset ? [0, 0] : offset,
-            },
-          },
-        ],
-      }
-    );
-
-    const timeoutDuration: number = 250;
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const onMouseEnter = (open: boolean) => {
-      clearTimeout(timeout);
-      if (open) return;
-      return buttonRef.current?.click();
-    };
-
-    const onMouseLeave = (
-      open: boolean,
-      close: (
-        focusableElement?:
-          | HTMLElement
-          | MutableRefObject<HTMLElement | null>
-          | MouseEvent<HTMLElement>
-      ) => void
-    ) => {
-      if (!open) return;
-      timeout = setTimeout(() => close(), timeoutDuration);
-    };
-
-    return (
-      <HeadlessPopover className="relative">
-        {({ open, close }) => (
+  ) => (
+    <PopoverRoot open={controller?.open} onOpenChange={controller?.setOpen}>
+      <PopoverTrigger
+        aria-disabled={disabled}
+        disabled={disabled}
+        ref={ref}
+        asChild
+      >
+        {buttonComponent || <Button {...buttonProps} />}
+      </PopoverTrigger>
+      <PopoverPortal>
+        <PopoverContent
+          align={align}
+          side={side}
+          sideOffset={offsetSizes[size]}
+          asChild
+        >
           <div
-            onMouseEnter={
-              trigger === "hover" ? () => onMouseEnter(open) : () => {}
-            }
-            onMouseLeave={
-              trigger === "hover" ? () => onMouseLeave(open, close) : () => {}
-            }
-          >
-            {!buttonComponent ? (
-              <HeadlessPopover.Button
-                className={cn(focusStyle.accent)}
-                ref={mergeRefs([
-                  buttonRef,
-                  ref,
-                  ...(!_referenceElement ? [setReferenceElement] : []),
-                ])}
-                as={buttonAs || Button}
-                disabled={disabled}
-                {...buttonProps}
-              />
-            ) : (
-              <HeadlessPopover.Button
-                aria-disabled={disabled}
-                as="span"
-                ref={mergeRefs([buttonRef, ref, setReferenceElement])}
-              >
-                {buttonComponent}
-              </HeadlessPopover.Button>
+            className={cn(
+              getPopoverContainerStyles({ size }),
+              focusStyle,
+              popoverAnimation,
+              panelClassName
             )}
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <HeadlessPopover.Panel as="span" focus={focus}>
-                <div
-                  ref={setPopperElement}
-                  className={cn(
-                    !fullScreenOnMobile ? "block" : "hidden md:block",
-                    getPopoverContainerStyles({ size }),
-                    panelClassName
-                  )}
-                  style={styles.popper}
-                  {...attributes.popper}
-                >
-                  {content}
-                </div>
-                <div
-                  className={cn(
-                    fullScreenOnMobile ? "block md:hidden" : "hidden",
-                    getPopoverFullScreenStyles(),
-                    panelClassName
-                  )}
-                >
-                  <div className={cn(getPopoverFullScreenHeaderStyles())}>
-                    <IconButton
-                      ariaLabel="close_popover"
-                      icon={IconX}
-                      variant="ghost"
-                      onClick={() => close()} // wenn hier ein PopoverButton verwendet wird, dann lässt sich Button nicht mehr per Klick schließen
-                    />
-                  </div>
-                  <div className={cn(getPopoverFullScreenContainerStyles())}>
-                    {content}
-                  </div>
-                </div>
-              </HeadlessPopover.Panel>
-            </Transition>
+          >
+            {content}
           </div>
-        )}
-      </HeadlessPopover>
-    );
-  }
+        </PopoverContent>
+      </PopoverPortal>
+    </PopoverRoot>
+  )
 );
 
 export default typedMemo(Popover);
 
 Popover.displayName = "Popover";
 
-export const PopoverButton = forwardRef<Element, any>((props, ref) => (
-  <HeadlessPopover.Button ref={ref} {...props} />
-));
+export type PopoverButtonProps = {
+  children: ReactElement;
+};
+
+export const PopoverButton = forwardRef(
+  (
+    { children, ...props }: PopoverButtonProps,
+    ref: ForwardedRef<HTMLButtonElement>
+  ) => (
+    <PopoverClose ref={ref} asChild {...props}>
+      {children}
+    </PopoverClose>
+  )
+);
 
 PopoverButton.displayName = "Popover Button";

@@ -94,6 +94,7 @@ export const ColorPicker = <
                       error: !!error,
                     })
                   )}
+                  placeholder="#------"
                   value={value}
                   onChange={onChange}
                 />

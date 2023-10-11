@@ -2,7 +2,7 @@ import type { Size } from "../../types";
 
 export type PopperOffsetProps = { size?: Size };
 
-const offsetSizes: Record<Size, number> = {
+export const offsetSizes: Record<Size, number> = {
   xs: 2,
   sm: 4,
   md: 6,

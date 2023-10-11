@@ -127,6 +127,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
         ref={ref}
         type={type}
         disabled={_disabled}
+        aria-disabled={_disabled}
         className={cn(
           extendedFocuses[focus][color],
           buttonBaseStyles.base,

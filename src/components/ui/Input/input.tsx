@@ -1,20 +1,20 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
 import {
-  ForwardedRef,
+  type ForwardedRef,
   forwardRef,
-  HTMLAttributes,
-  ReactNode,
-  Ref,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
   useEffect,
   useRef,
   useState,
 } from "react";
 import {
   Controller,
-  FieldPath,
-  FieldValues,
-  UseControllerProps,
+  type FieldPath,
+  type FieldValues,
+  type UseControllerProps,
 } from "react-hook-form";
 
 import { type Locale } from "../../../locales/getText";
@@ -163,7 +163,10 @@ const Input = forwardRef(InputInner) as <
 
 export default typedMemo(Input);
 
-export type RawInputProps = HTMLAttributes<HTMLInputElement> & {
+export type RawInputProps = Omit<
+  HTMLAttributes<HTMLInputElement>,
+  "onChange"
+> & {
   containerClassName?: string;
   leftAddon?: Pick<InputAddonProps, "children" | "className">;
   size?: Size;
@@ -174,7 +177,7 @@ export type RawInputProps = HTMLAttributes<HTMLInputElement> & {
   >;
   id?: string;
   value?: string;
-  onChange?: (...event: unknown[]) => void;
+  onChange?: (value: string) => void;
   error?: boolean;
   disabled?: boolean;
   rightAddon?: Pick<InputAddonProps, "children" | "className">;
@@ -236,7 +239,7 @@ export const RawInput = forwardRef(
           id={id}
           ref={ref}
           value={value}
-          onChange={onChange}
+          onChange={(e) => onChange?.(e.target.value)}
           onWheel={(e: any) => e.target?.type === "number" && e.target?.blur()} // damit beim scrollen die zahl nicht versehentlich verändert wird
           className={cn(
             getInputStyles({
