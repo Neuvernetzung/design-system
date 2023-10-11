@@ -34,6 +34,7 @@ import { Switch } from "../../../Switch";
 import { TabGroup, TabItemProps, TabList, TabPanels } from "../../../Tabs";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
+import isFunction from "lodash/isFunction";
 
 export type UseEditEventProps = {
   open: boolean;
@@ -61,7 +62,10 @@ export const useEditEvent = (): UseEditEventProps => {
   return { open, setOpen, event, setEvent, setEdit, onClose };
 };
 
-export type EventEditProps = Pick<ScheduleProps, "onCreate" | "onUpdate"> & {
+export type EventEditProps = Pick<
+  ScheduleProps,
+  "onCreate" | "onUpdate" | "disableUpdate"
+> & {
   editEventProps: UseEditEventProps;
 };
 
@@ -69,6 +73,7 @@ export const EventEdit = ({
   editEventProps,
   onCreate,
   onUpdate,
+  disableUpdate,
 }: EventEditProps) => {
   const isEdit = !!editEventProps.event;
 
@@ -100,6 +105,9 @@ export const EventEdit = ({
   };
 
   const [tab, setTab] = useState<number>(0);
+
+  if (disableUpdate || isEdit ? !isFunction(onUpdate) : !isFunction(onCreate))
+    return null;
 
   const tabs: TabItemProps[] = [
     {
@@ -218,9 +226,9 @@ export const EventEdit = ({
               onClick={(e: MouseEvent) => {
                 handleSubmit((event) => {
                   if (isEdit) {
-                    onUpdate(event);
+                    onUpdate?.(event);
                   } else {
-                    onCreate(event);
+                    onCreate?.(event);
                   }
                   onClose();
                 })(e);

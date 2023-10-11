@@ -10,6 +10,7 @@ import { Prose } from "../../../Prose";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
 import type { UseEditEventProps } from "./edit";
+import isFunction from "lodash/isFunction";
 
 export type UseViewEventProps = {
   open: boolean;
@@ -37,7 +38,10 @@ export const useViewEvent = (): UseViewEventProps => {
   return { open, setOpen, event, setEvent, setView, onClose };
 };
 
-export type ViewEventProps = Pick<ScheduleProps, "onDelete"> & {
+export type ViewEventProps = Pick<
+  ScheduleProps,
+  "onDelete" | "disableUpdate" | "disableDelete"
+> & {
   viewEventProps: UseViewEventProps;
   editEventProps: UseEditEventProps;
 };
@@ -46,6 +50,8 @@ export const ViewEvent = ({
   viewEventProps,
   onDelete,
   editEventProps,
+  disableDelete,
+  disableUpdate,
 }: ViewEventProps) => {
   if (!viewEventProps || !viewEventProps.event) return null;
 
@@ -68,18 +74,20 @@ export const ViewEvent = ({
         >
           <Text>Termin</Text>
           <div className={cn("flex flex-row", gaps.sm)}>
-            <IconButton
-              icon={IconTrash}
-              color="danger"
-              size="sm"
-              variant="ghost"
-              ariaLabel="delete_event"
-              onClick={() => {
-                if (!viewEventProps.event) return;
-                onDelete(viewEventProps.event);
-                viewEventProps.onClose();
-              }}
-            />
+            {!disableDelete && isFunction(onDelete) && (
+              <IconButton
+                icon={IconTrash}
+                color="danger"
+                size="sm"
+                variant="ghost"
+                ariaLabel="delete_event"
+                onClick={() => {
+                  if (!viewEventProps.event) return;
+                  onDelete(viewEventProps.event);
+                  viewEventProps.onClose();
+                }}
+              />
+            )}
             <IconButton
               size="sm"
               variant="ghost"
@@ -119,17 +127,19 @@ export const ViewEvent = ({
             gaps.md
           )}
         >
-          <Button
-            size="sm"
-            color="primary"
-            leftIcon={IconPencil}
-            onClick={() => {
-              viewEventProps.onClose();
-              editEventProps.setEdit(viewEventProps.event);
-            }}
-          >
-            Bearbeiten
-          </Button>
+          {!disableUpdate && (
+            <Button
+              size="sm"
+              color="primary"
+              leftIcon={IconPencil}
+              onClick={() => {
+                viewEventProps.onClose();
+                editEventProps.setEdit(viewEventProps.event);
+              }}
+            >
+              Bearbeiten
+            </Button>
+          )}
         </div>
       }
     />

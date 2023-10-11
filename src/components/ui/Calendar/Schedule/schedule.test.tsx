@@ -1,18 +1,22 @@
-import { render } from "../../../../../test-utils";
 import { axe } from "jest-axe";
 
-import {
-  Calendar,
-  CalendarDateDayView,
-  CalendarDateMonthView,
-  CalendarDateYearView,
-} from ".";
+import { render } from "../../../../../test-utils";
 import { type UseCalendarProps, useCalendar } from "../hooks";
+import {
+  Schedule,
+  ScheduleDayView,
+  ScheduleMonthView,
+  ScheduleWeekView,
+} from ".";
 import type { ReactNode } from "react";
 
 type CalendarPropsWrapperProps = {
   children: (calendarProps: UseCalendarProps) => ReactNode;
 };
+
+beforeAll(() => {
+  Element.prototype.scrollTo = jest.fn(); // scrollTo wird in jest Environment nicht erkannt, ist aber auch nicht wichtig für Test, deshalb mock
+});
 
 const CalendarPropsWrapper = ({ children }: CalendarPropsWrapperProps) => {
   const calendarProps = useCalendar();
@@ -20,17 +24,17 @@ const CalendarPropsWrapper = ({ children }: CalendarPropsWrapperProps) => {
   return children(calendarProps);
 };
 
-it("Calendar axe", async () => {
-  const { container } = render(<Calendar />);
+it("Schedule axe", async () => {
+  const { container } = render(<Schedule />);
 
   const results = await axe(container);
   expect(results).toHaveNoViolations();
 });
 
-it("CalendarDateDayView axe", async () => {
+it("ScheduleDayView axe", async () => {
   const { container } = render(
     <CalendarPropsWrapper>
-      {(calendarProps) => <CalendarDateDayView calendarProps={calendarProps} />}
+      {(calendarProps) => <ScheduleDayView calendarProps={calendarProps} />}
     </CalendarPropsWrapper>
   );
 
@@ -38,12 +42,10 @@ it("CalendarDateDayView axe", async () => {
   expect(results).toHaveNoViolations();
 });
 
-it("CalendarDateMonthView axe", async () => {
+it("ScheduleMonthView axe", async () => {
   const { container } = render(
     <CalendarPropsWrapper>
-      {(calendarProps) => (
-        <CalendarDateMonthView calendarProps={calendarProps} />
-      )}
+      {(calendarProps) => <ScheduleMonthView calendarProps={calendarProps} />}
     </CalendarPropsWrapper>
   );
 
@@ -51,12 +53,10 @@ it("CalendarDateMonthView axe", async () => {
   expect(results).toHaveNoViolations();
 });
 
-it("CalendarDateYearView axe", async () => {
+it("ScheduleWeekView axe", async () => {
   const { container } = render(
     <CalendarPropsWrapper>
-      {(calendarProps) => (
-        <CalendarDateYearView calendarProps={calendarProps} />
-      )}
+      {(calendarProps) => <ScheduleWeekView calendarProps={calendarProps} />}
     </CalendarPropsWrapper>
   );
 

@@ -16,6 +16,7 @@ import { type ReactNode, useState } from "react";
 
 import type { ScheduleProps } from "..";
 import { activationConstraint } from "../utils/activationConstraint";
+import isFunction from "lodash/isFunction";
 
 export type UseMonthGridDraggablePropsReturn = {
   sensors: SensorDescriptor<SensorOptions>[];
@@ -46,7 +47,7 @@ export type MonthGridDndContextProps = Omit<
   UseMonthGridDraggablePropsReturn,
   "activeItem" | "transformDelta"
 > &
-  Pick<ScheduleProps, "onUpdate" | "events"> & {
+  Pick<ScheduleProps, "onUpdate" | "events" | "disableDrag"> & {
     children: ReactNode;
   };
 
@@ -64,52 +65,60 @@ export const MonthGridDndContext = ({
   onUpdate,
   setActiveItem,
   children,
-}: MonthGridDndContextProps) => (
-  <DndContext
-    sensors={sensors}
-    onDragCancel={() => {
-      setActiveItem(undefined);
-    }}
-    onDragEnd={({ active, over }) => {
-      const id = active.id;
-      if (!id || !over) {
+  disableDrag,
+}: MonthGridDndContextProps) => {
+  const isDisabled = !isFunction(onUpdate) || disableDrag;
+
+  return (
+    <DndContext
+      sensors={sensors}
+      onDragStart={({ active }) => {
+        if (isDisabled) return;
+        setActiveItem(active.id);
+      }}
+      onDragCancel={() => {
+        if (isDisabled) return;
         setActiveItem(undefined);
+      }}
+      onDragEnd={({ active, over }) => {
+        if (isDisabled) return;
+        const id = active.id;
+        if (!id || !over) {
+          setActiveItem(undefined);
 
-        return;
-      }
+          return;
+        }
 
-      const event = events?.find((event) => event.uid === id);
-      if (!event) {
-        setActiveItem(undefined);
-        return;
-      }
+        const event = events?.find((event) => event.uid === id);
+        if (!event) {
+          setActiveItem(undefined);
+          return;
+        }
 
-      const date = new Date(over.id);
-      const month = getMonth(date);
-      const day = getDate(date);
+        const date = new Date(over.id);
+        const month = getMonth(date);
+        const day = getDate(date);
 
-      const usesDuration = event.duration;
-      const newEvent = { ...event };
-      set(
-        newEvent,
-        "start.date",
-        setMonth(setDate(event.start.date, day), month)
-      );
-      if (!usesDuration) {
+        const usesDuration = event.duration;
+        const newEvent = { ...event };
         set(
           newEvent,
-          "end.date",
-          setMonth(setDate(event.end.date, day), month)
+          "start.date",
+          setMonth(setDate(event.start.date, day), month)
         );
-      }
+        if (!usesDuration) {
+          set(
+            newEvent,
+            "end.date",
+            setMonth(setDate(event.end.date, day), month)
+          );
+        }
 
-      setActiveItem(undefined);
-      onUpdate(newEvent);
-    }}
-    onDragStart={({ active }) => {
-      setActiveItem(active.id);
-    }}
-  >
-    {children}
-  </DndContext>
-);
+        setActiveItem(undefined);
+        onUpdate(newEvent);
+      }}
+    >
+      {children}
+    </DndContext>
+  );
+};

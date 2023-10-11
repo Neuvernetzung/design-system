@@ -45,6 +45,7 @@ export const ScheduleHeader = ({
   rightArrowDisabled,
   title,
   editEventProps,
+  disableCreate,
 }: ScheduleHeaderProps) => {
   const { viewToday } = calendarProps;
 
@@ -117,7 +118,7 @@ export const ScheduleHeader = ({
           </Button>
         </div>
       )}
-      {editEventProps && (
+      {!disableCreate && editEventProps && (
         <Button
           size="sm"
           color="primary"

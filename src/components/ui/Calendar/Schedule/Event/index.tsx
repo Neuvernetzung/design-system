@@ -1,5 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
-import { Coordinates, CSS } from "@dnd-kit/utilities";
+import type { Coordinates } from "@dnd-kit/utilities";
 import {
   IconArrowBarRight,
   IconArrowBarToRight,
@@ -26,7 +26,9 @@ import { useThemeStateValue } from "../../../../../theme";
 import type { Color } from "../../../../../types";
 import { Icon } from "../../../Icon";
 import { Text } from "../../../Typography";
+import type { ScheduleDayProps } from "../day";
 import { dayGridDeltaToTime } from "../DayGrid/dragAndDrop";
+import type { ScheduleMonthViewProps } from "../month";
 import { timeFormatter } from "../utils/formatTitle";
 import type { UseViewEventProps } from "./view";
 
@@ -39,23 +41,19 @@ export type EventProps = {
   className?: string;
 };
 
-export const DraggableEvent = ({ ...props }: EventProps) => {
-  const { attributes, isDragging, listeners, setNodeRef, transform } =
-    useDraggable({
-      id: props.event.uid,
-    });
+export const DraggableEvent = ({
+  disableDrag,
+  ...props
+}: EventProps & Pick<ScheduleDayProps, "disableDrag">) => {
+  const { attributes, isDragging, listeners, setNodeRef } = useDraggable({
+    id: props.event.uid,
+    disabled: disableDrag,
+  });
 
   return (
-    <span
-      {...attributes}
-      {...listeners}
-      ref={setNodeRef}
-      style={{
-        transform: CSS.Translate.toString(transform),
-      }}
-    >
+    <div className="h-full" {...attributes} {...listeners} ref={setNodeRef}>
       <Event {...props} className={cn(isDragging && "opacity-50")} />
-    </span>
+    </div>
   );
 };
 
@@ -134,7 +132,7 @@ export const Event = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex w-full h-full relative overflow-hidden truncate",
+        "flex w-full h-full relative overflow-hidden truncate select-none",
         viewEventProps ? bgColorsInteractive[color] : bgColors[color],
         transitionFast,
         viewEventProps && focusBg[color],
@@ -190,15 +188,19 @@ export const Event = ({
   );
 };
 
-export const DraggableEventSmall = ({ ...props }: EventProps) => {
+export const DraggableEventSmall = ({
+  disableDrag,
+  ...props
+}: EventProps & Pick<ScheduleMonthViewProps, "disableDrag">) => {
   const { attributes, isDragging, listeners, setNodeRef } = useDraggable({
     id: props.event.uid,
+    disabled: disableDrag,
   });
 
   return (
-    <span {...attributes} {...listeners} ref={setNodeRef}>
+    <li {...attributes} {...listeners} ref={setNodeRef}>
       <EventSmall {...props} className={cn(isDragging && "opacity-50")} />
-    </span>
+    </li>
   );
 };
 
@@ -238,7 +240,7 @@ export const EventSmall = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex-shrink-0 w-full flex flex-col justify-center relative truncate",
+        "flex-shrink-0 w-full flex flex-col justify-center relative truncate select-none",
         viewEventProps ? bgColorsInteractive[color] : bgColors[color],
         transitionFast,
         viewEventProps && focusBg[color],

@@ -41,7 +41,7 @@ import { CustomImage } from "./Extensions/image";
 import { CustomTextAlign } from "./Extensions/textAlign";
 import { MenuBar } from "./Menus/menuBar";
 import { returnTextSelection, type TextTypeTags } from "./Menus/selectText";
-import { Size } from "../../../types";
+import type { Size } from "../../../types";
 
 export type RichTextProps = {
   label?: string;

@@ -2,6 +2,7 @@ import { DragOverlay, useDroppable } from "@dnd-kit/core";
 import cn from "classnames";
 import {
   addDays,
+  addHours,
   addMonths,
   compareAsc,
   endOfMonth,
@@ -16,6 +17,7 @@ import {
 import isFunction from "lodash/isFunction";
 import { useRef, useState } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
+import { v4 as uuid } from "uuid";
 
 import {
   bgColors,
@@ -31,7 +33,7 @@ import {
   roundings,
   scrollbar,
 } from "../../../../styles";
-import { Button } from "../../Button";
+import { Button, IconButton } from "../../Button";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
 import { DraggableEventSmall, DragOverlayEventSmall } from "./Event";
@@ -45,10 +47,15 @@ import {
 } from "./MonthGrid/dragAndDrop";
 import { getThisDaysEvents, getThisMonthEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
+import { IconPlus } from "@tabler/icons-react";
 
 export type ScheduleMonthViewProps = Omit<
   ScheduleProps,
-  "calendarProps" | "rowsEachHour" | "onDelete" | "onCreate"
+  | "calendarProps"
+  | "rowsEachHour"
+  | "onDelete"
+  | "disableUpdate"
+  | "disableDelete"
 > &
   Required<Pick<ScheduleProps, "calendarProps">> &
   Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
@@ -65,6 +72,9 @@ export const ScheduleMonthView = ({
   editEventProps,
   eventColor,
   onUpdate,
+  disabled,
+  disableDrag,
+  disableCreate,
 }: ScheduleMonthViewProps) => {
   const { setViewing, viewing, calendar, inRange } = calendarProps;
 
@@ -86,6 +96,7 @@ export const ScheduleMonthView = ({
         rightArrowFunction={() => setViewing(addMonths(viewing, 1))}
         title={formatTitle(startOfMonth(viewing), endOfMonth(viewing))}
         editEventProps={editEventProps}
+        disableCreate={disabled || disableCreate}
       />
       <div className={cn("overflow-y-scroll relative", scrollbar)}>
         <div
@@ -107,6 +118,7 @@ export const ScheduleMonthView = ({
           sensors={sensors}
           setActiveItem={setActiveItem}
           events={events}
+          disableDrag={disabled || disableDrag}
         >
           <div
             ref={gridInnerRef}
@@ -164,7 +176,14 @@ export const ScheduleMonthView = ({
                       setCurrentView={setCurrentView}
                       setViewing={setViewing}
                       viewEventProps={viewEventProps}
+                      editEventProps={editEventProps}
                       eventColor={eventColor}
+                      disableDrag={
+                        disabled || !isFunction(onUpdate) || disableDrag
+                      }
+                      disableCreate={
+                        disabled || !isFunction(onUpdate) || disableCreate
+                      }
                     />
                   ))}
                 </div>
@@ -204,7 +223,10 @@ export const MonthScheduleHead = ({ day }: MonthScheduleHeadProps) => {
   );
 };
 
-export type ScheduleMonthDay = Pick<ScheduleProps, "eventColor"> & {
+export type ScheduleMonthDay = Pick<
+  ScheduleMonthViewProps,
+  "eventColor" | "disableDrag" | "disableCreate" | "editEventProps"
+> & {
   day: Date;
   isInRange?: boolean;
   events: VEvent[];
@@ -220,6 +242,9 @@ export const ScheduleMonthDay = ({
   setCurrentView,
   viewEventProps,
   eventColor,
+  disableDrag,
+  disableCreate,
+  editEventProps,
 }: ScheduleMonthDay) => {
   const thisDaysEvents = getThisDaysEvents(events, day)
     .sort((a, b) => compareAsc(a.start.date, b.start.date))
@@ -236,16 +261,27 @@ export const ScheduleMonthDay = ({
   return (
     <>
       <div
+        onDoubleClick={() => {
+          if (disableCreate) return;
+          editEventProps?.setEdit({
+            uid: uuid(),
+            start: { date: day },
+            created: { date: new Date() },
+            stamp: { date: new Date() },
+            end: { date: addHours(day, 1) },
+            summary: "",
+          });
+        }}
         ref={setNodeRef}
         className={cn(
-          "h-full flex flex-col aspect-video overflow-hidden",
+          "h-full flex flex-col aspect-video overflow-hidden group",
           gaps.xs,
           paddingsSmallEvenly.md,
           !isInRange ? extendedBgColors.subtile : bgColors.white
         )}
       >
         <div className="flex flex-row justify-between items-center">
-          <div>
+          <div className={cn("flex flex-row", gaps.xs)}>
             {thisDaysEvents.length > 0 && (
               <Button
                 size="xs"
@@ -257,6 +293,26 @@ export const ScheduleMonthDay = ({
               >
                 {thisDaysEvents.length}
               </Button>
+            )}
+            {!disableCreate && (
+              <IconButton
+                ariaLabel="add_event"
+                size="xs"
+                variant="subtile"
+                className="hidden group-hover:flex"
+                icon={IconPlus}
+                onClick={() => {
+                  if (disableCreate) return;
+                  editEventProps?.setEdit({
+                    uid: uuid(),
+                    start: { date: day },
+                    created: { date: new Date() },
+                    stamp: { date: new Date() },
+                    end: { date: addHours(day, 1) },
+                    summary: "",
+                  });
+                }}
+              />
             )}
           </div>
           {isFunction(setCurrentView) ? (
@@ -284,7 +340,7 @@ export const ScheduleMonthDay = ({
             </Text>
           )}
         </div>
-        <div
+        <ol
           className={cn(
             "flex flex-col overflow-y-hidden hover:overflow-y-auto overflow-x-hidden hover:overflow-x-hidden",
             gapsSmall.sm,
@@ -292,7 +348,7 @@ export const ScheduleMonthDay = ({
           )}
         >
           {isOver && (
-            <div
+            <li
               className={cn(
                 "h-10 flex-shrink-0 w-full bg-opacity-20 border-2 border-dashed",
                 borders.primary,
@@ -310,10 +366,11 @@ export const ScheduleMonthDay = ({
                 event={event}
                 viewEventProps={viewEventProps}
                 color={eventColor}
+                disableDrag={disableDrag}
               />
             )
           )}
-        </div>
+        </ol>
       </div>
       <EventListModal
         open={allEventsOpen}

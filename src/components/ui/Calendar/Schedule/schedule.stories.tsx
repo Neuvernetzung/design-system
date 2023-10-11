@@ -176,6 +176,31 @@ export const Default = ({ ...args }) => {
   );
 };
 
+export const Disabled = ({ ...args }) => {
+  const [_events, setEvents] = useState(events);
+
+  return (
+    <Schedule
+      displayDayTime={{ start: 8, end: 18 }}
+      events={_events}
+      disabled
+      onCreate={(event) => {
+        setEvents((events) => [...events, event]);
+      }}
+      onUpdate={(event) => {
+        setEvents((events) => [
+          ...events.filter((e) => e.uid !== event.uid),
+          event,
+        ]);
+      }}
+      onDelete={(event) => {
+        setEvents((events) => events.filter((e) => e.uid !== event.uid));
+      }}
+      {...args}
+    />
+  );
+};
+
 export const Days = ({ ...args }) => {
   const calendarProps = useCalendar();
 

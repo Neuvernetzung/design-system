@@ -1,5 +1,7 @@
+import { DragOverlay } from "@dnd-kit/core";
 import cn from "classnames";
 import { addDays, addWeeks, endOfWeek, startOfWeek, subWeeks } from "date-fns";
+import isFunction from "lodash/isFunction";
 import { useRef } from "react";
 
 import {
@@ -10,14 +12,13 @@ import {
 } from "../../../../styles";
 import type { ScheduleDayViewProps } from ".";
 import { DayScheduleHead, ScheduleDay } from "./day";
-import { ScheduleDayGrid, calcDayRows } from "./DayGrid";
+import { calcDayRows, ScheduleDayGrid } from "./DayGrid";
+import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
+import { DragOverlayEvent } from "./Event";
 import { ScheduleHeader } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisWeeksEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
-import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
-import { DragOverlay } from "@dnd-kit/core";
-import { DragOverlayEvent } from "./Event";
 
 export type ScheduleWeekViewProps = ScheduleDayViewProps;
 
@@ -32,6 +33,10 @@ export const ScheduleWeekView = ({
   viewEventProps,
   editEventProps,
   onUpdate,
+  onCreate,
+  disabled,
+  disableDrag,
+  disableCreate,
 }: ScheduleWeekViewProps) => {
   const { setViewing, viewing } = calendarProps;
 
@@ -79,6 +84,7 @@ export const ScheduleWeekView = ({
           endOfWeek(viewing, { weekStartsOn: 1 })
         )}
         editEventProps={editEventProps}
+        disableCreate={disabled || !isFunction(onCreate) || disableCreate}
       />
 
       <div
@@ -112,13 +118,15 @@ export const ScheduleWeekView = ({
           events={events}
           setTransformDelta={setTransformDelta}
           cols={cols}
+          disableDrag={disabled || disableDrag}
         >
           <div
             ref={gridInnerRef}
             className={cn(
-              "grid grid-cols-7 auto-rows-auto ml-12 border-x border-b",
+              "grid grid-cols-7 auto-rows-auto ml-12 border-x border-b divide-x divide-opacity-20 dark:divide-opacity-20",
               extendedBgColors.subtile,
-              extendedBorders.filled
+              extendedBorders.filled,
+              divides.accent
             )}
           >
             <ScheduleDayGrid
@@ -135,6 +143,11 @@ export const ScheduleWeekView = ({
                 precisionInMinutes={precisionInMinutes}
                 viewEventProps={viewEventProps}
                 rows={rows}
+                disableDrag={disabled || !isFunction(onUpdate) || disableDrag}
+                disableCreate={
+                  disabled || !isFunction(onCreate) || disableCreate
+                }
+                editEventProps={editEventProps}
               />
             ))}
           </div>

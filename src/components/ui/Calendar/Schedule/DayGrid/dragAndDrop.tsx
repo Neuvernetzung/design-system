@@ -18,13 +18,14 @@ import type { Coordinates } from "@dnd-kit/utilities";
 import { addDays, addHours, addMinutes } from "date-fns";
 import compact from "lodash/compact";
 import set from "lodash/set";
-import { type ReactNode, RefObject, useMemo, useState } from "react";
+import { type ReactNode, type RefObject, useMemo, useState } from "react";
 
 import { useRefDimensions } from "../../../../../utils/internal";
 import type { ScheduleDayViewProps, ScheduleProps } from "..";
 import { DEFAULT_PRECISION_IN_MINUTES } from "./layoutDayEvents";
 import { createSnapModifier } from "../utils/snapModifier";
 import { activationConstraint } from "../utils/activationConstraint";
+import isFunction from "lodash/isFunction";
 
 export type UseDayGridDraggableProps = {
   gridInnerRef: RefObject<HTMLDivElement>;
@@ -85,7 +86,7 @@ export type DayGridDndContextProps = Omit<
   UseDayGridDraggablePropsReturn,
   "activeItem" | "transformDelta"
 > &
-  Pick<ScheduleProps, "onUpdate" | "events"> &
+  Pick<ScheduleProps, "onUpdate" | "events" | "disableDrag"> &
   Pick<ScheduleDayViewProps, "precisionInMinutes"> & {
     children: ReactNode;
     cols: number;
@@ -130,62 +131,71 @@ export const DayGridDndContext = ({
   innerWidth,
   setTransformDelta,
   cols,
-}: DayGridDndContextProps) => (
-  <DndContext
-    sensors={sensors}
-    onDragCancel={() => {
-      setActiveItem(undefined);
-    }}
-    onDragMove={({ delta }) => {
-      setTransformDelta(delta);
-    }}
-    onDragEnd={({ active, delta }) => {
-      const id = active.id;
-      if (!id || (delta.y === 0 && delta.x === 0)) {
+  disableDrag,
+}: DayGridDndContextProps) => {
+  const isDisabled = !isFunction(onUpdate) || disableDrag;
+
+  return (
+    <DndContext
+      sensors={sensors}
+      onDragStart={({ active }) => {
+        if (isDisabled) return;
+        setActiveItem(active.id);
+      }}
+      onDragCancel={() => {
+        if (isDisabled) return;
         setActiveItem(undefined);
-        setTransformDelta({ x: 0, y: 0 });
-        return;
-      }
+      }}
+      onDragMove={({ delta }) => {
+        if (isDisabled) return;
+        setTransformDelta(delta);
+      }}
+      onDragEnd={({ active, delta }) => {
+        if (isDisabled) return;
+        const id = active.id;
+        if (!id || (delta.y === 0 && delta.x === 0)) {
+          setActiveItem(undefined);
+          setTransformDelta({ x: 0, y: 0 });
+          return;
+        }
 
-      const event = events?.find((event) => event.uid === id);
-      if (!event) {
-        setActiveItem(undefined);
-        setTransformDelta({ x: 0, y: 0 });
-        return;
-      }
+        const event = events?.find((event) => event.uid === id);
+        if (!event) {
+          setActiveItem(undefined);
+          setTransformDelta({ x: 0, y: 0 });
+          return;
+        }
 
-      const { days, hours, minutes } = dayGridDeltaToTime({
-        innerHeight,
-        innerWidth,
-        delta,
-        precisionInMinutes,
-        cols,
-      });
+        const { days, hours, minutes } = dayGridDeltaToTime({
+          innerHeight,
+          innerWidth,
+          delta,
+          precisionInMinutes,
+          cols,
+        });
 
-      const usesDuration = event.duration;
-      const newEvent = { ...event };
-      set(
-        newEvent,
-        "start.date",
-        addDays(addHours(addMinutes(event.start.date, minutes), hours), days)
-      );
-      if (!usesDuration) {
+        const usesDuration = event.duration;
+        const newEvent = { ...event };
         set(
           newEvent,
-          "end.date",
-          addDays(addHours(addMinutes(event.end.date, minutes), hours), days)
+          "start.date",
+          addDays(addHours(addMinutes(event.start.date, minutes), hours), days)
         );
-      }
+        if (!usesDuration) {
+          set(
+            newEvent,
+            "end.date",
+            addDays(addHours(addMinutes(event.end.date, minutes), hours), days)
+          );
+        }
 
-      setActiveItem(undefined);
-      setTransformDelta({ x: 0, y: 0 });
-      onUpdate(newEvent);
-    }}
-    onDragStart={({ active }) => {
-      setActiveItem(active.id);
-    }}
-    modifiers={[...modifiers, restrictToFirstScrollableAncestor]}
-  >
-    {children}
-  </DndContext>
-);
+        setActiveItem(undefined);
+        setTransformDelta({ x: 0, y: 0 });
+        onUpdate(newEvent);
+      }}
+      modifiers={[...modifiers, restrictToFirstScrollableAncestor]}
+    >
+      {children}
+    </DndContext>
+  );
+};
