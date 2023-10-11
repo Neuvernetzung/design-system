@@ -1,6 +1,8 @@
 import { Popover as HeadlessPopover, Transition } from "@headlessui/react";
 import type { Placement } from "@popperjs/core";
+import { IconX } from "@tabler/icons-react";
 import cn from "classnames";
+import isNil from "lodash/isNil";
 import {
   ElementType,
   ForwardedRef,
@@ -23,14 +25,32 @@ import {
 } from "../../../styles/groups";
 import { popperOffset } from "../../../styles/popper/offset";
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
+import { typedMemo, useOutsideClick } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import type { ButtonProps, IconButtonProps } from "../Button";
 import { Button, IconButton } from "../Button";
-import { IconX } from "@tabler/icons-react";
+
+export type UsePopoverProps = { defaultValue?: boolean };
+
+export type ControlledPopoverProps = {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  close: () => void;
+};
+
+export const usePopover = ({
+  defaultValue,
+}: UsePopoverProps): ControlledPopoverProps => {
+  const [open, setOpen] = useState<boolean>(defaultValue ?? false);
+
+  const close = () => setOpen(false);
+
+  return { open, close, setOpen };
+};
 
 export type PopoverProps = {
   content: ReactNode;
+  controller?: ControlledPopoverProps;
   buttonProps?: ButtonProps | IconButtonProps;
   buttonAs?: ElementType;
   buttonComponent?: ReactNode;
@@ -49,6 +69,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
   (
     {
       content,
+      controller,
       buttonProps,
       buttonAs,
       buttonComponent,
@@ -65,11 +86,18 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
     const buttonRef = useRef<HTMLButtonElement>();
+    const panelRef = useRef<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] =
       useState<HTMLElement | null>(null);
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(
       null
     );
+
+    useOutsideClick(panelRef, () => {
+      if (isControlled) controller.close();
+    });
+
+    const isControlled = !isNil(controller);
 
     const offset = popperOffset({ size });
 
@@ -116,14 +144,25 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
         {({ open, close }) => (
           <div
             onMouseEnter={
-              trigger === "hover" ? () => onMouseEnter(open) : () => {}
+              trigger === "hover"
+                ? () => onMouseEnter(isControlled ? controller.open : open)
+                : () => {}
             }
             onMouseLeave={
-              trigger === "hover" ? () => onMouseLeave(open, close) : () => {}
+              trigger === "hover"
+                ? () =>
+                    onMouseLeave(
+                      isControlled ? controller.open : open,
+                      isControlled ? controller.close : close
+                    )
+                : () => {}
             }
           >
             {!buttonComponent ? (
               <HeadlessPopover.Button
+                onClick={
+                  isControlled ? () => controller.setOpen(true) : undefined
+                }
                 className={cn(focusStyle.accent)}
                 ref={mergeRefs([
                   buttonRef,
@@ -136,7 +175,11 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
               />
             ) : (
               <HeadlessPopover.Button
+                onClick={
+                  isControlled ? () => controller.setOpen(true) : undefined
+                }
                 aria-disabled={disabled}
+                disabled={disabled}
                 as="span"
                 ref={mergeRefs([buttonRef, ref, setReferenceElement])}
               >
@@ -145,6 +188,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
             )}
             <Transition
               as={Fragment}
+              show={isControlled ? controller.open : open}
               enter="transition ease-out duration-200"
               enterFrom="opacity-0 translate-y-1"
               enterTo="opacity-100 translate-y-0"
@@ -152,7 +196,12 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <HeadlessPopover.Panel as="span" focus={focus}>
+              <HeadlessPopover.Panel
+                as="span"
+                focus={focus}
+                static={isControlled}
+                ref={panelRef}
+              >
                 <div
                   ref={setPopperElement}
                   className={cn(
@@ -177,7 +226,9 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
                       ariaLabel="close_popover"
                       icon={IconX}
                       variant="ghost"
-                      onClick={() => close()} // wenn hier ein PopoverButton verwendet wird, dann lässt sich Button nicht mehr per Klick schließen
+                      onClick={() =>
+                        isControlled ? controller.close() : close()
+                      } // wenn hier ein PopoverButton verwendet wird, dann lässt sich Button nicht mehr per Klick schließen
                     />
                   </div>
                   <div className={cn(getPopoverFullScreenContainerStyles())}>

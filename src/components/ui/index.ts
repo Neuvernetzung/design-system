@@ -1,5 +1,6 @@
 export * from "./Backdrop";
 export * from "./Button";
+export * from "./Calendar";
 export * from "./Carousel";
 export * from "./Checkbox";
 export * from "./ColorPicker";

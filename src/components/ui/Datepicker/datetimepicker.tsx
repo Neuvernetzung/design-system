@@ -3,9 +3,13 @@ import cn from "classnames";
 import {
   addDays,
   differenceInDays,
+  getHours,
+  getMinutes,
   isAfter,
   isBefore,
   isValid,
+  setHours,
+  setMinutes,
 } from "date-fns";
 import { useRouter } from "next/router";
 import { MouseEvent, useEffect } from "react";
@@ -20,31 +24,19 @@ import {
 import type { Locale } from "../../../locales/getText";
 import { divides, marginsXSmall, placeholderAsText } from "../../../styles";
 import { getInputStyles } from "../../../styles/groups";
-import type { InputVariant, Size } from "../../../types";
 import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { IconButton } from "../Button";
 import { Calendar } from "../Calendar/Dates";
 import { useCalendar } from "../Calendar/hooks/useCalendar";
-import { FormElement, RequiredRule } from "../Form";
+import { FormElement } from "../Form";
 import { Popover } from "../Popover";
 import { usePopover } from "../Popover/popover";
+import { TimePickerInner } from "../Timepicker/timepicker";
+import { DatepickerProps } from "./datepicker";
 
-export type DatepickerProps = {
-  label?: string;
-  required?: RequiredRule;
-  placeholder?: string;
-  size?: Size;
-  helper?: string;
-  inputVariant?: InputVariant;
-  disabled?: boolean;
-  removeAll?: boolean;
-  minDate?: Date;
-  maxDate?: Date;
-};
-
-export const Datepicker = <
+export const Datetimepicker = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
@@ -104,6 +96,7 @@ export const Datepicker = <
 
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
+    timeStyle: "short",
   });
 
   return (
@@ -187,15 +180,50 @@ export const Datepicker = <
                 ),
               }}
               content={
-                <Calendar
-                  calendarProps={calendarProps}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  onChange={(e) => {
-                    onChange(e);
-                    popoverControler.close();
-                  }}
-                />
+                <div>
+                  <Calendar
+                    calendarProps={calendarProps}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    onChange={(e) => {
+                      if (!value) {
+                        onChange(e);
+                      } else
+                        onChange(
+                          setHours(
+                            setMinutes(e, getMinutes(value)),
+                            getHours(value)
+                          )
+                        );
+                    }}
+                  />
+                  <TimePickerInner
+                    inputVariant="ghost"
+                    size="sm"
+                    name={`${name}_timepicker`}
+                    label="Zeit"
+                    value={
+                      value
+                        ? `${`0${getHours(value)}`.slice(-2)}:${`0${getMinutes(
+                            // Minuten padden
+                            value
+                          )}`.slice(-2)}`
+                        : undefined
+                    }
+                    onChange={(v) => {
+                      if (!v) return;
+
+                      const [hour, minutes] = v.split(":");
+
+                      onChange(
+                        setHours(
+                          setMinutes(value || new Date(), Number(minutes) || 0),
+                          Number(hour) || 0
+                        )
+                      );
+                    }}
+                  />
+                </div>
               }
             />
           </FormElement>
@@ -205,4 +233,4 @@ export const Datepicker = <
   );
 };
 
-export default typedMemo(Datepicker);
+export default typedMemo(Datetimepicker);

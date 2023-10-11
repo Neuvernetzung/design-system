@@ -41,6 +41,7 @@ import { CustomImage } from "./Extensions/image";
 import { CustomTextAlign } from "./Extensions/textAlign";
 import { MenuBar } from "./Menus/menuBar";
 import { returnTextSelection, type TextTypeTags } from "./Menus/selectText";
+import type { Size } from "../../../types";
 
 export type RichTextProps = {
   label?: string;
@@ -51,6 +52,7 @@ export type RichTextProps = {
   showLength?: boolean;
   containerClassName?: string;
   AdditionalMenuItems?: ({ editor }: { editor: Editor | null }) => ReactNode;
+  size?: Size;
 };
 
 export const RichText = <
@@ -67,6 +69,7 @@ export const RichText = <
   showLength,
   containerClassName,
   AdditionalMenuItems,
+  size = "md",
 }: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     field: { value, onChange },
@@ -151,6 +154,7 @@ export const RichText = <
           label={label}
           helper={helper}
           error={error}
+          size={size}
         >
           <div
             ref={mergeRefs([containerRef, ref])}
