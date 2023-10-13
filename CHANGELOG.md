@@ -1,5 +1,13 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.1
+
+### Patch Changes
+
+- 82e1db5: extendedBgColorsInteractive subtile ist inkorrekt #1018
+- 33cc457: Schedule überarbeiten #1019
+- 6cad86e: Tiptap updaten #1021
+
 ## 2.2.0
 
 ### Minor Changes
