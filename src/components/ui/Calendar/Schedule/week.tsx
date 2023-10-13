@@ -23,8 +23,7 @@ import { formatTitle } from "./utils/formatTitle";
 export type ScheduleWeekViewProps = ScheduleDayViewProps;
 
 export const ScheduleWeekView = ({
-  currentView,
-  setCurrentView,
+  scheduleViewProps,
   calendarProps,
   events,
   rowsEachHour = 2,
@@ -72,8 +71,7 @@ export const ScheduleWeekView = ({
   return (
     <>
       <ScheduleHeader
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        scheduleViewProps={scheduleViewProps}
         calendarProps={calendarProps}
         leftAriaLabel="previous_week"
         leftArrowFunction={() => setViewing(subWeeks(viewing, 1))}
@@ -100,7 +98,7 @@ export const ScheduleWeekView = ({
         >
           {new Array(7).fill(null).map((_, i) => (
             <DayScheduleHead
-              setCurrentView={setCurrentView}
+              scheduleViewProps={scheduleViewProps}
               setViewing={setViewing}
               key={`week_day_head_${i}`}
               day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}

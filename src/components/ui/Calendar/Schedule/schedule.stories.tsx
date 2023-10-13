@@ -10,10 +10,10 @@ import {
 import React, { useState } from "react";
 import type { VEvent } from "ts-ics";
 
-import { useCalendar } from "../hooks/useCalendar";
 import { Schedule, ScheduleDayView } from ".";
 import { ScheduleMonthView } from "./month";
 import { ScheduleWeekView } from "./week";
+import { useSchedule } from "./hooks/useSchedule";
 
 export default {
   title: "UI/Data Display/Schedule",
@@ -79,12 +79,13 @@ const events: VEvent[] = [
     duration: { hours: 3 },
   },
   {
-    summary: "Event - Überlappend aber darunter 5",
+    summary: "Vorgemerkt",
     uid: "7",
     start: { date: addHours(date, 2) },
     created: { date: addHours(date, 2) },
     stamp: { date: addHours(date, 2) },
     duration: { hours: 1 },
+    status: "TENTATIVE",
   },
   {
     summary: "Event - Überlappend Nested 1",
@@ -154,9 +155,15 @@ const events: VEvent[] = [
 
 export const Default = ({ ...args }) => {
   const [_events, setEvents] = useState(events);
+  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+    useSchedule();
 
   return (
     <Schedule
+      calendarProps={calendarProps}
+      editEventProps={editEventProps}
+      scheduleViewProps={scheduleViewProps}
+      viewEventProps={viewEventProps}
       displayDayTime={{ start: 8, end: 18 }}
       events={_events}
       onCreate={(event) => {
@@ -178,9 +185,15 @@ export const Default = ({ ...args }) => {
 
 export const Disabled = ({ ...args }) => {
   const [_events, setEvents] = useState(events);
+  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+    useSchedule();
 
   return (
     <Schedule
+      calendarProps={calendarProps}
+      editEventProps={editEventProps}
+      scheduleViewProps={scheduleViewProps}
+      viewEventProps={viewEventProps}
       displayDayTime={{ start: 8, end: 18 }}
       events={_events}
       disabled
@@ -202,28 +215,48 @@ export const Disabled = ({ ...args }) => {
 };
 
 export const Days = ({ ...args }) => {
-  const calendarProps = useCalendar();
+  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+    useSchedule();
 
   return (
-    <ScheduleDayView events={events} calendarProps={calendarProps} {...args} />
+    <ScheduleDayView
+      events={events}
+      calendarProps={calendarProps}
+      editEventProps={editEventProps}
+      scheduleViewProps={scheduleViewProps}
+      viewEventProps={viewEventProps}
+      {...args}
+    />
   );
 };
 
 export const Weeks = ({ ...args }) => {
-  const calendarProps = useCalendar();
+  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+    useSchedule();
 
   return (
-    <ScheduleWeekView events={events} calendarProps={calendarProps} {...args} />
+    <ScheduleWeekView
+      events={events}
+      calendarProps={calendarProps}
+      editEventProps={editEventProps}
+      scheduleViewProps={scheduleViewProps}
+      viewEventProps={viewEventProps}
+      {...args}
+    />
   );
 };
 
 export const Months = ({ ...args }) => {
-  const calendarProps = useCalendar();
+  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+    useSchedule();
 
   return (
     <ScheduleMonthView
       events={events}
       calendarProps={calendarProps}
+      editEventProps={editEventProps}
+      scheduleViewProps={scheduleViewProps}
+      viewEventProps={viewEventProps}
       {...args}
     />
   );

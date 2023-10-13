@@ -1,16 +1,8 @@
 import { DragOverlay } from "@dnd-kit/core";
 import cn from "classnames";
-import {
-  addDays,
-  addHours,
-  getHours,
-  getMinutes,
-  isToday,
-  subDays,
-} from "date-fns";
+import { addDays, getHours, getMinutes, isToday, subDays } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";
-import { v4 as uuid } from "uuid";
 
 import {
   bgColors,
@@ -46,16 +38,14 @@ export type ScheduleDayViewProps = Omit<
   ScheduleProps,
   "calendarProps" | "onDelete" | "disableUpdate" | "disableDelete"
 > &
-  Required<Pick<ScheduleProps, "calendarProps">> &
-  Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
+  Required<Pick<ScheduleProps, "calendarProps">> & {
     precisionInMinutes?: number;
     viewEventProps?: UseViewEventProps;
     editEventProps?: UseEditEventProps;
   };
 
 export const ScheduleDayView = ({
-  currentView,
-  setCurrentView,
+  scheduleViewProps,
   calendarProps,
   events,
   rowsEachHour = 2,
@@ -102,8 +92,7 @@ export const ScheduleDayView = ({
   return (
     <>
       <ScheduleHeader
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        scheduleViewProps={scheduleViewProps}
         calendarProps={calendarProps}
         leftAriaLabel="previous_day"
         leftArrowFunction={() => setViewing(subDays(viewing, 1))}
@@ -111,7 +100,7 @@ export const ScheduleDayView = ({
         rightArrowFunction={() => setViewing(addDays(viewing, 1))}
         title={titleFormatter.format(viewing)}
         editEventProps={editEventProps}
-        disableCreate={disabled || disableCreate}
+        disableCreate={disabled || !isFunction(onCreate) || disableCreate}
       />
       <div
         ref={gridContainerRef}
@@ -123,7 +112,10 @@ export const ScheduleDayView = ({
             extendedBorders.filled
           )}
         >
-          <DayScheduleHead day={viewing} />
+          <DayScheduleHead
+            day={viewing}
+            scheduleViewProps={scheduleViewProps}
+          />
         </div>
         <DayGridDndContext
           innerHeight={innerHeight}
@@ -183,13 +175,15 @@ export const ScheduleDayView = ({
 export type DayScheduleHeadProps = {
   day: Date;
   setViewing?: (viewing: Date) => void;
-} & Pick<ScheduleHeaderProps, "setCurrentView">;
+} & Pick<ScheduleHeaderProps, "scheduleViewProps">;
 
 export const DayScheduleHead = ({
   day,
-  setCurrentView,
+  scheduleViewProps,
   setViewing,
 }: DayScheduleHeadProps) => {
+  const { setCurrentView } = scheduleViewProps;
+
   const dayTitleFormatter = new Intl.DateTimeFormat(undefined, {
     weekday: "short",
     day: "numeric",
@@ -285,14 +279,7 @@ export const ScheduleDay = ({
       <ol
         onDoubleClick={() => {
           if (disableCreate) return;
-          editEventProps?.setEdit({
-            uid: uuid(),
-            start: { date: day },
-            created: { date: new Date() },
-            stamp: { date: new Date() },
-            end: { date: addHours(day, 1) },
-            summary: "",
-          });
+          editEventProps?.setCreate(day);
         }}
         className={cn("grid h-full", paddingsXSmall.md, gapsXSmall.md)}
         style={{

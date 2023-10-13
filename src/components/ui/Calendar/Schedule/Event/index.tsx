@@ -9,21 +9,10 @@ import cn from "classnames";
 import { addDays, addHours, addMinutes } from "date-fns";
 import { getEventEnd, type VEvent } from "ts-ics";
 
-import {
-  bgColors,
-  bgColorsInteractive,
-  focusBg,
-  gapsSmall,
-  heights,
-  paddingsEvenly,
-  roundings,
-  roundingsBottom,
-  roundingsTop,
-  shadows,
-  transitionFast,
-} from "../../../../../styles";
+import { gapsSmall, shadows } from "../../../../../styles";
 import { useThemeStateValue } from "../../../../../theme";
 import type { Color } from "../../../../../types";
+import { Button } from "../../../Button";
 import { Icon } from "../../../Icon";
 import { Text } from "../../../Typography";
 import type { ScheduleDayProps } from "../day";
@@ -37,6 +26,7 @@ export type EventProps = {
   beginsBeforeThisDay?: boolean;
   endsAfterThisDay?: boolean;
   viewEventProps?: UseViewEventProps;
+  isDragoverlay?: boolean;
   color?: Color;
   className?: string;
 };
@@ -103,8 +93,13 @@ export const DragOverlayEvent = ({
       : undefined,
   } as VEvent;
 
-  return <Event event={newEvent} className={cn(shadows.xl)} />;
+  return <Event isDragoverlay event={newEvent} className={cn(shadows.xl)} />;
 };
+
+const formatEventTitle = (event: VEvent) =>
+  `${event.summary}\nStart: ${event.start.date}\nEnde: ${getEventEnd(event)}${
+    event.description ? `\n\nBeschreibung:\n${event.description}` : ""
+  }`;
 
 export const Event = ({
   event,
@@ -113,16 +108,20 @@ export const Event = ({
   viewEventProps,
   color = "primary",
   className,
+  isDragoverlay,
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
   const Component = viewEventProps ? "button" : "div";
 
-  const adjustedTextColor = useThemeStateValue((v) => v.adjustedTextColorState);
-
   return (
-    <Component
+    <Button
+      title={formatEventTitle(event)}
+      as={Component}
+      color={color}
+      disabled={!viewEventProps ? !isDragoverlay : false}
+      variant={event.status === "TENTATIVE" ? "subtile" : "filled"}
       onClick={
         viewEventProps
           ? () => {
@@ -132,13 +131,9 @@ export const Event = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex w-full h-full relative overflow-hidden truncate select-none",
-        viewEventProps ? bgColorsInteractive[color] : bgColors[color],
-        transitionFast,
-        viewEventProps && focusBg[color],
-        paddingsEvenly.sm,
-        !beginsBeforeThisDay && roundingsTop.md,
-        !endsAfterThisDay && roundingsBottom.md,
+        "flex !items-start !justify-start w-full h-full relative overflow-hidden truncate",
+        beginsBeforeThisDay && "rounded-t-none",
+        endsAfterThisDay && "rounded-b-none",
         className
       )}
     >
@@ -148,7 +143,6 @@ export const Event = ({
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
         {!startsAndEndsOnSameDay && (
           <Icon
-            className={cn(adjustedTextColor[color])}
             color="inherit"
             size="sm"
             icon={
@@ -161,11 +155,7 @@ export const Event = ({
           />
         )}
         {showTime && (
-          <Text
-            size="sm"
-            className={cn(adjustedTextColor[color])}
-            color="inherit"
-          >
+          <Text size="sm" color="inherit">
             {showTime &&
               (beginsBeforeThisDay
                 ? timeFormatter.format(getEventEnd(event))
@@ -176,15 +166,11 @@ export const Event = ({
             {" - "}
           </Text>
         )}
-        <Text
-          size="sm"
-          className={cn(adjustedTextColor[color])}
-          color="inherit"
-        >
+        <Text size="sm" color="inherit">
           {event.summary}
         </Text>
       </div>
-    </Component>
+    </Button>
   );
 };
 
@@ -211,7 +197,7 @@ export const DragOverlayEventSmall = ({
 }: DragOverLayEventSmallProps) => {
   if (!event) return null;
 
-  return <EventSmall event={event} className={cn(shadows.xl)} />;
+  return <EventSmall isDragoverlay event={event} className={cn(shadows.xl)} />;
 };
 
 export const EventSmall = ({
@@ -221,6 +207,7 @@ export const EventSmall = ({
   viewEventProps,
   color = "primary",
   className,
+  isDragoverlay,
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
@@ -230,7 +217,12 @@ export const EventSmall = ({
   const adjustedTextColor = useThemeStateValue((v) => v.adjustedTextColorState);
 
   return (
-    <Component
+    <Button
+      as={Component}
+      title={formatEventTitle(event)}
+      disabled={!viewEventProps ? !isDragoverlay : false}
+      color={color}
+      variant={event.status === "TENTATIVE" ? "subtile" : "filled"}
       onClick={
         viewEventProps
           ? () => {
@@ -240,13 +232,7 @@ export const EventSmall = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex-shrink-0 w-full flex flex-col justify-center relative truncate select-none",
-        viewEventProps ? bgColorsInteractive[color] : bgColors[color],
-        transitionFast,
-        viewEventProps && focusBg[color],
-        paddingsEvenly.sm,
-        heights.md,
-        roundings.md,
+        "flex-shrink-0 w-full flex flex-col !items-start relative truncate",
         className
       )}
     >
@@ -290,6 +276,6 @@ export const EventSmall = ({
           {event.summary}
         </Text>
       </div>
-    </Component>
+    </Button>
   );
 };

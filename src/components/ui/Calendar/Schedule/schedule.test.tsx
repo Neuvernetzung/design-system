@@ -1,31 +1,35 @@
 import { axe } from "jest-axe";
+import type { ReactNode } from "react";
 
 import { render } from "../../../../../test-utils";
-import { type UseCalendarProps, useCalendar } from "../hooks";
 import {
   Schedule,
   ScheduleDayView,
   ScheduleMonthView,
   ScheduleWeekView,
 } from ".";
-import type { ReactNode } from "react";
+import { useSchedule, type UseScheduleProps } from "./hooks";
 
-type CalendarPropsWrapperProps = {
-  children: (calendarProps: UseCalendarProps) => ReactNode;
+type SchedulePropsWrapperProps = {
+  children: (scheduleProps: UseScheduleProps) => ReactNode;
 };
 
 beforeAll(() => {
   Element.prototype.scrollTo = jest.fn(); // scrollTo wird in jest Environment nicht erkannt, ist aber auch nicht wichtig für Test, deshalb mock
 });
 
-const CalendarPropsWrapper = ({ children }: CalendarPropsWrapperProps) => {
-  const calendarProps = useCalendar();
+const SchedulePropsWrapper = ({ children }: SchedulePropsWrapperProps) => {
+  const scheduleProps = useSchedule();
 
-  return children(calendarProps);
+  return children(scheduleProps);
 };
 
 it("Schedule axe", async () => {
-  const { container } = render(<Schedule />);
+  const { container } = render(
+    <SchedulePropsWrapper>
+      {(scheduleProps) => <Schedule {...scheduleProps} />}
+    </SchedulePropsWrapper>
+  );
 
   const results = await axe(container);
   expect(results).toHaveNoViolations();
@@ -33,9 +37,9 @@ it("Schedule axe", async () => {
 
 it("ScheduleDayView axe", async () => {
   const { container } = render(
-    <CalendarPropsWrapper>
-      {(calendarProps) => <ScheduleDayView calendarProps={calendarProps} />}
-    </CalendarPropsWrapper>
+    <SchedulePropsWrapper>
+      {(scheduleProps) => <ScheduleDayView {...scheduleProps} />}
+    </SchedulePropsWrapper>
   );
 
   const results = await axe(container);
@@ -44,9 +48,9 @@ it("ScheduleDayView axe", async () => {
 
 it("ScheduleMonthView axe", async () => {
   const { container } = render(
-    <CalendarPropsWrapper>
-      {(calendarProps) => <ScheduleMonthView calendarProps={calendarProps} />}
-    </CalendarPropsWrapper>
+    <SchedulePropsWrapper>
+      {(scheduleProps) => <ScheduleMonthView {...scheduleProps} />}
+    </SchedulePropsWrapper>
   );
 
   const results = await axe(container);
@@ -55,9 +59,9 @@ it("ScheduleMonthView axe", async () => {
 
 it("ScheduleWeekView axe", async () => {
   const { container } = render(
-    <CalendarPropsWrapper>
-      {(calendarProps) => <ScheduleWeekView calendarProps={calendarProps} />}
-    </CalendarPropsWrapper>
+    <SchedulePropsWrapper>
+      {(scheduleProps) => <ScheduleWeekView {...scheduleProps} />}
+    </SchedulePropsWrapper>
   );
 
   const results = await axe(container);
