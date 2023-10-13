@@ -1,24 +1,31 @@
 import cn from "classnames";
-import { useState } from "react";
+import type { ReactElement } from "react";
 import type { VEvent } from "ts-ics";
 
 import { divides, gaps, paddingsEvenly } from "../../../../styles";
 import type { Color } from "../../../../types";
 import { Calendar } from "../Dates";
-import { useCalendar, UseCalendarProps } from "../hooks/useCalendar";
+import type { UseCalendarProps } from "../hooks/useCalendar";
 import { ScheduleDayView } from "./day";
-import { EventEdit, useEditEvent } from "./Event/edit";
-import { useViewEvent, ViewEvent } from "./Event/view";
+import {
+  type EditEventProps,
+  EventEdit,
+  type UseEditEventProps,
+} from "./Event/edit";
+import {
+  type UseViewEventProps,
+  ViewEvent,
+  type ViewEventProps,
+} from "./Event/view";
+import type { UseScheduleViewProps } from "./hooks/useSchedule";
 import { ScheduleMonthView } from "./month";
 import { ScheduleWeekView } from "./week";
 
 export * from "./day";
+export * from "./Event";
+export * from "./hooks";
 export * from "./month";
 export * from "./week";
-
-export const scheduleViews = ["day", "week", "month"] as const;
-
-export type ScheduleView = (typeof scheduleViews)[number];
 
 export type ScheduleDisplayDaytime = {
   start: number;
@@ -26,8 +33,13 @@ export type ScheduleDisplayDaytime = {
 };
 
 export type ScheduleProps = {
-  calendarProps?: UseCalendarProps;
+  calendarProps: UseCalendarProps;
+  viewEventProps: UseViewEventProps;
+  editEventProps: UseEditEventProps;
+  scheduleViewProps: UseScheduleViewProps;
   events?: VEvent[];
+  className?: string;
+  hideSideCalendar?: boolean;
   rowsEachHour?: number;
   displayDayTime?: ScheduleDisplayDaytime;
   onCreate?: (event: VEvent) => void;
@@ -39,11 +51,18 @@ export type ScheduleProps = {
   disableCreate?: boolean;
   disableUpdate?: boolean;
   disableDelete?: boolean;
+  CustomViewEventComponent?: (props: ViewEventProps) => ReactElement | null;
+  CustomEditEventComponent?: (props: EditEventProps) => ReactElement | null;
 };
 
 export const Schedule = ({
-  calendarProps: _calendarProps,
+  calendarProps,
+  viewEventProps,
+  editEventProps,
+  scheduleViewProps,
   events = [],
+  className,
+  hideSideCalendar,
   rowsEachHour,
   displayDayTime,
   onCreate,
@@ -55,25 +74,35 @@ export const Schedule = ({
   disableCreate,
   disableUpdate,
   disableDelete,
+  CustomViewEventComponent,
+  CustomEditEventComponent,
 }: ScheduleProps) => {
-  const cal = useCalendar();
-  const viewEventProps = useViewEvent();
-  const editEventProps = useEditEvent();
-  const calendarProps = _calendarProps || cal;
   const { setViewing } = calendarProps;
 
-  const [currentView, setCurrentView] = useState<ScheduleView>("day");
+  const { currentView } = scheduleViewProps;
+
+  const ViewEventComponent = CustomViewEventComponent || ViewEvent;
+  const EditEventComponent = CustomEditEventComponent || EventEdit;
 
   return (
     <>
-      <div className={cn("flex flex-row lg:divide-x", gaps.xs, divides.accent)}>
-        <div className="w-64 hidden lg:block">
-          <Calendar
-            onChange={setViewing}
-            calendarProps={calendarProps}
-            indicators={events.map((event) => event.start.date)}
-          />
-        </div>
+      <div
+        className={cn(
+          "flex flex-row lg:divide-x",
+          gaps.xs,
+          divides.accent,
+          className
+        )}
+      >
+        {!hideSideCalendar && (
+          <div className="w-64 hidden lg:block">
+            <Calendar
+              onChange={setViewing}
+              calendarProps={calendarProps}
+              indicators={events.map((event) => event.start.date)}
+            />
+          </div>
+        )}
         <div
           className={cn(
             "flex flex-col w-full max-h-[80vh]",
@@ -84,8 +113,7 @@ export const Schedule = ({
           {currentView === "day" && (
             <ScheduleDayView
               events={events}
-              currentView={currentView}
-              setCurrentView={setCurrentView}
+              scheduleViewProps={scheduleViewProps}
               calendarProps={calendarProps}
               rowsEachHour={rowsEachHour}
               displayDayTime={displayDayTime}
@@ -102,8 +130,7 @@ export const Schedule = ({
           {currentView === "week" && (
             <ScheduleWeekView
               events={events}
-              currentView={currentView}
-              setCurrentView={setCurrentView}
+              scheduleViewProps={scheduleViewProps}
               calendarProps={calendarProps}
               rowsEachHour={rowsEachHour}
               displayDayTime={displayDayTime}
@@ -120,8 +147,7 @@ export const Schedule = ({
           {currentView === "month" && (
             <ScheduleMonthView
               events={events}
-              currentView={currentView}
-              setCurrentView={setCurrentView}
+              scheduleViewProps={scheduleViewProps}
               calendarProps={calendarProps}
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
@@ -135,14 +161,14 @@ export const Schedule = ({
           )}
         </div>
       </div>
-      <ViewEvent
+      <ViewEventComponent
         viewEventProps={viewEventProps}
         editEventProps={editEventProps}
         onDelete={onDelete}
         disableDelete={disabled || disableDelete}
         disableUpdate={disabled || disableUpdate}
       />
-      <EventEdit
+      <EditEventComponent
         editEventProps={editEventProps}
         onCreate={onCreate}
         onUpdate={onUpdate}

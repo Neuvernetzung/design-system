@@ -40,7 +40,7 @@ import { DraggableEventSmall, DragOverlayEventSmall } from "./Event";
 import type { UseEditEventProps } from "./Event/edit";
 import { EventListModal } from "./Event/list";
 import type { UseViewEventProps } from "./Event/view";
-import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
+import { ScheduleHeader } from "./header";
 import {
   MonthGridDndContext,
   useMonthGridDraggable,
@@ -57,26 +57,27 @@ export type ScheduleMonthViewProps = Omit<
   | "disableUpdate"
   | "disableDelete"
 > &
-  Required<Pick<ScheduleProps, "calendarProps">> &
-  Pick<ScheduleHeaderProps, "currentView" | "setCurrentView"> & {
+  Required<Pick<ScheduleProps, "calendarProps">> & {
     viewEventProps?: UseViewEventProps;
     editEventProps?: UseEditEventProps;
   };
 
 export const ScheduleMonthView = ({
-  currentView,
-  setCurrentView,
+  scheduleViewProps,
   calendarProps,
   events,
   viewEventProps,
   editEventProps,
   eventColor,
   onUpdate,
+  onCreate,
   disabled,
   disableDrag,
   disableCreate,
 }: ScheduleMonthViewProps) => {
   const { setViewing, viewing, calendar, inRange } = calendarProps;
+
+  const { setCurrentView } = scheduleViewProps;
 
   const gridInnerRef = useRef<HTMLDivElement>(null);
 
@@ -87,8 +88,7 @@ export const ScheduleMonthView = ({
   return (
     <>
       <ScheduleHeader
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        scheduleViewProps={scheduleViewProps}
         calendarProps={calendarProps}
         leftAriaLabel="previous_week"
         leftArrowFunction={() => setViewing(subMonths(viewing, 1))}
@@ -96,7 +96,7 @@ export const ScheduleMonthView = ({
         rightArrowFunction={() => setViewing(addMonths(viewing, 1))}
         title={formatTitle(startOfMonth(viewing), endOfMonth(viewing))}
         editEventProps={editEventProps}
-        disableCreate={disabled || disableCreate}
+        disableCreate={disabled || !isFunction(onCreate) || disableCreate}
       />
       <div className={cn("overflow-y-scroll relative", scrollbar)}>
         <div
@@ -173,7 +173,7 @@ export const ScheduleMonthView = ({
                         endOfMonth(viewing)
                       )}
                       events={eventsByRows[i]}
-                      setCurrentView={setCurrentView}
+                      scheduleViewProps={scheduleViewProps}
                       setViewing={setViewing}
                       viewEventProps={viewEventProps}
                       editEventProps={editEventProps}
@@ -225,27 +225,33 @@ export const MonthScheduleHead = ({ day }: MonthScheduleHeadProps) => {
 
 export type ScheduleMonthDay = Pick<
   ScheduleMonthViewProps,
-  "eventColor" | "disableDrag" | "disableCreate" | "editEventProps"
+  | "eventColor"
+  | "disableDrag"
+  | "disableCreate"
+  | "editEventProps"
+  | "scheduleViewProps"
 > & {
   day: Date;
   isInRange?: boolean;
   events: VEvent[];
   setViewing?: (viewing: Date) => void;
   viewEventProps?: UseViewEventProps;
-} & Pick<ScheduleHeaderProps, "setCurrentView">;
+};
 
 export const ScheduleMonthDay = ({
   day,
   isInRange,
   events,
   setViewing,
-  setCurrentView,
+  scheduleViewProps,
   viewEventProps,
   eventColor,
   disableDrag,
   disableCreate,
   editEventProps,
 }: ScheduleMonthDay) => {
+  const { setCurrentView } = scheduleViewProps;
+
   const thisDaysEvents = getThisDaysEvents(events, day)
     .sort((a, b) => compareAsc(a.start.date, b.start.date))
     .map((event) => ({
@@ -263,18 +269,11 @@ export const ScheduleMonthDay = ({
       <div
         onDoubleClick={() => {
           if (disableCreate) return;
-          editEventProps?.setEdit({
-            uid: uuid(),
-            start: { date: day },
-            created: { date: new Date() },
-            stamp: { date: new Date() },
-            end: { date: addHours(day, 1) },
-            summary: "",
-          });
+          editEventProps?.setCreate(day);
         }}
         ref={setNodeRef}
         className={cn(
-          "h-full flex flex-col aspect-video overflow-hidden group",
+          "h-full flex flex-col aspect-[9/16] md:aspect-square xl:aspect-video overflow-hidden group",
           gaps.xs,
           paddingsSmallEvenly.md,
           !isInRange ? extendedBgColors.subtile : bgColors.white

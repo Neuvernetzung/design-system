@@ -11,18 +11,16 @@ import { gaps } from "../../../../styles";
 import { Button, IconButton } from "../../Button";
 import { Tooltip } from "../../Tooltip";
 import { Text } from "../../Typography";
-import type { ScheduleProps, ScheduleView } from ".";
+import type { ScheduleProps } from ".";
 import type { UseEditEventProps } from "./Event/edit";
-import { v4 as uuid } from "uuid";
-import { addHours } from "date-fns";
+import { UseScheduleViewProps } from "./hooks/useSchedule";
 
 export type ScheduleHeaderProps = Omit<
   ScheduleProps,
-  "calendarProps" | "onCreate" | "onUpdate" | "onDelete"
+  "calendarProps" | "onCreate" | "onUpdate" | "onDelete" | "viewEventProps"
 > &
   Required<Pick<ScheduleProps, "calendarProps">> & {
-    currentView?: ScheduleView;
-    setCurrentView?: (value: ScheduleView) => void;
+    scheduleViewProps: UseScheduleViewProps;
     leftArrowFunction: MouseEventHandler;
     leftAriaLabel: string;
     leftArrowDisabled?: boolean;
@@ -35,8 +33,7 @@ export type ScheduleHeaderProps = Omit<
 
 export const ScheduleHeader = ({
   calendarProps,
-  currentView,
-  setCurrentView,
+  scheduleViewProps,
   leftAriaLabel,
   leftArrowFunction,
   rightAriaLabel,
@@ -48,6 +45,8 @@ export const ScheduleHeader = ({
   disableCreate,
 }: ScheduleHeaderProps) => {
   const { viewToday } = calendarProps;
+
+  const { currentView, setCurrentView } = scheduleViewProps;
 
   return (
     <div
@@ -124,14 +123,7 @@ export const ScheduleHeader = ({
           color="primary"
           leftIcon={IconPlus}
           onClick={() => {
-            editEventProps.setEdit({
-              uid: uuid(),
-              start: { date: new Date() },
-              created: { date: new Date() },
-              stamp: { date: new Date() },
-              end: { date: addHours(new Date(), 1) },
-              summary: "",
-            });
+            editEventProps.setCreate();
           }}
         >
           Termin hinzufügen

@@ -35,6 +35,8 @@ import { TabGroup, TabItemProps, TabList, TabPanels } from "../../../Tabs";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
 import isFunction from "lodash/isFunction";
+import { v4 as uuid } from "uuid";
+import { addHours } from "date-fns";
 
 export type UseEditEventProps = {
   open: boolean;
@@ -43,11 +45,29 @@ export type UseEditEventProps = {
   setEvent: (event: VEvent) => void;
   setEdit: (event?: VEvent) => void;
   onClose: () => void;
+  setCreate: (date?: Date) => void;
+  isNew?: boolean;
 };
 
 export const useEditEvent = (): UseEditEventProps => {
   const [open, setOpen] = useState<boolean>(false);
   const [event, setEvent] = useState<VEvent>();
+  const [isNew, setIsNew] = useState<boolean>(false);
+
+  const setCreate = (date?: Date) => {
+    const d = date || new Date();
+
+    setEvent({
+      uid: uuid(),
+      start: { date: d },
+      created: { date: d },
+      stamp: { date: d },
+      end: { date: addHours(d, 1) },
+      summary: "",
+    });
+    setOpen(true);
+    setIsNew(true);
+  };
 
   const setEdit = (event?: VEvent) => {
     setEvent(event);
@@ -57,12 +77,13 @@ export const useEditEvent = (): UseEditEventProps => {
   const onClose = () => {
     setEvent(undefined);
     setOpen(false);
+    if (isNew) setIsNew(false);
   };
 
-  return { open, setOpen, event, setEvent, setEdit, onClose };
+  return { open, setOpen, event, setEvent, setEdit, onClose, setCreate, isNew };
 };
 
-export type EventEditProps = Pick<
+export type EditEventProps = Pick<
   ScheduleProps,
   "onCreate" | "onUpdate" | "disableUpdate"
 > & {
@@ -74,8 +95,8 @@ export const EventEdit = ({
   onCreate,
   onUpdate,
   disableUpdate,
-}: EventEditProps) => {
-  const isEdit = !!editEventProps.event;
+}: EditEventProps) => {
+  const isEdit = !editEventProps.isNew;
 
   const { control, handleSubmit, watch, setValue } = useForm<VEvent>({
     values: editEventProps.event ? { ...editEventProps.event } : undefined,
@@ -198,7 +219,7 @@ export const EventEdit = ({
             >
               <div className={cn("flex flex-row items-center", gaps.sm)}>
                 <Icon icon={IconPencil} />
-                <Text>Termin bearbeiten</Text>
+                <Text>{isEdit ? "Termin bearbeiten" : "Termin erstellen"}</Text>
               </div>
 
               <IconButton
