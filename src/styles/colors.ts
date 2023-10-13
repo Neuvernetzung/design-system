@@ -114,11 +114,11 @@ export const bgColorsInteractive: Record<Color, string> = {
 export const extendedBgColorsInteractive: Record<ExtendedColor, string> = {
   ...bgColorsInteractive,
   inherit: extendedBgColors.inherit,
-  light: `${extendedBgColors.light} hover:bg-accent-200`,
-  dark: `${extendedBgColors.dark} hover:bg-accent-800`,
+  light: `${extendedBgColors.light} hover:bg-accent-200 dark:hover:bg-accent-200`,
+  dark: `${extendedBgColors.dark} hover:bg-accent-800 dark:hover:bg-accent-800`,
   filled: `${extendedBgColors.filled} hover:bg-accent-300 dark:hover:bg-accent-700`,
   filledSubtile: `${extendedBgColors.filledSubtile} hover:bg-accent-200 dark:hover:bg-accent-800`,
-  subtile: `${extendedBgColors.filledSubtile} hover:bg-accent-100 dark:hover:bg-accent-900`,
+  subtile: `${extendedBgColors.subtile} hover:bg-accent-100 dark:hover:bg-accent-900`,
 };
 
 export const fillColors: Record<Color, string> = {
