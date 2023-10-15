@@ -1,11 +1,21 @@
-import { IconLink, IconPencil, IconUnlink, IconX } from "@tabler/icons-react";
+import {
+  IconLink,
+  IconPencil,
+  IconTrash,
+  IconUnlink,
+  IconUserPlus,
+  IconX,
+} from "@tabler/icons-react";
 import cn from "classnames";
+import { addHours } from "date-fns";
+import isFunction from "lodash/isFunction";
 import { type MouseEvent, useState } from "react";
 import {
-  FieldPathByValue,
-  Path,
-  UseControllerProps,
+  type FieldPathByValue,
+  type Path,
+  type UseControllerProps,
   useForm,
+  useFieldArray,
 } from "react-hook-form";
 import {
   getDurationFromInterval,
@@ -13,6 +23,7 @@ import {
   type VEvent,
   type VEventDuration,
 } from "ts-ics";
+import { v4 as uuid } from "uuid";
 
 import {
   borders,
@@ -22,7 +33,7 @@ import {
   paddingsX,
   roundings,
 } from "../../../../../styles";
-import { Size } from "../../../../../types";
+import type { Size } from "../../../../../types";
 import { Button, IconButton } from "../../../Button";
 import { Datetimepicker } from "../../../Datepicker";
 import { FormElement } from "../../../Form";
@@ -31,12 +42,10 @@ import { Input } from "../../../Input";
 import { Modal } from "../../../Modal";
 import { RichText } from "../../../RichText";
 import { Switch } from "../../../Switch";
-import { TabGroup, TabItemProps, TabList, TabPanels } from "../../../Tabs";
+import { TabGroup, type TabItemProps, TabList, TabPanels } from "../../../Tabs";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
-import isFunction from "lodash/isFunction";
-import { v4 as uuid } from "uuid";
-import { addHours } from "date-fns";
+import { Select } from "../../../Select";
 
 export type UseEditEventProps = {
   open: boolean;
@@ -98,6 +107,8 @@ export const EventEdit = ({
 }: EditEventProps) => {
   const isEdit = !editEventProps.isNew;
 
+  const [tab, setTab] = useState<number>(0);
+
   const { control, handleSubmit, watch, setValue } = useForm<VEvent>({
     values: editEventProps.event ? { ...editEventProps.event } : undefined,
   });
@@ -125,7 +136,14 @@ export const EventEdit = ({
     }
   };
 
-  const [tab, setTab] = useState<number>(0);
+  const {
+    append: appendAttendee,
+    fields: attendees,
+    remove: removeAttendee,
+  } = useFieldArray({
+    control,
+    name: "attendees",
+  });
 
   if (disableUpdate || isEdit ? !isFunction(onUpdate) : !isFunction(onCreate))
     return null;
@@ -184,6 +202,18 @@ export const EventEdit = ({
       content: (
         <div className={cn("w-full flex flex-col", gaps.sm)}>
           <Input name="location" label="Ort" control={control} size="sm" />
+          <Select
+            name="status"
+            size="sm"
+            label="Status"
+            control={control}
+            disabled={isEdit}
+            options={[
+              { children: "Bestätigt", value: "CONFIRMED" },
+              { children: "Vorgemerkt", value: "TENTATIVE" },
+              { children: "Abgesagt", value: "CANCELLED" },
+            ]}
+          />
           <Input
             name="categories"
             label="Kategorien"
@@ -196,6 +226,63 @@ export const EventEdit = ({
             label="Beschreibung"
             size="sm"
           />
+        </div>
+      ),
+    },
+    {
+      title: "Personen",
+      content: (
+        <div className={cn("w-full flex flex-col", gaps.sm)}>
+          {attendees.map((attendee, i) => (
+            <div
+              key={attendee.id}
+              className={cn(
+                "flex flex-col overflow-hidden",
+                roundings.sm,
+                extendedBgColors.subtile
+              )}
+            >
+              <div
+                className={cn(
+                  "flex flex-row justify-between items-center",
+                  paddingsEvenly.md,
+                  extendedBgColors.filled
+                )}
+              >
+                <Text size="sm">Person {i + 1}</Text>
+                <IconButton
+                  size="xs"
+                  variant="ghost"
+                  ariaLabel={`remove_attendee_${i}`}
+                  icon={IconTrash}
+                  onClick={() => removeAttendee(i)}
+                />
+              </div>
+              <div className={cn("flex flex-col", gaps.sm, paddingsEvenly.md)}>
+                <Input
+                  name={`attendees.${i}.name`}
+                  size="sm"
+                  control={control}
+                  label="Name"
+                />
+                <Input
+                  name={`attendees.${i}.email`}
+                  size="sm"
+                  control={control}
+                  label="E-Mail"
+                  required
+                />
+              </div>
+            </div>
+          ))}
+          <Button
+            size="sm"
+            variant="ghost"
+            leftIcon={IconUserPlus}
+            onClick={() => appendAttendee({ email: "" })}
+          >
+            Person hinzufügen
+          </Button>
         </div>
       ),
     },
@@ -247,7 +334,8 @@ export const EventEdit = ({
               onClick={(e: MouseEvent) => {
                 handleSubmit((event) => {
                   if (isEdit) {
-                    onUpdate?.(event);
+                    if (!editEventProps.event) return;
+                    onUpdate?.(event, editEventProps.event);
                   } else {
                     onCreate?.(event);
                   }

@@ -1,16 +1,35 @@
-import { IconPencil, IconTrash, IconX } from "@tabler/icons-react";
+import {
+  IconArrowBarRight,
+  IconArrowBarToRight,
+  IconCalendar,
+  IconCalendarCancel,
+  IconCheck,
+  IconClock,
+  IconMapPin,
+  IconPencil,
+  IconTrash,
+  IconX,
+} from "@tabler/icons-react";
 import cn from "classnames";
+import { isSameDay } from "date-fns";
+import isFunction from "lodash/isFunction";
 import { useState } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
 
-import { gaps } from "../../../../../styles";
+import {
+  extendedBgColors,
+  gaps,
+  paddingsEvenly,
+  roundings,
+} from "../../../../../styles";
 import { Button, IconButton } from "../../../Button";
+import { Icon } from "../../../Icon";
 import { Modal } from "../../../Modal";
 import { Prose } from "../../../Prose";
+import { Tag } from "../../../Tag";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
 import type { UseEditEventProps } from "./edit";
-import isFunction from "lodash/isFunction";
 
 export type UseViewEventProps = {
   open: boolean;
@@ -40,7 +59,12 @@ export const useViewEvent = (): UseViewEventProps => {
 
 export type ViewEventProps = Pick<
   ScheduleProps,
-  "onDelete" | "disableUpdate" | "disableDelete"
+  | "onDelete"
+  | "onUpdate"
+  | "disableUpdate"
+  | "disableDelete"
+  | "onCancelEventStatus"
+  | "onConfirmEventStatus"
 > & {
   viewEventProps: UseViewEventProps;
   editEventProps: UseEditEventProps;
@@ -49,16 +73,36 @@ export type ViewEventProps = Pick<
 export const ViewEvent = ({
   viewEventProps,
   onDelete,
+  onUpdate,
+  onCancelEventStatus,
+  onConfirmEventStatus,
   editEventProps,
   disableDelete,
   disableUpdate,
 }: ViewEventProps) => {
   if (!viewEventProps || !viewEventProps.event) return null;
 
+  const dayFormatter = new Intl.DateTimeFormat(undefined, {
+    dateStyle: "full",
+  });
+
+  const timeFormatter = new Intl.DateTimeFormat(undefined, {
+    timeStyle: "short",
+  });
+
   const formatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "full",
     timeStyle: "short",
   });
+
+  const event = viewEventProps.event;
+
+  const end = getEventEnd(event);
+
+  const allowDelete = isFunction(onDelete);
+  const allowUpdate = isFunction(onUpdate);
+  const allowConfirm = isFunction(onConfirmEventStatus) || allowUpdate;
+  const allowCancel = isFunction(onCancelEventStatus) || allowUpdate;
 
   return (
     <Modal
@@ -72,9 +116,12 @@ export const ViewEvent = ({
             gaps.md
           )}
         >
-          <Text>Termin</Text>
           <div className={cn("flex flex-row", gaps.sm)}>
-            {!disableDelete && isFunction(onDelete) && (
+            <Icon icon={IconCalendar} />
+            <Text>{event?.summary}</Text>
+          </div>
+          <div className={cn("flex flex-row", gaps.sm)}>
+            {!disableDelete && allowDelete && (
               <IconButton
                 icon={IconTrash}
                 color="danger"
@@ -82,8 +129,7 @@ export const ViewEvent = ({
                 variant="ghost"
                 ariaLabel="delete_event"
                 onClick={() => {
-                  if (!viewEventProps.event) return;
-                  onDelete(viewEventProps.event);
+                  onDelete(event);
                   viewEventProps.onClose();
                 }}
               />
@@ -101,21 +147,92 @@ export const ViewEvent = ({
         </div>
       }
       content={
-        <div className={cn("flex flex-col", gaps.xs)}>
-          <Text>Titel: {viewEventProps.event?.summary}</Text>
-          <Text>
-            Start: {formatter.format(viewEventProps.event?.start.date)}
-          </Text>
-          <Text>
-            Ende: {formatter.format(getEventEnd(viewEventProps.event))}
-          </Text>
-          {viewEventProps.event.location && (
-            <Text>Ort: {viewEventProps.event.location}</Text>
+        <div className={cn("flex flex-col items-start w-full", gaps.xs)}>
+          {isSameDay(event?.start.date, end) ? (
+            <>
+              <Tag
+                leftIcon={IconCalendar}
+                variant="subtile"
+                label={dayFormatter.format(event.start.date)}
+              />
+              <Tag
+                leftIcon={IconClock}
+                variant="subtile"
+                label={`${timeFormatter.format(
+                  event.start.date
+                )} - ${timeFormatter.format(end)}`}
+              />
+            </>
+          ) : (
+            <>
+              <Tag
+                leftIcon={IconArrowBarRight}
+                variant="subtile"
+                label={formatter.format(event.start.date)}
+              />
+              <Tag
+                leftIcon={IconArrowBarToRight}
+                variant="subtile"
+                label={formatter.format(end)}
+              />
+            </>
           )}
-          {viewEventProps.event.description && (
-            <div>
+          {event.location && (
+            <Tag
+              leftIcon={IconMapPin}
+              variant="subtile"
+              label={event.location}
+            />
+          )}
+          {event.categories && (
+            <div className="flex flex-col w-full">
+              <Text size="sm">Kategorien</Text>
+              <Text
+                className={cn(
+                  "w-full",
+                  paddingsEvenly.md,
+                  roundings.md,
+                  extendedBgColors.subtile
+                )}
+              >
+                {event.categories}
+              </Text>
+            </div>
+          )}
+          {event.description && (
+            <div className="flex flex-col w-full">
               <Text size="sm">Beschreibung</Text>
-              <Prose content={viewEventProps.event.description} />
+              <Prose
+                className={cn(
+                  "w-full",
+                  paddingsEvenly.md,
+                  roundings.md,
+                  extendedBgColors.subtile
+                )}
+                content={event.description}
+              />
+            </div>
+          )}
+          {event.attendees && event.attendees.length > 0 && (
+            <div className="flex flex-col w-full">
+              <Text size="sm">Personen</Text>
+              <div className={cn("flex flex-col", gaps.sm)}>
+                {event.attendees.map((attendee, i) => (
+                  <div
+                    key={`attendee_${i}`}
+                    className={cn(
+                      "flex flex-col",
+                      gaps.xs,
+                      paddingsEvenly.md,
+                      roundings.md,
+                      extendedBgColors.subtile
+                    )}
+                  >
+                    <Text size="sm">{attendee.name}</Text>
+                    <Text size="sm">{attendee.email}</Text>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -123,23 +240,62 @@ export const ViewEvent = ({
       footer={
         <div
           className={cn(
-            "flex flex-row w-full items-center justify-end",
+            "flex flex-row w-full items-center justify-between",
             gaps.md
           )}
         >
-          {!disableUpdate && (
+          {!disableUpdate && event.status !== "CANCELLED" && allowCancel && (
             <Button
               size="sm"
-              color="primary"
-              leftIcon={IconPencil}
+              variant="ghost"
+              leftIcon={IconCalendarCancel}
               onClick={() => {
+                if (isFunction(onCancelEventStatus)) {
+                  onCancelEventStatus({ ...event, status: "CANCELLED" });
+                } else {
+                  onUpdate?.({ ...event, status: "CANCELLED" }, event);
+                }
+
                 viewEventProps.onClose();
-                editEventProps.setEdit(viewEventProps.event);
               }}
             >
-              Bearbeiten
+              Stornieren
             </Button>
           )}
+          <div className={cn("flex flex-row", gaps.md)}>
+            {!disableUpdate && event.status === "TENTATIVE" && allowConfirm && (
+              <Button
+                size="sm"
+                color="success"
+                leftIcon={IconCheck}
+                onClick={() => {
+                  if (isFunction(onConfirmEventStatus)) {
+                    onConfirmEventStatus({ ...event, status: "CONFIRMED" });
+                  } else {
+                    onUpdate?.({ ...event, status: "CONFIRMED" }, event);
+                  }
+
+                  viewEventProps.onClose();
+                }}
+              >
+                Akzeptieren
+              </Button>
+            )}
+
+            {!disableUpdate && (
+              <Button
+                size="sm"
+                color="primary"
+                leftIcon={IconPencil}
+                onClick={() => {
+                  editEventProps.setEdit(event);
+                  viewEventProps.onClose();
+                }}
+              >
+                Bearbeiten
+              </Button>
+            )}
+          </div>
         </div>
       }
     />
