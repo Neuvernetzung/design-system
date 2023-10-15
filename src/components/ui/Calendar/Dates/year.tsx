@@ -43,7 +43,14 @@ export const CalendarDateYearView = ({
   maxDate,
   headerTitleFunction,
   calendarProps,
-  indicators,
+  yearHasIndicator,
+  yearIsDisabled,
+  activeButtonColor,
+  availableButtonColor,
+  activeButtonVariant,
+  availableButtonVariant,
+  buttonClassName,
+  gridClassName,
 }: CalenderDateYearViewProps) => {
   const { inRange, selected, viewing, clearTime, setViewing } = calendarProps;
 
@@ -143,7 +150,7 @@ export const CalendarDateYearView = ({
       />
       <div
         ref={yearsRef}
-        className="grid grid-cols-5"
+        className={cn("grid grid-cols-5", gridClassName)}
         onWheel={(e: WheelEvent) => {
           if (e.deltaY > 0) {
             setViewing(addYears(viewing, 10));
@@ -184,15 +191,15 @@ export const CalendarDateYearView = ({
             }
             color={
               selected.length > 0 && isSameYear(selected[0], year)
-                ? "primary"
-                : "accent"
+                ? activeButtonColor || "primary"
+                : availableButtonColor || "accent"
             }
             variant={
               selected.length > 0 && isSameYear(selected[0], year)
-                ? "filled"
-                : "ghost"
+                ? activeButtonVariant || "filled"
+                : availableButtonVariant || "ghost"
             }
-            className="relative"
+            className={cn("relative", buttonClassName)}
             onClick={() => {
               onYearClick?.(year);
             }}
@@ -207,19 +214,13 @@ export const CalendarDateYearView = ({
                 isAfter(
                   setMonth(lastDayOfMonth(clearTime(year)), 12),
                   setMonth(lastDayOfMonth(clearTime(maxDate)), 12)
-                ))
+                )) ||
+              yearIsDisabled?.(year)
             }
           >
-            {indicators?.find(
-              (date) =>
-                yearFormatter.format(date) === yearFormatter.format(year)
-            ) ? (
-              <>
-                {yearFormatter.format(year)}
-                <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
-              </>
-            ) : (
-              yearFormatter.format(year)
+            {yearFormatter.format(year)}
+            {yearHasIndicator?.(year) && (
+              <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
             )}
           </Button>
         ))}

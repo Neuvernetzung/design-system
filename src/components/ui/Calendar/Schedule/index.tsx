@@ -1,6 +1,7 @@
 import cn from "classnames";
+import { isSameMonth, isSameYear } from "date-fns";
 import type { ReactElement } from "react";
-import type { VEvent } from "ts-ics";
+import { getEventEnd, type VEvent } from "ts-ics";
 
 import { divides, gaps, paddingsEvenly } from "../../../../styles";
 import type { Color } from "../../../../types";
@@ -19,6 +20,7 @@ import {
 } from "./Event/view";
 import type { UseScheduleViewProps } from "./hooks/useSchedule";
 import { ScheduleMonthView } from "./month";
+import { isThisDaysEvent } from "./utils/filterEvents";
 import { ScheduleWeekView } from "./week";
 
 export * from "./day";
@@ -99,7 +101,17 @@ export const Schedule = ({
             <Calendar
               onChange={setViewing}
               calendarProps={calendarProps}
-              indicators={events.map((event) => event.start.date)}
+              dayHasIndicator={(day) =>
+                events.some((e) =>
+                  isThisDaysEvent(e.start.date, getEventEnd(e), day)
+                )
+              }
+              monthHasIndicator={(month) =>
+                events.some((e) => isSameMonth(e.start.date, month))
+              }
+              yearHasIndicator={(year) =>
+                events.some((e) => isSameYear(e.start.date, year))
+              }
             />
           </div>
         )}

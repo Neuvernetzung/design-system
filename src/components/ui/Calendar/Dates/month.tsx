@@ -45,7 +45,14 @@ export const CalendarDateMonthView = ({
   maxDate,
   headerTitleFunction,
   calendarProps,
-  indicators,
+  monthHasIndicator,
+  monthIsDisabled,
+  activeButtonColor,
+  availableButtonColor,
+  activeButtonVariant,
+  availableButtonVariant,
+  buttonClassName,
+  gridClassName,
 }: CalenderDateMonthViewProps) => {
   const { selected, viewing, clearTime, setViewing, inRange } = calendarProps;
 
@@ -152,7 +159,7 @@ export const CalendarDateMonthView = ({
       />
       <div
         ref={monthsRef}
-        className="grid grid-cols-4"
+        className={cn("grid grid-cols-4", gridClassName)}
         onWheel={(e: WheelEvent) => {
           if (e.deltaY > 0) {
             setViewing(addYears(viewing, 1));
@@ -189,36 +196,29 @@ export const CalendarDateMonthView = ({
                 selected.length > 0 &&
                 isSameYear(selected[0], monthDate) &&
                 isSameMonth(selected[0], monthDate)
-                  ? "primary"
-                  : "accent"
+                  ? activeButtonColor || "primary"
+                  : availableButtonColor || "accent"
               }
               variant={
                 selected.length > 0 &&
                 isSameYear(selected[0], monthDate) &&
                 isSameMonth(selected[0], monthDate)
-                  ? "filled"
-                  : "ghost"
+                  ? activeButtonVariant || "filled"
+                  : availableButtonVariant || "ghost"
               }
-              className="relative"
+              className={cn("relative", buttonClassName)}
               onClick={() => onMonthClick?.(monthDate)}
               data-id={dataIdFormatter.format(monthDate)}
               disabled={
                 (minDate &&
                   isBefore(monthDate, setDate(clearTime(minDate), 1))) ||
-                (maxDate && isAfter(monthDate, lastDayOfMonth(maxDate)))
+                (maxDate && isAfter(monthDate, lastDayOfMonth(maxDate))) ||
+                monthIsDisabled?.(monthDate)
               }
             >
-              {indicators?.find(
-                (date) =>
-                  dataIdFormatter.format(date) ===
-                  dataIdFormatter.format(monthDate)
-              ) ? (
-                <>
-                  {monthFormatter.format(monthDate)}
-                  <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
-                </>
-              ) : (
-                monthFormatter.format(monthDate)
+              {monthFormatter.format(monthDate)}
+              {monthHasIndicator?.(monthDate) && (
+                <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
               )}
             </Button>
           );
