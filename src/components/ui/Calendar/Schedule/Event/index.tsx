@@ -29,6 +29,7 @@ export type EventProps = {
   isDragoverlay?: boolean;
   color?: Color;
   className?: string;
+  isReverse?: boolean;
 };
 
 export const DraggableEvent = ({
@@ -105,6 +106,7 @@ export const Event = ({
   event,
   beginsBeforeThisDay,
   endsAfterThisDay,
+  isReverse,
   viewEventProps,
   color = "primary",
   className,
@@ -132,8 +134,9 @@ export const Event = ({
       type={viewEventProps ? "button" : undefined}
       className={cn(
         "flex !items-start !justify-start w-full h-full relative overflow-hidden truncate",
-        beginsBeforeThisDay && "rounded-t-none",
-        endsAfterThisDay && "rounded-b-none",
+        beginsBeforeThisDay &&
+          (isReverse ? "rounded-b-none" : "rounded-t-none"),
+        endsAfterThisDay && (isReverse ? "rounded-t-none" : "rounded-b-none"),
         className
       )}
     >
@@ -208,7 +211,7 @@ export const EventSmall = ({
   color = "primary",
   className,
   isDragoverlay,
-}: EventProps) => {
+}: Omit<EventProps, "isReveresed">) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
