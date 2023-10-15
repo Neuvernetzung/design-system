@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.3
+
+### Patch Changes
+
+- 4fe0992: Schedule - EventView und EventEdit erweitern #1033
+
 ## 2.2.2
 
 ### Patch Changes
