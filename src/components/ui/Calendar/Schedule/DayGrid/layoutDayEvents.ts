@@ -18,6 +18,7 @@ type DayLayout = {
   end: number;
   beginsBeforeThisDay?: boolean;
   endsAfterThisDay?: boolean;
+  isReverse?: boolean;
 };
 
 type DayLayoutWithoutTime = Pick<DayLayout, "event" | "width" | "left">;
@@ -103,9 +104,9 @@ export const useLayoutDayEvents = (
       if (columns.length > highestColumns) highestColumns = columns.length;
     }
 
-    const finalLayout = layout.map((item) =>
-      setStartAndEndOfEvent(item, day, highestColumns, options)
-    );
+    const finalLayout = layout
+      .map((item) => setStartAndEndOfEvent(item, day, highestColumns, options))
+      .filter((e) => e.height !== 0); // Wenn ein Event um 0 Uhr Endet oder started, dann kommt Layout durcheinander.
 
     return finalLayout;
   }, [events, day, options]);
@@ -142,16 +143,22 @@ const setStartAndEndOfEvent = (
   highestColumns: number,
   options?: DayLayoutEventOptionProps
 ): DayLayout => {
+  const isReverse = event.start.date > getEventEnd(event);
+
   const beginsBeforeThisDay = !isSameDay(event.start.date, day);
   const startTime = beginsBeforeThisDay
-    ? 0
+    ? isReverse
+      ? HOURS_A_DAY
+      : 0
     : getHours(event.start.date) + getMinutes(event.start.date) / 60;
 
   const endDate = getEventEnd(event);
 
   const endsAfterThisDay = !isSameDay(endDate, day);
   const endTime = endsAfterThisDay
-    ? HOURS_A_DAY
+    ? isReverse
+      ? 0
+      : HOURS_A_DAY
     : getHours(endDate) + getMinutes(endDate) / 60;
 
   const start = calcRow(startTime, options);
@@ -167,5 +174,6 @@ const setStartAndEndOfEvent = (
     height: end - start,
     beginsBeforeThisDay,
     endsAfterThisDay,
+    isReverse,
   };
 };

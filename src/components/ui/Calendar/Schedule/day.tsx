@@ -289,7 +289,15 @@ export const ScheduleDay = ({
       >
         {layout.map(
           (
-            { event, width, start, end, beginsBeforeThisDay, endsAfterThisDay },
+            {
+              event,
+              width,
+              start,
+              end,
+              beginsBeforeThisDay,
+              endsAfterThisDay,
+              isReverse,
+            },
             i
           ) => (
             <li
@@ -297,8 +305,8 @@ export const ScheduleDay = ({
               className={cn(
                 "w-full",
                 paddingsYSmall.md,
-                beginsBeforeThisDay && "!pt-0",
-                endsAfterThisDay && "!pb-0"
+                beginsBeforeThisDay && (isReverse ? "!pb-0" : "!pt-0"),
+                endsAfterThisDay && (isReverse ? "!pt-0" : "!pb-0")
               )}
               style={{
                 gridRowStart: start,
@@ -309,6 +317,7 @@ export const ScheduleDay = ({
               <DraggableEvent
                 beginsBeforeThisDay={beginsBeforeThisDay}
                 endsAfterThisDay={endsAfterThisDay}
+                isReverse={isReverse}
                 event={event}
                 viewEventProps={viewEventProps}
                 color={eventColor}
