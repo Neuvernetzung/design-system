@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.2
+
+### Patch Changes
+
+- 58698e0: Schedule - filterDates #1026
+- c272f2f: Calendar - Erweitern #1028
+
 ## 2.2.1
 
 ### Patch Changes
