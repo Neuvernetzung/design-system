@@ -36,7 +36,14 @@ export const CalendarDateDayView = ({
   maxDate,
   headerTitleFunction,
   calendarProps,
-  indicators,
+  dayHasIndicator,
+  dayIsDisabled,
+  activeButtonColor,
+  availableButtonColor,
+  activeButtonVariant,
+  availableButtonVariant,
+  buttonClassName,
+  gridClassName,
 }: CalenderDateDayViewProps) => {
   const {
     inRange,
@@ -187,7 +194,7 @@ export const CalendarDateDayView = ({
 
         <div
           ref={daysRef}
-          className="grid grid-cols-7"
+          className={cn("grid grid-cols-7", gridClassName)}
           onWheel={(e: WheelEvent) => {
             if (e.deltaY > 0) {
               viewNextMonth();
@@ -231,13 +238,22 @@ export const CalendarDateDayView = ({
                     ? 0
                     : -1
                 }
-                variant={!isSelected(day) ? "ghost" : "filled"}
-                color={!isSelected(day) ? "accent" : "primary"}
+                variant={
+                  isSelected(day)
+                    ? activeButtonVariant || "filled"
+                    : availableButtonVariant || "ghost"
+                }
+                color={
+                  isSelected(day)
+                    ? activeButtonColor || "primary"
+                    : availableButtonColor || "accent"
+                }
                 className={cn(
                   "relative",
                   !inRange(day, startOfMonth(viewing), endOfMonth(viewing)) &&
                     "opacity-50",
-                  transitionFast
+                  transitionFast,
+                  buttonClassName
                 )}
                 data-id={dataIdFormatter.format(day)}
                 data-in-range={inRange(
@@ -254,22 +270,13 @@ export const CalendarDateDayView = ({
                 }}
                 disabled={
                   (minDate && isBefore(day, clearTime(minDate))) ||
-                  (maxDate && isAfter(day, clearTime(maxDate)))
+                  (maxDate && isAfter(day, clearTime(maxDate))) ||
+                  dayIsDisabled?.(day)
                 }
               >
-                {indicators?.find(
-                  (date) =>
-                    dataIdFormatter.format(date) === dataIdFormatter.format(day)
-                ) ? (
-                  <>
-                    {dayFormatter.format(day)}
-                    <Indicator
-                      size="sm"
-                      wrapperClassName="!absolute bottom-1"
-                    />
-                  </>
-                ) : (
-                  dayFormatter.format(day)
+                {dayFormatter.format(day)}
+                {dayHasIndicator?.(day) && (
+                  <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
                 )}
               </Button>
             ))

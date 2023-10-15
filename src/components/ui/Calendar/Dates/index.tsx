@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { ButtonVariant, ExtendedColor } from "../../../../types";
 import { useCalendar, type UseCalendarProps } from "../hooks/useCalendar";
 import { CalendarDateDayView } from "./day";
 import { CalendarDateMonthView } from "./month";
@@ -15,7 +16,18 @@ export type CalendarProps = {
   calendarProps?: UseCalendarProps;
   minDate?: Date;
   maxDate?: Date;
-  indicators?: Date[];
+  dayHasIndicator?: (date: Date) => boolean;
+  monthHasIndicator?: (date: Date) => boolean;
+  yearHasIndicator?: (date: Date) => boolean;
+  dayIsDisabled?: (date: Date) => boolean;
+  monthIsDisabled?: (date: Date) => boolean;
+  yearIsDisabled?: (date: Date) => boolean;
+  activeButtonColor?: ExtendedColor;
+  availableButtonColor?: ExtendedColor;
+  activeButtonVariant?: ButtonVariant;
+  availableButtonVariant?: ButtonVariant;
+  buttonClassName?: string;
+  gridClassName?: string;
 };
 
 export const calendarViews = ["dates", "months", "years"] as const;
@@ -27,7 +39,18 @@ export const Calendar = ({
   minDate,
   maxDate,
   calendarProps: _calendarProps,
-  indicators,
+  dayHasIndicator,
+  monthHasIndicator,
+  yearHasIndicator,
+  dayIsDisabled,
+  monthIsDisabled,
+  yearIsDisabled,
+  activeButtonColor,
+  availableButtonColor,
+  activeButtonVariant,
+  availableButtonVariant,
+  buttonClassName,
+  gridClassName,
 }: CalendarProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -45,7 +68,14 @@ export const Calendar = ({
           maxDate={maxDate}
           headerTitleFunction={() => setCurrentView("months")}
           calendarProps={calendarProps}
-          indicators={indicators}
+          dayHasIndicator={dayHasIndicator}
+          dayIsDisabled={dayIsDisabled}
+          activeButtonColor={activeButtonColor}
+          availableButtonColor={availableButtonColor}
+          activeButtonVariant={activeButtonVariant}
+          availableButtonVariant={availableButtonVariant}
+          buttonClassName={buttonClassName}
+          gridClassName={gridClassName}
         />
       )}
       {currentView === "months" && (
@@ -58,7 +88,14 @@ export const Calendar = ({
           maxDate={maxDate}
           headerTitleFunction={() => setCurrentView("years")}
           calendarProps={calendarProps}
-          indicators={indicators}
+          monthHasIndicator={monthHasIndicator}
+          monthIsDisabled={monthIsDisabled}
+          activeButtonColor={activeButtonColor}
+          availableButtonColor={availableButtonColor}
+          activeButtonVariant={activeButtonVariant}
+          availableButtonVariant={availableButtonVariant}
+          buttonClassName={buttonClassName}
+          gridClassName={gridClassName}
         />
       )}
       {currentView === "years" && (
@@ -70,7 +107,14 @@ export const Calendar = ({
           minDate={minDate}
           maxDate={maxDate}
           calendarProps={calendarProps}
-          indicators={indicators}
+          yearHasIndicator={yearHasIndicator}
+          yearIsDisabled={yearIsDisabled}
+          activeButtonColor={activeButtonColor}
+          availableButtonColor={availableButtonColor}
+          activeButtonVariant={activeButtonVariant}
+          availableButtonVariant={availableButtonVariant}
+          buttonClassName={buttonClassName}
+          gridClassName={gridClassName}
         />
       )}
     </>

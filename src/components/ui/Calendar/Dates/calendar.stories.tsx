@@ -7,7 +7,7 @@ import {
   CalendarDateMonthView,
   CalendarDateYearView,
 } from ".";
-import { addDays, subDays } from "date-fns";
+import { addDays, isSameDay, isSameMonth, isSameYear, subDays } from "date-fns";
 import { useCalendar } from "../hooks/useCalendar";
 
 export default {
@@ -25,14 +25,19 @@ export default {
 const indicators = [new Date(), addDays(new Date(), 2), subDays(new Date(), 5)];
 
 export const Default = ({ ...args }) => (
-  <Calendar indicators={indicators} {...args} />
+  <Calendar
+    dayHasIndicator={(day) => indicators.some((i) => isSameDay(i, day))}
+    monthHasIndicator={(month) => indicators.some((i) => isSameMonth(i, month))}
+    yearHasIndicator={(year) => indicators.some((i) => isSameYear(i, year))}
+    {...args}
+  />
 );
 
 export const Days = ({ ...args }) => {
   const calendarProps = useCalendar();
   return (
     <CalendarDateDayView
-      indicators={indicators}
+      dayHasIndicator={(day) => indicators.some((i) => isSameDay(i, day))}
       calendarProps={calendarProps}
       {...args}
     />
@@ -43,7 +48,9 @@ export const Months = ({ ...args }) => {
   const calendarProps = useCalendar();
   return (
     <CalendarDateMonthView
-      indicators={indicators}
+      monthHasIndicator={(month) =>
+        indicators.some((i) => isSameMonth(i, month))
+      }
       calendarProps={calendarProps}
       {...args}
     />
@@ -54,7 +61,7 @@ export const Years = ({ ...args }) => {
   const calendarProps = useCalendar();
   return (
     <CalendarDateYearView
-      indicators={indicators}
+      yearHasIndicator={(year) => indicators.some((i) => isSameYear(i, year))}
       calendarProps={calendarProps}
       {...args}
     />
