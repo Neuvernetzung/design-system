@@ -7,7 +7,7 @@ import { IconButton } from "../../../Button";
 import { Modal } from "../../../Modal";
 import { Text } from "../../../Typography";
 import { titleFormatter } from "../utils/formatTitle";
-import { EventSmall } from ".";
+import { EventSmall } from "./event";
 import { type UseViewEventProps } from "./view";
 import type { ScheduleProps } from "..";
 

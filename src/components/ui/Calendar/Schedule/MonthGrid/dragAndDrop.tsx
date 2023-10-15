@@ -115,7 +115,7 @@ export const MonthGridDndContext = ({
         }
 
         setActiveItem(undefined);
-        onUpdate(newEvent);
+        onUpdate(newEvent, event);
       }}
     >
       {children}

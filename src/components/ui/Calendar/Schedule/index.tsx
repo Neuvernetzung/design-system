@@ -45,8 +45,10 @@ export type ScheduleProps = {
   rowsEachHour?: number;
   displayDayTime?: ScheduleDisplayDaytime;
   onCreate?: (event: VEvent) => void;
-  onUpdate?: (event: VEvent) => void;
+  onUpdate?: (event: VEvent, oldEvent: VEvent) => void;
   onDelete?: (event: VEvent) => void;
+  onConfirmEventStatus?: (event: VEvent) => void;
+  onCancelEventStatus?: (event: VEvent) => void;
   eventColor?: Color;
   disabled?: boolean;
   disableDrag?: boolean;
@@ -70,6 +72,8 @@ export const Schedule = ({
   onCreate,
   onUpdate,
   onDelete,
+  onConfirmEventStatus,
+  onCancelEventStatus,
   eventColor,
   disabled,
   disableDrag,
@@ -177,6 +181,9 @@ export const Schedule = ({
         viewEventProps={viewEventProps}
         editEventProps={editEventProps}
         onDelete={onDelete}
+        onUpdate={onUpdate}
+        onConfirmEventStatus={onConfirmEventStatus}
+        onCancelEventStatus={onCancelEventStatus}
         disableDelete={disabled || disableDelete}
         disableUpdate={disabled || disableUpdate}
       />

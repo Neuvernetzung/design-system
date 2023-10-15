@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { MutableRefObject, ReactNode, useRef } from "react";
+import { type ReactNode, useRef } from "react";
 import { create } from "zustand";
 
 import { getText, type Locale } from "../../../locales/getText";
@@ -29,8 +29,8 @@ export type ConfirmationModalProps = {
   heading: string;
   content?: string | ReactNode;
   color?: Color;
-  confirm: Function;
-  cancel?: Function;
+  confirm: () => void;
+  cancel?: () => void;
   confirmButton?: ReactNode;
   cancelButton?: ReactNode;
   forbidCancellation?: boolean;
@@ -41,8 +41,8 @@ export const ConfirmationModal = () => {
 
   const confirmationState = useConfirmationState((state) => state.confirmation);
 
-  const confirmBtnRef = useRef() as MutableRefObject<HTMLButtonElement>;
-  const cancelBtnRef = useRef() as MutableRefObject<HTMLButtonElement>;
+  const confirmBtnRef = useRef<HTMLButtonElement>(null);
+  const cancelBtnRef = useRef<HTMLButtonElement>(null);
 
   if (!confirmationState) return null;
 
