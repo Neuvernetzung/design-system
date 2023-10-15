@@ -191,7 +191,7 @@ export const DayGridDndContext = ({
 
         setActiveItem(undefined);
         setTransformDelta({ x: 0, y: 0 });
-        onUpdate(newEvent);
+        onUpdate(newEvent, event);
       }}
       modifiers={[...modifiers, restrictToFirstScrollableAncestor]}
     >

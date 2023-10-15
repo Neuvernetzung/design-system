@@ -1,7 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import cn from "classnames";
 import isString from "lodash/isString";
-import { FC, Fragment, MutableRefObject, ReactNode } from "react";
+import {
+  type FC,
+  Fragment,
+  type MutableRefObject,
+  type ReactNode,
+} from "react";
 
 import {
   bgColors,
@@ -19,8 +24,8 @@ import {
 import { useThemeStateValue } from "../../../theme/useThemeState";
 import { ExtendedSize } from "../../../types";
 import { Backdrop } from "../Backdrop";
-import { Text } from "../Typography/Text";
 import { Heading } from "../Typography/Heading";
+import { Text } from "../Typography/Text";
 
 export type ModalProps = {
   open: boolean;
