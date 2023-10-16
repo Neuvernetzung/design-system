@@ -280,7 +280,7 @@ export const EventEdit = ({
                   label="Status"
                   options={[
                     {
-                      value: "CONFIRMED",
+                      value: "ACCEPTED",
                       children: "Bestätigt",
                     },
                     { value: "TENTATIVE", children: "Vorgemerkt" },
