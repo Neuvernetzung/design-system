@@ -4,6 +4,7 @@ import {
   IconArrowBarRight,
   IconArrowBarToRight,
   IconArrowNarrowRight,
+  IconCalendarCancel,
 } from "@tabler/icons-react";
 import cn from "classnames";
 import { addDays, addHours, addMinutes } from "date-fns";
@@ -123,7 +124,13 @@ export const Event = ({
       as={Component}
       color={color}
       disabled={!viewEventProps ? !isDragoverlay : false}
-      variant={event.status === "TENTATIVE" ? "subtile" : "filled"}
+      variant={
+        event.status === "TENTATIVE"
+          ? "subtile"
+          : event.status === "CANCELLED"
+          ? "outline"
+          : "filled"
+      }
       onClick={
         viewEventProps
           ? () => {
@@ -225,7 +232,13 @@ export const EventSmall = ({
       title={formatEventTitle(event)}
       disabled={!viewEventProps ? !isDragoverlay : false}
       color={color}
-      variant={event.status === "TENTATIVE" ? "subtile" : "filled"}
+      variant={
+        event.status === "TENTATIVE"
+          ? "subtile"
+          : event.status === "CANCELLED"
+          ? "outline"
+          : "filled"
+      }
       onClick={
         viewEventProps
           ? () => {
@@ -247,7 +260,9 @@ export const EventSmall = ({
             color="inherit"
             size="sm"
             icon={
-              beginsBeforeThisDay && endsAfterThisDay
+              event.status === "CANCELLED"
+                ? IconCalendarCancel
+                : beginsBeforeThisDay && endsAfterThisDay
                 ? IconArrowNarrowRight
                 : beginsBeforeThisDay
                 ? IconArrowBarToRight
