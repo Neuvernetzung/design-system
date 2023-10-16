@@ -46,6 +46,7 @@ import { TabGroup, type TabItemProps, TabList, TabPanels } from "../../../Tabs";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
 import { Select } from "../../../Select";
+import InputWithTags from "../../../Input/WithTags/inputWithTags";
 
 export type UseEditEventProps = {
   open: boolean;
@@ -214,7 +215,7 @@ export const EventEdit = ({
               { children: "Abgesagt", value: "CANCELLED" },
             ]}
           />
-          <Input
+          <InputWithTags
             name="categories"
             label="Kategorien"
             control={control}
