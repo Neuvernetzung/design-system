@@ -187,16 +187,19 @@ export const ViewEvent = ({
           {event.categories && (
             <div className="flex flex-col w-full">
               <Text size="sm">Kategorien</Text>
-              <Text
+              <div
                 className={cn(
-                  "w-full",
+                  "w-full flex flex-row flex-wrap",
+                  gaps.sm,
                   paddingsEvenly.md,
                   roundings.md,
                   extendedBgColors.subtile
                 )}
               >
-                {event.categories}
-              </Text>
+                {event.categories.map((category) => (
+                  <Tag variant="subtile" key={category} label={category} />
+                ))}
+              </div>
             </div>
           )}
           {event.description && (
