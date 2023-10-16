@@ -1,5 +1,13 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.4
+
+### Patch Changes
+
+- e3651bc: Schema - Status für Attendees hinzufügen #1039
+- d5f09c4: Schedule - Event - Ansicht für Stornierte Termine #1038
+- e9b0b9f: Schedule - EventView - Kategorien Ansicht verbessern #1037
+
 ## 2.2.3
 
 ### Patch Changes
