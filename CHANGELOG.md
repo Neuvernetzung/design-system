@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.5
+
+### Patch Changes
+
+- f7fcf68: ts-ics updaten #1045
+
 ## 2.2.4
 
 ### Patch Changes
