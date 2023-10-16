@@ -17,7 +17,7 @@ export const textColors: Record<Color, string> = {
 
 export const extendedTextColors: Record<ExtendedColor, string> = {
   ...textColors,
-  inherit: "",
+  inherit: "text-inherit dark:text-inherit",
   light: "text-accent-100 dark:text-accent-100",
   dark: "text-accent-900 dark:text-accent-900",
   subtile: "text-accent-600 dark:text-accent-400",

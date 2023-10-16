@@ -187,16 +187,19 @@ export const ViewEvent = ({
           {event.categories && (
             <div className="flex flex-col w-full">
               <Text size="sm">Kategorien</Text>
-              <Text
+              <div
                 className={cn(
-                  "w-full",
+                  "w-full flex flex-row flex-wrap",
+                  gaps.sm,
                   paddingsEvenly.md,
                   roundings.md,
                   extendedBgColors.subtile
                 )}
               >
-                {event.categories}
-              </Text>
+                {event.categories.map((category) => (
+                  <Tag variant="subtile" key={category} label={category} />
+                ))}
+              </div>
             </div>
           )}
           {event.description && (
@@ -221,15 +224,49 @@ export const ViewEvent = ({
                   <div
                     key={`attendee_${i}`}
                     className={cn(
-                      "flex flex-col",
+                      "flex flex-row justify-between",
                       gaps.xs,
                       paddingsEvenly.md,
                       roundings.md,
                       extendedBgColors.subtile
                     )}
                   >
-                    <Text size="sm">{attendee.name}</Text>
-                    <Text size="sm">{attendee.email}</Text>
+                    <div className={cn("flex flex-col", gaps.xs)}>
+                      {attendee.name && (
+                        <div className={cn("flex flex-col")}>
+                          <Text size="xs">Name</Text>
+                          <Text>{attendee.name}</Text>
+                        </div>
+                      )}
+                      <div className={cn("flex flex-col")}>
+                        <Text size="xs">E-Mail</Text>
+                        <Text>{attendee.email}</Text>
+                      </div>
+                    </div>
+                    {attendee.partstat && (
+                      <Tag
+                        size="sm"
+                        label={
+                          attendee.partstat === "CONFIRMED"
+                            ? "Bestätigt"
+                            : attendee.partstat === "CANCELLED"
+                            ? "Abgesagt"
+                            : attendee.partstat === "TENTATIVE"
+                            ? "Vorgemerkt"
+                            : undefined
+                        }
+                        variant="outline"
+                        color={
+                          attendee.partstat === "CONFIRMED"
+                            ? "success"
+                            : attendee.partstat === "CANCELLED"
+                            ? "warn"
+                            : attendee.partstat === "TENTATIVE"
+                            ? "accent"
+                            : undefined
+                        }
+                      />
+                    )}
                   </div>
                 ))}
               </div>
