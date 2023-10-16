@@ -11,7 +11,6 @@ import { addDays, addHours, addMinutes } from "date-fns";
 import { getEventEnd, type VEvent } from "ts-ics";
 
 import { gapsSmall, shadows } from "../../../../../styles";
-import { useThemeStateValue } from "../../../../../theme";
 import type { Color } from "../../../../../types";
 import { Button } from "../../../Button";
 import { Icon } from "../../../Icon";
@@ -224,8 +223,6 @@ export const EventSmall = ({
 
   const Component = viewEventProps ? "button" : "div";
 
-  const adjustedTextColor = useThemeStateValue((v) => v.adjustedTextColorState);
-
   return (
     <Button
       as={Component}
@@ -256,7 +253,6 @@ export const EventSmall = ({
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
         {!startsAndEndsOnSameDay && (
           <Icon
-            className={cn(adjustedTextColor[color])}
             color="inherit"
             size="sm"
             icon={
@@ -271,11 +267,7 @@ export const EventSmall = ({
           />
         )}
         {showTime && (
-          <Text
-            size="sm"
-            className={cn(adjustedTextColor[color])}
-            color="inherit"
-          >
+          <Text size="sm" color="inherit">
             {showTime &&
               (beginsBeforeThisDay
                 ? timeFormatter.format(getEventEnd(event))
@@ -286,11 +278,7 @@ export const EventSmall = ({
             {" - "}
           </Text>
         )}
-        <Text
-          size="sm"
-          className={cn(adjustedTextColor[color])}
-          color="inherit"
-        >
+        <Text size="sm" color="inherit">
           {event.summary}
         </Text>
       </div>

@@ -184,7 +184,7 @@ export const ViewEvent = ({
               label={event.location}
             />
           )}
-          {event.categories && (
+          {event.categories && event.categories.length > 0 && (
             <div className="flex flex-col w-full">
               <Text size="sm">Kategorien</Text>
               <div
@@ -247,7 +247,7 @@ export const ViewEvent = ({
                       <Tag
                         size="sm"
                         label={
-                          attendee.partstat === "CONFIRMED"
+                          attendee.partstat === "ACCEPTED"
                             ? "Bestätigt"
                             : attendee.partstat === "CANCELLED"
                             ? "Abgesagt"
@@ -257,7 +257,7 @@ export const ViewEvent = ({
                         }
                         variant="outline"
                         color={
-                          attendee.partstat === "CONFIRMED"
+                          attendee.partstat === "ACCEPTED"
                             ? "success"
                             : attendee.partstat === "CANCELLED"
                             ? "warn"
