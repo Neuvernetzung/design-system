@@ -299,7 +299,7 @@ export const ViewEvent = ({
               Stornieren
             </Button>
           )}
-          <div className={cn("flex flex-row", gaps.md)}>
+          <div className={cn("flex flex-row justify-end w-full", gaps.md)}>
             {!disableUpdate && event.status === "TENTATIVE" && allowConfirm && (
               <Button
                 size="sm"
