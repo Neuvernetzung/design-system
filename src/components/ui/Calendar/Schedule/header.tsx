@@ -12,15 +12,19 @@ import { Button, IconButton } from "../../Button";
 import { Tooltip } from "../../Tooltip";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from ".";
-import type { UseEditEventProps } from "./Event/edit";
-import { UseScheduleViewProps } from "./hooks/useSchedule";
 
 export type ScheduleHeaderProps = Omit<
   ScheduleProps,
-  "calendarProps" | "onCreate" | "onUpdate" | "onDelete" | "viewEventProps"
+  | "calendarProps"
+  | "onCreate"
+  | "onUpdate"
+  | "onDelete"
+  | "viewEventProps"
+  | "scheduleViewProps"
+  | "editEventProps"
 > &
+  Partial<Pick<ScheduleProps, "scheduleViewProps" | "editEventProps">> &
   Required<Pick<ScheduleProps, "calendarProps">> & {
-    scheduleViewProps: UseScheduleViewProps;
     leftArrowFunction: MouseEventHandler;
     leftAriaLabel: string;
     leftArrowDisabled?: boolean;
@@ -28,7 +32,6 @@ export type ScheduleHeaderProps = Omit<
     rightAriaLabel: string;
     rightArrowDisabled?: boolean;
     title: string;
-    editEventProps?: UseEditEventProps;
   };
 
 export const ScheduleHeader = ({
@@ -46,7 +49,7 @@ export const ScheduleHeader = ({
 }: ScheduleHeaderProps) => {
   const { viewToday } = calendarProps;
 
-  const { currentView, setCurrentView } = scheduleViewProps;
+  const { currentView, setCurrentView } = scheduleViewProps || {};
 
   return (
     <div

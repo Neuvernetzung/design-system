@@ -27,7 +27,6 @@ import {
 } from "./DayGrid";
 import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
 import { DraggableEvent, DragOverlayEvent } from "./Event";
-import { UseEditEventProps } from "./Event/edit";
 import type { UseViewEventProps } from "./Event/view";
 import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
@@ -36,12 +35,22 @@ import { titleFormatter } from "./utils/formatTitle";
 
 export type ScheduleDayViewProps = Omit<
   ScheduleProps,
-  "calendarProps" | "onDelete" | "disableUpdate" | "disableDelete"
+  | "calendarProps"
+  | "onDelete"
+  | "disableUpdate"
+  | "disableDelete"
+  | "viewEventProps"
+  | "editEventProps"
+  | "scheduleViewProps"
 > &
-  Required<Pick<ScheduleProps, "calendarProps">> & {
+  Required<Pick<ScheduleProps, "calendarProps">> &
+  Partial<
+    Pick<
+      ScheduleProps,
+      "viewEventProps" | "editEventProps" | "scheduleViewProps"
+    >
+  > & {
     precisionInMinutes?: number;
-    viewEventProps?: UseViewEventProps;
-    editEventProps?: UseEditEventProps;
   };
 
 export const ScheduleDayView = ({
@@ -182,7 +191,7 @@ export const DayScheduleHead = ({
   scheduleViewProps,
   setViewing,
 }: DayScheduleHeadProps) => {
-  const { setCurrentView } = scheduleViewProps;
+  const { setCurrentView } = scheduleViewProps || {};
 
   const dayTitleFormatter = new Intl.DateTimeFormat(undefined, {
     weekday: "short",
