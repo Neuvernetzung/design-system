@@ -147,15 +147,21 @@ export const Event = ({
       )}
     >
       <div
-        className={cn("absolute overflow-hidden flex flex-row", gapsSmall.sm)}
+        className={cn(
+          "absolute overflow-hidden flex flex-row",
+          gapsSmall.sm,
+          event.status === "CANCELLED" && "line-through"
+        )}
       >
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
-        {!startsAndEndsOnSameDay && (
+        {(!startsAndEndsOnSameDay || event.status === "CANCELLED") && (
           <Icon
             color="inherit"
             size="sm"
             icon={
-              beginsBeforeThisDay && endsAfterThisDay
+              event.status === "CANCELLED"
+                ? IconCalendarCancel
+                : beginsBeforeThisDay && endsAfterThisDay
                 ? IconArrowNarrowRight
                 : beginsBeforeThisDay
                 ? IconArrowBarToRight
@@ -249,9 +255,15 @@ export const EventSmall = ({
         className
       )}
     >
-      <div className={cn("flex flex-row items-center truncate", gapsSmall.sm)}>
+      <div
+        className={cn(
+          "flex flex-row items-center truncate",
+          gapsSmall.sm,
+          event.status === "CANCELLED" && "line-through"
+        )}
+      >
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
-        {!startsAndEndsOnSameDay && (
+        {(!startsAndEndsOnSameDay || event.status === "CANCELLED") && (
           <Icon
             color="inherit"
             size="sm"
