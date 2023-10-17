@@ -29,7 +29,6 @@ import { Prose } from "../../../Prose";
 import { Tag } from "../../../Tag";
 import { Text } from "../../../Typography";
 import type { ScheduleProps } from "..";
-import type { UseEditEventProps } from "./edit";
 
 export type UseViewEventProps = {
   open: boolean;
@@ -65,10 +64,8 @@ export type ViewEventProps = Pick<
   | "disableDelete"
   | "onCancelEventStatus"
   | "onConfirmEventStatus"
-> & {
-  viewEventProps: UseViewEventProps;
-  editEventProps: UseEditEventProps;
-};
+> &
+  Partial<Pick<ScheduleProps, "viewEventProps" | "editEventProps">>;
 
 export const ViewEvent = ({
   viewEventProps,
@@ -319,13 +316,13 @@ export const ViewEvent = ({
               </Button>
             )}
 
-            {!disableUpdate && (
+            {!disableUpdate && editEventProps && (
               <Button
                 size="sm"
                 color="primary"
                 leftIcon={IconPencil}
                 onClick={() => {
-                  editEventProps.setEdit(event);
+                  editEventProps?.setEdit(event);
                   viewEventProps.onClose();
                 }}
               >
