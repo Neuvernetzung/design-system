@@ -1,5 +1,14 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.6
+
+### Patch Changes
+
+- 9ccee6d: Schedule - EventView - Wenn nichts zu akzeptieren oder zu stornieren, dann Bearbeiten Button trotzdem rechts anzeigen #1049
+- 74f79e0: Deps updaten #1054
+- 810b000: Schedule - Abgesagtes Event auch bei Day Ansicht mit Cancel Icon und Name durchstreichen #1048
+- 383098b: Schedule - EditEventProps und ViewEventProps als Optional angeben #1050
+
 ## 2.2.5
 
 ### Patch Changes
