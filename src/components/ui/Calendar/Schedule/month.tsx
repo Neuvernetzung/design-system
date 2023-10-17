@@ -56,11 +56,19 @@ export type ScheduleMonthViewProps = Omit<
   | "onDelete"
   | "disableUpdate"
   | "disableDelete"
+  | "viewEventProps"
+  | "editEventProps"
+  | "scheduleViewProps"
 > &
   Required<Pick<ScheduleProps, "calendarProps">> & {
     viewEventProps?: UseViewEventProps;
     editEventProps?: UseEditEventProps;
-  };
+  } & Partial<
+    Pick<
+      ScheduleProps,
+      "viewEventProps" | "editEventProps" | "scheduleViewProps"
+    >
+  >;
 
 export const ScheduleMonthView = ({
   scheduleViewProps,
@@ -77,7 +85,7 @@ export const ScheduleMonthView = ({
 }: ScheduleMonthViewProps) => {
   const { setViewing, viewing, calendar, inRange } = calendarProps;
 
-  const { setCurrentView } = scheduleViewProps;
+  const { setCurrentView } = scheduleViewProps || {};
 
   const gridInnerRef = useRef<HTMLDivElement>(null);
 
@@ -250,7 +258,7 @@ export const ScheduleMonthDay = ({
   disableCreate,
   editEventProps,
 }: ScheduleMonthDay) => {
-  const { setCurrentView } = scheduleViewProps;
+  const { setCurrentView } = scheduleViewProps || {};
 
   const thisDaysEvents = getThisDaysEvents(events, day)
     .sort((a, b) => compareAsc(a.start.date, b.start.date))

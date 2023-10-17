@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import type { VEvent } from "ts-ics";
 
-import { Schedule, ScheduleDayView } from ".";
+import { Schedule, ScheduleDayView, ViewEvent } from ".";
 import { ScheduleMonthView } from "./month";
 import { ScheduleWeekView } from "./week";
 import { useSchedule } from "./hooks/useSchedule";
@@ -215,49 +215,49 @@ export const Disabled = ({ ...args }) => {
 };
 
 export const Days = ({ ...args }) => {
-  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
-    useSchedule();
+  const { calendarProps, viewEventProps } = useSchedule();
 
   return (
-    <ScheduleDayView
-      events={events}
-      calendarProps={calendarProps}
-      editEventProps={editEventProps}
-      scheduleViewProps={scheduleViewProps}
-      viewEventProps={viewEventProps}
-      {...args}
-    />
+    <>
+      <ScheduleDayView
+        events={events}
+        calendarProps={calendarProps}
+        viewEventProps={viewEventProps}
+        {...args}
+      />
+      <ViewEvent viewEventProps={viewEventProps} />
+    </>
   );
 };
 
 export const Weeks = ({ ...args }) => {
-  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
-    useSchedule();
+  const { calendarProps, viewEventProps } = useSchedule();
 
   return (
-    <ScheduleWeekView
-      events={events}
-      calendarProps={calendarProps}
-      editEventProps={editEventProps}
-      scheduleViewProps={scheduleViewProps}
-      viewEventProps={viewEventProps}
-      {...args}
-    />
+    <>
+      <ScheduleWeekView
+        events={events}
+        calendarProps={calendarProps}
+        viewEventProps={viewEventProps}
+        {...args}
+      />
+      <ViewEvent viewEventProps={viewEventProps} />
+    </>
   );
 };
 
 export const Months = ({ ...args }) => {
-  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
-    useSchedule();
+  const { calendarProps, viewEventProps } = useSchedule();
 
   return (
-    <ScheduleMonthView
-      events={events}
-      calendarProps={calendarProps}
-      editEventProps={editEventProps}
-      scheduleViewProps={scheduleViewProps}
-      viewEventProps={viewEventProps}
-      {...args}
-    />
+    <>
+      <ScheduleMonthView
+        events={events}
+        calendarProps={calendarProps}
+        viewEventProps={viewEventProps}
+        {...args}
+      />
+      <ViewEvent viewEventProps={viewEventProps} />
+    </>
   );
 };
