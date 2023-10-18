@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.7
+
+### Patch Changes
+
+- bfea31c: Schedule - Monatsansicht "+" Termin hinzufügen wird als isEdit erkannt #1058
+
 ## 2.2.6
 
 ### Patch Changes
