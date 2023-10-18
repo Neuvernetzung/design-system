@@ -2,7 +2,6 @@ import { DragOverlay, useDroppable } from "@dnd-kit/core";
 import cn from "classnames";
 import {
   addDays,
-  addHours,
   addMonths,
   compareAsc,
   endOfMonth,
@@ -17,7 +16,6 @@ import {
 import isFunction from "lodash/isFunction";
 import { useRef, useState } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
-import { v4 as uuid } from "uuid";
 
 import {
   bgColors,
@@ -301,7 +299,7 @@ export const ScheduleMonthDay = ({
                 {thisDaysEvents.length}
               </Button>
             )}
-            {!disableCreate && (
+            {!disableCreate && editEventProps && (
               <IconButton
                 ariaLabel="add_event"
                 size="xs"
@@ -310,14 +308,7 @@ export const ScheduleMonthDay = ({
                 icon={IconPlus}
                 onClick={() => {
                   if (disableCreate) return;
-                  editEventProps?.setEdit({
-                    uid: uuid(),
-                    start: { date: day },
-                    created: { date: new Date() },
-                    stamp: { date: new Date() },
-                    end: { date: addHours(day, 1) },
-                    summary: "",
-                  });
+                  editEventProps?.setCreate(day);
                 }}
               />
             )}
