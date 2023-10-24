@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.8
+
+### Patch Changes
+
+- 648782e: usePopover exposen #1066
+
 ## 2.2.7
 
 ### Patch Changes
