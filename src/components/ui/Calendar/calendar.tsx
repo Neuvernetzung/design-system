@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 import { ButtonVariant, ExtendedColor } from "../../../types";
+import type { ButtonProps } from "../Button";
+import { CalendarSelectPropsUnion } from "./utils/select";
+import { CalendarDateDayView } from "./views/day";
+import { CalendarDateMonthView } from "./views/month";
+import { CalendarDateYearView } from "./views/year";
 import { useCalendar, type UseCalendarProps } from "./hooks/useCalendar";
-import { CalendarDateDayView } from "./Dates/day";
-import { CalendarDateMonthView } from "./Dates/month";
-import { CalendarDateYearView } from "./Dates/year";
 
 export type CalendarProps = {
-  onChange?: (value: Date) => void;
   calendarProps?: UseCalendarProps;
   minDate?: Date;
   maxDate?: Date;
@@ -22,8 +23,22 @@ export type CalendarProps = {
   activeButtonVariant?: ButtonVariant;
   availableButtonVariant?: ButtonVariant;
   buttonClassName?: string;
+  colsClassName?: string;
   gridClassName?: string;
   cols?: number;
+  shortcuts?: CalendarShortcutProps[];
+} & Partial<CalendarSelectPropsUnion>;
+
+export type CalendarShortcutProps = ({
+  setViewing,
+  viewing,
+  select,
+}: {
+  setViewing: (date: Date) => void;
+  viewing: Date;
+  select: (date: Date) => void;
+}) => {
+  buttonProps?: ButtonProps;
 };
 
 export const calendarViews = ["dates", "months", "years"] as const;
@@ -31,7 +46,6 @@ export const calendarViews = ["dates", "months", "years"] as const;
 export type CalendarViews = (typeof calendarViews)[number];
 
 export const Calendar = ({
-  onChange,
   minDate,
   maxDate,
   calendarProps: _calendarProps,
@@ -46,8 +60,12 @@ export const Calendar = ({
   activeButtonVariant,
   availableButtonVariant,
   buttonClassName,
+  colsClassName,
   gridClassName,
   cols = 1,
+  shortcuts,
+  onChange,
+  selectType = "single",
 }: CalendarProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -72,8 +90,11 @@ export const Calendar = ({
           activeButtonVariant={activeButtonVariant}
           availableButtonVariant={availableButtonVariant}
           buttonClassName={buttonClassName}
+          colsClassName={colsClassName}
           gridClassName={gridClassName}
           cols={cols}
+          shortcuts={shortcuts}
+          selectType={selectType}
         />
       )}
       {currentView === "months" && (
@@ -94,7 +115,6 @@ export const Calendar = ({
           availableButtonVariant={availableButtonVariant}
           buttonClassName={buttonClassName}
           gridClassName={gridClassName}
-          cols={cols}
         />
       )}
       {currentView === "years" && (
@@ -114,7 +134,6 @@ export const Calendar = ({
           availableButtonVariant={availableButtonVariant}
           buttonClassName={buttonClassName}
           gridClassName={gridClassName}
-          cols={cols}
         />
       )}
     </>

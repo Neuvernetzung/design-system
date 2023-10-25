@@ -32,7 +32,7 @@ import { Indicator } from "../../Indicator";
 
 export type CalenderDateMonthViewProps = Omit<
   CalendarProps,
-  "calendarProps" | "onClick"
+  "calendarProps" | "onClick" | "selectType" | "onChange"
 > &
   Required<Pick<CalendarProps, "calendarProps">> & {
     onMonthClick?: (value: Date) => void;

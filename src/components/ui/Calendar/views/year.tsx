@@ -30,7 +30,7 @@ import { Indicator } from "../../Indicator";
 
 export type CalenderDateYearViewProps = Omit<
   CalendarProps,
-  "calendarProps" | "onClick"
+  "calendarProps" | "onClick" | "selectType" | "onChange"
 > &
   Required<Pick<CalendarProps, "calendarProps">> & {
     onYearClick?: (value: Date) => void;

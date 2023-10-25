@@ -22,8 +22,10 @@ import { gaps, transitionFast } from "../../../../styles";
 import { Button, ButtonGroup } from "../../Button";
 import { Indicator } from "../../Indicator";
 import { Text } from "../../Typography/Text";
-import type { CalendarProps } from "..";
+import type { CalendarProps } from "../calendar";
 import { CalendarHeader } from "../header";
+import { isBetweenRange, isRangeEnd, isRangeStart } from "../utils";
+import { calendarSelect } from "../utils/select";
 
 export type CalenderDateDayViewProps = Omit<CalendarProps, "calendarProps"> &
   Required<Pick<CalendarProps, "calendarProps">> & {
@@ -43,17 +45,19 @@ export const CalendarDateDayView = ({
   activeButtonVariant,
   availableButtonVariant,
   buttonClassName,
+  colsClassName,
   gridClassName,
+  shortcuts,
+  selectType = "single",
 }: CalenderDateDayViewProps) => {
   const {
     selected,
-    select,
     viewing,
     clearTime,
     viewToday,
+    setViewing,
     viewPreviousMonth,
     viewNextMonth,
-    toggle,
     calendar,
     isSelected,
   } = calendarProps;
@@ -147,25 +151,39 @@ export const CalendarDateDayView = ({
   return (
     <div ref={outsideDaysRef} className={cn("flex flex-col", gaps.sm)}>
       <ButtonGroup>
-        <Button
-          onKeyDown={focusFromOutsideDates}
-          variant="ghost"
-          onClick={() => {
-            select(clearTime(new Date()), true);
-            onChange?.(new Date());
-            viewToday();
-          }}
-          size="sm"
-          disabled={
-            (minDate && isBefore(new Date(), minDate)) ||
-            (maxDate && isAfter(new Date(), maxDate))
-          }
-        >
-          Heute
-        </Button>
+        {shortcuts
+          ? shortcuts.map((shortcut, i) => (
+              <Button
+                onKeyDown={focusFromOutsideDates}
+                key={`shortcut_${i}`}
+                {...shortcut({
+                  setViewing,
+                  viewing,
+                  select: (date) => {
+                    calendarSelect({
+                      day: date,
+                      selectType,
+                      calendarProps,
+                      onChange: onChange as any,
+                    });
+                  },
+                }).buttonProps}
+              />
+            ))
+          : !isThisMonth(viewing) && (
+              <Button
+                onKeyDown={focusFromOutsideDates}
+                onClick={viewToday}
+                size="sm"
+                variant="outline"
+                leftIcon={IconArrowBack}
+              >
+                Zurück zum aktuellen Monat
+              </Button>
+            )}
       </ButtonGroup>
 
-      <div className={cn("flex flex-row w-full", gaps.xl)}>
+      <div className={cn("flex flex-row w-full", gaps.xl, colsClassName)}>
         {new Array(calendar.length).fill(null).map((_, i) => {
           const viewingMonth = addMonths(viewing, i);
 
@@ -244,6 +262,16 @@ export const CalendarDateDayView = ({
                       className={cn(
                         "relative",
                         !isSameMonth(day, viewingMonth) && "opacity-50",
+                        selectType === "range" &&
+                          cn([
+                            isBetweenRange(day, selected, isSelected) &&
+                              "rounded-none bg-opacity-70",
+                            isRangeStart(day, selected, isSelected) &&
+                              "rounded-r-none",
+                            isRangeEnd(day, selected, isSelected) &&
+                              "rounded-l-none",
+                          ]),
+
                         transitionFast,
                         buttonClassName
                       )}
@@ -253,8 +281,12 @@ export const CalendarDateDayView = ({
                       data-today={isToday(day)}
                       key={`${day}`}
                       onClick={() => {
-                        toggle(day, true);
-                        onChange?.(day);
+                        calendarSelect({
+                          day,
+                          selectType,
+                          calendarProps,
+                          onChange: onChange as any,
+                        });
                       }}
                       disabled={
                         (minDate && isBefore(day, clearTime(minDate))) ||
@@ -277,19 +309,6 @@ export const CalendarDateDayView = ({
           );
         })}
       </div>
-      <ButtonGroup>
-        {!isThisMonth(viewing) && (
-          <Button
-            onKeyDown={focusFromOutsideDates}
-            onClick={viewToday}
-            size="sm"
-            variant="outline"
-            leftIcon={IconArrowBack}
-          >
-            Zurück zum aktuellen Monat
-          </Button>
-        )}
-      </ButtonGroup>
     </div>
   );
 };

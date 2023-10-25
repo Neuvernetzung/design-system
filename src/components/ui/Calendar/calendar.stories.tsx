@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/react";
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Calendar,
@@ -7,7 +7,14 @@ import {
   CalendarDateMonthView,
   CalendarDateYearView,
 } from ".";
-import { addDays, isSameDay, isSameMonth, isSameYear, subDays } from "date-fns";
+import {
+  addDays,
+  addMonths,
+  isSameDay,
+  isSameMonth,
+  isSameYear,
+  subDays,
+} from "date-fns";
 import { useCalendar } from "./hooks/useCalendar";
 
 export default {
@@ -71,4 +78,66 @@ export const Years = ({ ...args }) => {
 export const Multiple = ({ ...args }) => {
   const calendarProps = useCalendar({ cols: 3 });
   return <Calendar calendarProps={calendarProps} {...args} />;
+};
+
+export const CustomShortcuts = ({ ...args }) => {
+  const calendarProps = useCalendar({ cols: 3 });
+  return (
+    <Calendar
+      shortcuts={[
+        ({ setViewing, viewing }) => ({
+          buttonProps: {
+            onClick: () => setViewing(addMonths(viewing, 1)),
+            children: "Nächster Monat",
+          },
+        }),
+      ]}
+      calendarProps={calendarProps}
+      {...args}
+    />
+  );
+};
+
+export const MultipleSelect = ({ ...args }) => {
+  const formatter = new Intl.DateTimeFormat(undefined, { dateStyle: "short" });
+  const calendarProps = useCalendar({ cols: 3 });
+  const [values, setValues] = useState<Date[]>([]);
+
+  return (
+    <>
+      <div className="flex flex-row gap-4">
+        {values.map((v, i) => (
+          <div key={i}>{formatter.format(v)}</div>
+        ))}
+      </div>
+      <Calendar
+        selectType="multiple"
+        onChange={(values) => setValues(values)}
+        calendarProps={calendarProps}
+        {...args}
+      />
+    </>
+  );
+};
+
+export const RangeSelect = ({ ...args }) => {
+  const formatter = new Intl.DateTimeFormat(undefined, { dateStyle: "short" });
+  const calendarProps = useCalendar({ cols: 3 });
+  const [values, setValues] = useState<Date[]>([]);
+
+  return (
+    <>
+      <div className="flex flex-row gap-4">
+        {values.map((v, i) => (
+          <div key={i}>{formatter.format(v)}</div>
+        ))}
+      </div>
+      <Calendar
+        selectType="range"
+        onChange={(values) => setValues(values)}
+        calendarProps={calendarProps}
+        {...args}
+      />
+    </>
+  );
 };
