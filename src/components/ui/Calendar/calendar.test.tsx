@@ -1,4 +1,4 @@
-import { render } from "../../../../../test-utils";
+import { render } from "../../../../test-utils";
 import { axe } from "jest-axe";
 
 import {
@@ -7,7 +7,7 @@ import {
   CalendarDateMonthView,
   CalendarDateYearView,
 } from ".";
-import { type UseCalendarProps, useCalendar } from "../hooks";
+import { type UseCalendarProps, useCalendar } from "./hooks";
 import type { ReactNode } from "react";
 
 type CalendarPropsWrapperProps = {

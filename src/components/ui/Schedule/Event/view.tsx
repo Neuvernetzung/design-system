@@ -21,13 +21,13 @@ import {
   gaps,
   paddingsEvenly,
   roundings,
-} from "../../../../../styles";
-import { Button, IconButton } from "../../../Button";
-import { Icon } from "../../../Icon";
-import { Modal } from "../../../Modal";
-import { Prose } from "../../../Prose";
-import { Tag } from "../../../Tag";
-import { Text } from "../../../Typography";
+} from "../../../../styles";
+import { Button, IconButton } from "../../Button";
+import { Icon } from "../../Icon";
+import { Modal } from "../../Modal";
+import { Prose } from "../../Prose";
+import { Tag } from "../../Tag";
+import { Text } from "../../Typography";
 import type { ScheduleProps } from "..";
 
 export type UseViewEventProps = {

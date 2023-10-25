@@ -1,7 +1,7 @@
 import { axe } from "jest-axe";
 import type { ReactNode } from "react";
 
-import { render } from "../../../../../test-utils";
+import { render } from "../../../../test-utils";
 import {
   Schedule,
   ScheduleDayView,

@@ -7,10 +7,10 @@ import {
 import cn from "classnames";
 import type { MouseEventHandler } from "react";
 
-import { gaps } from "../../../../styles";
-import { Button, IconButton } from "../../Button";
-import { Tooltip } from "../../Tooltip";
-import { Text } from "../../Typography";
+import { gaps } from "../../../styles";
+import { Button, IconButton } from "../Button";
+import { Tooltip } from "../Tooltip";
+import { Text } from "../Typography";
 import type { ScheduleProps } from ".";
 
 export type ScheduleHeaderProps = Omit<

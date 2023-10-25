@@ -2,10 +2,10 @@ import { IconX } from "@tabler/icons-react";
 import cn from "classnames";
 import type { VEvent } from "ts-ics";
 
-import { gaps, gapsSmall } from "../../../../../styles";
-import { IconButton } from "../../../Button";
-import { Modal } from "../../../Modal";
-import { Text } from "../../../Typography";
+import { gaps, gapsSmall } from "../../../../styles";
+import { IconButton } from "../../Button";
+import { Modal } from "../../Modal";
+import { Text } from "../../Typography";
 import { titleFormatter } from "../utils/formatTitle";
 import { EventSmall } from "./event";
 import { type UseViewEventProps } from "./view";

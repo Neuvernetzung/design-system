@@ -25,6 +25,7 @@ export * from "./Progress";
 export * from "./Prose";
 export * from "./Radio";
 export * from "./RichText";
+export * from "./Schedule";
 export * from "./Select";
 export * from "./Sortable";
 export * from "./Switch";

@@ -1,3 +1,3 @@
 export * from "./Dates";
-export * from "./Schedule";
+export * from "./calendar";
 export * from "./hooks";

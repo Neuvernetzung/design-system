@@ -32,21 +32,21 @@ import {
   paddingsEvenly,
   paddingsX,
   roundings,
-} from "../../../../../styles";
-import type { Size } from "../../../../../types";
-import { Button, IconButton } from "../../../Button";
-import { Datetimepicker } from "../../../Datepicker";
-import { FormElement } from "../../../Form";
-import { Icon } from "../../../Icon";
-import { Input } from "../../../Input";
-import { Modal } from "../../../Modal";
-import { RichText } from "../../../RichText";
-import { Switch } from "../../../Switch";
-import { TabGroup, type TabItemProps, TabList, TabPanels } from "../../../Tabs";
-import { Text } from "../../../Typography";
+} from "../../../../styles";
+import type { Size } from "../../../../types";
+import { Button, IconButton } from "../../Button";
+import { Datetimepicker } from "../../Datepicker";
+import { FormElement } from "../../Form";
+import { Icon } from "../../Icon";
+import { Input } from "../../Input";
+import { Modal } from "../../Modal";
+import { RichText } from "../../RichText";
+import { Switch } from "../../Switch";
+import { TabGroup, type TabItemProps, TabList, TabPanels } from "../../Tabs";
+import { Text } from "../../Typography";
 import type { ScheduleProps } from "..";
-import { Select } from "../../../Select";
-import InputWithTags from "../../../Input/WithTags/inputWithTags";
+import { Select } from "../../Select";
+import InputWithTags from "../../Input/WithTags/inputWithTags";
 
 export type UseEditEventProps = {
   open: boolean;

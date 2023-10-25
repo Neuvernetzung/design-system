@@ -30,9 +30,9 @@ import {
   paddingsXSmall,
   roundings,
   scrollbar,
-} from "../../../../styles";
-import { Button, IconButton } from "../../Button";
-import { Text } from "../../Typography";
+} from "../../../styles";
+import { Button, IconButton } from "../Button";
+import { Text } from "../Typography";
 import type { ScheduleProps } from ".";
 import { DraggableEventSmall, DragOverlayEventSmall } from "./Event";
 import type { UseEditEventProps } from "./Event/edit";

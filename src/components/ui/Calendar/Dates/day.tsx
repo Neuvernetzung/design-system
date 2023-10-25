@@ -2,16 +2,16 @@ import { IconArrowBack } from "@tabler/icons-react";
 import cn from "classnames";
 import {
   addDays,
-  endOfMonth,
+  addMonths,
   getDate,
   isAfter,
   isBefore,
+  isSameMonth,
   isThisMonth,
   isToday,
   isValid,
   lastDayOfMonth,
   setDate,
-  startOfMonth,
   subDays,
 } from "date-fns";
 import type { KeyboardEvent, WheelEvent } from "react";
@@ -20,10 +20,10 @@ import { useEffect, useRef, useState } from "react";
 import { ARROW_KEYS } from "../../../../constants";
 import { gaps, transitionFast } from "../../../../styles";
 import { Button, ButtonGroup } from "../../Button";
-import { Text } from "../../Typography/Text";
-import type { CalendarProps } from ".";
-import { CalendarHeader } from "./header";
 import { Indicator } from "../../Indicator";
+import { Text } from "../../Typography/Text";
+import type { CalendarProps } from "..";
+import { CalendarHeader } from "../header";
 
 export type CalenderDateDayViewProps = Omit<CalendarProps, "calendarProps"> &
   Required<Pick<CalendarProps, "calendarProps">> & {
@@ -46,7 +46,6 @@ export const CalendarDateDayView = ({
   gridClassName,
 }: CalenderDateDayViewProps) => {
   const {
-    inRange,
     selected,
     select,
     viewing,
@@ -64,7 +63,7 @@ export const CalendarDateDayView = ({
   const daysRef = useRef<HTMLDivElement>(null);
   const outsideDaysRef = useRef<HTMLDivElement>(null);
 
-  const focusFromOutsideDates = (e: KeyboardEvent) => {
+  const focusFromOutsideDates = (e: KeyboardEvent, viewingMonth?: Date) => {
     if (!ARROW_KEYS.includes(e.key)) return;
 
     e.preventDefault();
@@ -77,50 +76,46 @@ export const CalendarDateDayView = ({
 
     if (
       selected.length > 0 &&
-      inRange(selected[0], startOfMonth(viewing), endOfMonth(viewing))
+      isSameMonth(selected[0], viewingMonth || viewing)
     )
       return setPreselectedDate(selected[0]);
 
-    if (inRange(new Date(), startOfMonth(viewing), endOfMonth(viewing)))
+    if (isSameMonth(new Date(), viewingMonth || viewing))
       return setPreselectedDate(new Date());
 
     if (e.key === "ArrowRight" || e.key === "ArrowDown")
-      return setPreselectedDate(setDate(viewing, 1));
+      return setPreselectedDate(setDate(viewingMonth || viewing, 1));
 
     if (e.key === "ArrowLeft" || e.key === "ArrowUp")
-      return setPreselectedDate(lastDayOfMonth(viewing));
+      return setPreselectedDate(lastDayOfMonth(viewingMonth || viewing));
   };
 
-  const arrowKeyNavigationDates = (e: KeyboardEvent) => {
+  const arrowKeyNavigationDates = (e: KeyboardEvent, viewingMonth: Date) => {
     if (!ARROW_KEYS.includes(e.key)) return;
 
     e.preventDefault();
 
     if (e.key === "ArrowLeft") {
       const toSelect = subDays(preselectedDate, 1);
-      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
-        viewPreviousMonth();
+      if (!isSameMonth(toSelect, viewingMonth)) viewPreviousMonth();
       setPreselectedDate(toSelect);
     }
 
     if (e.key === "ArrowRight") {
       const toSelect = addDays(preselectedDate, 1);
-      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
-        viewNextMonth();
+      if (!isSameMonth(toSelect, viewingMonth)) viewNextMonth();
       setPreselectedDate(toSelect);
     }
 
     if (e.key === "ArrowUp") {
       const toSelect = subDays(preselectedDate, 7);
-      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
-        viewPreviousMonth();
+      if (!isSameMonth(toSelect, viewingMonth)) viewPreviousMonth();
       setPreselectedDate(toSelect);
     }
 
     if (e.key === "ArrowDown") {
       const toSelect = addDays(preselectedDate, 7);
-      if (!inRange(toSelect, startOfMonth(viewing), endOfMonth(viewing)))
-        viewNextMonth();
+      if (!isSameMonth(toSelect, viewingMonth)) viewNextMonth();
       setPreselectedDate(toSelect);
     }
   };
@@ -169,119 +164,118 @@ export const CalendarDateDayView = ({
           Heute
         </Button>
       </ButtonGroup>
-      <CalendarHeader
-        leftArrowFunction={viewPreviousMonth}
-        leftAriaLabel="Previous Month"
-        leftArrowDisabled={minDate && isBefore(setDate(viewing, 1), minDate)}
-        rightArrowFunction={viewNextMonth}
-        rightAriaLabel="Next Month"
-        rightArrowDisabled={
-          maxDate && isAfter(lastDayOfMonth(viewing), maxDate)
-        }
-        titleFunction={headerTitleFunction}
-        title={titleFormatter.format(viewing)}
-        onKeyDown={focusFromOutsideDates}
-      />
 
-      <div>
-        <div className="grid grid-cols-7 text-center">
-          {calendar[0][0].map((day) => (
-            <Text size="xs" key={`${day}`}>
-              {weekdayFormatter.format(day)}
-            </Text>
-          ))}
-        </div>
+      <div className={cn("flex flex-row w-full", gaps.xl)}>
+        {new Array(calendar.length).fill(null).map((_, i) => {
+          const viewingMonth = addMonths(viewing, i);
 
-        <div
-          ref={daysRef}
-          className={cn("grid grid-cols-7", gridClassName)}
-          onWheel={(e: WheelEvent) => {
-            if (e.deltaY > 0) {
-              viewNextMonth();
-            } else {
-              viewPreviousMonth();
-            }
-          }}
-        >
-          {calendar[0].map((week) =>
-            week.map((day) => (
-              <Button
-                size="sm"
-                onKeyDown={arrowKeyNavigationDates}
-                tabIndex={
-                  isSelected(day)
-                    ? 0
-                    : (selected.length === 0 ||
-                        !inRange(
-                          selected[0],
-                          startOfMonth(viewing),
-                          endOfMonth(viewing)
-                        )) &&
-                      isToday(day)
-                    ? 0
-                    : !inRange(
-                        selected[0],
-                        startOfMonth(viewing),
-                        endOfMonth(viewing)
-                      ) &&
-                      !inRange(
-                        new Date(),
-                        startOfMonth(viewing),
-                        endOfMonth(viewing)
-                      ) &&
-                      inRange(
-                        day,
-                        startOfMonth(viewing),
-                        endOfMonth(viewing)
-                      ) &&
-                      getDate(day) === 1
-                    ? 0
-                    : -1
+          return (
+            <div
+              className={cn("w-full flex flex-col", gaps.xs)}
+              key={`calendar_month_${i}`}
+            >
+              <CalendarHeader
+                leftArrowFunction={i === 0 ? viewPreviousMonth : undefined}
+                leftAriaLabel="Previous Month"
+                leftArrowDisabled={
+                  minDate && isBefore(setDate(viewing, 1), minDate)
                 }
-                variant={
-                  isSelected(day)
-                    ? activeButtonVariant || "filled"
-                    : availableButtonVariant || "ghost"
+                rightArrowFunction={
+                  i === calendar.length - 1 ? viewNextMonth : undefined
                 }
-                color={
-                  isSelected(day)
-                    ? activeButtonColor || "primary"
-                    : availableButtonColor || "accent"
+                rightAriaLabel="Next Month"
+                rightArrowDisabled={
+                  maxDate && isAfter(lastDayOfMonth(viewing), maxDate)
                 }
-                className={cn(
-                  "relative",
-                  !inRange(day, startOfMonth(viewing), endOfMonth(viewing)) &&
-                    "opacity-50",
-                  transitionFast,
-                  buttonClassName
-                )}
-                data-id={dataIdFormatter.format(day)}
-                data-in-range={inRange(
-                  day,
-                  startOfMonth(viewing),
-                  endOfMonth(viewing)
-                )}
-                data-selected={isSelected(day)}
-                data-today={isToday(day)}
-                key={`${day}`}
-                onClick={() => {
-                  toggle(day, true);
-                  onChange?.(day);
+                titleFunction={headerTitleFunction}
+                title={titleFormatter.format(viewingMonth)}
+                onKeyDown={(e) => focusFromOutsideDates(e, viewingMonth)}
+              />
+              <div className="grid grid-cols-7 text-center">
+                {calendar[i][0].map((day) => (
+                  <Text size="xs" key={`${day}`}>
+                    {weekdayFormatter.format(day)}
+                  </Text>
+                ))}
+              </div>
+
+              <div
+                ref={daysRef}
+                className={cn("grid grid-cols-7", gridClassName)}
+                onWheel={(e: WheelEvent) => {
+                  if (e.deltaY > 0) {
+                    viewNextMonth();
+                  } else {
+                    viewPreviousMonth();
+                  }
                 }}
-                disabled={
-                  (minDate && isBefore(day, clearTime(minDate))) ||
-                  (maxDate && isAfter(day, clearTime(maxDate))) ||
-                  dayIsDisabled?.(day)
-                }
               >
-                {dayFormatter.format(day)}
-                {dayHasIndicator?.(day) && (
-                  <Indicator size="sm" wrapperClassName="!absolute bottom-1" />
+                {calendar[i].map((week) =>
+                  week.map((day) => (
+                    <Button
+                      size="sm"
+                      onKeyDown={(e: KeyboardEvent) =>
+                        arrowKeyNavigationDates(e, viewingMonth)
+                      }
+                      tabIndex={
+                        isSelected(day)
+                          ? 0
+                          : (selected.length === 0 ||
+                              !isSameMonth(selected[0], viewingMonth)) &&
+                            isToday(day)
+                          ? 0
+                          : !isSameMonth(selected[0], viewingMonth) &&
+                            !isSameMonth(new Date(), viewingMonth) &&
+                            isSameMonth(day, viewingMonth) &&
+                            getDate(day) === 1
+                          ? 0
+                          : -1
+                      }
+                      variant={
+                        isSelected(day)
+                          ? activeButtonVariant || "filled"
+                          : availableButtonVariant || "ghost"
+                      }
+                      color={
+                        isSelected(day)
+                          ? activeButtonColor || "primary"
+                          : availableButtonColor || "accent"
+                      }
+                      className={cn(
+                        "relative",
+                        !isSameMonth(day, viewingMonth) && "opacity-50",
+                        transitionFast,
+                        buttonClassName
+                      )}
+                      data-id={dataIdFormatter.format(day)}
+                      data-in-range={isSameMonth(day, viewingMonth)}
+                      data-selected={isSelected(day)}
+                      data-today={isToday(day)}
+                      key={`${day}`}
+                      onClick={() => {
+                        toggle(day, true);
+                        onChange?.(day);
+                      }}
+                      disabled={
+                        (minDate && isBefore(day, clearTime(minDate))) ||
+                        (maxDate && isAfter(day, clearTime(maxDate))) ||
+                        dayIsDisabled?.(day)
+                      }
+                    >
+                      {dayFormatter.format(day)}
+                      {dayHasIndicator?.(day) && (
+                        <Indicator
+                          size="sm"
+                          wrapperClassName="!absolute bottom-1"
+                        />
+                      )}
+                    </Button>
+                  ))
                 )}
-              </Button>
-            ))
-          )}
-        </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <ButtonGroup>
         {!isThisMonth(viewing) && (

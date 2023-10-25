@@ -14,10 +14,10 @@ import {
   paddingsXSmall,
   paddingsYSmall,
   scrollbar,
-} from "../../../../styles";
-import { Color } from "../../../../types";
-import { Button } from "../../Button";
-import { Text } from "../../Typography";
+} from "../../../styles";
+import { Color } from "../../../types";
+import { Button } from "../Button";
+import { Text } from "../Typography";
 import type { ScheduleProps } from ".";
 import {
   calcDayRows,

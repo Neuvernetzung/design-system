@@ -9,7 +9,7 @@ import {
   extendedBgColors,
   extendedBorders,
   scrollbar,
-} from "../../../../styles";
+} from "../../../styles";
 import type { ScheduleDayViewProps } from ".";
 import { DayScheduleHead, ScheduleDay } from "./day";
 import { calcDayRows, ScheduleDayGrid } from "./DayGrid";

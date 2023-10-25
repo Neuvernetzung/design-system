@@ -10,11 +10,11 @@ import cn from "classnames";
 import { addDays, addHours, addMinutes } from "date-fns";
 import { getEventEnd, type VEvent } from "ts-ics";
 
-import { gapsSmall, shadows } from "../../../../../styles";
-import type { Color } from "../../../../../types";
-import { Button } from "../../../Button";
-import { Icon } from "../../../Icon";
-import { Text } from "../../../Typography";
+import { gapsSmall, shadows } from "../../../../styles";
+import type { Color } from "../../../../types";
+import { Button } from "../../Button";
+import { Icon } from "../../Icon";
+import { Text } from "../../Typography";
 import type { ScheduleDayProps } from "../day";
 import { dayGridDeltaToTime } from "../DayGrid/dragAndDrop";
 import type { ScheduleMonthViewProps } from "../month";

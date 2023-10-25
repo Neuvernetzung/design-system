@@ -8,7 +8,7 @@ import {
   CalendarDateYearView,
 } from ".";
 import { addDays, isSameDay, isSameMonth, isSameYear, subDays } from "date-fns";
-import { useCalendar } from "../hooks/useCalendar";
+import { useCalendar } from "./hooks/useCalendar";
 
 export default {
   title: "UI/Data Display/Calendar",
@@ -66,4 +66,9 @@ export const Years = ({ ...args }) => {
       {...args}
     />
   );
+};
+
+export const Multiple = ({ ...args }) => {
+  const calendarProps = useCalendar({ cols: 3 });
+  return <Calendar calendarProps={calendarProps} {...args} />;
 };

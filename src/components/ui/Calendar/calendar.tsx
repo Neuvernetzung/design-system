@@ -1,15 +1,10 @@
 import { useState } from "react";
 
-import { ButtonVariant, ExtendedColor } from "../../../../types";
-import { useCalendar, type UseCalendarProps } from "../hooks/useCalendar";
-import { CalendarDateDayView } from "./day";
-import { CalendarDateMonthView } from "./month";
-import { CalendarDateYearView } from "./year";
-
-export * from "./day";
-export * from "./header";
-export * from "./month";
-export * from "./year";
+import { ButtonVariant, ExtendedColor } from "../../../types";
+import { useCalendar, type UseCalendarProps } from "./hooks/useCalendar";
+import { CalendarDateDayView } from "./Dates/day";
+import { CalendarDateMonthView } from "./Dates/month";
+import { CalendarDateYearView } from "./Dates/year";
 
 export type CalendarProps = {
   onChange?: (value: Date) => void;
@@ -28,6 +23,7 @@ export type CalendarProps = {
   availableButtonVariant?: ButtonVariant;
   buttonClassName?: string;
   gridClassName?: string;
+  cols?: number;
 };
 
 export const calendarViews = ["dates", "months", "years"] as const;
@@ -51,6 +47,7 @@ export const Calendar = ({
   availableButtonVariant,
   buttonClassName,
   gridClassName,
+  cols = 1,
 }: CalendarProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -76,6 +73,7 @@ export const Calendar = ({
           availableButtonVariant={availableButtonVariant}
           buttonClassName={buttonClassName}
           gridClassName={gridClassName}
+          cols={cols}
         />
       )}
       {currentView === "months" && (
@@ -96,6 +94,7 @@ export const Calendar = ({
           availableButtonVariant={availableButtonVariant}
           buttonClassName={buttonClassName}
           gridClassName={gridClassName}
+          cols={cols}
         />
       )}
       {currentView === "years" && (
@@ -115,6 +114,7 @@ export const Calendar = ({
           availableButtonVariant={availableButtonVariant}
           buttonClassName={buttonClassName}
           gridClassName={gridClassName}
+          cols={cols}
         />
       )}
     </>

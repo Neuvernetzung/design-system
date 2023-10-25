@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 import { useMemo, useState } from "react";
 
-import { useCalendar, UseCalendarProps } from "../../hooks";
+import { useCalendar, UseCalendarProps } from "../../Calendar/hooks";
 import { useEditEvent } from "../Event/edit";
 import { useViewEvent } from "../Event/view";
 
