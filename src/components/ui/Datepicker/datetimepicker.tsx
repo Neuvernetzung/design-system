@@ -28,7 +28,7 @@ import { smallerSize } from "../../../utils";
 import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { IconButton } from "../Button";
-import { Calendar } from "../Calendar/Dates";
+import { Calendar } from "../Calendar";
 import { useCalendar } from "../Calendar/hooks/useCalendar";
 import { FormElement } from "../Form";
 import { Popover } from "../Popover";
@@ -188,6 +188,7 @@ export const Datetimepicker = <
                     calendarProps={calendarProps}
                     minDate={minDate}
                     maxDate={maxDate}
+                    selectType="single"
                     onChange={(e) => {
                       if (!value) {
                         onChange(e);

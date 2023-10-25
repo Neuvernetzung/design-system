@@ -1,8 +1,8 @@
 import cn from "classnames";
 import { setHours, setMinutes } from "date-fns";
 
-import { bgColors, divides, paddingsXSmall } from "../../../../../styles";
-import { Text } from "../../../Typography";
+import { bgColors, divides, paddingsXSmall } from "../../../../styles";
+import { Text } from "../../Typography";
 import type { ScheduleProps } from "..";
 
 export type ScheduleDayGridProps = Pick<

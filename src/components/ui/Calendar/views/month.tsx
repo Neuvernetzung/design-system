@@ -26,13 +26,13 @@ import {
 import { ARROW_KEYS } from "../../../../constants";
 import { gaps } from "../../../../styles";
 import { Button } from "../../Button";
-import type { CalendarProps } from ".";
-import { CalendarHeader } from "./header";
+import type { CalendarProps } from "..";
+import { CalendarHeader } from "../header";
 import { Indicator } from "../../Indicator";
 
 export type CalenderDateMonthViewProps = Omit<
   CalendarProps,
-  "calendarProps" | "onClick"
+  "calendarProps" | "onClick" | "selectType" | "onChange"
 > &
   Required<Pick<CalendarProps, "calendarProps">> & {
     onMonthClick?: (value: Date) => void;

@@ -3,10 +3,10 @@ import { isSameMonth, isSameYear } from "date-fns";
 import type { ReactElement } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
 
-import { divides, gaps, paddingsEvenly } from "../../../../styles";
-import type { Color } from "../../../../types";
-import { Calendar } from "../Dates";
-import type { UseCalendarProps } from "../hooks/useCalendar";
+import { divides, gaps, paddingsEvenly } from "../../../styles";
+import type { Color } from "../../../types";
+import { Calendar } from "../Calendar";
+import type { UseCalendarProps } from "../Calendar/hooks/useCalendar";
 import { ScheduleDayView } from "./day";
 import {
   type EditEventProps,

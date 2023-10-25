@@ -1,14 +1,16 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { Button, IconButton } from "../../Button";
 import cn from "classnames";
 import type { KeyboardEventHandler, MouseEventHandler } from "react";
-import { gaps, paddingsX } from "../../../../styles";
+
+import { gaps, paddingsX } from "../../../styles";
+import { Button, IconButton } from "../Button";
+import isFunction from "lodash/isFunction";
 
 type CalenderHeaderProps = {
-  leftArrowFunction: MouseEventHandler;
+  leftArrowFunction?: MouseEventHandler;
   leftAriaLabel: string;
   leftArrowDisabled?: boolean;
-  rightArrowFunction: MouseEventHandler;
+  rightArrowFunction?: MouseEventHandler;
   rightAriaLabel: string;
   rightArrowDisabled?: boolean;
   titleFunction?: MouseEventHandler;
@@ -34,15 +36,17 @@ export const CalendarHeader = ({
       paddingsX.md
     )}
   >
-    <IconButton
-      variant="ghost"
-      ariaLabel={leftAriaLabel}
-      icon={IconChevronLeft}
-      onClick={leftArrowFunction}
-      size="sm"
-      disabled={leftArrowDisabled}
-      onKeyDown={onKeyDown}
-    />
+    {isFunction(leftArrowFunction) && (
+      <IconButton
+        variant="ghost"
+        ariaLabel={leftAriaLabel}
+        icon={IconChevronLeft}
+        onClick={leftArrowFunction}
+        size="sm"
+        disabled={leftArrowDisabled}
+        onKeyDown={onKeyDown}
+      />
+    )}
 
     <Button
       variant="ghost"
@@ -53,15 +57,16 @@ export const CalendarHeader = ({
     >
       {title}
     </Button>
-
-    <IconButton
-      variant="ghost"
-      ariaLabel={rightAriaLabel}
-      icon={IconChevronRight}
-      onClick={rightArrowFunction}
-      size="sm"
-      disabled={rightArrowDisabled}
-      onKeyDown={onKeyDown}
-    />
+    {isFunction(rightArrowFunction) && (
+      <IconButton
+        variant="ghost"
+        ariaLabel={rightAriaLabel}
+        icon={IconChevronRight}
+        onClick={rightArrowFunction}
+        size="sm"
+        disabled={rightArrowDisabled}
+        onKeyDown={onKeyDown}
+      />
+    )}
   </div>
 );
