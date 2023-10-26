@@ -9,7 +9,11 @@ import {
 } from "date-fns";
 import { useMemo, useState } from "react";
 
-import { useCalendar, UseCalendarProps } from "../../Calendar/hooks";
+import {
+  useCalendar,
+  type UseCalendarOwnProps,
+  type UseCalendarProps,
+} from "../../Calendar/hooks";
 import { useEditEvent } from "../Event/edit";
 import { useViewEvent } from "../Event/view";
 
@@ -62,8 +66,8 @@ export const useDateRange = (
     return { start: undefined, end: undefined };
   }, [viewing, currentView]);
 
-export const useSchedule = () => {
-  const calendarProps = useCalendar();
+export const useSchedule = (props?: UseCalendarOwnProps) => {
+  const calendarProps = useCalendar(props);
   const viewEventProps = useViewEvent();
   const editEventProps = useEditEvent();
 
