@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.10
+
+### Patch Changes
+
+- a2058e1: Popover Anchor hinzufügen #1074
+- 1572b96: Borders white und black auf korrekte Farben setzen #1073
+
 ## 2.2.9
 
 ### Patch Changes
