@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.11
+
+### Patch Changes
+
+- 3eaf7f8: DefaultValue und initialView zu useCalendar hinzufügen #1080
+- 11072a7: Cols Prop von Kalender entfernen #1079
+
 ## 2.2.10
 
 ### Patch Changes
