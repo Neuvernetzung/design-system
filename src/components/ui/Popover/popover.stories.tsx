@@ -153,3 +153,37 @@ export const LargeContent = ({ ...args }) => (
     />
   </Container>
 );
+
+export const PositionAgainstElement = ({ ...args }) => (
+  <Container>
+    <div className="relative w-64 mx-auto rounded-lg p-4 bg-accent-100 mt-20">
+      <Popover
+        content={
+          <div>
+            <Text>Dies ist ein Popover</Text>
+          </div>
+        }
+        positionAgainstRelativeParent
+        align="center"
+        side="bottom"
+        buttonProps={{ children: "Panel Classname" }}
+        {...args}
+      />
+    </div>
+    <div className="relative w-64 mx-auto rounded-lg p-4 bg-accent-100 mt-20">
+      <Popover
+        content={
+          <div>
+            <Text>Fullwidth</Text>
+          </div>
+        }
+        positionAgainstRelativeParent
+        align="center"
+        side="bottom"
+        buttonProps={{ children: "Full width" }}
+        fullWidth
+        {...args}
+      />
+    </div>
+  </Container>
+);
