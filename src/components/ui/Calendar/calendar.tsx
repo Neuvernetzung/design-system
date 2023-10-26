@@ -25,7 +25,6 @@ export type CalendarProps = {
   buttonClassName?: string;
   colsClassName?: string;
   gridClassName?: string;
-  cols?: number;
   shortcuts?: CalendarShortcutProps[];
 } & Partial<CalendarSelectPropsUnion>;
 
@@ -62,7 +61,6 @@ export const Calendar = ({
   buttonClassName,
   colsClassName,
   gridClassName,
-  cols = 1,
   shortcuts,
   onChange,
   selectType = "single",
@@ -92,7 +90,6 @@ export const Calendar = ({
           buttonClassName={buttonClassName}
           colsClassName={colsClassName}
           gridClassName={gridClassName}
-          cols={cols}
           shortcuts={shortcuts}
           selectType={selectType}
         />
