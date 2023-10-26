@@ -13,6 +13,7 @@ import {
 
 type PopoverContainerStyleProps = {
   size: Size;
+  fullWidth?: boolean;
 };
 
 const styles = {
@@ -21,6 +22,7 @@ const styles = {
 
 export const getPopoverContainerStyles = ({
   size,
+  fullWidth,
 }: PopoverContainerStyleProps) =>
   cn(
     styles.base,
@@ -31,5 +33,5 @@ export const getPopoverContainerStyles = ({
     shadows.lg,
     roundings.lg,
     paddingsLargeEvenly.lg,
-    popoverMaxSizes[size]
+    fullWidth ? "w-[var(--radix-popover-trigger-width)]" : popoverMaxSizes[size]
   );

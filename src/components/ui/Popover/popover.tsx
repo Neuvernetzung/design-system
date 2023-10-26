@@ -5,6 +5,7 @@ import {
   Portal as PopoverPortal,
   Root as PopoverRoot,
   Trigger as PopoverTrigger,
+  PopoverAnchor,
 } from "@radix-ui/react-popover";
 import cn from "classnames";
 import {
@@ -48,6 +49,8 @@ export type PopoverProps = {
   side?: PopperContentProps["side"];
   disabled?: boolean;
   panelClassName?: string;
+  positionAgainstRelativeParent?: boolean;
+  fullWidth?: boolean;
 } & PopoverTriggerProps;
 
 export type PopoverTriggerProps =
@@ -66,10 +69,17 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       side = "bottom",
       disabled,
       panelClassName,
+      positionAgainstRelativeParent,
+      fullWidth,
     },
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
     <PopoverRoot open={controller?.open} onOpenChange={controller?.setOpen}>
+      {positionAgainstRelativeParent && (
+        <PopoverAnchor asChild>
+          <div className="absolute w-full h-full inset-0 pointer-events-none" />
+        </PopoverAnchor>
+      )}
       <PopoverTrigger
         aria-disabled={disabled}
         disabled={disabled}
@@ -87,7 +97,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
         >
           <div
             className={cn(
-              getPopoverContainerStyles({ size }),
+              getPopoverContainerStyles({ size, fullWidth }),
               focusStyle,
               popoverAnimation,
               panelClassName
