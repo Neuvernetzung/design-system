@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.12
+
+### Patch Changes
+
+- 1235d45: Popover Komponentenprops nach außen exposen #1085
+
 ## 2.2.11
 
 ### Patch Changes
