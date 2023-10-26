@@ -1,11 +1,19 @@
+import type {
+  PopoverAnchorProps,
+  PopoverCloseProps,
+  PopoverContentProps,
+  PopoverPortalProps,
+  PopoverProps as PopoverRootProps,
+  PopoverTriggerProps,
+} from "@radix-ui/react-popover";
 import {
   Close as PopoverClose,
   Content as PopoverContent,
+  PopoverAnchor,
   PopperContentProps,
   Portal as PopoverPortal,
   Root as PopoverRoot,
   Trigger as PopoverTrigger,
-  PopoverAnchor,
 } from "@radix-ui/react-popover";
 import cn from "classnames";
 import {
@@ -17,13 +25,13 @@ import {
 } from "react";
 
 import { focus as focusStyle } from "../../../styles";
+import { popoverAnimation } from "../../../styles/animation";
 import { getPopoverContainerStyles } from "../../../styles/groups";
 import { offsetSizes } from "../../../styles/popper/offset";
 import type { Size } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import type { ButtonProps } from "../Button";
 import { Button } from "../Button";
-import { popoverAnimation } from "../../../styles/animation";
 
 export type UsePopoverProps = { defaultValue?: boolean };
 
@@ -51,9 +59,14 @@ export type PopoverProps = {
   panelClassName?: string;
   positionAgainstRelativeParent?: boolean;
   fullWidth?: boolean;
-} & PopoverTriggerProps;
+  popoverRootProps?: PopoverRootProps;
+  popoverAnchorProps?: PopoverAnchorProps;
+  popoverTriggerProps?: PopoverTriggerProps;
+  popoverContentProps?: PopoverContentProps;
+  popoverPortalProps?: PopoverPortalProps;
+} & PopoverOwnTriggerProps;
 
-export type PopoverTriggerProps =
+export type PopoverOwnTriggerProps =
   | { buttonProps?: ButtonProps; buttonComponent?: never }
   | { buttonProps?: never; buttonComponent: ReactNode };
 
@@ -71,12 +84,21 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       panelClassName,
       positionAgainstRelativeParent,
       fullWidth,
+      popoverRootProps,
+      popoverAnchorProps,
+      popoverTriggerProps,
+      popoverContentProps,
+      popoverPortalProps,
     },
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
-    <PopoverRoot open={controller?.open} onOpenChange={controller?.setOpen}>
+    <PopoverRoot
+      open={controller?.open}
+      onOpenChange={controller?.setOpen}
+      {...popoverRootProps}
+    >
       {positionAgainstRelativeParent && (
-        <PopoverAnchor asChild>
+        <PopoverAnchor asChild {...popoverAnchorProps}>
           <div className="absolute w-full h-full inset-0 pointer-events-none" />
         </PopoverAnchor>
       )}
@@ -85,15 +107,17 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
         disabled={disabled}
         ref={ref}
         asChild
+        {...popoverTriggerProps}
       >
         {buttonComponent || <Button {...buttonProps} />}
       </PopoverTrigger>
-      <PopoverPortal>
+      <PopoverPortal {...popoverPortalProps}>
         <PopoverContent
           align={align}
           side={side}
           sideOffset={offsetSizes[size]}
           asChild
+          {...popoverContentProps}
         >
           <div
             className={cn(
@@ -117,7 +141,7 @@ Popover.displayName = "Popover";
 
 export type PopoverButtonProps = {
   children: ReactElement;
-};
+} & PopoverCloseProps;
 
 export const PopoverButton = forwardRef(
   (
