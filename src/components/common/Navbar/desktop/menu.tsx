@@ -83,10 +83,9 @@ export const NavigationMenu = ({
                       size={minSize(size, "sm")}
                       variant="ghost"
                       disabled={disabled}
+                      className={cn(_textColor || textColor)}
                     >
-                      <Text className={cn(_textColor || textColor)}>
-                        {label}
-                      </Text>
+                      <Text color="inherit">{label}</Text>
                       {tag && (
                         <Tag
                           variant="solid"
