@@ -6,11 +6,11 @@ import { createElement, ReactNode } from "react";
 import { prose } from "../../../styles";
 import type { ProseComponents, ProseComponentTag } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
-import { BlockQuote } from "../Typography/BlockQuote";
 import { HorizontalRule } from "../HorizontalRule";
 import { Image } from "../Image";
 import { ListItem, OrderedList, UnorderedList } from "../List";
 import { Anchor, Heading, Text } from "../Typography";
+import { BlockQuote } from "../Typography/BlockQuote";
 
 export type ProseProps = {
   content: string | undefined;

@@ -30,6 +30,7 @@ import {
   requiredInputRule,
   validationInputResult,
 } from "../../../utils/internal/inputRule";
+import { snapToStep, valueOf } from "../../../utils/internal/number/decimal";
 import {
   FormElement,
   MaxLengthRule,
@@ -107,8 +108,8 @@ export const InputInner = <
         validate: (value) => {
           if (type === "number" && step)
             return validationInputResult(
-              (String(value).split(".")[1]?.length || 0) <=
-                (String(step).split(".")[1]?.length || 0)
+              valueOf(value) === Number(snapToStep(value, step)),
+              `Die nötige Abstufung ist ${step}`
             );
           return true;
         },
