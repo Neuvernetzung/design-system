@@ -39,7 +39,7 @@
     "framer-motion": "^10",
     "html-react-parser": "^4",
     "lodash": "^4",
-    "next": ">13.5 || ^14",
+    "next": "^13.5.0 || ^14",
     "next-themes": "^0",
     "prosemirror-commands": "^1",
     "prosemirror-dropcursor": "1",
