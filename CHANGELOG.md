@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.13
+
+### Patch Changes
+
+- ca786b9: Number Input hinzufügen #1089
+
 ## 2.2.12
 
 ### Patch Changes
