@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.16
+
+### Patch Changes
+
+- 1a13883: CarouselModal exposen #1099
+
 ## 2.2.15
 
 ### Patch Changes
