@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.15
+
+### Patch Changes
+
+- 13057e3: Navbar - Navitems ohne children nutzen nicht textColor #1096
+
 ## 2.2.14
 
 ### Patch Changes
