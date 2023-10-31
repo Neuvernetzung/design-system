@@ -1,6 +1,7 @@
 import { Meta } from "@storybook/react";
 import {
   Icon360,
+  IconArrowWaveRightUp,
   IconBolt,
   IconColorSwatch,
   IconLogout,
@@ -8,6 +9,7 @@ import {
   IconShoppingCart,
   IconTrash,
   IconUser,
+  IconX,
 } from "@tabler/icons-react";
 import cn from "classnames";
 import React, { useRef, useState } from "react";
@@ -22,6 +24,7 @@ import { Select } from "../../ui/Select";
 import { Heading } from "../../ui/Typography/Heading";
 import { PageContainer } from "../Container";
 import { Navbar, NavbarProps, SideNavbar } from "./navbar";
+import { colors, sizes } from "../../../types";
 
 export default {
   title: "COMMON/Navbar",
@@ -123,6 +126,7 @@ const baseProps: NavbarProps = {
           label: "Extern",
           href: "5",
           external: true,
+          icon: IconArrowWaveRightUp,
           subLabel: {
             children: "Dies ist ein externes Item",
           },
@@ -145,11 +149,13 @@ const baseProps: NavbarProps = {
       label: "Extern",
       href: "https://www.google.de",
       external: true,
+      icon: IconArrowWaveRightUp,
     },
     {
       label: "Disabled",
       tag: { label: "nie", color: "danger", size: "sm", variant: "subtile" },
       disabled: true,
+      icon: IconX,
     },
   ],
   logo: (
@@ -237,13 +243,28 @@ export const Size = ({ ...args }) => {
           control={control}
           label="Größe"
           name="size"
-          options={[
-            { children: "xs", value: "xs" },
-            { children: "sm", value: "sm" },
-            { children: "md", value: "md" },
-            { children: "lg", value: "lg" },
-            { children: "xl", value: "xl" },
-          ]}
+          options={sizes.map((size) => ({ value: size, children: size }))}
+        />
+      </PageContainer>
+    </>
+  );
+};
+
+export const Color = ({ ...args }) => {
+  const navbarRef = useRef(null);
+  const { control, watch } = useForm();
+  const color = watch("color");
+
+  return (
+    <>
+      <Navbar ref={navbarRef} color={color} {...baseProps} {...args} />
+
+      <PageContainer navbarRef={navbarRef}>
+        <Select
+          control={control}
+          label="Größe"
+          name="color"
+          options={colors.map((color) => ({ value: color, children: color }))}
         />
       </PageContainer>
     </>
@@ -270,13 +291,7 @@ export const Sidenav = ({ ...args }) => {
           control={control}
           label="Größe"
           name="size"
-          options={[
-            { children: "xs", value: "xs" },
-            { children: "sm", value: "sm" },
-            { children: "md", value: "md" },
-            { children: "lg", value: "lg" },
-            { children: "xl", value: "xl" },
-          ]}
+          options={sizes.map((size) => ({ value: size, children: size }))}
         />
       </PageContainer>
     </>
