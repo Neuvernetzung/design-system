@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.17
+
+### Patch Changes
+
+- 08226d6: Footer - Gestaltungsmöglichnkeiten hinzufügen #1102
+
 ## 2.2.16
 
 ### Patch Changes
