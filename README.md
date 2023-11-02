@@ -1,13 +1,11 @@
 # Neuvernetzung - Design System
 
-Ein design system für React und Next.js
-
-[![neuvernetzung-logo](https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/LogoFull.png)](https://neuvernetzung.de)
+[![neuvernetzung-logo](https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png)](https://neuvernetzung.de)
 
 ## Einrichtung
 
 ```
-npm i @neuvernetzung/design-system && npm i -D tailwindcss postcss autoprefixer classnames
+npm i @neuvernetzung/design-system && npm i -D tailwindcss postcss autoprefixer
 ```
 
 ### \_app.tsx mit ThemeProvider wrappen. Und Globale CSS Datei importieren.
