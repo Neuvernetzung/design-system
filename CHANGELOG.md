@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.18
+
+### Patch Changes
+
+- c9e260d: ReadMe Datei Endung fixen #1108
+- b1fb225: ReadMe updaten mit neuem Header #1103
+
 ## 2.2.17
 
 ### Patch Changes
