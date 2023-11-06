@@ -1,5 +1,13 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.2.19
+
+### Patch Changes
+
+- 86544f0: ButtonGroup funktioniert nicht mehr bei Horizontal #1110
+- 303f896: Deps updaten #1121
+- c56e1d3: Swiper 11 unterstützen in peer Deps #1111
+
 ## 2.2.18
 
 ### Patch Changes
