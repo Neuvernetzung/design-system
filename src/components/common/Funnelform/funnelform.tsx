@@ -51,6 +51,14 @@ export const Funnelform = <
   const funnelData = funnel.state;
 
   const internalOnSubmit = (data: T) => {
+    if (
+      funnel.name === "__proto__" ||
+      funnel.name === "constructor" ||
+      funnel.name === "prototype"
+    ) {
+      throw Error("Forbidden name!");
+    }
+
     const newData = merge(funnelData?.[funnel.name], data);
 
     onSubmit?.(newData);
