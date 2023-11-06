@@ -88,7 +88,7 @@ export const CarouselModal = ({
         className={cn("relative", zIndexes.modal)}
         onClose={handleClose}
       >
-        <Backdrop />
+        <Backdrop isOpen={controller?.open} />
 
         <div className="fixed inset-x-0 bottom-0 top-12">
           <div

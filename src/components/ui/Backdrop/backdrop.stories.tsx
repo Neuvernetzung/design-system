@@ -15,6 +15,6 @@ const Container = ({ ...props }) => (
 
 export const Default = ({ ...args }) => (
   <Container>
-    <Backdrop />
+    <Backdrop isOpen />
   </Container>
 );

@@ -37,7 +37,7 @@ export const Loading = () => {
   if (isLoading === true)
     return (
       <div className={cn("relative", zIndexes.modal)}>
-        <Backdrop />
+        <Backdrop isOpen={isLoading === true} />
         <div className={cn("fixed inset-0 flex items-center justify-center")}>
           <div className={cn("flex flex-col items-center", gaps.md)}>
             <Spinner size="xl" />

@@ -95,7 +95,7 @@ export const Modal = ({
         className={cn("relative", zIndexes.modal)}
         onClose={handleClose}
       >
-        <Backdrop />
+        <Backdrop isOpen={open} />
 
         <div className="fixed inset-0 overflow-y-auto">
           <div

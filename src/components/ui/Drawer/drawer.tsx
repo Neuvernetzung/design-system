@@ -113,7 +113,7 @@ export const Drawer = ({
     className={cn("relative", zIndexes.modal)}
     onClose={() => setOpen(false)}
   >
-    <Backdrop />
+    <Backdrop isOpen={open} />
     <LazyMotion features={domAnimation}>
       <MotionPanel
         {...animations(open, size, placement)}

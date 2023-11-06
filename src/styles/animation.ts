@@ -3,3 +3,6 @@ export const popoverAnimation =
 
 export const tooltipAnimation =
   "data-[state=delayed-open]:animate-tooltip data-[state=instant-open]:animate-tooltip data-[state=closed]:animate-tooltipOut";
+
+export const backdropAnimation =
+  "data-[state=open]:animate-backdrop data-[state=closed]:animate-backdropOut";

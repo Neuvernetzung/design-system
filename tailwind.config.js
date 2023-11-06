@@ -61,6 +61,8 @@ module.exports = {
         popoverOut: "popoverOut 50ms linear",
         tooltip: "tooltip 50ms linear",
         tooltipOut: "tooltipOut 50ms linear",
+        backdrop: "backdrop 100ms linear",
+        backdropOut: "backdropOut 50ms linear",
       },
       keyframes: {
         popover: {
@@ -78,6 +80,14 @@ module.exports = {
         tooltipOut: {
           "0%": { transform: "scale(100%)", opacity: 1 },
           "100%": { transform: "scale(95%)", opacity: 0 },
+        },
+        backdrop: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        backdropOut: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
         },
       },
     },
