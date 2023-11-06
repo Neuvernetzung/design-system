@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 2.3.0
+
+### Minor Changes
+
+- 7bc019a: Fix Funnelform Prototype-polluting assignment #1123
+
 ## 2.2.19
 
 ### Patch Changes
