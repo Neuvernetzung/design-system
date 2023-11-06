@@ -158,7 +158,7 @@
     "uuid": "^9.0.1",
     "webpack": "^5.89.0",
     "zod": "^3.22.4",
-    "zustand": "^4.4.4"
+    "zustand": "^4.4.6"
   },
   "repository": {
     "type": "git",
