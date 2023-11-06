@@ -48,3 +48,20 @@ export const DifferentSizes = ({ ...args }) => (
     </ButtonGroup>
   </Container>
 );
+
+export const Directions = ({ ...args }) => (
+  <Container>
+    <ButtonGroup direction="vertical" className="w-16">
+      <Button className="h-12" {...args}>
+        Close
+      </Button>
+      <IconButton size="sm" ariaLabel="home" icon={IconX} {...args} />
+    </ButtonGroup>
+    <ButtonGroup direction="horizontal">
+      <Button className="h-12" {...args}>
+        Close
+      </Button>
+      <IconButton size="sm" ariaLabel="home" icon={IconX} {...args} />
+    </ButtonGroup>
+  </Container>
+);
