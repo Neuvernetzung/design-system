@@ -128,7 +128,7 @@
     "eslint": "^8.52.0",
     "eslint-plugin-storybook": "^0.6.15",
     "framer-motion": "^10.16.4",
-    "html-react-parser": "^4.2.5",
+    "html-react-parser": "^5.0.6",
     "jest": "^29.7.0",
     "jest-axe": "^8.0.0",
     "jest-environment-jsdom": "^29.7.0",
