@@ -108,7 +108,7 @@
     "@storybook/nextjs": "7.5.2",
     "@storybook/react": "7.5.2",
     "@storybook/theming": "^7.5.2",
-    "@swc/core": "^1.3.95",
+    "@swc/core": "^1.3.96",
     "@tabler/icons-react": "^2.40.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
