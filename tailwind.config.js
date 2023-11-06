@@ -59,6 +59,8 @@ module.exports = {
       animation: {
         popover: "popover 100ms linear",
         popoverOut: "popoverOut 50ms linear",
+        tooltip: "tooltip 50ms linear",
+        tooltipOut: "tooltipOut 50ms linear",
       },
       keyframes: {
         popover: {
@@ -68,6 +70,14 @@ module.exports = {
         popoverOut: {
           "0%": { transform: "scale(100%) translateY(0px)", opacity: 1 },
           "100%": { transform: "scale(95%) translateY(5px)", opacity: 0 },
+        },
+        tooltip: {
+          "0%": { transform: "scale(95%)", opacity: 0 },
+          "100%": { transform: "scale(100%)", opacity: 1 },
+        },
+        tooltipOut: {
+          "0%": { transform: "scale(100%)", opacity: 1 },
+          "100%": { transform: "scale(95%)", opacity: 0 },
         },
       },
     },
