@@ -97,7 +97,8 @@ const options: HTMLReactParserOptions = {
         attributes,
         className,
         children:
-          typedDomNode.children && domToReact(typedDomNode.children, options),
+          typedDomNode.children &&
+          domToReact(typedDomNode.children as any, options),
       });
     }
 
