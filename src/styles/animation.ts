@@ -6,3 +6,6 @@ export const tooltipAnimation =
 
 export const backdropAnimation =
   "data-[state=open]:animate-backdrop data-[state=closed]:animate-backdropOut";
+
+export const disclosureAnimation =
+  "data-[state=open]:animate-disclosure data-[state=closed]:animate-disclosureOut";

@@ -10,7 +10,7 @@ export const Backdrop = ({ isOpen }: BackdropProps) => (
     className={cn(
       "fixed inset-0 bg-opacity-25 bg-black backdrop-blur-sm",
       backdropAnimation,
-      "will-change-auto"
+      "will-change-[opacity]"
     )}
   />
 );

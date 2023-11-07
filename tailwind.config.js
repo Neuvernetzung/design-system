@@ -63,6 +63,8 @@ module.exports = {
         tooltipOut: "tooltipOut 50ms linear",
         backdrop: "backdrop 100ms linear",
         backdropOut: "backdropOut 50ms linear",
+        disclosure: "disclosure 100ms linear",
+        disclosureOut: "disclosureOut 50ms linear",
       },
       keyframes: {
         popover: {
@@ -88,6 +90,14 @@ module.exports = {
         backdropOut: {
           "0%": { opacity: 1 },
           "100%": { opacity: 0 },
+        },
+        disclosure: {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        disclosureOut: {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
         },
       },
     },

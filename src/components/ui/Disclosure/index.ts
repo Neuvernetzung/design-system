@@ -4,5 +4,4 @@ export type {
   DisclosureItemProps,
   DisclosureProps,
 } from "./disclosure";
-export { DisclosureGroup } from "./disclosure";
-export { default as Disclosure } from "./disclosure";
+export { DisclosureGroup, Disclosure, DisclosureItem } from "./disclosure";
