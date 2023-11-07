@@ -1,3 +1,6 @@
+export const modalAnimation =
+  "data-[state=open]:animate-modal data-[state=closed]:animate-modalOut";
+
 export const popoverAnimation =
   "data-[state=open]:animate-popover data-[state=closed]:animate-popoverOut";
 
