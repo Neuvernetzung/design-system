@@ -65,6 +65,14 @@ module.exports = {
         backdropOut: "backdropOut 50ms linear",
         disclosure: "disclosure 100ms linear",
         disclosureOut: "disclosureOut 50ms linear",
+        drawerRight: "drawerRight 100ms linear",
+        drawerRightOut: "drawerRightOut 100ms linear",
+        drawerLeft: "drawerLeft 100ms linear",
+        drawerLeftOut: "drawerLeftOut 100ms linear",
+        drawerTop: "drawerTop 100ms linear",
+        drawerTopOut: "drawerTopOut 100ms linear",
+        drawerBottom: "drawerBottom 100ms linear",
+        drawerBottomOut: "drawerBottomOut 100ms linear",
       },
       keyframes: {
         popover: {
@@ -98,6 +106,38 @@ module.exports = {
         disclosureOut: {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
+        },
+        drawerRight: {
+          from: { transform: "translateX(100%)" },
+          to: { transform: "translateX(0%)" },
+        },
+        drawerRightOut: {
+          from: { transform: "translateX(0%)" },
+          to: { transform: "translateX(100%)" },
+        },
+        drawerLeft: {
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(0%)" },
+        },
+        drawerLeftOut: {
+          from: { transform: "translateX(0%)" },
+          to: { transform: "translateX(-100%)" },
+        },
+        drawerTop: {
+          from: { transform: "translateY(-100%)" },
+          to: { transform: "translateY(0%)" },
+        },
+        drawerTopOut: {
+          from: { transform: "translateY(0%)" },
+          to: { transform: "translateY(-100%)" },
+        },
+        drawerBottom: {
+          from: { transform: "translateY(100%)" },
+          to: { transform: "translateY(0%)" },
+        },
+        drawerBottomOut: {
+          from: { transform: "translateY(0%)" },
+          to: { transform: "translateY(100%)" },
         },
       },
     },
