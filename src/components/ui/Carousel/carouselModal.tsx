@@ -96,10 +96,10 @@ export const CarouselModal = ({
 
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
-      <DialogOverlay className={cn(zIndexes.modal)}>
-        <Backdrop isOpen={controller?.open} />
-      </DialogOverlay>
       <DialogPortal>
+        <DialogOverlay asChild className={cn(zIndexes.modal)}>
+          <Backdrop isOpen={controller?.open} />
+        </DialogOverlay>
         <DialogContent
           onOpenAutoFocus={
             initialFocus

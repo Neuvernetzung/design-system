@@ -229,15 +229,26 @@ export const Nested = ({ ...args }) => {
       <Modal
         header="Erstes Modal"
         footer={
-          <Button
-            onClick={() => {
-              action("click");
-              setNestedOpen(true);
-            }}
-            fullWidth
-          >
-            Nested öffnen
-          </Button>
+          <div className="flex flex-row gap-4">
+            <Button
+              onClick={() => {
+                action("click");
+                setOpen(false);
+              }}
+              fullWidth
+            >
+              Schließen
+            </Button>
+            <Button
+              onClick={() => {
+                action("click");
+                setNestedOpen(true);
+              }}
+              fullWidth
+            >
+              Nested öffnen
+            </Button>
+          </div>
         }
         open={open}
         setOpen={setOpen}
@@ -252,7 +263,6 @@ export const Nested = ({ ...args }) => {
             color="warn"
             onClick={() => {
               action("nested-click");
-              setOpen(false);
               setNestedOpen(false);
             }}
             fullWidth
