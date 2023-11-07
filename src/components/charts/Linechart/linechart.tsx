@@ -13,7 +13,6 @@ import { bisector, extent, max, min } from "@visx/vendor/d3-array";
 import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
 import cn from "classnames";
 import type { CurveFactory } from "d3-shape";
-import { domAnimation, LazyMotion } from "framer-motion";
 import isFunction from "lodash/isFunction";
 import {
   ForwardedRef,
@@ -215,134 +214,132 @@ export const Linechart = forwardRef(
     };
 
     return (
-      <LazyMotion features={domAnimation}>
-        <ChartWrapper ref={wrapperRef}>
-          <ChartAreaWrapper
-            ref={mergeRefs([ref, containerRef])}
-            id={id}
-            height={innerHeight}
-            width={innerWidth}
-            margin={margin}
-            onTouchStart={(e) => handleTooltip(e)}
-            onTouchMove={(e) => handleTooltip(e)}
-            onMouseMove={(e) => handleTooltip(e)}
-            onMouseLeave={() => hideTooltip()}
-          >
-            <ChartXAxisWrapper ref={xAxisRef}>
-              <Axis
-                hideAxisLine
-                hideTicks
-                top={innerHeight}
-                scale={xScale}
-                orientation="bottom"
-                tickComponent={ChartTickXComponent}
-                {...xAxisProps}
-              />
-            </ChartXAxisWrapper>
-            <ChartYAxisWrapper ref={yAxisRef}>
-              <Axis
-                hideAxisLine
-                hideTicks
-                scale={yScale}
-                orientation="left"
-                tickComponent={ChartTickYComponent}
-                numTicks={10}
-                {...yAxisProps}
-              />
-            </ChartYAxisWrapper>
-            <LinePath
+      <ChartWrapper ref={wrapperRef}>
+        <ChartAreaWrapper
+          ref={mergeRefs([ref, containerRef])}
+          id={id}
+          height={innerHeight}
+          width={innerWidth}
+          margin={margin}
+          onTouchStart={(e) => handleTooltip(e)}
+          onTouchMove={(e) => handleTooltip(e)}
+          onMouseMove={(e) => handleTooltip(e)}
+          onMouseLeave={() => hideTooltip()}
+        >
+          <ChartXAxisWrapper ref={xAxisRef}>
+            <Axis
+              hideAxisLine
+              hideTicks
+              top={innerHeight}
+              scale={xScale}
+              orientation="bottom"
+              tickComponent={ChartTickXComponent}
+              {...xAxisProps}
+            />
+          </ChartXAxisWrapper>
+          <ChartYAxisWrapper ref={yAxisRef}>
+            <Axis
+              hideAxisLine
+              hideTicks
+              scale={yScale}
+              orientation="left"
+              tickComponent={ChartTickYComponent}
+              numTicks={10}
+              {...yAxisProps}
+            />
+          </ChartYAxisWrapper>
+          <LinePath
+            data={allData}
+            x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
+            y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
+            stroke={color}
+            fill="none"
+            strokeWidth="2"
+            vectorEffect="non-scaling-stroke"
+            curve={curve}
+            defined={(d) => {
+              if (missingValueBehaviour === "zero") return true;
+              return getY(d) !== null;
+            }}
+            {...lineProps}
+          />
+          {showLineArea && (
+            <AreaClosed
               data={allData}
-              x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
-              y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
-              stroke={color}
-              fill="none"
-              strokeWidth="2"
-              vectorEffect="non-scaling-stroke"
+              x={(d) => xScale(getX(d))}
+              y={(d) => yScale(getY(d) || 0)}
+              yScale={yScale}
               curve={curve}
+              fill={color}
+              opacity={0.1}
               defined={(d) => {
                 if (missingValueBehaviour === "zero") return true;
                 return getY(d) !== null;
               }}
-              {...lineProps}
-            />
-            {showLineArea && (
-              <AreaClosed
-                data={allData}
-                x={(d) => xScale(getX(d))}
-                y={(d) => yScale(getY(d) || 0)}
-                yScale={yScale}
-                curve={curve}
-                fill={color}
-                opacity={0.1}
-                defined={(d) => {
-                  if (missingValueBehaviour === "zero") return true;
-                  return getY(d) !== null;
-                }}
-                {...lineAreaProps}
-              />
-            )}
-            {allowTooltipHover && (
-              <ChartTooltipHover
-                width={width}
-                height={innerHeight}
-                tooltipData={tooltipData}
-                tooltipLeft={tooltipLeft}
-                tooltipTop={tooltipTop}
-                {...hoverProps}
-              />
-            )}
-            {showGridRows && (
-              <GridRows
-                scale={yScale}
-                width={innerWidth}
-                stroke="currentColor"
-                className={cn(extendedTextColors.subtile)}
-                strokeDasharray="1,3"
-                strokeOpacity={0.2}
-                pointerEvents="none"
-                {...gridRowProps}
-              />
-            )}
-            {showGridColumns && (
-              <GridColumns
-                scale={xScale}
-                height={innerHeight}
-                strokeDasharray="1,3"
-                stroke="currentColor"
-                className={cn(extendedTextColors.subtile)}
-                strokeOpacity={0.2}
-                pointerEvents="none"
-                {...gridColumnProps}
-              />
-            )}
-            {children &&
-              (isFunction(children)
-                ? children({
-                    height,
-                    innerHeight,
-                    innerWidth,
-                    margin,
-                    width,
-                    xScale,
-                    yScale,
-                  })
-                : children)}
-          </ChartAreaWrapper>
-          {allowTooltip && (
-            <ChartTooltip
-              tooltipLabel={
-                isFunction(formatTooltip)
-                  ? formatTooltip(tooltipData)
-                  : tooltipData?.y
-              }
-              tooltipLeft={tooltipLeft}
-              tooltipTop={tooltipTop}
-              tooltipData={tooltipData}
-              TooltipInPortal={TooltipInPortal}
+              {...lineAreaProps}
             />
           )}
-        </ChartWrapper>
-      </LazyMotion>
+          {allowTooltipHover && (
+            <ChartTooltipHover
+              width={width}
+              height={innerHeight}
+              tooltipData={tooltipData}
+              tooltipLeft={tooltipLeft}
+              tooltipTop={tooltipTop}
+              {...hoverProps}
+            />
+          )}
+          {showGridRows && (
+            <GridRows
+              scale={yScale}
+              width={innerWidth}
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeDasharray="1,3"
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridRowProps}
+            />
+          )}
+          {showGridColumns && (
+            <GridColumns
+              scale={xScale}
+              height={innerHeight}
+              strokeDasharray="1,3"
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridColumnProps}
+            />
+          )}
+          {children &&
+            (isFunction(children)
+              ? children({
+                  height,
+                  innerHeight,
+                  innerWidth,
+                  margin,
+                  width,
+                  xScale,
+                  yScale,
+                })
+              : children)}
+        </ChartAreaWrapper>
+        {allowTooltip && (
+          <ChartTooltip
+            tooltipLabel={
+              isFunction(formatTooltip)
+                ? formatTooltip(tooltipData)
+                : tooltipData?.y
+            }
+            tooltipLeft={tooltipLeft}
+            tooltipTop={tooltipTop}
+            tooltipData={tooltipData}
+            TooltipInPortal={TooltipInPortal}
+          />
+        )}
+      </ChartWrapper>
     );
   }
 );

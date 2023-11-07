@@ -2,9 +2,9 @@ import cn from "classnames";
 import { MouseEventHandler, ReactNode } from "react";
 
 import { gapsSmall } from "../../../../styles";
+import { SvgType } from "../../../../types";
 import { IconButton } from "../../Button";
 import { Tooltip } from "../../Tooltip";
-import { SvgType } from "../../../../types";
 
 type RichTextMenuItemProps = {
   onClick: MouseEventHandler;
@@ -25,7 +25,7 @@ export const RichTextMenuItem = ({
   ariaLabel,
   id,
 }: RichTextMenuItemProps) => (
-  <Tooltip label={tooltip} placement="top">
+  <Tooltip label={tooltip}>
     <IconButton
       id={id}
       tabIndex={-1}

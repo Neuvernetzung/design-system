@@ -9,4 +9,3 @@ export * from "./updateQuery";
 export * from "./useRefDimensions";
 export * from "./useWindowSize";
 export * from "./polymorphic";
-export * from "./hooks";

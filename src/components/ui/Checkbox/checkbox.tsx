@@ -9,13 +9,13 @@ import {
   MouseEvent,
   ReactNode,
 } from "react";
-import {
-  Controller,
+import type {
   FieldError,
   FieldPath,
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import type { Locale } from "../../../locales/getText";
 import {
@@ -23,6 +23,7 @@ import {
   bordersInteractive,
   checkboxSizes,
   extendedBgColors,
+  extendedBgColorsInteractive,
   extendedTextColors,
   focus,
   gaps,
@@ -34,7 +35,6 @@ import {
   transition,
 } from "../../../styles";
 import type { CheckboxVariant, Color, Size, SvgType } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
@@ -68,17 +68,6 @@ const styles = {
   label: "cursor-pointer select-none",
   labelDisabled: "cursor-not-allowed select-none opacity-75",
   iconWrapper: "pointer-events-none flex items-center justify-center",
-};
-
-export const checkedColors: Record<Color, string> = {
-  brand: "bg-brand-500 hover:bg-brand-600 dark:hover:bg-brand-400",
-  primary: "bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-400",
-  accent: "bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400",
-  success: "bg-success-500 hover:bg-success-600 dark:hover:bg-success-400",
-  warn: "bg-warn-500 hover:bg-warn-600 dark:hover:bg-warn-400",
-  danger: "bg-danger-500 hover:bg-danger-600 dark:hover:bg-danger-400",
-  black: "bg-black hover:bg-accent-900 dark:hover:bg-accent-900",
-  white: "bg-white hover:bg-accent-100 dark:hover:bg-accent-100",
 };
 
 export const Checkbox = <
@@ -308,7 +297,7 @@ export const CheckboxInner = forwardRef(
                 bordersInteractive.accent,
                 !disabled &&
                   (_isChecked || _isIndeterminate) &&
-                  `${checkedColors[color]} border-none`,
+                  `${extendedBgColorsInteractive[color]} border-none`,
                 error && styles.inputError
               )}
             >
@@ -359,5 +348,3 @@ export const CheckboxInner = forwardRef(
 );
 
 CheckboxInner.displayName = "CheckboxInner";
-
-export default typedMemo(Checkbox);

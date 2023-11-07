@@ -1,7 +1,8 @@
-import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 import { IconCheck, IconMinus } from "@tabler/icons-react";
 import type { Size, SvgType } from "../../../types";
 import { Icon } from "../Icon";
+import cn from "classnames";
+import { checkboxAnimation, transition } from "../../../styles";
 
 type CheckboxIconProps = {
   size?: Size;
@@ -16,78 +17,40 @@ export const CheckboxIcon = ({
   icon,
   isIndeterminate,
 }: CheckboxIconProps) => (
-  <LazyMotion features={domAnimation}>
-    <CheckboxTransition open={isChecked || isIndeterminate}>
-      {isChecked ? (
-        <Icon size={size} icon={icon ?? CheckIconAnimation} />
-      ) : (
-        isIndeterminate && (
-          <Icon size={size} icon={CheckIndeterminateIconAnimation} />
-        )
-      )}
-    </CheckboxTransition>
-  </LazyMotion>
+  <div
+    data-state={
+      isChecked ? "checked" : isIndeterminate ? "indeterminate" : "unchecked"
+    }
+    className={cn(
+      "group flex h-full items-center justify-center will-change-transform",
+      transition
+    )}
+  >
+    {isChecked ? (
+      <Icon size={size} icon={icon ?? CheckboxIconCheck} />
+    ) : (
+      isIndeterminate && (
+        <Icon
+          className={cn(checkboxAnimation)}
+          size={size}
+          icon={CheckboxIconMinus}
+        />
+      )
+    )}
+  </div>
 );
 
-function CheckboxTransition({ open, children }: any) {
-  return (
-    <AnimatePresence initial={false}>
-      {open && (
-        <m.div
-          variants={{
-            unchecked: { scale: 0.5 },
-            checked: { scale: 1 },
-          }}
-          initial="unchecked"
-          animate="checked"
-          exit="unchecked"
-          className="flex h-full items-center justify-center"
-        >
-          {children}
-        </m.div>
-      )}
-    </AnimatePresence>
-  );
-}
+const CheckboxIconCheck = () => (
+  <IconCheck className={cn(checkboxAnimation)} style={animationStyle} />
+);
 
-const animationVariants = {
-  unchecked: {
-    opacity: 0,
-    strokeDashoffset: "100%",
-  },
-  checked: {
-    opacity: 1,
-    strokeDashoffset: 0,
-    transition: { duration: 0.3 },
-  },
-};
+const CheckboxIconMinus = () => (
+  <IconMinus className={cn(checkboxAnimation)} style={animationStyle} />
+);
+
 const animationStyle = {
   fill: "none",
   strokeWidth: 3,
   stroke: "currentColor",
   strokeDasharray: "100%",
 };
-
-const MotionCheckIcon = m(IconCheck);
-
-function CheckIconAnimation(props: any) {
-  return (
-    <MotionCheckIcon
-      variants={animationVariants}
-      style={animationStyle}
-      {...props}
-    />
-  );
-}
-
-const MotionCheckIndeterminateIcon = m(IconMinus);
-
-function CheckIndeterminateIconAnimation(props: any) {
-  return (
-    <MotionCheckIndeterminateIcon
-      variants={animationVariants}
-      style={animationStyle}
-      {...props}
-    />
-  );
-}

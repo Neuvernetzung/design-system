@@ -1,8 +1,8 @@
 import { Meta } from "@storybook/react";
-import React from "react";
+import React, { useState } from "react";
 
-import { DisclosureGroup } from ".";
 import { disclosureVariants, sizes } from "../../../types";
+import { DisclosureGroup } from ".";
 
 export default {
   title: "UI/Disclosures/Disclosure",
@@ -100,3 +100,23 @@ export const DefaultOpen = ({ ...args }) => (
     />
   </Container>
 );
+
+export const Controlled = ({ ...args }) => {
+  const [value, setValue] = useState<number[]>([]);
+
+  return (
+    <Container className="flex flex-col">
+      {JSON.stringify(value)}
+      <DisclosureGroup
+        value={value}
+        setValue={setValue}
+        items={[
+          { title: `1`, content: "Content 1", defaultOpen: true },
+          { title: `2`, content: "Content 2" },
+          { title: `3`, content: "Content 3" },
+        ]}
+        {...args}
+      />
+    </Container>
+  );
+};

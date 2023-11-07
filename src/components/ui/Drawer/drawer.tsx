@@ -1,7 +1,14 @@
-import { Dialog } from "@headlessui/react";
+import {
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogClose,
+  Root,
+  DialogTrigger,
+} from "@radix-ui/react-dialog";
+import { IconX } from "@tabler/icons-react";
 import cn from "classnames";
-import { domAnimation, LazyMotion, m } from "framer-motion";
-import { MutableRefObject, ReactNode } from "react";
+import type { MutableRefObject, ReactElement, ReactNode } from "react";
 
 import {
   bgColors,
@@ -10,25 +17,24 @@ import {
   paddingsLargeEvenly,
   shadows,
   transition,
-  zIndexes,
 } from "../../../styles";
-import { IconX } from "@tabler/icons-react";
 import type { ExtendedSize, SvgType } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
 export type DrawerProps = {
-  open: boolean;
-  setOpen: (open: boolean) => void;
+  open?: boolean;
+  defaultOpen?: boolean;
+  setOpen?: (open: boolean) => void;
   initialFocus?: MutableRefObject<HTMLElement>;
   size?: DrawerSize;
   icon?: SvgType;
   title?: string;
   content?: ReactNode;
   placement?: DrawerPlacement;
+  children?: ReactElement;
 };
 
 export type DrawerSize = Exclude<ExtendedSize, "4xl" | "5xl" | "6xl"> | "full";
@@ -44,9 +50,9 @@ const widths: Record<DrawerSize, string> = {
   full: "max-w-none",
 };
 
-const drawerPlacements = ["top", "bottom", "left", "right"] as const;
+export const drawerPlacements = ["top", "bottom", "left", "right"] as const;
 
-type DrawerPlacement = (typeof drawerPlacements)[number];
+export type DrawerPlacement = (typeof drawerPlacements)[number];
 
 const placements = (
   size: DrawerSize
@@ -54,50 +60,35 @@ const placements = (
   DrawerPlacement,
   {
     className: string;
-    animate: Record<string, any>;
-    initial: Record<string, any>;
   }
 > => ({
   right: {
-    className: cn(widths[size], "right-0 inset-y-0"),
-    animate: { translateX: "0%" },
-    initial: { translateX: "100%" },
+    className: cn(
+      widths[size],
+      "right-0 inset-y-0 data-[state=open]:animate-drawerRight data-[state=closed]:animate-drawerRightOut"
+    ),
   },
   left: {
-    className: cn(widths[size], "left-0 inset-y-0"),
-    animate: { translateX: "0%" },
-    initial: { translateX: "-100%" },
+    className: cn(
+      widths[size],
+      "left-0 inset-y-0 data-[state=open]:animate-drawerLeft data-[state=closed]:animate-drawerLeftOut"
+    ),
   },
   top: {
-    className: cn("top-0 inset-x-0"),
-    animate: { translateY: "0%" },
-    initial: { translateY: "-100%" },
+    className: cn(
+      "top-0 inset-x-0 data-[state=open]:animate-drawerTop data-[state=closed]:animate-drawerTopOut"
+    ),
   },
   bottom: {
-    className: cn("bottom-0 inset-x-0"),
-    animate: { translateY: "0%" },
-    initial: { translateY: "100%" },
+    className: cn(
+      "bottom-0 inset-x-0 data-[state=open]:animate-drawerBottom data-[state=closed]:animate-drawerBottomOut"
+    ),
   },
 });
-
-const animations = (
-  open: boolean,
-  size: DrawerSize,
-  placement: DrawerPlacement
-) => ({
-  animate: open ? "animate" : "initial",
-  initial: "initial",
-  variants: {
-    animate: placements(size)[placement].animate,
-    initial: placements(size)[placement].initial,
-  },
-  transition: { duration: 0.075 },
-});
-
-const MotionPanel = m(Dialog.Panel);
 
 export const Drawer = ({
   open,
+  defaultOpen,
   setOpen,
   initialFocus,
   size = "md",
@@ -105,18 +96,23 @@ export const Drawer = ({
   title,
   content,
   placement = "right",
+  children,
 }: DrawerProps) => (
-  <Dialog
-    as="div"
-    initialFocus={initialFocus}
-    open={open}
-    className={cn("relative", zIndexes.modal)}
-    onClose={() => setOpen(false)}
-  >
-    <Backdrop />
-    <LazyMotion features={domAnimation}>
-      <MotionPanel
-        {...animations(open, size, placement)}
+  <Root open={open} defaultOpen={defaultOpen} onOpenChange={setOpen}>
+    {children && <DialogTrigger asChild>{children}</DialogTrigger>}
+    <DialogPortal>
+      <DialogOverlay asChild>
+        <Backdrop isOpen />
+      </DialogOverlay>
+      <DialogContent
+        onOpenAutoFocus={
+          initialFocus
+            ? (e) => {
+                e.preventDefault();
+                initialFocus.current.focus();
+              }
+            : undefined
+        }
         className={cn(
           transition,
           borders.accent,
@@ -125,8 +121,7 @@ export const Drawer = ({
           gaps.md,
           placements(size)[placement].className,
           shadows.xl,
-
-          "fixed overflow-y-hidden hover:overflow-y-auto w-full flex flex-col"
+          "fixed overflow-y-hidden hover:overflow-y-auto w-full flex flex-col will-change-transform"
         )}
       >
         <div
@@ -134,17 +129,17 @@ export const Drawer = ({
         >
           {icon && <Icon icon={icon} />}
           <Text size="lg">{title}</Text>
-          <IconButton
-            ariaLabel="closeDrawer"
-            icon={IconX}
-            variant="ghost"
-            onClick={() => setOpen(false)}
-          />
+          <DialogClose asChild>
+            <IconButton
+              ariaLabel="closeDrawer"
+              icon={IconX}
+              variant="ghost"
+              onClick={() => setOpen?.(false)}
+            />
+          </DialogClose>
         </div>
         {content}
-      </MotionPanel>
-    </LazyMotion>
-  </Dialog>
+      </DialogContent>
+    </DialogPortal>
+  </Root>
 );
-
-export default typedMemo(Drawer);

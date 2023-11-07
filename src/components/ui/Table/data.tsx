@@ -1,10 +1,10 @@
+import { IconChevronDown } from "@tabler/icons-react";
 import cn from "classnames";
 import get from "lodash/get";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { paddingsEvenly, transition } from "../../../styles";
-import { IconChevronDown } from "@tabler/icons-react";
 import { typedMemo, updateQuery } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { CheckboxInner } from "../Checkbox/checkbox";
@@ -18,8 +18,6 @@ import {
   TableHeadCell,
   TableRow,
 } from "./table";
-import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
-import { disclosureAnimationVariants } from "../Disclosure/disclosure";
 
 export type DataTableProps<
   T extends string,
@@ -185,31 +183,13 @@ export const DataTableInner = <
                 />
               ))}
             </TableRow>
-            <LazyMotion features={domAnimation}>
-              <AnimatePresence initial={false}>
-                {disclosureValue && item[disclosureValue] && (
-                  <tr
-                    key={`row_${i}_disclosure`}
-                    className={disclosureClassName}
-                  >
-                    <td colSpan={checkable ? cols.length + 1 : cols.length}>
-                      <m.span
-                        initial="initial"
-                        animate={
-                          disclosureValue && item[disclosureValue]
-                            ? "animate"
-                            : "initial"
-                        }
-                        variants={disclosureAnimationVariants}
-                        className="w-full"
-                      >
-                        {item[disclosureValue]}
-                      </m.span>
-                    </td>
-                  </tr>
-                )}
-              </AnimatePresence>
-            </LazyMotion>
+            {disclosureValue && item[disclosureValue] && (
+              <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
+                <td colSpan={checkable ? cols.length + 1 : cols.length}>
+                  <span className="w-full">{item[disclosureValue]}</span>
+                </td>
+              </tr>
+            )}
           </>
         ))}
       </TableBody>

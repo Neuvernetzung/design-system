@@ -1,6 +1,5 @@
 import cn from "classnames";
-import { m } from "framer-motion";
-import { MouseEventHandler } from "react";
+import type { MouseEventHandler } from "react";
 
 import {
   bgColors,
@@ -67,10 +66,7 @@ export const Toast = ({
   const { adjustedTextColorState } = useThemeState();
 
   return (
-    <m.div
-      initial={{ y: 5, opacity: 0 }}
-      animate={{ y: 0, opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 10 }}
+    <div
       role="dialog"
       aria-label={color}
       className={cn(
@@ -112,7 +108,7 @@ export const Toast = ({
         icon={IconX}
         className={cn(variants(color, adjustedTextColorState)[variant].close)}
       />
-    </m.div>
+    </div>
   );
 };
 
