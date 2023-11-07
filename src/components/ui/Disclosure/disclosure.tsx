@@ -42,7 +42,7 @@ export type DisclosureGroupProps = DisclosureBaseProps & {
 } & DisclosureMultipleProps;
 
 type DisclosureSingleProps = {
-  type: "single";
+  type?: "single";
   value?: number;
   setValue?: (value: number) => void;
 };
