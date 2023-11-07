@@ -1,21 +1,14 @@
-import cn from "classnames";
 import {
-  AnimatePresence,
-  domAnimation,
-  LayoutGroup,
-  LazyMotion,
-} from "framer-motion";
+  IconAlertTriangle,
+  IconCircleCheck,
+  IconInfoSquareRounded,
+} from "@tabler/icons-react";
+import cn from "classnames";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";
 
 import { zIndexes } from "../../../styles";
-import {
-  IconCircleCheck,
-  IconAlertTriangle,
-  IconInfoSquareRounded,
-} from "@tabler/icons-react";
-
 import type { Color, SvgType, ToastVariant } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { isLoading, loading } from "../Loading/loading";
@@ -95,28 +88,22 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
         zIndexes.notify
       )}
     >
-      <LazyMotion features={domAnimation}>
-        <LayoutGroup>
-          <AnimatePresence>
-            {notificationArray.map(
-              ({ id, message, color = "accent", icon, variant }) => (
-                <Toast
-                  key={id}
-                  message={message}
-                  color={color}
-                  handleClose={() =>
-                    setNotificationArray((oldArray) =>
-                      oldArray.filter((item) => item.id !== id)
-                    )
-                  }
-                  variant={variant}
-                  icon={icon || icons[color]}
-                />
+      {notificationArray.map(
+        ({ id, message, color = "accent", icon, variant }) => (
+          <Toast
+            key={id}
+            message={message}
+            color={color}
+            handleClose={() =>
+              setNotificationArray((oldArray) =>
+                oldArray.filter((item) => item.id !== id)
               )
-            )}
-          </AnimatePresence>
-        </LayoutGroup>
-      </LazyMotion>
+            }
+            variant={variant}
+            icon={icon || icons[color]}
+          />
+        )
+      )}
     </div>
   );
 };
