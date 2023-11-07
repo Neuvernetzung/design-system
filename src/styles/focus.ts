@@ -32,7 +32,7 @@ export const focusBg: Record<Color, string> = {
   white: `focus-visible:bg-accent-100 dark:bg-accent-900 ${focusBase}`,
   black: `focus-visible:bg-accent-900 dark:bg-accent-100 ${focusBase}`,
   accent: `focus-visible:bg-accent-500 dark:focus-visible:bg-accent-400 ${focusBgBase}`,
-  success: `focus-visible:bg-success-400 dark:focus-visible:bg-success-600  {focusBgBase}`,
+  success: `focus-visible:bg-success-400 dark:focus-visible:bg-success-600 ${focusBgBase}`,
   warn: `focus-visible:bg-warn-400 dark:focus-visible:bg-warn-600 ${focusBgBase}`,
   danger: `focus-visible:bg-danger-400 dark:focus-visible:bg-danger-600 ${focusBgBase}`,
 };

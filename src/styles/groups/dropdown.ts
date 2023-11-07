@@ -9,8 +9,8 @@ import {
   extendedTextColors,
   gapsSmall,
   paddings,
+  paddingsSmallEvenly,
   paddingsX,
-  paddingsYSmall,
   roundings,
   shadows,
   textColors,
@@ -33,7 +33,7 @@ export const getDropdownContainerStyles = ({
   cn(
     containerStyles.base,
     zIndexes.dropdown,
-    paddingsYSmall[capSize(size, "md")],
+    paddingsSmallEvenly[capSize(size, "md")],
     roundings[minSize(size, "md")],
     shadows[minSize(size, "md")]
   );
@@ -65,17 +65,6 @@ export const getDropDownOptionsStyles = ({
     gapsSmall[size],
     disabled ? optionStyles.disabled : optionStyles.textColor
   );
-
-type DropdownGroupStyleProps = {
-  size: Size;
-};
-
-const groupStyles = {
-  base: `w-full border-b last:border-none ${borders.accent}`,
-};
-
-export const getDropdownGroupStyles = ({ size }: DropdownGroupStyleProps) =>
-  cn(groupStyles.base, paddingsYSmall[capSize(size, "md")]);
 
 type DropdownGroupHeaderStyleProps = {
   size: Size;

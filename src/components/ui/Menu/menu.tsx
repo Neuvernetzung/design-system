@@ -1,30 +1,28 @@
-import { Menu as HeadlessMenu } from "@headlessui/react";
-import type { Placement } from "@popperjs/core";
-import cn from "classnames";
 import {
-  ElementType,
-  ForwardedRef,
-  forwardRef,
-  ReactNode,
-  useState,
-} from "react";
-import { createPortal } from "react-dom";
-import { usePopper } from "react-popper";
+  DropdownMenuContent,
+  type DropdownMenuContentProps,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+  type DropdownMenuTriggerProps,
+  Root as DropdownMenuRoot,
+} from "@radix-ui/react-dropdown-menu";
+import cn from "classnames";
+import Link from "next/link";
+import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
-import { gapsSmall, textColors } from "../../../styles";
+import { marginsYSmall, popoverAnimation } from "../../../styles";
 import {
   getDropdownContainerStyles,
   getDropdownGroupHeaderStyles,
-  getDropdownGroupStyles,
-  getDropDownOptionsStyles,
 } from "../../../styles/groups";
-import { popperOffset } from "../../../styles/popper/offset";
+import { offsetSizes } from "../../../styles/popper/offset";
 import type { Color, Size, SvgType } from "../../../types";
 import { capSize } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
-import { mergeRefs } from "../../../utils/internal/mergeRefs";
-import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
-import { Icon } from "../Icon";
+import { Button, ButtonProps } from "../Button";
+import { HorizontalRule } from "../HorizontalRule";
 import { Text } from "../Typography";
 
 export type MenuProps = {
@@ -32,223 +30,196 @@ export type MenuProps = {
   size?: Size;
   disabled?: boolean;
   dropdownClassName?: string;
-  placement?: Placement;
-} & MenuButtonProps;
+  side?: DropdownMenuContentProps["side"];
+  align?: DropdownMenuContentProps["align"];
+  buttonProps?: ButtonProps;
+  buttonComponent?: ReactElement;
+  menuTriggerProps?: DropdownMenuTriggerProps;
+};
 
-type MenuButtonProps =
-  | {
-      buttonType: "button";
-      buttonProps: ButtonProps;
-    }
-  | {
-      buttonType: "icon";
-      buttonProps: IconButtonProps;
-    };
+export type MenuItemAnchorProps = {
+  type: "anchor";
+  href: string;
+  color?: Color;
+  icon?: SvgType;
+};
 
-type OptionalFunctionProps =
-  | { href: string; onClick?: never }
-  | { href?: never; onClick: () => void };
+export type MenuItemButtonProps = {
+  type: "button";
+  onClick: () => void;
+  color?: Color;
+  icon?: SvgType;
+};
 
-type OptionalItemProps =
-  | {
-      items?: MenuItemProps[];
-      href?: never;
-      onClick?: never;
-      icon?: never;
-    }
-  | ({
-      items?: never;
-      icon?: SvgType;
-    } & OptionalFunctionProps);
+export type MenuItemGroupProps = {
+  type: "group";
+  items?: MenuItemProps[];
+};
 
-export type MenuItemProps = {
+export type MenuItemSeparatorProps = {
+  type: "separator";
+};
+
+export type MenuItemBaseProps = {
   children?: ReactNode;
   disabled?: boolean;
-  color?: Color;
-} & OptionalItemProps;
-
-type AsProps = {
-  as: ElementType;
-  href?: string;
-  onClick?: () => void;
 };
+
+export type MenuItemProps = MenuItemBaseProps &
+  (
+    | MenuItemAnchorProps
+    | MenuItemButtonProps
+    | MenuItemGroupProps
+    | MenuItemSeparatorProps
+  );
+
+export type MenuItemComponentProps = { size: Size };
 
 export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   (
     {
       items,
       disabled,
-      size = "md",
+      size = "sm",
       buttonProps,
-      buttonType = "button",
+      buttonComponent,
       dropdownClassName,
-      placement = "bottom-end",
+      side = "bottom",
+      align = "center",
+      menuTriggerProps,
     }: MenuProps,
     ref: ForwardedRef<HTMLButtonElement>
-  ) => {
-    const [referenceElement, setReferenceElement] =
-      useState<HTMLElement | null>(null);
-    const [popperElement, setPopperElement] = useState<HTMLElement | null>(
-      null
-    );
-    const offset = popperOffset({ size });
-
-    const { styles, attributes } = usePopper(referenceElement, popperElement, {
-      placement,
-      modifiers: [{ name: "offset", options: { offset } }],
-    });
-
-    const ButtonComponent = { icon: IconButton, button: Button };
-
-    return (
-      <HeadlessMenu>
-        <HeadlessMenu.Button
-          ref={mergeRefs([ref, setReferenceElement])}
-          disabled={disabled}
-          as={ButtonComponent[buttonType]}
-          {...buttonProps}
-        />
-        {createPortal(
-          <HeadlessMenu.Items
-            ref={setPopperElement}
-            className={cn(
-              "!w-64",
-              getDropdownContainerStyles({ size }),
-              dropdownClassName
-            )}
-            style={styles.popper}
-            {...attributes.popper}
-          >
-            {items?.map(
-              (
-                {
-                  children,
-                  disabled,
-                  items: _items,
-                  href,
-                  onClick,
-                  icon,
-                  color,
-                }: MenuItemProps,
-                i
-              ) => {
-                if (_items && _items.length !== 0)
-                  return (
-                    <div className={cn(getDropdownGroupStyles({ size }))}>
-                      {children && (
-                        <Text
-                          size="xs"
-                          className={cn(getDropdownGroupHeaderStyles({ size }))}
-                        >
-                          {children}
-                        </Text>
-                      )}
-                      {_items?.map(
-                        (
-                          {
-                            children: _children,
-                            disabled: _disabled,
-                            href: _href,
-                            onClick: _onClick,
-                            icon: _icon,
-                            color: _color,
-                          }: MenuItemProps,
-                          _i
-                        ) => {
-                          const asProps: AsProps = _href
-                            ? { as: "a", href: _href }
-                            : _onClick
-                            ? { as: "button", onClick: _onClick }
-                            : { as: "div" };
-
-                          return (
-                            <HeadlessMenu.Item
-                              {...asProps}
-                              key={`menu_option_${_i}`}
-                              disabled={_disabled}
-                              className={({ active }: { active?: boolean }) =>
-                                cn(
-                                  getDropDownOptionsStyles({
-                                    size,
-                                    active,
-                                    disabled: _disabled,
-                                  })
-                                )
-                              }
-                            >
-                              <div
-                                className={cn(
-                                  "flex flex-row items-center",
-                                  gapsSmall[capSize(size, "md")],
-                                  _color && textColors[_color]
-                                )}
-                              >
-                                {_icon && (
-                                  <Icon
-                                    color={_color}
-                                    icon={_icon}
-                                    size={capSize(size, "md")}
-                                  />
-                                )}
-                                {_children}
-                              </div>
-                            </HeadlessMenu.Item>
-                          );
-                        }
-                      )}
-                    </div>
-                  );
-                if (_items?.length === 0) return null;
-
-                const asProps: AsProps = href
-                  ? { as: "a", href }
-                  : onClick
-                  ? { as: "button", onClick }
-                  : { as: "div" };
-
-                return (
-                  <HeadlessMenu.Item
-                    {...asProps}
-                    key={`menu_option_${i}`}
-                    disabled={disabled}
-                    className={({ active }: { active?: boolean }) =>
-                      cn(
-                        getDropDownOptionsStyles({
-                          size,
-                          active,
-                          disabled,
-                        })
-                      )
-                    }
-                  >
-                    <div
-                      className={cn(
-                        "flex flex-row items-center",
-                        gapsSmall[capSize(size, "md")],
-                        color && textColors[color]
-                      )}
-                    >
-                      {icon && (
-                        <Icon
-                          color={color}
-                          icon={icon}
-                          size={capSize(size, "md")}
-                        />
-                      )}
-                      {children}
-                    </div>
-                  </HeadlessMenu.Item>
-                );
-              }
-            )}
-          </HeadlessMenu.Items>,
-          document?.body
-        )}
-      </HeadlessMenu>
-    );
-  }
+  ) => (
+    <DropdownMenuRoot>
+      <DropdownMenuTrigger
+        aria-disabled={disabled}
+        disabled={disabled}
+        ref={ref}
+        asChild
+        {...menuTriggerProps}
+      >
+        {buttonComponent || <Button {...buttonProps} />}
+      </DropdownMenuTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuContent
+          side={side}
+          align={align}
+          sideOffset={offsetSizes[size]}
+          className={cn(
+            "!w-64",
+            getDropdownContainerStyles({ size }),
+            dropdownClassName,
+            popoverAnimation
+          )}
+        >
+          {items?.map((props: MenuItemProps, i) => (
+            <MenuItem key={`menu_option_${i}`} size={size} {...props} />
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenuRoot>
+  )
 );
 
-export default typedMemo(Menu);
-
 Menu.displayName = "Menu";
+
+const MenuItem = ({
+  type,
+  size,
+  ...props
+}: MenuItemProps & MenuItemComponentProps) => {
+  if (type === "button")
+    return (
+      <MenuItemButton
+        size={size}
+        {...(props as MenuItemBaseProps & MenuItemButtonProps)}
+      />
+    );
+
+  if (type === "anchor")
+    return (
+      <MenuItemAnchor
+        size={size}
+        {...(props as MenuItemBaseProps & MenuItemAnchorProps)}
+      />
+    );
+
+  if (type === "separator")
+    return <HorizontalRule className={cn(marginsYSmall[size])} />;
+
+  if (type === "group")
+    return (
+      <MenuItemGroup
+        size={size}
+        {...(props as MenuItemBaseProps & MenuItemGroupProps)}
+      />
+    );
+
+  return null;
+};
+
+const MenuItemButton = ({
+  onClick,
+  children,
+  color,
+  disabled,
+  icon,
+  size,
+}: MenuItemBaseProps & MenuItemButtonProps & MenuItemComponentProps) => (
+  <DropdownMenuItem asChild>
+    <Button
+      size={capSize(size, "md")}
+      disabled={disabled}
+      variant="ghost"
+      color={color}
+      className={cn("w-full !justify-start")}
+      onClick={onClick}
+      leftIcon={icon}
+    >
+      {children}
+    </Button>
+  </DropdownMenuItem>
+);
+
+const MenuItemAnchor = ({
+  href,
+  children,
+  color,
+  disabled,
+  icon,
+  size,
+}: MenuItemBaseProps & MenuItemAnchorProps & MenuItemComponentProps) => (
+  <DropdownMenuItem asChild>
+    <Button
+      as={Link}
+      href={href}
+      size={capSize(size, "md")}
+      disabled={disabled}
+      variant="ghost"
+      color={color}
+      leftIcon={icon}
+      className={cn("w-full !justify-start")}
+    >
+      {children}
+    </Button>
+  </DropdownMenuItem>
+);
+
+const MenuItemGroup = ({
+  items,
+  children,
+  size,
+}: MenuItemBaseProps & MenuItemGroupProps & MenuItemComponentProps) => (
+  <DropdownMenuGroup>
+    {children && (
+      <DropdownMenuLabel asChild>
+        <Text size="xs" className={cn(getDropdownGroupHeaderStyles({ size }))}>
+          {children}
+        </Text>
+      </DropdownMenuLabel>
+    )}
+    {items?.map((props: MenuItemProps, i) => (
+      <MenuItem key={`group-menu-item-${i}`} size={size} {...props} />
+    ))}
+  </DropdownMenuGroup>
+);

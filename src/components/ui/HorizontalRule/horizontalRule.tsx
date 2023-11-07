@@ -1,9 +1,9 @@
 import cn from "classnames";
 
-import { borders, marginsY } from "../../../styles";
+import { borders } from "../../../styles";
 
-export type HorizontalRuleProps = {};
+export type HorizontalRuleProps = { className?: string };
 
-export const HorizontalRule = () => (
-  <hr className={cn(marginsY.lg, borders.accent)} />
+export const HorizontalRule = ({ className }: HorizontalRuleProps) => (
+  <hr className={cn(borders.accent, className)} />
 );

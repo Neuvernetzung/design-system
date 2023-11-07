@@ -3,7 +3,7 @@ import type { Element, HTMLReactParserOptions } from "html-react-parser";
 import parse, { domToReact } from "html-react-parser";
 import { createElement, ReactNode } from "react";
 
-import { prose } from "../../../styles";
+import { marginsY, prose } from "../../../styles";
 import type { ProseComponents, ProseComponentTag } from "../../../types";
 import { typedMemo } from "../../../utils/internal";
 import { HorizontalRule } from "../HorizontalRule";
@@ -39,7 +39,7 @@ export const proseComponents: ProseComponents = {
     component: Anchor,
     props: {},
   },
-  hr: { component: HorizontalRule, props: {} },
+  hr: { component: HorizontalRule, props: { className: marginsY.md } },
   img: {
     component: Image as any,
     props: {
