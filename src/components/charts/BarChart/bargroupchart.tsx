@@ -13,7 +13,6 @@ import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { max, min } from "@visx/vendor/d3-array";
 import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
 import cn from "classnames";
-import { domAnimation, LazyMotion } from "framer-motion";
 import { isFunction } from "lodash";
 import { ForwardedRef, forwardRef, ReactNode, useRef } from "react";
 
@@ -196,149 +195,147 @@ export const Bargroupchart = forwardRef(
     };
 
     return (
-      <LazyMotion features={domAnimation}>
-        <ChartWrapper ref={wrapperRef}>
-          <ChartAreaWrapper
-            ref={mergeRefs([ref, containerRef])}
-            id={id}
+      <ChartWrapper ref={wrapperRef}>
+        <ChartAreaWrapper
+          ref={mergeRefs([ref, containerRef])}
+          id={id}
+          height={innerHeight}
+          width={innerWidth}
+          margin={margin}
+        >
+          <ChartXAxisWrapper ref={xAxisRef}>
+            <Axis
+              hideAxisLine
+              hideTicks
+              top={innerHeight}
+              scale={xScale}
+              orientation="bottom"
+              tickComponent={ChartTickXComponent}
+              {...xAxisProps}
+            />
+          </ChartXAxisWrapper>
+          <ChartYAxisWrapper ref={yAxisRef}>
+            <Axis
+              hideAxisLine
+              hideTicks
+              scale={yScale}
+              orientation="left"
+              tickComponent={ChartTickYComponent}
+              numTicks={10}
+              {...yAxisProps}
+            />
+          </ChartYAxisWrapper>
+          <BarGroup
+            data={data}
+            keys={keys}
             height={innerHeight}
-            width={innerWidth}
-            margin={margin}
+            x0={getX}
+            x0Scale={xScale}
+            x1Scale={keysScale}
+            yScale={yScale}
+            color={(_, i) => getChartColor(i)}
           >
-            <ChartXAxisWrapper ref={xAxisRef}>
-              <Axis
-                hideAxisLine
-                hideTicks
-                top={innerHeight}
-                scale={xScale}
-                orientation="bottom"
-                tickComponent={ChartTickXComponent}
-                {...xAxisProps}
-              />
-            </ChartXAxisWrapper>
-            <ChartYAxisWrapper ref={yAxisRef}>
-              <Axis
-                hideAxisLine
-                hideTicks
-                scale={yScale}
-                orientation="left"
-                tickComponent={ChartTickYComponent}
-                numTicks={10}
-                {...yAxisProps}
-              />
-            </ChartYAxisWrapper>
-            <BarGroup
-              data={data}
-              keys={keys}
+            {(barGroups) =>
+              barGroups.map((barGroup) => (
+                <Group
+                  key={`bar-group-${barGroup.index}-${barGroup.x0}`}
+                  left={barGroup.x0}
+                >
+                  {barGroup.bars.map((bar) => (
+                    <rect
+                      key={`bar-group-bar-${barGroup.index}-${bar.index}-${bar.value}-${bar.key}`}
+                      x={bar.x}
+                      y={bar.value === null ? innerHeight : bar.y}
+                      width={bar.width}
+                      height={bar.value === null ? 0 : bar.height}
+                      fill={bar.color}
+                      onTouchStart={() =>
+                        handleTooltip({
+                          x: barGroup.x0 + bar.x,
+                          y: bar.value,
+                        })
+                      }
+                      onTouchMove={() =>
+                        handleTooltip({
+                          x: barGroup.x0 + bar.x,
+                          y: bar.value,
+                        })
+                      }
+                      onMouseMove={() =>
+                        handleTooltip({
+                          x: barGroup.x0 + bar.x,
+                          y: bar.value,
+                        })
+                      }
+                      onMouseLeave={() => hideTooltip()}
+                      {...barProps}
+                    />
+                  ))}
+                </Group>
+              ))
+            }
+          </BarGroup>
+          {allowTooltipHover && (
+            <ChartTooltipHover
+              width={width}
               height={innerHeight}
-              x0={getX}
-              x0Scale={xScale}
-              x1Scale={keysScale}
-              yScale={yScale}
-              color={(_, i) => getChartColor(i)}
-            >
-              {(barGroups) =>
-                barGroups.map((barGroup) => (
-                  <Group
-                    key={`bar-group-${barGroup.index}-${barGroup.x0}`}
-                    left={barGroup.x0}
-                  >
-                    {barGroup.bars.map((bar) => (
-                      <rect
-                        key={`bar-group-bar-${barGroup.index}-${bar.index}-${bar.value}-${bar.key}`}
-                        x={bar.x}
-                        y={bar.value === null ? innerHeight : bar.y}
-                        width={bar.width}
-                        height={bar.value === null ? 0 : bar.height}
-                        fill={bar.color}
-                        onTouchStart={() =>
-                          handleTooltip({
-                            x: barGroup.x0 + bar.x,
-                            y: bar.value,
-                          })
-                        }
-                        onTouchMove={() =>
-                          handleTooltip({
-                            x: barGroup.x0 + bar.x,
-                            y: bar.value,
-                          })
-                        }
-                        onMouseMove={() =>
-                          handleTooltip({
-                            x: barGroup.x0 + bar.x,
-                            y: bar.value,
-                          })
-                        }
-                        onMouseLeave={() => hideTooltip()}
-                        {...barProps}
-                      />
-                    ))}
-                  </Group>
-                ))
-              }
-            </BarGroup>
-            {allowTooltipHover && (
-              <ChartTooltipHover
-                width={width}
-                height={innerHeight}
-                tooltipData={tooltipData}
-                tooltipLeft={tooltipLeft}
-                tooltipTop={tooltipTop}
-                {...hoverProps}
-              />
-            )}
-            {showGridRows && (
-              <GridRows
-                scale={yScale}
-                width={innerWidth}
-                stroke="currentColor"
-                className={cn(extendedTextColors.subtile)}
-                strokeDasharray="1,3"
-                strokeOpacity={0.2}
-                pointerEvents="none"
-                {...gridRowProps}
-              />
-            )}
-            {showGridColumns && (
-              <GridColumns
-                scale={xScale}
-                height={innerHeight}
-                strokeDasharray="1,3"
-                stroke="currentColor"
-                className={cn(extendedTextColors.subtile)}
-                strokeOpacity={0.2}
-                pointerEvents="none"
-                {...gridColumnProps}
-              />
-            )}
-            {children &&
-              (isFunction(children)
-                ? children({
-                    height,
-                    innerHeight,
-                    innerWidth,
-                    margin,
-                    width,
-                    xScale,
-                    yScale,
-                  })
-                : children)}
-          </ChartAreaWrapper>
-          {allowTooltip && (
-            <ChartTooltip
-              tooltipLabel={
-                isFunction(formatTooltip)
-                  ? formatTooltip(tooltipData)
-                  : tooltipData?.y
-              }
+              tooltipData={tooltipData}
               tooltipLeft={tooltipLeft}
               tooltipTop={tooltipTop}
-              tooltipData={tooltipData}
-              TooltipInPortal={TooltipInPortal}
+              {...hoverProps}
             />
           )}
-        </ChartWrapper>
-      </LazyMotion>
+          {showGridRows && (
+            <GridRows
+              scale={yScale}
+              width={innerWidth}
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeDasharray="1,3"
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridRowProps}
+            />
+          )}
+          {showGridColumns && (
+            <GridColumns
+              scale={xScale}
+              height={innerHeight}
+              strokeDasharray="1,3"
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridColumnProps}
+            />
+          )}
+          {children &&
+            (isFunction(children)
+              ? children({
+                  height,
+                  innerHeight,
+                  innerWidth,
+                  margin,
+                  width,
+                  xScale,
+                  yScale,
+                })
+              : children)}
+        </ChartAreaWrapper>
+        {allowTooltip && (
+          <ChartTooltip
+            tooltipLabel={
+              isFunction(formatTooltip)
+                ? formatTooltip(tooltipData)
+                : tooltipData?.y
+            }
+            tooltipLeft={tooltipLeft}
+            tooltipTop={tooltipTop}
+            tooltipData={tooltipData}
+            TooltipInPortal={TooltipInPortal}
+          />
+        )}
+      </ChartWrapper>
     );
   }
 );

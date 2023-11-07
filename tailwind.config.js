@@ -73,6 +73,8 @@ module.exports = {
         drawerTopOut: "drawerTopOut 100ms linear",
         drawerBottom: "drawerBottom 100ms linear",
         drawerBottomOut: "drawerBottomOut 100ms linear",
+        checkbox: "checkbox 150ms linear",
+        checkboxOut: "checkboxOut 100ms linear",
       },
       keyframes: {
         popover: {
@@ -138,6 +140,22 @@ module.exports = {
         drawerBottomOut: {
           from: { transform: "translateY(0%)" },
           to: { transform: "translateY(100%)" },
+        },
+        checkbox: {
+          from: { opacity: 0, strokeDashoffset: "100%", scale: 0.5 },
+          to: {
+            opacity: 1,
+            strokeDashoffset: 0,
+            scale: 1,
+          },
+        },
+        checkboxOut: {
+          from: { opacity: 1, strokeDashoffset: 0, scale: 1 },
+          to: {
+            opacity: 0,
+            strokeDashoffset: "100%",
+            scale: 0.5,
+          },
         },
       },
     },

@@ -9,3 +9,6 @@ export const backdropAnimation =
 
 export const disclosureAnimation =
   "data-[state=open]:animate-disclosure data-[state=closed]:animate-disclosureOut";
+
+export const checkboxAnimation =
+  "group-data-[state=checked]:animate-checkbox group-data-[state=indeterminate]:animate-checkbox group-data-[state=unchecked]:animate-checkboxOut";

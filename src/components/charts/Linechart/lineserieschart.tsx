@@ -6,7 +6,6 @@ import { AreaClosed, LinePath } from "@visx/shape";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { bisector, extent, max, min } from "@visx/vendor/d3-array";
 import cn from "classnames";
-import { domAnimation, LazyMotion } from "framer-motion";
 import compact from "lodash/compact";
 import isFunction from "lodash/isFunction";
 import {
@@ -178,141 +177,139 @@ export const LineSerieschart = forwardRef(
     };
 
     return (
-      <LazyMotion features={domAnimation}>
-        <ChartWrapper ref={wrapperRef}>
-          <ChartAreaWrapper
-            ref={mergeRefs([ref, containerRef])}
-            id={id}
-            height={innerHeight}
-            width={innerWidth}
-            margin={margin}
-            onTouchStart={(e) => handleTooltip(e)}
-            onTouchMove={(e) => handleTooltip(e)}
-            onMouseMove={(e) => handleTooltip(e)}
-            onMouseLeave={() => hideTooltip()}
-          >
-            <ChartXAxisWrapper ref={xAxisRef}>
-              <Axis
-                hideAxisLine
-                hideTicks
-                top={innerHeight}
-                scale={xScale}
-                orientation="bottom"
-                tickComponent={ChartTickXComponent}
-                {...xAxisProps}
+      <ChartWrapper ref={wrapperRef}>
+        <ChartAreaWrapper
+          ref={mergeRefs([ref, containerRef])}
+          id={id}
+          height={innerHeight}
+          width={innerWidth}
+          margin={margin}
+          onTouchStart={(e) => handleTooltip(e)}
+          onTouchMove={(e) => handleTooltip(e)}
+          onMouseMove={(e) => handleTooltip(e)}
+          onMouseLeave={() => hideTooltip()}
+        >
+          <ChartXAxisWrapper ref={xAxisRef}>
+            <Axis
+              hideAxisLine
+              hideTicks
+              top={innerHeight}
+              scale={xScale}
+              orientation="bottom"
+              tickComponent={ChartTickXComponent}
+              {...xAxisProps}
+            />
+          </ChartXAxisWrapper>
+          <ChartYAxisWrapper ref={yAxisRef}>
+            <Axis
+              hideAxisLine
+              hideTicks
+              scale={yScale}
+              orientation="left"
+              tickComponent={ChartTickYComponent}
+              numTicks={10}
+              {...yAxisProps}
+            />
+          </ChartYAxisWrapper>
+          {series.map(({ data, color }, i) => (
+            <>
+              <LinePath
+                key={`line-path-${i}`}
+                data={data}
+                x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
+                y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
+                stroke={color || getChartColor(i)}
+                fill="none"
+                strokeWidth="2"
+                vectorEffect="non-scaling-stroke"
+                curve={curve}
+                defined={(d) => {
+                  if (missingValueBehaviour === "zero") return true;
+                  return getY(d) !== null;
+                }}
+                {...lineProps}
               />
-            </ChartXAxisWrapper>
-            <ChartYAxisWrapper ref={yAxisRef}>
-              <Axis
-                hideAxisLine
-                hideTicks
-                scale={yScale}
-                orientation="left"
-                tickComponent={ChartTickYComponent}
-                numTicks={10}
-                {...yAxisProps}
-              />
-            </ChartYAxisWrapper>
-            {series.map(({ data, color }, i) => (
-              <>
-                <LinePath
-                  key={`line-path-${i}`}
+              {showLineArea && (
+                <AreaClosed
+                  key={`area-closed-${i}`}
                   data={data}
-                  x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
-                  y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
-                  stroke={color || getChartColor(i)}
-                  fill="none"
-                  strokeWidth="2"
-                  vectorEffect="non-scaling-stroke"
+                  x={(d) => xScale(getX(d))}
+                  y={(d) => yScale(getY(d) || 0)}
+                  yScale={yScale}
                   curve={curve}
+                  fill={color || getChartColor(i)}
+                  opacity={0.1}
                   defined={(d) => {
                     if (missingValueBehaviour === "zero") return true;
                     return getY(d) !== null;
                   }}
-                  {...lineProps}
+                  {...lineAreaProps}
                 />
-                {showLineArea && (
-                  <AreaClosed
-                    key={`area-closed-${i}`}
-                    data={data}
-                    x={(d) => xScale(getX(d))}
-                    y={(d) => yScale(getY(d) || 0)}
-                    yScale={yScale}
-                    curve={curve}
-                    fill={color || getChartColor(i)}
-                    opacity={0.1}
-                    defined={(d) => {
-                      if (missingValueBehaviour === "zero") return true;
-                      return getY(d) !== null;
-                    }}
-                    {...lineAreaProps}
-                  />
-                )}
-              </>
-            ))}
-            {allowTooltipHover && (
-              <ChartTooltipHover
-                width={width}
-                height={innerHeight}
-                tooltipData={tooltipData}
-                tooltipLeft={tooltipLeft}
-                tooltipTop={tooltipTop}
-                color={getChartColor(tooltipData?.i || 0)}
-                {...hoverProps}
-              />
-            )}
-            {showGridRows && (
-              <GridRows
-                scale={yScale}
-                width={innerWidth}
-                stroke="currentColor"
-                className={cn(extendedTextColors.subtile)}
-                strokeDasharray="1,3"
-                strokeOpacity={0.2}
-                pointerEvents="none"
-                {...gridRowProps}
-              />
-            )}
-            {showGridColumns && (
-              <GridColumns
-                scale={xScale}
-                height={innerHeight}
-                strokeDasharray="1,3"
-                stroke="currentColor"
-                className={cn(extendedTextColors.subtile)}
-                strokeOpacity={0.2}
-                pointerEvents="none"
-                {...gridColumnProps}
-              />
-            )}
-            {children &&
-              (isFunction(children)
-                ? children({
-                    height,
-                    innerHeight,
-                    innerWidth,
-                    margin,
-                    width,
-                    xScale,
-                    yScale,
-                  })
-                : children)}
-          </ChartAreaWrapper>
-          {allowTooltip && (
-            <ChartTooltip
-              tooltipLabel={
-                isFunction(formatTooltip)
-                  ? formatTooltip(tooltipData)
-                  : tooltipData?.y
-              }
+              )}
+            </>
+          ))}
+          {allowTooltipHover && (
+            <ChartTooltipHover
+              width={width}
+              height={innerHeight}
+              tooltipData={tooltipData}
               tooltipLeft={tooltipLeft}
               tooltipTop={tooltipTop}
-              tooltipData={tooltipData}
-              TooltipInPortal={TooltipInPortal}
+              color={getChartColor(tooltipData?.i || 0)}
+              {...hoverProps}
             />
           )}
-        </ChartWrapper>
-      </LazyMotion>
+          {showGridRows && (
+            <GridRows
+              scale={yScale}
+              width={innerWidth}
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeDasharray="1,3"
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridRowProps}
+            />
+          )}
+          {showGridColumns && (
+            <GridColumns
+              scale={xScale}
+              height={innerHeight}
+              strokeDasharray="1,3"
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridColumnProps}
+            />
+          )}
+          {children &&
+            (isFunction(children)
+              ? children({
+                  height,
+                  innerHeight,
+                  innerWidth,
+                  margin,
+                  width,
+                  xScale,
+                  yScale,
+                })
+              : children)}
+        </ChartAreaWrapper>
+        {allowTooltip && (
+          <ChartTooltip
+            tooltipLabel={
+              isFunction(formatTooltip)
+                ? formatTooltip(tooltipData)
+                : tooltipData?.y
+            }
+            tooltipLeft={tooltipLeft}
+            tooltipTop={tooltipTop}
+            tooltipData={tooltipData}
+            TooltipInPortal={TooltipInPortal}
+          />
+        )}
+      </ChartWrapper>
     );
   }
 );

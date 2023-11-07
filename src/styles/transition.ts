@@ -1,3 +1,9 @@
-export const transition = "transition duration-300 ease-in-out";
+import cn from "classnames";
 
-export const transitionFast = "transition duration-150 ease-in-out";
+export const duration = "duration-300";
+
+export const transition = cn("transition ease-in-out", duration);
+
+export const durationFast = "duration-150";
+
+export const transitionFast = cn("transition ease-in-out", durationFast);
