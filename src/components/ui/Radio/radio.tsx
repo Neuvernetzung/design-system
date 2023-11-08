@@ -1,13 +1,17 @@
-import { RadioGroup } from "@headlessui/react";
+import {
+  RadioGroupItem,
+  RadioGroupProps,
+  Root as RadioGroupRoot,
+} from "@radix-ui/react-radio-group";
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
-import {
-  Controller,
+import type { ReactNode } from "react";
+import type {
   FieldPath,
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import type { Locale } from "../../../locales/getText";
 import {
@@ -15,7 +19,6 @@ import {
   bordersInteractive,
   extendedBgColors,
   focus,
-  gaps,
   gapsSmall,
   radioSizes,
   roundings,
@@ -28,24 +31,6 @@ import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
-
-export const checkedColors: Record<Color, string> = {
-  brand:
-    "border-brand-500 dark:border-brand-500 hover:border-brand-600 dark:hover:border-brand-400",
-  primary:
-    "border-primary-500 dark:border-primary-500 hover:border-primary-600 dark:hover:border-primary-400",
-  accent:
-    "border-accent-500 dark:border-accent-500 hover:border-accent-600 dark:hover:border-accent-400",
-  success:
-    "border-success-500 dark:border-success-500 hover:border-success-600 dark:hover:border-success-400",
-  warn: "border-warn-500 dark:border-warn-500 hover:border-warn-600 dark:hover:border-warn-400",
-  danger:
-    "border-danger-500 dark:border-danger-500 hover:border-danger-600 dark:hover:border-danger-400",
-  white:
-    "border-white dark:border-white hover:border-accent-100 dark:hover:border-accent-100",
-  black:
-    "border-black dark:border-black hover:border-accent-900 dark:hover:border-accent-900",
-};
 
 export const radioBorderSizes: Record<Size, string> = {
   xs: "border-4",
@@ -65,11 +50,12 @@ export type RadioProps = {
   color?: Color;
   disabled?: boolean;
   className?: string;
+  orientation?: RadioGroupProps["orientation"];
 };
 
 export type RadioOptionProps = {
   label: ReactNode;
-  value: any;
+  value: string;
   disabled?: boolean;
 };
 
@@ -99,6 +85,7 @@ export const Radio = <
   options,
   disabled,
   className,
+  orientation = "vertical",
 }: RadioProps & UseControllerProps<TFieldValues, TName>) => {
   const locale = useRouter().locale as Locale;
 
@@ -109,7 +96,10 @@ export const Radio = <
       rules={{
         required: requiredInputRule(required, locale),
       }}
-      render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
+      render={({
+        field: { value: checkedValue, onChange, ref },
+        fieldState: { error },
+      }) => (
         <FormElement
           required={required}
           error={error}
@@ -118,95 +108,91 @@ export const Radio = <
           helper={helper}
           size={size}
         >
-          <RadioGroup
-            value={value}
-            onChange={onChange}
+          <RadioGroupRoot
+            value={checkedValue}
+            onValueChange={onChange}
             disabled={disabled}
-            className={cn("flex flex-col", gapsSmall[size], className)}
-          >
-            {options.map(
-              (
-                { label, value, disabled: singleDisabled }: RadioOptionProps,
-                i
-              ) => {
-                const _disabled = singleDisabled ?? disabled;
-
-                return (
-                  <RadioGroup.Option
-                    ref={ref}
-                    id={`${name}_option_${i}`}
-                    key={value}
-                    disabled={_disabled}
-                    value={value}
-                    className={cn(
-                      "w-fit",
-                      styles.base,
-                      gapsSmall[size],
-                      focus[color],
-                      roundings[size]
-                    )}
-                  >
-                    {({ checked }) => (
-                      <>
-                        {variant === "default" && (
-                          <div
-                            className={cn(
-                              "flex flex-row items-center",
-                              gaps[size]
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                "aspect-square flex",
-                                transition,
-                                !_disabled
-                                  ? styles.input
-                                  : styles.inputDisabled,
-                                radioSizes[size],
-                                checked && radioBorderSizes[size],
-                                !_disabled && checked
-                                  ? checkedColors[color]
-                                  : bordersInteractive.accent,
-                                error && styles.inputError
-                              )}
-                            />
-                            <label
-                              htmlFor={`${name}_option_${i}`}
-                              className={cn(
-                                !_disabled
-                                  ? styles.label
-                                  : styles.labelDisabled,
-                                textColors.accent,
-                                textSizes[size]
-                              )}
-                            >
-                              {label}
-                            </label>
-                          </div>
-                        )}
-                        {variant === "button" && (
-                          <Button
-                            disabled={_disabled}
-                            variant={checked ? "filled" : "outline"}
-                            color={!error ? color : "danger"}
-                            size={size}
-                            as="span"
-                            className={cn(
-                              !_disabled
-                                ? "cursor-pointer"
-                                : "cursor-not-allowed"
-                            )}
-                          >
-                            {label}
-                          </Button>
-                        )}
-                      </>
-                    )}
-                  </RadioGroup.Option>
-                );
-              }
+            orientation={orientation}
+            className={cn(
+              "flex",
+              orientation === "horizontal" ? "flex-row" : "flex-col",
+              gapsSmall[size],
+              className
             )}
-          </RadioGroup>
+          >
+            {options.map(({ label, value, disabled: singleDisabled }, i) => {
+              const _disabled = singleDisabled ?? disabled;
+              const isChecked = value === checkedValue;
+
+              return (
+                <div
+                  ref={ref}
+                  key={value}
+                  className={cn(
+                    "w-fit",
+                    styles.base,
+                    gapsSmall[size],
+                    focus[color],
+                    roundings[size]
+                  )}
+                >
+                  {variant === "default" && (
+                    <>
+                      <RadioGroupItem
+                        disabled={_disabled}
+                        value={value}
+                        id={`${name}_option_${i}`}
+                        className={cn(
+                          "aspect-square flex rounded-full",
+                          focus[color],
+                          radioSizes[size]
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            "w-full h-full",
+                            transition,
+                            !_disabled ? styles.input : styles.inputDisabled,
+                            isChecked && radioBorderSizes[size],
+                            !_disabled && isChecked
+                              ? bordersInteractive[color]
+                              : bordersInteractive.accent,
+                            error && styles.inputError
+                          )}
+                        />
+                      </RadioGroupItem>
+                      <label
+                        htmlFor={`${name}_option_${i}`}
+                        className={cn(
+                          !_disabled ? styles.label : styles.labelDisabled,
+                          textColors.accent,
+                          textSizes[size]
+                        )}
+                      >
+                        {label}
+                      </label>
+                    </>
+                  )}
+                  {variant === "button" && (
+                    <RadioGroupItem disabled={_disabled} value={value} asChild>
+                      <Button
+                        disabled={_disabled}
+                        variant={isChecked ? "filled" : "outline"}
+                        color={!error ? color : "danger"}
+                        size={size}
+                        as="span"
+                        className={cn(
+                          !_disabled ? "cursor-pointer" : "cursor-not-allowed"
+                        )}
+                      >
+                        {label}
+                      </Button>
+                    </RadioGroupItem>
+                  )}
+                </div>
+              );
+            })}
+          </RadioGroupRoot>
         </FormElement>
       )}
     />
