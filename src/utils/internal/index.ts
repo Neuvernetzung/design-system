@@ -5,7 +5,6 @@ export * from "./format";
 export * from "./mergeRefs";
 export * from "./regex";
 export * from "./typedMemo";
-export * from "./updateQuery";
 export * from "./useRefDimensions";
 export * from "./useWindowSize";
 export * from "./polymorphic";
