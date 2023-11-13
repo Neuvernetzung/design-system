@@ -8,7 +8,7 @@ import {
   focusesVariants,
   sizes,
 } from "../../../../types";
-import { loading } from "../../Loading";
+import { loading, useIsLoading } from "../../Loading";
 import { notify } from "../../Notify";
 import { IconButton } from "./iconButton";
 import { ElementType } from "react";
@@ -161,8 +161,10 @@ export const Disabled = ({ ...args }) => (
 );
 
 export const IsLoading = ({ ...args }) => {
-  const load = (id: string) => {
-    loading(true, { id });
+  const isLoading = useIsLoading();
+
+  const load = () => {
+    loading(true);
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });
     }, 2000);
@@ -174,10 +176,10 @@ export const IsLoading = ({ ...args }) => {
         <IconButton
           ariaLabel="button"
           icon={IconHome}
+          isLoading={isLoading}
           onClick={() => {
-            load("button");
+            load();
           }}
-          loadingId="button"
           {...args}
         />
       </Container>

@@ -13,6 +13,7 @@ import {
 import { loading } from "../Loading";
 import { notify } from "../Notify";
 import { Button } from "./button";
+import { useIsLoading } from "../Loading/loading";
 
 export default {
   title: "UI/Buttons/Button",
@@ -182,8 +183,10 @@ export const VeryLong = ({ ...args }) => (
 );
 
 export const IsLoading = ({ ...args }) => {
-  const load = (id: string) => {
-    loading(true, { id });
+  const isLoading = useIsLoading();
+
+  const load = () => {
+    loading(true);
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });
     }, 2000);
@@ -195,9 +198,9 @@ export const IsLoading = ({ ...args }) => {
         <Button
           onClick={() => {
             action("button");
-            load("button");
+            load();
           }}
-          loadingId="button"
+          isLoading={isLoading}
           {...args}
         >
           Click
