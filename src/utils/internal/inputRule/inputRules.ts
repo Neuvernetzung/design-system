@@ -2,7 +2,7 @@ import isBoolean from "lodash/isBoolean";
 import isNumber from "lodash/isNumber";
 import isRegExp from "lodash/isRegExp";
 import isString from "lodash/isString";
-import { ValidationRule } from "react-hook-form";
+import type { ValidationRule } from "react-hook-form";
 
 import type {
   MaxLengthRule,

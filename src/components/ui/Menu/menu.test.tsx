@@ -6,13 +6,7 @@ import { Menu } from ".";
 it("Menu axe", async () => {
   const { container } = render(
     <Menu
-      items={[
-        {
-          children: "Test",
-          href: "/",
-        },
-      ]}
-      buttonType="button"
+      items={[{ type: "anchor", children: "Test", href: "/" }]}
       buttonProps={{ children: "Test" }}
     />
   );

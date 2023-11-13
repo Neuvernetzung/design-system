@@ -73,11 +73,14 @@ export const ConfirmationModal = () => {
   return (
     <Modal
       open={!!confirmationState}
-      onClose={handleCancel}
       setOpen={reset}
       size="sm"
       initialFocus={
-        color !== "danger" && color !== "warn" ? confirmBtnRef : cancelBtnRef
+        color !== "danger"
+          ? color !== "warn"
+            ? confirmBtnRef
+            : cancelBtnRef
+          : undefined
       }
       forbidCancellation={forbidCancellation}
       header={

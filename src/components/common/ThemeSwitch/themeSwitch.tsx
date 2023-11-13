@@ -53,15 +53,16 @@ export const ThemeSwitchMenu = ({
 
   return (
     <Menu
-      dropdownClassName="min-w-[8rem] w-16 bg-red-500"
-      buttonType="icon"
-      buttonProps={{
-        ariaLabel: "theme-switch",
-        size,
-        icon: resolvedTheme === "light" ? IconSun : IconMoon,
-        variant: "ghost",
-        className: textColor,
-      }}
+      dropdownClassName="min-w-[8rem] w-16"
+      buttonComponent={
+        <IconButton
+          ariaLabel="theme-switch"
+          size={size}
+          icon={resolvedTheme === "light" ? IconSun : IconMoon}
+          variant="ghost"
+          className={textColor}
+        />
+      }
       items={[
         {
           icon: IconDeviceDesktop,

@@ -57,6 +57,8 @@ module.exports = {
         danger: colorVariables("danger"),
       },
       animation: {
+        modal: "modal 100ms linear",
+        modalOut: "modalOut 50ms linear",
         popover: "popover 100ms linear",
         popoverOut: "popoverOut 50ms linear",
         tooltip: "tooltip 50ms linear",
@@ -77,6 +79,14 @@ module.exports = {
         checkboxOut: "checkboxOut 100ms linear",
       },
       keyframes: {
+        modal: {
+          "0%": { transform: "scale(95%) translateY(5px)", opacity: 0 },
+          "100%": { transform: "scale(100%) translateY(0px)", opacity: 1 },
+        },
+        modalOut: {
+          "0%": { transform: "scale(100%) translateY(0px)", opacity: 1 },
+          "100%": { transform: "scale(95%) translateY(5px)", opacity: 0 },
+        },
         popover: {
           "0%": { transform: "scale(95%) translateY(5px)", opacity: 0 },
           "100%": { transform: "scale(100%) translateY(0px)", opacity: 1 },

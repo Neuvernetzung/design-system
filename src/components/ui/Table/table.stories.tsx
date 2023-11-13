@@ -1,13 +1,13 @@
-import { IconChevronDown, IconPencil } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
+import { IconChevronDown, IconPencil } from "@tabler/icons-react";
+import cn from "classnames";
 import React, { useEffect, useState } from "react";
 
+import { extendedBgColors } from "../../../styles";
 import { IconButton } from "../Button";
 import { UseSortableChange } from "../Sortable";
-import { DataTable, SimpleTable, SortableTable } from ".";
 import { Text } from "../Typography";
-import cn from "classnames";
-import { extendedBgColors } from "../../../styles";
+import { DataTable, SimpleTable, SortableTable } from ".";
 
 export default {
   title: "UI/Data Display/Table",
@@ -76,6 +76,7 @@ export const Simple = ({ ...args }) => (
     ]}
     divideX
     items={items}
+    {...args}
   />
 );
 
@@ -97,6 +98,7 @@ export const DisabledHead = ({ ...args }) => (
     ]}
     divideY={false}
     items={items}
+    {...args}
   />
 );
 
@@ -114,11 +116,12 @@ export const Data = ({ ...args }) => {
         { id: "options", title: "", shrink: true },
       ]}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       setChecked={setChecked}
       divideX
       items={items}
+      {...args}
     />
   );
 };
@@ -138,7 +141,7 @@ export const Disclosure = ({ ...args }) => {
         { id: "options", title: "", shrink: true },
       ]}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       disclosureValue="disclosure"
       disclosureClassName={cn(extendedBgColors.subtile)}
@@ -161,6 +164,7 @@ export const Disclosure = ({ ...args }) => {
           />
         ),
       }))}
+      {...args}
     />
   );
 };
@@ -179,13 +183,14 @@ export const DataNoItems = ({ ...args }) => {
         { id: "options", title: "", shrink: true },
       ]}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       setChecked={setChecked}
       disclosureValue="disclosure"
       disclosureClassName="bg-accent-100"
       divideX
       items={[]}
+      {...args}
     />
   );
 };
@@ -204,13 +209,14 @@ export const Data1Item = ({ ...args }) => {
         { id: "options", title: "", shrink: true },
       ]}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       setChecked={setChecked}
       disclosureValue="disclosure"
       disclosureClassName="bg-accent-100"
       divideX
       items={[items[0]]}
+      {...args}
     />
   );
 };
@@ -254,6 +260,7 @@ export const Sortable = ({ ...args }) => {
         id="_id"
         items={items}
         order="order"
+        {...args}
       />
       <div className="flex flex-col gap-2">
         <Text>Geändert:</Text>

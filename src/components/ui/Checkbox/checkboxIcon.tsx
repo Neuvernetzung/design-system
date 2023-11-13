@@ -6,37 +6,35 @@ import { checkboxAnimation, transition } from "../../../styles";
 
 type CheckboxIconProps = {
   size?: Size;
-  isChecked: boolean;
+  checked: boolean;
   icon?: SvgType;
-  isIndeterminate?: boolean;
+  indeterminate?: boolean;
 };
 
 export const CheckboxIcon = ({
   size,
-  isChecked,
+  checked,
   icon,
-  isIndeterminate,
+  indeterminate,
 }: CheckboxIconProps) => (
   <div
     data-state={
-      isChecked ? "checked" : isIndeterminate ? "indeterminate" : "unchecked"
+      checked ? "checked" : indeterminate ? "indeterminate" : "unchecked"
     }
     className={cn(
       "group flex h-full items-center justify-center will-change-transform",
       transition
     )}
   >
-    {isChecked ? (
+    {checked ? (
       <Icon size={size} icon={icon ?? CheckboxIconCheck} />
-    ) : (
-      isIndeterminate && (
-        <Icon
-          className={cn(checkboxAnimation)}
-          size={size}
-          icon={CheckboxIconMinus}
-        />
-      )
-    )}
+    ) : indeterminate ? (
+      <Icon
+        className={cn(checkboxAnimation)}
+        size={size}
+        icon={CheckboxIconMinus}
+      />
+    ) : null}
   </div>
 );
 

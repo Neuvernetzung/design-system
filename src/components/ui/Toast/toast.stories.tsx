@@ -4,6 +4,7 @@ import React from "react";
 
 import { colors, toastVariants } from "../../../types";
 import { Toast } from "./toast";
+import { ToastProvider, ToastViewport } from "@radix-ui/react-toast";
 
 export default {
   title: "UI/Overlay/Toast",
@@ -21,31 +22,39 @@ const Container = ({ ...props }) => (
 
 export const Variants = ({ ...args }) => (
   <Container>
-    {toastVariants.map((variant) => (
-      <Toast
-        variant={variant}
-        key={variant}
-        icon={IconAlertTriangle}
-        message={`Dies ist eine ${variant} Benachrichtigung`}
-        handleClose={() => {}}
-        {...args}
-      />
-    ))}
+    <ToastProvider>
+      {toastVariants.map((variant) => (
+        <Toast
+          variant={variant}
+          key={variant}
+          icon={IconAlertTriangle}
+          message={`Dies ist eine ${variant} Benachrichtigung`}
+          open
+          setOpen={() => {}}
+          {...args}
+        />
+      ))}
+      <ToastViewport />
+    </ToastProvider>
   </Container>
 );
 
 export const Colors = ({ ...args }) => (
   <Container>
-    {colors.map((color) => (
-      <Toast
-        color={color}
-        key={color}
-        icon={IconAlertTriangle}
-        message={`Dies ist eine ${color} Benachrichtigung`}
-        handleClose={() => {}}
-        {...args}
-      />
-    ))}
+    <ToastProvider>
+      {colors.map((color) => (
+        <Toast
+          color={color}
+          key={color}
+          icon={IconAlertTriangle}
+          message={`Dies ist eine ${color} Benachrichtigung`}
+          open
+          setOpen={() => {}}
+          {...args}
+        />
+      ))}
+      <ToastViewport />
+    </ToastProvider>
   </Container>
 );
 
@@ -54,17 +63,38 @@ Colors.parameters = {
 };
 export const LongWords = ({ ...args }) => (
   <Container>
-    <Toast
-      icon={IconAlertTriangle}
-      message="Dies ist eine seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehr lange Benachrichtigung"
-      handleClose={() => {}}
-      {...args}
-    />
-    <Toast
-      icon={IconAlertTriangle}
-      message="Dies ist eine error Benachrichtigung für den Pfad test.pfad.irgendwas.langes"
-      handleClose={() => {}}
-      {...args}
-    />
+    <ToastProvider>
+      <Toast
+        icon={IconAlertTriangle}
+        message="Dies ist eine seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehr lange Benachrichtigung"
+        open
+        setOpen={() => {}}
+        {...args}
+      />
+      <Toast
+        icon={IconAlertTriangle}
+        message="Dies ist eine error Benachrichtigung für den Pfad test.pfad.irgendwas.langes"
+        open
+        setOpen={() => {}}
+        {...args}
+      />
+      <ToastViewport />
+    </ToastProvider>
+  </Container>
+);
+
+export const Title = ({ ...args }) => (
+  <Container>
+    <ToastProvider>
+      <Toast
+        icon={IconAlertTriangle}
+        title="Dies ist ein Titel"
+        message="Dies ist die Beschreibung"
+        open
+        setOpen={() => {}}
+        {...args}
+      />
+      <ToastViewport />
+    </ToastProvider>
   </Container>
 );

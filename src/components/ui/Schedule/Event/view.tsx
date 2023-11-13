@@ -104,7 +104,6 @@ export const ViewEvent = ({
   return (
     <Modal
       open={viewEventProps.open}
-      onClose={viewEventProps.onClose}
       setOpen={viewEventProps.setOpen}
       header={
         <div

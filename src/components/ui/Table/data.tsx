@@ -112,11 +112,23 @@ export const DataTableInner = <
               <th className={cn("w-0", paddingsEvenly[size])}>
                 <CheckboxInner
                   id="checkbox_indeterminate"
-                  current={checked}
                   disabled={items?.length === 0}
-                  options={items?.map((item) => get(item, checkedValue))}
-                  allowIndetermination
-                  onChange={setChecked}
+                  checked={
+                    checked.length > 0
+                      ? items.every((item) =>
+                          checked.find(
+                            (value) => value === get(item, checkedValue)
+                          )
+                        )
+                        ? true
+                        : "indeterminate"
+                      : false
+                  }
+                  setChecked={(value) => {
+                    if (value === true) {
+                      setChecked(items.map((item) => get(item, checkedValue)));
+                    } else setChecked([]);
+                  }}
                 />
               </th>
             )}
@@ -163,13 +175,15 @@ export const DataTableInner = <
                 <td className={cn(paddingsEvenly[size])}>
                   <CheckboxInner
                     id={`checkbox_${i}`}
-                    current={checked}
-                    value={get(item, checkedValue)}
-                    onChange={setChecked}
-                    options={[
-                      ...items.map((item) => get(item, checkedValue)),
-                      "",
-                    ]}
+                    checked={checked.includes(get(item, checkedValue))}
+                    setChecked={(value) => {
+                      if (value === true) {
+                        setChecked([...checked, get(item, checkedValue)]);
+                      } else
+                        setChecked(
+                          checked.filter((v) => v !== get(item, checkedValue))
+                        );
+                    }}
                   />
                 </td>
               )}

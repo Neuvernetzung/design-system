@@ -1,12 +1,14 @@
-import { Dialog, Transition } from "@headlessui/react";
+import {
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogTrigger,
+  Root as DialogRoot,
+} from "@radix-ui/react-dialog";
 import cn from "classnames";
 import isString from "lodash/isString";
-import {
-  type FC,
-  Fragment,
-  type MutableRefObject,
-  type ReactNode,
-} from "react";
+import type { FC, ReactElement, ReactNode, RefObject } from "react";
+import { Fragment } from "react";
 
 import {
   bgColors,
@@ -19,7 +21,6 @@ import {
   roundingsTop,
   shadows,
   transition,
-  zIndexes,
 } from "../../../styles";
 import { useThemeStateValue } from "../../../theme/useThemeState";
 import { ExtendedSize } from "../../../types";
@@ -34,14 +35,14 @@ export type ModalProps = {
   content?: string | ReactNode;
   footer?: ReactNode;
   size?: ModalSize;
-  initialFocus?: MutableRefObject<HTMLElement | null>;
+  initialFocus?: RefObject<HTMLElement>;
   wrapper?: FC;
-  onClose?: () => void;
   forbidCancellation?: boolean;
   headerClassName?: string;
   contentClassName?: string;
   footerClassName?: string;
   wrapperClassName?: string;
+  children?: ReactElement;
 };
 
 export type ModalSize = Exclude<ExtendedSize, "4xl" | "5xl" | "6xl"> | "full";
@@ -66,19 +67,13 @@ export const Modal = ({
   size = "md",
   initialFocus,
   wrapper,
-  onClose,
   forbidCancellation,
   headerClassName,
   contentClassName,
   footerClassName,
   wrapperClassName,
+  children,
 }: ModalProps) => {
-  const handleClose = () => {
-    if (forbidCancellation) return;
-    onClose?.();
-    setOpen(false);
-  };
-
   const pagePadding = useThemeStateValue((state) => state.pagePadding);
 
   const sectionStyles = cn("w-full flex", paddingsEvenly.lg);
@@ -88,33 +83,21 @@ export const Modal = ({
   const Wrapper = wrapper || Fragment;
 
   return (
-    <Transition appear show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        initialFocus={initialFocus}
-        className={cn("relative", zIndexes.modal)}
-        onClose={handleClose}
-      >
-        <Backdrop isOpen={open} />
+    <DialogRoot open={open} onOpenChange={setOpen}>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div
-            className={cn(
-              "flex min-h-full items-center justify-center",
-              pagePaddings[pagePadding],
-              paddingsY.lg
-            )}
-          >
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+      <DialogPortal>
+        <DialogOverlay>
+          <Backdrop isOpen={open} />
+          <div className={cn("fixed inset-0 overflow-y-auto")}>
+            <div
+              className={cn(
+                "flex min-h-full items-center justify-center",
+                pagePaddings[pagePadding],
+                paddingsY.lg
+              )}
             >
-              <Dialog.Panel
+              <DialogContent
                 className={cn(
                   "w-full flex flex-col border",
                   transition,
@@ -125,6 +108,35 @@ export const Modal = ({
                   borders.accent,
                   wrapperClassName
                 )}
+                onOpenAutoFocus={
+                  initialFocus
+                    ? (e) => {
+                        e.preventDefault();
+                        initialFocus.current?.focus();
+                      }
+                    : undefined
+                }
+                onPointerDownOutside={
+                  forbidCancellation
+                    ? (e) => {
+                        e.preventDefault();
+                      }
+                    : undefined
+                }
+                onInteractOutside={
+                  forbidCancellation
+                    ? (e) => {
+                        e.preventDefault();
+                      }
+                    : undefined
+                }
+                onEscapeKeyDown={
+                  forbidCancellation
+                    ? (e) => {
+                        e.preventDefault();
+                      }
+                    : undefined
+                }
               >
                 <Wrapper>
                   {header && (
@@ -150,12 +162,12 @@ export const Modal = ({
                     </div>
                   )}
                 </Wrapper>
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogContent>
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+        </DialogOverlay>
+      </DialogPortal>
+    </DialogRoot>
   );
 };
 

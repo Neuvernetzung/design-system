@@ -1,13 +1,26 @@
-import { Dialog, Transition } from "@headlessui/react";
-import cn from "classnames";
-import { Backdrop } from "../Backdrop";
-import { paddingsY, pagePaddings, zIndexes } from "../../../styles";
-import { Fragment, MutableRefObject, useState } from "react";
-import { Carousel, CarouselController, CarouselProps } from "./carousel";
-import { IconButton } from "../Button";
+import {
+  DialogClose,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  Root as DialogRoot,
+} from "@radix-ui/react-dialog";
 import { IconX } from "@tabler/icons-react";
+import cn from "classnames";
+import { MutableRefObject, useState } from "react";
 import { Swiper as SwiperType } from "swiper/types";
+
+import {
+  modalAnimation,
+  paddingsY,
+  pagePaddings,
+  transition,
+  zIndexes,
+} from "../../../styles";
 import { useThemeStateValue } from "../../../theme";
+import { Backdrop } from "../Backdrop";
+import { IconButton } from "../Button";
+import { Carousel, CarouselController, type CarouselProps } from "./carousel";
 
 export type CarouselModalController = {
   open: boolean;
@@ -16,7 +29,7 @@ export type CarouselModalController = {
 } & CarouselController;
 
 export type CarouselModalProps = {
-  initialFocus?: MutableRefObject<HTMLElement | null>;
+  initialFocus?: MutableRefObject<HTMLElement>;
   onClose?: () => void;
   controller: CarouselModalController;
 } & CarouselProps;
@@ -77,20 +90,32 @@ export const CarouselModal = ({
     onClose?.();
     controller?.setOpen(false);
   };
+  const { open, setOpen } = controller;
 
   const pagePadding = useThemeStateValue((state) => state.pagePadding);
 
   return (
-    <Transition appear show={controller?.open} as={Fragment}>
-      <Dialog
-        as="div"
-        initialFocus={initialFocus}
-        className={cn("relative", zIndexes.modal)}
-        onClose={handleClose}
-      >
-        <Backdrop isOpen={controller?.open} />
-
-        <div className="fixed inset-x-0 bottom-0 top-12">
+    <DialogRoot open={open} onOpenChange={setOpen}>
+      <DialogPortal>
+        <DialogOverlay asChild className={cn(zIndexes.modal)}>
+          <Backdrop isOpen={controller?.open} />
+        </DialogOverlay>
+        <DialogContent
+          onOpenAutoFocus={
+            initialFocus
+              ? (e) => {
+                  e.preventDefault();
+                  initialFocus.current.focus();
+                }
+              : undefined
+          }
+          className={cn(
+            "fixed inset-x-0 bottom-0 top-12 will-change-[transform,opacity]",
+            zIndexes.modal,
+            modalAnimation,
+            transition
+          )}
+        >
           <div
             className={cn(
               "h-full items-center justify-center",
@@ -98,20 +123,12 @@ export const CarouselModal = ({
               paddingsY.lg
             )}
           >
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+            <div
+              className={cn(
+                "relative flex justify-end h-full max-h-full w-full"
+              )}
             >
-              <Dialog.Panel
-                className={cn(
-                  "relative flex justify-end h-full max-h-full w-full"
-                )}
-              >
+              <DialogClose asChild>
                 <IconButton
                   onClick={handleClose}
                   icon={IconX}
@@ -119,31 +136,31 @@ export const CarouselModal = ({
                   className="h-min -translate-y-12"
                   variant="ghost"
                 />
-                <Carousel
-                  className="absolute top-0 bottom-12 lg:bottom-32"
-                  slides={slides}
-                  withThumbs={withThumbs}
-                  thumbsClassName="absolute bottom-4"
-                  thumbsProps={{
-                    slidesPerView: 4,
-                    breakpoints: {
-                      1024: { slidesPerView: 10 },
-                    },
-                    ...restCarouselProps.thumbsProps,
-                  }}
-                  controller={controller}
-                  swiperProps={{
-                    initialSlide: controller?.initialSlide,
+              </DialogClose>
+              <Carousel
+                className="absolute top-0 bottom-12 lg:bottom-32"
+                slides={slides}
+                withThumbs={withThumbs}
+                thumbsClassName="absolute bottom-4"
+                thumbsProps={{
+                  slidesPerView: 4,
+                  breakpoints: {
+                    1024: { slidesPerView: 10 },
+                  },
+                  ...restCarouselProps.thumbsProps,
+                }}
+                controller={controller}
+                swiperProps={{
+                  initialSlide: controller?.initialSlide,
 
-                    ...restCarouselProps.swiperProps,
-                  }}
-                  {...restCarouselProps}
-                />
-              </Dialog.Panel>
-            </Transition.Child>
+                  ...restCarouselProps.swiperProps,
+                }}
+                {...restCarouselProps}
+              />
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+        </DialogContent>
+      </DialogPortal>
+    </DialogRoot>
   );
 };
