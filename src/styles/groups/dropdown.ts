@@ -71,7 +71,7 @@ type DropdownGroupHeaderStyleProps = {
 };
 
 const groupHeaderStyles = {
-  base: "font-semibold uppercase select-none",
+  base: "font-semibold select-none",
 };
 
 export const getDropdownGroupHeaderStyles = ({
