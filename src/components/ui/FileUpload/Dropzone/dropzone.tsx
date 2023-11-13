@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { IconCloudUpload } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { DragEvent, ReactElement, useRef, useState } from "react";
 import {
@@ -8,20 +8,16 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import type { Locale } from "../../../../locales/getText";
-import {
-  bordersInteractive,
-  gaps,
-  paddingsEvenly,
-  roundings,
-  transition,
-} from "../../../../styles";
-import { IconCloudUpload } from "@tabler/icons-react";
-import type { Size } from "../../../../types";
-import { smallerSize } from "../../../../utils";
-import { typedMemo } from "../../../../utils/internal";
-import { requiredInputRule } from "../../../../utils/internal/inputRule";
+import type { Locale } from "@/locales/getText";
+import { gaps, paddingsEvenly } from "@/styles";
+import type { Size } from "@/types";
+import { smallerSize } from "@/utils";
+import { cn } from "@/utils/cn";
+import { typedMemo } from "@/utils/internal";
+import { requiredInputRule } from "@/utils/internal/inputRule";
+
 import { Button } from "../../Button";
+import { DropButton } from "../../Button/DropButton";
 import { FormElement, RequiredRule } from "../../Form";
 import { Icon } from "../../Icon";
 import { Tag } from "../../Tag";
@@ -113,70 +109,68 @@ const Dropzone = <
           error={error}
           name={name}
         >
-          <label
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={(e) => onChange(handleDrop(e, currentFiles))}
-            htmlFor={name}
-            className={cn(
-              "flex flex-col items-center justify-center w-full border-dashed border cursor-pointer",
-              transition,
-              dragActive
-                ? bordersInteractive.primary
-                : error
-                ? bordersInteractive.danger
-                : bordersInteractive.accent,
-              roundings[size]
-            )}
+          <DropButton
+            size={size}
+            color={error ? "danger" : "accent"}
+            className={cn(dragActive && "bg-opacity-10")}
+            asChild
           >
-            <div
-              className={cn(
-                "flex items-center justify-center select-none",
-                flexRow ? "flex-row" : "flex-col",
-                gaps[size],
-                paddingsEvenly[size]
-              )}
+            <label
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={(e) => onChange(handleDrop(e, currentFiles))}
+              htmlFor={name}
+              className={cn("cursor-pointer")}
             >
-              <Icon
-                icon={IconCloudUpload}
-                color={error ? "danger" : "subtile"}
-                size={size}
+              <div
+                className={cn(
+                  "flex items-center justify-center select-none",
+                  flexRow ? "flex-row" : "flex-col",
+                  gaps[size],
+                  paddingsEvenly[size]
+                )}
+              >
+                <Icon
+                  icon={IconCloudUpload}
+                  color={error ? "danger" : "subtile"}
+                  size={size}
+                />
+                {info || (
+                  <Button
+                    ref={controllerRef}
+                    onClick={onButtonClick}
+                    className="pointer-events-none"
+                    variant="ghost"
+                    color={error ? "danger" : "accent"}
+                    size={smallerSize(size)}
+                  >
+                    <span className="font-semibold">Zum hochladen klicken</span>{" "}
+                    oder Medien hereinziehen.{" "}
+                    {currentFiles?.length > 0 && (
+                      <Tag
+                        size="xs"
+                        variant="subtile"
+                        label={`${currentFiles.length} ausgewählt.`}
+                      />
+                    )}
+                  </Button>
+                )}
+              </div>
+              <input
+                ref={inputRef}
+                id={name}
+                onChange={(e) =>
+                  onChange(handleChange(e.target.files, currentFiles))
+                }
+                type="file"
+                accept={accept}
+                disabled={disabled}
+                className="hidden"
+                multiple
               />
-              {info || (
-                <Button
-                  ref={controllerRef}
-                  onClick={onButtonClick}
-                  className="pointer-events-none"
-                  variant="ghost"
-                  color={error ? "danger" : "accent"}
-                  size={smallerSize(size)}
-                >
-                  <span className="font-semibold">Zum hochladen klicken</span>{" "}
-                  oder Medien hereinziehen.{" "}
-                  {currentFiles?.length > 0 && (
-                    <Tag
-                      size="xs"
-                      variant="subtile"
-                      label={`${currentFiles.length} ausgewählt.`}
-                    />
-                  )}
-                </Button>
-              )}
-            </div>
-            <input
-              ref={inputRef}
-              id={name}
-              onChange={(e) =>
-                onChange(handleChange(e.target.files, currentFiles))
-              }
-              type="file"
-              accept={accept}
-              disabled={disabled}
-              className="hidden"
-              multiple
-            />
-          </label>
+            </label>
+          </DropButton>
         </FormElement>
       )}
     />

@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import { ElementType, ForwardedRef, forwardRef, ReactNode } from "react";
 
 import { cn } from "@/utils";
@@ -23,7 +22,6 @@ import type {
   Size,
   SvgType,
 } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import type {
   PolymorphicForwardRefExoticComponent,
   PolymorphicPropsWithoutRef,
@@ -158,7 +156,5 @@ export const Button: PolymorphicForwardRefExoticComponent<
     );
   }
 );
-
-export default typedMemo(Button);
 
 Button.displayName = "button";
