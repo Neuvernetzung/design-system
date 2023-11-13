@@ -1,14 +1,17 @@
-import { Switch as HeadlessSwitch } from "@headlessui/react";
+import { Root as SwitchRoot, SwitchThumb } from "@radix-ui/react-switch";
 import cn from "classnames";
 import isString from "lodash/isString";
-import { ForwardedRef, forwardRef, Fragment, ReactNode } from "react";
-import {
-  Controller,
+import { useRouter } from "next/router";
+import type { ForwardedRef, ReactNode } from "react";
+import { forwardRef } from "react";
+import type {
   FieldPath,
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
+import type { Locale } from "../../../locales/getText";
 import {
   bgColors,
   bgColorsInteractive,
@@ -21,12 +24,10 @@ import {
 } from "../../../styles";
 import type { Color, Size } from "../../../types";
 import { mergeRefs, typedMemo } from "../../../utils/internal";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
 import type { RequiredRule } from "../Form";
 import { FormElement } from "../Form";
 import { Text } from "../Typography";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { useRouter } from "next/router";
-import type { Locale } from "../../../locales/getText";
 
 export type SwitchProps = {
   label?: string;
@@ -87,39 +88,34 @@ export const SwitchInner = <
               gaps[size]
             )}
           >
-            <HeadlessSwitch checked={value} as={Fragment} onChange={onChange}>
-              {({ checked }) => (
-                <button
-                  ref={mergeRefs([ref, controllerRef])}
-                  disabled={disabled}
-                  type="button"
-                  aria-label={name}
-                  className={cn(
-                    checked
-                      ? bgColorsInteractive[color]
-                      : extendedBgColorsInteractive.filled,
-                    heightsSmall[size],
-                    focus[color],
-                    transition,
-                    disabled && "cursor-not-allowed",
-                    "relative inline-flex items-center w-min aspect-video rounded-full"
-                  )}
-                >
-                  <span
-                    className={cn(
-                      bgColors.white,
-                      checked
-                        ? "left-full -translate-x-[120%]"
-                        : "left-0 translate-x-[20%]",
-                      transition,
-                      error && bgColors.danger,
-                      disabled && extendedBgColors.filledSubtile,
-                      "transition-all absolute inline-block h-[80%] aspect-square rounded-full"
-                    )}
-                  />
-                </button>
+            <SwitchRoot
+              checked={value}
+              onCheckedChange={onChange}
+              disabled={disabled}
+              ref={mergeRefs([ref, controllerRef])}
+              aria-label={name}
+              className={cn(
+                value
+                  ? bgColorsInteractive[color]
+                  : extendedBgColorsInteractive.filled,
+                heightsSmall[size],
+                focus[color],
+                transition,
+                disabled && "cursor-not-allowed",
+                "relative inline-flex items-center w-min aspect-video rounded-full"
               )}
-            </HeadlessSwitch>
+            >
+              <SwitchThumb
+                className={cn(
+                  bgColors.white,
+                  "left-0 translate-x-[20%] data-[state=checked]:left-full data-[state=checked]:-translate-x-[120%]",
+                  transition,
+                  error && bgColors.danger,
+                  disabled && extendedBgColors.filledSubtile,
+                  "transition-all absolute inline-block h-[80%] aspect-square rounded-full"
+                )}
+              />
+            </SwitchRoot>
             {isString(content) ? <Text size={size}>{content}</Text> : content}
           </div>
         </FormElement>
