@@ -50,7 +50,10 @@ export const Tooltip = ({
             side={side}
             align={align}
             sideOffset={offsetSizes[size]}
-            className={cn("will-change-[transform,opacity]", tooltipAnimation)}
+            className={cn(
+              "pointer-events-none will-change-[transform,opacity]",
+              tooltipAnimation
+            )}
           >
             <TooltipInner size={size} label={label} />
           </TooltipContent>
@@ -79,7 +82,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
       ref={ref}
       role="tooltip"
       className={cn(
-        "pointer-events-none flex",
+        "flex",
         paddingsSmall[size],
         roundings[size],
 
