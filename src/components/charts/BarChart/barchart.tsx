@@ -12,9 +12,10 @@ import { AddSVGProps, AnyScaleBand } from "@visx/shape/lib/types";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { max, min } from "@visx/vendor/d3-array";
 import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
-import { cn } from "@/utils";
 import { isFunction } from "lodash";
 import { ForwardedRef, forwardRef, ReactNode, useRef } from "react";
+
+import { cn } from "@/utils";
 
 import { extendedTextColors } from "../../../styles";
 import { mergeRefs, useRefDimensions } from "../../../utils/internal";

@@ -30,8 +30,8 @@ export const ChartTooltip = ({
     <TooltipInPortal
       left={tooltipLeft}
       top={tooltipTop}
-      style={{}}
-      className={cn("absolute pointer-events-none transition-transform")}
+      style={{}} // Default Styles von TooltipInPortal entfernen
+      className={cn("absolute pointer-events-none")} // transition-transform entfernt, da sonst immer Sprung vom 0 Punkt, sehr schlimm bei BarChart
     >
       <TooltipInner label={tooltipLabel} />
     </TooltipInPortal>
