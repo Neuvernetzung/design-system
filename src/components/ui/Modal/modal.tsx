@@ -15,7 +15,6 @@ import {
   borders,
   extendedBgColors,
   paddingsEvenly,
-  paddingsY,
   pagePaddings,
   roundings,
   roundingsTop,
@@ -93,8 +92,7 @@ export const Modal = ({
             <div
               className={cn(
                 "flex min-h-full items-center justify-center",
-                pagePaddings[pagePadding],
-                paddingsY.lg
+                pagePaddings[pagePadding]
               )}
             >
               <DialogContent

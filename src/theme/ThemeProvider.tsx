@@ -45,6 +45,7 @@ export type ConfigProps = {
   disableSetTheme?: boolean;
   preferSetValuesOverConfig?: boolean;
   iconStrokeWidth?: number;
+  maxPageWidth?: Size;
 } & NotificationConfigProps;
 
 type NotificationConfigProps =
@@ -69,6 +70,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     pagePadding,
     preferSetValuesOverConfig,
     iconStrokeWidth,
+    maxPageWidth,
   } = config || {};
 
   const store = useRef(
@@ -79,6 +81,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
       requiredInfoVariant,
       pagePadding,
       iconStrokeWidth,
+      maxPageWidth,
     })
   ).current;
 

@@ -1,6 +1,9 @@
 import { Meta } from "@storybook/react";
 import { useRef } from "react";
 
+import { extendedBgColors } from "@/styles";
+import { cn } from "@/utils";
+
 import { Heading, Text } from "../../ui/Typography";
 import { Footer, Navbar } from "..";
 import { PageContainer } from "./pagecontainer";
@@ -12,8 +15,8 @@ export default {
 } as Meta;
 
 export const Default = ({ ...args }) => {
-  const navbarRef = useRef(null);
-  const footerRef = useRef(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -49,13 +52,26 @@ export const Default = ({ ...args }) => {
         }
         {...args}
       />
-      <PageContainer navbarRef={navbarRef} footerRef={footerRef} {...args}>
-        <Text>Dies ist ein Page Container</Text>
+      <PageContainer
+        navbarRef={navbarRef}
+        footerRef={footerRef}
+        className={cn(extendedBgColors.subtile)}
+        {...args}
+      >
+        <Text className={cn(extendedBgColors.filled)}>
+          Dies ist ein Page Container
+        </Text>
       </PageContainer>
       <Footer
         ref={footerRef}
         className="bg-accent-100 dark:bg-accent-800"
         copyright="Dies ist der Footer"
+        cols={[
+          { label: "Test Label", links: [] },
+          { label: "Test", links: [] },
+          { label: "Test", links: [] },
+          { label: "Test", links: [] },
+        ]}
         {...args}
       />
     </>

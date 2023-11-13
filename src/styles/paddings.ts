@@ -95,19 +95,3 @@ export const paddingsLargeEvenly: Record<Size, string> = {
   lg: "p-6",
   xl: "p-8",
 };
-
-export const pagePaddings: Record<Size, string> = {
-  xs: "px-2 lg:px-4",
-  sm: "px-4 lg:px-8",
-  md: "px-4 sm:px-6 lg:px-12",
-  lg: "px-4 sm:px-6 md:px-8 lg:px-16",
-  xl: "px-4 sm:px-6 md:px-12 lg:px-24",
-};
-
-export const negatePagePaddings: Record<Size, string> = {
-  xs: "-mx-2 lg:-mx-4",
-  sm: "-mx-4 lg:-mx-8",
-  md: "-mx-4 sm:-mx-6 lg:-mx-12",
-  lg: "-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16",
-  xl: "-mx-4 sm:-mx-6 md:-mx-12 lg:-mx-24",
-};
