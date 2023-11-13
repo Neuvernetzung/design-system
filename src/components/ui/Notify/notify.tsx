@@ -1,3 +1,4 @@
+import { ToastProvider, ToastViewport } from "@radix-ui/react-toast";
 import {
   IconAlertTriangle,
   IconCircleCheck,
@@ -29,6 +30,7 @@ export const notify = (notification: NotifyProps) => {
 export type NotifyProps = {
   color?: Color;
   variant?: ToastVariant;
+  title?: string;
   message: string;
   icon?: SvgType;
   duration?: number;
@@ -81,30 +83,32 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
     white: IconInfoSquareRounded,
   };
 
+  if (!notificationArray || notificationArray.length === 0) return null;
+
   return (
-    <div
-      className={cn(
-        "visible fixed bottom-5 right-5 flex max-h-screen flex-col-reverse flex-wrap-reverse gap-5",
-        zIndexes.notify
-      )}
-    >
-      {notificationArray.map(
-        ({ id, message, color = "accent", icon, variant }) => (
-          <Toast
-            key={id}
-            message={message}
-            color={color}
-            handleClose={() =>
-              setNotificationArray((oldArray) =>
-                oldArray.filter((item) => item.id !== id)
-              )
-            }
-            variant={variant}
-            icon={icon || icons[color]}
-          />
-        )
-      )}
-    </div>
+    <ToastProvider swipeDirection="right">
+      <div className={cn("visible fixed bottom-5 right-5", zIndexes.notify)}>
+        {notificationArray.map(
+          ({ id, message, color = "accent", icon, variant, title }) => (
+            <Toast
+              key={id}
+              title={title}
+              message={message}
+              color={color}
+              open
+              setOpen={() =>
+                setNotificationArray((oldArray) =>
+                  oldArray.filter((item) => item.id !== id)
+                )
+              }
+              variant={variant}
+              icon={icon || icons[color]}
+            />
+          )
+        )}
+        <ToastViewport className="max-h-screen flex flex-col-reverse flex-wrap-reverse gap-5" />
+      </div>
+    </ToastProvider>
   );
 };
 

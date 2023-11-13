@@ -1,16 +1,22 @@
+import {
+  Root as ToastRoot,
+  ToastClose,
+  ToastDescription,
+  ToastTitle,
+} from "@radix-ui/react-toast";
+import { IconX } from "@tabler/icons-react";
 import cn from "classnames";
-import type { MouseEventHandler } from "react";
 
 import {
   bgColors,
   borders,
   gaps,
+  gapsSmall,
   paddingsEvenly,
   roundings,
   shadows,
   textColors,
 } from "../../../styles";
-import { IconX } from "@tabler/icons-react";
 import { useThemeState } from "../../../theme/useThemeState";
 import type {
   Color,
@@ -21,13 +27,16 @@ import type {
 import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
+import { Heading } from "../Typography/Heading";
 import { Text } from "../Typography/Text";
 
 export type ToastProps = {
   message: string;
+  title?: string;
   color?: Color;
   icon?: SvgType;
-  handleClose: MouseEventHandler;
+  open: boolean;
+  setOpen: (open: boolean) => void;
   variant?: ToastVariant;
 };
 
@@ -59,18 +68,21 @@ type VariantProps = {
 export const Toast = ({
   variant = "outline",
   message,
-  handleClose,
+  open,
+  setOpen,
   color = "accent",
   icon,
+  title,
 }: ToastProps) => {
   const { adjustedTextColorState } = useThemeState();
 
   return (
-    <div
-      role="dialog"
-      aria-label={color}
+    <ToastRoot
+      open={open}
+      onOpenChange={setOpen}
       className={cn(
         "flex w-64 flex-row justify-between items-start",
+        "translate-x-[--radix-toast-swipe-move-x] data-[swipe=cancel]:translate-x-0 opacity-100 data-[swipe=end]:opacity-0 transition-opacity",
         roundings.md,
         shadows.lg,
         gaps.xl,
@@ -88,27 +100,44 @@ export const Toast = ({
             <Icon size="sm" icon={icon} />
           </div>
         )}
-        <Text
-          size="sm"
-          className={cn(
-            variants(color, adjustedTextColorState)[variant].text,
-            "w-36 break-words overflow-hidden"
-          )}
-          color="inherit"
-        >
-          {message}
-        </Text>
+        <div className={cn("flex flex-col", gapsSmall.sm)}>
+          <ToastTitle asChild>
+            <Heading
+              size="sm"
+              className={cn(
+                variants(color, adjustedTextColorState)[variant].text,
+                "w-36 break-words overflow-hidden"
+              )}
+              color="inherit"
+            >
+              {title}
+            </Heading>
+          </ToastTitle>
+          <ToastDescription asChild>
+            <Text
+              size="sm"
+              className={cn(
+                variants(color, adjustedTextColorState)[variant].text,
+                "w-36 break-words overflow-hidden"
+              )}
+              color="inherit"
+            >
+              {message}
+            </Text>
+          </ToastDescription>
+        </div>
       </div>
-      <IconButton
-        size="sm"
-        variant="ghost"
-        ariaLabel="close-dialog"
-        onClick={handleClose}
-        color="inherit"
-        icon={IconX}
-        className={cn(variants(color, adjustedTextColorState)[variant].close)}
-      />
-    </div>
+      <ToastClose asChild>
+        <IconButton
+          size="sm"
+          variant="ghost"
+          ariaLabel="close-dialog"
+          color="inherit"
+          icon={IconX}
+          className={cn(variants(color, adjustedTextColorState)[variant].close)}
+        />
+      </ToastClose>
+    </ToastRoot>
   );
 };
 
