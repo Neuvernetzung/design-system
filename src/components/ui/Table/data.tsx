@@ -1,11 +1,10 @@
 import { IconChevronDown } from "@tabler/icons-react";
-import { cn } from "@/utils";
 import get from "lodash/get";
-import { useRouter } from "next/router";
-import { useState } from "react";
+
+import { cn } from "@/utils";
 
 import { paddingsEvenly, transition } from "../../../styles";
-import { typedMemo, updateQuery } from "../../../utils/internal";
+import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { CheckboxInner } from "../Checkbox/checkbox";
 import {
@@ -25,7 +24,8 @@ export type DataTableProps<
   D extends string
 > = Omit<SimpleTableProps<T>, "items" | "cols"> &
   DataTablePropsConditional<T, K, D> & {
-    setSort?: (sort: string) => void;
+    sort: string | undefined;
+    setSort: (sort: string) => void;
     cols: DataTableCol<T>[];
     disclosureValue?: D;
     disclosureClassName?: string;
@@ -65,6 +65,7 @@ export const DataTableInner = <
   items = [],
   cols = [],
   size = "md",
+  sort,
   setSort,
   checkable,
   checkedValue,
@@ -79,24 +80,12 @@ export const DataTableInner = <
   disabledBorder = false,
   divideY = true,
 }: DataTableProps<T, K, D>) => {
-  const router = useRouter();
-
-  const [sort, setLocalSort] = useState<string>();
-
   const normalizedSort = sort?.[0] === "-" ? sort.slice(1) : sort;
 
   const handleSort = (_sort: string) => {
     const __sort = _sort === sort ? `-${_sort}` : _sort;
-    setLocalSort(__sort);
-    if (!setSort) {
-      updateQuery({
-        router,
-        name: "sort",
-        value: __sort,
-      });
-    } else {
-      setSort(__sort);
-    }
+
+    setSort(__sort);
   };
 
   return (

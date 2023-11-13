@@ -104,6 +104,7 @@ export const DisabledHead = ({ ...args }) => (
 
 export const Data = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
+  const [sort, setSort] = useState<string>();
 
   return (
     <DataTable
@@ -115,6 +116,8 @@ export const Data = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
       checkedValue="id"
       checked={checked}
@@ -129,6 +132,8 @@ export const Data = ({ ...args }) => {
 export const Disclosure = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
   const [disclosure, setDisclosure] = useState<string>();
+  const [sort, setSort] = useState<string>();
+
   return (
     <DataTable
       cols={[
@@ -140,6 +145,8 @@ export const Disclosure = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
       checkedValue="id"
       checked={checked}
@@ -171,6 +178,7 @@ export const Disclosure = ({ ...args }) => {
 
 export const DataNoItems = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
+  const [sort, setSort] = useState<string>();
 
   return (
     <DataTable
@@ -182,6 +190,8 @@ export const DataNoItems = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
       checkedValue="id"
       checked={checked}
@@ -197,6 +207,7 @@ export const DataNoItems = ({ ...args }) => {
 
 export const Data1Item = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
+  const [sort, setSort] = useState<string>();
 
   return (
     <DataTable
@@ -208,11 +219,12 @@ export const Data1Item = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
       checkedValue="id"
       checked={checked}
       setChecked={setChecked}
-      disclosureValue="disclosure"
       disclosureClassName="bg-accent-100"
       divideX
       items={[items[0]]}
