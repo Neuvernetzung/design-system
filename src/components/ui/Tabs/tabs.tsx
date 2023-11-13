@@ -1,11 +1,19 @@
-import { Tab } from "@headlessui/react";
+import {
+  Root as TabsRoot,
+  TabsContent,
+  TabsList,
+  TabsProps,
+  TabsTrigger,
+} from "@radix-ui/react-tabs";
 import cn from "classnames";
-import { Fragment, ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
+import { useState } from "react";
 
 import {
   bgColors,
   borders,
   bordersInteractive,
+  focus,
   gaps,
   paddings,
   paddingsX,
@@ -20,13 +28,14 @@ import type {
   SvgType,
   TabListVariant,
 } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 
 export type TabGroupProps = TabListProps &
   Omit<TabPanelsProps, "items"> & {
     className?: string;
-    defaultIndex?: number;
+    defaultTab?: string;
+    value?: string;
+    setValue?: (value: string) => void;
   };
 
 export type TabListProps = {
@@ -40,23 +49,31 @@ export type TabListProps = {
   tabListVariant?: TabListVariant;
   activeButtonVariant?: ButtonVariant;
   activeButtonColor?: ExtendedColor;
+  value?: string;
 };
 
 export type TabPanelsProps = {
-  items: TabItemProps[];
+  items: TabItemValueProps[];
   panelsClassName?: string;
   size?: Size;
   unmount?: boolean;
 };
 
-export type TabItemProps = {
+export type TabItemValueProps = {
+  type?: "tab";
   title: string | undefined;
+  value: string;
   content: ReactNode | undefined;
   disabled?: boolean;
   className?: string;
   icon?: SvgType;
-  isSpace?: boolean;
 };
+
+export type TabItemSeparatorProps = {
+  type: "separator";
+};
+
+export type TabItemProps = TabItemValueProps | TabItemSeparatorProps;
 
 export const Tabs = ({
   items = [],
@@ -65,7 +82,7 @@ export const Tabs = ({
   color,
   panelsClassName,
   listClassName,
-  defaultIndex,
+  defaultTab,
   unmount,
   headerStartElement,
   headerEndElement,
@@ -73,40 +90,60 @@ export const Tabs = ({
   tabListVariant,
   activeButtonVariant,
   activeButtonColor,
-}: TabGroupProps) => (
-  <Tab.Group
-    defaultIndex={defaultIndex}
-    as="div"
-    className={cn("flex flex-col w-full", className)}
-  >
-    <TabList
-      items={items}
-      listClassName={listClassName}
-      size={size}
-      color={color}
-      buttonColor={buttonColor}
-      headerStartElement={headerStartElement}
-      headerEndElement={headerEndElement}
-      tabListVariant={tabListVariant}
-      activeButtonVariant={activeButtonVariant}
-      activeButtonColor={activeButtonColor}
-    />
-    <TabPanels
-      unmount={unmount}
-      items={items.filter((item) => !item?.isSpace) as TabItemProps[]}
-      panelsClassName={panelsClassName}
-      size={size}
-    />
-  </Tab.Group>
+  value,
+  setValue,
+}: TabGroupProps) => {
+  const [internalValue, setInternalValue] = useState<string>(
+    value ||
+      (
+        items.find(
+          (item) => item.type === "tab" || !item.type
+        ) as TabItemValueProps
+      )?.value
+  );
+  const tab = setValue ? value : internalValue;
+
+  return (
+    <TabsRoot
+      defaultValue={defaultTab || internalValue}
+      value={tab}
+      onValueChange={(v) => {
+        if (setValue) {
+          setValue?.(v);
+        } else setInternalValue(v);
+      }}
+      className={cn("flex flex-col w-full", className)}
+    >
+      <TabList
+        items={items}
+        listClassName={listClassName}
+        size={size}
+        color={color}
+        buttonColor={buttonColor}
+        headerStartElement={headerStartElement}
+        headerEndElement={headerEndElement}
+        tabListVariant={tabListVariant}
+        activeButtonVariant={activeButtonVariant}
+        activeButtonColor={activeButtonColor}
+        value={tab}
+      />
+      <TabPanels
+        unmount={unmount}
+        items={
+          items.filter(
+            (item) => item?.type !== "separator"
+          ) as TabItemValueProps[]
+        }
+        panelsClassName={panelsClassName}
+        size={size}
+      />
+    </TabsRoot>
+  );
+};
+
+export const TabGroup = ({ children, ...props }: TabsProps) => (
+  <TabsRoot {...props}>{children}</TabsRoot>
 );
-
-export default typedMemo(Tabs);
-
-export const TabGroup: typeof Tab.Group = ({ children, ...props }) => (
-  <Tab.Group {...props}>{children}</Tab.Group>
-);
-
-TabGroup.displayName = "TabGroup";
 
 type TabListStyleProps = {
   size: Size;
@@ -137,61 +174,45 @@ export const TabList = ({
   tabListVariant = "default",
   activeButtonVariant,
   activeButtonColor,
-}: TabListProps) => {
-  const result = items
-    .filter(({ isSpace }) => !isSpace)
-    .map((item, index) => ({ ...item, index }));
-
-  items
-    .filter(({ isSpace }) => isSpace)
-    .forEach((item) => {
-      const index = items.indexOf(item);
-      if (index !== -1) {
-        result.splice(index, 0, { ...item, index: -1 });
-      }
-    });
-
-  return (
-    <Tab.List
-      className={cn("flex flex-row justify-between items-center w-full")}
-    >
-      {({ selectedIndex }) => (
-        <div
-          className={cn(
-            "flex flex-row w-full items-center justify-between",
-            tabListStyles({ size, color })[tabListVariant],
-            paddingsX[size],
-            gaps[size],
-            listClassName
-          )}
-        >
-          <div className={cn("flex flex-row items-center w-full", gaps[size])}>
-            {headerStartElement && headerStartElement}
-            {result.map(({ title, disabled, icon, index, isSpace }) => {
-              if (isSpace) return <span className="w-full" />;
-              return (
-                <TabButton
-                  key={`tab_button_${title}`}
-                  title={title}
-                  disabled={disabled}
-                  color={color}
-                  buttonColor={buttonColor}
-                  size={size}
-                  icon={icon}
-                  isSelected={selectedIndex === index}
-                  tabListVariant={tabListVariant}
-                  activeButtonVariant={activeButtonVariant}
-                  activeButtonColor={activeButtonColor}
-                />
-              );
-            })}
-          </div>
-          {headerEndElement && headerEndElement}
-        </div>
+  value: activeTab,
+}: TabListProps) => (
+  <TabsList className={cn("flex flex-row justify-between items-center w-full")}>
+    <div
+      className={cn(
+        "flex flex-row w-full items-center justify-between",
+        tabListStyles({ size, color })[tabListVariant],
+        paddingsX[size],
+        gaps[size],
+        listClassName
       )}
-    </Tab.List>
-  );
-};
+    >
+      <div className={cn("flex flex-row items-center w-full", gaps[size])}>
+        {headerStartElement && headerStartElement}
+        {items.map((props) => {
+          if (props.type === "separator") return <span className="w-full" />;
+
+          if (props.type === "tab" || !props.type)
+            return (
+              <TabButton
+                key={`tab_button_${props.value}`}
+                color={color}
+                buttonColor={buttonColor}
+                size={size}
+                tabListVariant={tabListVariant}
+                activeButtonVariant={activeButtonVariant}
+                activeButtonColor={activeButtonColor}
+                isSelected={activeTab === props.value}
+                {...props}
+              />
+            );
+
+          return null;
+        })}
+      </div>
+      {headerEndElement && headerEndElement}
+    </div>
+  </TabsList>
+);
 
 export type TabButtonProps = {
   isSelected?: boolean;
@@ -222,7 +243,8 @@ export const TabButton = ({
   tabListVariant = "default",
   activeButtonVariant,
   activeButtonColor,
-}: Omit<TabItemProps, "content"> &
+  value,
+}: Omit<TabItemValueProps, "content"> &
   Pick<
     TabListProps,
     | "color"
@@ -239,20 +261,18 @@ export const TabButton = ({
       tabButtonStyles({ size, color, isSelected })[tabListVariant]
     )}
   >
-    <Tab as={Fragment}>
-      {({ selected }) => (
-        <Button
-          size={size}
-          variant={!selected ? "ghost" : activeButtonVariant || "filled"}
-          disabled={disabled}
-          color={!selected ? buttonColor : activeButtonColor || buttonColor}
-          className={cn("whitespace-nowrap", className)}
-          leftIcon={icon}
-        >
-          {title}
-        </Button>
-      )}
-    </Tab>
+    <TabsTrigger value={value} asChild>
+      <Button
+        size={size}
+        variant={!isSelected ? "ghost" : activeButtonVariant || "filled"}
+        disabled={disabled}
+        color={!isSelected ? buttonColor : activeButtonColor || buttonColor}
+        className={cn("whitespace-nowrap", className)}
+        leftIcon={icon}
+      >
+        {title}
+      </Button>
+    </TabsTrigger>
   </div>
 );
 
@@ -262,25 +282,25 @@ export const TabPanels = ({
   panelsClassName,
   unmount,
 }: TabPanelsProps) => (
-  <Tab.Panels className={cn(paddings[size], panelsClassName)}>
-    {items.map(({ content, className: panelClassName }, i) => (
+  <div className={cn(paddings[size], panelsClassName)}>
+    {items.map((props, i) => (
       <TabPanel
         key={`tab_panel_${i}`}
-        content={content}
-        className={panelClassName}
         size={size}
         unmount={unmount}
+        {...props}
       />
     ))}
-  </Tab.Panels>
+  </div>
 );
 
 export const TabPanel = ({
   content,
   className,
-  unmount,
-}: Omit<TabItemProps, "title"> & Pick<TabPanelsProps, "size" | "unmount">) => (
-  <Tab.Panel unmount={unmount} className={cn("flex", className)}>
+  value,
+}: Omit<TabItemValueProps, "title"> &
+  Pick<TabPanelsProps, "size" | "unmount">) => (
+  <TabsContent value={value} className={cn("flex", focus.accent, className)}>
     {content}
-  </Tab.Panel>
+  </TabsContent>
 );

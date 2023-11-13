@@ -123,37 +123,17 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
 
 Menu.displayName = "Menu";
 
-const MenuItem = ({
-  type,
-  size,
-  ...props
-}: MenuItemProps & MenuItemComponentProps) => {
-  if (type === "button")
-    return (
-      <MenuItemButton
-        size={size}
-        {...(props as MenuItemBaseProps & MenuItemButtonProps)}
-      />
-    );
+const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
+  const { type, size } = props;
 
-  if (type === "anchor")
-    return (
-      <MenuItemAnchor
-        size={size}
-        {...(props as MenuItemBaseProps & MenuItemAnchorProps)}
-      />
-    );
+  if (type === "button") return <MenuItemButton {...props} />;
+
+  if (type === "anchor") return <MenuItemAnchor {...props} />;
 
   if (type === "separator")
     return <HorizontalRule className={cn(marginsYSmall[size])} />;
 
-  if (type === "group")
-    return (
-      <MenuItemGroup
-        size={size}
-        {...(props as MenuItemBaseProps & MenuItemGroupProps)}
-      />
-    );
+  if (type === "group") return <MenuItemGroup {...props} />;
 
   return null;
 };
@@ -165,7 +145,9 @@ const MenuItemButton = ({
   disabled,
   icon,
   size,
-}: MenuItemBaseProps & MenuItemButtonProps & MenuItemComponentProps) => (
+}: MenuItemBaseProps &
+  Omit<MenuItemButtonProps, "type"> &
+  MenuItemComponentProps) => (
   <DropdownMenuItem asChild>
     <Button
       size={capSize(size, "md")}
@@ -188,7 +170,9 @@ const MenuItemAnchor = ({
   disabled,
   icon,
   size,
-}: MenuItemBaseProps & MenuItemAnchorProps & MenuItemComponentProps) => (
+}: MenuItemBaseProps &
+  Omit<MenuItemAnchorProps, "type"> &
+  MenuItemComponentProps) => (
   <DropdownMenuItem asChild>
     <Button
       as={Link}
@@ -209,7 +193,9 @@ const MenuItemGroup = ({
   items,
   children,
   size,
-}: MenuItemBaseProps & MenuItemGroupProps & MenuItemComponentProps) => (
+}: MenuItemBaseProps &
+  Omit<MenuItemGroupProps, "type"> &
+  MenuItemComponentProps) => (
   <DropdownMenuGroup>
     {children && (
       <DropdownMenuLabel asChild>

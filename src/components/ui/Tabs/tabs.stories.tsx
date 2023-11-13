@@ -1,6 +1,7 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
 import { IconX } from "@tabler/icons-react";
+import React, { useState } from "react";
+
 import { colors, sizes, tabListVariants } from "../../../types";
 import { Button, IconButton } from "../Button";
 import { Tag } from "../Tag";
@@ -9,6 +10,13 @@ import { TabGroup, TabItemProps, TabList, TabPanels, Tabs } from ".";
 export default {
   title: "UI/Disclosures/Tabs",
   component: Tabs,
+  parameters: {
+    docs: {
+      source: {
+        type: "code",
+      },
+    },
+  }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
 const Container = ({ ...props }) => (
@@ -19,9 +27,9 @@ export const Default = ({ ...args }) => (
   <Container>
     <Tabs
       items={[
-        { title: "Tab 1", content: "Content 1" },
-        { title: "Tab 2", content: "Content 2" },
-        { title: "Tab 3", content: "Content 3" },
+        { title: "Tab 1", content: "Content 1", value: "1" },
+        { title: "Tab 2", content: "Content 2", value: "2" },
+        { title: "Tab 3", content: "Content 3", value: "3" },
       ]}
       {...args}
     />
@@ -35,9 +43,9 @@ export const Sizes = ({ ...args }) => (
         key={size}
         size={size}
         items={[
-          { title: "Tab 1", content: "Content 1" },
-          { title: "Tab 2", content: "Content 2" },
-          { title: "Tab 3", content: "Content 3" },
+          { title: "Tab 1", content: "Content 1", value: "1" },
+          { title: "Tab 2", content: "Content 2", value: "2" },
+          { title: "Tab 3", content: "Content 3", value: "3" },
         ]}
         {...args}
       />
@@ -52,9 +60,9 @@ export const Colors = ({ ...args }) => (
         key={color}
         color={color}
         items={[
-          { title: "Tab 1", content: "Content 1" },
-          { title: "Tab 2", content: "Content 2" },
-          { title: "Tab 3", content: "Content 3" },
+          { title: "Tab 1", content: "Content 1", value: "1" },
+          { title: "Tab 2", content: "Content 2", value: "2" },
+          { title: "Tab 3", content: "Content 3", value: "3" },
         ]}
         {...args}
       />
@@ -81,9 +89,9 @@ export const AdditionalHeadElements = ({ ...args }) => (
         />
       }
       items={[
-        { title: "Tab 1", content: "Content 1" },
-        { title: "Tab 2", content: "Content 2" },
-        { title: "Tab 3", content: "Content 3" },
+        { title: "Tab 1", content: "Content 1", value: "1" },
+        { title: "Tab 2", content: "Content 2", value: "2" },
+        { title: "Tab 3", content: "Content 3", value: "3" },
       ]}
       {...args}
     />
@@ -97,9 +105,9 @@ export const ListVariants = ({ ...args }) => (
         key={variant}
         tabListVariant={variant}
         items={[
-          { title: "Tab 1", content: "Content 1" },
-          { title: "Tab 2", content: "Content 2" },
-          { title: "Tab 3", content: "Content 3" },
+          { title: "Tab 1", content: "Content 1", value: "1" },
+          { title: "Tab 2", content: "Content 2", value: "2" },
+          { title: "Tab 3", content: "Content 3", value: "3" },
         ]}
         {...args}
       />
@@ -109,9 +117,9 @@ export const ListVariants = ({ ...args }) => (
 
 export const Separate = ({ ...args }) => {
   const items = [
-    { title: "Tab 1", content: "Content 1" },
-    { title: "Tab 2", content: "Content 2" },
-    { title: "Tab 3", content: "Content 3" },
+    { title: "Tab 1", content: "Content 1", value: "1" },
+    { title: "Tab 2", content: "Content 2", value: "2" },
+    { title: "Tab 3", content: "Content 3", value: "3" },
   ];
 
   return (
@@ -126,12 +134,12 @@ export const Separate = ({ ...args }) => {
 
 export const WithSpace = ({ ...args }) => {
   const items: TabItemProps[] = [
-    { title: "Tab 1", content: "Content 1" },
-    { title: "Tab 2", content: "Content 2" },
-    { isSpace: true, title: undefined, content: undefined },
-    { title: "Tab 3", content: "Content 3" },
-    { isSpace: true, title: undefined, content: undefined },
-    { title: "Tab 4", content: "Content 4" },
+    { title: "Tab 1", content: "Content 1", value: "1" },
+    { title: "Tab 2", content: "Content 2", value: "2" },
+    { type: "separator" },
+    { title: "Tab 3", content: "Content 3", value: "3" },
+    { type: "separator" },
+    { title: "Tab 4", content: "Content 4", value: "4" },
   ];
 
   return (
@@ -154,24 +162,24 @@ export const WithSpace = ({ ...args }) => {
 
 export const Controlled = ({ ...args }) => {
   const items = [
-    { title: "Tab 1", content: "Content 1" },
-    { title: "Tab 2", content: "Content 2" },
-    { title: "Tab 3", content: "Content 3" },
+    { title: "Tab 1", content: "Content 1", value: "1" },
+    { title: "Tab 2", content: "Content 2", value: "2" },
+    { title: "Tab 3", content: "Content 3", value: "3" },
   ];
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [value, setValue] = useState(0);
 
   return (
     <Container>
-      <Button
-        onClick={() => setSelectedIndex((selectedIndex + 1) % items.length)}
-      >
+      <Button onClick={() => setValue((value + 1) % items.length)}>
         Nächster Tab
       </Button>
-      <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-        <TabList items={items} listClassName="hidden" />
-        <TabPanels items={items} {...args} />
-      </TabGroup>
+      <Tabs
+        items={items}
+        value={items[value].value}
+        setValue={(v) => setValue(items.findIndex((item) => item.value === v))}
+        {...args}
+      />
     </Container>
   );
 };
