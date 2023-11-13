@@ -163,9 +163,8 @@ type CheckboxInnerProps = {
   color?: Color;
   icon?: SvgType;
   error?: FieldError;
-  checked: boolean;
+  checked: CheckedState;
   setChecked: (value: CheckedState) => void;
-  indeterminate?: boolean;
   defaultValue?: boolean;
 };
 
@@ -182,7 +181,6 @@ export const CheckboxInner = forwardRef(
       error,
       setChecked,
       checked,
-      indeterminate,
       defaultValue,
     }: CheckboxInnerProps,
 
@@ -214,7 +212,7 @@ export const CheckboxInner = forwardRef(
               checkboxSizes[size],
               bordersInteractive.accent,
               !disabled &&
-                (checked || indeterminate) &&
+                checked &&
                 `${extendedBgColorsInteractive[color]} border-none`,
               error && styles.inputError
             )}
@@ -227,10 +225,10 @@ export const CheckboxInner = forwardRef(
               )}
             >
               <CheckboxIcon
-                checked={checked}
+                checked={checked === true}
                 size={size}
                 icon={icon}
-                indeterminate={indeterminate}
+                indeterminate={checked === "indeterminate"}
               />
             </CheckboxIndicator>
           </div>

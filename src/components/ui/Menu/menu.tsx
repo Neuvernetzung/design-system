@@ -45,7 +45,7 @@ export type MenuItemAnchorProps = {
 };
 
 export type MenuItemButtonProps = {
-  type: "button";
+  type?: "button";
   onClick: () => void;
   color?: Color;
   icon?: SvgType;
@@ -126,7 +126,7 @@ Menu.displayName = "Menu";
 const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
   const { type, size } = props;
 
-  if (type === "button") return <MenuItemButton {...props} />;
+  if (type === "button" || !type) return <MenuItemButton {...props} />;
 
   if (type === "anchor") return <MenuItemAnchor {...props} />;
 

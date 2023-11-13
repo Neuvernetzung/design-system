@@ -1,6 +1,7 @@
+import { IconSelector } from "@tabler/icons-react";
 import { Editor as CoreEditor } from "@tiptap/core";
 import { Editor } from "@tiptap/react";
-import { IconSelector } from "@tabler/icons-react";
+
 import { Menu } from "../../Menu";
 
 export const textTypeTags = ["p", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
@@ -58,8 +59,6 @@ export const SelectText = ({
 }: SelectTextProps) => (
   <Menu
     size="sm"
-    placement="bottom"
-    buttonType="button"
     buttonProps={{
       id,
       tabIndex: -1,
@@ -71,6 +70,7 @@ export const SelectText = ({
     }}
     items={[
       {
+        type: "group",
         children: "Fließtext",
         items: [
           {
@@ -83,6 +83,7 @@ export const SelectText = ({
         ],
       },
       {
+        type: "group",
         children: "Überschriften",
         items: [
           {

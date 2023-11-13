@@ -28,15 +28,13 @@ export const CheckboxIcon = ({
   >
     {checked ? (
       <Icon size={size} icon={icon ?? CheckboxIconCheck} />
-    ) : (
-      indeterminate && (
-        <Icon
-          className={cn(checkboxAnimation)}
-          size={size}
-          icon={CheckboxIconMinus}
-        />
-      )
-    )}
+    ) : indeterminate ? (
+      <Icon
+        className={cn(checkboxAnimation)}
+        size={size}
+        icon={CheckboxIconMinus}
+      />
+    ) : null}
   </div>
 );
 

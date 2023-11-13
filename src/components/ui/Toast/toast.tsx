@@ -78,6 +78,7 @@ export const Toast = ({
 
   return (
     <ToastRoot
+      role="listitem"
       open={open}
       onOpenChange={setOpen}
       className={cn(
@@ -101,18 +102,20 @@ export const Toast = ({
           </div>
         )}
         <div className={cn("flex flex-col", gapsSmall.sm)}>
-          <ToastTitle asChild>
-            <Heading
-              size="sm"
-              className={cn(
-                variants(color, adjustedTextColorState)[variant].text,
-                "w-36 break-words overflow-hidden"
-              )}
-              color="inherit"
-            >
-              {title}
-            </Heading>
-          </ToastTitle>
+          {title && (
+            <ToastTitle asChild>
+              <Heading
+                size="sm"
+                className={cn(
+                  variants(color, adjustedTextColorState)[variant].text,
+                  "w-36 break-words overflow-hidden"
+                )}
+                color="inherit"
+              >
+                {title}
+              </Heading>
+            </ToastTitle>
+          )}
           <ToastDescription asChild>
             <Text
               size="sm"

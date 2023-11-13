@@ -7,13 +7,8 @@ import {
 } from "@radix-ui/react-dialog";
 import cn from "classnames";
 import isString from "lodash/isString";
-import {
-  type FC,
-  Fragment,
-  type MutableRefObject,
-  type ReactElement,
-  type ReactNode,
-} from "react";
+import type { FC, ReactElement, ReactNode, RefObject } from "react";
+import { Fragment } from "react";
 
 import {
   bgColors,
@@ -40,7 +35,7 @@ export type ModalProps = {
   content?: string | ReactNode;
   footer?: ReactNode;
   size?: ModalSize;
-  initialFocus?: MutableRefObject<HTMLElement>;
+  initialFocus?: RefObject<HTMLElement>;
   wrapper?: FC;
   forbidCancellation?: boolean;
   headerClassName?: string;
@@ -117,7 +112,7 @@ export const Modal = ({
                   initialFocus
                     ? (e) => {
                         e.preventDefault();
-                        initialFocus.current.focus();
+                        initialFocus.current?.focus();
                       }
                     : undefined
                 }

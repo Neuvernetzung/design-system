@@ -36,7 +36,6 @@ import {
 import {
   getDropdownContainerStyles,
   getDropdownGroupHeaderStyles,
-  getDropdownGroupStyles,
   getDropDownOptionsStyles,
   getInputStyles,
 } from "../../../styles/groups";
@@ -405,7 +404,7 @@ export const SelectInner = <
                     ) => {
                       if (_options && _options.length !== 0)
                         return (
-                          <div className={cn(getDropdownGroupStyles({ size }))}>
+                          <div className={cn()}>
                             <Text
                               size="xs"
                               className={cn(

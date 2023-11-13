@@ -141,6 +141,7 @@ export const Radio = <
                       <RadioGroupItem
                         disabled={_disabled}
                         value={value}
+                        aria-label={value}
                         id={`${name}_option_${i}`}
                         className={cn(
                           "aspect-square flex rounded-full",
@@ -174,13 +175,17 @@ export const Radio = <
                     </>
                   )}
                   {variant === "button" && (
-                    <RadioGroupItem disabled={_disabled} value={value} asChild>
+                    <RadioGroupItem
+                      disabled={_disabled}
+                      value={value}
+                      aria-label={value}
+                      asChild
+                    >
                       <Button
                         disabled={_disabled}
                         variant={isChecked ? "filled" : "outline"}
                         color={!error ? color : "danger"}
                         size={size}
-                        as="span"
                         className={cn(
                           !_disabled ? "cursor-pointer" : "cursor-not-allowed"
                         )}
