@@ -7,11 +7,12 @@ import {
   IconLogout,
   IconTrash,
 } from "@tabler/icons-react";
-import React from "react";
+import React, { useState } from "react";
 
 import { sizes } from "../../../types";
 import { ButtonGroup, IconButton } from "../Button";
 import { Menu, MenuItemProps } from "./menu";
+import { Text } from "../Typography/Text";
 
 export default {
   title: "UI/Overlay/Menu",
@@ -181,6 +182,99 @@ export const Disabled = ({ ...args }) => {
           {...args}
         />
       </ButtonGroup>
+    </Container>
+  );
+};
+
+export const Checkbox = ({ ...args }) => {
+  const [bookmarksChecked, setBookmarksChecked] = useState(false);
+  const [urlsChecked, setUrlsChecked] = useState(false);
+
+  const items: MenuItemProps[] = [
+    {
+      children: "Normales Item",
+      onClick: () => {},
+    },
+    { type: "separator" },
+    {
+      type: "group",
+      children: "Optionen",
+      items: [
+        {
+          type: "checkbox",
+          children: "Bookmarks",
+          checked: bookmarksChecked,
+          setChecked: setBookmarksChecked,
+        },
+        {
+          type: "checkbox",
+          children: "Urls",
+          checked: urlsChecked,
+          setChecked: setUrlsChecked,
+        },
+      ],
+    },
+    { type: "separator" },
+    { type: "anchor", children: "Option 6", href: "#" },
+  ];
+
+  return (
+    <Container>
+      <div className="flex flex-col gap-4">
+        <Text>Bookmarks: {String(bookmarksChecked)}</Text>
+        <Text>Urls: {String(urlsChecked)}</Text>
+        <ButtonGroup>
+          <Menu
+            items={items}
+            buttonProps={{ children: "Checkbox" }}
+            {...args}
+          />
+        </ButtonGroup>
+      </div>
+    </Container>
+  );
+};
+
+export const Radio = ({ ...args }) => {
+  const [radio, setRadio] = useState<string>();
+
+  const items: MenuItemProps[] = [
+    {
+      children: "Normales Item",
+      onClick: () => {},
+    },
+    { type: "separator" },
+    {
+      type: "group",
+      children: "Radio",
+      items: [
+        {
+          type: "radio",
+          value: radio,
+          setValue: setRadio,
+          options: [
+            { value: "booksmarks", children: "Bookmarks" },
+            { value: "urls", children: "Urls" },
+          ],
+        },
+      ],
+    },
+    { type: "separator" },
+    { type: "anchor", children: "Option 6", href: "#" },
+  ];
+
+  return (
+    <Container>
+      <div className="flex flex-col gap-4">
+        <Text>Value: {String(radio)}</Text>
+        <ButtonGroup>
+          <Menu
+            items={items}
+            buttonProps={{ children: "Checkbox" }}
+            {...args}
+          />
+        </ButtonGroup>
+      </div>
     </Container>
   );
 };
