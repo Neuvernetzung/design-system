@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Anchor } from ".";
 import { Text } from "../Text";
@@ -28,8 +27,11 @@ export default {
 
 export const Default = ({ ...args }) => (
   <Text>
-    Die ist ein <Anchor href="/test">Link</Anchor>, welcher inline im Text
-    eingebunden ist.
+    Die ist ein{" "}
+    <Anchor href="/test" {...args}>
+      Link
+    </Anchor>
+    , welcher inline im Text eingebunden ist.
   </Text>
 );
 
@@ -44,8 +46,11 @@ export const AnchorInsideCheckbox = ({ ...args }) => {
         {
           label: (
             <Text>
-              Die ist ein <Anchor href="/test">Link</Anchor>, welcher inline im
-              Text eingebunden ist.
+              Die ist ein{" "}
+              <Anchor href="/test" {...args}>
+                Link
+              </Anchor>
+              , welcher inline im Text eingebunden ist.
             </Text>
           ),
           value: "123",

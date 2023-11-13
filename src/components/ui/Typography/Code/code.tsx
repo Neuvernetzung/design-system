@@ -5,7 +5,7 @@ import type {
   ExtendedColor,
   Size,
 } from "../../../../types";
-import cn from "classnames";
+import { cn } from "@/utils";
 import {
   bgColors,
   borders,

@@ -1,12 +1,12 @@
 import { IconCheck } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { Select } from "../Select";
-import { TabGroup, TabList, TabPanels } from "../Tabs";
+import { TabGroup, TabItemValueProps, TabList, TabPanels } from "../Tabs";
 import { Heading } from "../Typography";
 import { Modal, ModalSize } from "./modal";
 
@@ -281,19 +281,10 @@ export const Nested = ({ ...args }) => {
 export const WithWrapper = ({ ...args }) => {
   const [open, setOpen] = useState(false);
 
-  const tabs = [
-    {
-      title: "Tab 1",
-      content: "Tab Content 1",
-    },
-    {
-      title: "Tab 2",
-      content: "Tab Content 2",
-    },
-    {
-      title: "Tab 3",
-      content: "Tab Content 3",
-    },
+  const tabs: TabItemValueProps[] = [
+    { value: "1", title: "Tab 1", content: "Tab Content 1" },
+    { value: "2", title: "Tab 2", content: "Tab Content 2" },
+    { value: "3", title: "Tab 3", content: "Tab Content 3" },
   ];
 
   return (

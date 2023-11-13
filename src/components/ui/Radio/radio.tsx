@@ -3,7 +3,7 @@ import {
   RadioGroupProps,
   Root as RadioGroupRoot,
 } from "@radix-ui/react-radio-group";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import type {

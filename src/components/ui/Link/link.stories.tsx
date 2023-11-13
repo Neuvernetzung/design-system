@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Button } from "../Button";
 import { Link } from "./link";
@@ -23,7 +22,7 @@ export const Default = ({ ...args }) => (
 
 export const AsButton = ({ ...args }) => (
   <Container>
-    <Link href="/" passHref legacyBehavior>
+    <Link href="/" passHref legacyBehavior {...args}>
       <Button as="a">Link</Button>
     </Link>
   </Container>
@@ -31,7 +30,7 @@ export const AsButton = ({ ...args }) => (
 
 export const Disabled = ({ ...args }) => (
   <Container>
-    <Link href="/" disabled>
+    <Link href="/" disabled {...args}>
       Link
     </Link>
   </Container>

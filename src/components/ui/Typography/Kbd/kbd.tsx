@@ -8,7 +8,7 @@ import {
   shadows,
   textSizes,
 } from "../../../../styles";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { smallerSize } from "../../../../utils";
 
 export type KbdProps = { size?: Size; children: ReactNode };

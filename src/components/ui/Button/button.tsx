@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import cn from "classnames";
+import { cn } from "@/utils";
 import isString from "lodash/isString";
 import { ElementType, ForwardedRef, forwardRef, ReactNode } from "react";
 

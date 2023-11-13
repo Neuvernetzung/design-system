@@ -1,6 +1,5 @@
 import { Meta } from "@storybook/react";
-import cn from "classnames";
-import React from "react";
+import { cn } from "@/utils";
 import { useForm } from "react-hook-form";
 
 import { Button, Prose } from "..";
@@ -8,6 +7,7 @@ import { RichText } from ".";
 import { Editor } from "@tiptap/react";
 import { IconPhoto } from "@tabler/icons-react";
 import { Form } from "../Form/form";
+import { HTMLAttributes } from "react";
 
 export default {
   title: "UI/Form/RichText",
@@ -21,7 +21,7 @@ export default {
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
-const Container = ({ className, ...props }: any) => (
+const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col gap-5", className)} {...props} />
 );
 
@@ -36,6 +36,7 @@ export const Default = ({ ...args }) => {
         name="RichText"
         placeholder="Schreib etwas..."
         showLength
+        {...args}
       />
     </Container>
   );
@@ -45,12 +46,7 @@ export const Error = ({ ...args }) => {
   const formMethods = useForm();
 
   return (
-    <Form
-      handleSubmit={formMethods.handleSubmit}
-      onSubmit={(data) => {
-        console.log(data);
-      }}
-    >
+    <Form handleSubmit={formMethods.handleSubmit} onSubmit={() => {}}>
       <Container>
         <RichText
           required
@@ -59,6 +55,7 @@ export const Error = ({ ...args }) => {
           name="RichText"
           placeholder="Schreib etwas..."
           showLength
+          {...args}
         />
         <Button type="submit">Bestätigen</Button>
       </Container>
@@ -79,7 +76,7 @@ export const CompareToProse = ({ ...args }) => {
 
   return (
     <Container className="grid grid-cols-2">
-      <RichText control={control} name="RichTextCompare" />
+      <RichText control={control} name="RichTextCompare" {...args} />
       <Prose content={watch("RichTextCompare")} />
     </Container>
   );
@@ -90,8 +87,8 @@ export const SelectOnTopOfEachOther = ({ ...args }) => {
 
   return (
     <Container>
-      <RichText control={formMethods.control} name="RichText" />
-      <RichText control={formMethods.control} name="RichText" />
+      <RichText control={formMethods.control} name="RichText" {...args} />
+      <RichText control={formMethods.control} name="RichText" {...args} />
     </Container>
   );
 };
@@ -125,6 +122,7 @@ export const CustomMenuButtons = ({ ...args }) => {
         control={control}
         AdditionalMenuItems={MenuButtonItem}
         name="RichText"
+        {...args}
       />
       <Prose content={watch("RichText")} />
     </Container>

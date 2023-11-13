@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { HexColorPicker } from "react-colorful";
 import {

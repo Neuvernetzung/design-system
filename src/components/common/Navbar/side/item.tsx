@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import Link from "next/link";
 
 import { gaps } from "../../../../styles";

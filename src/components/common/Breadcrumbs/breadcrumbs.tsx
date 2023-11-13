@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { IconChevronRight, IconHome } from "@tabler/icons-react";
 import type { ButtonVariant, Size } from "../../../types";

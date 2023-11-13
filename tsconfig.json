@@ -1,13 +1,7 @@
 {
   "extends": "@neuvernetzung/tsconfig/react-library.json",
   "include": ["**/*.ts", "**/*.tsx", "src/**/*ts", "src/**/*tsx"],
-  "exclude": [
-    "dist",
-    "alt",
-    "node_modules",
-    "**/**.stories.**",
-    "commitlint.config.ts"
-  ],
+  "exclude": ["dist", "alt", "node_modules", "commitlint.config.ts"],
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "ES2015"],
     "allowJs": true,

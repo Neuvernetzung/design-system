@@ -20,7 +20,7 @@ import {
 } from "../../../../utils/internal/inputRule";
 import { Button, ButtonGroup } from "../../Button";
 import { smallerSize } from "../../../../utils";
-import cn from "classnames";
+import { cn } from "@/utils";
 import {
   decrement,
   increment,

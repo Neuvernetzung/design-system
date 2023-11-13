@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import type { ReturnedColors } from "../theme/extendColors";
 import type { Color, ExtendedColor, HEX } from "../types";

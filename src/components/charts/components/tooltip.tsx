@@ -1,5 +1,5 @@
 import { TooltipInPortalProps } from "@visx/tooltip/lib/hooks/useTooltipInPortal";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { FC, HTMLAttributes, ReactNode } from "react";
 
 import {

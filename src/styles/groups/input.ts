@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import type { InputVariant, Size } from "../../types";
 import {

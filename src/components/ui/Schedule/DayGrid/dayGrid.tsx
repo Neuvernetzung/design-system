@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { setHours, setMinutes } from "date-fns";
 
 import { bgColors, divides, paddingsXSmall } from "../../../../styles";

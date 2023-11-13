@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Funnelform, useFunnelForm } from "./funnelform";
 import { Input, Button, Text } from "../../ui";
@@ -24,7 +23,7 @@ export const Start = ({ ...args }) => {
   const data = funnel.state;
 
   return (
-    <Funnelform funnel={funnel} handleSubmit={handleSubmit}>
+    <Funnelform funnel={funnel} handleSubmit={handleSubmit} {...args}>
       <div className="flex flex-col gap-4">
         <Text>Name: {data?.name}</Text>
         <Text>Stadt: {data?.city}</Text>
@@ -48,7 +47,7 @@ export const Mid = ({ ...args }) => {
   const data = funnel.state;
 
   return (
-    <Funnelform handleSubmit={handleSubmit} funnel={funnel}>
+    <Funnelform handleSubmit={handleSubmit} funnel={funnel} {...args}>
       <div className="flex flex-col gap-4">
         <Text>Name: {data?.name}</Text>
         <Text>Stadt: {data?.city}</Text>
@@ -72,10 +71,17 @@ export const Finish = ({ ...args }) => {
 
   const data = funnel.state;
 
-  const onSubmit = (data: MyFunnel) => {};
+  const onSubmit = (data: MyFunnel) => {
+    console.log(data);
+  };
 
   return (
-    <Funnelform funnel={funnel} handleSubmit={handleSubmit} onSubmit={onSubmit}>
+    <Funnelform
+      funnel={funnel}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+      {...args}
+    >
       <div className="flex flex-col gap-4">
         <Text>Name: {data?.name}</Text>
         <Text>Stadt: {data?.city}</Text>

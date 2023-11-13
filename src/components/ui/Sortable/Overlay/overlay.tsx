@@ -8,7 +8,7 @@ import {
 } from "../../../../styles";
 import { IconButton } from "../../Button/IconButton";
 import { Text } from "../../Typography/Text";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { Size } from "../../../../types";
 import { Tag } from "../../Tag";
 import { smallerSize } from "../../../../utils";

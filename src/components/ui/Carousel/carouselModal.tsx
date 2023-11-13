@@ -6,7 +6,7 @@ import {
   Root as DialogRoot,
 } from "@radix-ui/react-dialog";
 import { IconX } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { MutableRefObject, useState } from "react";
 import { Swiper as SwiperType } from "swiper/types";
 

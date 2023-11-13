@@ -5,7 +5,7 @@ import {
   TabsProps,
   TabsTrigger,
 } from "@radix-ui/react-tabs";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { ReactElement, ReactNode } from "react";
 import { useState } from "react";
 

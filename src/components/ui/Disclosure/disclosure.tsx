@@ -6,7 +6,7 @@ import {
   Root,
 } from "@radix-ui/react-accordion";
 import { IconChevronDown, IconMinus, IconPlus } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import compact from "lodash/compact";
 import isString from "lodash/isString";
 import { type ReactNode } from "react";

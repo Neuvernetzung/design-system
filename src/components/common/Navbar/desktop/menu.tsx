@@ -8,7 +8,7 @@ import {
   Viewport as NavigationMenuViewport,
 } from "@radix-ui/react-navigation-menu";
 import { IconChevronDown } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import Link from "next/link";
 import type { RefObject } from "react";
 

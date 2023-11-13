@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import isArray from "lodash/isArray";
 import { ForwardedRef, forwardRef, HTMLAttributes, useState } from "react";
 import {

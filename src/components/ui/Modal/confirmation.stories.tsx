@@ -1,7 +1,6 @@
 import { IconInfoCircle } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { colors } from "../../../types";
@@ -28,6 +27,7 @@ export const Default = ({ ...args }) => (
             content: "Wollen Sie die Bestätigung wirklich bestätigen?",
             cancel: action("cancel"),
             confirm: action("confirm"),
+            ...args,
           })
         }
       >

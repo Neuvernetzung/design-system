@@ -1,6 +1,5 @@
 import { IconSettings } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { colors, sizes, tagVariants } from "../../../types";
 import { Tag } from "./tag";

@@ -1,5 +1,5 @@
 import { IconGripVertical } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import { paddingsEvenly } from "../../../styles";
 import { mergeRefs, typedMemo } from "../../../utils/internal";

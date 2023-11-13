@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { ForwardedRef, forwardRef, ReactNode } from "react";
 import {

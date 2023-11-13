@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { ReactNode, useState } from "react";
 import {
   A11y,

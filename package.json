@@ -93,7 +93,8 @@
     "@visx/responsive": "^3.3.0",
     "@visx/scale": "^3.3.0",
     "@visx/shape": "^3.3.0",
-    "@visx/tooltip": "^3.3.0"
+    "@visx/tooltip": "^3.3.0",
+    "tailwind-merge": "^2.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.2",

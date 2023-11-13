@@ -1,6 +1,5 @@
 import { Meta } from "@storybook/react";
 import { useBreakPoints } from "./useBreakPoints";
-import React from "react";
 import { Text } from "../components";
 
 export default {
@@ -19,7 +18,7 @@ const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
 );
 
-export const Default = ({ ...args }) => {
+export const Default = () => {
   const { breakpoint, isBreakpoint, isBreakpointOrLarger } = useBreakPoints();
 
   return (

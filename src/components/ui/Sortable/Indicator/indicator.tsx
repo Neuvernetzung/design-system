@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { ComponentPropsWithoutRef, ElementType, ReactElement } from "react";
 
 import { bgColors, roundings, zIndexes } from "../../../../styles";

@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { Element, HTMLReactParserOptions } from "html-react-parser";
 import parse, { domToReact } from "html-react-parser";
 import { createElement, ReactNode } from "react";

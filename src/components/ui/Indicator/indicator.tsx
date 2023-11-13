@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { ReactNode } from "react";
 
 import { bgColors, paddingsSmallEvenly } from "../../../styles";

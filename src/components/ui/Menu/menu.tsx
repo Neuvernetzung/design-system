@@ -14,7 +14,7 @@ import {
   Root as DropdownMenuRoot,
 } from "@radix-ui/react-dropdown-menu";
 import { IconCheck, IconPointFilled } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import Link from "next/link";
 import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 

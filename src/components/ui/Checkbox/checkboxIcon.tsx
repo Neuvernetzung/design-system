@@ -1,7 +1,7 @@
 import { IconCheck, IconMinus } from "@tabler/icons-react";
 import type { Size, SvgType } from "../../../types";
 import { Icon } from "../Icon";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { checkboxAnimation, transition } from "../../../styles";
 
 type CheckboxIconProps = {

@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { ProgressBar } from ".";
 import { Button } from "..";
@@ -16,14 +16,14 @@ const Container = ({ ...props }) => (
 export const Colors = ({ ...args }) => (
   <Container>
     {colors.map((color) => (
-      <ProgressBar key={color} progress={33} color={color} />
+      <ProgressBar key={color} progress={33} color={color} {...args} />
     ))}
   </Container>
 );
 export const Sizes = ({ ...args }) => (
   <Container>
     {sizes.map((size) => (
-      <ProgressBar key={size} progress={33} size={size} />
+      <ProgressBar key={size} progress={33} size={size} {...args} />
     ))}
   </Container>
 );
@@ -32,7 +32,7 @@ export const Transition = ({ ...args }) => {
 
   return (
     <Container>
-      <ProgressBar progress={progress} />
+      <ProgressBar progress={progress} {...args} />
       <Button onClick={() => setProgress(66)}>66</Button>
       <Button onClick={() => setProgress(33)}>33</Button>
     </Container>

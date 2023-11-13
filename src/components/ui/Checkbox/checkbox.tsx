@@ -3,7 +3,7 @@ import {
   CheckedState,
   Root as CheckboxRoot,
 } from "@radix-ui/react-checkbox";
-import cn from "classnames";
+import { cn } from "@/utils";
 import isArray from "lodash/isArray";
 import { useRouter } from "next/router";
 import type { ForwardedRef, ReactNode } from "react";

@@ -1,8 +1,7 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
-import { colors, radioVariants, Sizes as SizesType } from "../../../types";
+import { colors, radioVariants, sizes } from "../../../types";
 import { Button, Form } from "..";
 import { Radio } from ".";
 
@@ -64,7 +63,7 @@ export const Variants = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {radioVariants.map((variant: any) => (
+      {radioVariants.map((variant) => (
         <Radio
           key={variant}
           control={formMethods.control}
@@ -88,7 +87,6 @@ Variants.parameters = {
 
 export const Sizes = ({ ...args }) => {
   const formMethods = useForm();
-  const sizes: Array<keyof SizesType> = ["xs", "sm", "md", "lg", "xl"];
 
   return (
     <Form
@@ -96,7 +94,7 @@ export const Sizes = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {sizes.map((size: any) => (
+      {sizes.map((size) => (
         <Radio
           key={size}
           control={formMethods.control}
@@ -127,7 +125,7 @@ export const Colors = ({ ...args }) => {
       onSubmit={() => {}}
       className={formClassName}
     >
-      {colors.map((color: any) => (
+      {colors.map((color) => (
         <Radio
           key={color}
           control={formMethods.control}
@@ -150,8 +148,11 @@ Colors.parameters = {
 };
 
 export const Disabled = ({ ...args }) => {
-  const formMethods = useForm<any>({
-    defaultValues: { radio_disabled: "option-2" },
+  const formMethods = useForm({
+    defaultValues: {
+      radio_disabled: "option-2",
+      radio_disabled_single: undefined,
+    },
   });
 
   return (

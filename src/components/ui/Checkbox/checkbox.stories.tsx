@@ -5,7 +5,6 @@ import {
   IconHome,
   IconPlus,
 } from "@tabler/icons-react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { checkboxVariants, colors, sizes } from "../../../types";

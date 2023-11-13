@@ -1,5 +1,5 @@
 import { DragOverlay, useDroppable } from "@dnd-kit/core";
-import cn from "classnames";
+import { cn } from "@/utils";
 import {
   addDays,
   addMonths,
