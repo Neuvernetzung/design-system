@@ -1,6 +1,7 @@
-import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { create } from "zustand";
+
+import { cn } from "@/utils";
 
 import { getText, type Locale } from "../../../locales/getText";
 import {
@@ -10,24 +11,22 @@ import {
   zIndexes,
 } from "../../../styles";
 import type { ExtendedColor, Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
-import { Text } from "../Typography/Text";
 import { iconDimensions } from "../Icon/icon";
+import { Text } from "../Typography/Text";
 
-export const useLoadingState = create<string | boolean>(() => false);
+export const useLoadingState = create<boolean>(() => false);
 
-type LoadingOptions = {
-  id?: string;
+export const loading = (loading: boolean) => {
+  useLoadingState.setState(loading);
 };
 
-export const loading = (loading: boolean, { id }: LoadingOptions = {}) => {
-  useLoadingState.setState(id || loading);
-};
+export const isLoading = () => useLoadingState.getState();
 
-export const isLoading = (id?: string) => {
-  if (!id) return !!useLoadingState.getState();
-  return id === useLoadingState.getState();
+export const useIsLoading = () => {
+  const isLoading = useLoadingState((state) => state);
+
+  return isLoading;
 };
 
 export const Loading = () => {
@@ -49,8 +48,6 @@ export const Loading = () => {
 
   return null;
 };
-
-export default typedMemo(Loading);
 
 type SpinnerProps = {
   color?: ExtendedColor;

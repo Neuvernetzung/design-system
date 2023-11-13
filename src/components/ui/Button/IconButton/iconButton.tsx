@@ -1,6 +1,5 @@
 /* eslint-disable react/button-has-type */
 import { cn } from "@/utils";
-import isString from "lodash/isString";
 import { ElementType, ForwardedRef, forwardRef } from "react";
 
 import {
@@ -25,7 +24,7 @@ import type {
   PolymorphicPropsWithRef,
 } from "../../../../utils/internal/polymorphic";
 import { Icon } from "../../Icon";
-import { Spinner, useLoadingState } from "../../Loading/loading";
+import { Spinner } from "../../Loading/loading";
 import {
   buttonBaseStyles,
   buttonVariantStyles,
@@ -42,7 +41,7 @@ export type IconButtonOwnProps = {
   rounded?: boolean;
   icon: SvgType;
   disabled?: boolean;
-  loadingId?: string;
+  isLoading?: boolean;
   iconClassName?: string;
   ariaLabel: string;
   type?: "button" | "submit" | "reset";
@@ -68,7 +67,7 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
       rounded,
       icon,
       ariaLabel,
-      loadingId,
+      isLoading,
       className,
       iconClassName,
       as,
@@ -79,9 +78,6 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
     const Component: ElementType = as || IconButtonDefaultElement;
 
     const { adjustedTextColorState } = useThemeState();
-
-    const loadingState = useLoadingState((state) => state);
-    const isLoading = isString(loadingState) && loadingState === loadingId;
 
     const _disabled = disabled || isLoading;
 
