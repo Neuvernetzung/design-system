@@ -11,8 +11,8 @@ import {
   IconUser,
   IconX,
 } from "@tabler/icons-react";
-import cn from "classnames";
-import React, { useRef, useState } from "react";
+import { cn } from "@/utils";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Logo } from "../../../../public/Logo";
@@ -175,9 +175,8 @@ const baseProps: NavbarProps = {
           onClick: () => {},
         },
       ]}
-      placement="top"
+      side="top"
       size="xl"
-      buttonType="button"
       buttonProps={{
         variant: "ghost",
         children: "Benutzer",

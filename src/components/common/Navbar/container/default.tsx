@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { ForwardedRef, forwardRef, useRef } from "react";
 
 import {

@@ -1,7 +1,7 @@
 import { Meta } from "@storybook/react";
 import { IconChevronDown, IconPencil } from "@tabler/icons-react";
-import cn from "classnames";
-import React, { useEffect, useState } from "react";
+import { cn } from "@/utils";
+import { useEffect, useState } from "react";
 
 import { extendedBgColors } from "../../../styles";
 import { IconButton } from "../Button";
@@ -42,7 +42,7 @@ const items = [
   {
     _id: "_2",
     id: "2",
-    title: { test: "undefined" }["23"],
+    title: "Test",
     name: 2,
     createdAt: new Date().toDateString(),
   },

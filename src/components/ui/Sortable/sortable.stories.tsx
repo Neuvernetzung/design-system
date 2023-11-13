@@ -1,10 +1,10 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Sortable, SortableItem, UseSortableChange } from ".";
 import { Text, IconButton } from "..";
 import { IconGripVertical } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { bgColorsInteractive, paddingsEvenly } from "../../../styles";
 
 export default {
@@ -38,6 +38,7 @@ export const Default = ({ ...args }) => {
       items={items}
       handleChange={handleChange}
       itemIds={items.map((item) => item.id)}
+      {...args}
     >
       {items.map((item) => (
         <SortableItem className={itemClassName} id={item.id} key={item.id}>
@@ -64,6 +65,7 @@ export const Controlled = ({ ...args }) => {
           handleChange={handleChange}
           itemIds={defaultItems.map((item) => item.id)}
           order="order"
+          {...args}
         >
           {(items) =>
             items.map((item) => (
@@ -103,6 +105,7 @@ export const WithHandle = ({ ...args }) => {
       items={items}
       handleChange={handleChange}
       itemIds={items.map((item) => item.id)}
+      {...args}
     >
       {items.map((item, i) => (
         <SortableItem

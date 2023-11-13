@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { HTMLAttributes, MutableRefObject } from "react";
 
 import { pagePaddings } from "../../../styles";

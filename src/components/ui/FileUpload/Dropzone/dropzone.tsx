@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { DragEvent, ReactElement, useRef, useState } from "react";
 import {

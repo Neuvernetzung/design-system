@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Heading } from "./heading";
 import { extendedColors, sizes } from "../../../../types";

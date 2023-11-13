@@ -1,5 +1,5 @@
 import { DragOverlay } from "@dnd-kit/core";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { addDays, getHours, getMinutes, isToday, subDays } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";

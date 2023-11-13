@@ -1,5 +1,5 @@
 import { IconClock, IconX } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import isNumber from "lodash/isNumber";
 import { useRouter } from "next/router";
 import { type ForwardedRef, forwardRef, type MouseEvent } from "react";

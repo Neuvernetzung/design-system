@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode } from "react";
 
 export type ButtonGroupProps = HTMLAttributes<HTMLDivElement> & {

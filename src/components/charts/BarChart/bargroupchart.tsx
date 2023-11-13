@@ -12,7 +12,7 @@ import { AddSVGProps, AnyScaleBand, DatumObject } from "@visx/shape/lib/types";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { max, min } from "@visx/vendor/d3-array";
 import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { isFunction } from "lodash";
 import { ForwardedRef, forwardRef, ReactNode, useRef } from "react";
 

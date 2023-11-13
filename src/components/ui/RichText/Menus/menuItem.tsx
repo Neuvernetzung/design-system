@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { MouseEventHandler, ReactNode } from "react";
 
 import { gapsSmall } from "../../../../styles";

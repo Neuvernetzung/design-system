@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { ImageProps as NextImageProps } from "next/image";
 import NextImage from "next/image";
 import { HTMLAttributes, useState } from "react";

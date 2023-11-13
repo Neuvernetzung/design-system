@@ -7,7 +7,7 @@ import {
   IconLogout,
   IconTrash,
 } from "@tabler/icons-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { sizes } from "../../../types";
 import { ButtonGroup, IconButton } from "../Button";

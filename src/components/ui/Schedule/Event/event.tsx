@@ -6,7 +6,7 @@ import {
   IconArrowNarrowRight,
   IconCalendarCancel,
 } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { addDays, addHours, addMinutes } from "date-fns";
 import { getEventEnd, type VEvent } from "ts-ics";
 

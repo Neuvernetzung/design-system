@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { gaps } from "../../../../styles";
 import { NavbarSubItemProps, NavLinkWrap } from "../desktop/sub";
 import { Text } from "../../../ui/Typography/Text";

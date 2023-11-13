@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import NextLink from "next/link";
 import { AnchorHTMLAttributes, ReactElement } from "react";
 

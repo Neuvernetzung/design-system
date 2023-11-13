@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { BaseSyntheticEvent, ReactNode } from "react";
 import {
   FieldValues,

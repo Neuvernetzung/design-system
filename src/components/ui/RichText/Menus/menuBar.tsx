@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Editor } from "@tiptap/react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRef, KeyboardEvent, ReactNode } from "react";
 
 import {

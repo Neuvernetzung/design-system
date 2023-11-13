@@ -24,17 +24,11 @@ export default {
 
 const formClassName = "flex flex-col gap-5";
 
-type FormProps = {
-  select: any;
-  input: any;
-  switch: any;
-};
-
 export const Default = ({ ...args }) => {
-  const { handleSubmit, control } = useForm<FormProps>();
+  const { handleSubmit, control } = useForm();
   const [submitted, setSubmitted] = React.useState<boolean>(false);
 
-  const onSubmit = (data: FormProps) => {
+  const onSubmit = () => {
     action("Submit");
     setSubmitted(true);
   };

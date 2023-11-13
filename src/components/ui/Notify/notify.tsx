@@ -4,7 +4,7 @@ import {
   IconCircleCheck,
   IconInfoSquareRounded,
 } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { create } from "zustand";

@@ -1,5 +1,5 @@
 import { IconX } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { VEvent } from "ts-ics";
 
 import { gaps, gapsSmall } from "../../../../styles";

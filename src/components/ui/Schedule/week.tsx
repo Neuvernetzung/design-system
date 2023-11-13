@@ -1,5 +1,5 @@
 import { DragOverlay } from "@dnd-kit/core";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { addDays, addWeeks, endOfWeek, startOfWeek, subWeeks } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";

@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { typedMemo } from "../../../utils/internal";
 import { backdropAnimation } from "../../../styles";
 

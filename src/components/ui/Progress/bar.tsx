@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import { bgColors, extendedBgColors, roundingsSmall } from "../../../styles";
 import type { Color, Size } from "../../../types";

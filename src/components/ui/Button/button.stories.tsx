@@ -1,7 +1,7 @@
 import { IconHome } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import React, { ElementType } from "react";
+import { ElementType } from "react";
 
 import { ThemeProvider } from "../../../theme";
 import {
@@ -182,7 +182,7 @@ export const VeryLong = ({ ...args }) => (
 );
 
 export const IsLoading = ({ ...args }) => {
-  const load = (id) => {
+  const load = (id: string) => {
     loading(true, { id });
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });

@@ -10,7 +10,7 @@ import {
   IconTrash,
   IconX,
 } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { isSameDay } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useState } from "react";

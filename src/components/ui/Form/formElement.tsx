@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import isString from "lodash/isString";
 import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";

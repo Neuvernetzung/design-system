@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
@@ -81,7 +80,7 @@ export const Default = () => (
 );
 
 export const CancelLoading = () => {
-  const load = (id) => {
+  const load = (id: string | undefined) => {
     loading(true, { id });
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });

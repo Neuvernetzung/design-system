@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Tree, TreeDisclosure, TreeItemProps } from ".";
 import { borderVariants } from "../../../styles";
@@ -81,14 +80,14 @@ const Container = ({ ...props }) => (
 
 export const Default = ({ ...args }) => (
   <Container>
-    <Tree items={items} />
+    <Tree items={items} {...args} />
   </Container>
 );
 
 export const BorderVariants = ({ ...args }) => (
   <Container>
     {borderVariants.map((variant) => (
-      <Tree key={variant} borderVariant={variant} items={items} />
+      <Tree key={variant} borderVariant={variant} items={items} {...args} />
     ))}
   </Container>
 );
@@ -96,13 +95,13 @@ export const BorderVariants = ({ ...args }) => (
 export const Sizes = ({ ...args }) => (
   <Container>
     {sizes.map((size) => (
-      <Tree key={size} size={size} items={items} />
+      <Tree key={size} size={size} items={items} {...args} />
     ))}
   </Container>
 );
 
 export const Disclosure = ({ ...args }) => (
   <Container>
-    <TreeDisclosure items={items} />
+    <TreeDisclosure items={items} {...args} />
   </Container>
 );

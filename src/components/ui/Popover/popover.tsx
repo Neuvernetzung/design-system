@@ -15,7 +15,7 @@ import {
   Root as PopoverRoot,
   Trigger as PopoverTrigger,
 } from "@radix-ui/react-popover";
-import cn from "classnames";
+import { cn } from "@/utils";
 import {
   ForwardedRef,
   forwardRef,

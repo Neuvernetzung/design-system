@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IconTrash, IconSearch } from "@tabler/icons-react";
 import { Button, Form, Heading, Icon, Input } from "../../ui";
@@ -47,7 +47,7 @@ const items: TestItem[] = [
   },
 ];
 
-const SelectItems: PaginatedSelectItems<TestItem> = ({
+const SelectItems: PaginatedSelectItems<TestItem, boolean> = ({
   items,
   handleSelect,
   isActive,

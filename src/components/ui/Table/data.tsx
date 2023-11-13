@@ -1,5 +1,5 @@
 import { IconChevronDown } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import get from "lodash/get";
 import { useRouter } from "next/router";
 import { useState } from "react";

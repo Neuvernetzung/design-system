@@ -1,6 +1,5 @@
 import { Meta } from "@storybook/react";
-import cn from "classnames";
-import React from "react";
+import { cn } from "@/utils";
 
 import { borders } from "../../../styles";
 import { LineSerieschart } from ".";

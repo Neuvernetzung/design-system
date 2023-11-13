@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import type { NavbarProps, SubNavProps } from "../navbar";
 import { NavigationMenu } from "./menu";

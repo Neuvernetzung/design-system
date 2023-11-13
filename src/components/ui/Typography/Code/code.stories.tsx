@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Code, CodeInline } from ".";
 import { Text } from "../Text";
@@ -20,8 +19,8 @@ export default {
 
 export const Default = ({ ...args }) => (
   <Text>
-    Die ist ein <CodeInline>Inline Code</CodeInline>, welcher inline im Text
-    eingebunden ist. <Code>Und dies ist ein normaler Code</Code>
+    Die ist ein <CodeInline {...args}>Inline Code</CodeInline>, welcher inline
+    im Text eingebunden ist. <Code>Und dies ist ein normaler Code</Code>
   </Text>
 );
 

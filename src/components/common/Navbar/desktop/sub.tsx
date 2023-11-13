@@ -1,5 +1,5 @@
 import { IconChevronRight } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import isString from "lodash/isString";
 import Link from "next/link";
 import { ReactElement } from "react";

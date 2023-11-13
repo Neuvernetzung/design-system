@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Image } from "./index";
 
@@ -23,6 +22,7 @@ export const Default = ({ ...args }) => (
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1920px-Google_2015_logo.svg.png"
       alt="test Bild"
       className="aspect-video rounded-lg"
+      {...args}
     />
   </Container>
 );
@@ -33,6 +33,7 @@ export const Internal = ({ ...args }) => (
       src="/testImage.jpg"
       alt="test Bild"
       className="aspect-video rounded-lg"
+      {...args}
     />
   </Container>
 );
@@ -43,6 +44,7 @@ export const Fallback = ({ ...args }) => (
       src="https://play.min.io:9000/upload/Gruppe%2027.png123"
       alt="ohne Bild"
       className="aspect-video rounded-lg"
+      {...args}
     />
   </Container>
 );
@@ -53,6 +55,7 @@ export const FallbackShrinked = ({ ...args }) => (
       src="https://play.min.io:9000/upload/Gruppe%2027.png123"
       alt="ohne Bild"
       className="aspect-video rounded-lg"
+      {...args}
     />
   </Container>
 );
@@ -64,6 +67,7 @@ export const DynamicRatio = ({ ...args }) => (
       alt="ohne Bild"
       className="object-contain"
       dynamicRatio
+      {...args}
     />
   </Container>
 );

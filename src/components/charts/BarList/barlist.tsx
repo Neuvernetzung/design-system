@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import isFunction from "lodash/isFunction";
 import Link from "next/link";
 import { ReactNode, useMemo } from "react";

@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/react";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import {
   Loading as LoadingComponent,
@@ -12,10 +12,10 @@ export default {
   component: SpinnerComponent,
 } as Meta;
 
-export const Spinner = ({ ...args }) => <SpinnerComponent />;
+export const Spinner = ({ ...args }) => <SpinnerComponent {...args} />;
 
 export const Loading = ({ ...args }) => {
   useEffect(() => loading(true), []);
 
-  return <LoadingComponent />;
+  return <LoadingComponent {...args} />;
 };

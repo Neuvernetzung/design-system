@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
 import {

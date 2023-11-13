@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { CSSProperties, forwardRef, ReactNode } from "react";
 
 import { textColors } from "../../../../styles";

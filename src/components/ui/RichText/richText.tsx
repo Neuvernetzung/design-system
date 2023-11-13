@@ -4,7 +4,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { KeyboardEvent, ReactNode, useRef, useState } from "react";
 import {

@@ -1,6 +1,5 @@
 import { IconAlertTriangle } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { colors, toastVariants } from "../../../types";
 import { Toast } from "./toast";

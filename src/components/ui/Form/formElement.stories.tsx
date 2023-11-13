@@ -1,6 +1,5 @@
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../Button";
@@ -26,14 +25,10 @@ export default {
 
 const formClassName = "flex flex-col gap-5";
 
-type LabelProps = {
-  input_1: any;
-};
-
 export const Label = ({ ...args }) => {
-  const formMethods = useForm<LabelProps>();
+  const formMethods = useForm();
 
-  const onSubmit = (data: LabelProps) => data;
+  const onSubmit = () => {};
 
   return (
     <Form

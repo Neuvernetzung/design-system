@@ -1,6 +1,5 @@
 import { IconHome } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { ThemeProvider } from "../../../../theme";
 import {
@@ -8,11 +7,11 @@ import {
   colors,
   focusesVariants,
   sizes,
-  Sizes as SizesType,
 } from "../../../../types";
 import { loading } from "../../Loading";
 import { notify } from "../../Notify";
 import { IconButton } from "./iconButton";
+import { ElementType } from "react";
 
 export default {
   title: "UI/Buttons/IconButton",
@@ -93,7 +92,7 @@ Focuses.parameters = {
 
 export const Sizes = ({ ...args }) => (
   <Container>
-    {sizes.map((size: any) => (
+    {sizes.map((size) => (
       <IconButton
         ariaLabel="home"
         size={size}
@@ -110,16 +109,16 @@ Sizes.parameters = {
 };
 
 export const AsComponent = ({ ...args }) => {
-  const components = ["button", "a"];
+  const components: ElementType[] = ["button", "a"];
 
   return (
     <Container>
-      {components.map((component: any) => (
+      {components.map((component) => (
         <IconButton
           ariaLabel="home"
           as={component}
           href="#"
-          key={component}
+          key={component.toString()}
           icon={IconHome}
           {...args}
         />
@@ -162,7 +161,7 @@ export const Disabled = ({ ...args }) => (
 );
 
 export const IsLoading = ({ ...args }) => {
-  const load = (id) => {
+  const load = (id: string) => {
     loading(true, { id });
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });
@@ -180,9 +179,7 @@ export const IsLoading = ({ ...args }) => {
           }}
           loadingId="button"
           {...args}
-        >
-          Click
-        </IconButton>
+        />
       </Container>
     </ThemeProvider>
   );

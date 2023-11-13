@@ -5,7 +5,7 @@ import {
   ToastTitle,
 } from "@radix-ui/react-toast";
 import { IconX } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import {
   bgColors,

@@ -5,7 +5,7 @@ import {
   DialogTrigger,
   Root as DialogRoot,
 } from "@radix-ui/react-dialog";
-import cn from "classnames";
+import { cn } from "@/utils";
 import isString from "lodash/isString";
 import type { FC, ReactElement, ReactNode, RefObject } from "react";
 import { Fragment } from "react";

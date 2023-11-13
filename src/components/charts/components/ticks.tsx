@@ -1,5 +1,5 @@
 import { TickRendererProps } from "@visx/axis";
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import { extendedTextColors, textSizes } from "../../../styles";
 

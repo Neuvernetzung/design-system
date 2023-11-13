@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 

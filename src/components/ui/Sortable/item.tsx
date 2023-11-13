@@ -8,7 +8,7 @@ import type { PolymorphicPropsWithoutRef } from "../../../utils/internal/polymor
 import { mergeRefs, typedMemo } from "../../../utils/internal";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { DragIndicator } from "./Indicator";
-import cn from "classnames";
+import { cn } from "@/utils";
 
 type FunctionChildrenProps<THandle extends boolean> = {
   handle: THandle extends true

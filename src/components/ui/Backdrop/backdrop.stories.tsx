@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Backdrop } from ".";
 
@@ -15,6 +14,6 @@ const Container = ({ ...props }) => (
 
 export const Default = ({ ...args }) => (
   <Container>
-    <Backdrop isOpen />
+    <Backdrop isOpen {...args} />
   </Container>
 );

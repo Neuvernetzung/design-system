@@ -1,5 +1,5 @@
 import { Root as SwitchRoot, SwitchThumb } from "@radix-ui/react-switch";
-import cn from "classnames";
+import { cn } from "@/utils";
 import isString from "lodash/isString";
 import { useRouter } from "next/router";
 import type { ForwardedRef, ReactNode } from "react";

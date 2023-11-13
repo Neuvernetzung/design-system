@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@radix-ui/react-dialog";
 import { IconX } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { MutableRefObject, ReactElement, ReactNode } from "react";
 
 import {

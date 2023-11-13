@@ -1,6 +1,5 @@
 import { Meta } from "@storybook/react";
 import { addDays, addMonths, subDays, subMonths } from "date-fns";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { sizes } from "../../../types";

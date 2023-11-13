@@ -11,7 +11,7 @@ import type { LinePathProps } from "@visx/shape/lib/shapes/LinePath";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { bisector, extent, max, min } from "@visx/vendor/d3-array";
 import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { CurveFactory } from "d3-shape";
 import isFunction from "lodash/isFunction";
 import {

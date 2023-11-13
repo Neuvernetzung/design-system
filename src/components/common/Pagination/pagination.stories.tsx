@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Button, Modal, Text } from "../../ui";
 import { Pagination } from ".";
@@ -95,7 +95,7 @@ export const ToLastPage = ({ ...args }) => {
     <div>
       <Button onClick={() => setResult(50)}>50</Button>
       <Button onClick={() => setResult(100)}>100</Button>
-      <Pagination result={result} />
+      <Pagination result={result} {...args} />
     </div>
   );
 };

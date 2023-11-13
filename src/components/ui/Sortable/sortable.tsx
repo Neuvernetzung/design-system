@@ -9,7 +9,7 @@ import {
   SortingStrategy,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import cn from "classnames";
+import { cn } from "@/utils";
 import isFunction from "lodash/isFunction";
 import { Children, cloneElement, ReactElement } from "react";
 import { createPortal } from "react-dom";

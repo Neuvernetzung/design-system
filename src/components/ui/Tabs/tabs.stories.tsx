@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/react";
 import { IconX } from "@tabler/icons-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { colors, sizes, tabListVariants } from "../../../types";
 import { Button, IconButton } from "../Button";

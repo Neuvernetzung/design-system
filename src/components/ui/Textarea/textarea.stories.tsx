@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, Form } from "..";
@@ -124,12 +123,9 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
-type MaxLengthProps = {
-  textarea_max_length: any;
-};
 
 export const MaxLength = ({ ...args }) => {
-  const formMethods = useForm<MaxLengthProps>();
+  const formMethods = useForm();
 
   return (
     <Form

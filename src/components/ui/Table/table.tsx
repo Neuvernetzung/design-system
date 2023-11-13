@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import get from "lodash/get";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";

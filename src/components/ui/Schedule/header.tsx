@@ -4,7 +4,7 @@ import {
   IconChevronRight,
   IconPlus,
 } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { MouseEventHandler } from "react";
 
 import { gaps } from "../../../styles";

@@ -5,7 +5,7 @@ import { GridColumns, GridRows } from "@visx/grid";
 import { AreaClosed, LinePath } from "@visx/shape";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { bisector, extent, max, min } from "@visx/vendor/d3-array";
-import cn from "classnames";
+import { cn } from "@/utils";
 import compact from "lodash/compact";
 import isFunction from "lodash/isFunction";
 import {

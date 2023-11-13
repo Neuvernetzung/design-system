@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, Form } from "..";
@@ -318,13 +317,8 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
-type OtherValueReturnedProps = {
-  _id_returned: any;
-  _id_returned_multiple;
-};
-
 export const OtherValueReturned = ({ ...args }) => {
-  const formMethods = useForm<OtherValueReturnedProps>();
+  const formMethods = useForm();
 
   const options = [
     {
@@ -414,20 +408,16 @@ export const Overflow = ({ ...args }) => {
       className={formClassName}
     >
       <Disclosure
-        items={[
-          {
-            title: "Select",
-            content: (
-              <Select
-                control={formMethods.control}
-                name="overflow"
-                returned="value"
-                options={options}
-                {...args}
-              />
-            ),
-          },
-        ]}
+        content={
+          <Select
+            control={formMethods.control}
+            name="overflow"
+            returned="value"
+            options={options}
+            {...args}
+          />
+        }
+        title="Select"
       />
     </Form>
   );

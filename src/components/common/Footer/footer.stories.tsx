@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Logo } from "../../../../public/Logo";
 import { Icon } from "../../ui/Icon";
