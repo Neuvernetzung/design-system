@@ -1,20 +1,22 @@
-import { cn } from "@/utils";
-import { forwardRef, ReactElement, ReactNode } from "react";
+import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
 import {
   extendedBgColors,
   extendedBorders,
   gaps,
+  maxPageWidths,
   paddingsX,
   paddingsYLarge,
   pagePaddings,
-} from "../../../styles";
-import { useThemeStateValue } from "../../../theme";
-import type { ExtendedColor, Size, SvgType } from "../../../types";
-import { smallerSize } from "../../../utils";
+} from "@/styles";
+import { useThemeStateValue } from "@/theme";
+import type { ExtendedColor, Size, SvgType } from "@/types";
+import { cn } from "@/utils/cn";
+import { smallerSize } from "@/utils/size";
+
+import { Icon } from "../../ui/Icon";
 import { Link } from "../../ui/Link";
 import { Text } from "../../ui/Typography/Text";
-import { Icon } from "../../ui/Icon";
 
 type FooterProps = {
   logo?: ReactNode;
@@ -44,12 +46,20 @@ const colsClassName: Record<number, string> = {
   4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-4",
 };
 
-export const Footer = forwardRef<HTMLDivElement, FooterProps>(
+export const Footer = forwardRef(
   (
-    { logo, cols = [], copyright, className, size = "md", color = "white" },
-    ref
+    {
+      logo,
+      cols = [],
+      copyright,
+      className,
+      size = "md",
+      color = "white",
+    }: FooterProps,
+    ref: ForwardedRef<HTMLDivElement>
   ) => {
     const pagePadding = useThemeStateValue((state) => state.pagePadding);
+    const maxPageWidth = useThemeStateValue((state) => state.maxPageWidth);
     const adjustedColors = useThemeStateValue(
       (state) => state.adjustedTextColorState
     );
@@ -65,7 +75,11 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
         )}
       >
         <div
-          className={cn("w-full max-w-6xl mx-auto", pagePaddings[pagePadding])}
+          className={cn(
+            "w-full mx-auto",
+            pagePaddings[pagePadding],
+            maxPageWidth && maxPageWidths[maxPageWidth]
+          )}
         >
           <div
             className={cn(

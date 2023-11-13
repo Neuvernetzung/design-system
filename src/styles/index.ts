@@ -6,6 +6,7 @@ export * from "./gaps";
 export * from "./list";
 export * from "./margins";
 export * from "./paddings";
+export * from "./page";
 export * from "./placeholder";
 export * from "./prose";
 export * from "./roundings";

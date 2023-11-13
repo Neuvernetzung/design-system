@@ -12,7 +12,6 @@ import { Swiper as SwiperType } from "swiper/types";
 
 import {
   modalAnimation,
-  paddingsY,
   pagePaddings,
   transition,
   zIndexes,
@@ -119,8 +118,7 @@ export const CarouselModal = ({
           <div
             className={cn(
               "h-full items-center justify-center",
-              pagePaddings[pagePadding],
-              paddingsY.lg
+              pagePaddings[pagePadding]
             )}
           >
             <div
