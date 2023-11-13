@@ -1,6 +1,6 @@
-/* eslint-disable react/button-has-type */
-import { cn } from "@/utils";
 import { ElementType, ForwardedRef, forwardRef } from "react";
+
+import { cn } from "@/utils";
 
 import {
   extendedFocuses,
