@@ -16,8 +16,8 @@ import { cn } from "@/utils";
 import { isFunction } from "lodash";
 import { ForwardedRef, forwardRef, ReactNode, useRef } from "react";
 
-import { extendedTextColors } from "../../../styles";
-import { mergeRefs, useRefDimensions } from "../../../utils/internal";
+import { extendedTextColors } from "@/styles";
+import { mergeRefs } from "@/utils/internal";
 import { ChartTickXComponent, ChartTickYComponent } from "../components/ticks";
 import {
   ChartTooltip,
@@ -40,6 +40,7 @@ import {
 } from "../utils";
 import { getChartColor } from "../utils/colors";
 import { BarchartDataFieldProps } from "./barchart";
+import { useRefDimensions } from "@/hooks";
 
 export type BargroupchartDataFieldProps = DatumObject;
 

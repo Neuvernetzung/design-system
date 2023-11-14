@@ -2,8 +2,9 @@ import get from "lodash/get";
 import isString from "lodash/isString";
 
 import type { Color, ColorObject, HEX } from "@/types";
-import { getColorVariable } from "./colorVariable";
 import { blendColor } from "@/utils/internal";
+
+import { getColorVariable } from "./colorVariable";
 
 export type ExtendColors = Partial<
   Omit<Record<Color, ColorObject | HEX>, "white" | "black"> &
