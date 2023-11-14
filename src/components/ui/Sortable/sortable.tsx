@@ -14,7 +14,6 @@ import isFunction from "lodash/isFunction";
 import { Children, cloneElement, ReactElement } from "react";
 import { createPortal } from "react-dom";
 
-import { typedMemo } from "../../../utils/internal";
 import {
   AnySortableItem,
   handleDragEnd,
@@ -35,7 +34,7 @@ export type SortableProps<TItem extends AnySortableItem> = {
   modifiers?: Modifiers;
 };
 
-const Sortable = <TItem extends AnySortableItem = AnySortableItem>({
+export const Sortable = <TItem extends AnySortableItem = AnySortableItem>({
   children,
   items,
   handleChange,
@@ -102,5 +101,3 @@ const Sortable = <TItem extends AnySortableItem = AnySortableItem>({
     </DndContext>
   );
 };
-
-export default typedMemo(Sortable);

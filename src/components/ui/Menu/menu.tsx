@@ -14,18 +14,18 @@ import {
   Root as DropdownMenuRoot,
 } from "@radix-ui/react-dropdown-menu";
 import { IconCheck, IconPointFilled } from "@tabler/icons-react";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
-import { marginsYSmall, popoverAnimation } from "../../../styles";
+import { marginsYSmall, popoverAnimation } from "@/styles";
 import {
   getDropdownContainerStyles,
   getDropdownGroupHeaderStyles,
-} from "../../../styles/groups";
-import { offsetSizes } from "../../../styles/popper/offset";
-import type { Color, Size, SvgType } from "../../../types";
-import { capSize } from "../../../utils";
+} from "@/styles/groups";
+import { offsetSizes } from "@/styles/popper/offset";
+import type { Color, Size, SvgType } from "@/types";
+import { capSize } from "@/utils";
 import { Button, ButtonProps } from "../Button";
 import { HorizontalRule } from "../HorizontalRule";
 import { Icon } from "../Icon";
@@ -173,8 +173,7 @@ const MenuItemAnchor = ({
 }: Omit<MenuItemAnchorProps, "type"> & MenuItemComponentProps) => (
   <DropdownMenuItem asChild>
     <Button
-      as={Link}
-      href={href}
+      asChild
       size={capSize(size, "md")}
       disabled={disabled}
       variant="ghost"
@@ -182,7 +181,7 @@ const MenuItemAnchor = ({
       leftIcon={icon}
       className={cn("w-full !justify-start")}
     >
-      {children}
+      <Link href={href}>{children}</Link>
     </Button>
   </DropdownMenuItem>
 );

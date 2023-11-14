@@ -115,24 +115,26 @@ export const MobileNavItem = ({
     return (
       <li>
         {!children && !child ? (
-          <Button
-            as={Link}
-            href={href || "#"}
-            {...(external ? { target: "_blank" } : {})}
-            variant="ghost"
-            fullWidth
-          >
-            {icon && (
-              <div className="flex">
-                <Icon color="accent" icon={icon} />
-              </div>
-            )}
-            <div
-              className={cn("w-full flex items-center justify-start", gaps.sm)}
+          <Button variant="ghost" fullWidth asChild>
+            <Link
+              href={href || "#"}
+              {...(external ? { target: "_blank" } : {})}
             >
-              {label}
-              {tag && <Tag variant="solid" size="sm" {...tag} />}
-            </div>
+              {icon && (
+                <div className="flex">
+                  <Icon color="accent" icon={icon} />
+                </div>
+              )}
+              <div
+                className={cn(
+                  "w-full flex items-center justify-start",
+                  gaps.sm
+                )}
+              >
+                {label}
+                {tag && <Tag variant="solid" size="sm" {...tag} />}
+              </div>
+            </Link>
           </Button>
         ) : (
           <DisclosureGroup

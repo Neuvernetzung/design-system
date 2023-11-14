@@ -7,4 +7,3 @@ export * from "./regex";
 export * from "./typedMemo";
 export * from "./useRefDimensions";
 export * from "./useWindowSize";
-export * from "./polymorphic";

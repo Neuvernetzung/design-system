@@ -1,5 +1,5 @@
 import { IconClock, IconX } from "@tabler/icons-react";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import isNumber from "lodash/isNumber";
 import { useRouter } from "next/router";
 import { type ForwardedRef, forwardRef, type MouseEvent } from "react";
@@ -11,14 +11,15 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { getText, type Locale } from "../../../locales/getText";
-import { divides, marginsXSmall } from "../../../styles";
-import type { InputVariant, Size } from "../../../types";
-import { smallerSize } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
+import { getText, type Locale } from "@/locales/getText";
+import { divides, marginsXSmall } from "@/styles";
+import type { InputVariant, Size } from "@/types";
+import { smallerSize } from "@/utils";
+import { typedMemo } from "@/utils/internal";
 import { IconButton } from "../Button";
 import { FormElement } from "../Form";
 import { RawInput } from "../Input";
+import { Icon } from "../Icon";
 
 export type TimepickerProps = {
   required?: boolean;
@@ -190,14 +191,10 @@ export const TimePickerInner = forwardRef(
                   disabled={disabled}
                 />
               )}
-              <div>
-                <IconButton
-                  as="span"
-                  role="button"
-                  ariaLabel="clock"
+              <div className="aspect-square h-full flex items-center justify-center">
+                <Icon
                   size={smallerSize(size)}
                   icon={IconClock}
-                  variant="ghost"
                   className={cn(
                     "pointer-events-none flex max-h-6",
                     marginsXSmall[size]

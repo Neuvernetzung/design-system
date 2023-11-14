@@ -41,7 +41,11 @@ export const Default = ({ ...args }) => {
       {...args}
     >
       {items.map((item) => (
-        <SortableItem className={itemClassName} id={item.id} key={item.id}>
+        <SortableItem
+          className={itemClassName}
+          id={item.id.toString()}
+          key={item.id}
+        >
           <div>{item.content}</div>
         </SortableItem>
       ))}
@@ -71,7 +75,7 @@ export const Controlled = ({ ...args }) => {
             items.map((item) => (
               <SortableItem
                 className={itemClassName}
-                id={item.id}
+                id={item.id.toString()}
                 key={item.id}
               >
                 <div>{item.content}</div>
@@ -112,7 +116,7 @@ export const WithHandle = ({ ...args }) => {
           className={itemClassName}
           handle
           indicator
-          id={item.id}
+          id={item.id.toString()}
           key={item.id}
         >
           {({ handle }) => (

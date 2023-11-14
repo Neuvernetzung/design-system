@@ -1,7 +1,6 @@
-import { IconHome } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import { ElementType } from "react";
+import { IconHome, IconLink, IconStack } from "@tabler/icons-react";
 
 import { ThemeProvider } from "../../../theme";
 import {
@@ -11,9 +10,9 @@ import {
   sizes,
 } from "../../../types";
 import { loading } from "../Loading";
+import { useIsLoading } from "../Loading/loading";
 import { notify } from "../Notify";
 import { Button } from "./button";
-import { useIsLoading } from "../Loading/loading";
 
 export default {
   title: "UI/Buttons/Button",
@@ -94,19 +93,16 @@ Sizes.parameters = {
   controls: { exclude: "size" },
 };
 
-export const AsComponent = ({ ...args }) => {
-  const components: ElementType[] = ["button", "a"];
-
-  return (
-    <Container>
-      {components.map((component) => (
-        <Button as={component} href="#" key={String(component)} {...args}>
-          {String(component)}
-        </Button>
-      ))}
-    </Container>
-  );
-};
+export const AsChild = ({ ...args }) => (
+  <Container>
+    <Button leftIcon={IconLink} asChild {...args}>
+      <a href="#">Anchor</a>
+    </Button>
+    <Button leftIcon={IconStack} asChild {...args}>
+      <div>Div</div>
+    </Button>
+  </Container>
+);
 
 export const FullWidth = ({ ...args }) => (
   <Container>

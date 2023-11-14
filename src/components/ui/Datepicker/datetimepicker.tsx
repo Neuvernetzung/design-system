@@ -1,5 +1,5 @@
 import { IconCalendar, IconX } from "@tabler/icons-react";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import {
   addDays,
   differenceInDays,
@@ -21,12 +21,12 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import type { Locale } from "../../../locales/getText";
-import { divides, marginsXSmall, placeholderAsText } from "../../../styles";
-import { getInputStyles } from "../../../styles/groups";
-import { smallerSize } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
+import type { Locale } from "@/locales/getText";
+import { divides, marginsXSmall, placeholderAsText } from "@/styles";
+import { getInputStyles } from "@/styles/groups";
+import { smallerSize } from "@/utils";
+import { typedMemo } from "@/utils/internal";
+import { requiredInputRule } from "@/utils/internal/inputRule";
 import { IconButton } from "../Button";
 import { Calendar } from "../Calendar";
 import { useCalendar } from "../Calendar/hooks/useCalendar";
@@ -35,6 +35,7 @@ import { Popover } from "../Popover";
 import { usePopover } from "../Popover/popover";
 import { TimePickerInner } from "../Timepicker/timepicker";
 import { DatepickerProps } from "./datepicker";
+import { Icon } from "../Icon";
 
 export const Datetimepicker = <
   TFieldValues extends FieldValues = FieldValues,
@@ -165,13 +166,10 @@ export const Datetimepicker = <
                           disabled={disabled}
                         />
                       )}
-                      <div>
-                        <IconButton
-                          as="span"
-                          ariaLabel="calendar"
+                      <div className="aspect-square h-full flex items-center justify-center">
+                        <Icon
                           size={smallerSize(size)}
                           icon={IconCalendar}
-                          variant="ghost"
                           className={cn(
                             "pointer-events-none flex max-h-6",
                             marginsXSmall[size]

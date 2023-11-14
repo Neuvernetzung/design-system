@@ -49,7 +49,7 @@ export const NavbarDesktopSubItem = ({
       >
         <div className="w-full">
           <div className={cn("flex flex-row items-center", gaps.sm)}>
-            <Heading as="h4">{label}</Heading>
+            <Heading level="h4">{label}</Heading>
             {tag && <Tag variant="solid" size="sm" {...tag} />}
           </div>
 

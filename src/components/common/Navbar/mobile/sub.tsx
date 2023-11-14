@@ -18,12 +18,12 @@ export const NavbarMobileSubItem = ({
 }: NavbarSubItemProps) => (
   <NavLinkWrap href={href} disabled={disabled} external={external}>
     <Button
-      as={!disabled ? "span" : "button"}
       variant="ghost"
       fullWidth
       leftIcon={icon}
       disabled={disabled}
       className={cn(textColor, "!justify-start")}
+      asChild={disabled}
     >
       <div>
         <div className={cn("flex flex-row items-center", gaps.sm)}>
