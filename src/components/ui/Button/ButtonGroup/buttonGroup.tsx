@@ -8,7 +8,7 @@ export type ButtonGroupProps = HTMLAttributes<HTMLDivElement> & {
   reverse?: boolean;
 };
 
-const ButtonGroup = ({
+export const ButtonGroup = ({
   className,
   direction = "horizontal",
   reverse,

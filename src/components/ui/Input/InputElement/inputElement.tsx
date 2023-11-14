@@ -4,7 +4,6 @@ import { CSSProperties, forwardRef, ReactNode } from "react";
 import { textColors } from "../../../../styles";
 import { inputSizes } from "../../../../styles/groups";
 import type { Size } from "../../../../types";
-import { typedMemo } from "../../../../utils/internal";
 
 export type InputElementProps = {
   className?: string;
@@ -49,7 +48,5 @@ export const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
     </div>
   )
 );
-
-export default typedMemo(InputElement);
 
 InputElement.displayName = "InputElement";

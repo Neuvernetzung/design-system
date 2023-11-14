@@ -13,7 +13,6 @@ import { gaps, paddingsEvenly } from "@/styles";
 import type { Size } from "@/types";
 import { smallerSize } from "@/utils";
 import { cn } from "@/utils/cn";
-import { typedMemo } from "@/utils/internal";
 import { requiredInputRule } from "@/utils/internal/inputRule";
 
 import { Button } from "../../Button";
@@ -34,7 +33,7 @@ export type DropzoneProps = {
   info?: ReactElement;
 };
 
-const Dropzone = <
+export const Dropzone = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPathByValue<TFieldValues, File[]> = FieldPathByValue<
     TFieldValues,
@@ -176,5 +175,3 @@ const Dropzone = <
     />
   );
 };
-
-export default typedMemo(Dropzone);

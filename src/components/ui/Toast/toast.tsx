@@ -24,7 +24,6 @@ import type {
   SvgType,
   ToastVariant,
 } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { Icon } from "../Icon";
 import { Heading } from "../Typography/Heading";
@@ -40,7 +39,7 @@ export type ToastProps = {
   variant?: ToastVariant;
 };
 
-export const variants = (
+export const toastVariantStyles = (
   color: Color,
   adjustedTextColorState: Record<ExtendedColor, string>
 ): Record<ToastVariant, VariantProps> => ({
@@ -76,6 +75,10 @@ export const Toast = ({
 }: ToastProps) => {
   const { adjustedTextColorState } = useThemeState();
 
+  const variantStyle = toastVariantStyles(color, adjustedTextColorState)[
+    variant
+  ];
+
   return (
     <ToastRoot
       role="listitem"
@@ -88,16 +91,12 @@ export const Toast = ({
         shadows.lg,
         gaps.xl,
         paddingsEvenly.lg,
-        variants(color, adjustedTextColorState)[variant].container
+        variantStyle.container
       )}
     >
       <div className={cn("flex flex-row justify-start", gaps.md)}>
         {icon && (
-          <div
-            className={cn(
-              variants(color, adjustedTextColorState)[variant].icon
-            )}
-          >
+          <div className={cn(variantStyle.icon)}>
             <Icon size="sm" icon={icon} />
           </div>
         )}
@@ -107,7 +106,7 @@ export const Toast = ({
               <Heading
                 size="sm"
                 className={cn(
-                  variants(color, adjustedTextColorState)[variant].text,
+                  variantStyle.text,
                   "w-36 break-words overflow-hidden"
                 )}
                 color="inherit"
@@ -120,7 +119,7 @@ export const Toast = ({
             <Text
               size="sm"
               className={cn(
-                variants(color, adjustedTextColorState)[variant].text,
+                variantStyle.text,
                 "w-36 break-words overflow-hidden"
               )}
               color="inherit"
@@ -137,11 +136,9 @@ export const Toast = ({
           ariaLabel="close-dialog"
           color="inherit"
           icon={IconX}
-          className={cn(variants(color, adjustedTextColorState)[variant].close)}
+          className={cn(variantStyle.close)}
         />
       </ToastClose>
     </ToastRoot>
   );
 };
-
-export default typedMemo(Toast);

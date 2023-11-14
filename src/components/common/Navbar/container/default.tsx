@@ -11,7 +11,7 @@ import {
 } from "@/styles";
 import { useThemeStateValue } from "@/theme";
 import { cn } from "@/utils";
-import { mergeRefs, typedMemo } from "@/utils/internal";
+import { mergeRefs } from "@/utils/internal";
 
 import { ThemeSwitch } from "../../ThemeSwitch";
 import { DesktopItems } from "../desktop/items";
@@ -23,7 +23,7 @@ export type NavbarContainerProps = {
   textColor?: string;
 };
 
-const NavbarContainer = forwardRef(
+export const NavbarContainer = forwardRef(
   (
     {
       navbarClassName,
@@ -119,5 +119,3 @@ const NavbarContainer = forwardRef(
 );
 
 NavbarContainer.displayName = "navbarContainer";
-
-export default typedMemo(NavbarContainer);

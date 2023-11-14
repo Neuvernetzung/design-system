@@ -15,7 +15,6 @@ import { getText, type Locale } from "@/locales/getText";
 import { divides, marginsXSmall } from "@/styles";
 import type { InputVariant, Size } from "@/types";
 import { smallerSize } from "@/utils";
-import { typedMemo } from "@/utils/internal";
 import { IconButton } from "../Button";
 import { FormElement } from "../Form";
 import { RawInput } from "../Input";
@@ -111,8 +110,6 @@ export const Timepicker = <
     />
   );
 };
-
-export default typedMemo(Timepicker);
 
 export type TimePickerInnerProps = Omit<TimepickerProps, "min" | "max"> & {
   error?: FieldError;

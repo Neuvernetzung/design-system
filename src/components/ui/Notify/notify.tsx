@@ -11,7 +11,6 @@ import { create } from "zustand";
 
 import { zIndexes } from "../../../styles";
 import type { Color, SvgType, ToastVariant } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { isLoading, loading } from "../Loading/loading";
 import { Toast } from "../Toast";
 
@@ -111,5 +110,3 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
     </ToastProvider>
   );
 };
-
-export default typedMemo(Notify);

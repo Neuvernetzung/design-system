@@ -19,7 +19,6 @@ import {
 } from "../../../styles";
 import { offsetSizes } from "../../../styles/popper/offset";
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type TooltipProps = {
@@ -62,8 +61,6 @@ export const Tooltip = ({
     </TooltipProvider>
   );
 };
-
-export default typedMemo(Tooltip);
 
 type TooltipInnerT = {
   styles?: object;

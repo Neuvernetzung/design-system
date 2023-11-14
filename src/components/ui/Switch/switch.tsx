@@ -23,7 +23,7 @@ import {
   transition,
 } from "../../../styles";
 import type { Color, Size } from "../../../types";
-import { mergeRefs, typedMemo } from "../../../utils/internal";
+import { mergeRefs } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import type { RequiredRule } from "../Form";
 import { FormElement } from "../Form";
@@ -126,7 +126,7 @@ export const SwitchInner = <
 
 SwitchInner.displayName = "Switch"; // muss bleiben sonst kommt docgen storybook plugin durcheinander
 
-const Switch = forwardRef(SwitchInner) as <
+export const Switch = forwardRef(SwitchInner) as <
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>
 >(
@@ -135,5 +135,3 @@ const Switch = forwardRef(SwitchInner) as <
       ref?: ForwardedRef<HTMLButtonElement>;
     }
 ) => ReturnType<typeof SwitchInner>;
-
-export default typedMemo(Switch);

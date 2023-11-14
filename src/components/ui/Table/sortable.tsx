@@ -2,7 +2,7 @@ import { IconGripVertical } from "@tabler/icons-react";
 import { cn } from "@/utils";
 
 import { paddingsEvenly } from "@/styles";
-import { mergeRefs, typedMemo } from "@/utils/internal";
+import { mergeRefs } from "@/utils/internal";
 import { IconButton } from "../Button";
 import { DragIndicator, SortableProps } from "../Sortable";
 import {
@@ -47,7 +47,7 @@ export type SortableTableProps<
 
 export type SortableTableCol<T> = SimpleTableCol<T>;
 
-export const SortableTableInner = <
+export const SortableTable = <
   T extends string,
   TId extends string,
   TItem extends AnySortableItem
@@ -240,5 +240,3 @@ const SortableTableRow = forwardRef(
 );
 
 SortableTableRow.displayName = "SortableTableRow";
-
-export const SortableTable = typedMemo(SortableTableInner);

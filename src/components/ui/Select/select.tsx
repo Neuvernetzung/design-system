@@ -43,7 +43,6 @@ import { popperOffset } from "../../../styles/popper/offset";
 import { IconCheck, IconSelector, IconX } from "@tabler/icons-react";
 import type { InputVariant, Size } from "../../../types";
 import { capSize, smallerSize } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
 import { mergeRefs } from "../../../utils/internal/mergeRefs";
 import { Button, ButtonGroup, IconButton } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
@@ -517,7 +516,7 @@ export const SelectInner = <
   );
 };
 
-const Select = forwardRef(SelectInner) as <
+export const Select = forwardRef(SelectInner) as <
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>
 >(
@@ -526,8 +525,6 @@ const Select = forwardRef(SelectInner) as <
       ref?: ForwardedRef<HTMLButtonElement>;
     }
 ) => ReturnType<typeof SelectInner>;
-
-export default typedMemo(Select);
 
 type TagProps = {
   size: Size;

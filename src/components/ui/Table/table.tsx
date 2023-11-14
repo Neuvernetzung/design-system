@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import get from "lodash/get";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
@@ -18,10 +18,9 @@ import {
   paddingsLarge,
   paddingsLargeEvenly,
   roundings,
-} from "../../../styles";
-import type { Size } from "../../../types";
-import { smallerSize } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
+} from "@/styles";
+import type { Size } from "@/types";
+import { smallerSize } from "@/utils";
 import { Text } from "../Typography";
 
 export type SimpleTableProps<T extends string> = {
@@ -45,7 +44,7 @@ export type SimpleTableCol<T> = {
   dataCellClassName?: string;
 };
 
-export const SimpleTableInner = <T extends string>({
+export const SimpleTable = <T extends string>({
   items = [],
   cols,
   size = "md",
@@ -254,5 +253,3 @@ export const TableContainer = ({
     </table>
   </div>
 );
-
-export const SimpleTable = typedMemo(SimpleTableInner);

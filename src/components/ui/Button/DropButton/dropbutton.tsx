@@ -13,8 +13,7 @@ import {
 import type { ExtendedColor, Size } from "@/types";
 import { cn } from "@/utils";
 
-import { Button } from "..";
-import { buttonBaseStyles } from "../button";
+import { Button, buttonBaseStyles } from "../button";
 
 export type DropButtonProps = {
   asChild?: boolean;

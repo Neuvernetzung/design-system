@@ -1,5 +1,4 @@
 import { cn } from "@/utils";
-import { typedMemo } from "../../../utils/internal";
 import { backdropAnimation } from "../../../styles";
 
 export type BackdropProps = { isOpen: boolean };
@@ -14,5 +13,3 @@ export const Backdrop = ({ isOpen }: BackdropProps) => (
     )}
   />
 );
-
-export default typedMemo(Backdrop);

@@ -3,7 +3,6 @@ import { ElementType, ForwardedRef, forwardRef, HTMLAttributes } from "react";
 
 import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColor, ExtendedSize } from "../../../../types";
-import { typedMemo } from "../../../../utils/internal";
 import { Slot } from "@radix-ui/react-slot";
 
 export const levelMap: Record<ExtendedSize, ElementType> = {
@@ -58,7 +57,5 @@ export const Heading = forwardRef(
     );
   }
 );
-
-export default typedMemo(Heading);
 
 Heading.displayName = "Heading";

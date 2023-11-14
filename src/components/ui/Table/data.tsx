@@ -4,7 +4,6 @@ import get from "lodash/get";
 import { cn } from "@/utils";
 
 import { paddingsEvenly, transition } from "../../../styles";
-import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { CheckboxInner } from "../Checkbox/checkbox";
 import {
@@ -57,7 +56,7 @@ export type DataTableCol<T> = SimpleTableCol<T> & {
   sortable?: boolean;
 };
 
-export const DataTableInner = <
+export const DataTable = <
   T extends string,
   K extends string,
   D extends string
@@ -199,5 +198,3 @@ export const DataTableInner = <
     </TableContainer>
   );
 };
-
-export const DataTable = typedMemo(DataTableInner);

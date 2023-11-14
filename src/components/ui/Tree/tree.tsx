@@ -12,7 +12,6 @@ import {
   roundingsBottom,
 } from "../../../styles";
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import {
   Disclosure,
   DisclosureGroupProps,
@@ -60,7 +59,7 @@ const borderVariants: Record<BorderVariant, string> = {
   hidden: "border-hidden",
 };
 
-const Tree = <TItem extends {} = {}>({
+export const Tree = <TItem extends {} = {}>({
   items,
   size = "md",
   className,
@@ -145,8 +144,6 @@ const Tree = <TItem extends {} = {}>({
     </div>
   );
 };
-
-export default typedMemo(Tree);
 
 export type TreeDisclosureProps = TreeProps<
   Omit<DisclosureItemProps, "content">
