@@ -80,8 +80,8 @@ export const Default = () => (
 );
 
 export const CancelLoading = () => {
-  const load = (id: string | undefined) => {
-    loading(true, { id });
+  const load = () => {
+    loading(true);
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });
     }, 2000);
@@ -92,7 +92,7 @@ export const CancelLoading = () => {
       config={{ allowNotification: true, allowGlobalLoading: true }}
     >
       <Container>
-        <Button variant="outline" onClick={() => load(undefined)}>
+        <Button variant="outline" onClick={() => load()}>
           Global
         </Button>
       </Container>

@@ -33,12 +33,12 @@ export type ProseComponentTag = (typeof proseComponentTags)[number];
 
 export type ProseComponents = {
   p: ProseComponent<TextProps>;
-  h1: ProseComponent<HeadingProps<"h1">>;
-  h2: ProseComponent<HeadingProps<"h2">>;
-  h3: ProseComponent<HeadingProps<"h3">>;
-  h4: ProseComponent<HeadingProps<"h4">>;
-  h5: ProseComponent<HeadingProps<"h5">>;
-  h6: ProseComponent<HeadingProps<"h6">>;
+  h1: ProseComponent<HeadingProps>;
+  h2: ProseComponent<HeadingProps>;
+  h3: ProseComponent<HeadingProps>;
+  h4: ProseComponent<HeadingProps>;
+  h5: ProseComponent<HeadingProps>;
+  h6: ProseComponent<HeadingProps>;
   ol: ProseComponent<OrderedListProps>;
   ul: ProseComponent<UnorderedListProps>;
   li: ProseComponent<ListItemProps>;

@@ -83,7 +83,7 @@ export const Default = ({ ...args }) => {
   return (
     <PaginatedSelect
       items={items}
-      pagination={{ result: 21, activePage: page, setActivePage: setPage }}
+      pagination={{ result: 21, page, setPage }}
       control={control}
       label="Paginated Select"
       name="select"
@@ -103,7 +103,7 @@ export const Error = ({ ...args }) => {
       <PaginatedSelect
         required
         items={items}
-        pagination={{ result: 21, activePage: page, setActivePage: setPage }}
+        pagination={{ result: 21, page, setPage }}
         control={control}
         label="Paginated Select"
         name="select"
@@ -139,7 +139,7 @@ export const Multiple = ({ ...args }) => {
     <PaginatedSelect
       items={items}
       multiple
-      pagination={{ result: 21, activePage: page, setActivePage: setPage }}
+      pagination={{ result: 21, page, setPage }}
       control={control}
       label="Paginated Select"
       name="select"

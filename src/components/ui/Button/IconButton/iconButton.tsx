@@ -1,4 +1,5 @@
-import { ElementType, ForwardedRef, forwardRef } from "react";
+import { Slot, Slottable } from "@radix-ui/react-slot";
+import { ForwardedRef, forwardRef, HTMLAttributes, ReactElement } from "react";
 
 import { cn } from "@/utils";
 
@@ -9,7 +10,7 @@ import {
   textSizes,
   transition,
 } from "../../../../styles";
-import { useThemeState } from "../../../../theme/useThemeState";
+import { useThemeStateValue } from "../../../../theme/useThemeState";
 import {
   ButtonVariant,
   ExtendedColor,
@@ -17,12 +18,6 @@ import {
   Size,
   SvgType,
 } from "../../../../types";
-import { typedMemo } from "../../../../utils/internal";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "../../../../utils/internal/polymorphic";
 import { Icon } from "../../Icon";
 import { Spinner } from "../../Loading/loading";
 import {
@@ -31,9 +26,7 @@ import {
   getButtonColorStyle,
 } from "../button";
 
-const IconButtonDefaultElement = "button";
-
-export type IconButtonOwnProps = {
+export type IconButtonProps = HTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   color?: ExtendedColor;
   size?: Size;
@@ -45,18 +38,14 @@ export type IconButtonOwnProps = {
   iconClassName?: string;
   ariaLabel: string;
   type?: "button" | "submit" | "reset";
-  children?: undefined;
-};
+} & IconButtonAsChildProps;
 
-export type IconButtonProps<
-  T extends ElementType = typeof IconButtonDefaultElement
-> = PolymorphicPropsWithRef<IconButtonOwnProps, T>;
+type IconButtonAsChildProps =
+  | { asChild?: false; children?: never }
+  | { asChild: true; children: ReactElement };
 
-export const IconButton: PolymorphicForwardRefExoticComponent<
-  IconButtonOwnProps,
-  typeof IconButtonDefaultElement
-> = forwardRef(
-  <T extends ElementType = typeof IconButtonDefaultElement>(
+export const IconButton = forwardRef(
+  (
     {
       size = "md",
       type = "button",
@@ -70,14 +59,17 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
       isLoading,
       className,
       iconClassName,
-      as,
+      asChild,
+      children,
       ...props
-    }: PolymorphicPropsWithoutRef<IconButtonOwnProps, T>,
-    ref: ForwardedRef<Element>
+    }: IconButtonProps,
+    ref: ForwardedRef<HTMLButtonElement>
   ) => {
-    const Component: ElementType = as || IconButtonDefaultElement;
+    const Component = asChild ? Slot : "button";
 
-    const { adjustedTextColorState } = useThemeState();
+    const adjustedTextColorState = useThemeStateValue(
+      (v) => v.adjustedTextColorState
+    );
 
     const _disabled = disabled || isLoading;
 
@@ -112,11 +104,10 @@ export const IconButton: PolymorphicForwardRefExoticComponent<
         ) : (
           <Spinner size={size} />
         )}
+        <Slottable>{children}</Slottable>
       </Component>
     );
   }
 );
-
-export default typedMemo(IconButton);
 
 IconButton.displayName = "IconButton";

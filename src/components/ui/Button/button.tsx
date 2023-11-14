@@ -1,4 +1,5 @@
-import { ElementType, ForwardedRef, forwardRef, ReactNode } from "react";
+import { Slot, Slottable } from "@radix-ui/react-slot";
+import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 
 import { cn } from "@/utils";
 
@@ -14,7 +15,7 @@ import {
   textSizes,
   transition,
 } from "../../../styles";
-import { useThemeState } from "../../../theme/useThemeState";
+import { useThemeStateValue } from "../../../theme/useThemeState";
 import type {
   ButtonVariant,
   ExtendedColor,
@@ -22,11 +23,6 @@ import type {
   Size,
   SvgType,
 } from "../../../types";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "../../../utils/internal/polymorphic";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
 
@@ -66,9 +62,7 @@ export const buttonBaseStyles = {
   rounded: "!rounded-full",
 };
 
-export const ButtonDefaultElement = "button";
-
-export type ButtonOwnProps = {
+export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   color?: ExtendedColor;
   size?: Size;
@@ -81,16 +75,11 @@ export type ButtonOwnProps = {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   isLoading?: boolean;
+  asChild?: boolean;
 };
 
-export type ButtonProps<T extends ElementType = typeof ButtonDefaultElement> =
-  PolymorphicPropsWithRef<ButtonOwnProps, T>;
-
-export const Button: PolymorphicForwardRefExoticComponent<
-  ButtonOwnProps,
-  typeof ButtonDefaultElement
-> = forwardRef(
-  <T extends ElementType = typeof ButtonDefaultElement>(
+export const Button = forwardRef(
+  (
     {
       size = "md",
       type = "button",
@@ -104,15 +93,17 @@ export const Button: PolymorphicForwardRefExoticComponent<
       rightIcon,
       isLoading,
       className,
-      as,
       children,
+      asChild,
       ...props
-    }: PolymorphicPropsWithoutRef<ButtonOwnProps, T>,
-    ref: ForwardedRef<Element>
+    }: ButtonProps,
+    ref: ForwardedRef<HTMLButtonElement>
   ) => {
-    const Component: ElementType = as || ButtonDefaultElement;
+    const Component = asChild ? Slot : "button";
 
-    const { adjustedTextColorState } = useThemeState();
+    const adjustedTextColorState = useThemeStateValue(
+      (v) => v.adjustedTextColorState
+    );
 
     const _disabled = disabled || isLoading;
 
@@ -150,7 +141,7 @@ export const Button: PolymorphicForwardRefExoticComponent<
         ) : (
           <Spinner size={size} />
         )}
-        {children}
+        <Slottable>{children}</Slottable>
         {rightIcon && <Icon size={size} icon={rightIcon} />}
       </Component>
     );

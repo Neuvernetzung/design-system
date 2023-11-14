@@ -27,18 +27,20 @@ export const SideNavItem = ({
       <Button
         disabled={disabled}
         size="md"
-        as={Link}
-        href={href || "#"}
-        {...(external ? { target: "_blank" } : {})}
         variant="ghost"
         fullWidth
         className={cn(textColor)}
         leftIcon={icon}
+        asChild
       >
-        <div className={cn("w-full flex items-center justify-start", gaps.sm)}>
-          <Text color="inherit">{label}</Text>
-          {tag && <Tag variant="solid" size="xs" {...tag} />}
-        </div>
+        <Link href={href || "#"} {...(external ? { target: "_blank" } : {})}>
+          <div
+            className={cn("w-full flex items-center justify-start", gaps.sm)}
+          >
+            <Text color="inherit">{label}</Text>
+            {tag && <Tag variant="solid" size="xs" {...tag} />}
+          </div>
+        </Link>
       </Button>
     ) : (
       <DisclosureGroup

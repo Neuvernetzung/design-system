@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import type { Placement } from "@popperjs/core";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import isArray from "lodash/isArray";
 import isEqual from "lodash/isEqual";
 import {
@@ -539,15 +539,14 @@ type TagProps = {
 const Tag = forwardRef(
   (
     { size, onClick, onKeyUp, children }: TagProps,
-    ref: ForwardedRef<HTMLDivElement>
+    ref: ForwardedRef<HTMLButtonElement>
   ) => (
     <ButtonGroup>
-      <Button as="div" size={smallerSize(size)} className="pointer-events-none">
-        {children}
+      <Button asChild size={smallerSize(size)} className="pointer-events-none">
+        <div>{children}</div>
       </Button>
       <IconButton
         ref={ref}
-        as="div"
         focus="bg"
         tabIndex={-1}
         role="button"

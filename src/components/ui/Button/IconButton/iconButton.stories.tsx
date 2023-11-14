@@ -1,5 +1,6 @@
-import { IconHome } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
+import { IconHome } from "@tabler/icons-react";
+import Link from "next/link";
 
 import { ThemeProvider } from "../../../../theme";
 import {
@@ -11,7 +12,6 @@ import {
 import { loading, useIsLoading } from "../../Loading";
 import { notify } from "../../Notify";
 import { IconButton } from "./iconButton";
-import { ElementType } from "react";
 
 export default {
   title: "UI/Buttons/IconButton",
@@ -108,24 +108,13 @@ Sizes.parameters = {
   controls: { exclude: "size" },
 };
 
-export const AsComponent = ({ ...args }) => {
-  const components: ElementType[] = ["button", "a"];
-
-  return (
-    <Container>
-      {components.map((component) => (
-        <IconButton
-          ariaLabel="home"
-          as={component}
-          href="#"
-          key={component.toString()}
-          icon={IconHome}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const AsChild = ({ ...args }) => (
+  <Container>
+    <IconButton asChild ariaLabel="home" icon={IconHome} {...args}>
+      <Link href="#" />
+    </IconButton>
+  </Container>
+);
 
 export const Rounded = ({ ...args }) => (
   <Container>

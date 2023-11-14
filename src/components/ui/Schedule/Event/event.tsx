@@ -115,12 +115,10 @@ export const Event = ({
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
-  const Component = viewEventProps ? "button" : "div";
-
   return (
     <Button
       title={formatEventTitle(event)}
-      as={Component}
+      asChild={!!viewEventProps}
       color={color}
       disabled={!viewEventProps ? !isDragoverlay : false}
       variant={
@@ -227,11 +225,9 @@ export const EventSmall = ({
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
-  const Component = viewEventProps ? "button" : "div";
-
   return (
     <Button
-      as={Component}
+      asChild={!!viewEventProps}
       title={formatEventTitle(event)}
       disabled={!viewEventProps ? !isDragoverlay : false}
       color={color}

@@ -252,10 +252,10 @@ export const CheckboxInner = forwardRef(
           variant={checked ? "filled" : "outline"}
           color={!error ? color : "danger"}
           size={size}
-          as="span"
+          asChild
           className={cn(!disabled ? "cursor-pointer" : "cursor-not-allowed")}
         >
-          {label}
+          <span>{label}</span>
         </Button>
       )}
     </CheckboxRoot>

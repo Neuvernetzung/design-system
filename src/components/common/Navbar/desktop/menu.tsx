@@ -76,22 +76,23 @@ export const NavigationMenu = ({
                     {...(external ? { target: "_blank" } : {})}
                   >
                     <Button
-                      as={Link}
-                      href={href || "#"}
                       leftIcon={icon}
                       size={minSize(size, "sm")}
                       variant="ghost"
                       disabled={disabled}
                       className={cn(_textColor || textColor)}
+                      asChild
                     >
-                      <Text color="inherit">{label}</Text>
-                      {tag && (
-                        <Tag
-                          variant="solid"
-                          size={smallerSize(size)}
-                          {...tag}
-                        />
-                      )}
+                      <Link href={href || "#"}>
+                        <Text color="inherit">{label}</Text>
+                        {tag && (
+                          <Tag
+                            variant="solid"
+                            size={smallerSize(size)}
+                            {...tag}
+                          />
+                        )}
+                      </Link>
                     </Button>
                   </NavigationMenuLink>
                 ) : (

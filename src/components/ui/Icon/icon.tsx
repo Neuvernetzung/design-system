@@ -1,21 +1,10 @@
+import { createElement, ForwardedRef, forwardRef, HTMLAttributes } from "react";
+
 import { cn } from "@/utils";
-import {
-  createElement,
-  ElementType,
-  ForwardedRef,
-  forwardRef,
-  HTMLAttributes,
-} from "react";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "../../../utils/internal/polymorphic";
 
 import { extendedTextColors } from "../../../styles";
-import type { ExtendedColor, Size, SvgType } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { useThemeStateValue } from "../../../theme/useThemeState";
+import type { ExtendedColor, Size, SvgType } from "../../../types";
 
 export const iconDimensions: Record<Size, string> = {
   xs: "h-4 w-4",
@@ -25,30 +14,17 @@ export const iconDimensions: Record<Size, string> = {
   xl: "h-10 w-10",
 };
 
-const IconDefaultElement = "svg";
-
-export type IconOwnProps = HTMLAttributes<HTMLElement> & {
+export type IconProps = HTMLAttributes<HTMLSpanElement> & {
   size?: Size;
   color?: ExtendedColor;
   icon: SvgType;
   className?: string;
 };
 
-export type IconProps<T extends ElementType = typeof IconDefaultElement> =
-  PolymorphicPropsWithRef<IconOwnProps, T>;
-
-export const Icon: PolymorphicForwardRefExoticComponent<
-  IconOwnProps,
-  typeof IconDefaultElement
-> = forwardRef(
-  <T extends ElementType = typeof IconDefaultElement>(
-    {
-      size = "md",
-      icon,
-      color = "inherit",
-      className,
-    }: PolymorphicPropsWithoutRef<IconOwnProps, T>,
-    ref: ForwardedRef<HTMLElement>
+export const Icon = forwardRef(
+  (
+    { size = "md", icon, color = "inherit", className }: IconProps,
+    ref: ForwardedRef<HTMLSpanElement>
   ) => {
     const iconStrokeWidth = useThemeStateValue(
       (values) => values.iconStrokeWidth
@@ -73,7 +49,5 @@ export const Icon: PolymorphicForwardRefExoticComponent<
     );
   }
 );
-
-export default typedMemo(Icon);
 
 Icon.displayName = "Icon";

@@ -113,13 +113,15 @@ export const Footer = forwardRef(
                   </li>
                   {links.map(({ label, href }, _i) => (
                     <Text
-                      as="li"
                       size={smallerSize(size)}
                       color="inherit"
                       className={cn(adjustedColors[color])}
                       key={`footergroup_${i}_el_${_i}`}
+                      asChild
                     >
-                      <Link href={href}>{label}</Link>
+                      <li>
+                        <Link href={href}>{label}</Link>
+                      </li>
                     </Text>
                   ))}
                 </ul>
