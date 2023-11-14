@@ -32,3 +32,9 @@ export const borderRadiusSizes = [
 export type BorderRadiusSizes = typeof borderRadiusSizes;
 
 export type BorderRadiusSize = BorderRadiusSizes[number];
+
+export const breakpointSizes = ["xs", "sm", "md", "lg", "xl", "2xl"] as const;
+
+export type BreakpointSizes = typeof breakpointSizes;
+
+export type BreakpointSize = BreakpointSizes[number];

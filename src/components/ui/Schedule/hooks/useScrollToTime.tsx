@@ -1,5 +1,5 @@
 import { type RefObject, useEffect } from "react";
-import { useRefDimensions } from "../../../../utils/internal";
+import { useRefDimensions } from "@/hooks";
 import { getHours, getMinutes } from "date-fns";
 
 export type UseScrollToTimeProps = {

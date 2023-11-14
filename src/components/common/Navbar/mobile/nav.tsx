@@ -3,9 +3,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { bgColors, gaps, paddingsEvenly, scrollbar } from "../../../../styles";
+import { bgColors, gaps, paddingsEvenly, scrollbar } from "@/styles";
 import { IconX, IconMenu2 } from "@tabler/icons-react";
-import { useRefDimensions } from "../../../../utils/internal";
+import { useRefDimensions } from "@/hooks";
 import { Button, IconButton } from "../../../ui/Button";
 import { DisclosureGroup } from "../../../ui/Disclosure";
 import { Icon } from "../../../ui/Icon";

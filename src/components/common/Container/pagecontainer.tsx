@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 import { maxPageWidths, pageGaps, pagePaddings } from "@/styles/page";
 import { useThemeStateValue } from "@/theme";
 import { cn } from "@/utils/cn";
-import { useRefDimensions, useWindowSize } from "@/utils/internal";
+import { useRefDimensions, useWindowSize } from "@/hooks";
 
 type PageContainerProps = HTMLAttributes<HTMLDivElement> & {
   navbarRef?: RefObject<HTMLDivElement>;

@@ -6,6 +6,7 @@ import plugin from "tailwindcss/plugin";
 import { animationKeyframes, animations } from "@/theme/animations";
 import { twRadiusVariables } from "@/theme/borderRadius";
 import { twColorVariable, twColorVariables } from "@/theme/colors";
+import { twDefaultBreakpoints } from "@/theme/breapoints/extendBreakpoints";
 
 const config: Config = {
   content: [`${__dirname}/src/**/*.{ts,tsx}`],
@@ -16,6 +17,7 @@ const config: Config = {
       body: ["Inter", ...defaultTheme.fontFamily.sans],
     },
     borderRadius: twRadiusVariables,
+    screens: twDefaultBreakpoints,
     extend: {
       colors: {
         white: twColorVariable("white"),

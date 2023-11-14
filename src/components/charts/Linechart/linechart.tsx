@@ -11,7 +11,6 @@ import type { LinePathProps } from "@visx/shape/lib/shapes/LinePath";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { bisector, extent, max, min } from "@visx/vendor/d3-array";
 import type { ScaleLinear, ScaleTime } from "@visx/vendor/d3-scale";
-import { cn } from "@/utils";
 import type { CurveFactory } from "d3-shape";
 import isFunction from "lodash/isFunction";
 import {
@@ -23,8 +22,10 @@ import {
   useRef,
 } from "react";
 
+import { cn } from "@/utils";
+
 import { extendedTextColors } from "../../../styles";
-import { mergeRefs, useRefDimensions } from "../../../utils/internal";
+import { mergeRefs } from "../../../utils/internal";
 import { ChartTickXComponent, ChartTickYComponent } from "../components/ticks";
 import {
   ChartTooltip,
@@ -46,6 +47,7 @@ import {
   MissingValueBehaviour,
 } from "../utils";
 import { getChartColor } from "../utils/colors";
+import { useRefDimensions } from "@/hooks";
 
 export type LinechartDataFieldProps = { x: number | Date; y: number | null };
 

@@ -17,8 +17,8 @@ import { ForwardedRef, forwardRef, ReactNode, useRef } from "react";
 
 import { cn } from "@/utils";
 
-import { extendedTextColors } from "../../../styles";
-import { mergeRefs, useRefDimensions } from "../../../utils/internal";
+import { extendedTextColors } from "@/styles";
+import { mergeRefs } from "@/utils/internal";
 import { ChartTickXComponent, ChartTickYComponent } from "../components/ticks";
 import {
   ChartTooltip,
@@ -40,6 +40,7 @@ import {
   MissingValueBehaviour,
 } from "../utils";
 import { getChartColor } from "../utils/colors";
+import { useRefDimensions } from "@/hooks";
 
 export type BarchartDataFieldProps = { x: number | Date; y: number | null };
 

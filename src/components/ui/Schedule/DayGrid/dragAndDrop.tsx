@@ -20,7 +20,7 @@ import compact from "lodash/compact";
 import set from "lodash/set";
 import { type ReactNode, type RefObject, useMemo, useState } from "react";
 
-import { useRefDimensions } from "../../../../utils/internal";
+import { useRefDimensions } from "@/hooks";
 import type { ScheduleDayViewProps, ScheduleProps } from "..";
 import { DEFAULT_PRECISION_IN_MINUTES } from "./layoutDayEvents";
 import { createSnapModifier } from "../utils/snapModifier";
