@@ -1,23 +1,8 @@
 import get from "lodash/get";
 
-import type { Size } from "../types";
-import { getBorderRadiusVariable } from "../utils";
-
-export const borderRadiusSizes = [
-  "none",
-  "sm",
-  "DEFAULT",
-  "md",
-  "lg",
-  "xl",
-  "2xl",
-  "3xl",
-  "full",
-] as const;
-
-export type BorderRadiusSizes = typeof borderRadiusSizes;
-
-export type BorderRadiusSize = BorderRadiusSizes[number];
+import type { Size } from "@/types";
+import { borderRadiusSizes, type BorderRadiusSize } from "@/types/Sizes";
+import { getBorderRadiusVariable } from "./borderRadiusVariable";
 
 export const getBorderRadiusVariables = (
   extendedBorderRadius: ReturnedBorderRadius
@@ -40,8 +25,8 @@ const defaultRadii: Record<Size, Record<BorderRadiusSize, string>> = {
     sm: "0px",
     DEFAULT: "0px",
     md: "0px",
-    lg: "0px",
-    xl: "0px",
+    lg: "0.05rem",
+    xl: "0.125rem",
     "2xl": "0.25rem",
     "3xl": "0.5rem",
     full: "9999px",
