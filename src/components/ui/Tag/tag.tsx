@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import { ReactElement } from "react";
 
 import {
@@ -10,17 +10,10 @@ import {
   roundings,
   textColors,
   textSizes,
-} from "../../../styles";
-import { useThemeState } from "../../../theme/useThemeState";
-import type {
-  Color,
-  ExtendedColor,
-  Size,
-  SvgType,
-  TagVariant,
-} from "../../../types";
-import { capSize } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
+} from "@/styles";
+import { useThemeState } from "@/theme/useThemeState";
+import type { Color, ExtendedColor, Size, SvgType, TagVariant } from "@/types";
+import { capSize } from "@/utils";
 import { Icon } from "../Icon";
 
 export type TagProps = {
@@ -34,7 +27,7 @@ export type TagProps = {
   className?: string;
 };
 
-export const variants = (
+export const tagVariantStyles = (
   color: Color,
   adjustedTextColorState: Record<ExtendedColor, string>
 ): Record<TagVariant, string> => ({
@@ -55,12 +48,15 @@ export const Tag = ({
 }: TagProps) => {
   const { adjustedTextColorState } = useThemeState();
 
+  const tagVariantStyle = tagVariantStyles(color, adjustedTextColorState)[
+    variant
+  ];
+
   return (
     <span
       className={cn(
         "h-min flex-0 inline-flex flex-row items-center select-none",
-        variants(color, adjustedTextColorState)[variant],
-
+        tagVariantStyle,
         label ? paddingsSmall[size] : paddingsSmallEvenly[size],
         gapsSmall[size],
         textSizes[size],
@@ -75,5 +71,3 @@ export const Tag = ({
     </span>
   );
 };
-
-export default typedMemo(Tag);

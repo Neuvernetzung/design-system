@@ -6,7 +6,6 @@ import { create } from "zustand";
 import { getText, type Locale } from "../../../locales/getText";
 import { gaps } from "../../../styles";
 import type { Color, SvgType } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { Tag } from "../Tag";
 import { Heading } from "../Typography/Heading";
@@ -115,5 +114,3 @@ export const ConfirmationModal = () => {
     />
   );
 };
-
-export default typedMemo(ConfirmationModal);

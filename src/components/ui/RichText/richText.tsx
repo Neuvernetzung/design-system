@@ -22,7 +22,7 @@ import {
   roundings,
   transition,
 } from "../../../styles";
-import { focusById, mergeRefs, typedMemo } from "../../../utils/internal";
+import { focusById, mergeRefs } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
 import { Text } from "../Typography";
@@ -207,5 +207,3 @@ export const RichText = <
     />
   );
 };
-
-export default typedMemo(RichText);

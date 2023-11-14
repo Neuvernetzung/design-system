@@ -25,7 +25,6 @@ import type { Locale } from "@/locales/getText";
 import { divides, marginsXSmall, placeholderAsText } from "@/styles";
 import { getInputStyles } from "@/styles/groups";
 import { smallerSize } from "@/utils";
-import { typedMemo } from "@/utils/internal";
 import { requiredInputRule } from "@/utils/internal/inputRule";
 import { IconButton } from "../Button";
 import { Calendar } from "../Calendar";
@@ -234,5 +233,3 @@ export const Datetimepicker = <
     />
   );
 };
-
-export default typedMemo(Datetimepicker);

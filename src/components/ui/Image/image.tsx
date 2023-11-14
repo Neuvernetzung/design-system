@@ -3,7 +3,6 @@ import type { ImageProps as NextImageProps } from "next/image";
 import NextImage from "next/image";
 import { HTMLAttributes, useState } from "react";
 import { IconPhotoOff } from "@tabler/icons-react";
-import { typedMemo } from "../../../utils/internal";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
@@ -74,8 +73,6 @@ export const Image = ({
     </div>
   );
 };
-
-export default typedMemo(Image);
 
 type FallbackProps = { src?: string; alt?: string; className?: string };
 

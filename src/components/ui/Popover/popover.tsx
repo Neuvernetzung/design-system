@@ -29,7 +29,6 @@ import { popoverAnimation } from "../../../styles/animation";
 import { getPopoverContainerStyles } from "../../../styles/groups";
 import { offsetSizes } from "../../../styles/popper/offset";
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import type { ButtonProps } from "../Button";
 import { Button } from "../Button";
 
@@ -134,8 +133,6 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
     </PopoverRoot>
   )
 );
-
-export default typedMemo(Popover);
 
 Popover.displayName = "Popover";
 

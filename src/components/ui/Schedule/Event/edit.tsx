@@ -6,7 +6,6 @@ import {
   IconUserPlus,
   IconX,
 } from "@tabler/icons-react";
-import { cn } from "@/utils";
 import { addHours } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { type MouseEvent, useState } from "react";
@@ -25,6 +24,8 @@ import {
 } from "ts-ics";
 import { v4 as uuid } from "uuid";
 
+import { cn } from "@/utils";
+
 import {
   borders,
   extendedBgColors,
@@ -39,7 +40,7 @@ import { Datetimepicker } from "../../Datepicker";
 import { FormElement } from "../../Form";
 import { Icon } from "../../Icon";
 import { Input } from "../../Input";
-import InputWithTags from "../../Input/WithTags/inputWithTags";
+import { InputWithTags } from "../../Input/WithTags/inputWithTags";
 import { Modal } from "../../Modal";
 import { RichText } from "../../RichText";
 import { Select } from "../../Select";

@@ -20,7 +20,7 @@ import {
 import { type Locale } from "../../../locales/getText";
 import { getInputStyles } from "../../../styles/groups";
 import type { InputVariant, Size } from "../../../types";
-import { mergeRefs, typedMemo } from "../../../utils/internal";
+import { mergeRefs } from "../../../utils/internal";
 import {
   maxInputRule,
   maxLengthInputRule,
@@ -152,7 +152,7 @@ export const InputInner = <
   );
 };
 
-const Input = forwardRef(InputInner) as <
+export const Input = forwardRef(InputInner) as <
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>
 >(
@@ -161,8 +161,6 @@ const Input = forwardRef(InputInner) as <
       ref?: ForwardedRef<HTMLInputElement>;
     }
 ) => ReturnType<typeof InputInner>;
-
-export default typedMemo(Input);
 
 export type RawInputProps = Omit<
   HTMLAttributes<HTMLInputElement>,

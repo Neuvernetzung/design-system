@@ -10,7 +10,6 @@ import {
 } from "../../../../styles";
 import { inputSizes } from "../../../../styles/groups";
 import type { InputVariant, Size } from "../../../../types";
-import { typedMemo } from "../../../../utils/internal";
 
 export type InputAddonProps = {
   className?: string;
@@ -51,7 +50,5 @@ export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
     </div>
   )
 );
-
-export default typedMemo(InputAddon);
 
 InputAddon.displayName = "InputAddon";

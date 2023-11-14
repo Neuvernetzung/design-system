@@ -6,7 +6,7 @@ import { sizes } from "../../../../types";
 import { Button, Form } from "../..";
 import { FileUploadPreview } from "../UploadPreview";
 import { Dropzone } from ".";
-import Input from "../../Input/input";
+import { Input } from "../../Input";
 import { cn } from "@/utils";
 
 export default {

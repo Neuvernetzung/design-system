@@ -1,1 +1,1 @@
-export { default as InputAddon } from "./inputAddon";
+export * from "./inputAddon";

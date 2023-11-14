@@ -1,2 +1,2 @@
-export { default as NavbarContainer } from "./default";
-export { default as NavbarSideContainer } from "./side";
+export * from "./default";
+export * from "./side";

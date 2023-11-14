@@ -2,7 +2,6 @@ import { cn } from "@/utils";
 import { ForwardedRef, forwardRef, OlHTMLAttributes } from "react";
 
 import { listStyle } from "../../../styles";
-import { typedMemo } from "../../../utils/internal";
 
 export type OrderedListProps = OlHTMLAttributes<HTMLOListElement> & {};
 
@@ -19,5 +18,3 @@ export const OrderedList = forwardRef(
   )
 );
 OrderedList.displayName = "OrderedList";
-
-export default typedMemo(OrderedList);

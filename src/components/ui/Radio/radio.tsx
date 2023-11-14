@@ -27,7 +27,6 @@ import {
   transition,
 } from "../../../styles";
 import type { Color, RadioVariant, Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
@@ -203,5 +202,3 @@ export const Radio = <
     />
   );
 };
-
-export default typedMemo(Radio);

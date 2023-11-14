@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import isArray from "lodash/isArray";
 import { ForwardedRef, forwardRef, HTMLAttributes, useState } from "react";
 import {
@@ -8,24 +8,19 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import {
-  extendedBgColors,
-  gaps,
-  paddingsEvenly,
-  roundings,
-} from "../../../../styles";
-import { getInputStyles } from "../../../../styles/groups";
+import { extendedBgColors, gaps, paddingsEvenly, roundings } from "@/styles";
+import { getInputStyles } from "@/styles/groups";
 import { IconX, IconPlus } from "@tabler/icons-react";
-import type { InputVariant, Size } from "../../../../types";
-import { capSize } from "../../../../utils";
-import { mergeRefs, typedMemo } from "../../../../utils/internal";
+import type { InputVariant, Size } from "@/types";
+import { capSize } from "@/utils";
+import { mergeRefs } from "@/utils/internal";
 import { Button, ButtonGroup, IconButton } from "../../Button";
 import { FormElement, RequiredRule } from "../../Form";
 import { Text } from "../../Typography";
 import { InputAddon } from "../InputAddon";
-import { requiredInputRule } from "../../../../utils/internal/inputRule";
+import { requiredInputRule } from "@/utils/internal/inputRule";
 import { useRouter } from "next/router";
-import type { Locale } from "../../../../locales/getText";
+import type { Locale } from "@/locales/getText";
 
 export type InputWithTagsProps = HTMLAttributes<HTMLInputElement> & {
   required?: RequiredRule;
@@ -189,7 +184,7 @@ export const InputWithTagsInner = <
   );
 };
 
-const InputWithTags = forwardRef(InputWithTagsInner) as <
+export const InputWithTags = forwardRef(InputWithTagsInner) as <
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>
 >(
@@ -198,5 +193,3 @@ const InputWithTags = forwardRef(InputWithTagsInner) as <
       ref?: ForwardedRef<HTMLInputElement>;
     }
 ) => ReturnType<typeof InputWithTagsInner>;
-
-export default typedMemo(InputWithTags);

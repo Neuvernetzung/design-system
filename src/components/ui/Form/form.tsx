@@ -6,8 +6,6 @@ import {
   UseFormHandleSubmit,
 } from "react-hook-form";
 
-import { typedMemo } from "../../../utils/internal";
-
 export type FormProps<T extends FieldValues> = {
   handleSubmit: UseFormHandleSubmit<T>;
   onSubmit: SubmitHandler<T>;
@@ -41,5 +39,3 @@ export const Form = <T extends FieldValues>({
     {...props}
   />
 );
-
-export default typedMemo(Form);

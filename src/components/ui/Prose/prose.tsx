@@ -5,7 +5,6 @@ import { createElement, ReactNode } from "react";
 
 import { marginsY, prose } from "../../../styles";
 import type { ProseComponents, ProseComponentTag } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { HorizontalRule } from "../HorizontalRule";
 import { Image } from "../Image";
 import { ListItem, OrderedList, UnorderedList } from "../List";
@@ -111,5 +110,3 @@ export const Prose = ({ content, className }: ProseProps) => {
 
   return <div className={cn(prose, className)}>{parse(content, options)}</div>;
 };
-
-export default typedMemo(Prose);
