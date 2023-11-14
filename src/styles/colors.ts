@@ -1,8 +1,7 @@
+import type { ReturnedColors } from "@/theme/colors";
+import type { Color, ExtendedColor, HEX } from "@/types";
 import { cn } from "@/utils";
-
-import type { ReturnedColors } from "../theme/extendColors";
-import type { Color, ExtendedColor, HEX } from "../types";
-import { colorIsBright } from "../utils/colorIsBright";
+import { colorIsBright } from "@/utils/colorIsBright";
 
 export const textColors: Record<Color, string> = {
   brand: "text-brand-500",

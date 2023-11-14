@@ -1,9 +1,9 @@
 import get from "lodash/get";
 import isString from "lodash/isString";
 
-import type { Color, ColorObject, HEX } from "../types";
-import { getRGBColorVariable } from "../utils";
-import { blendColor } from "../utils/internal";
+import type { Color, ColorObject, HEX } from "@/types";
+import { getColorVariable } from "./colorVariable";
+import { blendColor } from "@/utils/internal";
 
 export type ExtendColors = Partial<
   Omit<Record<Color, ColorObject | HEX>, "white" | "black"> &
@@ -20,9 +20,9 @@ export const getColorVariables = (extendedColors: ReturnedColors) =>
   (Object.keys(extendedColors) as Array<keyof ReturnedColors>)
     ?.map((color) => {
       if (isString(get(extendedColors, color)))
-        return getRGBColorVariable(get(extendedColors, color) as HEX, color);
+        return getColorVariable(get(extendedColors, color) as HEX, color);
       return Object.keys(get(extendedColors, color))?.map((key) =>
-        getRGBColorVariable(
+        getColorVariable(
           get(extendedColors, `${color}.${key}`) as unknown as HEX,
           color,
           key

@@ -4,8 +4,8 @@ import { persist } from "zustand/middleware";
 
 import { adjustedTextColors } from "../styles";
 import type { ExtendedColor, RequiredInfoVariant, Size } from "../types";
-import { extendBorderRadius, ReturnedBorderRadius } from "./extendBorderRadius";
-import { ExtendColors, extendColors, ReturnedColors } from "./extendColors";
+import { extendBorderRadius, ReturnedBorderRadius } from "./borderRadius";
+import { ExtendColors, extendColors, ReturnedColors } from "./colors";
 
 export const LOCAL_THEME_KEY = "theme-storage";
 
