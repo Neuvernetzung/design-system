@@ -8,9 +8,9 @@
 npm i @neuvernetzung/design-system && npm i -D tailwindcss postcss autoprefixer
 ```
 
-### \_app.tsx mit ThemeProvider wrappen. Und Globale CSS Datei importieren.
+### `\_app.tsx` mit ThemeProvider wrappen. Und Globale CSS Datei importieren.
 
-```
+```ts
 import type { AppProps } from "next/app";
 
 import { ThemeProvider } from "@neuvernetzung/design-system";
@@ -19,24 +19,23 @@ import "@neuvernetzung/design-system/globals.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider config={config}>
-        <Component {...pageProps} />
+      <Component {...pageProps} />
     </ThemeProvider>
   );
 }
 
 export default MyApp;
-
 ```
 
-### Design-System Preset in tailwind.config.js importieren.
+### Design-System Preset in `tailwind.config.ts` importieren.
 
-```
-const config = require("@neuvernetzung/design-system/tailwind.config");
+```ts
+import designSystem from "@neuvernetzung/design-system/tailwind.config";
+import path from "path";
+import type { Config } from "tailwindcss";
 
-const path = require("path");
-
-module.exports = {
-  presets: [config],
+const config: Config = {
+  presets: [designSystem],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     `${path.dirname(
@@ -51,11 +50,13 @@ module.exports = {
   },
   plugins: [],
 };
+
+export default config;
 ```
 
-### postcss.config.js erstellen
+### `postcss.config.js` erstellen
 
-```
+```js
 module.exports = {
   plugins: {
     tailwindcss: {},
