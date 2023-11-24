@@ -36,6 +36,7 @@ type LinkGroupProps = {
 type LinkProps = {
   label: string;
   href: string;
+  icon?: SvgType;
 };
 
 const colsClassName: Record<number, string> = {
@@ -111,15 +112,20 @@ export const Footer = forwardRef(
                       {label}
                     </Text>
                   </li>
-                  {links.map(({ label, href }, _i) => (
+                  {links.map(({ label, href, icon }, _i) => (
                     <Text
                       size={smallerSize(size)}
                       color="inherit"
-                      className={cn(adjustedColors[color])}
+                      className={cn(
+                        "flex flex-row items-center",
+                        gaps.sm,
+                        adjustedColors[color]
+                      )}
                       key={`footergroup_${i}_el_${_i}`}
                       asChild
                     >
                       <li>
+                        {icon && <Icon icon={icon} />}
                         <Link href={href}>{label}</Link>
                       </li>
                     </Text>
