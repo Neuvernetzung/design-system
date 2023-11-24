@@ -15,7 +15,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { IconCheck, IconPointFilled } from "@tabler/icons-react";
 import { cn } from "@/utils/cn";
-import Link from "next/link";
+import Link, { type LinkProps } from "next/link";
 import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
 import { marginsYSmall, popoverAnimation } from "@/styles";
@@ -53,6 +53,7 @@ export type MenuItemAnchorProps = {
   href: string;
   color?: Color;
   icon?: SvgType;
+  anchorProps?: LinkProps;
 } & MenuItemBaseProps;
 
 export type MenuItemButtonProps = {
@@ -60,6 +61,7 @@ export type MenuItemButtonProps = {
   onClick: () => void;
   color?: Color;
   icon?: SvgType;
+  buttonProps?: ButtonProps;
 } & MenuItemBaseProps;
 
 export type MenuItemGroupProps = {
