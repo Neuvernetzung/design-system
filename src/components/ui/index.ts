@@ -1,3 +1,4 @@
+export * from "./Avatar";
 export * from "./Backdrop";
 export * from "./Button";
 export * from "./Calendar";
