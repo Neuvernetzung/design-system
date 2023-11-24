@@ -3,7 +3,7 @@ import { Meta } from "@storybook/react";
 import { Logo } from "../../../../public/Logo";
 import { Icon } from "../../ui/Icon";
 import { Footer } from "./footer";
-import { IconBeach } from "@tabler/icons-react";
+import { IconBeach, IconCheck, IconCross } from "@tabler/icons-react";
 
 export default {
   title: "COMMON/Footer",
@@ -20,8 +20,8 @@ export const Default = ({ ...args }) => (
         label: "Rechtliches",
         icon: IconBeach,
         links: [
-          { label: "Impressum", href: "/" },
-          { label: "Datenschutz", href: "/" },
+          { label: "Impressum", href: "/", icon: IconCheck },
+          { label: "Datenschutz", href: "/", icon: IconCross },
         ],
       },
       {
