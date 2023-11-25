@@ -4,10 +4,13 @@ import {
   extendedBgColors,
   extendedBorders,
   gaps,
+  gapsLarge,
   maxPageWidths,
   paddingsX,
   paddingsYLarge,
+  pageGaps,
   pagePaddings,
+  pagePaddingsX,
 } from "@/styles";
 import { useThemeStateValue } from "@/theme";
 import type { ExtendedColor, Size, SvgType } from "@/types";
@@ -19,21 +22,27 @@ import { Link } from "../../ui/Link";
 import { Text } from "../../ui/Typography/Text";
 
 type FooterProps = {
-  logo?: ReactNode;
-  cols?: LinkGroupProps[];
-  copyright?: string;
+  main?: ReactNode;
+  links?: FooterLinkGroupProps[];
+  divider?: FooterDividerProps;
+  legalSection?: ReactNode;
   className?: string;
   size?: Size;
   color?: ExtendedColor;
 };
 
-type LinkGroupProps = {
-  icon?: SvgType;
-  label?: string | ReactElement;
-  links: LinkProps[];
+type FooterDividerProps = {
+  logo?: ReactNode;
+  className?: string;
 };
 
-type LinkProps = {
+type FooterLinkGroupProps = {
+  icon?: SvgType;
+  label?: string | ReactElement;
+  links: FooterLinkProps[];
+};
+
+type FooterLinkProps = {
   label: string;
   href: string;
   icon?: SvgType;
@@ -45,14 +54,25 @@ const colsClassName: Record<number, string> = {
   2: "grid-cols-1 sm:grid-cols-2",
   3: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
   4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-4",
+  5: "grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5",
+};
+
+const colsSmallClassName: Record<number, string> = {
+  0: "",
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
+  4: "grid-cols-1 sm:grid-cols-2 xl:grid-cols-4",
+  5: "grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-5",
 };
 
 export const Footer = forwardRef(
   (
     {
-      logo,
-      cols = [],
-      copyright,
+      divider,
+      legalSection,
+      links,
+      main,
       className,
       size = "md",
       color = "white",
@@ -75,23 +95,28 @@ export const Footer = forwardRef(
           className
         )}
       >
-        <div
+        <section
           className={cn(
-            "w-full mx-auto",
+            "w-full mx-auto flex flex-col ",
+            main && "md:grid md:grid-cols-2 lg:grid-cols-3",
+            pageGaps[pagePadding],
             pagePaddings[pagePadding],
             maxPageWidth && maxPageWidths[maxPageWidth]
           )}
         >
+          {main && main}
           <div
             className={cn(
-              "grid",
-              colsClassName[cols?.length || 0],
-              gaps[size],
+              "grid col-span-1 lg:col-span-2 xl",
+              main
+                ? colsSmallClassName[links?.length || 0]
+                : colsClassName[links?.length || 0],
+              gapsLarge[size],
               paddingsYLarge[size]
             )}
           >
-            {cols &&
-              cols?.map(({ icon, label, links }, i) => (
+            {links &&
+              links?.map(({ icon, label, links }, i) => (
                 <ul
                   className="items-start flex flex-col"
                   key={`footerlinkgroup_${i}`}
@@ -133,13 +158,14 @@ export const Footer = forwardRef(
                 </ul>
               ))}
           </div>
-        </div>
-        {(copyright || logo) && (
-          <div
+        </section>
+        {divider && (
+          <section
             className={cn(
               "flex flex-col items-center",
               gaps[size],
-              paddingsYLarge[size]
+              paddingsYLarge[size],
+              divider.className
             )}
           >
             <div className={cn("flex justify-center items-center w-full")}>
@@ -150,7 +176,11 @@ export const Footer = forwardRef(
                   adjustedColors[color]
                 )}
               />
-              {logo && <div className={cn("flex", paddingsX.xl)}>{logo}</div>}
+              {divider.logo && (
+                <div className={cn("flex", paddingsX[size])}>
+                  {divider.logo}
+                </div>
+              )}
               <div
                 className={cn(
                   "border-b w-full flex-grow opacity-50",
@@ -159,17 +189,12 @@ export const Footer = forwardRef(
                 )}
               />
             </div>
-
-            {copyright && (
-              <Text
-                color="inherit"
-                className={cn(adjustedColors[color])}
-                size="xs"
-              >
-                {copyright}
-              </Text>
-            )}
-          </div>
+          </section>
+        )}
+        {legalSection && (
+          <section className={cn("w-full", pagePaddingsX[pagePadding])}>
+            {legalSection}
+          </section>
         )}
       </footer>
     );
