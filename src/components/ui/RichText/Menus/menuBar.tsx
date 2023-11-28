@@ -171,35 +171,29 @@ export const MenuBar = ({
           id="richtext_menu_item_7"
           ariaLabel="align left"
           icon={IconAlignLeft}
-          onClick={() => editor.chain().focus().setTextAlign("text-left").run()}
-          active={editor.isActive({ textAlign: "text-left" })}
+          onClick={() => editor.commands.setTextAlign("left")}
+          active={editor.isActive({ textAlign: "left" })}
         />
         <RichTextMenuItem
           id="richtext_menu_item_8"
           ariaLabel="align center"
           icon={IconAlignCenter}
-          onClick={() =>
-            editor.chain().focus().setTextAlign("text-center").run()
-          }
-          active={editor.isActive({ textAlign: "text-center" })}
+          onClick={() => editor.commands.setTextAlign("center")}
+          active={editor.isActive({ textAlign: "center" })}
         />
         <RichTextMenuItem
           id="richtext_menu_item_9"
           ariaLabel="align right"
           icon={IconAlignRight}
-          onClick={() =>
-            editor.chain().focus().setTextAlign("text-right").run()
-          }
-          active={editor.isActive({ textAlign: "text-right" })}
+          onClick={() => editor.commands.setTextAlign("right")}
+          active={editor.isActive({ textAlign: "right" })}
         />
         <RichTextMenuItem
           id="richtext_menu_item_10"
           ariaLabel="align justify"
           icon={IconAlignJustified}
-          onClick={() =>
-            editor.chain().focus().setTextAlign("text-justify").run()
-          }
-          active={editor.isActive({ textAlign: "text-justify" })}
+          onClick={() => editor.commands.setTextAlign("justify")}
+          active={editor.isActive({ textAlign: "justify" })}
         />
       </RichTextMenuGroup>
       <RichTextMenuGroup>

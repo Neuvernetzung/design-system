@@ -3,7 +3,7 @@ import { ForwardedRef, forwardRef, OlHTMLAttributes } from "react";
 
 import { listStyle } from "../../../styles";
 
-export type UnorderedListProps = OlHTMLAttributes<HTMLUListElement> & {};
+export type UnorderedListProps = OlHTMLAttributes<HTMLUListElement>;
 
 export const UnorderedList = forwardRef(
   (
@@ -12,9 +12,12 @@ export const UnorderedList = forwardRef(
   ) => (
     <ul
       ref={ref}
-      className={cn("list-disc", listStyle, className)}
+      className={cn(unorderedListClassName, className)}
       {...props}
     />
   )
 );
+
 UnorderedList.displayName = "UnorderedList";
+
+export const unorderedListClassName = cn("list-disc", listStyle);

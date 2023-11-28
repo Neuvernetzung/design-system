@@ -45,9 +45,8 @@ export const Heading = forwardRef(
       <Component
         ref={ref}
         className={cn(
-          "font-heading font-semibold",
-          textSizes[size],
-          extendedTextColors[color],
+          getHeadingClassName({ size, color }),
+
           className
         )}
         {...props}
@@ -59,3 +58,14 @@ export const Heading = forwardRef(
 );
 
 Heading.displayName = "Heading";
+
+export type GetHeadingClassNameProps = {
+  size?: ExtendedSize;
+  color?: ExtendedColor;
+};
+
+export const getHeadingClassName = ({
+  size = "md",
+  color = "accent",
+}: GetHeadingClassNameProps) =>
+  cn("font-heading font-semibold", textSizes[size], extendedTextColors[color]);

@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import CharacterCount from "@tiptap/extension-character-count";
+import ImageExtension from "@tiptap/extension-image";
+import LinkExtension from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { cn } from "@/utils";
-import { useRouter } from "next/router";
 import { KeyboardEvent, ReactNode, useRef, useState } from "react";
 import {
   Controller,
@@ -15,33 +16,22 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import type { Locale } from "../../../locales/getText";
+import { cn } from "@/utils";
+
 import {
   bordersInteractive,
   paddings,
   roundings,
   transition,
 } from "../../../styles";
+import type { Size } from "../../../types";
 import { focusById, mergeRefs } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
+import { proseClassName } from "../Prose";
 import { Text } from "../Typography";
-import {
-  CustomBlockQuote,
-  CustomBulletList,
-  CustomHeading,
-  CustomHorizontalRule,
-  CustomLink,
-  CustomListItem,
-  CustomOrderedList,
-  CustomParagraph,
-} from "./Extensions";
-import { CustomHardBreak } from "./Extensions/hardBreak";
-import { CustomImage } from "./Extensions/image";
-import { CustomTextAlign } from "./Extensions/textAlign";
 import { MenuBar } from "./Menus/menuBar";
 import { returnTextSelection, type TextTypeTags } from "./Menus/selectText";
-import type { Size } from "../../../types";
 
 export type RichTextProps = {
   label?: string;
@@ -75,8 +65,6 @@ export const RichText = <
     field: { value, onChange },
   } = useController({ control, name });
 
-  const locale = useRouter().locale as Locale;
-
   const [selectedTag, setSelectedTag] = useState<TextTypeTags>("p");
   const [lastMenuItem, setLastMenuItem] = useState<number>(0);
 
@@ -90,28 +78,21 @@ export const RichText = <
       Placeholder.configure({
         placeholder,
       }),
-
       CharacterCount.configure({
         limit: maxLength,
       }),
-
-      CustomTextAlign,
-      CustomBulletList,
-      CustomOrderedList,
-      CustomListItem,
-      CustomHeading,
-      CustomParagraph,
-      CustomLink,
-      CustomBlockQuote,
-      CustomHorizontalRule,
-      CustomHardBreak,
-      CustomImage,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      LinkExtension.configure({ openOnClick: false }),
+      ImageExtension,
     ],
     editorProps: {
       attributes: {
         id: name,
         role: "textbox",
         "aria-label": label || name,
+        class: proseClassName,
       },
     },
     onCreate: ({ editor }) => {
@@ -145,7 +126,7 @@ export const RichText = <
       control={control}
       name={name}
       rules={{
-        required: requiredInputRule(required, locale),
+        required: requiredInputRule(required),
       }}
       render={({ field: { ref }, fieldState: { error } }) => (
         <FormElement

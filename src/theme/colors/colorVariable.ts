@@ -22,6 +22,9 @@ export const getColorVariable = (hex: HEX, color: Color, shade?: string) => {
   return `${colorVariableName(color, shade)}: ${r} ${g} ${b}`;
 };
 
+export const twColorVariableWithoutAlpha = (color: Color, shade?: string) =>
+  `rgb(var(${colorVariableName(color, shade)}))`;
+
 export const twColorVariable = (color: Color, shade?: string) =>
   `rgb(var(${colorVariableName(color, shade)}) / <alpha-value>)`;
 
