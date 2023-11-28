@@ -7,7 +7,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { KeyboardEvent, ReactNode, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import {
   Controller,
   FieldPath,
@@ -25,13 +25,12 @@ import {
   transition,
 } from "../../../styles";
 import type { Size } from "../../../types";
-import { focusById, mergeRefs } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
 import { proseClassName } from "../Prose";
 import { Text } from "../Typography";
+import { BubbleMenu } from "./Menus/bubblemenu";
 import { MenuBar } from "./Menus/menuBar";
-import { returnTextSelection, type TextTypeTags } from "./Menus/selectText";
 
 export type RichTextProps = {
   label?: string;
@@ -65,15 +64,9 @@ export const RichText = <
     field: { value, onChange },
   } = useController({ control, name });
 
-  const [selectedTag, setSelectedTag] = useState<TextTypeTags>("p");
-  const [lastMenuItem, setLastMenuItem] = useState<number>(0);
-
   const editor = useEditor({
-    onSelectionUpdate({ editor }) {
-      setSelectedTag(returnTextSelection({ editor }));
-    },
     extensions: [
-      StarterKit,
+      StarterKit.configure({ heading: { levels: [1, 2, 3, 4] } }),
       Underline,
       Placeholder.configure({
         placeholder,
@@ -84,7 +77,10 @@ export const RichText = <
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
-      LinkExtension.configure({ openOnClick: false }),
+      LinkExtension.configure({
+        openOnClick: false,
+        HTMLAttributes: { target: "_blank" },
+      }),
       ImageExtension,
     ],
     editorProps: {
@@ -103,24 +99,6 @@ export const RichText = <
     },
   });
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const containerOnKeyDown = (e: KeyboardEvent) => {
-    if (containerRef.current !== document.activeElement) return;
-
-    if (!e.shiftKey && e.key === "Tab") {
-      e.preventDefault();
-      focusById(`richtext_menu_item_${lastMenuItem}`, containerRef.current);
-    }
-  };
-
-  const contentOnKeyDown = (e: KeyboardEvent) => {
-    if (e.shiftKey && e.key === "Tab") {
-      e.preventDefault();
-      focusById(`richtext_menu_item_${lastMenuItem}`, containerRef.current);
-    }
-  };
-
   return (
     <Controller
       control={control}
@@ -138,10 +116,6 @@ export const RichText = <
           size={size}
         >
           <div
-            ref={mergeRefs([containerRef, ref])}
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
-            onKeyDown={containerOnKeyDown}
             className={cn(
               !error ? bordersInteractive.accent : bordersInteractive.danger,
               "group border w-full relative cursor-auto",
@@ -151,17 +125,15 @@ export const RichText = <
               containerClassName
             )}
           >
+            {editor ? <BubbleMenu editor={editor} /> : null}
             <MenuBar
               editor={editor}
-              selectedTag={selectedTag}
-              setSelectedTag={setSelectedTag}
-              setLastMenuItem={setLastMenuItem}
               AdditionalMenuItems={
                 AdditionalMenuItems && AdditionalMenuItems({ editor })
               }
             />
             <EditorContent
-              onKeyDown={contentOnKeyDown}
+              ref={ref}
               className={cn(
                 paddings.md,
                 "[&>.ProseMirror]:outline-none [&>.ProseMirror]:focus:outline-none [&>.ProseMirror]:focus-visible:outline-none [&>.ProseMirror]:focus-within:outline-none",

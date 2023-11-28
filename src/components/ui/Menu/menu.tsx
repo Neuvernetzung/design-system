@@ -16,7 +16,13 @@ import {
 import { IconCheck, IconPointFilled } from "@tabler/icons-react";
 import { cn } from "@/utils/cn";
 import Link, { type LinkProps } from "next/link";
-import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  ReactElement,
+  ReactNode,
+  RefObject,
+} from "react";
 
 import { marginsYSmall, popoverAnimation } from "@/styles";
 import {
@@ -41,6 +47,7 @@ export type MenuProps = {
   buttonProps?: ButtonProps;
   buttonComponent?: ReactElement;
   menuTriggerProps?: DropdownMenuTriggerProps;
+  containerRef?: RefObject<HTMLElement>;
 };
 
 export type MenuItemBaseProps = {
@@ -88,13 +95,19 @@ export type MenuItemRadioProps = {
   options: (MenuItemBaseProps & { value: string })[];
 };
 
+export type MenuItemCustomProps = { type: "custom" } & Omit<
+  MenuItemBaseProps,
+  "disabled"
+>;
+
 export type MenuItemProps =
   | MenuItemAnchorProps
   | MenuItemButtonProps
   | MenuItemGroupProps
   | MenuItemSeparatorProps
   | MenuItemCheckboxProps
-  | MenuItemRadioProps;
+  | MenuItemRadioProps
+  | MenuItemCustomProps;
 
 export type MenuItemComponentProps = { size: Size };
 
@@ -110,6 +123,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       side = "bottom",
       align = "center",
       menuTriggerProps,
+      containerRef,
     }: MenuProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
@@ -123,7 +137,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       >
         {buttonComponent || <Button {...buttonProps} />}
       </DropdownMenuTrigger>
-      <DropdownMenuPortal>
+      <DropdownMenuPortal container={containerRef?.current || undefined}>
         <DropdownMenuContent
           side={side}
           align={align}
@@ -161,6 +175,8 @@ const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
   if (type === "checkbox") return <MenuItemCheckbox {...props} />;
 
   if (type === "radio") return <MenuItemRadioGroup {...props} />;
+
+  if (type === "custom") return <MenuItemCustom {...props} />;
 
   return null;
 };
@@ -283,4 +299,11 @@ const MenuItemRadioGroup = ({
       </DropdownMenuRadioItem>
     ))}
   </DropdownMenuRadioGroup>
+);
+
+const MenuItemCustom = ({
+  children,
+}: Omit<MenuItemCustomProps, "type"> &
+  Omit<MenuItemComponentProps, "size">) => (
+  <DropdownMenuItem>{children}</DropdownMenuItem>
 );
