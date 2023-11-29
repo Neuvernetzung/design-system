@@ -72,14 +72,13 @@ type RichTextMenuGroupProps = {
   type: "multiple" | "single";
 };
 
+export const menuGroupClassName = cn("flex flex-row flex-nowrap", gapsSmall.xs);
+
 export const RichTextMenuGroup = ({
   type,
   children,
 }: RichTextMenuGroupProps) => (
-  <ToolbarToggleGroup
-    type={type}
-    className={cn("flex flex-row flex-nowrap", gapsSmall.xs)}
-  >
+  <ToolbarToggleGroup type={type} className={menuGroupClassName}>
     {children}
   </ToolbarToggleGroup>
 );

@@ -47,6 +47,7 @@ export type MenuProps = {
   buttonProps?: ButtonProps;
   buttonComponent?: ReactElement;
   menuTriggerProps?: DropdownMenuTriggerProps;
+  menuContentProps?: DropdownMenuContentProps;
   containerRef?: RefObject<HTMLElement>;
 };
 
@@ -124,6 +125,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       align = "center",
       menuTriggerProps,
       containerRef,
+      menuContentProps,
     }: MenuProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
@@ -148,6 +150,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
             dropdownClassName,
             popoverAnimation
           )}
+          {...menuContentProps}
         >
           {items?.map((props: MenuItemProps, i) => (
             <MenuItem key={`menu_option_${i}`} size={size} {...props} />

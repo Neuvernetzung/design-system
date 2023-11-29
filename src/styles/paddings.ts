@@ -49,19 +49,19 @@ export const paddingsSmall: Record<Size, string> = {
 };
 
 export const paddingsXLarge: Record<Size, string> = {
-  xs: "px-1",
-  sm: "px-2",
-  md: "px-4",
-  lg: "px-6",
-  xl: "px-8",
+  xs: "px-3",
+  sm: "px-4",
+  md: "px-5",
+  lg: "px-8",
+  xl: "px-12",
 };
 
 export const paddingsYLarge: Record<Size, string> = {
-  xs: "py-0.5",
-  sm: "py-1",
-  md: "py-2",
-  lg: "py-3",
-  xl: "py-4",
+  xs: "py-1",
+  sm: "py-2",
+  md: "py-3",
+  lg: "py-6",
+  xl: "py-8",
 };
 
 export const paddingsLarge: Record<Size, string> = {

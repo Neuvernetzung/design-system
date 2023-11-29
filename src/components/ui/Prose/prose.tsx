@@ -23,5 +23,7 @@ export const proseClassName = cn(
   "prose prose-accent dark:prose-invert prose-sm sm:prose-base",
   "prose-headings:font-heading prose-headings:font-semibold",
   "prose-a:after:content-['↗'] prose-a:after:align-middle",
-  "prose-img:rounded-md"
+  "prose-img:rounded-md",
+  "prose-th:bg-accent-100 dark:prose-th:bg-accent-900 prose-th:border-accent-300 dark:prose-th:border-accent-700",
+  "prose-td:border-accent-300 dark:prose-td:border-accent-700"
 );

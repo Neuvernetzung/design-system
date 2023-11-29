@@ -30,7 +30,9 @@ import { FormElement, RequiredRule } from "../Form";
 import { proseClassName } from "../Prose";
 import { Text } from "../Typography";
 import { BubbleMenu } from "./Menus/bubblemenu";
+import { FloatingMenu } from "./Menus/floatingmenu";
 import { MenuBar } from "./Menus/menuBar";
+import { TableExtensions } from "./Table";
 
 export type RichTextProps = {
   label?: string;
@@ -82,6 +84,7 @@ export const RichText = <
         HTMLAttributes: { target: "_blank" },
       }),
       ImageExtension,
+      ...TableExtensions,
     ],
     editorProps: {
       attributes: {
@@ -126,6 +129,7 @@ export const RichText = <
             )}
           >
             {editor ? <BubbleMenu editor={editor} /> : null}
+            {editor ? <FloatingMenu editor={editor} /> : null}
             <MenuBar
               editor={editor}
               AdditionalMenuItems={

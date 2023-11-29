@@ -70,7 +70,7 @@ export const SelectText = ({ editor, containerRef }: SelectTextProps) => (
     items={[
       {
         type: "group",
-        children: "Fließtext",
+        children: "Fließtexte",
         items: [
           {
             icon: IconLetterP,

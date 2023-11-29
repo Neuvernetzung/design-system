@@ -8,6 +8,7 @@ import {
   IconAlignRight,
   IconBold,
   IconClearFormatting,
+  IconCode,
   IconDots,
   IconItalic,
   IconList,
@@ -17,8 +18,7 @@ import {
   IconStrikethrough,
   IconUnderline,
 } from "@tabler/icons-react";
-import { isNodeSelection, posToDOMRect } from "@tiptap/core";
-import type { Editor } from "@tiptap/react";
+import { isNodeSelection, type Editor, posToDOMRect } from "@tiptap/react";
 import { useRef } from "react";
 
 import { useDebounce } from "@/hooks";
@@ -34,7 +34,6 @@ import {
 } from "@/styles";
 import { offsetSizes } from "@/styles/popper/offset";
 import { cn } from "@/utils";
-import { mergeRefs } from "@/utils/internal";
 
 import { IconButton } from "../../Button";
 import { Menu } from "../../Menu";
@@ -45,6 +44,18 @@ import { SelectText } from "./selectText";
 export type BubbleMenuProps = {
   editor: Editor;
 };
+
+export const toolbarClassName = cn(
+  "flex-row flex-nowrap border",
+  popoverAnimation,
+  gaps.md,
+  divides.accent,
+  borders.accent,
+  paddings.sm,
+  bgColors.white,
+  shadows.md,
+  roundings.md
+);
 
 export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -104,20 +115,9 @@ export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
         ref={refs.setFloating}
       >
         <ToolbarRoot
-          ref={mergeRefs([containerRef])}
+          ref={containerRef}
           data-state={open ? "open" : "closed"}
-          className={cn(
-            "flex-row flex-nowrap border",
-            open ? "flex" : "hidden",
-            popoverAnimation,
-            gaps.md,
-            divides.accent,
-            borders.accent,
-            paddings.sm,
-            bgColors.white,
-            shadows.md,
-            roundings.md
-          )}
+          className={cn(open ? "flex" : "hidden", toolbarClassName)}
         >
           <SelectText editor={editor} containerRef={containerRef} />
           <RichTextMenuGroup type="multiple">
@@ -240,6 +240,15 @@ export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
                 children: "Zitat",
                 buttonProps: {
                   variant: editor.isActive("blockquote") ? "subtile" : "ghost",
+                },
+              },
+              {
+                type: "button",
+                icon: IconCode,
+                onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+                children: "Code Block",
+                buttonProps: {
+                  variant: editor.isActive("codeBlock") ? "subtile" : "ghost",
                 },
               },
               { type: "separator" },
