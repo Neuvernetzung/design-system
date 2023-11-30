@@ -152,9 +152,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
           )}
           {...menuContentProps}
         >
-          {items?.map((props: MenuItemProps, i) => (
-            <MenuItem key={`menu_option_${i}`} size={size} {...props} />
-          ))}
+          <MenuItems items={items} size={size} />
         </DropdownMenuContent>
       </DropdownMenuPortal>
     </DropdownMenuRoot>
@@ -162,6 +160,14 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
 );
 
 Menu.displayName = "Menu";
+
+export const MenuItems = ({
+  items,
+  size = "sm",
+}: Pick<MenuProps, "items" | "size">) =>
+  items?.map((props: MenuItemProps, i) => (
+    <MenuItem key={`menu_option_${i}`} size={size} {...props} />
+  ));
 
 const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
   const { type, size } = props;
@@ -243,9 +249,7 @@ const MenuItemGroup = ({
         </Text>
       </DropdownMenuLabel>
     )}
-    {items?.map((props: MenuItemProps, i) => (
-      <MenuItem key={`group-menu-item-${i}`} size={size} {...props} />
-    ))}
+    <MenuItems items={items || []} size={size} />
   </DropdownMenuGroup>
 );
 

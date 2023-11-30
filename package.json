@@ -94,6 +94,7 @@
     "@tiptap/pm": "2.1.12",
     "@tiptap/react": "2.1.12",
     "@tiptap/starter-kit": "2.1.12",
+    "@tiptap/suggestion": "^2.1.12",
     "@visx/axis": "^3.5.0",
     "@visx/curve": "^3.3.0",
     "@visx/event": "^3.3.0",

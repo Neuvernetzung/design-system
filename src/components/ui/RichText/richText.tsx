@@ -34,6 +34,8 @@ import { FloatingExtension } from "./Floating";
 import { Floating } from "./Floating/NodeView";
 import { BubbleMenu } from "./Menus/bubblemenu";
 import { MenuBar } from "./Menus/menuBar";
+import { SlashCommand } from "./Slash";
+import { SlashMenu } from "./Slash/Menu";
 import { TableExtensions } from "./Table";
 
 export type RichTextProps = {
@@ -75,7 +77,17 @@ export const RichText = <
       }),
       Underline,
       Placeholder.configure({
-        placeholder,
+        emptyEditorClass:
+          "first:before:content-[attr(data-placeholder)] first:before:float-left first:before:text-accent-500 first:before:pointer-events-none first:before:h-0",
+        emptyNodeClass:
+          "before:content-[attr(data-placeholder)] before:float-left before:text-accent-500 before:pointer-events-none before:h-0",
+        placeholder: ({ node, editor }) => {
+          if (editor.isEmpty && placeholder) return placeholder;
+          if (node.type.name === "heading") {
+            return `Überschrift ${node.attrs.level}`;
+          }
+          return `Drücke "/" für Befehle...`;
+        },
       }),
       CharacterCount.configure({
         limit: maxLength,
@@ -89,6 +101,7 @@ export const RichText = <
       }),
       FloatingExtension,
       ImageExtension,
+      SlashCommand,
       ...TableExtensions,
     ],
     editorProps: {
@@ -96,7 +109,12 @@ export const RichText = <
         id: name,
         role: "textbox",
         "aria-label": label || name,
-        class: cn(proseClassName, paddingsY.md, paddingsXLarge.xl),
+        class: cn(
+          proseClassName,
+          paddingsY.md,
+          paddingsXLarge.xl,
+          "outline-none focus:outline-none focus-visible:outline-none focus-within:outline-none"
+        ),
       },
     },
     onCreate: ({ editor }) => {
@@ -135,6 +153,7 @@ export const RichText = <
           >
             {editor ? <BubbleMenu editor={editor} /> : null}
             {editor ? <Floating editor={editor} /> : null}
+            {editor ? <SlashMenu editor={editor} /> : null}
             <MenuBar
               editor={editor}
               AdditionalMenuItems={
@@ -143,10 +162,7 @@ export const RichText = <
             />
             <EditorContent
               ref={ref}
-              className={cn(
-                "[&>.ProseMirror]:outline-none [&>.ProseMirror]:focus:outline-none [&>.ProseMirror]:focus-visible:outline-none [&>.ProseMirror]:focus-within:outline-none",
-                "appearance-none"
-              )}
+              className={cn("appearance-none")}
               editor={editor}
             />
             {maxLength && showLength && (
