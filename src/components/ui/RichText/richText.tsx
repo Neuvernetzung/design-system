@@ -20,7 +20,8 @@ import { cn } from "@/utils";
 
 import {
   bordersInteractive,
-  paddings,
+  paddingsXLarge,
+  paddingsY,
   roundings,
   transition,
 } from "../../../styles";
@@ -29,8 +30,9 @@ import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
 import { proseClassName } from "../Prose";
 import { Text } from "../Typography";
+import { FloatingExtension } from "./Floating";
+import { Floating } from "./Floating/NodeView";
 import { BubbleMenu } from "./Menus/bubblemenu";
-import { FloatingMenu } from "./Menus/floatingmenu";
 import { MenuBar } from "./Menus/menuBar";
 import { TableExtensions } from "./Table";
 
@@ -68,7 +70,9 @@ export const RichText = <
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ heading: { levels: [1, 2, 3, 4] } }),
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3, 4] },
+      }),
       Underline,
       Placeholder.configure({
         placeholder,
@@ -83,6 +87,7 @@ export const RichText = <
         openOnClick: false,
         HTMLAttributes: { target: "_blank" },
       }),
+      FloatingExtension,
       ImageExtension,
       ...TableExtensions,
     ],
@@ -91,7 +96,7 @@ export const RichText = <
         id: name,
         role: "textbox",
         "aria-label": label || name,
-        class: proseClassName,
+        class: cn(proseClassName, paddingsY.md, paddingsXLarge.xl),
       },
     },
     onCreate: ({ editor }) => {
@@ -129,7 +134,7 @@ export const RichText = <
             )}
           >
             {editor ? <BubbleMenu editor={editor} /> : null}
-            {editor ? <FloatingMenu editor={editor} /> : null}
+            {editor ? <Floating editor={editor} /> : null}
             <MenuBar
               editor={editor}
               AdditionalMenuItems={
@@ -139,7 +144,6 @@ export const RichText = <
             <EditorContent
               ref={ref}
               className={cn(
-                paddings.md,
                 "[&>.ProseMirror]:outline-none [&>.ProseMirror]:focus:outline-none [&>.ProseMirror]:focus-visible:outline-none [&>.ProseMirror]:focus-within:outline-none",
                 "appearance-none"
               )}
