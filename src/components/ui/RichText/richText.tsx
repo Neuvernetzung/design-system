@@ -39,6 +39,7 @@ import { SlashCommand } from "./Slash";
 import { SlashMenu } from "./Slash/Menu";
 import { TableExtensions } from "./Table";
 import { Float } from "./Float";
+import { richTextTableClassName } from "./Table/Table/className";
 
 export type RichTextProps = {
   label?: string;
@@ -120,7 +121,8 @@ export const RichText = <
           proseClassName,
           paddingsY.md,
           paddingsXLarge.xl,
-          "outline-none focus:outline-none focus-visible:outline-none focus-within:outline-none"
+          "outline-none focus:outline-none focus-visible:outline-none focus-within:outline-none",
+          richTextTableClassName
         ),
       },
     },

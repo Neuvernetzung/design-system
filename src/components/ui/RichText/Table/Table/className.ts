@@ -1,0 +1,1 @@
+export const richTextTableClassName = `[&_.selectedCell]:after:bg-primary-500/10 [&_.selectedCell]:after:inset-0 [&_.selectedCell]:after:content-[""] [&_.selectedCell]:after:absolute [&_.selectedCell]:after:pointer-events-none`;
