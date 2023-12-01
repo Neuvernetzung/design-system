@@ -14,9 +14,14 @@ import {
   Root as DropdownMenuRoot,
 } from "@radix-ui/react-dropdown-menu";
 import { IconCheck, IconPointFilled } from "@tabler/icons-react";
-import { cn } from "@/utils/cn";
 import Link, { type LinkProps } from "next/link";
-import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  ReactElement,
+  ReactNode,
+  RefObject,
+} from "react";
 
 import { marginsYSmall, popoverAnimation } from "@/styles";
 import {
@@ -26,7 +31,9 @@ import {
 import { offsetSizes } from "@/styles/popper/offset";
 import type { Color, Size, SvgType } from "@/types";
 import { capSize } from "@/utils";
-import { Button, ButtonProps } from "../Button";
+import { cn } from "@/utils/cn";
+
+import { Button, type ButtonProps } from "../Button";
 import { HorizontalRule } from "../HorizontalRule";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -41,6 +48,8 @@ export type MenuProps = {
   buttonProps?: ButtonProps;
   buttonComponent?: ReactElement;
   menuTriggerProps?: DropdownMenuTriggerProps;
+  menuContentProps?: DropdownMenuContentProps;
+  containerRef?: RefObject<HTMLElement>;
 };
 
 export type MenuItemBaseProps = {
@@ -88,13 +97,19 @@ export type MenuItemRadioProps = {
   options: (MenuItemBaseProps & { value: string })[];
 };
 
+export type MenuItemCustomProps = { type: "custom" } & Omit<
+  MenuItemBaseProps,
+  "disabled"
+>;
+
 export type MenuItemProps =
   | MenuItemAnchorProps
   | MenuItemButtonProps
   | MenuItemGroupProps
   | MenuItemSeparatorProps
   | MenuItemCheckboxProps
-  | MenuItemRadioProps;
+  | MenuItemRadioProps
+  | MenuItemCustomProps;
 
 export type MenuItemComponentProps = { size: Size };
 
@@ -110,6 +125,8 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       side = "bottom",
       align = "center",
       menuTriggerProps,
+      containerRef,
+      menuContentProps,
     }: MenuProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
@@ -123,7 +140,7 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       >
         {buttonComponent || <Button {...buttonProps} />}
       </DropdownMenuTrigger>
-      <DropdownMenuPortal>
+      <DropdownMenuPortal container={containerRef?.current || undefined}>
         <DropdownMenuContent
           side={side}
           align={align}
@@ -134,10 +151,9 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
             dropdownClassName,
             popoverAnimation
           )}
+          {...menuContentProps}
         >
-          {items?.map((props: MenuItemProps, i) => (
-            <MenuItem key={`menu_option_${i}`} size={size} {...props} />
-          ))}
+          <MenuItems items={items} size={size} />
         </DropdownMenuContent>
       </DropdownMenuPortal>
     </DropdownMenuRoot>
@@ -145,6 +161,14 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
 );
 
 Menu.displayName = "Menu";
+
+export const MenuItems = ({
+  items,
+  size = "sm",
+}: Pick<MenuProps, "items" | "size">) =>
+  items?.map((props, i) => (
+    <MenuItem key={`menu_option_${i}`} size={size} {...props} />
+  ));
 
 const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
   const { type, size } = props;
@@ -161,6 +185,8 @@ const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
   if (type === "checkbox") return <MenuItemCheckbox {...props} />;
 
   if (type === "radio") return <MenuItemRadioGroup {...props} />;
+
+  if (type === "custom") return <MenuItemCustom {...props} />;
 
   return null;
 };
@@ -224,9 +250,7 @@ const MenuItemGroup = ({
         </Text>
       </DropdownMenuLabel>
     )}
-    {items?.map((props: MenuItemProps, i) => (
-      <MenuItem key={`group-menu-item-${i}`} size={size} {...props} />
-    ))}
+    <MenuItems items={items || []} size={size} />
   </DropdownMenuGroup>
 );
 
@@ -283,4 +307,11 @@ const MenuItemRadioGroup = ({
       </DropdownMenuRadioItem>
     ))}
   </DropdownMenuRadioGroup>
+);
+
+const MenuItemCustom = ({
+  children,
+}: Omit<MenuItemCustomProps, "type"> &
+  Omit<MenuItemComponentProps, "size">) => (
+  <DropdownMenuItem>{children}</DropdownMenuItem>
 );

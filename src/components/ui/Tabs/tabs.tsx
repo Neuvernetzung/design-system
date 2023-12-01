@@ -34,8 +34,6 @@ export type TabGroupProps = TabListProps &
   Omit<TabPanelsProps, "items"> & {
     className?: string;
     defaultTab?: string;
-    value?: string;
-    setValue?: (value: string) => void;
   };
 
 export type TabListProps = {
@@ -50,6 +48,7 @@ export type TabListProps = {
   activeButtonVariant?: ButtonVariant;
   activeButtonColor?: ExtendedColor;
   value?: string;
+  setValue?: (value: string) => void;
 };
 
 export type TabPanelsProps = {
@@ -283,24 +282,22 @@ export const TabPanels = ({
   unmount,
 }: TabPanelsProps) => (
   <div className={cn(paddings[size], panelsClassName)}>
-    {items.map((props, i) => (
-      <TabPanel
-        key={`tab_panel_${i}`}
-        size={size}
-        unmount={unmount}
-        {...props}
-      />
+    {items.map(({ content, ...props }, i) => (
+      <TabPanel key={`tab_panel_${i}`} size={size} unmount={unmount} {...props}>
+        {content}
+      </TabPanel>
     ))}
   </div>
 );
 
 export const TabPanel = ({
-  content,
+  children,
   className,
   value,
-}: Omit<TabItemValueProps, "title"> &
-  Pick<TabPanelsProps, "size" | "unmount">) => (
+}: Omit<TabItemValueProps, "title" | "content"> & {
+  children: ReactNode;
+} & Pick<TabPanelsProps, "size" | "unmount">) => (
   <TabsContent value={value} className={cn("flex", focus.accent, className)}>
-    {content}
+    {children}
   </TabsContent>
 );

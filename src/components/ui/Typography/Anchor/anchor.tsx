@@ -2,7 +2,7 @@ import { cn } from "@/utils";
 import NextLink from "next/link";
 import { AnchorHTMLAttributes, ReactElement } from "react";
 
-import { linkStyle } from "../../../../styles/link";
+import { getLinkStyle } from "../../../../styles/link";
 import { Color } from "../../../../types";
 import { Icon } from "../../Icon";
 import { IconExternalLink } from "@tabler/icons-react";
@@ -33,7 +33,7 @@ export const Anchor = ({
     <NextLink
       href={href}
       rel={isExternal ? "noopener noreferrer nofollow" : undefined}
-      className={cn(linkStyle({ color }), "inline-flex", className)}
+      className={cn(getLinkStyle({ color }), "inline-flex", className)}
       {...props}
     >
       {children}

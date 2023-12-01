@@ -65,8 +65,8 @@ export const Default = ({ ...args }) => {
       <Footer
         ref={footerRef}
         className="bg-accent-100 dark:bg-accent-800"
-        copyright="Dies ist der Footer"
-        cols={[
+        legalSection="Dies ist der Footer"
+        links={[
           { label: "Test Label", links: [] },
           { label: "Test", links: [] },
           { label: "Test", links: [] },

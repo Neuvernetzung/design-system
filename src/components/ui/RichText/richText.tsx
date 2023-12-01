@@ -1,47 +1,61 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import CharacterCount from "@tiptap/extension-character-count";
+import LinkExtension from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import { Editor, EditorContent, useEditor } from "@tiptap/react";
+import {
+  type Editor,
+  EditorContent,
+  type Extension,
+  useEditor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { cn } from "@/utils";
-import { useRouter } from "next/router";
-import { KeyboardEvent, ReactNode, useRef, useState } from "react";
 import {
   Controller,
-  FieldPath,
-  FieldValues,
+  type FieldPath,
+  type FieldValues,
   useController,
-  UseControllerProps,
+  type UseControllerProps,
 } from "react-hook-form";
 
-import type { Locale } from "../../../locales/getText";
+import { cn } from "@/utils/cn";
+
 import {
   bordersInteractive,
-  paddings,
+  paddingsXLarge,
+  paddingsY,
   roundings,
   transition,
 } from "../../../styles";
-import { focusById, mergeRefs } from "../../../utils/internal";
-import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { FormElement, RequiredRule } from "../Form";
-import { Text } from "../Typography";
-import {
-  CustomBlockQuote,
-  CustomBulletList,
-  CustomHeading,
-  CustomHorizontalRule,
-  CustomLink,
-  CustomListItem,
-  CustomOrderedList,
-  CustomParagraph,
-} from "./Extensions";
-import { CustomHardBreak } from "./Extensions/hardBreak";
-import { CustomImage } from "./Extensions/image";
-import { CustomTextAlign } from "./Extensions/textAlign";
-import { MenuBar } from "./Menus/menuBar";
-import { returnTextSelection, type TextTypeTags } from "./Menus/selectText";
 import type { Size } from "../../../types";
+import { requiredInputRule } from "../../../utils/internal/inputRule";
+import { FormElement, type RequiredRule } from "../Form";
+import type { MenuItemProps } from "../Menu";
+import { proseClassName } from "../Prose";
+import { Text } from "../Typography/Text";
+import { Float } from "./Float";
+import { FloatingMenuExtension } from "./Floating";
+import { Floating } from "./Floating/NodeView";
+import { ImageExtension } from "./Image";
+import { ImageFigure } from "./Image/Figure";
+import { BubbleMenu } from "./Menus/bubblemenu";
+import { SlashCommand } from "./Slash";
+import { SlashMenu } from "./Slash/Menu";
+import { SmallParagraph } from "./Small";
+import { TableExtensions } from "./Table";
+import { richTextTableClassName } from "./Table/Table/className";
+
+export type RichTextOptionProps = {
+  disableFloatingMenu?: boolean;
+  disableSlashMenu?: boolean;
+  disableTable?: boolean;
+  disableImages?: boolean;
+};
+
+export type RichTextPluginProps = {
+  menuItems: (editor: Editor) => MenuItemProps[];
+};
 
 export type RichTextProps = {
   label?: string;
@@ -51,8 +65,11 @@ export type RichTextProps = {
   maxLength?: number;
   showLength?: boolean;
   containerClassName?: string;
-  AdditionalMenuItems?: ({ editor }: { editor: Editor | null }) => ReactNode;
+  editorClassName?: string;
   size?: Size;
+  options?: RichTextOptionProps;
+  extensions?: Extension[];
+  plugins?: RichTextPluginProps[];
 };
 
 export const RichText = <
@@ -68,50 +85,76 @@ export const RichText = <
   maxLength,
   showLength,
   containerClassName,
-  AdditionalMenuItems,
+  editorClassName,
   size = "md",
+  options,
+  extensions = [],
+  plugins = [],
 }: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     field: { value, onChange },
   } = useController({ control, name });
 
-  const locale = useRouter().locale as Locale;
-
-  const [selectedTag, setSelectedTag] = useState<TextTypeTags>("p");
-  const [lastMenuItem, setLastMenuItem] = useState<number>(0);
-
   const editor = useEditor({
-    onSelectionUpdate({ editor }) {
-      setSelectedTag(returnTextSelection({ editor }));
-    },
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3, 4] },
+        dropcursor: {
+          width: 6,
+          color: "rgb(var(--color-primary-500))",
+          class: "rounded-full",
+        },
+      }),
       Underline,
       Placeholder.configure({
-        placeholder,
+        emptyEditorClass:
+          "first:before:content-[attr(data-placeholder)] first:before:float-left first:before:text-accent-500 first:before:pointer-events-none first:before:h-0",
+        emptyNodeClass:
+          "before:content-[attr(data-placeholder)] before:float-left before:text-accent-500 before:pointer-events-none before:h-0",
+        placeholder: ({ node, editor }) => {
+          if (editor.isEmpty && placeholder) return placeholder;
+          if (node.type.name === "heading") {
+            return `Überschrift ${node.attrs.level}`;
+          }
+          if (node.type.name === "figure") {
+            return "";
+          }
+          return `Tippe "/" für Befehle...`;
+        },
       }),
-
       CharacterCount.configure({
         limit: maxLength,
       }),
+      TextAlign.configure({
+        types: ["heading", "paragraph", "image", "figure"],
+      }),
+      LinkExtension.configure({
+        openOnClick: false,
+        HTMLAttributes: { target: "_blank" },
+      }),
 
-      CustomTextAlign,
-      CustomBulletList,
-      CustomOrderedList,
-      CustomListItem,
-      CustomHeading,
-      CustomParagraph,
-      CustomLink,
-      CustomBlockQuote,
-      CustomHorizontalRule,
-      CustomHardBreak,
-      CustomImage,
+      Float,
+      SmallParagraph,
+      ...(options?.disableImages ? [] : [ImageFigure, ImageExtension]),
+      ...(options?.disableSlashMenu ? [] : [SlashCommand]),
+      ...(options?.disableFloatingMenu ? [] : [FloatingMenuExtension]),
+      ...(options?.disableTable ? [] : TableExtensions),
+      ...extensions,
     ],
     editorProps: {
       attributes: {
         id: name,
         role: "textbox",
         "aria-label": label || name,
+        class: cn(
+          proseClassName,
+          "w-full mx-auto box-content", // box-content, damit max-w-prose gleich bleibt und Padding außerhalb des Contents ist
+          paddingsXLarge.xl,
+          paddingsY.xl,
+          "outline-none focus:outline-none focus-visible:outline-none focus-within:outline-none",
+          richTextTableClassName,
+          editorClassName
+        ),
       },
     },
     onCreate: ({ editor }) => {
@@ -122,30 +165,12 @@ export const RichText = <
     },
   });
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const containerOnKeyDown = (e: KeyboardEvent) => {
-    if (containerRef.current !== document.activeElement) return;
-
-    if (!e.shiftKey && e.key === "Tab") {
-      e.preventDefault();
-      focusById(`richtext_menu_item_${lastMenuItem}`, containerRef.current);
-    }
-  };
-
-  const contentOnKeyDown = (e: KeyboardEvent) => {
-    if (e.shiftKey && e.key === "Tab") {
-      e.preventDefault();
-      focusById(`richtext_menu_item_${lastMenuItem}`, containerRef.current);
-    }
-  };
-
   return (
     <Controller
       control={control}
       name={name}
       rules={{
-        required: requiredInputRule(required, locale),
+        required: requiredInputRule(required),
       }}
       render={({ field: { ref }, fieldState: { error } }) => (
         <FormElement
@@ -157,35 +182,28 @@ export const RichText = <
           size={size}
         >
           <div
-            ref={mergeRefs([containerRef, ref])}
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
-            onKeyDown={containerOnKeyDown}
+            defaultValue="editor"
             className={cn(
               !error ? bordersInteractive.accent : bordersInteractive.danger,
-              "group border w-full relative cursor-auto",
+              "group border w-full relative cursor-auto overflow-hidden",
               roundings.md,
               transition,
               "focus:outline-none focus-within:ring focus-within:ring-opacity-20 dark:focus-within:ring-opacity-20 focus-within:ring-accent-600 dark:focus-within:ring-accent-300",
               containerClassName
             )}
           >
-            <MenuBar
-              editor={editor}
-              selectedTag={selectedTag}
-              setSelectedTag={setSelectedTag}
-              setLastMenuItem={setLastMenuItem}
-              AdditionalMenuItems={
-                AdditionalMenuItems && AdditionalMenuItems({ editor })
-              }
-            />
+            {editor ? (
+              <BubbleMenu editor={editor} options={options} plugins={plugins} />
+            ) : null}
+            {!options?.disableFloatingMenu && editor ? (
+              <Floating editor={editor} />
+            ) : null}
+            {!options?.disableSlashMenu && editor ? (
+              <SlashMenu editor={editor} options={options} plugins={plugins} />
+            ) : null}
             <EditorContent
-              onKeyDown={contentOnKeyDown}
-              className={cn(
-                paddings.md,
-                "[&>.ProseMirror]:outline-none [&>.ProseMirror]:focus:outline-none [&>.ProseMirror]:focus-visible:outline-none [&>.ProseMirror]:focus-within:outline-none",
-                "appearance-none"
-              )}
+              ref={ref}
+              className={cn("appearance-none w-full")}
               editor={editor}
             />
             {maxLength && showLength && (

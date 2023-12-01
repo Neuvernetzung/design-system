@@ -1,5 +1,11 @@
+import {
+  ToolbarButton,
+  ToolbarToggleGroup,
+  ToolbarToggleItem,
+} from "@radix-ui/react-toolbar";
+import type { MouseEventHandler, ReactNode } from "react";
+
 import { cn } from "@/utils";
-import { MouseEventHandler, ReactNode } from "react";
 
 import { gapsSmall } from "../../../../styles";
 import { SvgType } from "../../../../types";
@@ -13,8 +19,31 @@ type RichTextMenuItemProps = {
   disabled?: boolean;
   tooltip?: string;
   ariaLabel: string;
-  id: string;
+  value: string;
 };
+
+export const RichTextMenuGroupItem = ({
+  onClick,
+  icon,
+  active,
+  disabled,
+  tooltip,
+  ariaLabel,
+  value,
+}: RichTextMenuItemProps) => (
+  <Tooltip label={tooltip} delay={500}>
+    <ToolbarToggleItem asChild value={value}>
+      <IconButton
+        size="sm"
+        variant={active ? "subtile" : "ghost"}
+        onClick={onClick}
+        disabled={disabled}
+        icon={icon}
+        ariaLabel={ariaLabel}
+      />
+    </ToolbarToggleItem>
+  </Tooltip>
+);
 
 export const RichTextMenuItem = ({
   onClick,
@@ -23,26 +52,33 @@ export const RichTextMenuItem = ({
   disabled,
   tooltip,
   ariaLabel,
-  id,
-}: RichTextMenuItemProps) => (
-  <Tooltip label={tooltip}>
-    <IconButton
-      id={id}
-      tabIndex={-1}
-      size="sm"
-      variant={active ? "subtile" : "ghost"}
-      onClick={onClick}
-      disabled={disabled}
-      icon={icon}
-      ariaLabel={ariaLabel}
-    />
+}: Omit<RichTextMenuItemProps, "value">) => (
+  <Tooltip label={tooltip} delay={500}>
+    <ToolbarButton asChild>
+      <IconButton
+        size="sm"
+        variant={active ? "subtile" : "ghost"}
+        onClick={onClick}
+        disabled={disabled}
+        icon={icon}
+        ariaLabel={ariaLabel}
+      />
+    </ToolbarButton>
   </Tooltip>
 );
 
 type RichTextMenuGroupProps = {
   children: ReactNode;
+  type: "multiple" | "single";
 };
 
-export const RichTextMenuGroup = ({ children }: RichTextMenuGroupProps) => (
-  <div className={cn("flex flex-row flex-wrap", gapsSmall.xs)}>{children}</div>
+export const menuGroupClassName = cn("flex flex-row flex-nowrap", gapsSmall.xs);
+
+export const RichTextMenuGroup = ({
+  type,
+  children,
+}: RichTextMenuGroupProps) => (
+  <ToolbarToggleGroup type={type} className={menuGroupClassName}>
+    {children}
+  </ToolbarToggleGroup>
 );

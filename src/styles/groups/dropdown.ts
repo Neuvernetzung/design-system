@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 import type { Size } from "../../types";
 import { capSize, minSize } from "../../utils";
@@ -12,6 +12,7 @@ import {
   paddingsSmallEvenly,
   paddingsX,
   roundings,
+  scrollbar,
   shadows,
   textColors,
   textSizes,
@@ -33,6 +34,7 @@ export const getDropdownContainerStyles = ({
   cn(
     containerStyles.base,
     zIndexes.dropdown,
+    scrollbar,
     paddingsSmallEvenly[capSize(size, "md")],
     roundings[minSize(size, "md")],
     shadows[minSize(size, "md")]

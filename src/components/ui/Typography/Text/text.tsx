@@ -30,12 +30,7 @@ export const Text = forwardRef(
     return (
       <Component
         ref={ref}
-        className={cn(
-          "font-body inline",
-          textSizes[size],
-          extendedTextColors[color],
-          className
-        )}
+        className={cn(getTextClassName({ color, size }), className)}
         {...props}
       >
         {children}
@@ -45,3 +40,14 @@ export const Text = forwardRef(
 );
 
 Text.displayName = "Text";
+
+export type GetTextClassNameProps = {
+  size: ExtendedSize;
+  color: ExtendedColor;
+};
+
+export const getTextClassName = ({
+  size = "md",
+  color = "accent",
+}: GetTextClassNameProps) =>
+  cn("font-body inline", textSizes[size], extendedTextColors[color]);
