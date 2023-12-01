@@ -4,7 +4,12 @@ import LinkExtension from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
+import {
+  type Editor,
+  EditorContent,
+  type Extension,
+  useEditor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {
   Controller,
@@ -25,9 +30,10 @@ import {
 } from "../../../styles";
 import type { Size } from "../../../types";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { FormElement, RequiredRule } from "../Form";
+import { FormElement, type RequiredRule } from "../Form";
+import type { MenuItemProps } from "../Menu";
 import { proseClassName } from "../Prose";
-import { Text } from "../Typography";
+import { Text } from "../Typography/Text";
 import { Float } from "./Float";
 import { FloatingMenuExtension } from "./Floating";
 import { Floating } from "./Floating/NodeView";
@@ -47,6 +53,10 @@ export type RichTextOptionProps = {
   disableImages?: boolean;
 };
 
+export type RichTextPluginProps = {
+  menuItems: (editor: Editor) => MenuItemProps[];
+};
+
 export type RichTextProps = {
   label?: string;
   helper?: string;
@@ -58,6 +68,8 @@ export type RichTextProps = {
   editorClassName?: string;
   size?: Size;
   options?: RichTextOptionProps;
+  extensions?: Extension[];
+  plugins?: RichTextPluginProps[];
 };
 
 export const RichText = <
@@ -76,6 +88,8 @@ export const RichText = <
   editorClassName,
   size = "md",
   options,
+  extensions = [],
+  plugins = [],
 }: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     field: { value, onChange },
@@ -125,6 +139,7 @@ export const RichText = <
       ...(options?.disableSlashMenu ? [] : [SlashCommand]),
       ...(options?.disableFloatingMenu ? [] : [FloatingMenuExtension]),
       ...(options?.disableTable ? [] : TableExtensions),
+      ...extensions,
     ],
     editorProps: {
       attributes: {
@@ -177,12 +192,14 @@ export const RichText = <
               containerClassName
             )}
           >
-            {editor ? <BubbleMenu editor={editor} options={options} /> : null}
+            {editor ? (
+              <BubbleMenu editor={editor} options={options} plugins={plugins} />
+            ) : null}
             {!options?.disableFloatingMenu && editor ? (
               <Floating editor={editor} />
             ) : null}
             {!options?.disableSlashMenu && editor ? (
-              <SlashMenu editor={editor} options={options} />
+              <SlashMenu editor={editor} options={options} plugins={plugins} />
             ) : null}
             <EditorContent
               ref={ref}

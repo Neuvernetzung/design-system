@@ -31,7 +31,7 @@ import { offsetSizes } from "@/styles/popper/offset";
 import { cn } from "@/utils";
 
 import { MenuItems } from "../../Menu";
-import type { RichTextOptionProps } from "../richText";
+import type { RichTextOptionProps, RichTextPluginProps } from "../richText";
 
 export const slashMenuStore = create<{ open: boolean; range?: Range }>(() => ({
   open: false,
@@ -41,9 +41,10 @@ export const slashMenuStore = create<{ open: boolean; range?: Range }>(() => ({
 type SlashMenuProps = {
   editor: Editor;
   options: RichTextOptionProps | undefined;
+  plugins: RichTextPluginProps[] | undefined;
 };
 
-export const SlashMenu = ({ editor, options }: SlashMenuProps) => {
+export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
   const { open, range: storeRange } = useStore(slashMenuStore);
   const range = storeRange || { from: NaN, to: NaN };
 
@@ -85,6 +86,9 @@ export const SlashMenu = ({ editor, options }: SlashMenuProps) => {
       }),
     ],
   });
+
+  const pluginMenuItems =
+    plugins?.map((plugin) => plugin.menuItems(editor)).flat() || [];
 
   return (
     <DropdownMenuRoot
@@ -167,7 +171,13 @@ export const SlashMenu = ({ editor, options }: SlashMenuProps) => {
                   },
                 ],
               },
-              { type: "separator" },
+              pluginMenuItems.length !== 0 && { type: "separator" },
+              pluginMenuItems.length !== 0 && {
+                type: "group",
+                items: pluginMenuItems,
+              },
+
+              !options?.disableTable && { type: "separator" },
               !options?.disableTable && {
                 icon: IconTable,
                 children: "Tabelle",

@@ -8,8 +8,8 @@ import {
   IconLetterPSmall,
   IconSelector,
 } from "@tabler/icons-react";
-import { Editor as CoreEditor } from "@tiptap/core";
-import { Editor } from "@tiptap/react";
+import type { Editor as CoreEditor } from "@tiptap/core";
+import type { Editor } from "@tiptap/react";
 import type { RefObject } from "react";
 
 import { Button } from "../../Button";

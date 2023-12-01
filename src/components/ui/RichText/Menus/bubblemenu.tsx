@@ -39,7 +39,7 @@ import { cn } from "@/utils";
 
 import { IconButton } from "../../Button";
 import { Menu } from "../../Menu";
-import type { RichTextOptionProps } from "../richText";
+import type { RichTextOptionProps, RichTextPluginProps } from "../richText";
 import { AddLinkButton } from "./addLink";
 import { RichTextMenuGroup, RichTextMenuGroupItem } from "./menuItem";
 import { SelectText } from "./selectText";
@@ -47,6 +47,7 @@ import { SelectText } from "./selectText";
 export type BubbleMenuProps = {
   editor: Editor;
   options: RichTextOptionProps | undefined;
+  plugins: RichTextPluginProps[] | undefined;
 };
 
 export const toolbarClassName = cn(
@@ -61,7 +62,7 @@ export const toolbarClassName = cn(
   roundings.md
 );
 
-export const BubbleMenu = ({ editor, options }: BubbleMenuProps) => {
+export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { ranges } = editor.state.selection;
@@ -113,6 +114,9 @@ export const BubbleMenu = ({ editor, options }: BubbleMenuProps) => {
     notAllowedNodes.includes(editor.state.selection.node.type.name)
   )
     return;
+
+  const pluginMenuItems =
+    plugins?.map((plugin) => plugin.menuItems(editor)).flat() || [];
 
   if (!openRaw) return null;
 
@@ -225,7 +229,13 @@ export const BubbleMenu = ({ editor, options }: BubbleMenuProps) => {
                   },
                 ],
               },
-              { type: "separator" },
+              pluginMenuItems.length !== 0 && { type: "separator" },
+              pluginMenuItems.length !== 0 && {
+                type: "group",
+                items: pluginMenuItems,
+              },
+
+              !options?.disableTable && { type: "separator" },
               !options?.disableTable && {
                 icon: IconTable,
                 children: "Tabelle",

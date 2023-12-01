@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 
 import { Button, Prose } from "..";
 import { RichText } from ".";
-import { Editor } from "@tiptap/react";
 import { IconPhoto } from "@tabler/icons-react";
 import { Form } from "../Form/form";
 import { HTMLAttributes } from "react";
@@ -93,26 +92,6 @@ export const SelectOnTopOfEachOther = ({ ...args }) => {
   );
 };
 
-const MenuButtonItem = ({ editor }: { editor: Editor | null }) => (
-  <Button
-    size="sm"
-    leftIcon={IconPhoto}
-    onClick={() => {
-      editor
-        ?.chain()
-        .focus()
-        .setImage({
-          src: "https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png",
-          alt: "Test",
-          title: "Image",
-        })
-        .run();
-    }}
-  >
-    Custom
-  </Button>
-);
-
 export const CustomMenuButtons = ({ ...args }) => {
   const { control, watch } = useForm({
     defaultValues: {
@@ -124,7 +103,27 @@ export const CustomMenuButtons = ({ ...args }) => {
     <Container className="grid grid-cols-2">
       <RichText
         control={control}
-        AdditionalMenuItems={MenuButtonItem}
+        plugins={[
+          {
+            menuItems: (editor) => [
+              {
+                type: "button",
+                icon: IconPhoto,
+                children: "Bild",
+                onClick: () =>
+                  editor
+                    ?.chain()
+                    .focus()
+                    .setImage({
+                      src: "https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png",
+                      alt: "Test",
+                      title: "Image",
+                    })
+                    .run(),
+              },
+            ],
+          },
+        ]}
         name="RichText"
         {...args}
       />

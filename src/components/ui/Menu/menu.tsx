@@ -14,7 +14,6 @@ import {
   Root as DropdownMenuRoot,
 } from "@radix-ui/react-dropdown-menu";
 import { IconCheck, IconPointFilled } from "@tabler/icons-react";
-import { cn } from "@/utils/cn";
 import Link, { type LinkProps } from "next/link";
 import {
   ForwardedRef,
@@ -32,7 +31,9 @@ import {
 import { offsetSizes } from "@/styles/popper/offset";
 import type { Color, Size, SvgType } from "@/types";
 import { capSize } from "@/utils";
-import { Button, ButtonProps } from "../Button";
+import { cn } from "@/utils/cn";
+
+import { Button, type ButtonProps } from "../Button";
 import { HorizontalRule } from "../HorizontalRule";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -165,7 +166,7 @@ export const MenuItems = ({
   items,
   size = "sm",
 }: Pick<MenuProps, "items" | "size">) =>
-  items?.map((props: MenuItemProps, i) => (
+  items?.map((props, i) => (
     <MenuItem key={`menu_option_${i}`} size={size} {...props} />
   ));
 

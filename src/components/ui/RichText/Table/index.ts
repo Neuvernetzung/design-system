@@ -1,4 +1,4 @@
-import { AnyExtension } from "@tiptap/core";
+import type { AnyExtension } from "@tiptap/core";
 import { TableCell } from "./Cell";
 import { TableRow } from "./Row";
 import { Table } from "./Table";
