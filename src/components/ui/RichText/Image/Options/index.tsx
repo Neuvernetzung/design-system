@@ -7,6 +7,9 @@ import {
   IconAlignRight,
   IconAlt,
   IconCheck,
+  IconFloatLeft,
+  IconFloatNone,
+  IconFloatRight,
   IconTextCaption,
   IconTrash,
 } from "@tabler/icons-react";
@@ -82,7 +85,7 @@ export const ImageOptions = ({
     open,
     whileElementsMounted: (...props) =>
       autoUpdate(...props, { animationFrame: true }),
-    placement: "bottom",
+    placement: "top",
     elements: { reference: imgRef.current },
     middleware: [offset({ mainAxis: offsetSizes.md })],
   });
@@ -277,6 +280,47 @@ export const ImageOptions = ({
                   ariaLabel="align_right"
                   onClick={() => {
                     editor.commands.setTextAlign("right");
+                  }}
+                />
+              </ToolbarButton>
+            </div>
+            <div className={cn(menuGroupClassName)}>
+              <ToolbarButton asChild>
+                <IconButton
+                  size="xs"
+                  variant={
+                    editor.isActive({ float: "left" }) ? "subtile" : "ghost"
+                  }
+                  icon={IconFloatLeft}
+                  ariaLabel="float_left"
+                  onClick={() => {
+                    editor.commands.setFloat("left");
+                  }}
+                />
+              </ToolbarButton>
+              <ToolbarButton asChild>
+                <IconButton
+                  size="xs"
+                  variant={
+                    editor.isActive({ float: "right" }) ? "subtile" : "ghost"
+                  }
+                  icon={IconFloatRight}
+                  ariaLabel="float_right"
+                  onClick={() => {
+                    editor.commands.setFloat("right");
+                  }}
+                />
+              </ToolbarButton>
+              <ToolbarButton asChild>
+                <IconButton
+                  size="xs"
+                  variant={
+                    editor.isActive({ float: "none" }) ? "subtile" : "ghost"
+                  }
+                  icon={IconFloatNone}
+                  ariaLabel="unset_float"
+                  onClick={() => {
+                    editor.commands.unsetFloat();
                   }}
                 />
               </ToolbarButton>

@@ -82,7 +82,7 @@ const DragHandle = () => {
   });
 };
 
-export const FloatingExtension = Extension.create({
+export const FloatingMenuExtension = Extension.create({
   name: "floatingMenu",
 
   addProseMirrorPlugins() {

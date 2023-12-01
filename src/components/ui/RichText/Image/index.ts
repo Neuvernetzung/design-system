@@ -19,16 +19,17 @@ export const ImageExtension = TiptapImageExtension.extend({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const { style } = HTMLAttributes;
+    const { style, "data-float": dataFloat, ...rest } = HTMLAttributes;
 
     return [
       "figure",
       mergeAttributes(this.options.HTMLAttributes, {
         style,
+        "data-float": dataFloat,
       }),
       [
         "img",
-        mergeAttributes(HTMLAttributes, {
+        mergeAttributes(rest, {
           draggable: false,
           contenteditable: false,
         }),

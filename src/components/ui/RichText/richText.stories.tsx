@@ -116,7 +116,7 @@ const MenuButtonItem = ({ editor }: { editor: Editor | null }) => (
 export const CustomMenuButtons = ({ ...args }) => {
   const { control, watch } = useForm({
     defaultValues: {
-      RichText: `<figure><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="100%" height="auto" caption="Tolle Caption"><figcaption>Tolle Caption</figcaption></figure>`,
+      RichText: `<figure style="text-align: center;"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="100%" height="auto" caption="Tolle Caption"><figcaption>Tolle Caption</figcaption></figure>`,
     },
   });
 

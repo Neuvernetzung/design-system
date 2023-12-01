@@ -29,7 +29,7 @@ import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
 import { proseClassName } from "../Prose";
 import { Text } from "../Typography";
-import { FloatingExtension } from "./Floating";
+import { FloatingMenuExtension } from "./Floating";
 import { Floating } from "./Floating/NodeView";
 import { ImageExtension } from "./Image";
 import { ImageFigure } from "./Image/Figure";
@@ -38,6 +38,7 @@ import { MenuBar } from "./Menus/menuBar";
 import { SlashCommand } from "./Slash";
 import { SlashMenu } from "./Slash/Menu";
 import { TableExtensions } from "./Table";
+import { Float } from "./Float";
 
 export type RichTextProps = {
   label?: string;
@@ -103,7 +104,8 @@ export const RichText = <
         openOnClick: false,
         HTMLAttributes: { target: "_blank" },
       }),
-      FloatingExtension,
+      FloatingMenuExtension,
+      Float,
       ImageFigure,
       ImageExtension,
       SlashCommand,
