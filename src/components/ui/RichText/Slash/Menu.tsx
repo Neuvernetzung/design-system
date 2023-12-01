@@ -22,6 +22,7 @@ import {
   posToDOMRect,
   type Range,
 } from "@tiptap/react";
+import compact from "lodash/compact";
 import { create, useStore } from "zustand";
 
 import { popoverAnimation } from "@/styles";
@@ -30,15 +31,19 @@ import { offsetSizes } from "@/styles/popper/offset";
 import { cn } from "@/utils";
 
 import { MenuItems } from "../../Menu";
+import type { RichTextOptionProps } from "../richText";
 
 export const slashMenuStore = create<{ open: boolean; range?: Range }>(() => ({
   open: false,
   range: undefined,
 }));
 
-type SlashMenuProps = { editor: Editor };
+type SlashMenuProps = {
+  editor: Editor;
+  options: RichTextOptionProps | undefined;
+};
 
-export const SlashMenu = ({ editor }: SlashMenuProps) => {
+export const SlashMenu = ({ editor, options }: SlashMenuProps) => {
   const { open, range: storeRange } = useStore(slashMenuStore);
   const range = storeRange || { from: NaN, to: NaN };
 
@@ -100,7 +105,7 @@ export const SlashMenu = ({ editor }: SlashMenuProps) => {
         >
           <MenuItems
             size="sm"
-            items={[
+            items={compact([
               {
                 type: "group",
                 children: "Fließtexte",
@@ -163,7 +168,7 @@ export const SlashMenu = ({ editor }: SlashMenuProps) => {
                 ],
               },
               { type: "separator" },
-              {
+              !options?.disableTable && {
                 icon: IconTable,
                 children: "Tabelle",
                 onClick: () => {
@@ -233,7 +238,7 @@ export const SlashMenu = ({ editor }: SlashMenuProps) => {
                     .run();
                 },
               },
-            ]}
+            ])}
           />
         </DropdownMenuContent>
       </DropdownMenuPortal>

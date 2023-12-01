@@ -4,15 +4,14 @@ import LinkExtension from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import { Editor, EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import type { ReactNode } from "react";
 import {
   Controller,
-  FieldPath,
-  FieldValues,
+  type FieldPath,
+  type FieldValues,
   useController,
-  UseControllerProps,
+  type UseControllerProps,
 } from "react-hook-form";
 
 import { cn } from "@/utils/cn";
@@ -35,12 +34,18 @@ import { Floating } from "./Floating/NodeView";
 import { ImageExtension } from "./Image";
 import { ImageFigure } from "./Image/Figure";
 import { BubbleMenu } from "./Menus/bubblemenu";
-import { MenuBar } from "./Menus/menuBar";
 import { SlashCommand } from "./Slash";
 import { SlashMenu } from "./Slash/Menu";
 import { SmallParagraph } from "./Small";
 import { TableExtensions } from "./Table";
 import { richTextTableClassName } from "./Table/Table/className";
+
+export type RichTextOptionProps = {
+  disableFloatingMenu?: boolean;
+  disableSlashMenu?: boolean;
+  disableTable?: boolean;
+  disableImages?: boolean;
+};
 
 export type RichTextProps = {
   label?: string;
@@ -50,8 +55,9 @@ export type RichTextProps = {
   maxLength?: number;
   showLength?: boolean;
   containerClassName?: string;
-  AdditionalMenuItems?: ({ editor }: { editor: Editor | null }) => ReactNode;
+  editorClassName?: string;
   size?: Size;
+  options?: RichTextOptionProps;
 };
 
 export const RichText = <
@@ -67,8 +73,9 @@ export const RichText = <
   maxLength,
   showLength,
   containerClassName,
-  AdditionalMenuItems,
+  editorClassName,
   size = "md",
+  options,
 }: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     field: { value, onChange },
@@ -111,13 +118,13 @@ export const RichText = <
         openOnClick: false,
         HTMLAttributes: { target: "_blank" },
       }),
-      FloatingMenuExtension,
+
       Float,
-      ImageFigure,
-      ImageExtension,
       SmallParagraph,
-      SlashCommand,
-      ...TableExtensions,
+      ...(options?.disableImages ? [] : [ImageFigure, ImageExtension]),
+      ...(options?.disableSlashMenu ? [] : [SlashCommand]),
+      ...(options?.disableFloatingMenu ? [] : [FloatingMenuExtension]),
+      ...(options?.disableTable ? [] : TableExtensions),
     ],
     editorProps: {
       attributes: {
@@ -126,10 +133,12 @@ export const RichText = <
         "aria-label": label || name,
         class: cn(
           proseClassName,
-          paddingsY.md,
+          "w-full mx-auto box-content", // box-content, damit max-w-prose gleich bleibt und Padding außerhalb des Contents ist
           paddingsXLarge.xl,
+          paddingsY.xl,
           "outline-none focus:outline-none focus-visible:outline-none focus-within:outline-none",
-          richTextTableClassName
+          richTextTableClassName,
+          editorClassName
         ),
       },
     },
@@ -158,27 +167,26 @@ export const RichText = <
           size={size}
         >
           <div
+            defaultValue="editor"
             className={cn(
               !error ? bordersInteractive.accent : bordersInteractive.danger,
-              "group border w-full relative cursor-auto",
+              "group border w-full relative cursor-auto overflow-hidden",
               roundings.md,
               transition,
               "focus:outline-none focus-within:ring focus-within:ring-opacity-20 dark:focus-within:ring-opacity-20 focus-within:ring-accent-600 dark:focus-within:ring-accent-300",
               containerClassName
             )}
           >
-            {editor ? <BubbleMenu editor={editor} /> : null}
-            {editor ? <Floating editor={editor} /> : null}
-            {editor ? <SlashMenu editor={editor} /> : null}
-            <MenuBar
-              editor={editor}
-              AdditionalMenuItems={
-                AdditionalMenuItems && AdditionalMenuItems({ editor })
-              }
-            />
+            {editor ? <BubbleMenu editor={editor} options={options} /> : null}
+            {!options?.disableFloatingMenu && editor ? (
+              <Floating editor={editor} />
+            ) : null}
+            {!options?.disableSlashMenu && editor ? (
+              <SlashMenu editor={editor} options={options} />
+            ) : null}
             <EditorContent
               ref={ref}
-              className={cn("appearance-none")}
+              className={cn("appearance-none w-full")}
               editor={editor}
             />
             {maxLength && showLength && (

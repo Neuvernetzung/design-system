@@ -16,9 +16,11 @@ import {
   IconQuote,
   IconSeparator,
   IconStrikethrough,
+  IconTable,
   IconUnderline,
 } from "@tabler/icons-react";
 import { type Editor, isNodeSelection, posToDOMRect } from "@tiptap/react";
+import { compact } from "lodash";
 import { useRef } from "react";
 
 import { useDebounce } from "@/hooks";
@@ -37,12 +39,14 @@ import { cn } from "@/utils";
 
 import { IconButton } from "../../Button";
 import { Menu } from "../../Menu";
+import type { RichTextOptionProps } from "../richText";
 import { AddLinkButton } from "./addLink";
 import { RichTextMenuGroup, RichTextMenuGroupItem } from "./menuItem";
 import { SelectText } from "./selectText";
 
 export type BubbleMenuProps = {
   editor: Editor;
+  options: RichTextOptionProps | undefined;
 };
 
 export const toolbarClassName = cn(
@@ -57,7 +61,7 @@ export const toolbarClassName = cn(
   roundings.md
 );
 
-export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
+export const BubbleMenu = ({ editor, options }: BubbleMenuProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { ranges } = editor.state.selection;
@@ -171,7 +175,7 @@ export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
                 />
               </ToolbarButton>
             }
-            items={[
+            items={compact([
               {
                 type: "group",
                 children: "Ausrichtung",
@@ -220,6 +224,14 @@ export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
                     ),
                   },
                 ],
+              },
+              { type: "separator" },
+              !options?.disableTable && {
+                icon: IconTable,
+                children: "Tabelle",
+                onClick: () => {
+                  editor.chain().insertTable().focus().run();
+                },
               },
               { type: "separator" },
               {
@@ -275,7 +287,7 @@ export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
                 },
                 children: "Styles entfernen",
               },
-            ]}
+            ])}
           />
         </ToolbarRoot>
       </div>
