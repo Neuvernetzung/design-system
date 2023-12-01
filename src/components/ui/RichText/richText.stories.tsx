@@ -102,7 +102,7 @@ const MenuButtonItem = ({ editor }: { editor: Editor | null }) => (
         ?.chain()
         .focus()
         .setImage({
-          src: "https://storybook.js.org/images/develop/vscode.svg",
+          src: "https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png",
           alt: "Test",
           title: "Image",
         })
@@ -114,7 +114,11 @@ const MenuButtonItem = ({ editor }: { editor: Editor | null }) => (
 );
 
 export const CustomMenuButtons = ({ ...args }) => {
-  const { control, watch } = useForm();
+  const { control, watch } = useForm({
+    defaultValues: {
+      RichText: `<figure><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="100%" height="auto" caption="Tolle Caption"><figcaption>Tolle Caption</figcaption></figure>`,
+    },
+  });
 
   return (
     <Container className="grid grid-cols-2">

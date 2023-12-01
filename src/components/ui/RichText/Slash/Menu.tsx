@@ -94,6 +94,7 @@ export const SlashMenu = ({ editor }: SlashMenuProps) => {
           ref={refs.setFloating}
           className={cn(
             getDropdownContainerStyles({ size: "sm" }),
+            " will-change-[transform,opacity]",
             popoverAnimation
           )}
         >

@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import CharacterCount from "@tiptap/extension-character-count";
-import ImageExtension from "@tiptap/extension-image";
 import LinkExtension from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
@@ -16,7 +15,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 import {
   bordersInteractive,
@@ -32,6 +31,8 @@ import { proseClassName } from "../Prose";
 import { Text } from "../Typography";
 import { FloatingExtension } from "./Floating";
 import { Floating } from "./Floating/NodeView";
+import { ImageExtension } from "./Image";
+import { ImageFigure } from "./Image/Figure";
 import { BubbleMenu } from "./Menus/bubblemenu";
 import { MenuBar } from "./Menus/menuBar";
 import { SlashCommand } from "./Slash";
@@ -86,20 +87,24 @@ export const RichText = <
           if (node.type.name === "heading") {
             return `Überschrift ${node.attrs.level}`;
           }
-          return `Drücke "/" für Befehle...`;
+          if (node.type.name === "figure") {
+            return "";
+          }
+          return `Tippe "/" für Befehle...`;
         },
       }),
       CharacterCount.configure({
         limit: maxLength,
       }),
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ["heading", "paragraph", "image", "figure"],
       }),
       LinkExtension.configure({
         openOnClick: false,
         HTMLAttributes: { target: "_blank" },
       }),
       FloatingExtension,
+      ImageFigure,
       ImageExtension,
       SlashCommand,
       ...TableExtensions,

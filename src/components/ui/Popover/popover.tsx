@@ -69,7 +69,7 @@ export type PopoverOwnTriggerProps =
   | { buttonProps?: ButtonProps; buttonComponent?: never }
   | { buttonProps?: never; buttonComponent: ReactNode };
 
-export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
+export const Popover = forwardRef(
   (
     {
       content,
@@ -88,7 +88,7 @@ export const Popover = forwardRef<HTMLButtonElement, PopoverProps>(
       popoverTriggerProps,
       popoverContentProps,
       popoverPortalProps,
-    },
+    }: PopoverProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
     <PopoverRoot

@@ -18,7 +18,7 @@ import {
   IconStrikethrough,
   IconUnderline,
 } from "@tabler/icons-react";
-import { isNodeSelection, type Editor, posToDOMRect } from "@tiptap/react";
+import { type Editor, isNodeSelection, posToDOMRect } from "@tiptap/react";
 import { useRef } from "react";
 
 import { useDebounce } from "@/hooks";
@@ -100,7 +100,15 @@ export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
   });
 
   const openRaw = !editor.view.state.selection.empty;
-  const open = useDebounce(openRaw, 250); // Werte werden einzelnd in useDebounce verwendet, da useEffect mit Object Schwierigkeiten hat
+  const open = useDebounce(openRaw, 250);
+
+  const notAllowedNodes = ["image", "figure"];
+
+  if (
+    isNodeSelection(editor.state.selection) &&
+    notAllowedNodes.includes(editor.state.selection.node.type.name)
+  )
+    return;
 
   if (!openRaw) return null;
 
