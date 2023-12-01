@@ -40,13 +40,6 @@ export const TableCellMenu = ({ editor, style }: TableCellMenuProps) => (
         children: "Hinzufügen",
         items: [
           {
-            icon: IconRowInsertTop,
-            children: "Reihe oben",
-            onClick: () => {
-              editor.chain().focus().addRowBefore().run();
-            },
-          },
-          {
             icon: IconRowInsertBottom,
             children: "Reihe unten",
             onClick: () => {
@@ -54,10 +47,10 @@ export const TableCellMenu = ({ editor, style }: TableCellMenuProps) => (
             },
           },
           {
-            icon: IconColumnInsertLeft,
-            children: "Spalte links",
+            icon: IconRowInsertTop,
+            children: "Reihe oben",
             onClick: () => {
-              editor.chain().focus().addColumnBefore().run();
+              editor.chain().focus().addRowBefore().run();
             },
           },
           {
@@ -65,6 +58,13 @@ export const TableCellMenu = ({ editor, style }: TableCellMenuProps) => (
             children: "Spalte rechts",
             onClick: () => {
               editor.chain().focus().addColumnAfter().run();
+            },
+          },
+          {
+            icon: IconColumnInsertLeft,
+            children: "Spalte links",
+            onClick: () => {
+              editor.chain().focus().addColumnBefore().run();
             },
           },
         ],

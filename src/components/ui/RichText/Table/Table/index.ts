@@ -1,5 +1,5 @@
 import TableExtension, { createTable } from "@tiptap/extension-table";
-import { TextSelection } from "prosemirror-state";
+import { TextSelection } from "@tiptap/pm/state";
 
 export const Table = TableExtension.configure({
   HTMLAttributes: { class: "relative" },

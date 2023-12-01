@@ -29,6 +29,7 @@ import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { FormElement, RequiredRule } from "../Form";
 import { proseClassName } from "../Prose";
 import { Text } from "../Typography";
+import { Float } from "./Float";
 import { FloatingMenuExtension } from "./Floating";
 import { Floating } from "./Floating/NodeView";
 import { ImageExtension } from "./Image";
@@ -37,8 +38,8 @@ import { BubbleMenu } from "./Menus/bubblemenu";
 import { MenuBar } from "./Menus/menuBar";
 import { SlashCommand } from "./Slash";
 import { SlashMenu } from "./Slash/Menu";
+import { SmallParagraph } from "./Small";
 import { TableExtensions } from "./Table";
-import { Float } from "./Float";
 import { richTextTableClassName } from "./Table/Table/className";
 
 export type RichTextProps = {
@@ -77,6 +78,11 @@ export const RichText = <
     extensions: [
       StarterKit.configure({
         heading: { levels: [1, 2, 3, 4] },
+        dropcursor: {
+          width: 6,
+          color: "rgb(var(--color-primary-500))",
+          class: "rounded-full",
+        },
       }),
       Underline,
       Placeholder.configure({
@@ -109,6 +115,7 @@ export const RichText = <
       Float,
       ImageFigure,
       ImageExtension,
+      SmallParagraph,
       SlashCommand,
       ...TableExtensions,
     ],
