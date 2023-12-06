@@ -216,6 +216,7 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
         <div className={cn(inputContainerClassName)}>
           <button
             type="button"
+            aria-label={`open-select-${id}`}
             {...toggleButtonProps}
             ref={mergeRefs(compact([refs.setReference, toggleRef, ref]))}
             disabled={disabled}

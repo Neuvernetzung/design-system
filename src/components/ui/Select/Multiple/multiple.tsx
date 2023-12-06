@@ -270,6 +270,7 @@ export const SelectMultipleRawInner = <
               ref={mergeRefs(compact([toggleRef, ref]))}
               disabled={disabled}
               type="button"
+              aria-label={`open-select-${id}`}
               {...toggleButtonProps}
             />
             {!selectedItems || selectedItems.length === 0 ? (
