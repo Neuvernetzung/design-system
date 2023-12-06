@@ -58,7 +58,6 @@ type ColorProps = {
 
 export const buttonBaseStyles = {
   base: "appearance-none flex items-center justify-center select-none gap-2 font-semibold disabled:cursor-not-allowed text-ellipsis",
-  fullWidth: "w-full",
   rounded: "!rounded-full",
 };
 
@@ -67,7 +66,6 @@ export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
   color?: ExtendedColor;
   size?: Size;
   focus?: FocusVariant;
-  fullWidth?: boolean;
   rounded?: boolean;
   leftIcon?: SvgType;
   rightIcon?: SvgType;
@@ -87,7 +85,6 @@ export const Button = forwardRef(
       color = "accent",
       focus = "ring",
       disabled = false,
-      fullWidth,
       rounded,
       leftIcon,
       rightIcon,
@@ -129,7 +126,6 @@ export const Button = forwardRef(
             getButtonColorStyle(color, adjustedTextColorState)?.disabled,
           getButtonColorStyle(color, adjustedTextColorState)?.text[variant],
           {
-            [buttonBaseStyles.fullWidth]: fullWidth,
             [buttonBaseStyles.rounded]: rounded,
           },
           className

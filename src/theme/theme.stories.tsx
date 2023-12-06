@@ -134,7 +134,7 @@ export const DarkTheme = () => {
           borders.accent
         )}
       >
-        <Tag color="brand" label=":root" />
+        <Tag color="brand">:root</Tag>
       </div>
       <Form
         handleSubmit={handleDarkSubmit}
@@ -206,9 +206,9 @@ export const NestedTheme = () => {
           borders.accent
         )}
       >
-        <Tag color="brand" label=":root" />
+        <Tag color="brand">:root</Tag>
         <div className={cn("container border p-4", borders.accent)}>
-          <Tag color="brand" label=".container" />
+          <Tag color="brand">.container</Tag>
         </div>
       </div>
       <Form

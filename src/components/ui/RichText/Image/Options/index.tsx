@@ -31,7 +31,7 @@ import { offsetSizes } from "@/styles/popper/offset";
 import { cn } from "@/utils";
 
 import { Button, IconButton } from "../../../Button";
-import { RawInput } from "../../../Input";
+import { InputRaw } from "../../../Input";
 import { Popover, usePopover } from "../../../Popover";
 import { toolbarClassName } from "../../Menus/bubblemenu";
 import { menuGroupClassName } from "../../Menus/menuItem";
@@ -186,7 +186,7 @@ export const ImageOptions = ({
                   >
                     <div className={cn("flex flex-col", gapsSmall.xs)}>
                       <Text size="xs">Alt-Tag</Text>
-                      <RawInput
+                      <InputRaw
                         size="sm"
                         defaultValue={node.attrs.alt}
                         onChange={(value) => updateAttributes({ alt: value })}

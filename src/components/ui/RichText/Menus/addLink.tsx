@@ -147,7 +147,7 @@ export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
               size="sm"
               content="Externer Link"
             />
-            <Button type="submit" color="primary" fullWidth>
+            <Button type="submit" color="primary" className="w-full">
               Bestätigen
             </Button>
           </Form>

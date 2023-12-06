@@ -1,12 +1,10 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 
 import { cn } from "@/utils";
 
 import type { Size } from "../../../types";
-import { Button, IconButton, Select, Text } from "../../ui";
+import { Button, IconButton, SelectRaw, Text } from "../../ui";
 import {
   DEFAULT_PAGINATION_LIMIT,
   DEFAULT_PAGINATION_PAGE,
@@ -32,16 +30,12 @@ type SetPageProps = {
 type SetLimitProps =
   | {
       limit: number | undefined;
-      setLimit: (limit: number) => void;
+      setLimit: (limit: number | undefined) => void;
     }
   | {
       limit?: never;
       setLimit?: never;
     };
-
-type FormInputs = {
-  limit: number;
-};
 
 export const Pagination = ({
   limits = DEFAULT_PAGINATIONS_LIMITS,
@@ -56,19 +50,6 @@ export const Pagination = ({
   selectLimit = true,
   variant = "default",
 }: PaginationProps) => {
-  const router = useRouter();
-
-  const formMethods = useForm<FormInputs>({
-    defaultValues: {
-      limit: setLimit ? limit : Number(router.query.limit) || limits[0],
-    },
-  });
-  const watchLimit = formMethods.watch("limit");
-
-  useEffect(() => {
-    if (setLimit) setLimit(watchLimit);
-  }, [watchLimit]);
-
   useEffect(() => {
     // Wenn sich das Result oder Limit ändert z.B. durch Filtern einer anderen Funktion oä. wird automatisch zur letzten Seite gesprungen.
     if (page * limit <= result) return;
@@ -84,16 +65,15 @@ export const Pagination = ({
       )}
     >
       {selectLimit && result !== 0 && limits.length > 1 && (
-        <Select
-          control={formMethods.control}
-          name="limit"
+        <SelectRaw
+          id="limit"
+          value={limit}
+          onChange={setLimit}
           options={limits.map((limit) => ({
             children: `${limit} pro Seite`,
             value: limit,
           }))}
-          returned="value"
           variant="ghost"
-          removeAll={false}
           size={size}
         />
       )}

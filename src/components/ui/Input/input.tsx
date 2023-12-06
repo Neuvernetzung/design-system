@@ -1,4 +1,3 @@
-import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import {
   type ForwardedRef,
@@ -6,9 +5,7 @@ import {
   type HTMLAttributes,
   type ReactNode,
   type Ref,
-  useEffect,
   useRef,
-  useState,
 } from "react";
 import {
   Controller,
@@ -17,8 +14,14 @@ import {
   type UseControllerProps,
 } from "react-hook-form";
 
+import { useRefDimensions } from "@/hooks";
+import { cn } from "@/utils";
+
 import { type Locale } from "../../../locales/getText";
-import { getInputStyles } from "../../../styles/groups";
+import {
+  getInputStyles,
+  inputContainerClassName,
+} from "../../../styles/groups";
 import type { InputVariant, Size } from "../../../types";
 import { mergeRefs } from "../../../utils/internal";
 import {
@@ -45,7 +48,7 @@ import type { InputAddonProps } from "./InputAddon/inputAddon";
 import { InputElement } from "./InputElement";
 import type { InputElementProps } from "./InputElement/inputElement";
 
-export type InputProps = RawInputProps & {
+export type InputProps = InputRawProps & {
   label?: string;
   helper?: ReactNode;
   required?: RequiredRule;
@@ -55,10 +58,6 @@ export type InputProps = RawInputProps & {
   min?: MinRule;
   pattern?: PatternRule;
   type?: "text" | "number" | "password" | "url" | "email";
-};
-
-const styles = {
-  containerBase: "flex flex-row relative",
 };
 
 export const InputInner = <
@@ -127,7 +126,7 @@ export const InputInner = <
           size={size}
           className={className}
         >
-          <RawInput
+          <InputRaw
             containerClassName={containerClassName}
             leftAddon={leftAddon}
             size={size}
@@ -162,7 +161,7 @@ export const Input = forwardRef(InputInner) as <
     }
 ) => ReturnType<typeof InputInner>;
 
-export type RawInputProps = Omit<
+export type InputRawProps = Omit<
   HTMLAttributes<HTMLInputElement>,
   "onChange"
 > & {
@@ -189,7 +188,7 @@ export type RawInputProps = Omit<
   type?: HTMLInputElement["type"];
 };
 
-export const RawInput = forwardRef(
+export const InputRaw = forwardRef(
   (
     {
       containerClassName,
@@ -208,27 +207,28 @@ export const RawInput = forwardRef(
       rightElement,
       step,
       ...props
-    }: RawInputProps,
+    }: InputRawProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const leftElementRef = useRef<HTMLDivElement>(null);
     const rightElementRef = useRef<HTMLDivElement>(null);
-    const [leftElementWidth, setleftElementWidth] = useState<number>();
-    const [rightElementWidth, setRightElementWidth] = useState<number>();
-    useEffect(() => {
-      setleftElementWidth(leftElementRef?.current?.clientWidth);
-      setRightElementWidth(rightElementRef?.current?.clientWidth);
-    }, []);
+    const { width: leftElementWidth } = useRefDimensions(leftElementRef);
+    const { width: rightElementWidth } = useRefDimensions(rightElementRef);
 
     return (
-      <div className={cn(styles.containerBase, containerClassName)}>
+      <div className={cn(inputContainerClassName, containerClassName)}>
         {leftAddon && (
-          <InputAddon size={size} variant={variant} isLeft {...leftAddon} />
+          <InputAddon
+            size={size}
+            variant={variant}
+            type="left"
+            {...leftAddon}
+          />
         )}
         {leftElement && (
           <InputElement
             size={size}
-            isLeft
+            type="left"
             ref={leftElementRef}
             {...leftElement}
           />
@@ -246,8 +246,8 @@ export const RawInput = forwardRef(
               variant,
               error: !!error,
               disabled,
-              leftAddon,
-              rightAddon,
+              leftAddon: !!leftAddon,
+              rightAddon: !!rightAddon,
             }),
             inputClassName
           )}
@@ -261,12 +261,17 @@ export const RawInput = forwardRef(
         />
 
         {rightAddon && (
-          <InputAddon size={size} variant={variant} isRight {...rightAddon} />
+          <InputAddon
+            size={size}
+            variant={variant}
+            type="right"
+            {...rightAddon}
+          />
         )}
         {rightElement && (
           <InputElement
             size={size}
-            isRight
+            type="right"
             ref={rightElementRef}
             {...rightElement}
           />
@@ -276,4 +281,4 @@ export const RawInput = forwardRef(
   }
 );
 
-RawInput.displayName = "RawInput";
+InputRaw.displayName = "InputRaw";

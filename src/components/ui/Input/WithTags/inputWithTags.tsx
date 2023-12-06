@@ -1,5 +1,6 @@
-import { cn } from "@/utils/cn";
+import { IconPlus, IconX } from "@tabler/icons-react";
 import isArray from "lodash/isArray";
+import { useRouter } from "next/router";
 import { ForwardedRef, forwardRef, HTMLAttributes, useState } from "react";
 import {
   Controller,
@@ -8,19 +9,19 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
+import type { Locale } from "@/locales/getText";
 import { extendedBgColors, gaps, paddingsEvenly, roundings } from "@/styles";
 import { getInputStyles } from "@/styles/groups";
-import { IconX, IconPlus } from "@tabler/icons-react";
 import type { InputVariant, Size } from "@/types";
 import { capSize } from "@/utils";
+import { cn } from "@/utils/cn";
 import { mergeRefs } from "@/utils/internal";
+import { requiredInputRule } from "@/utils/internal/inputRule";
+
 import { Button, ButtonGroup, IconButton } from "../../Button";
 import { FormElement, RequiredRule } from "../../Form";
 import { Text } from "../../Typography";
 import { InputAddon } from "../InputAddon";
-import { requiredInputRule } from "@/utils/internal/inputRule";
-import { useRouter } from "next/router";
-import type { Locale } from "@/locales/getText";
 
 export type InputWithTagsProps = HTMLAttributes<HTMLInputElement> & {
   required?: RequiredRule;
@@ -128,7 +129,7 @@ export const InputWithTagsInner = <
               <InputAddon
                 size={size}
                 variant={variant}
-                isRight
+                type="right"
                 className="!p-0"
               >
                 <IconButton

@@ -81,12 +81,9 @@ export const AdditionalHeadElements = ({ ...args }) => (
         <IconButton variant="ghost" ariaLabel="close" icon={IconX} size="sm" />
       }
       headerStartElement={
-        <Tag
-          label="nicht klickbar"
-          variant="subtile"
-          color="primary"
-          size="sm"
-        />
+        <Tag variant="subtile" color="primary" size="sm">
+          nicht klickbar
+        </Tag>
       }
       items={[
         { title: "Tab 1", content: "Content 1", value: "1" },

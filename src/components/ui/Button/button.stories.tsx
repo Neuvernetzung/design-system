@@ -106,7 +106,7 @@ export const AsChild = ({ ...args }) => (
 
 export const FullWidth = ({ ...args }) => (
   <Container>
-    <Button fullWidth {...args}>
+    <Button className="w-full" {...args}>
       full width
     </Button>
   </Container>
@@ -114,10 +114,10 @@ export const FullWidth = ({ ...args }) => (
 
 export const ContentAlignment = ({ ...args }) => (
   <Container>
-    <Button className="!justify-start" fullWidth {...args}>
+    <Button className="!justify-start w-full" {...args}>
       left
     </Button>
-    <Button className="!justify-end" fullWidth {...args}>
+    <Button className="!justify-end w-full" {...args}>
       right
     </Button>
   </Container>
