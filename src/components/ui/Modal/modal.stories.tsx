@@ -50,7 +50,7 @@ export const Default = ({ ...args }) => {
                 action("click");
                 setOpen(false);
               }}
-              fullWidth
+              className="w-full"
             >
               Bestätigen
             </Button>
@@ -105,7 +105,7 @@ export const Sizes = ({ ...args }) => {
                       action("click");
                       setOpen(false);
                     }}
-                    fullWidth
+                    className="w-full"
                   >
                     Bestätigen
                   </Button>
@@ -196,7 +196,7 @@ export const LargeContainer = ({ ...args }) => {
                 action("click");
                 setOpen(false);
               }}
-              fullWidth
+              className="w-full"
             >
               Bestätigen
             </Button>
@@ -235,7 +235,7 @@ export const Nested = ({ ...args }) => {
                 action("click");
                 setOpen(false);
               }}
-              fullWidth
+              className="w-full"
             >
               Schließen
             </Button>
@@ -244,7 +244,7 @@ export const Nested = ({ ...args }) => {
                 action("click");
                 setNestedOpen(true);
               }}
-              fullWidth
+              className="w-full"
             >
               Nested öffnen
             </Button>
@@ -265,7 +265,7 @@ export const Nested = ({ ...args }) => {
               action("nested-click");
               setNestedOpen(false);
             }}
-            fullWidth
+            className="w-full"
           >
             Toll!
           </Button>

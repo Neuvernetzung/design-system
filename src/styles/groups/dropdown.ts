@@ -5,67 +5,35 @@ import { capSize, minSize } from "../../utils";
 import {
   bgColors,
   borders,
-  extendedBgColors,
-  extendedTextColors,
-  gapsSmall,
-  paddings,
   paddingsSmallEvenly,
   paddingsX,
   roundings,
   scrollbar,
   shadows,
-  textColors,
-  textSizes,
-  transitionFast,
   zIndexes,
 } from "..";
 
 type DropdownContainerStyleProps = {
   size: Size;
+  disablePadding?: boolean;
 };
 
-const containerStyles = {
-  base: `focus:outline-none z-10 w-full max-h-60 min-w-[16rem] overflow-auto ${bgColors.white} border ${borders.accent}`,
-};
+export const getDropdownPadding = (size: Size) =>
+  paddingsSmallEvenly[capSize(size, "md")];
 
 export const getDropdownContainerStyles = ({
   size,
+  disablePadding,
 }: DropdownContainerStyleProps) =>
   cn(
-    containerStyles.base,
+    "min-w-[16rem] overflow-auto border",
+    bgColors.white,
+    borders.accent,
     zIndexes.dropdown,
     scrollbar,
-    paddingsSmallEvenly[capSize(size, "md")],
+    !disablePadding && getDropdownPadding(size),
     roundings[minSize(size, "md")],
     shadows[minSize(size, "md")]
-  );
-
-type DropdownOptionsStyleProps = {
-  size: Size;
-  active?: boolean;
-  disabled?: boolean;
-};
-
-const optionStyles = {
-  base: `w-full flex flex-row items-center justify-between select-none focus:outline-none outline-none ${transitionFast}`,
-  inactive: cn(bgColors.white),
-  active: `${extendedBgColors.filledSubtile}`,
-  textColor: textColors.accent,
-  disabled: `${extendedTextColors.filledSubtile} cursor-not-allowed`,
-};
-
-export const getDropDownOptionsStyles = ({
-  size,
-  active,
-  disabled,
-}: DropdownOptionsStyleProps) =>
-  cn(
-    optionStyles.base,
-    paddings[capSize(size, "md")],
-    textSizes[capSize(size, "md")],
-    active ? optionStyles.active : optionStyles.inactive,
-    gapsSmall[size],
-    disabled ? optionStyles.disabled : optionStyles.textColor
   );
 
 type DropdownGroupHeaderStyleProps = {

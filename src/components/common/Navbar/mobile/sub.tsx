@@ -19,10 +19,9 @@ export const NavbarMobileSubItem = ({
   <NavLinkWrap href={href} disabled={disabled} external={external}>
     <Button
       variant="ghost"
-      fullWidth
       leftIcon={icon}
       disabled={disabled}
-      className={cn(textColor, "!justify-start")}
+      className={cn(textColor, "w-full !justify-start")}
       asChild={disabled}
     >
       <div>

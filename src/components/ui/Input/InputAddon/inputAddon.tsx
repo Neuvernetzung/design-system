@@ -16,8 +16,7 @@ export type InputAddonProps = {
   children: ReactNode;
   size: Size;
   variant: InputVariant;
-  isLeft?: boolean;
-  isRight?: boolean;
+  type: "left" | "right";
 };
 
 export const addonVariant: Record<InputVariant, string> = {
@@ -31,7 +30,7 @@ const styles = {
 };
 
 export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
-  ({ className, children, variant, size, isLeft, isRight }, ref) => (
+  ({ className, children, variant, size, type }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -39,10 +38,10 @@ export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
         inputSizes[size],
         addonVariant[variant],
         extendedBgColors.filledSubtile,
-        isLeft && roundingsLeft[size],
-        isLeft && "border-l",
-        isRight && roundingsRight[size],
-        isRight && "border-r",
+        type === "left" && roundingsLeft[size],
+        type === "left" && "border-l",
+        type === "right" && roundingsRight[size],
+        type === "right" && "border-r",
         className
       )}
     >

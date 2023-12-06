@@ -97,14 +97,14 @@ export const ConfirmationModal = () => {
             ref={cancelBtnRef}
             variant="outline"
             onClick={handleCancel}
-            fullWidth
+            className="w-full"
           >
             {cancelButton || getText(locale).cancel}
           </Button>
           <Button
             ref={confirmBtnRef}
             onClick={handleConfirm}
-            fullWidth
+            className="w-full"
             color={color}
           >
             {confirmButton || getText(locale).confirm}

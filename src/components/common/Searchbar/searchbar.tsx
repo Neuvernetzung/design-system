@@ -1,7 +1,7 @@
 import { IconSearch } from "@tabler/icons-react";
 import type { Size } from "../../../types";
 import { Icon } from "../../ui";
-import { RawInput } from "@/components/ui/Input/input";
+import { InputRaw } from "@/components/ui/Input/input";
 
 type SearchbarProps = {
   size?: Size;
@@ -14,7 +14,7 @@ export const Searchbar = ({
   search,
   setSearch,
 }: SearchbarProps) => (
-  <RawInput
+  <InputRaw
     size={size}
     value={search}
     onChange={setSearch}

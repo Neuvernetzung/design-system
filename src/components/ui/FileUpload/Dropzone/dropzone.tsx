@@ -150,8 +150,7 @@ export const Dropzone = <
                       <Tag
                         size="xs"
                         variant="subtile"
-                        label={`${currentFiles.length} ausgewählt.`}
-                      />
+                      >{`${currentFiles.length} ausgewählt.`}</Tag>
                     )}
                   </Button>
                 )}

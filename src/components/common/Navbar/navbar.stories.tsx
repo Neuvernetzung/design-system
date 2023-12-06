@@ -53,7 +53,7 @@ const baseProps: NavbarProps = {
           href: "2",
           subLabel: { children: "Hier steht eine Beschreibung." },
           tag: {
-            label: "Neu",
+            children: "Neu",
             color: "success",
             size: "xs",
           },
@@ -65,7 +65,7 @@ const baseProps: NavbarProps = {
     },
     {
       label: "Item 2",
-      tag: { label: "bald", color: "warn", size: "sm", variant: "outline" },
+      tag: { children: "bald", color: "warn", size: "sm", variant: "outline" },
       children: [
         {
           label: "Sub Item 1",
@@ -86,7 +86,7 @@ const baseProps: NavbarProps = {
     {
       label: "Full",
       fullWidthPopover: true,
-      tag: { label: "width", variant: "outline" },
+      tag: { children: "width", variant: "outline" },
       children: [
         {
           label: "Sub Item 1",
@@ -102,7 +102,7 @@ const baseProps: NavbarProps = {
           href: "2",
           subLabel: { children: "Hier steht eine Beschreibung." },
           tag: {
-            label: "Neu",
+            children: "Neu",
             color: "success",
             size: "xs",
           },
@@ -153,7 +153,7 @@ const baseProps: NavbarProps = {
     },
     {
       label: "Disabled",
-      tag: { label: "nie", color: "danger", size: "sm", variant: "subtile" },
+      tag: { children: "nie", color: "danger", size: "sm", variant: "subtile" },
       disabled: true,
       icon: IconX,
     },

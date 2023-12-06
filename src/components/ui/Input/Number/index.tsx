@@ -1,6 +1,6 @@
 import { forwardRef, useRef } from "react";
 import type { Ref } from "react";
-import { type InputProps, RawInput } from "../input";
+import { type InputProps, InputRaw } from "../input";
 import { FormElement } from "../../Form";
 import { mergeRefs } from "../../../../utils/internal";
 import type {
@@ -19,8 +19,8 @@ import {
   validationInputResult,
 } from "../../../../utils/internal/inputRule";
 import { Button, ButtonGroup } from "../../Button";
-import { smallerSize } from "../../../../utils";
-import { cn } from "@/utils";
+import { smallerSize } from "@/utils/size";
+import { cn } from "@/utils/cn";
 import {
   decrement,
   increment,
@@ -95,7 +95,7 @@ export const InputNumber = forwardRef(
             size={size}
             className={className}
           >
-            <RawInput
+            <InputRaw
               type="number"
               containerClassName={containerClassName}
               size={size}
@@ -168,3 +168,5 @@ export const InputNumber = forwardRef(
     );
   }
 );
+
+InputNumber.displayName = "InputNumber";

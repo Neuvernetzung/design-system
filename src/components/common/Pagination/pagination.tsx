@@ -1,12 +1,11 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 
+import { gaps, paddingsYLarge } from "@/styles";
 import { cn } from "@/utils";
 
 import type { Size } from "../../../types";
-import { Button, IconButton, Select, Text } from "../../ui";
+import { Button, IconButton, SelectRaw, Text } from "../../ui";
 import {
   DEFAULT_PAGINATION_LIMIT,
   DEFAULT_PAGINATION_PAGE,
@@ -39,10 +38,6 @@ type SetLimitProps =
       setLimit?: never;
     };
 
-type FormInputs = {
-  limit: number;
-};
-
 export const Pagination = ({
   limits = DEFAULT_PAGINATIONS_LIMITS,
   result = 0,
@@ -56,19 +51,6 @@ export const Pagination = ({
   selectLimit = true,
   variant = "default",
 }: PaginationProps) => {
-  const router = useRouter();
-
-  const formMethods = useForm<FormInputs>({
-    defaultValues: {
-      limit: setLimit ? limit : Number(router.query.limit) || limits[0],
-    },
-  });
-  const watchLimit = formMethods.watch("limit");
-
-  useEffect(() => {
-    if (setLimit) setLimit(watchLimit);
-  }, [watchLimit]);
-
   useEffect(() => {
     // Wenn sich das Result oder Limit ändert z.B. durch Filtern einer anderen Funktion oä. wird automatisch zur letzten Seite gesprungen.
     if (page * limit <= result) return;
@@ -79,21 +61,22 @@ export const Pagination = ({
   return (
     <div
       className={cn(
-        "py-5 flex flex-row items-center justify-between",
+        "flex flex-row items-center justify-between",
+        gaps[size],
+        paddingsYLarge[size],
         containerClassName
       )}
     >
       {selectLimit && result !== 0 && limits.length > 1 && (
-        <Select
-          control={formMethods.control}
-          name="limit"
+        <SelectRaw
+          id="limit"
+          value={limit}
+          onChange={(v) => setLimit?.(v || DEFAULT_PAGINATION_LIMIT)}
           options={limits.map((limit) => ({
             children: `${limit} pro Seite`,
             value: limit,
           }))}
-          returned="value"
           variant="ghost"
-          removeAll={false}
           size={size}
         />
       )}

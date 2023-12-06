@@ -95,6 +95,7 @@
     "@visx/shape": "^3.5.0",
     "@visx/tooltip": "^3.3.0",
     "dompurify": "^3.0.6",
+    "downshift": "^8.2.3",
     "tailwind-merge": "^2.0.0"
   },
   "devDependencies": {

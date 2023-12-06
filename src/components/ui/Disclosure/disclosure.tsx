@@ -153,10 +153,9 @@ export const DisclosureItem = ({
           size={size}
           color={color}
           disabled={disabled}
-          fullWidth
           {...buttonProps}
           className={cn(
-            "group",
+            "group w-full",
             variants[variant]?.button,
             buttonProps?.className
           )}

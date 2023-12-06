@@ -8,10 +8,10 @@ import {
 } from "../../../../styles";
 import { IconButton } from "../../Button/IconButton";
 import { Text } from "../../Typography/Text";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import type { Size } from "../../../../types";
 import { Tag } from "../../Tag";
-import { smallerSize } from "../../../../utils";
+import { smallerSize } from "@/utils/size";
 
 type DragOverlayProps = {
   size?: Size;
@@ -45,6 +45,6 @@ export const DragOverlay = ({
     <Text className="whitespace-nowrap">
       {itemCount && itemCount > 1 ? "Items" : "Item"}
     </Text>
-    {itemCount && <Tag label={String(itemCount)} size={smallerSize(size)} />}
+    {itemCount && <Tag size={smallerSize(size)}>{String(itemCount)}</Tag>}
   </div>
 );

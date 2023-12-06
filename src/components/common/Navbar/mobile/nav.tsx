@@ -115,7 +115,7 @@ export const MobileNavItem = ({
     return (
       <li>
         {!children && !child ? (
-          <Button variant="ghost" fullWidth asChild>
+          <Button variant="ghost" className="w-full" asChild>
             <Link
               href={href || "#"}
               {...(external ? { target: "_blank" } : {})}
@@ -172,7 +172,7 @@ export const MobileNavItem = ({
     );
 
   return (
-    <Button disabled={disabled} variant="ghost" fullWidth>
+    <Button disabled={disabled} variant="ghost" className="w-full">
       {icon && (
         <div className="flex">
           <Icon color="accent" icon={icon} />

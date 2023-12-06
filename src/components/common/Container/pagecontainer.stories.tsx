@@ -27,7 +27,7 @@ export const Default = ({ ...args }) => {
           {
             label: "Full",
             fullWidthPopover: true,
-            tag: { label: "width", variant: "outline" },
+            tag: { children: "width", variant: "outline" },
             child: "Test",
           },
           {
@@ -37,7 +37,7 @@ export const Default = ({ ...args }) => {
           {
             label: "Disabled",
             tag: {
-              label: "nie",
+              children: "nie",
               color: "danger",
               size: "sm",
               variant: "subtile",

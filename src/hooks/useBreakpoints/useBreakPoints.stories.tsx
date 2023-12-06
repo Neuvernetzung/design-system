@@ -27,18 +27,18 @@ export const Default = () => {
     <Container>
       <div className="flex flex-col gap-4 items-start">
         <Heading>Javascript Breakpoint</Heading>
-        <Tag label={breakpoint} />
+        <Tag>{breakpoint}</Tag>
         <Text>Breakpoint ist MD: {String(isBreakpoint("md"))}</Text>
         <Text>MD oder größer als MD: {String(isBreakpointOrLarger("md"))}</Text>
       </div>
       <div className="flex flex-col gap-4 items-start">
         <Heading>Tailwind Breakpoint</Heading>
-        <Tag className="sm:hidden" label="unter sm" />
-        <Tag className="hidden sm:max-md:block" label="sm" />
-        <Tag className="hidden md:max-lg:block" label="md" />
-        <Tag className="hidden lg:max-xl:block" label="lg" />
-        <Tag className="hidden xl:max-2xl:block" label="xl" />
-        <Tag className="hidden 2xl:block" label="2xl" />
+        <Tag className="sm:hidden">unter sm</Tag>
+        <Tag className="hidden sm:max-md:block">sm</Tag>
+        <Tag className="hidden md:max-lg:block">md</Tag>
+        <Tag className="hidden lg:max-xl:block">lg</Tag>
+        <Tag className="hidden xl:max-2xl:block">xl</Tag>
+        <Tag className="hidden 2xl:block">2xl</Tag>
       </div>
     </Container>
   );

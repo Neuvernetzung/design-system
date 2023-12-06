@@ -28,8 +28,7 @@ export const SideNavItem = ({
         disabled={disabled}
         size="md"
         variant="ghost"
-        fullWidth
-        className={cn(textColor)}
+        className={cn("w-full", textColor)}
         leftIcon={icon}
         asChild
       >

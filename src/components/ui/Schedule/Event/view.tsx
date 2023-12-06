@@ -146,39 +146,28 @@ export const ViewEvent = ({
         <div className={cn("flex flex-col items-start w-full", gaps.xs)}>
           {isSameDay(event?.start.date, end) ? (
             <>
-              <Tag
-                leftIcon={IconCalendar}
-                variant="subtile"
-                label={dayFormatter.format(event.start.date)}
-              />
-              <Tag
-                leftIcon={IconClock}
-                variant="subtile"
-                label={`${timeFormatter.format(
-                  event.start.date
-                )} - ${timeFormatter.format(end)}`}
-              />
+              <Tag leftIcon={IconCalendar} variant="subtile">
+                {dayFormatter.format(event.start.date)}
+              </Tag>
+              <Tag leftIcon={IconClock} variant="subtile">
+                {timeFormatter.format(event.start.date)} -{" "}
+                {timeFormatter.format(end)}
+              </Tag>
             </>
           ) : (
             <>
-              <Tag
-                leftIcon={IconArrowBarRight}
-                variant="subtile"
-                label={formatter.format(event.start.date)}
-              />
-              <Tag
-                leftIcon={IconArrowBarToRight}
-                variant="subtile"
-                label={formatter.format(end)}
-              />
+              <Tag leftIcon={IconArrowBarRight} variant="subtile">
+                {formatter.format(event.start.date)}
+              </Tag>
+              <Tag leftIcon={IconArrowBarToRight} variant="subtile">
+                {formatter.format(end)}
+              </Tag>
             </>
           )}
           {event.location && (
-            <Tag
-              leftIcon={IconMapPin}
-              variant="subtile"
-              label={event.location}
-            />
+            <Tag leftIcon={IconMapPin} variant="subtile">
+              {event.location}
+            </Tag>
           )}
           {event.categories && event.categories.length > 0 && (
             <div className="flex flex-col w-full">
@@ -193,7 +182,9 @@ export const ViewEvent = ({
                 )}
               >
                 {event.categories.map((category) => (
-                  <Tag variant="subtile" key={category} label={category} />
+                  <Tag variant="subtile" key={category}>
+                    {category}
+                  </Tag>
                 ))}
               </div>
             </div>
@@ -242,15 +233,6 @@ export const ViewEvent = ({
                     {attendee.partstat && (
                       <Tag
                         size="sm"
-                        label={
-                          attendee.partstat === "ACCEPTED"
-                            ? "Bestätigt"
-                            : attendee.partstat === "CANCELLED"
-                            ? "Abgesagt"
-                            : attendee.partstat === "TENTATIVE"
-                            ? "Vorgemerkt"
-                            : undefined
-                        }
                         variant="outline"
                         color={
                           attendee.partstat === "ACCEPTED"
@@ -261,7 +243,15 @@ export const ViewEvent = ({
                             ? "accent"
                             : undefined
                         }
-                      />
+                      >
+                        {attendee.partstat === "ACCEPTED"
+                          ? "Bestätigt"
+                          : attendee.partstat === "CANCELLED"
+                          ? "Abgesagt"
+                          : attendee.partstat === "TENTATIVE"
+                          ? "Vorgemerkt"
+                          : undefined}
+                      </Tag>
                     )}
                   </div>
                 ))}

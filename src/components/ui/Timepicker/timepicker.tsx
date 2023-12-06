@@ -17,7 +17,7 @@ import type { InputVariant, Size } from "@/types";
 import { smallerSize } from "@/utils";
 import { IconButton } from "../Button";
 import { FormElement } from "../Form";
-import { RawInput } from "../Input";
+import { InputRaw } from "../Input";
 import { Icon } from "../Icon";
 
 export type TimepickerProps = {
@@ -149,7 +149,7 @@ export const TimePickerInner = forwardRef(
       helper={helper}
       size={size}
     >
-      <RawInput
+      <InputRaw
         ref={ref}
         type="time"
         variant={inputVariant}
