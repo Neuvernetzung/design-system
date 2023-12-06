@@ -237,7 +237,7 @@ export const ViewEvent = ({
                         color={
                           attendee.partstat === "ACCEPTED"
                             ? "success"
-                            : attendee.partstat === "CANCELLED"
+                            : attendee.partstat === "DECLINED"
                             ? "warn"
                             : attendee.partstat === "TENTATIVE"
                             ? "accent"
@@ -246,7 +246,7 @@ export const ViewEvent = ({
                       >
                         {attendee.partstat === "ACCEPTED"
                           ? "Bestätigt"
-                          : attendee.partstat === "CANCELLED"
+                          : attendee.partstat === "DECLINED"
                           ? "Abgesagt"
                           : attendee.partstat === "TENTATIVE"
                           ? "Vorgemerkt"
