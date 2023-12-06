@@ -1,16 +1,18 @@
 import { useMemo } from "react";
 
 import type { SelectOptionProps, SelectOptionValueProps } from "../Option";
+import type { SelectValue } from "../select";
 
-export const useFlatSelectOptions = (options: SelectOptionProps[]) =>
-  useMemo(() => getFlatSelectOptions(options), [options]);
+export const useFlatSelectOptions = <TValue extends SelectValue = SelectValue>(
+  options: SelectOptionProps<TValue>[]
+) => useMemo(() => getFlatSelectOptions(options), [options]);
 
-export const getFlatSelectOptions = (
-  options: SelectOptionProps[],
+export const getFlatSelectOptions = <TValue extends SelectValue = SelectValue>(
+  options: SelectOptionProps<TValue>[],
   result: number = 0
 ) => {
-  const valueOptions: SelectOptionValueProps[] = [];
-  const indexedOptions: SelectOptionProps[] = [];
+  const valueOptions: SelectOptionValueProps<TValue>[] = [];
+  const indexedOptions: SelectOptionProps<TValue>[] = [];
   let newResult = result || 0;
 
   options.forEach((option) => {

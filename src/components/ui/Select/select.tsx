@@ -46,11 +46,12 @@ import {
   type CheckedType,
   SelectOption,
   type SelectOptionProps,
+  SelectOptionValueProps,
 } from "./Option";
 import { useFlatSelectOptions } from "./utils/getFlatSelectOptions";
 
-export type SelectProps = {
-  options: SelectOptionProps[];
+export type SelectProps<TValue extends SelectValue = SelectValue> = {
+  options: SelectOptionProps<TValue>[];
   size?: Size;
   variant?: InputVariant;
   disabled?: boolean;
@@ -70,14 +71,15 @@ export type SelectProps = {
 
 export const SelectInner = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TValue extends SelectValue = SelectValue
 >(
   {
     control,
     name,
     required,
     ...props
-  }: SelectProps & UseControllerProps<TFieldValues, TName>,
+  }: SelectProps<TValue> & UseControllerProps<TFieldValues, TName>,
   ref: ForwardedRef<HTMLButtonElement>
 ) => {
   const {
@@ -103,224 +105,233 @@ export const SelectInner = <
   );
 };
 
-export type SelectRawProps = SelectProps & {
-  id: string;
-  value?: string | null;
-  defaultValue?: string | null;
-  onChange?: (value: string | undefined) => void;
-  error?: FieldError;
+export type SelectRawProps<TValue extends SelectValue = SelectValue> =
+  SelectProps<TValue> & {
+    id: string;
+    value?: TValue | null;
+    defaultValue?: TValue | null;
+    onChange?: (value: TValue | undefined) => void;
+    error?: FieldError;
+  };
+
+export type SelectValue = string | number;
+
+export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
+  {
+    id,
+    options,
+    allowReset,
+    buttonClassName,
+    checkedType,
+    defaultMessage = "Auswählen ...",
+    disabled = false,
+    helper,
+    label,
+    noOptionsMessage = "Keine Optionen gefunden.",
+    optionsClassName,
+    placement = "bottom",
+    required,
+    size = "md",
+    variant = "outline",
+    value,
+    defaultValue,
+    error,
+    onChange,
+    afterChildren,
+    beforeChildren,
+  }: SelectRawProps<TValue>,
+  ref: ForwardedRef<HTMLButtonElement>
+) => {
+  const { valueOptions, indexedOptions } =
+    useFlatSelectOptions<TValue>(options);
+
+  const closeButtonRef = useRef<HTMLDivElement>(null);
+  const { width: closeButtonWidth } = useRefDimensions(closeButtonRef);
+
+  const {
+    isOpen,
+    selectedItem,
+    getToggleButtonProps,
+    getMenuProps,
+    highlightedIndex,
+    getItemProps,
+    reset,
+  } = useSelect<SelectOptionValueProps<TValue>>({
+    selectedItem: value
+      ? valueOptions.find((v) => v.value === value)
+      : value === null
+      ? null
+      : undefined,
+    toggleButtonId: id,
+    items: valueOptions,
+    defaultSelectedItem: defaultValue
+      ? valueOptions.find((v) => v.value === defaultValue)
+      : undefined,
+    isItemDisabled: (item) => !!item.disabled,
+    onSelectedItemChange: onChange
+      ? ({ selectedItem }) => {
+          onChange(selectedItem?.value);
+        }
+      : undefined,
+  });
+
+  const { ref: toggleRef, ...toggleButtonProps } = getToggleButtonProps();
+
+  const { ref: menuRef, ...menuProps } = getMenuProps(
+    {},
+    { suppressRefError: true }
+  );
+
+  const { x, y, strategy, refs } = useFloating({
+    open: isOpen,
+    placement,
+    middleware: [
+      offset({ mainAxis: offsetSizes[size] }),
+      flip({
+        padding: offsetSizes[size],
+        fallbackPlacements: [
+          "top",
+          "bottom-start",
+          "top-start",
+          "bottom-end",
+          "top-end",
+        ],
+      }),
+    ],
+  });
+
+  const buttonWidth =
+    refs.reference?.current?.getBoundingClientRect().width || 0;
+
+  return (
+    <>
+      <FormElement
+        required={required}
+        error={error}
+        name={id}
+        label={label}
+        helper={helper}
+        size={size}
+      >
+        <div className={cn(inputContainerClassName)}>
+          <button
+            type="button"
+            {...toggleButtonProps}
+            ref={mergeRefs(compact([refs.setReference, toggleRef, ref]))}
+            disabled={disabled}
+            className={cn(
+              getInputStyles({
+                disabled,
+                error: !!error,
+                size,
+                variant,
+              }),
+              "truncate text-start",
+              !selectedItem && placeholderAsText[variant],
+              buttonClassName
+            )}
+            style={{
+              paddingRight: closeButtonRef && closeButtonWidth,
+            }}
+          >
+            {selectedItem?.children || defaultMessage}
+          </button>
+
+          <InputElement size={size} type="right" ref={closeButtonRef}>
+            {allowReset && !!selectedItem ? (
+              <IconButton
+                icon={IconX}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  reset();
+                }}
+                ariaLabel="clear_selection"
+                className="pointer-events-auto aspect-auto"
+                size={smallerSize(size)}
+                variant="ghost"
+              />
+            ) : (
+              <Icon
+                size={smallerSize(size)}
+                icon={IconSelector}
+                className={cn(
+                  "pointer-events-none flex",
+                  isOpen ? "rotate-180" : "rotate-0",
+                  transition
+                )}
+              />
+            )}
+          </InputElement>
+        </div>
+      </FormElement>
+      {isOpen && (
+        <Portal>
+          <div
+            ref={mergeRefs(compact([refs.setFloating, menuRef]))}
+            data-state={isOpen ? "open" : "closed"}
+            style={{
+              top: y,
+              left: x,
+              position: strategy,
+              width: buttonWidth,
+            }}
+            className={cn(
+              getDropdownContainerStyles({ size, disablePadding: true }),
+              "flex flex-col will-change-[transform,opacity] divide-y",
+              divides.accent,
+              popoverAnimation,
+              optionsClassName
+            )}
+          >
+            {beforeChildren && (
+              <div className={cn(getDropdownPadding(size))}>
+                {beforeChildren}
+              </div>
+            )}
+            <ul className={cn(getDropdownPadding(size))} {...menuProps}>
+              {indexedOptions.map((option, i) => (
+                <SelectOption
+                  key={i}
+                  {...option}
+                  size={size}
+                  getItemProps={getItemProps}
+                  isSelected={(value) => selectedItem?.value === value}
+                  highlightedIndex={highlightedIndex}
+                  checkedType={checkedType}
+                />
+              ))}
+              {!indexedOptions ||
+                (indexedOptions.length === 0 && (
+                  <NoOptionsFound message={noOptionsMessage} size={size} />
+                ))}
+            </ul>
+            {afterChildren && (
+              <div className={cn(getDropdownPadding(size))}>
+                {afterChildren}
+              </div>
+            )}
+          </div>
+        </Portal>
+      )}
+    </>
+  );
 };
 
-export const SelectRaw = forwardRef(
-  (
-    {
-      id,
-      options,
-      allowReset,
-      buttonClassName,
-      checkedType,
-      defaultMessage = "Auswählen ...",
-      disabled = false,
-      helper,
-      label,
-      noOptionsMessage = "Keine Optionen gefunden.",
-      optionsClassName,
-      placement = "bottom",
-      required,
-      size = "md",
-      variant = "outline",
-      value,
-      defaultValue,
-      error,
-      onChange,
-      afterChildren,
-      beforeChildren,
-    }: SelectRawProps,
-    ref: ForwardedRef<HTMLButtonElement>
-  ) => {
-    const { valueOptions, indexedOptions } = useFlatSelectOptions(options);
-
-    const closeButtonRef = useRef<HTMLDivElement>(null);
-    const { width: closeButtonWidth } = useRefDimensions(closeButtonRef);
-
-    const {
-      isOpen,
-      selectedItem,
-      getToggleButtonProps,
-      getMenuProps,
-      highlightedIndex,
-      getItemProps,
-      reset,
-    } = useSelect({
-      selectedItem: value
-        ? valueOptions.find((v) => v.value === value)
-        : value === null
-        ? null
-        : undefined,
-      toggleButtonId: id,
-      items: valueOptions,
-      defaultSelectedItem: defaultValue
-        ? valueOptions.find((v) => v.value === defaultValue)
-        : undefined,
-      isItemDisabled: (item) => !!item.disabled,
-      onSelectedItemChange: onChange
-        ? ({ selectedItem }) => {
-            onChange(selectedItem?.value);
-          }
-        : undefined,
-    });
-
-    const { ref: toggleRef, ...toggleButtonProps } = getToggleButtonProps();
-
-    const { ref: menuRef, ...menuProps } = getMenuProps(
-      {},
-      { suppressRefError: true }
-    );
-
-    const { x, y, strategy, refs } = useFloating({
-      open: isOpen,
-      placement,
-      middleware: [
-        offset({ mainAxis: offsetSizes[size] }),
-        flip({
-          padding: offsetSizes[size],
-          fallbackPlacements: [
-            "top",
-            "bottom-start",
-            "top-start",
-            "bottom-end",
-            "top-end",
-          ],
-        }),
-      ],
-    });
-
-    const buttonWidth =
-      refs.reference?.current?.getBoundingClientRect().width || 0;
-
-    return (
-      <>
-        <FormElement
-          required={required}
-          error={error}
-          name={id}
-          label={label}
-          helper={helper}
-          size={size}
-        >
-          <div className={cn(inputContainerClassName)}>
-            <button
-              type="button"
-              {...toggleButtonProps}
-              ref={mergeRefs(compact([refs.setReference, toggleRef, ref]))}
-              disabled={disabled}
-              className={cn(
-                getInputStyles({
-                  disabled,
-                  error: !!error,
-                  size,
-                  variant,
-                }),
-                "truncate text-start",
-                !selectedItem && placeholderAsText[variant],
-                buttonClassName
-              )}
-              style={{
-                paddingRight: closeButtonRef && closeButtonWidth,
-              }}
-            >
-              {selectedItem?.children || defaultMessage}
-            </button>
-
-            <InputElement size={size} type="right" ref={closeButtonRef}>
-              {allowReset && !!selectedItem ? (
-                <IconButton
-                  icon={IconX}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    reset();
-                  }}
-                  ariaLabel="clear_selection"
-                  className="pointer-events-auto aspect-auto"
-                  size={smallerSize(size)}
-                  variant="ghost"
-                />
-              ) : (
-                <Icon
-                  size={smallerSize(size)}
-                  icon={IconSelector}
-                  className={cn(
-                    "pointer-events-none flex",
-                    isOpen ? "rotate-180" : "rotate-0",
-                    transition
-                  )}
-                />
-              )}
-            </InputElement>
-          </div>
-        </FormElement>
-        {isOpen && (
-          <Portal>
-            <div
-              ref={mergeRefs(compact([refs.setFloating, menuRef]))}
-              data-state={isOpen ? "open" : "closed"}
-              style={{
-                top: y,
-                left: x,
-                position: strategy,
-                width: buttonWidth,
-              }}
-              className={cn(
-                getDropdownContainerStyles({ size, disablePadding: true }),
-                "flex flex-col will-change-[transform,opacity] divide-y",
-                divides.accent,
-                popoverAnimation,
-                optionsClassName
-              )}
-            >
-              {beforeChildren && (
-                <div className={cn(getDropdownPadding(size))}>
-                  {beforeChildren}
-                </div>
-              )}
-              <ul className={cn(getDropdownPadding(size))} {...menuProps}>
-                {indexedOptions.map((option, i) => (
-                  <SelectOption
-                    key={i}
-                    {...option}
-                    size={size}
-                    getItemProps={getItemProps}
-                    isSelected={(value) => selectedItem?.value === value}
-                    highlightedIndex={highlightedIndex}
-                    checkedType={checkedType}
-                  />
-                ))}
-                {!indexedOptions ||
-                  (indexedOptions.length === 0 && (
-                    <NoOptionsFound message={noOptionsMessage} size={size} />
-                  ))}
-              </ul>
-              {afterChildren && (
-                <div className={cn(getDropdownPadding(size))}>
-                  {afterChildren}
-                </div>
-              )}
-            </div>
-          </Portal>
-        )}
-      </>
-    );
+export const SelectRaw = forwardRef(SelectRawInner) as <
+  TValue extends SelectValue = SelectValue
+>(
+  props: SelectRawProps<TValue> & {
+    ref?: ForwardedRef<HTMLButtonElement>;
   }
-);
-
-SelectRaw.displayName = "SelectRaw";
+) => ReturnType<typeof SelectRawInner>;
 
 export const Select = forwardRef(SelectInner) as <
   TFieldValues extends FieldValues,
-  TName extends FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues>,
+  TValue extends SelectValue = SelectValue
 >(
-  props: SelectProps &
+  props: SelectProps<TValue> &
     UseControllerProps<TFieldValues, TName> & {
       ref?: ForwardedRef<HTMLButtonElement>;
     }

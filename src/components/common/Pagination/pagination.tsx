@@ -1,6 +1,7 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useEffect } from "react";
 
+import { gaps, paddingsYLarge } from "@/styles";
 import { cn } from "@/utils";
 
 import type { Size } from "../../../types";
@@ -30,7 +31,7 @@ type SetPageProps = {
 type SetLimitProps =
   | {
       limit: number | undefined;
-      setLimit: (limit: number | undefined) => void;
+      setLimit: (limit: number) => void;
     }
   | {
       limit?: never;
@@ -60,7 +61,9 @@ export const Pagination = ({
   return (
     <div
       className={cn(
-        "py-5 flex flex-row items-center justify-between",
+        "flex flex-row items-center justify-between",
+        gaps[size],
+        paddingsYLarge[size],
         containerClassName
       )}
     >
@@ -68,7 +71,7 @@ export const Pagination = ({
         <SelectRaw
           id="limit"
           value={limit}
-          onChange={setLimit}
+          onChange={(v) => setLimit?.(v || DEFAULT_PAGINATION_LIMIT)}
           options={limits.map((limit) => ({
             children: `${limit} pro Seite`,
             value: limit,
