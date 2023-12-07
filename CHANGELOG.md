@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.5
+
+### Patch Changes
+
+- eee3b8c: w-full von PageContainer entfernen #1196
+- 973030e: Result Abfrage in Pagination verbessert #1197
+
 ## 3.0.4
 
 ### Patch Changes
