@@ -1,31 +1,62 @@
-import cn from "classnames";
-import type { HTMLAttributes, MutableRefObject } from "react";
+import { type HTMLAttributes, type RefObject, useEffect } from "react";
+import { create, useStore } from "zustand";
+import { persist } from "zustand/middleware";
 
-import { pagePaddings } from "../../../styles";
-import { useThemeStateValue } from "../../../theme";
-import { useRefDimensions, useWindowSize } from "../../../utils/internal";
+import { maxPageWidths, pageGaps, pagePaddings } from "@/styles/page";
+import { useThemeStateValue } from "@/theme";
+import { cn } from "@/utils/cn";
+import { useRefDimensions, useWindowSize } from "@/hooks";
 
 type PageContainerProps = HTMLAttributes<HTMLDivElement> & {
-  navbarRef?: MutableRefObject<any>;
-  sidenavRef?: MutableRefObject<any>;
-  footerRef?: MutableRefObject<any>;
+  navbarRef?: RefObject<HTMLDivElement>;
+  sidenavRef?: RefObject<HTMLDivElement>;
+  footerRef?: RefObject<HTMLDivElement>;
   enablePagePadding?: boolean;
+  enabledPageGaps?: boolean;
   className?: string;
 };
+
+export const pageContainerStore = create(
+  persist(() => ({ navbarHeight: 0, footerHeight: 0, sidenavWidth: 0 }), {
+    name: "pageContainer",
+  })
+);
 
 export const PageContainer = ({
   navbarRef,
   sidenavRef,
   footerRef,
   enablePagePadding = true,
+  enabledPageGaps = true,
   className,
+  children,
   ...props
 }: PageContainerProps) => {
-  const navbarHeight = useRefDimensions(navbarRef).height;
-  const footerHeight = useRefDimensions(footerRef).height;
-  const sidenavWidth = useRefDimensions(sidenavRef).width;
+  const pageContainerState = useStore(pageContainerStore);
+
+  const navbarHeight =
+    useRefDimensions(navbarRef).height || pageContainerState.navbarHeight;
+
+  useEffect(() => {
+    pageContainerStore.setState({ navbarHeight });
+  }, [navbarHeight]);
+
+  const footerHeight =
+    useRefDimensions(footerRef).height || pageContainerState.footerHeight;
+
+  useEffect(() => {
+    pageContainerStore.setState({ footerHeight });
+  }, [footerHeight]);
+
+  const sidenavWidth =
+    useRefDimensions(sidenavRef).width || pageContainerState.sidenavWidth;
+
+  useEffect(() => {
+    pageContainerStore.setState({ sidenavWidth });
+  }, [sidenavWidth]);
 
   const pagePadding = useThemeStateValue((state) => state.pagePadding);
+  const maxPageWidth = useThemeStateValue((state) => state.maxPageWidth);
 
   const windowWidth = useWindowSize().width;
 
@@ -46,8 +77,9 @@ export const PageContainer = ({
   return (
     <main
       className={cn(
-        "overflow-x-hidden flex flex-col",
+        "overflow-x-hidden w-full",
         enablePagePadding && pagePaddings[pagePadding],
+        enabledPageGaps && pageGaps[pagePadding],
         className
       )}
       style={{
@@ -57,6 +89,15 @@ export const PageContainer = ({
         minHeight: calcHeight(),
       }}
       {...props}
-    />
+    >
+      <div
+        className={cn(
+          "flex flex-col w-full mx-auto",
+          maxPageWidth && maxPageWidths[maxPageWidth]
+        )}
+      >
+        {children}
+      </div>
+    </main>
   );
 };

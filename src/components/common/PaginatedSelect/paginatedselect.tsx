@@ -9,7 +9,6 @@ import {
 
 import type { Locale } from "../../../locales/getText";
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import {
   Button,
@@ -68,7 +67,7 @@ export type PaginatedSelectProps<TItem, TMultiple extends boolean> = {
   modalSize?: ModalProps["size"];
 };
 
-const PaginatedSelect = <
+export const PaginatedSelect = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends Path<TFieldValues> = Path<TFieldValues>,
   TItem extends any = any,
@@ -220,5 +219,3 @@ const PaginatedSelect = <
     />
   );
 };
-
-export default typedMemo(PaginatedSelect);

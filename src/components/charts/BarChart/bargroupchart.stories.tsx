@@ -1,7 +1,6 @@
 import { Meta } from "@storybook/react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { format } from "date-fns";
-import React from "react";
 
 import { borders } from "../../../styles";
 import { Bargroupchart } from ".";

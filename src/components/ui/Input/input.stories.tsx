@@ -1,7 +1,6 @@
 import { IconPhone } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
-import cn from "classnames";
-import React from "react";
+import { cn } from "@/utils";
 import { useForm } from "react-hook-form";
 
 import { Button, Form, Icon, Text } from "..";

@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { ForwardedRef, forwardRef } from "react";
 
 import {
@@ -10,7 +10,6 @@ import {
   scrollbar,
   zIndexes,
 } from "../../../../styles";
-import { typedMemo } from "../../../../utils/internal";
 import type { NavbarProps } from "..";
 import { NavLogo } from "../logo";
 import { SideNavItem } from "../side/item";
@@ -22,7 +21,7 @@ export type SidenavProps = Omit<
 > &
   NavbarContainerProps;
 
-const NavbarSideContainer = forwardRef(
+export const NavbarSideContainer = forwardRef(
   (
     {
       logo,
@@ -83,5 +82,3 @@ const NavbarSideContainer = forwardRef(
 );
 
 NavbarSideContainer.displayName = "navbarSideContainer";
-
-export default typedMemo(NavbarSideContainer);

@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IconTrash, IconSearch } from "@tabler/icons-react";
 import { Button, Form, Heading, Icon, Input } from "../../ui";
@@ -47,7 +47,7 @@ const items: TestItem[] = [
   },
 ];
 
-const SelectItems: PaginatedSelectItems<TestItem> = ({
+const SelectItems: PaginatedSelectItems<TestItem, boolean> = ({
   items,
   handleSelect,
   isActive,
@@ -83,7 +83,7 @@ export const Default = ({ ...args }) => {
   return (
     <PaginatedSelect
       items={items}
-      pagination={{ result: 21, activePage: page, setActivePage: setPage }}
+      pagination={{ result: 21, page, setPage }}
       control={control}
       label="Paginated Select"
       name="select"
@@ -103,7 +103,7 @@ export const Error = ({ ...args }) => {
       <PaginatedSelect
         required
         items={items}
-        pagination={{ result: 21, activePage: page, setActivePage: setPage }}
+        pagination={{ result: 21, page, setPage }}
         control={control}
         label="Paginated Select"
         name="select"
@@ -139,7 +139,7 @@ export const Multiple = ({ ...args }) => {
     <PaginatedSelect
       items={items}
       multiple
-      pagination={{ result: 21, activePage: page, setActivePage: setPage }}
+      pagination={{ result: 21, page, setPage }}
       control={control}
       label="Paginated Select"
       name="select"

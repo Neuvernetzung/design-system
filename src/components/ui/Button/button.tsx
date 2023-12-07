@@ -1,7 +1,7 @@
-/* eslint-disable react/button-has-type */
-import cn from "classnames";
-import isString from "lodash/isString";
-import { ElementType, ForwardedRef, forwardRef, ReactNode } from "react";
+import { Slot, Slottable } from "@radix-ui/react-slot";
+import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
+
+import { cn } from "@/utils";
 
 import {
   extendedBgColors,
@@ -15,7 +15,7 @@ import {
   textSizes,
   transition,
 } from "../../../styles";
-import { useThemeState } from "../../../theme/useThemeState";
+import { useThemeStateValue } from "../../../theme/useThemeState";
 import type {
   ButtonVariant,
   ExtendedColor,
@@ -23,15 +23,8 @@ import type {
   Size,
   SvgType,
 } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "../../../utils/internal/polymorphic";
 import { Icon } from "../Icon";
 import { Spinner } from "../Loading";
-import { useLoadingState } from "../Loading/loading";
 
 export const buttonVariantStyles: Record<ButtonVariant, string> = {
   filled: "",
@@ -65,35 +58,26 @@ type ColorProps = {
 
 export const buttonBaseStyles = {
   base: "appearance-none flex items-center justify-center select-none gap-2 font-semibold disabled:cursor-not-allowed text-ellipsis",
-  fullWidth: "w-full",
   rounded: "!rounded-full",
 };
 
-export const ButtonDefaultElement = "button";
-
-export type ButtonOwnProps = {
+export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   color?: ExtendedColor;
   size?: Size;
   focus?: FocusVariant;
-  fullWidth?: boolean;
   rounded?: boolean;
   leftIcon?: SvgType;
   rightIcon?: SvgType;
   children?: ReactNode;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
-  loadingId?: string;
+  isLoading?: boolean;
+  asChild?: boolean;
 };
 
-export type ButtonProps<T extends ElementType = typeof ButtonDefaultElement> =
-  PolymorphicPropsWithRef<ButtonOwnProps, T>;
-
-export const Button: PolymorphicForwardRefExoticComponent<
-  ButtonOwnProps,
-  typeof ButtonDefaultElement
-> = forwardRef(
-  <T extends ElementType = typeof ButtonDefaultElement>(
+export const Button = forwardRef(
+  (
     {
       size = "md",
       type = "button",
@@ -101,24 +85,22 @@ export const Button: PolymorphicForwardRefExoticComponent<
       color = "accent",
       focus = "ring",
       disabled = false,
-      fullWidth,
       rounded,
       leftIcon,
       rightIcon,
-      loadingId,
+      isLoading,
       className,
-      as,
       children,
+      asChild,
       ...props
-    }: PolymorphicPropsWithoutRef<ButtonOwnProps, T>,
-    ref: ForwardedRef<Element>
+    }: ButtonProps,
+    ref: ForwardedRef<HTMLButtonElement>
   ) => {
-    const Component: ElementType = as || ButtonDefaultElement;
+    const Component = asChild ? Slot : "button";
 
-    const { adjustedTextColorState } = useThemeState();
-
-    const loadingState = useLoadingState((state) => state);
-    const isLoading = isString(loadingState) && loadingState === loadingId;
+    const adjustedTextColorState = useThemeStateValue(
+      (v) => v.adjustedTextColorState
+    );
 
     const _disabled = disabled || isLoading;
 
@@ -144,7 +126,6 @@ export const Button: PolymorphicForwardRefExoticComponent<
             getButtonColorStyle(color, adjustedTextColorState)?.disabled,
           getButtonColorStyle(color, adjustedTextColorState)?.text[variant],
           {
-            [buttonBaseStyles.fullWidth]: fullWidth,
             [buttonBaseStyles.rounded]: rounded,
           },
           className
@@ -156,13 +137,11 @@ export const Button: PolymorphicForwardRefExoticComponent<
         ) : (
           <Spinner size={size} />
         )}
-        {children}
+        <Slottable>{children}</Slottable>
         {rightIcon && <Icon size={size} icon={rightIcon} />}
       </Component>
     );
   }
 );
-
-export default typedMemo(Button);
 
 Button.displayName = "button";

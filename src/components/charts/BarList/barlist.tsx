@@ -1,8 +1,8 @@
-import cn from "classnames";
 import isFunction from "lodash/isFunction";
 import Link from "next/link";
-import { ReactNode, useMemo } from "react";
+import { ReactElement, ReactNode, useMemo } from "react";
 
+import { Tooltip } from "@/components/ui/Tooltip";
 import {
   bgColors,
   bgColorsInteractive,
@@ -15,9 +15,11 @@ import {
   roundings,
   textColors,
   transition,
-} from "../../../styles";
-import { useThemeState } from "../../../theme";
-import { Color, Size } from "../../../types";
+} from "@/styles";
+import { useThemeStateValue } from "@/theme";
+import { Color, Size } from "@/types";
+import { cn } from "@/utils";
+
 import { Text } from "../../ui/Typography/Text";
 
 export type BarListItemProps = {
@@ -40,6 +42,7 @@ export type BarListProps = {
   justifyValue?: "justify-between" | "justify-start";
   formatValue?: (value: number) => string | number;
   variant?: BarListVariant;
+  tooltip?: boolean;
 };
 
 const barVariantProps: Record<BarListVariant, string> = {
@@ -56,8 +59,11 @@ export const BarList = ({
   justifyValue = "justify-between",
   formatValue,
   variant = "default",
+  tooltip,
 }: BarListProps) => {
-  const { adjustedTextColorState } = useThemeState();
+  const adjustedTextColorState = useThemeStateValue(
+    (v) => v.adjustedTextColorState
+  );
 
   const sortedData = useMemo(
     () =>
@@ -84,6 +90,8 @@ export const BarList = ({
           href={href}
           size={size}
           color={color}
+          name={name}
+          tooltip={tooltip}
         >
           <div
             className={cn(
@@ -92,7 +100,7 @@ export const BarList = ({
               justifyValue
             )}
           >
-            <div className="flex flex-row w-full">
+            <div className="flex flex-row w-full overflow-hidden">
               <div
                 className={cn(
                   "relative",
@@ -106,7 +114,7 @@ export const BarList = ({
               >
                 <div
                   className={cn(
-                    "absolute max-w-full inset-y-0 flex items-center"
+                    "absolute max-w-full inset-y-0 flex items-center overflow-hidden"
                   )}
                 >
                   {!isShort(value) &&
@@ -114,6 +122,7 @@ export const BarList = ({
                       <Text
                         size={size}
                         className={cn(
+                          "truncate",
                           paddings[size],
                           variant === "default" && adjustedTextColorState[color]
                         )}
@@ -127,7 +136,11 @@ export const BarList = ({
                 (children || (
                   <Text
                     size={size}
-                    className={cn(paddings[size], textColors.accent)}
+                    className={cn(
+                      "w-min truncate",
+                      paddings[size],
+                      textColors.accent
+                    )}
                   >
                     {name}
                   </Text>
@@ -135,7 +148,7 @@ export const BarList = ({
             </div>
             {showValue && (
               <div>
-                <Text size={size} className="whitespace-nowrap">
+                <Text size={size} className="truncate">
                   {isFunction(formatValue) ? formatValue(value) : value}
                 </Text>
               </div>
@@ -147,32 +160,37 @@ export const BarList = ({
   );
 };
 
-type BarListItemWrapperProps = { href?: string; children: ReactNode } & Pick<
-  BarListProps,
-  "size" | "color"
->;
+type BarListItemWrapperProps = { children: ReactElement } & Pick<
+  BarListItemProps,
+  "href" | "name"
+> &
+  Pick<BarListProps, "size" | "color" | "tooltip">;
 
 const BarListItemWrapper = ({
   href,
   size = "md",
   color = "primary",
   children,
+  name,
+  tooltip,
 }: BarListItemWrapperProps) => {
   if (href)
     return (
-      <Link
-        href={href}
-        className={cn(
-          focusBase,
-          focusRing[color],
-          roundings[size],
-          transition,
-          "hover:bg-black/10 dark:hover:bg-white/10"
-        )}
-      >
-        {children}
-      </Link>
+      <Tooltip label={tooltip && name}>
+        <Link
+          href={href}
+          className={cn(
+            focusBase,
+            focusRing[color],
+            roundings[size],
+            transition,
+            "hover:bg-black/10 dark:hover:bg-white/10"
+          )}
+        >
+          {children}
+        </Link>
+      </Tooltip>
     );
 
-  return children;
+  return <Tooltip label={tooltip && name}>{children}</Tooltip>;
 };

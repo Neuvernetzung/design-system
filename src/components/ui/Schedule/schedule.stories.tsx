@@ -7,7 +7,7 @@ import {
   setMinutes,
   subDays,
 } from "date-fns";
-import React, { useState } from "react";
+import { useState } from "react";
 import type { VEvent } from "ts-ics";
 
 import { Schedule, ScheduleDayView, ViewEvent } from ".";

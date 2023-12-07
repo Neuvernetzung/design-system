@@ -1,1 +1,1 @@
-export { isLoading, default as Loading, loading, Spinner } from "./loading";
+export * from "./loading";

@@ -1,8 +1,8 @@
 import { IconGripVertical } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 
-import { paddingsEvenly } from "../../../styles";
-import { mergeRefs, typedMemo } from "../../../utils/internal";
+import { paddingsEvenly } from "@/styles";
+import { mergeRefs } from "@/utils/internal";
 import { IconButton } from "../Button";
 import { DragIndicator, SortableProps } from "../Sortable";
 import {
@@ -30,7 +30,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { createPortal } from "react-dom";
-import type { Size } from "../../../types";
+import type { Size } from "@/types";
 import { DragOverlay as DragOverlayComponent } from "../Sortable/Overlay";
 import { ForwardedRef, forwardRef } from "react";
 
@@ -47,7 +47,7 @@ export type SortableTableProps<
 
 export type SortableTableCol<T> = SimpleTableCol<T>;
 
-export const SortableTableInner = <
+export const SortableTable = <
   T extends string,
   TId extends string,
   TItem extends AnySortableItem
@@ -205,10 +205,12 @@ const SortableTableRow = forwardRef(
         <DragIndicator
           setNodeRef={mergeRefs([ref, setNodeRef])}
           style={style}
-          as="tr"
+          asChild
           key={`drag_indicator_${id}`}
         >
-          <td colSpan={100} />
+          <tr>
+            <td colSpan={100} />
+          </tr>
         </DragIndicator>
       );
 
@@ -238,5 +240,3 @@ const SortableTableRow = forwardRef(
 );
 
 SortableTableRow.displayName = "SortableTableRow";
-
-export const SortableTable = typedMemo(SortableTableInner);

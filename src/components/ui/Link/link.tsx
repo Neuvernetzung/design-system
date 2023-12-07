@@ -2,7 +2,7 @@ import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { ReactElement } from "react";
 
 export type LinkProps = NextLinkProps & {
-  children: ReactElement | string;
+  children?: ReactElement | string;
   disabled?: boolean;
 };
 

@@ -1,16 +1,15 @@
-import cn from "classnames";
+import { cn } from "@/utils/cn";
 import isString from "lodash/isString";
 import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 import type { FieldError, Message, ValidationRule } from "react-hook-form";
 
-import { getText, type Locale } from "../../../locales/getText";
-import { gapsSmall, textColors, textSizes } from "../../../styles";
-import { useThemeStateValue } from "../../../theme";
+import { getText, type Locale } from "@/locales/getText";
+import { gapsSmall, textColors, textSizes } from "@/styles";
+import { useThemeStateValue } from "@/theme";
 import { IconAlertTriangle } from "@tabler/icons-react";
-import type { RequiredInfoVariant, Size } from "../../../types";
-import { smallerSize } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
+import type { RequiredInfoVariant, Size } from "@/types";
+import { smallerSize } from "@/utils";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
@@ -88,5 +87,3 @@ export const FormElement: FC<FormElementProps> = ({
     </span>
   );
 };
-
-export default typedMemo(FormElement);

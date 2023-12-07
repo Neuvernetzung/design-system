@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { isSameMonth, isSameYear } from "date-fns";
 import type { ReactElement } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
@@ -120,11 +120,7 @@ export const Schedule = ({
           </div>
         )}
         <div
-          className={cn(
-            "flex flex-col w-full max-h-[80vh]",
-            gaps.md,
-            paddingsEvenly.md
-          )}
+          className={cn("flex flex-col w-full max-h-[80vh]", paddingsEvenly.md)}
         >
           {currentView === "day" && (
             <ScheduleDayView

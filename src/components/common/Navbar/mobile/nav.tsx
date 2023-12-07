@@ -1,11 +1,11 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { bgColors, gaps, paddingsEvenly, scrollbar } from "../../../../styles";
+import { bgColors, gaps, paddingsEvenly, scrollbar } from "@/styles";
 import { IconX, IconMenu2 } from "@tabler/icons-react";
-import { useRefDimensions } from "../../../../utils/internal";
+import { useRefDimensions } from "@/hooks";
 import { Button, IconButton } from "../../../ui/Button";
 import { DisclosureGroup } from "../../../ui/Disclosure";
 import { Icon } from "../../../ui/Icon";
@@ -115,24 +115,26 @@ export const MobileNavItem = ({
     return (
       <li>
         {!children && !child ? (
-          <Button
-            as={Link}
-            href={href || "#"}
-            {...(external ? { target: "_blank" } : {})}
-            variant="ghost"
-            fullWidth
-          >
-            {icon && (
-              <div className="flex">
-                <Icon color="accent" icon={icon} />
-              </div>
-            )}
-            <div
-              className={cn("w-full flex items-center justify-start", gaps.sm)}
+          <Button variant="ghost" className="w-full" asChild>
+            <Link
+              href={href || "#"}
+              {...(external ? { target: "_blank" } : {})}
             >
-              {label}
-              {tag && <Tag variant="solid" size="sm" {...tag} />}
-            </div>
+              {icon && (
+                <div className="flex">
+                  <Icon color="accent" icon={icon} />
+                </div>
+              )}
+              <div
+                className={cn(
+                  "w-full flex items-center justify-start",
+                  gaps.sm
+                )}
+              >
+                {label}
+                {tag && <Tag variant="solid" size="sm" {...tag} />}
+              </div>
+            </Link>
           </Button>
         ) : (
           <DisclosureGroup
@@ -170,7 +172,7 @@ export const MobileNavItem = ({
     );
 
   return (
-    <Button disabled={disabled} variant="ghost" fullWidth>
+    <Button disabled={disabled} variant="ghost" className="w-full">
       {icon && (
         <div className="flex">
           <Icon color="accent" icon={icon} />

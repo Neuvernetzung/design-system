@@ -6,7 +6,6 @@ import {
   IconUserPlus,
   IconX,
 } from "@tabler/icons-react";
-import cn from "classnames";
 import { addHours } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { type MouseEvent, useState } from "react";
@@ -14,8 +13,8 @@ import {
   type FieldPathByValue,
   type Path,
   type UseControllerProps,
-  useForm,
   useFieldArray,
+  useForm,
 } from "react-hook-form";
 import {
   getDurationFromInterval,
@@ -24,6 +23,8 @@ import {
   type VEventDuration,
 } from "ts-ics";
 import { v4 as uuid } from "uuid";
+
+import { cn } from "@/utils";
 
 import {
   borders,
@@ -39,14 +40,19 @@ import { Datetimepicker } from "../../Datepicker";
 import { FormElement } from "../../Form";
 import { Icon } from "../../Icon";
 import { Input } from "../../Input";
+import { InputWithTags } from "../../Input/WithTags/inputWithTags";
 import { Modal } from "../../Modal";
 import { RichText } from "../../RichText";
+import { Select } from "../../Select";
 import { Switch } from "../../Switch";
-import { TabGroup, type TabItemProps, TabList, TabPanels } from "../../Tabs";
+import {
+  TabGroup,
+  type TabItemValueProps,
+  TabList,
+  TabPanels,
+} from "../../Tabs";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from "..";
-import { Select } from "../../Select";
-import InputWithTags from "../../Input/WithTags/inputWithTags";
 
 export type UseEditEventProps = {
   open: boolean;
@@ -108,7 +114,7 @@ export const EventEdit = ({
 }: EditEventProps) => {
   const isEdit = !editEventProps.isNew;
 
-  const [tab, setTab] = useState<number>(0);
+  const [tab, setTab] = useState<string>("appointment");
 
   const { control, handleSubmit, watch, setValue } = useForm<VEvent>({
     values: editEventProps.event ? { ...editEventProps.event } : undefined,
@@ -116,7 +122,7 @@ export const EventEdit = ({
 
   const onClose = () => {
     editEventProps.onClose();
-    setTab(0);
+    setTab("appointment");
   };
 
   const { end, duration, start } = watch();
@@ -149,8 +155,9 @@ export const EventEdit = ({
   if (disableUpdate || isEdit ? !isFunction(onUpdate) : !isFunction(onCreate))
     return null;
 
-  const tabs: TabItemProps[] = [
+  const tabs: TabItemValueProps[] = [
     {
+      value: "appointment",
       title: "Termin",
       content: (
         <div className={cn("w-full flex flex-col", gaps.sm)}>
@@ -199,6 +206,7 @@ export const EventEdit = ({
       ),
     },
     {
+      value: "extended",
       title: "Erweitert",
       content: (
         <div className={cn("w-full flex flex-col", gaps.sm)}>
@@ -231,6 +239,7 @@ export const EventEdit = ({
       ),
     },
     {
+      value: "persons",
       title: "Personen",
       content: (
         <div className={cn("w-full flex flex-col", gaps.sm)}>
@@ -304,12 +313,11 @@ export const EventEdit = ({
   ];
 
   return (
-    <TabGroup selectedIndex={tab} onChange={setTab}>
+    <TabGroup value={tab} onValueChange={setTab}>
       <Modal
         open={editEventProps.open}
         headerClassName="pb-0 px-0"
         setOpen={editEventProps.setOpen}
-        onClose={onClose}
         header={
           <div className={cn("w-full flex flex-col", gaps.sm)}>
             <div

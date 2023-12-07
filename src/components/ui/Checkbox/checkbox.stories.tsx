@@ -1,12 +1,10 @@
+import { Meta } from "@storybook/react";
 import {
   IconChevronDown,
   IconChevronUp,
   IconHome,
   IconPlus,
 } from "@tabler/icons-react";
-
-import { Meta } from "@storybook/react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { checkboxVariants, colors, sizes } from "../../../types";
@@ -203,8 +201,8 @@ export const Icon = ({ ...args }) => {
 };
 
 type DisabledProps = {
-  checkbox_disabled: any;
-  checkbox_disabled_single: any;
+  checkbox_disabled: string[];
+  checkbox_disabled_single: string[];
 };
 
 export const Disabled = ({ ...args }) => {
@@ -244,7 +242,7 @@ export const Disabled = ({ ...args }) => {
 };
 
 type ErrorProps = {
-  checkbox_error: any;
+  checkbox_error: string[];
 };
 
 export const Error = ({ ...args }) => {

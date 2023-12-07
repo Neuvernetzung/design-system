@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { IconChevronRight, IconHome } from "@tabler/icons-react";
 import type { ButtonVariant, Size } from "../../../types";
@@ -45,9 +45,10 @@ export const Breadcrumbs = ({
         ariaLabel="home"
         size={size}
         variant={variant}
-        as={Link}
-        href="/"
-      />
+        asChild
+      >
+        <Link href="/" />
+      </IconButton>
 
       {newPaths
         .filter((v) => v)
@@ -61,13 +62,13 @@ export const Breadcrumbs = ({
             <Button
               size={size}
               variant={variant}
-              as={Link}
-              href={item}
               disabled={i + 1 === newPaths.length || item === "..."}
             >
-              {!transform
-                ? item.split("/").pop()
-                : transform(item.split("/").pop())}
+              <Link href={item}>
+                {!transform
+                  ? item.split("/").pop()
+                  : transform(item.split("/").pop())}
+              </Link>
             </Button>
           </div>
         ))}

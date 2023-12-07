@@ -1,34 +1,32 @@
-import { Placement } from "@popperjs/core";
-import cn from "classnames";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import {
-  ForwardedRef,
-  forwardRef,
-  ReactElement,
-  ReactNode,
-  useRef,
-  useState,
-} from "react";
-import { createPortal } from "react-dom";
-import { usePopper } from "react-popper";
+  PopperContentProps,
+  Root,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@radix-ui/react-tooltip";
+import { cn } from "@/utils";
+import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
 import {
   bgColors,
   paddingsSmall,
   roundings,
   shadows,
+  tooltipAnimation,
   zIndexes,
 } from "../../../styles";
-import { popperOffset } from "../../../styles/popper/offset";
+import { offsetSizes } from "../../../styles/popper/offset";
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type TooltipProps = {
   children: ReactElement;
   label?: ReactNode;
   size?: Size;
-  placement?: Placement;
+  side?: PopperContentProps["side"];
+  align?: PopperContentProps["align"];
   delay?: number;
 };
 
@@ -36,80 +34,33 @@ export const Tooltip = ({
   label,
   children,
   size = "sm",
-  placement = "top",
+  side = "top",
+  align = "center",
   delay = 0,
 }: TooltipProps) => {
-  const [hover, setHover] = useState<boolean>(false);
-  const isEntering = useRef<boolean>(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
-    null
-  );
-
-  const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
-
-  const offset = popperOffset({ size });
-
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement,
-    modifiers: [
-      {
-        name: "offset",
-        options: {
-          offset,
-        },
-      },
-    ],
-  });
-
   if (!label) return children;
 
-  const handleMouseEnter = () => {
-    isEntering.current = true;
-    timeoutRef.current = setTimeout(() => {
-      if (isEntering.current === true) setHover(true);
-    }, delay);
-  };
-
-  const handleMouseLeave = () => {
-    isEntering.current = false;
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setHover(false);
-  };
-
   return (
-    <>
-      <span
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        ref={setReferenceElement}
-      >
-        {children}
-      </span>
-      <LazyMotion features={domAnimation}>
-        {createPortal(
-          <AnimatePresence>
-            {hover && (
-              <TooltipInner
-                ref={setPopperElement}
-                styles={styles.popper}
-                attributes={attributes.popper}
-                size={size}
-                label={label}
-              />
+    <TooltipProvider delayDuration={delay}>
+      <Root>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent
+            side={side}
+            align={align}
+            sideOffset={offsetSizes[size]}
+            className={cn(
+              "pointer-events-none will-change-[transform,opacity]",
+              tooltipAnimation
             )}
-          </AnimatePresence>,
-          document.body
-        )}
-      </LazyMotion>
-    </>
+          >
+            <TooltipInner size={size} label={label} />
+          </TooltipContent>
+        </TooltipPortal>
+      </Root>
+    </TooltipProvider>
   );
 };
-
-export default typedMemo(Tooltip);
 
 type TooltipInnerT = {
   styles?: object;
@@ -123,43 +74,28 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
   (
     { styles, attributes, size = "sm", label, className },
     ref: ForwardedRef<HTMLSpanElement>
-  ) => {
-    const [innerPopperElement, setInnerPopperElement] =
-      useState<HTMLElement | null>(null);
-    const { styles: innerStyles, attributes: innerAttributes } = usePopper(
-      undefined,
-      innerPopperElement
-    );
+  ) => (
+    <span
+      ref={ref}
+      role="tooltip"
+      className={cn(
+        "flex",
+        paddingsSmall[size],
+        roundings[size],
 
-    return (
-      <span
-        role="tooltip"
-        className={cn(zIndexes.tooltip)}
-        ref={ref || setInnerPopperElement}
-        style={styles || innerStyles}
-        {...(attributes || innerAttributes)} // Animationen können nicht im selben Span sein, da durch Scale usePopper nicht ordentlich funktioniert.
-      >
-        <m.span
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1, transition: { duration: 0.1 } }}
-          exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.1 } }}
-          className={cn(
-            "pointer-events-none flex",
-            paddingsSmall[size],
-            roundings[size],
-
-            bgColors.black,
-            shadows.sm,
-            className
-          )}
-        >
-          <Text size={size} color="filled">
-            {label}
-          </Text>
-        </m.span>
-      </span>
-    );
-  }
+        bgColors.black,
+        shadows.sm,
+        zIndexes.tooltip,
+        className
+      )}
+      style={styles}
+      {...attributes}
+    >
+      <Text size={size} color="filled">
+        {label}
+      </Text>
+    </span>
+  )
 );
 
 TooltipInner.displayName = "TooltipInner";

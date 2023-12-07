@@ -1,5 +1,5 @@
 import { IconArrowBack } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import {
   addDays,
   addMonths,

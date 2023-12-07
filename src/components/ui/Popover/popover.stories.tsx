@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Text } from "../Typography";
 import { Popover } from ".";

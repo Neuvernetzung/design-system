@@ -1,14 +1,15 @@
-import { UniqueIdentifier, DraggableAttributes } from "@dnd-kit/core";
+import { DraggableAttributes, UniqueIdentifier } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { Slot } from "@radix-ui/react-slot";
 import isFunction from "lodash/isFunction";
-import { ElementType, ForwardedRef, forwardRef, ReactNode } from "react";
-import type { PolymorphicPropsWithoutRef } from "../../../utils/internal/polymorphic";
+import { ForwardedRef, HTMLAttributes, ReactNode, forwardRef } from "react";
 
-import { mergeRefs, typedMemo } from "../../../utils/internal";
-import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { cn } from "@/utils";
+
+import { mergeRefs } from "../../../utils/internal";
 import { DragIndicator } from "./Indicator";
-import cn from "classnames";
 
 type FunctionChildrenProps<THandle extends boolean> = {
   handle: THandle extends true
@@ -16,31 +17,30 @@ type FunctionChildrenProps<THandle extends boolean> = {
     : undefined;
 };
 
-export type SortableItemProps<THandle extends boolean> = {
+export type SortableItemProps<THandle extends boolean> = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "children"
+> & {
   id: UniqueIdentifier;
   handle?: THandle;
   indicator?: boolean;
+  asChild?: boolean;
   children:
     | ReactNode
     | (({ handle }: FunctionChildrenProps<THandle>) => ReactNode);
 };
 
-const SortableItemDefaultElement = "div";
-
-const SortableItemInner = <
-  THandle extends boolean = false,
-  T extends ElementType = typeof SortableItemDefaultElement
->(
+export const SortableItemInner = <THandle extends boolean = false>(
   {
     id,
     handle,
     indicator,
-    as,
+    asChild,
     children,
     className,
     ...props
-  }: PolymorphicPropsWithoutRef<SortableItemProps<THandle>, T>,
-  ref: ForwardedRef<HTMLElement>
+  }: SortableItemProps<THandle>,
+  ref: ForwardedRef<HTMLDivElement>
 ) => {
   const {
     attributes,
@@ -56,7 +56,7 @@ const SortableItemInner = <
     transition,
   };
 
-  const Component: ElementType = as || SortableItemDefaultElement;
+  const Component = asChild ? Slot : "div";
 
   if (isDragging && indicator)
     return <DragIndicator setNodeRef={setNodeRef} style={style} />;
@@ -84,13 +84,10 @@ const SortableItemInner = <
   );
 };
 
-const SortableItem = forwardRef(SortableItemInner) as <
-  THandle extends boolean = false,
-  T extends ElementType = typeof SortableItemDefaultElement
+export const SortableItem = forwardRef(SortableItemInner) as <
+  THandle extends boolean = false
 >(
-  props: PolymorphicPropsWithoutRef<SortableItemProps<THandle>, T> & {
-    ref?: ForwardedRef<HTMLElement>;
+  props: SortableItemProps<THandle> & {
+    ref?: ForwardedRef<HTMLButtonElement>;
   }
 ) => ReturnType<typeof SortableItemInner>;
-
-export default typedMemo(SortableItem);

@@ -1,6 +1,5 @@
 import { Meta } from "@storybook/react";
-import cn from "classnames";
-import React from "react";
+import { cn } from "@/utils";
 
 import { borders } from "../../../styles";
 import { BarList, barListVariants } from ".";
@@ -20,7 +19,15 @@ const data = [
   { name: "Facebook", value: 285 },
   { name: "YouTube", value: 503, href: "https://www.youtube.com" },
   { name: "LinkedIn", value: 80 },
+  {
+    name: "https://neuvernetzung.de/blog/Massgeschneiderten_Webseiten:_Einzigartige_Performance_Sicherheit_und_Unverwechselbarkeit_fur_Ihr_Online-Business",
+    value: 350,
+  },
   { name: "Instagram", value: 1055, href: "https://www.instagram.de" },
+  {
+    name: "https://neuvernetzung.de/blog/Massgeschneiderten_Webseiten:_Einzigartige_Performance_Sicherheit_und_Unverwechselbarkeit_fur_Ihr_Online-Business-Einzigartige_Performance_Sicherheit_und_Unverwechselbarkeit_fur_Ihr_Online-Business",
+    value: 50,
+  },
 ];
 
 export const Default = ({ ...args }) => (

@@ -5,6 +5,9 @@ const config: Config.InitialOptions = {
   // `<rootDir>` is a token Jest substitutes
   testEnvironment: "jsdom",
   roots: ["<rootDir>/src"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
+  },
 
   // Jest transformations -- this adds support for TypeScript
   // using ts-jest

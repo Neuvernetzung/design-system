@@ -1,10 +1,10 @@
 import { Meta } from "@storybook/react";
-import cn from "classnames";
-import React from "react";
+import { format } from "date-fns";
+
+import { cn } from "@/utils";
 
 import { borders } from "../../../styles";
 import { Barchart } from ".";
-import { format } from "date-fns";
 
 export default {
   title: "CHARTS/Barchart",

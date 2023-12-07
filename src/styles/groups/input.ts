@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 
 import type { InputVariant, Size } from "../../types";
 import {
@@ -23,8 +23,8 @@ import {
 type InputStyleProps = {
   size: Size;
   variant: InputVariant;
-  leftAddon?: any;
-  rightAddon?: any;
+  leftAddon?: boolean;
+  rightAddon?: boolean;
   disabled: boolean;
   error: boolean;
 };
@@ -65,9 +65,7 @@ export const inputVariants: Record<InputVariant, VariantProps> = {
   },
 };
 
-const styles = {
-  inputBase: `appearance-none outline-none w-full`,
-};
+export const inputContainerClassName = "flex flex-row relative";
 
 export const getInputStyles = ({
   size,
@@ -78,10 +76,10 @@ export const getInputStyles = ({
   rightAddon,
 }: InputStyleProps) =>
   cn(
+    "appearance-none outline-none w-full",
     inputSizes[size],
     inputVariants[variant]?.base,
     !error ? focus.accent : focus.danger,
-    styles.inputBase,
     focus,
     transition,
     !error

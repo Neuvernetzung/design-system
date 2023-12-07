@@ -4,7 +4,7 @@ import {
   IconChevronRight,
   IconPlus,
 } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { MouseEventHandler } from "react";
 
 import { gaps } from "../../../styles";
@@ -54,7 +54,7 @@ export const ScheduleHeader = ({
   return (
     <div
       className={cn(
-        "flex flex-col md:flex-row justify-between items-center",
+        "flex flex-col md:flex-row justify-between items-center mb-4",
         gaps.md
       )}
     >

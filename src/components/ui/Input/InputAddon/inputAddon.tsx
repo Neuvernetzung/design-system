@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { forwardRef, ReactNode } from "react";
 
 import {
@@ -10,15 +10,13 @@ import {
 } from "../../../../styles";
 import { inputSizes } from "../../../../styles/groups";
 import type { InputVariant, Size } from "../../../../types";
-import { typedMemo } from "../../../../utils/internal";
 
 export type InputAddonProps = {
   className?: string;
   children: ReactNode;
   size: Size;
   variant: InputVariant;
-  isLeft?: boolean;
-  isRight?: boolean;
+  type: "left" | "right";
 };
 
 export const addonVariant: Record<InputVariant, string> = {
@@ -32,7 +30,7 @@ const styles = {
 };
 
 export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
-  ({ className, children, variant, size, isLeft, isRight }, ref) => (
+  ({ className, children, variant, size, type }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -40,10 +38,10 @@ export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
         inputSizes[size],
         addonVariant[variant],
         extendedBgColors.filledSubtile,
-        isLeft && roundingsLeft[size],
-        isLeft && "border-l",
-        isRight && roundingsRight[size],
-        isRight && "border-r",
+        type === "left" && roundingsLeft[size],
+        type === "left" && "border-l",
+        type === "right" && roundingsRight[size],
+        type === "right" && "border-r",
         className
       )}
     >
@@ -51,7 +49,5 @@ export const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
     </div>
   )
 );
-
-export default typedMemo(InputAddon);
 
 InputAddon.displayName = "InputAddon";

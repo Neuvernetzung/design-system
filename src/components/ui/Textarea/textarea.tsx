@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { ForwardedRef, forwardRef, ReactNode } from "react";
 import {
@@ -11,7 +11,7 @@ import {
 import type { Locale } from "../../../locales/getText";
 import { getInputStyles } from "../../../styles/groups";
 import type { InputVariant, Size } from "../../../types";
-import { mergeRefs, typedMemo } from "../../../utils/internal";
+import { mergeRefs } from "../../../utils/internal";
 import {
   maxLengthInputRule,
   minLengthInputRule,
@@ -122,7 +122,7 @@ export const TextareaInner = <
   );
 };
 
-const Textarea = forwardRef(TextareaInner) as <
+export const Textarea = forwardRef(TextareaInner) as <
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>
 >(
@@ -131,5 +131,3 @@ const Textarea = forwardRef(TextareaInner) as <
       ref?: ForwardedRef<HTMLTextAreaElement>;
     }
 ) => ReturnType<typeof TextareaInner>;
-
-export default typedMemo(Textarea);

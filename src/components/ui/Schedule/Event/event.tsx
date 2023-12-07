@@ -6,7 +6,7 @@ import {
   IconArrowNarrowRight,
   IconCalendarCancel,
 } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { addDays, addHours, addMinutes } from "date-fns";
 import { getEventEnd, type VEvent } from "ts-ics";
 
@@ -115,12 +115,10 @@ export const Event = ({
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
-  const Component = viewEventProps ? "button" : "div";
-
   return (
     <Button
       title={formatEventTitle(event)}
-      as={Component}
+      asChild={!!viewEventProps}
       color={color}
       disabled={!viewEventProps ? !isDragoverlay : false}
       variant={
@@ -139,7 +137,7 @@ export const Event = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex !items-start !justify-start w-full h-full relative overflow-hidden truncate",
+        "flex items-start justify-start w-full h-full relative overflow-hidden truncate",
         beginsBeforeThisDay &&
           (isReverse ? "rounded-b-none" : "rounded-t-none"),
         endsAfterThisDay && (isReverse ? "rounded-t-none" : "rounded-b-none"),
@@ -227,11 +225,9 @@ export const EventSmall = ({
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
-  const Component = viewEventProps ? "button" : "div";
-
   return (
     <Button
-      as={Component}
+      asChild={!!viewEventProps}
       title={formatEventTitle(event)}
       disabled={!viewEventProps ? !isDragoverlay : false}
       color={color}

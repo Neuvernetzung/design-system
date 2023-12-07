@@ -1,8 +1,10 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
-import { Searchbar } from ".";
+import { useUrlState } from "@/hooks";
+
 import { Modal } from "../../ui";
+import { Searchbar } from ".";
 
 export default {
   title: "COMMON/Searchbar",
@@ -10,10 +12,14 @@ export default {
   argTypes: {},
 } as Meta;
 
-export const Default = ({ ...args }) => <Searchbar {...args} />;
-
-export const WithState = ({ ...args }) => {
+export const Default = ({ ...args }) => {
   const [search, setSearch] = useState<string>();
+
+  return <Searchbar search={search} setSearch={setSearch} {...args} />;
+};
+
+export const WithUrlState = ({ ...args }) => {
+  const [search, setSearch] = useUrlState({ name: "search" });
 
   return (
     <div>
@@ -23,7 +29,7 @@ export const WithState = ({ ...args }) => {
         content={
           <div>
             Suche: {search}
-            <Searchbar setSearch={setSearch} {...args} />
+            <Searchbar search={search} setSearch={setSearch} {...args} />
           </div>
         }
       />

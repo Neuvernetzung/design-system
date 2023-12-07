@@ -1,16 +1,16 @@
-import cn from "classnames";
-import { LazyMotion, domAnimation, m } from "framer-motion";
-import { typedMemo } from "../../../utils/internal";
+import { cn } from "@/utils";
+import { backdropAnimation } from "../../../styles";
 
-export const Backdrop = () => (
-  <LazyMotion features={domAnimation}>
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 100 }}
-      transition={{ duration: 0.2 }}
-      className={cn("fixed inset-0 bg-opacity-25 bg-black backdrop-blur-sm")}
-    />
-  </LazyMotion>
+export type BackdropProps = { isOpen: boolean; className?: string };
+
+export const Backdrop = ({ isOpen, className }: BackdropProps) => (
+  <div
+    data-state={isOpen ? "open" : "closed"}
+    className={cn(
+      "fixed inset-0 bg-opacity-25 bg-black backdrop-blur-sm",
+      backdropAnimation,
+      "will-change-[opacity]",
+      className
+    )}
+  />
 );
-
-export default typedMemo(Backdrop);

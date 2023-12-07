@@ -1,27 +1,37 @@
-import { Editor as CoreEditor } from "@tiptap/core";
-import { Editor } from "@tiptap/react";
-import { IconSelector } from "@tabler/icons-react";
-import { Menu } from "../../Menu";
+import { ToolbarButton } from "@radix-ui/react-toolbar";
+import {
+  IconH1,
+  IconH2,
+  IconH3,
+  IconH4,
+  IconLetterP,
+  IconLetterPSmall,
+  IconSelector,
+} from "@tabler/icons-react";
+import type { Editor as CoreEditor } from "@tiptap/core";
+import type { Editor } from "@tiptap/react";
+import type { RefObject } from "react";
 
-export const textTypeTags = ["p", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
+import { Button } from "../../Button";
+import { Menu } from "../../Menu";
+import compact from "lodash/compact";
+
+export const textTypeTags = ["p", "small", "h1", "h2", "h3", "h4"] as const;
 
 export type TextTypeTags = (typeof textTypeTags)[number];
 
 const tags: Record<TextTypeTags, string> = {
-  p: "Paragraph - p",
-  h1: "Überschrift - h1",
-  h2: "Überschrift - h2",
-  h3: "Überschrift - h3",
-  h4: "Überschrift - h4",
-  h5: "Überschrift - h5",
-  h6: "Überschrift - h6",
+  p: "Text",
+  small: "Klein",
+  h1: "Überschrift 1",
+  h2: "Überschrift 2",
+  h3: "Überschrift 3",
+  h4: "Überschrift 4",
 };
 
 type SelectTextProps = {
   editor: Editor;
-  selectedTag: TextTypeTags;
-  setSelectedTag: (type: TextTypeTags) => void;
-  id: string;
+  containerRef?: RefObject<HTMLElement>;
 };
 
 type returnTextSelectionProps = {
@@ -41,94 +51,88 @@ export const returnTextSelection = ({ editor }: returnTextSelectionProps) => {
   if (editor.isActive("heading", { level: 4 })) {
     return "h4";
   }
-  if (editor.isActive("heading", { level: 5 })) {
-    return "h5";
-  }
-  if (editor.isActive("heading", { level: 6 })) {
-    return "h6";
+  if (editor.isActive("small")) {
+    return "small";
   }
   return "p";
 };
 
-export const SelectText = ({
-  editor,
-  selectedTag,
-  setSelectedTag,
-  id,
-}: SelectTextProps) => (
-  <Menu
-    size="sm"
-    placement="bottom"
-    buttonType="button"
-    buttonProps={{
-      id,
-      tabIndex: -1,
-      children: tags[selectedTag || "p"],
-      className: "truncate w-36",
-      variant: "ghost",
-      size: "sm",
-      rightIcon: IconSelector,
-    }}
-    items={[
-      {
-        children: "Fließtext",
-        items: [
-          {
-            children: tags.p,
-            onClick: () => {
-              editor?.chain().focus().setParagraph().run();
-              setSelectedTag("p");
+export const SelectText = ({ editor, containerRef }: SelectTextProps) => {
+  const isList = editor.isActive("listItem");
+
+  return (
+    <Menu
+      size="sm"
+      containerRef={containerRef}
+      buttonComponent={
+        <ToolbarButton asChild>
+          <Button
+            className="truncate"
+            variant="ghost"
+            size="sm"
+            rightIcon={IconSelector}
+          >
+            {tags[returnTextSelection({ editor }) || "p"]}
+          </Button>
+        </ToolbarButton>
+      }
+      items={compact([
+        {
+          type: "group",
+          children: "Fließtexte",
+          items: [
+            {
+              icon: IconLetterP,
+              children: tags.p,
+              onClick: () => {
+                editor?.chain().focus().setParagraph().run();
+              },
             },
-          },
-        ],
-      },
-      {
-        children: "Überschriften",
-        items: [
-          {
-            children: tags.h1,
-            onClick: () => {
-              editor?.chain().focus().toggleHeading({ level: 1 }).run();
-              setSelectedTag("h1");
+            {
+              icon: IconLetterPSmall,
+              children: tags.small,
+              onClick: () => {
+                editor?.chain().focus().setSmall().run();
+              },
             },
-          },
-          {
-            children: tags.h2,
-            onClick: () => {
-              editor?.chain().focus().toggleHeading({ level: 2 }).run();
-              setSelectedTag("h2");
+          ],
+        },
+        !isList && { type: "separator" },
+        !isList && {
+          type: "group",
+          children: "Überschriften",
+          items: [
+            {
+              icon: IconH1,
+              children: tags.h1,
+              onClick: () => {
+                editor?.chain().focus().toggleHeading({ level: 1 }).run();
+              },
             },
-          },
-          {
-            children: tags.h3,
-            onClick: () => {
-              editor?.chain().focus().toggleHeading({ level: 3 }).run();
-              setSelectedTag("h3");
+            {
+              icon: IconH2,
+              children: tags.h2,
+              onClick: () => {
+                editor?.chain().focus().toggleHeading({ level: 2 }).run();
+              },
             },
-          },
-          {
-            children: tags.h4,
-            onClick: () => {
-              editor?.chain().focus().toggleHeading({ level: 4 }).run();
-              setSelectedTag("h4");
+            {
+              icon: IconH3,
+              children: tags.h3,
+              onClick: () => {
+                editor?.chain().focus().toggleHeading({ level: 3 }).run();
+              },
             },
-          },
-          {
-            children: tags.h5,
-            onClick: () => {
-              editor?.chain().focus().toggleHeading({ level: 5 }).run();
-              setSelectedTag("h5");
+            {
+              icon: IconH4,
+              children: tags.h4,
+              onClick: () => {
+                editor?.chain().focus().toggleHeading({ level: 4 }).run();
+              },
             },
-          },
-          {
-            children: tags.h6,
-            onClick: () => {
-              editor?.chain().focus().toggleHeading({ level: 6 }).run();
-              setSelectedTag("h6");
-            },
-          },
-        ],
-      },
-    ]}
-  />
-);
+          ],
+        },
+      ])}
+    />
+  );
+};

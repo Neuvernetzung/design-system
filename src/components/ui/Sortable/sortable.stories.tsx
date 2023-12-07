@@ -1,10 +1,10 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Sortable, SortableItem, UseSortableChange } from ".";
 import { Text, IconButton } from "..";
 import { IconGripVertical } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { bgColorsInteractive, paddingsEvenly } from "../../../styles";
 
 export default {
@@ -13,14 +13,14 @@ export default {
   argTypes: {},
 } as Meta;
 
-type Item = { id: number; content: string; order: number };
+type Item = { id: string; content: string; order: number };
 
 const defaultItems: Item[] = [
-  { id: 1, content: "Item 1", order: 23 },
-  { id: 2, content: "Item 2", order: 24 },
-  { id: 3, content: "Item 3", order: 25 },
-  { id: 4, content: "Item 4", order: 28 },
-  { id: 5, content: "Item 5", order: 29 },
+  { id: "1", content: "Item 1", order: 23 },
+  { id: "2", content: "Item 2", order: 24 },
+  { id: "3", content: "Item 3", order: 25 },
+  { id: "4", content: "Item 4", order: 28 },
+  { id: "5", content: "Item 5", order: 29 },
 ];
 
 const itemClassName = cn(paddingsEvenly.md, bgColorsInteractive.white);
@@ -38,9 +38,14 @@ export const Default = ({ ...args }) => {
       items={items}
       handleChange={handleChange}
       itemIds={items.map((item) => item.id)}
+      {...args}
     >
       {items.map((item) => (
-        <SortableItem className={itemClassName} id={item.id} key={item.id}>
+        <SortableItem
+          className={itemClassName}
+          id={item.id.toString()}
+          key={item.id}
+        >
           <div>{item.content}</div>
         </SortableItem>
       ))}
@@ -64,12 +69,13 @@ export const Controlled = ({ ...args }) => {
           handleChange={handleChange}
           itemIds={defaultItems.map((item) => item.id)}
           order="order"
+          {...args}
         >
           {(items) =>
             items.map((item) => (
               <SortableItem
                 className={itemClassName}
-                id={item.id}
+                id={item.id.toString()}
                 key={item.id}
               >
                 <div>{item.content}</div>
@@ -103,13 +109,14 @@ export const WithHandle = ({ ...args }) => {
       items={items}
       handleChange={handleChange}
       itemIds={items.map((item) => item.id)}
+      {...args}
     >
       {items.map((item, i) => (
         <SortableItem
           className={itemClassName}
           handle
           indicator
-          id={item.id}
+          id={item.id.toString()}
           key={item.id}
         >
           {({ handle }) => (

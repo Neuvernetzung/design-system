@@ -7,14 +7,8 @@ it("Tabs axe", async () => {
   const { container } = render(
     <Tabs
       items={[
-        {
-          title: "Tab 1",
-          content: "Content 1",
-        },
-        {
-          title: "Tab 2",
-          content: "Content 2",
-        },
+        { value: "1", title: "Tab 1", content: "Content 1" },
+        { value: "2", title: "Tab 2", content: "Content 2" },
       ]}
     />
   );

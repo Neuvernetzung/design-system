@@ -1,6 +1,5 @@
 import { Meta } from "@storybook/react";
-import cn from "classnames";
-import React from "react";
+import { cn } from "@/utils";
 import { useForm } from "react-hook-form";
 
 import {
@@ -47,7 +46,7 @@ type FormProps = {
   radius: Size;
 };
 
-export const Default = ({ ...args }) => {
+export const Default = () => {
   const { colorState } = useThemeState();
   const themeStore = useThemeStore();
 
@@ -90,7 +89,7 @@ export const Default = ({ ...args }) => {
   );
 };
 
-export const DarkTheme = ({ ...args }) => {
+export const DarkTheme = () => {
   const { colorState } = useThemeState();
   const themeStore = useThemeStore();
 
@@ -135,7 +134,7 @@ export const DarkTheme = ({ ...args }) => {
           borders.accent
         )}
       >
-        <Tag color="brand" label=":root" />
+        <Tag color="brand">:root</Tag>
       </div>
       <Form
         handleSubmit={handleDarkSubmit}
@@ -151,7 +150,7 @@ export const DarkTheme = ({ ...args }) => {
   );
 };
 
-export const NestedTheme = ({ ...args }) => {
+export const NestedTheme = () => {
   const { colorState } = useThemeState();
   const themeStore = useThemeStore();
 
@@ -207,9 +206,9 @@ export const NestedTheme = ({ ...args }) => {
           borders.accent
         )}
       >
-        <Tag color="brand" label=":root" />
+        <Tag color="brand">:root</Tag>
         <div className={cn("container border p-4", borders.accent)}>
-          <Tag color="brand" label=".container" />
+          <Tag color="brand">.container</Tag>
         </div>
       </div>
       <Form
@@ -244,7 +243,7 @@ export const NestedTheme = ({ ...args }) => {
   );
 };
 
-export const IconStrokeWidth = ({ ...args }) => {
+export const IconStrokeWidth = () => {
   const { iconStrokeWidth } = useThemeState();
   const themeStore = useThemeStore();
 

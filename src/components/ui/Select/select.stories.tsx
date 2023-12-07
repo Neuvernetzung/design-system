@@ -1,11 +1,12 @@
 import { Meta } from "@storybook/react";
-import React from "react";
+import { IconPlus } from "@tabler/icons-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, Form } from "..";
-import { Select } from ".";
-import { Disclosure } from "../Disclosure";
 import { inputVariants, sizes } from "../../../types";
+import { Button, Form, InputRaw, Popover } from "..";
+import { Disclosure } from "../Disclosure";
+import { Select } from ".";
 
 export default {
   title: "UI/Form/Select",
@@ -30,20 +31,21 @@ export default {
 const formClassName = "flex flex-col gap-5";
 
 export const Variants = ({ ...args }) => {
-  const formMethods = useForm();
+  const { control, handleSubmit } = useForm();
 
   return (
     <Form
-      handleSubmit={formMethods.handleSubmit}
+      handleSubmit={handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <div className="flex flex-col items-center">
         <div className="w-32">
           <Select
-            removeAll
-            control={formMethods.control}
+            allowReset
+            control={control}
             name="select"
+            label="Default"
             options={[
               { children: "Option 1", value: "option-1" },
               { children: "Option 2", value: "option-2" },
@@ -55,8 +57,9 @@ export const Variants = ({ ...args }) => {
       {inputVariants.map((variant) => (
         <Select
           key={variant}
-          removeAll
-          control={formMethods.control}
+          allowReset
+          label={variant}
+          control={control}
           variant={variant}
           name={`select_${variant}`}
           options={[
@@ -75,19 +78,19 @@ Variants.parameters = {
 };
 
 export const Sizes = ({ ...args }) => {
-  const formMethods = useForm();
+  const { control, handleSubmit } = useForm();
 
   return (
     <Form
-      handleSubmit={formMethods.handleSubmit}
+      handleSubmit={handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       {sizes.map((size) => (
         <Select
           key={size}
-          removeAll
-          control={formMethods.control}
+          allowReset
+          control={control}
           size={size}
           name={`select_${size}`}
           options={[
@@ -105,52 +108,22 @@ Sizes.parameters = {
   controls: { exclude: "size" },
 };
 
-export const Multiple = ({ ...args }) => {
-  const formMethods = useForm();
-
-  return (
-    <Form
-      handleSubmit={formMethods.handleSubmit}
-      onSubmit={() => {}}
-      className={formClassName}
-    >
-      <Select
-        control={formMethods.control}
-        name="select_multiple"
-        multipleStyle="indicator"
-        options={[
-          { children: "Option 1", value: "option-1" },
-          { children: "Option 2", value: "option-2" },
-          { children: "Option 3", value: "option-3" },
-          { children: "Option 4", value: "option-4" },
-        ]}
-        multiple
-        {...args}
-      />
-    </Form>
-  );
-};
-
-Multiple.parameters = {
-  controls: { exclude: "multiple" },
-};
-
 export const Groups = ({ ...args }) => {
-  const formMethods = useForm();
+  const { control, handleSubmit } = useForm();
 
   return (
     <Form
-      handleSubmit={formMethods.handleSubmit}
+      handleSubmit={handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        control={formMethods.control}
-        name="select_multiple"
+        control={control}
+        name="select"
         options={[
           {
-            children: "Gruppe 1",
-            value: "group-1",
+            type: "group",
+            label: "Gruppe 1",
             options: [
               { children: "Option 1", value: "option-1" },
               { children: "Option 2", value: "option-2" },
@@ -158,8 +131,8 @@ export const Groups = ({ ...args }) => {
             ],
           },
           {
-            children: "Gruppe 2",
-            value: "group-2",
+            type: "group",
+            label: "Gruppe 2",
             options: [
               { children: "Option 4", value: "option-4" },
               { children: "Option 5", value: "option-5" },
@@ -168,15 +141,14 @@ export const Groups = ({ ...args }) => {
           },
           { children: "Option 7", value: "option-7" },
           {
-            children: "Gruppe 3",
-            value: "group-3",
+            type: "group",
+            label: "Gruppe 3",
             options: [
               { children: "Option 8", value: "option-8" },
               { children: "Option 9", value: "option-9" },
             ],
           },
         ]}
-        multiple
         {...args}
       />
     </Form>
@@ -186,33 +158,15 @@ export const Groups = ({ ...args }) => {
 export const Checked = ({ ...args }) => {
   const formMethods = useForm();
   const options = [
-    {
-      children: "Gruppe 1",
-      value: "group-1",
-      options: [
-        { children: "Option 1", value: "option-1" },
-        { children: "Option 2", value: "option-2" },
-        { children: "Option 3", value: "option-3" },
-      ],
-    },
-    {
-      children: "Gruppe 2",
-      value: "group-2",
-      options: [
-        { children: "Option 4", value: "option-4" },
-        { children: "Option 5", value: "option-5" },
-        { children: "Option 6", value: "option-6" },
-      ],
-    },
+    { children: "Option 1", value: "option-1" },
+    { children: "Option 2", value: "option-2" },
+    { children: "Option 3", value: "option-3" },
+    { children: "Option 4", value: "option-4" },
+    { children: "Option 5", value: "option-5" },
+    { children: "Option 6", value: "option-6" },
     { children: "Option 7", value: "option-7" },
-    {
-      children: "Gruppe 3",
-      value: "group-3",
-      options: [
-        { children: "Option 8", value: "option-8" },
-        { children: "Option 9", value: "option-9" },
-      ],
-    },
+    { children: "Option 8", value: "option-8" },
+    { children: "Option 9", value: "option-9" },
   ];
 
   return (
@@ -225,7 +179,6 @@ export const Checked = ({ ...args }) => {
         control={formMethods.control}
         name="select_multiple"
         options={options}
-        multiple
         label="CheckMark"
         {...args}
       />
@@ -233,9 +186,8 @@ export const Checked = ({ ...args }) => {
         control={formMethods.control}
         name="select_multiple"
         options={options}
-        multiple
         label="Hide active"
-        hideActive
+        checkedType="hide"
         {...args}
       />
     </Form>
@@ -284,6 +236,7 @@ export const Disabled = ({ ...args }) => {
     >
       <Select
         control={formMethods.control}
+        label="Komplett disabled"
         name="select_all_disabled"
         options={[
           {
@@ -300,6 +253,7 @@ export const Disabled = ({ ...args }) => {
       />
       <Select
         control={formMethods.control}
+        label="Option disabled"
         name="select_all_disabled"
         options={[
           {
@@ -311,6 +265,15 @@ export const Disabled = ({ ...args }) => {
             value: "option-2",
             disabled: true,
           },
+          {
+            children: "Option 3",
+            value: "option-3",
+            disabled: true,
+          },
+          {
+            children: "Option 4",
+            value: "option-4",
+          },
         ]}
         {...args}
       />
@@ -318,52 +281,10 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
-type OtherValueReturnedProps = {
-  _id_returned: any;
-  _id_returned_multiple;
-};
-
-export const OtherValueReturned = ({ ...args }) => {
-  const formMethods = useForm<OtherValueReturnedProps>();
-
-  const options = [
-    {
-      children: "Option 1",
-      _id: "option-1",
-    },
-    {
-      children: "Option 2",
-      _id: "option-2",
-    },
-  ];
-
-  return (
-    <Form
-      handleSubmit={formMethods.handleSubmit}
-      onSubmit={() => {}}
-      className={formClassName}
-    >
-      <Select
-        control={formMethods.control}
-        name="_id_returned"
-        returned="_id"
-        options={options}
-        {...args}
-      />
-      <Select
-        control={formMethods.control}
-        name="_id_returned_multiple"
-        multiple
-        returned="_id"
-        options={options}
-        {...args}
-      />
-    </Form>
-  );
-};
-
 export const DefaultValue = ({ ...args }) => {
-  const formMethods = useForm({ defaultValues: { default_value: "option-2" } });
+  const { control, handleSubmit } = useForm({
+    defaultValues: { default_value: "option-2" },
+  });
 
   const options = [
     {
@@ -378,14 +299,13 @@ export const DefaultValue = ({ ...args }) => {
 
   return (
     <Form
-      handleSubmit={formMethods.handleSubmit}
+      handleSubmit={handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Select
-        control={formMethods.control}
+        control={control}
         name="default_value"
-        returned="value"
         options={options}
         {...args}
       />
@@ -394,7 +314,7 @@ export const DefaultValue = ({ ...args }) => {
 };
 
 export const Overflow = ({ ...args }) => {
-  const formMethods = useForm();
+  const { control, handleSubmit } = useForm();
 
   const options = [
     {
@@ -409,25 +329,82 @@ export const Overflow = ({ ...args }) => {
 
   return (
     <Form
-      handleSubmit={formMethods.handleSubmit}
+      handleSubmit={handleSubmit}
       onSubmit={() => {}}
       className={formClassName}
     >
       <Disclosure
-        items={[
-          {
-            title: "Select",
-            content: (
-              <Select
-                control={formMethods.control}
-                name="overflow"
-                returned="value"
-                options={options}
-                {...args}
-              />
-            ),
-          },
-        ]}
+        content={
+          <Select
+            control={control}
+            name="overflow"
+            options={options}
+            allowReset
+            {...args}
+          />
+        }
+        title="Select"
+      />
+    </Form>
+  );
+};
+
+export const BeforeAndAfterChildren = ({ ...args }) => {
+  const { control, handleSubmit } = useForm();
+
+  const [filter, setFilter] = useState<string>();
+
+  const options = [
+    {
+      children: "Option 1",
+      value: "option-1",
+    },
+    {
+      children: "Option 2",
+      value: "option-2",
+    },
+  ];
+
+  return (
+    <Form
+      handleSubmit={handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Select
+        beforeChildren={
+          <div>
+            <InputRaw
+              placeholder="Filtern ..."
+              size="sm"
+              variant="ghost"
+              value={filter}
+              onChange={setFilter}
+            />
+          </div>
+        }
+        afterChildren={
+          <Popover
+            content={<div>Test</div>}
+            buttonComponent={
+              <Button
+                size="sm"
+                color="primary"
+                className="w-full"
+                leftIcon={IconPlus}
+              >
+                Mehr hinzufügen
+              </Button>
+            }
+          />
+        }
+        control={control}
+        name="overflow"
+        options={options.filter((v) =>
+          filter ? v.value.includes(filter) : true
+        )}
+        allowReset
+        {...args}
       />
     </Form>
   );

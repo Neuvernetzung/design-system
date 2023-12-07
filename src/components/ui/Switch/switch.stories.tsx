@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { Color, Size, colors, sizes } from "../../../types";

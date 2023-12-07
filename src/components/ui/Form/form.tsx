@@ -1,12 +1,10 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { BaseSyntheticEvent, ReactNode } from "react";
 import {
   FieldValues,
   SubmitHandler,
   UseFormHandleSubmit,
 } from "react-hook-form";
-
-import { typedMemo } from "../../../utils/internal";
 
 export type FormProps<T extends FieldValues> = {
   handleSubmit: UseFormHandleSubmit<T>;
@@ -41,5 +39,3 @@ export const Form = <T extends FieldValues>({
     {...props}
   />
 );
-
-export default typedMemo(Form);

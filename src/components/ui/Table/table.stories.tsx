@@ -1,13 +1,13 @@
-import { IconChevronDown, IconPencil } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { IconChevronDown, IconPencil } from "@tabler/icons-react";
+import { cn } from "@/utils";
+import { useEffect, useState } from "react";
 
+import { extendedBgColors } from "../../../styles";
 import { IconButton } from "../Button";
 import { UseSortableChange } from "../Sortable";
-import { DataTable, SimpleTable, SortableTable } from ".";
 import { Text } from "../Typography";
-import cn from "classnames";
-import { extendedBgColors } from "../../../styles";
+import { DataTable, SimpleTable, SortableTable } from ".";
 
 export default {
   title: "UI/Data Display/Table",
@@ -42,7 +42,7 @@ const items = [
   {
     _id: "_2",
     id: "2",
-    title: { test: "undefined" }["23"],
+    title: "Test",
     name: 2,
     createdAt: new Date().toDateString(),
   },
@@ -76,6 +76,7 @@ export const Simple = ({ ...args }) => (
     ]}
     divideX
     items={items}
+    {...args}
   />
 );
 
@@ -97,11 +98,13 @@ export const DisabledHead = ({ ...args }) => (
     ]}
     divideY={false}
     items={items}
+    {...args}
   />
 );
 
 export const Data = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
+  const [sort, setSort] = useState<string>();
 
   return (
     <DataTable
@@ -113,12 +116,15 @@ export const Data = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       setChecked={setChecked}
       divideX
       items={items}
+      {...args}
     />
   );
 };
@@ -126,6 +132,8 @@ export const Data = ({ ...args }) => {
 export const Disclosure = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
   const [disclosure, setDisclosure] = useState<string>();
+  const [sort, setSort] = useState<string>();
+
   return (
     <DataTable
       cols={[
@@ -137,8 +145,10 @@ export const Disclosure = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       disclosureValue="disclosure"
       disclosureClassName={cn(extendedBgColors.subtile)}
@@ -161,12 +171,14 @@ export const Disclosure = ({ ...args }) => {
           />
         ),
       }))}
+      {...args}
     />
   );
 };
 
 export const DataNoItems = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
+  const [sort, setSort] = useState<string>();
 
   return (
     <DataTable
@@ -178,20 +190,24 @@ export const DataNoItems = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       setChecked={setChecked}
       disclosureValue="disclosure"
       disclosureClassName="bg-accent-100"
       divideX
       items={[]}
+      {...args}
     />
   );
 };
 
 export const Data1Item = ({ ...args }) => {
   const [checked, setChecked] = useState<string[]>([]);
+  const [sort, setSort] = useState<string>();
 
   return (
     <DataTable
@@ -203,14 +219,16 @@ export const Data1Item = ({ ...args }) => {
         { id: "createdAt", title: "Erstellung", sortable: true },
         { id: "options", title: "", shrink: true },
       ]}
+      sort={sort}
+      setSort={setSort}
       checkable
-      checkedValue="_id"
+      checkedValue="id"
       checked={checked}
       setChecked={setChecked}
-      disclosureValue="disclosure"
       disclosureClassName="bg-accent-100"
       divideX
       items={[items[0]]}
+      {...args}
     />
   );
 };
@@ -254,6 +272,7 @@ export const Sortable = ({ ...args }) => {
         id="_id"
         items={items}
         order="order"
+        {...args}
       />
       <div className="flex flex-col gap-2">
         <Text>Geändert:</Text>

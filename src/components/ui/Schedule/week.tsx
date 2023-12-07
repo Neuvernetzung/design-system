@@ -1,5 +1,5 @@
 import { DragOverlay } from "@dnd-kit/core";
-import cn from "classnames";
+import { cn } from "@/utils";
 import { addDays, addWeeks, endOfWeek, startOfWeek, subWeeks } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";
@@ -84,27 +84,26 @@ export const ScheduleWeekView = ({
         editEventProps={editEventProps}
         disableCreate={disabled || !isFunction(onCreate) || disableCreate}
       />
-
+      <div
+        className={cn(
+          "grid grid-cols-7 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",
+          extendedBorders.filled,
+          divides.accent
+        )}
+      >
+        {new Array(7).fill(null).map((_, i) => (
+          <DayScheduleHead
+            scheduleViewProps={scheduleViewProps}
+            setViewing={setViewing}
+            key={`week_day_head_${i}`}
+            day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
+          />
+        ))}
+      </div>
       <div
         ref={gridContainerRef}
         className={cn("overflow-y-scroll relative", scrollbar)}
       >
-        <div
-          className={cn(
-            "sticky z-[1] top-0 grid grid-cols-7 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",
-            extendedBorders.filled,
-            divides.accent
-          )}
-        >
-          {new Array(7).fill(null).map((_, i) => (
-            <DayScheduleHead
-              scheduleViewProps={scheduleViewProps}
-              setViewing={setViewing}
-              key={`week_day_head_${i}`}
-              day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
-            />
-          ))}
-        </div>
         <DayGridDndContext
           innerHeight={innerHeight}
           modifiers={modifiers}

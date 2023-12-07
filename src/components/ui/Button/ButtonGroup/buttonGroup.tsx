@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode } from "react";
 
 export type ButtonGroupProps = HTMLAttributes<HTMLDivElement> & {
@@ -8,7 +8,7 @@ export type ButtonGroupProps = HTMLAttributes<HTMLDivElement> & {
   reverse?: boolean;
 };
 
-const ButtonGroup = ({
+export const ButtonGroup = ({
   className,
   direction = "horizontal",
   reverse,

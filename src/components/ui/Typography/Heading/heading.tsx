@@ -1,16 +1,11 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { ElementType, ForwardedRef, forwardRef, HTMLAttributes } from "react";
-import type {
-  PolymorphicForwardRefExoticComponent,
-  PolymorphicPropsWithoutRef,
-  PolymorphicPropsWithRef,
-} from "../../../../utils/internal/polymorphic";
 
 import { extendedTextColors, textSizes } from "../../../../styles";
 import type { ExtendedColor, ExtendedSize } from "../../../../types";
-import { typedMemo } from "../../../../utils/internal";
+import { Slot } from "@radix-ui/react-slot";
 
-export const tagMap: Record<ExtendedSize, keyof JSX.IntrinsicElements> = {
+export const levelMap: Record<ExtendedSize, ElementType> = {
   xs: "h6",
   sm: "h5",
   md: "h4",
@@ -23,41 +18,35 @@ export const tagMap: Record<ExtendedSize, keyof JSX.IntrinsicElements> = {
   "6xl": "h1",
 };
 
-const HeadingDefaultElement: keyof JSX.IntrinsicElements = "h2";
-
-export type HeadingOwnProps = HTMLAttributes<HTMLHeadingElement> & {
+export type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
   size?: ExtendedSize;
   color?: ExtendedColor;
   className?: string;
+  level?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  asChild?: boolean;
 };
 
-export type HeadingProps<T extends ElementType = typeof HeadingDefaultElement> =
-  PolymorphicPropsWithRef<HeadingOwnProps, T>;
-
-export const Heading: PolymorphicForwardRefExoticComponent<
-  HeadingOwnProps,
-  typeof HeadingDefaultElement
-> = forwardRef(
-  <T extends ElementType = typeof HeadingDefaultElement>(
+export const Heading = forwardRef(
+  (
     {
       size = "md",
       color = "accent",
-      as,
+      level,
       className,
       children,
+      asChild,
       ...props
-    }: PolymorphicPropsWithoutRef<HeadingOwnProps, T>,
-    ref: ForwardedRef<Element>
+    }: HeadingProps,
+    ref: ForwardedRef<HTMLHeadingElement>
   ) => {
-    const Component: ElementType = as || tagMap[size];
+    const Component = asChild ? Slot : level || levelMap[size];
 
     return (
       <Component
         ref={ref}
         className={cn(
-          "font-heading font-semibold",
-          textSizes[size],
-          extendedTextColors[color],
+          getHeadingClassName({ size, color }),
+
           className
         )}
         {...props}
@@ -68,6 +57,15 @@ export const Heading: PolymorphicForwardRefExoticComponent<
   }
 );
 
-export default typedMemo(Heading);
-
 Heading.displayName = "Heading";
+
+export type GetHeadingClassNameProps = {
+  size?: ExtendedSize;
+  color?: ExtendedColor;
+};
+
+export const getHeadingClassName = ({
+  size = "md",
+  color = "accent",
+}: GetHeadingClassNameProps) =>
+  cn("font-heading font-semibold", textSizes[size], extendedTextColors[color]);

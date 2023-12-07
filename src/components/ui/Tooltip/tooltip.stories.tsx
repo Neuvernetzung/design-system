@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { Button } from "../Button";
 import { Tooltip, TooltipInner } from ".";
@@ -15,16 +14,16 @@ const Container = ({ ...props }) => (
 
 export const Default = ({ ...args }) => (
   <Container className="flex flex-col mx-auto items-center gap-5">
-    <Tooltip placement="bottom" label="Dies ist ein Tooltip" {...args}>
+    <Tooltip side="bottom" label="Dies ist ein Tooltip" {...args}>
       <Button>Unten</Button>
     </Tooltip>
-    <Tooltip placement="left" label="Dies ist ein Tooltip" {...args}>
+    <Tooltip side="left" label="Dies ist ein Tooltip" {...args}>
       <Button>Links</Button>
     </Tooltip>
-    <Tooltip placement="right" label="Dies ist ein Tooltip" {...args}>
+    <Tooltip side="right" label="Dies ist ein Tooltip" {...args}>
       <Button>Rechts</Button>
     </Tooltip>
-    <Tooltip placement="top" label="Dies ist ein Tooltip" {...args}>
+    <Tooltip side="top" label="Dies ist ein Tooltip" {...args}>
       <Button>Unten</Button>
     </Tooltip>
   </Container>
@@ -46,7 +45,7 @@ export const TooltipInnerView = ({ ...args }) => (
 
 export const Delay = ({ ...args }) => (
   <Container>
-    <Tooltip placement="top" label="Dies ist ein Tooltip" delay={500} {...args}>
+    <Tooltip side="top" label="Dies ist ein Tooltip" delay={500} {...args}>
       <Button>500ms</Button>
     </Tooltip>
   </Container>

@@ -1,11 +1,9 @@
-import cn from "classnames";
+import { IconChevronDown } from "@tabler/icons-react";
 import get from "lodash/get";
-import { useRouter } from "next/router";
-import { useState } from "react";
+
+import { cn } from "@/utils";
 
 import { paddingsEvenly, transition } from "../../../styles";
-import { IconChevronDown } from "@tabler/icons-react";
-import { typedMemo, updateQuery } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import { CheckboxInner } from "../Checkbox/checkbox";
 import {
@@ -18,8 +16,6 @@ import {
   TableHeadCell,
   TableRow,
 } from "./table";
-import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
-import { disclosureAnimationVariants } from "../Disclosure/disclosure";
 
 export type DataTableProps<
   T extends string,
@@ -27,7 +23,8 @@ export type DataTableProps<
   D extends string
 > = Omit<SimpleTableProps<T>, "items" | "cols"> &
   DataTablePropsConditional<T, K, D> & {
-    setSort?: (sort: string) => void;
+    sort: string | undefined;
+    setSort: (sort: string) => void;
     cols: DataTableCol<T>[];
     disclosureValue?: D;
     disclosureClassName?: string;
@@ -59,7 +56,7 @@ export type DataTableCol<T> = SimpleTableCol<T> & {
   sortable?: boolean;
 };
 
-export const DataTableInner = <
+export const DataTable = <
   T extends string,
   K extends string,
   D extends string
@@ -67,6 +64,7 @@ export const DataTableInner = <
   items = [],
   cols = [],
   size = "md",
+  sort,
   setSort,
   checkable,
   checkedValue,
@@ -81,24 +79,12 @@ export const DataTableInner = <
   disabledBorder = false,
   divideY = true,
 }: DataTableProps<T, K, D>) => {
-  const router = useRouter();
-
-  const [sort, setLocalSort] = useState<string>();
-
   const normalizedSort = sort?.[0] === "-" ? sort.slice(1) : sort;
 
   const handleSort = (_sort: string) => {
     const __sort = _sort === sort ? `-${_sort}` : _sort;
-    setLocalSort(__sort);
-    if (!setSort) {
-      updateQuery({
-        router,
-        name: "sort",
-        value: __sort,
-      });
-    } else {
-      setSort(__sort);
-    }
+
+    setSort(__sort);
   };
 
   return (
@@ -114,11 +100,23 @@ export const DataTableInner = <
               <th className={cn("w-0", paddingsEvenly[size])}>
                 <CheckboxInner
                   id="checkbox_indeterminate"
-                  current={checked}
                   disabled={items?.length === 0}
-                  options={items?.map((item) => get(item, checkedValue))}
-                  allowIndetermination
-                  onChange={setChecked}
+                  checked={
+                    checked.length > 0
+                      ? items.every((item) =>
+                          checked.find(
+                            (value) => value === get(item, checkedValue)
+                          )
+                        )
+                        ? true
+                        : "indeterminate"
+                      : false
+                  }
+                  setChecked={(value) => {
+                    if (value === true) {
+                      setChecked(items.map((item) => get(item, checkedValue)));
+                    } else setChecked([]);
+                  }}
                 />
               </th>
             )}
@@ -165,13 +163,15 @@ export const DataTableInner = <
                 <td className={cn(paddingsEvenly[size])}>
                   <CheckboxInner
                     id={`checkbox_${i}`}
-                    current={checked}
-                    value={get(item, checkedValue)}
-                    onChange={setChecked}
-                    options={[
-                      ...items.map((item) => get(item, checkedValue)),
-                      "",
-                    ]}
+                    checked={checked.includes(get(item, checkedValue))}
+                    setChecked={(value) => {
+                      if (value === true) {
+                        setChecked([...checked, get(item, checkedValue)]);
+                      } else
+                        setChecked(
+                          checked.filter((v) => v !== get(item, checkedValue))
+                        );
+                    }}
                   />
                 </td>
               )}
@@ -185,36 +185,16 @@ export const DataTableInner = <
                 />
               ))}
             </TableRow>
-            <LazyMotion features={domAnimation}>
-              <AnimatePresence initial={false}>
-                {disclosureValue && item[disclosureValue] && (
-                  <tr
-                    key={`row_${i}_disclosure`}
-                    className={disclosureClassName}
-                  >
-                    <td colSpan={checkable ? cols.length + 1 : cols.length}>
-                      <m.span
-                        initial="initial"
-                        animate={
-                          disclosureValue && item[disclosureValue]
-                            ? "animate"
-                            : "initial"
-                        }
-                        variants={disclosureAnimationVariants}
-                        className="w-full"
-                      >
-                        {item[disclosureValue]}
-                      </m.span>
-                    </td>
-                  </tr>
-                )}
-              </AnimatePresence>
-            </LazyMotion>
+            {disclosureValue && item[disclosureValue] && (
+              <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
+                <td colSpan={checkable ? cols.length + 1 : cols.length}>
+                  <span className="w-full">{item[disclosureValue]}</span>
+                </td>
+              </tr>
+            )}
           </>
         ))}
       </TableBody>
     </TableContainer>
   );
 };
-
-export const DataTable = typedMemo(DataTableInner);

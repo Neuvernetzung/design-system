@@ -1,10 +1,12 @@
+import { ToolbarButton } from "@radix-ui/react-toolbar";
+import { IconLink, IconTrash } from "@tabler/icons-react";
 import { Editor } from "@tiptap/react";
-import cn from "classnames";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { cn } from "@/utils";
+
 import { gaps } from "../../../../styles";
-import { IconLink, IconTrash } from "@tabler/icons-react";
 import { hrefRegex, pathRegex } from "../../../../utils/internal/regex";
 import { Button, IconButton } from "../../Button";
 import { Form } from "../../Form";
@@ -16,7 +18,6 @@ import { Heading } from "../../Typography";
 
 type AddLinkButtonProps = {
   editor: Editor;
-  id: string;
 };
 
 type LinkFormProps = {
@@ -24,7 +25,7 @@ type LinkFormProps = {
   external: boolean;
 };
 
-export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
+export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
   const [open, setOpen] = useState(false);
 
   const currentHref = editor.getAttributes("link").href;
@@ -68,34 +69,38 @@ export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
 
   return (
     <>
-      <Tooltip label={!active ? "Link hinzufügen" : "Link bearbeiten"}>
-        <IconButton
-          id={id}
-          tabIndex={-1}
-          icon={IconLink}
-          size="sm"
-          ariaLabel={!active ? "add_link" : "remove_link"}
-          variant={!active ? "ghost" : "subtile"}
-          onClick={() => {
-            setFormState(
-              !currentHref
-                ? ""
-                : String(currentHref).includes("https://")
-                ? currentHref.split("https://")?.[1]
-                : currentHref.slice(0, 1) === "/"
-                ? currentHref.slice(1)
-                : currentHref
-            );
-            setExternalState(
-              !currentHref
-                ? true
-                : String(currentHref).includes("https://")
-                ? true
-                : !(currentHref.slice(0, 1) === "/")
-            );
-            setOpen(true);
-          }}
-        />
+      <Tooltip
+        label={!active ? "Link hinzufügen" : "Link bearbeiten"}
+        delay={500}
+      >
+        <ToolbarButton asChild>
+          <IconButton
+            tabIndex={-1}
+            icon={IconLink}
+            size="sm"
+            ariaLabel={!active ? "add_link" : "remove_link"}
+            variant={!active ? "ghost" : "subtile"}
+            onClick={() => {
+              setFormState(
+                !currentHref
+                  ? ""
+                  : String(currentHref).includes("https://")
+                  ? currentHref.split("https://")?.[1]
+                  : currentHref.slice(0, 1) === "/"
+                  ? currentHref.slice(1)
+                  : currentHref
+              );
+              setExternalState(
+                !currentHref
+                  ? true
+                  : String(currentHref).includes("https://")
+                  ? true
+                  : !(currentHref.slice(0, 1) === "/")
+              );
+              setOpen(true);
+            }}
+          />
+        </ToolbarButton>
       </Tooltip>
       <Modal
         header={
@@ -142,7 +147,7 @@ export const AddLinkButton = ({ editor, id }: AddLinkButtonProps) => {
               size="sm"
               content="Externer Link"
             />
-            <Button type="submit" color="primary" fullWidth>
+            <Button type="submit" color="primary" className="w-full">
               Bestätigen
             </Button>
           </Form>

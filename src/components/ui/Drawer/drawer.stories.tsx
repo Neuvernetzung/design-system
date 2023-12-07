@@ -1,9 +1,9 @@
 import { IconShoppingCart } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Button } from "../Button";
-import { Drawer } from "./drawer";
+import { Drawer, drawerPlacements } from "./drawer";
 
 export default {
   title: "UI/Overlay/Drawer",
@@ -14,17 +14,54 @@ const Container = ({ ...props }) => (
   <div className="flex flex-row gap-5" {...props} />
 );
 
-export const Default = ({ ...args }) => {
+export const Default = ({ ...args }) => (
+  <Container>
+    <Drawer
+      title="Test"
+      icon={IconShoppingCart}
+      content="Drawer Content"
+      {...args}
+    >
+      <Button>Öffnen</Button>
+    </Drawer>
+  </Container>
+);
+
+export const Directions = ({ ...args }) => (
+  <Container>
+    {drawerPlacements.map((placement) => (
+      <Drawer
+        key={placement}
+        placement={placement}
+        title="Test"
+        icon={IconShoppingCart}
+        content="Drawer Content"
+        {...args}
+      >
+        <Button>{placement}</Button>
+      </Drawer>
+    ))}
+  </Container>
+);
+
+export const Controlled = ({ ...args }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Container>
-      <Button onClick={() => setOpen(true)}>Öffnen</Button>
+      <Button
+        color={open ? "success" : "accent"}
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        {open ? "Offen" : "Zu"}
+      </Button>
       <Drawer
-        title="Test"
-        icon={IconShoppingCart}
         open={open}
         setOpen={setOpen}
+        title="Test"
+        icon={IconShoppingCart}
         content="Drawer Content"
         {...args}
       />

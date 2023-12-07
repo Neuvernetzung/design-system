@@ -1,28 +1,47 @@
 import { Meta } from "@storybook/react";
-import React from "react";
+import { IconBeach, IconCheck, IconCross } from "@tabler/icons-react";
+
+import { Heading, Text } from "@/components/ui";
 
 import { Logo } from "../../../../public/Logo";
 import { Icon } from "../../ui/Icon";
 import { Footer } from "./footer";
-import { IconBeach } from "@tabler/icons-react";
 
 export default {
   title: "COMMON/Footer",
   component: Footer,
   argTypes: {},
+  parameters: {
+    docs: {
+      source: {
+        type: "code",
+      },
+    },
+  }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
 } as Meta;
 
 export const Default = ({ ...args }) => (
   <Footer
-    logo={<Icon size="lg" icon={Logo} className="fill-primary-500" />}
-    copyright="Copyright by Neuvernetzung UG"
-    cols={[
+    divider={{
+      logo: <Icon size="lg" icon={Logo} className="fill-primary-500" />,
+    }}
+    main={
+      <div className="flex flex-col gap-2">
+        <Heading level="h3" size="lg">
+          Testfirma
+        </Heading>
+        <Text>Irgendendetwas</Text>
+        <Text size="sm">Social Media</Text>
+      </div>
+    }
+    legalSection="Copyright by Neuvernetzung UG"
+    links={[
       {
         label: "Rechtliches",
         icon: IconBeach,
         links: [
-          { label: "Impressum", href: "/" },
-          { label: "Datenschutz", href: "/" },
+          { label: "Impressum", href: "/", icon: IconCheck },
+          { label: "Datenschutz", href: "/", icon: IconCross },
         ],
       },
       {

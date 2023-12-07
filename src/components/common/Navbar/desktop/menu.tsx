@@ -8,17 +8,16 @@ import {
   Viewport as NavigationMenuViewport,
 } from "@radix-ui/react-navigation-menu";
 import { IconChevronDown } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn, minSize, smallerSize } from "@/utils";
 import Link from "next/link";
 import type { RefObject } from "react";
 
-import { gaps, pagePaddings } from "../../../../styles";
+import { gaps, pagePaddingsX } from "../../../../styles";
 import { popoverAnimation } from "../../../../styles/animation";
 import { getPopoverContainerStyles } from "../../../../styles/groups";
 import { offsetSizes } from "../../../../styles/popper/offset";
 import { useThemeStateValue } from "../../../../theme";
 import type { Size } from "../../../../types";
-import { minSize, smallerSize } from "../../../../utils";
 import { Button } from "../../../ui/Button";
 import { Tag } from "../../../ui/Tag";
 import { Text } from "../../../ui/Typography/Text";
@@ -77,22 +76,23 @@ export const NavigationMenu = ({
                     {...(external ? { target: "_blank" } : {})}
                   >
                     <Button
-                      as={Link}
-                      href={href || "#"}
                       leftIcon={icon}
                       size={minSize(size, "sm")}
                       variant="ghost"
                       disabled={disabled}
                       className={cn(_textColor || textColor)}
+                      asChild
                     >
-                      <Text color="inherit">{label}</Text>
-                      {tag && (
-                        <Tag
-                          variant="solid"
-                          size={smallerSize(size)}
-                          {...tag}
-                        />
-                      )}
+                      <Link href={href || "#"}>
+                        <Text color="inherit">{label}</Text>
+                        {tag && (
+                          <Tag
+                            variant="solid"
+                            size={smallerSize(size)}
+                            {...tag}
+                          />
+                        )}
+                      </Link>
                     </Button>
                   </NavigationMenuLink>
                 ) : (
@@ -128,7 +128,7 @@ export const NavigationMenu = ({
                         getPopoverContainerStyles({ size }),
                         fullWidthPopover &&
                           "rounded-none w-screen !max-w-none !border-t-0 !border-x-0",
-                        fullWidthPopover && pagePaddings[pagePadding]
+                        fullWidthPopover && pagePaddingsX[pagePadding]
                       )}
                     >
                       <ul className={cn("flex flex-col", gaps.md)}>

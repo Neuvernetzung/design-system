@@ -1,18 +1,18 @@
-import {
-  IconDownload,
-  IconLogout,
-  IconDotsVertical,
-  IconTrash,
-  Icon360,
-} from "@tabler/icons-react";
-
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import React from "react";
+import {
+  Icon360,
+  IconDotsVertical,
+  IconDownload,
+  IconLogout,
+  IconTrash,
+} from "@tabler/icons-react";
+import { useState } from "react";
 
 import { sizes } from "../../../types";
-import { ButtonGroup } from "../Button";
-import { MenuItemProps, Menu } from "./menu";
+import { ButtonGroup, IconButton } from "../Button";
+import { Menu, MenuItemProps } from "./menu";
+import { Text } from "../Typography/Text";
 
 export default {
   title: "UI/Overlay/Menu",
@@ -26,32 +26,45 @@ const Container = ({ ...props }) => (
 export const Default = ({ ...args }) => {
   const items: MenuItemProps[] = [
     {
+      type: "group",
       children: "Gruppe 1",
       items: [
         {
+          type: "button",
           children: "Option 1",
           icon: Icon360,
           onClick: action("Option-1"),
           color: "primary",
         },
-        { children: "Option 2", icon: IconDownload, href: "#" },
+        { type: "anchor", children: "Option 2", icon: IconDownload, href: "#" },
       ],
     },
+    { type: "separator" },
     {
+      type: "group",
       items: [
         {
+          type: "button",
           children: "Option 3",
           onClick: action("Option-3"),
         },
-        { children: "Option 4", href: "#", color: "success" },
+        { type: "anchor", children: "Option 4", href: "#", color: "success" },
       ],
     },
+    { type: "separator" },
     {
+      type: "button",
       children: "Option 5",
       icon: IconLogout,
       onClick: action("Option-5"),
     },
-    { children: "Trash", icon: IconTrash, href: "#", color: "danger" },
+    {
+      type: "anchor",
+      children: "Trash",
+      icon: IconTrash,
+      href: "#",
+      color: "danger",
+    },
   ];
 
   return (
@@ -59,14 +72,17 @@ export const Default = ({ ...args }) => {
       <ButtonGroup>
         <Menu
           items={items}
-          buttonType="button"
           buttonProps={{ children: "Menu Button" }}
+          size="sm"
+          align="start"
           {...args}
         />
         <Menu
           items={items}
-          buttonType="icon"
-          buttonProps={{ icon: IconDotsVertical, ariaLabel: "test" }}
+          buttonComponent={
+            <IconButton icon={IconDotsVertical} ariaLabel="test" />
+          }
+          size="sm"
           {...args}
         />
       </ButtonGroup>
@@ -75,34 +91,35 @@ export const Default = ({ ...args }) => {
 };
 
 export const Sizes = ({ ...args }) => {
-  const items = [
+  const items: MenuItemProps[] = [
     {
+      type: "group",
       children: "Gruppe 1",
       items: [
         {
+          type: "button",
           children: "Option 1",
           icon: Icon360,
           onClick: action("Option-1"),
         },
-        { children: "Option 2", icon: IconDownload, href: "#" },
+        { type: "anchor", children: "Option 2", icon: IconDownload, href: "#" },
       ],
     },
     {
+      type: "group",
       children: "Gruppe 2",
       items: [
-        {
-          children: "Option 3",
-          onClick: action("Option-3"),
-        },
-        { children: "Option 4", href: "#" },
+        { type: "button", children: "Option 3", onClick: action("Option-3") },
+        { type: "anchor", children: "Option 4", href: "#" },
       ],
     },
     {
+      type: "button",
       children: "Option 5",
       icon: IconLogout,
       onClick: action("Option-5"),
     },
-    { children: "Option 6", href: "#" },
+    { type: "anchor", children: "Option 6", href: "#" },
   ];
 
   return (
@@ -113,7 +130,6 @@ export const Sizes = ({ ...args }) => {
             items={items}
             key={size}
             size={size}
-            buttonType="button"
             buttonProps={{ children: `${size} Button` }}
             {...args}
           />
@@ -124,26 +140,29 @@ export const Sizes = ({ ...args }) => {
 };
 
 export const Disabled = ({ ...args }) => {
-  const items = [
+  const items: MenuItemProps[] = [
     {
+      type: "group",
       children: "Gruppe 1",
       items: [
         {
+          type: "button",
           children: "Disabled",
           icon: Icon360,
           disabled: true,
           onClick: action("Option-1"),
         },
-        { children: "Option 2", icon: IconDownload, href: "#" },
+        { type: "anchor", children: "Option 2", icon: IconDownload, href: "#" },
       ],
     },
     {
+      type: "button",
       children: "Option 5",
       disabled: true,
       icon: IconLogout,
       onClick: action("Option-5"),
     },
-    { children: "Option 6", href: "#" },
+    { type: "anchor", children: "Option 6", href: "#" },
   ];
 
   return (
@@ -152,17 +171,110 @@ export const Disabled = ({ ...args }) => {
         <Menu
           items={items}
           disabled
-          buttonType="button"
           buttonProps={{ children: "Komplett disabled" }}
           {...args}
         />
         <Menu
           items={items}
-          buttonType="icon"
-          buttonProps={{ icon: IconDotsVertical, ariaLabel: "test" }}
+          buttonComponent={
+            <IconButton icon={IconDotsVertical} ariaLabel="menu" />
+          }
           {...args}
         />
       </ButtonGroup>
+    </Container>
+  );
+};
+
+export const Checkbox = ({ ...args }) => {
+  const [bookmarksChecked, setBookmarksChecked] = useState(false);
+  const [urlsChecked, setUrlsChecked] = useState(false);
+
+  const items: MenuItemProps[] = [
+    {
+      children: "Normales Item",
+      onClick: () => {},
+    },
+    { type: "separator" },
+    {
+      type: "group",
+      children: "Optionen",
+      items: [
+        {
+          type: "checkbox",
+          children: "Bookmarks",
+          checked: bookmarksChecked,
+          setChecked: setBookmarksChecked,
+        },
+        {
+          type: "checkbox",
+          children: "Urls",
+          checked: urlsChecked,
+          setChecked: setUrlsChecked,
+        },
+      ],
+    },
+    { type: "separator" },
+    { type: "anchor", children: "Option 6", href: "#" },
+  ];
+
+  return (
+    <Container>
+      <div className="flex flex-col gap-4">
+        <Text>Bookmarks: {String(bookmarksChecked)}</Text>
+        <Text>Urls: {String(urlsChecked)}</Text>
+        <ButtonGroup>
+          <Menu
+            items={items}
+            buttonProps={{ children: "Checkbox" }}
+            {...args}
+          />
+        </ButtonGroup>
+      </div>
+    </Container>
+  );
+};
+
+export const Radio = ({ ...args }) => {
+  const [radio, setRadio] = useState<string>();
+
+  const items: MenuItemProps[] = [
+    {
+      children: "Normales Item",
+      onClick: () => {},
+    },
+    { type: "separator" },
+    {
+      type: "group",
+      children: "Radio",
+      items: [
+        {
+          type: "radio",
+          value: radio,
+          setValue: setRadio,
+          options: [
+            { value: "booksmarks", children: "Bookmarks" },
+            { value: "urls", children: "Urls" },
+          ],
+        },
+      ],
+    },
+    { type: "separator" },
+    { type: "anchor", children: "Option 6", href: "#" },
+  ];
+
+  return (
+    <Container>
+      <div className="flex flex-col gap-4">
+        <Text>Value: {String(radio)}</Text>
+        <ButtonGroup>
+          <Menu
+            items={items}
+            buttonProps={{ children: "Checkbox" }}
+            {...args}
+          />
+        </ButtonGroup>
+      </div>
     </Container>
   );
 };

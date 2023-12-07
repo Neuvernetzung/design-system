@@ -9,16 +9,13 @@ import type { GeneralNotifyProps } from "../components/ui/Notify/notify";
 import { adjustedTextColors } from "../styles";
 import type { RequiredInfoVariant, Size } from "../types";
 import { createCSSSelector } from "../utils/internal";
-import {
-  extendBorderRadius,
-  getBorderRadiusVariables,
-} from "./extendBorderRadius";
+import { extendBorderRadius, getBorderRadiusVariables } from "./borderRadius";
 import {
   type ExtendColors,
   extendColors,
   getColorVariables,
   type ReturnedColors,
-} from "./extendColors";
+} from "./colors";
 import {
   createThemeStore,
   ThemeContext,
@@ -45,6 +42,7 @@ export type ConfigProps = {
   disableSetTheme?: boolean;
   preferSetValuesOverConfig?: boolean;
   iconStrokeWidth?: number;
+  maxPageWidth?: Size;
 } & NotificationConfigProps;
 
 type NotificationConfigProps =
@@ -69,6 +67,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     pagePadding,
     preferSetValuesOverConfig,
     iconStrokeWidth,
+    maxPageWidth,
   } = config || {};
 
   const store = useRef(
@@ -79,6 +78,7 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
       requiredInfoVariant,
       pagePadding,
       iconStrokeWidth,
+      maxPageWidth,
     })
   ).current;
 

@@ -1,10 +1,9 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { ReactNode } from "react";
 
 import { bgColors, paddingsSmallEvenly } from "../../../styles";
 import { useThemeState } from "../../../theme";
 import type { Color, Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Text } from "../Typography";
 
 export type IndicatorProps = {
@@ -16,7 +15,7 @@ export type IndicatorProps = {
   wrapperClassName?: string;
 };
 
-const Indicator = ({
+export const Indicator = ({
   color = "primary",
   value,
   size = "md",
@@ -48,5 +47,3 @@ const Indicator = ({
 };
 
 Indicator.displayName = "indicator";
-
-export default typedMemo(Indicator);

@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { HexColorPicker } from "react-colorful";
 import {
@@ -12,7 +12,6 @@ import { getText, type Locale } from "../../../locales/getText";
 import { getInputStyles } from "../../../styles/groups";
 import type { ButtonVariant, Size } from "../../../types";
 import { colorIsBright } from "../../../utils";
-import { typedMemo } from "../../../utils/internal";
 import {
   patternInputRule,
   requiredInputRule,
@@ -106,5 +105,3 @@ export const ColorPicker = <
     />
   );
 };
-
-export default typedMemo(ColorPicker);

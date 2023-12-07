@@ -1,14 +1,15 @@
 import { IconCheck } from "@tabler/icons-react";
 import { action } from "@storybook/addon-actions";
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, ButtonGroup, IconButton } from "../Button";
-import { Select } from "../Select";
-import { TabGroup, TabList, TabPanels } from "../Tabs";
+import { Select, SelectMultiple } from "../Select";
+import { TabGroup, TabItemValueProps, TabList, TabPanels } from "../Tabs";
 import { Heading } from "../Typography";
 import { Modal, ModalSize } from "./modal";
+import { Menu } from "../Menu";
 
 export default {
   title: "UI/Overlay/Modal",
@@ -50,7 +51,7 @@ export const Default = ({ ...args }) => {
                 action("click");
                 setOpen(false);
               }}
-              fullWidth
+              className="w-full"
             >
               Bestätigen
             </Button>
@@ -105,7 +106,7 @@ export const Sizes = ({ ...args }) => {
                       action("click");
                       setOpen(false);
                     }}
-                    fullWidth
+                    className="w-full"
                   >
                     Bestätigen
                   </Button>
@@ -196,7 +197,7 @@ export const LargeContainer = ({ ...args }) => {
                 action("click");
                 setOpen(false);
               }}
-              fullWidth
+              className="w-full"
             >
               Bestätigen
             </Button>
@@ -229,15 +230,26 @@ export const Nested = ({ ...args }) => {
       <Modal
         header="Erstes Modal"
         footer={
-          <Button
-            onClick={() => {
-              action("click");
-              setNestedOpen(true);
-            }}
-            fullWidth
-          >
-            Nested öffnen
-          </Button>
+          <div className="flex flex-row gap-4">
+            <Button
+              onClick={() => {
+                action("click");
+                setOpen(false);
+              }}
+              className="w-full"
+            >
+              Schließen
+            </Button>
+            <Button
+              onClick={() => {
+                action("click");
+                setNestedOpen(true);
+              }}
+              className="w-full"
+            >
+              Nested öffnen
+            </Button>
+          </div>
         }
         open={open}
         setOpen={setOpen}
@@ -252,10 +264,9 @@ export const Nested = ({ ...args }) => {
             color="warn"
             onClick={() => {
               action("nested-click");
-              setOpen(false);
               setNestedOpen(false);
             }}
-            fullWidth
+            className="w-full"
           >
             Toll!
           </Button>
@@ -271,19 +282,10 @@ export const Nested = ({ ...args }) => {
 export const WithWrapper = ({ ...args }) => {
   const [open, setOpen] = useState(false);
 
-  const tabs = [
-    {
-      title: "Tab 1",
-      content: "Tab Content 1",
-    },
-    {
-      title: "Tab 2",
-      content: "Tab Content 2",
-    },
-    {
-      title: "Tab 3",
-      content: "Tab Content 3",
-    },
+  const tabs: TabItemValueProps[] = [
+    { value: "1", title: "Tab 1", content: "Tab Content 1" },
+    { value: "2", title: "Tab 2", content: "Tab Content 2" },
+    { value: "3", title: "Tab 3", content: "Tab Content 3" },
   ];
 
   return (
@@ -312,10 +314,11 @@ export const ContainerOverflow = ({ ...args }) => {
 
       <Modal
         content={
-          <div>
+          <div className="flex flex-row gap-4">
             <Select
               control={control}
               name="test"
+              beforeChildren={<Button>Test</Button>}
               options={[
                 {
                   children: "Option 1",
@@ -330,6 +333,28 @@ export const ContainerOverflow = ({ ...args }) => {
                   value: "option-3",
                 },
               ]}
+            />
+            <SelectMultiple
+              control={control}
+              name="multi"
+              options={[
+                {
+                  children: "Option 1",
+                  value: "option-1",
+                },
+                {
+                  children: "Option 2",
+                  value: "option-2",
+                },
+                {
+                  children: "Option 3",
+                  value: "option-3",
+                },
+              ]}
+            />
+            <Menu
+              buttonProps={{ children: "Menu" }}
+              items={[{ type: "button", onClick: () => {}, children: "Test" }]}
             />
           </div>
         }

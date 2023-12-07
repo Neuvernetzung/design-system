@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { BlockQuote } from ".";
 
@@ -15,7 +14,7 @@ const Container = ({ ...props }) => (
 
 export const Default = ({ ...args }) => (
   <Container>
-    <BlockQuote>
+    <BlockQuote {...args}>
       Dies ist eine
       <br />
       mehrzeile Zitierung.

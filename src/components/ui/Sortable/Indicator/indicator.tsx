@@ -1,9 +1,11 @@
-import cn from "classnames";
-import { ComponentPropsWithoutRef, ElementType, ReactElement } from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { HTMLAttributes, ReactElement } from "react";
+
+import { cn } from "@/utils";
 
 import { bgColors, roundings, zIndexes } from "../../../../styles";
 
-export type DragIndicatorProps<TElementType extends ElementType> = {
+export type DragIndicatorProps = HTMLAttributes<HTMLDivElement> & {
   setNodeRef:
     | ((node: HTMLElement | null) => void)
     | ((instance: HTMLTableRowElement | null) => void);
@@ -13,18 +15,18 @@ export type DragIndicatorProps<TElementType extends ElementType> = {
   };
   children?: ReactElement;
   className?: string;
-  as?: TElementType;
-} & ComponentPropsWithoutRef<TElementType>;
+  asChild?: boolean;
+};
 
-export const DragIndicator = <TElementType extends ElementType>({
+export const DragIndicator = ({
   setNodeRef,
   style,
   children,
   className,
-  as,
+  asChild,
   ...props
-}: DragIndicatorProps<TElementType>) => {
-  const Component = as || "div";
+}: DragIndicatorProps) => {
+  const Component = asChild ? Slot : "div";
 
   return (
     <Component

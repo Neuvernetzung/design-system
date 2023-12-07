@@ -1,6 +1,6 @@
-import { IconHome } from "@tabler/icons-react";
 import { Meta } from "@storybook/react";
-import React from "react";
+import { IconHome } from "@tabler/icons-react";
+import Link from "next/link";
 
 import { ThemeProvider } from "../../../../theme";
 import {
@@ -8,9 +8,8 @@ import {
   colors,
   focusesVariants,
   sizes,
-  Sizes as SizesType,
 } from "../../../../types";
-import { loading } from "../../Loading";
+import { loading, useIsLoading } from "../../Loading";
 import { notify } from "../../Notify";
 import { IconButton } from "./iconButton";
 
@@ -93,7 +92,7 @@ Focuses.parameters = {
 
 export const Sizes = ({ ...args }) => (
   <Container>
-    {sizes.map((size: any) => (
+    {sizes.map((size) => (
       <IconButton
         ariaLabel="home"
         size={size}
@@ -109,24 +108,13 @@ Sizes.parameters = {
   controls: { exclude: "size" },
 };
 
-export const AsComponent = ({ ...args }) => {
-  const components = ["button", "a"];
-
-  return (
-    <Container>
-      {components.map((component: any) => (
-        <IconButton
-          ariaLabel="home"
-          as={component}
-          href="#"
-          key={component}
-          icon={IconHome}
-          {...args}
-        />
-      ))}
-    </Container>
-  );
-};
+export const AsChild = ({ ...args }) => (
+  <Container>
+    <IconButton asChild ariaLabel="home" icon={IconHome} {...args}>
+      <Link href="#" />
+    </IconButton>
+  </Container>
+);
 
 export const Rounded = ({ ...args }) => (
   <Container>
@@ -162,8 +150,10 @@ export const Disabled = ({ ...args }) => (
 );
 
 export const IsLoading = ({ ...args }) => {
-  const load = (id) => {
-    loading(true, { id });
+  const isLoading = useIsLoading();
+
+  const load = () => {
+    loading(true);
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });
     }, 2000);
@@ -175,14 +165,12 @@ export const IsLoading = ({ ...args }) => {
         <IconButton
           ariaLabel="button"
           icon={IconHome}
+          isLoading={isLoading}
           onClick={() => {
-            load("button");
+            load();
           }}
-          loadingId="button"
           {...args}
-        >
-          Click
-        </IconButton>
+        />
       </Container>
     </ThemeProvider>
   );

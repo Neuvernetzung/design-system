@@ -1,13 +1,13 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { sizes } from "../../../../types";
 
 import { Button, Form } from "../..";
 import { FileUploadPreview } from "../UploadPreview";
 import { Dropzone } from ".";
-import Input from "../../Input/input";
-import cn from "classnames";
+import { Input } from "../../Input";
+import { cn } from "@/utils";
 
 export default {
   title: "UI/Form/Dropzone",
@@ -43,7 +43,7 @@ export const Default = ({ ...args }) => {
   return (
     <Form
       handleSubmit={formMethods.handleSubmit}
-      onSubmit={(data) => {
+      onSubmit={() => {
         setStarted(!started);
       }}
       className={formClassName}
@@ -80,7 +80,7 @@ export const Sizes = ({ ...args }) => {
   return (
     <Form
       handleSubmit={formMethods.handleSubmit}
-      onSubmit={(data) => {
+      onSubmit={() => {
         setStarted(!started);
       }}
       className={formClassName}
@@ -108,7 +108,7 @@ export const Direction = ({ ...args }) => {
   return (
     <Form
       handleSubmit={formMethods.handleSubmit}
-      onSubmit={(data) => {
+      onSubmit={() => {
         setStarted(!started);
       }}
       className={cn(formClassName, "!flex-row")}

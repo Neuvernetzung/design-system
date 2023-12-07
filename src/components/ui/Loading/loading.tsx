@@ -1,6 +1,7 @@
-import cn from "classnames";
 import { useRouter } from "next/router";
 import { create } from "zustand";
+
+import { cn } from "@/utils";
 
 import { getText, type Locale } from "../../../locales/getText";
 import {
@@ -10,24 +11,22 @@ import {
   zIndexes,
 } from "../../../styles";
 import type { ExtendedColor, Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Backdrop } from "../Backdrop";
-import { Text } from "../Typography/Text";
 import { iconDimensions } from "../Icon/icon";
+import { Text } from "../Typography/Text";
 
-export const useLoadingState = create<string | boolean>(() => false);
+export const useLoadingState = create<boolean>(() => false);
 
-type LoadingOptions = {
-  id?: string;
+export const loading = (loading: boolean) => {
+  useLoadingState.setState(loading);
 };
 
-export const loading = (loading: boolean, { id }: LoadingOptions = {}) => {
-  useLoadingState.setState(id || loading);
-};
+export const isLoading = () => useLoadingState.getState();
 
-export const isLoading = (id?: string) => {
-  if (!id) return !!useLoadingState.getState();
-  return id === useLoadingState.getState();
+export const useIsLoading = () => {
+  const isLoading = useLoadingState((state) => state);
+
+  return isLoading;
 };
 
 export const Loading = () => {
@@ -37,8 +36,13 @@ export const Loading = () => {
   if (isLoading === true)
     return (
       <div className={cn("relative", zIndexes.modal)}>
-        <Backdrop />
-        <div className={cn("fixed inset-0 flex items-center justify-center")}>
+        <Backdrop isOpen={isLoading === true} />
+        <div
+          className={cn(
+            zIndexes.modal,
+            "fixed inset-0 flex items-center justify-center"
+          )}
+        >
           <div className={cn("flex flex-col items-center", gaps.md)}>
             <Spinner size="xl" />
             <Text className="animate-pulse">{getText(locale).loading}</Text>
@@ -49,8 +53,6 @@ export const Loading = () => {
 
   return null;
 };
-
-export default typedMemo(Loading);
 
 type SpinnerProps = {
   color?: ExtendedColor;

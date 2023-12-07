@@ -1,13 +1,16 @@
-import cn from "classnames";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { useEffect } from "react";
+
+import { gaps, paddingsYLarge } from "@/styles";
+import { cn } from "@/utils";
+
 import type { Size } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
-import { updateQuery } from "../../../utils/internal/updateQuery";
-import { Button, ButtonGroup, IconButton, Select, Text } from "../../ui";
-import { create } from "zustand";
+import { Button, IconButton, SelectRaw, Text } from "../../ui";
+import {
+  DEFAULT_PAGINATION_LIMIT,
+  DEFAULT_PAGINATION_PAGE,
+  DEFAULT_PAGINATIONS_LIMITS,
+} from "./constants";
 
 export type PaginationProps = {
   limits?: number[];
@@ -17,18 +20,13 @@ export type PaginationProps = {
   containerClassName?: string;
   selectLimit?: boolean;
   variant?: "default" | "minimalistic";
-} & SetActivePageProps &
+} & SetPageProps &
   SetLimitProps;
 
-type SetActivePageProps =
-  | {
-      activePage: number | undefined;
-      setActivePage: (page: number) => void;
-    }
-  | {
-      activePage?: never;
-      setActivePage?: never;
-    };
+type SetPageProps = {
+  page: number | undefined;
+  setPage: (page: number) => void;
+};
 
 type SetLimitProps =
   | {
@@ -40,138 +38,81 @@ type SetLimitProps =
       setLimit?: never;
     };
 
-type FormInputs = {
-  limit: number;
-};
-
-const usePaginationStore = create<{
-  rerender: () => void;
-}>((set) => ({
-  rerender: () => set({}),
-}));
-
-const Pagination = ({
-  limits = [10, 25, 50, 100],
+export const Pagination = ({
+  limits = DEFAULT_PAGINATIONS_LIMITS,
   result = 0,
   emptyMessage,
-  activePage = 1,
-  setActivePage,
-  limit = 10,
+  page = DEFAULT_PAGINATION_PAGE,
+  setPage,
+  limit = DEFAULT_PAGINATION_LIMIT,
   setLimit,
   size = "md",
   containerClassName,
   selectLimit = true,
   variant = "default",
 }: PaginationProps) => {
-  const router = useRouter();
-  const { rerender } = usePaginationStore();
-
-  const [initialLimit, setInitialLimit] = useState<boolean>(true);
-  const formMethods = useForm<FormInputs>({
-    defaultValues: {
-      limit: setLimit ? limit : Number(router.query.limit) || limits[0],
-    },
-  });
-  const watchLimit = formMethods.watch("limit");
-  const p = router.query.page !== undefined ? Number(router.query.page) : 1;
-
-  const internalPage = setActivePage ? activePage : Number(p);
-  const internalLimit = setLimit
-    ? limit
-    : router.query.limit
-    ? Number(router.query.limit)
-    : limits[0];
-
-  const handlePage = (_page: number) => {
-    rerender(); // Notwendig, damit mehrere Paginations synchron verwendet werden können.
-    if (!setActivePage) {
-      updateQuery({
-        router,
-        name: "page",
-        value: _page,
-      });
-    } else {
-      setActivePage(_page);
-    }
-  };
-
-  useEffect(() => {
-    rerender(); // Notwendig, damit mehrere Paginations synchron verwendet werden können.
-    if (watchLimit !== limits[0] || !initialLimit) {
-      setInitialLimit(false);
-      if (!setLimit) {
-        updateQuery({
-          router,
-          name: "limit",
-          value: watchLimit,
-        });
-      } else {
-        setLimit(watchLimit);
-      }
-    }
-  }, [watchLimit]);
-
   useEffect(() => {
     // Wenn sich das Result oder Limit ändert z.B. durch Filtern einer anderen Funktion oä. wird automatisch zur letzten Seite gesprungen.
-    if (internalPage * internalLimit <= result) return;
+    if (page * limit <= result) return;
 
-    handlePage(Math.ceil(result / internalLimit));
-  }, [result, internalLimit]);
+    setPage(Math.ceil(result / limit));
+  }, [result, limit]);
 
   return (
     <div
       className={cn(
-        "py-5 flex flex-row items-center justify-between",
+        "flex flex-row items-center justify-between",
+        gaps[size],
+        paddingsYLarge[size],
         containerClassName
       )}
     >
       {selectLimit && result !== 0 && limits.length > 1 && (
-        <Select
-          control={formMethods.control}
-          name="limit"
+        <SelectRaw
+          id="limit"
+          value={limit}
+          onChange={(v) => setLimit?.(v || DEFAULT_PAGINATION_LIMIT)}
           options={limits.map((limit) => ({
             children: `${limit} pro Seite`,
             value: limit,
           }))}
-          returned="value"
           variant="ghost"
-          removeAll={false}
           size={size}
         />
       )}
       {result !== 0 ? (
-        result > 1 * internalLimit && (
-          <ButtonGroup>
+        result > 1 * limit && (
+          <div className="flex flex-row">
             <IconButton
               variant="ghost"
               type="button"
-              onClick={() => handlePage(internalPage - 1)}
-              disabled={internalPage === 1}
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
               icon={IconChevronLeft}
               ariaLabel="before page"
               size={size}
             />
 
             {variant === "default" &&
-              Array(Math.ceil(result / internalLimit))
+              Array(Math.ceil(result / limit))
                 .fill(1)
                 .map((_, i) =>
                   i === 0 ||
-                  i === Math.ceil(result / internalLimit) - 1 ||
-                  (i >= internalPage - 2 && i <= internalPage) ? (
+                  i === Math.ceil(result / limit) - 1 ||
+                  (i >= page - 2 && i <= page) ? (
                     <Button
-                      variant={i + 1 === internalPage ? "filled" : "ghost"}
+                      variant={i + 1 === page ? "filled" : "ghost"}
                       key={i}
                       type="button"
-                      onClick={() => handlePage(i + 1)}
+                      onClick={() => setPage(i + 1)}
                       className="min-w-[2.5rem]"
                       size={size}
                     >
                       {i + 1}
                     </Button>
                   ) : (
-                    i >= internalPage - 3 &&
-                    i <= internalPage + 1 && (
+                    i >= page - 3 &&
+                    i <= page + 1 && (
                       <Button variant="ghost" size={size} disabled key={i}>
                         ...
                       </Button>
@@ -180,20 +121,20 @@ const Pagination = ({
                 )}
             {variant === "minimalistic" && (
               <Button variant="ghost" className="pointer-events-none">
-                {internalPage} / {Math.ceil(result / internalLimit)}
+                {page} / {Math.ceil(result / limit)}
               </Button>
             )}
 
             <IconButton
               variant="ghost"
               type="button"
-              onClick={() => handlePage(internalPage + 1)}
+              onClick={() => setPage(page + 1)}
               icon={IconChevronRight}
-              disabled={internalPage === Math.ceil(result / internalLimit)}
+              disabled={page === Math.ceil(result / limit)}
               ariaLabel="next page"
               size={size}
             />
-          </ButtonGroup>
+          </div>
         )
       ) : (
         <div className="w-full flex justify-center">
@@ -203,7 +144,5 @@ const Pagination = ({
     </div>
   );
 };
-
-export default typedMemo(Pagination);
 
 Pagination.displayName = "pagination";

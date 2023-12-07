@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { useRouter } from "next/router";
 import { type ReactNode, useRef } from "react";
 import { create } from "zustand";
@@ -6,7 +6,6 @@ import { create } from "zustand";
 import { getText, type Locale } from "../../../locales/getText";
 import { gaps } from "../../../styles";
 import type { Color, SvgType } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { Button } from "../Button";
 import { Tag } from "../Tag";
 import { Heading } from "../Typography/Heading";
@@ -73,11 +72,14 @@ export const ConfirmationModal = () => {
   return (
     <Modal
       open={!!confirmationState}
-      onClose={handleCancel}
       setOpen={reset}
       size="sm"
       initialFocus={
-        color !== "danger" && color !== "warn" ? confirmBtnRef : cancelBtnRef
+        color !== "danger"
+          ? color !== "warn"
+            ? confirmBtnRef
+            : cancelBtnRef
+          : undefined
       }
       forbidCancellation={forbidCancellation}
       header={
@@ -95,14 +97,14 @@ export const ConfirmationModal = () => {
             ref={cancelBtnRef}
             variant="outline"
             onClick={handleCancel}
-            fullWidth
+            className="w-full"
           >
             {cancelButton || getText(locale).cancel}
           </Button>
           <Button
             ref={confirmBtnRef}
             onClick={handleConfirm}
-            fullWidth
+            className="w-full"
             color={color}
           >
             {confirmButton || getText(locale).confirm}
@@ -112,5 +114,3 @@ export const ConfirmationModal = () => {
     />
   );
 };
-
-export default typedMemo(ConfirmationModal);

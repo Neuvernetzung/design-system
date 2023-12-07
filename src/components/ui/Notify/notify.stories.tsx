@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 
 import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
@@ -81,8 +80,8 @@ export const Default = () => (
 );
 
 export const CancelLoading = () => {
-  const load = (id) => {
-    loading(true, { id });
+  const load = () => {
+    loading(true);
     setTimeout(() => {
       notify({ message: "Nicht mehr laden." });
     }, 2000);
@@ -93,7 +92,7 @@ export const CancelLoading = () => {
       config={{ allowNotification: true, allowGlobalLoading: true }}
     >
       <Container>
-        <Button variant="outline" onClick={() => load(undefined)}>
+        <Button variant="outline" onClick={() => load()}>
           Global
         </Button>
       </Container>

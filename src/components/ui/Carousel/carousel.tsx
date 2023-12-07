@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import { ReactNode, useState } from "react";
 import {
   A11y,
@@ -14,7 +14,6 @@ import { Swiper, type SwiperProps, SwiperSlide } from "swiper/react";
 import { AutoplayOptions, Swiper as SwiperType } from "swiper/types";
 import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react";
 import { margins } from "../../../styles";
-import { typedMemo } from "../../../utils/internal";
 import { IconButton } from "../Button";
 import useSwiperRef from "./utils/useSwiperRef";
 
@@ -189,5 +188,3 @@ export const Carousel = ({
     </>
   );
 };
-
-export default typedMemo(Carousel);

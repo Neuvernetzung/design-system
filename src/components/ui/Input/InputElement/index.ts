@@ -1,1 +1,1 @@
-export { default as InputElement } from "./inputElement";
+export * from "./inputElement";

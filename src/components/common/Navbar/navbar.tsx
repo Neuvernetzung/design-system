@@ -1,8 +1,7 @@
-import cn from "classnames";
+import { cn } from "@/utils";
 import {
   type ForwardedRef,
   forwardRef,
-  type MutableRefObject,
   type ReactElement,
   type ReactNode,
   type RefObject,
@@ -59,7 +58,7 @@ export type LogoProps = {
 
 export type SubNavProps = Pick<NavbarProps, "navItems" | "size"> & {
   textColor?: string;
-  navbarRef?: MutableRefObject<HTMLElement | null>;
+  navbarRef?: RefObject<HTMLElement>;
 };
 
 export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(

@@ -1,8 +1,7 @@
 import { Meta } from "@storybook/react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, Form, Icon } from "../..";
+import { Button, Form } from "../..";
 import { InputWithTags } from ".";
 
 export default {

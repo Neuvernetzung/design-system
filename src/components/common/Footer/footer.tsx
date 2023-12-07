@@ -1,39 +1,51 @@
-import cn from "classnames";
-import { forwardRef, ReactElement, ReactNode } from "react";
+import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
 
 import {
   extendedBgColors,
   extendedBorders,
   gaps,
+  gapsLarge,
+  maxPageWidths,
   paddingsX,
   paddingsYLarge,
+  pageGaps,
   pagePaddings,
-} from "../../../styles";
-import { useThemeStateValue } from "../../../theme";
-import type { ExtendedColor, Size, SvgType } from "../../../types";
-import { smallerSize } from "../../../utils";
+  pagePaddingsX,
+} from "@/styles";
+import { useThemeStateValue } from "@/theme";
+import type { ExtendedColor, Size, SvgType } from "@/types";
+import { cn } from "@/utils/cn";
+import { smallerSize } from "@/utils/size";
+
+import { Icon } from "../../ui/Icon";
 import { Link } from "../../ui/Link";
 import { Text } from "../../ui/Typography/Text";
-import { Icon } from "../../ui/Icon";
 
 type FooterProps = {
-  logo?: ReactNode;
-  cols?: LinkGroupProps[];
-  copyright?: string;
+  main?: ReactNode;
+  links?: FooterLinkGroupProps[];
+  divider?: FooterDividerProps;
+  legalSection?: ReactNode;
   className?: string;
   size?: Size;
   color?: ExtendedColor;
 };
 
-type LinkGroupProps = {
-  icon?: SvgType;
-  label?: string | ReactElement;
-  links: LinkProps[];
+type FooterDividerProps = {
+  logo?: ReactNode;
+  className?: string;
 };
 
-type LinkProps = {
+type FooterLinkGroupProps = {
+  icon?: SvgType;
+  label?: string | ReactElement;
+  links: FooterLinkProps[];
+};
+
+type FooterLinkProps = {
   label: string;
   href: string;
+  icon?: SvgType;
 };
 
 const colsClassName: Record<number, string> = {
@@ -42,14 +54,33 @@ const colsClassName: Record<number, string> = {
   2: "grid-cols-1 sm:grid-cols-2",
   3: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
   4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-4",
+  5: "grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5",
 };
 
-export const Footer = forwardRef<HTMLDivElement, FooterProps>(
+const colsSmallClassName: Record<number, string> = {
+  0: "",
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
+  4: "grid-cols-1 sm:grid-cols-2 xl:grid-cols-4",
+  5: "grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-5",
+};
+
+export const Footer = forwardRef(
   (
-    { logo, cols = [], copyright, className, size = "md", color = "white" },
-    ref
+    {
+      divider,
+      legalSection,
+      links,
+      main,
+      className,
+      size = "md",
+      color = "white",
+    }: FooterProps,
+    ref: ForwardedRef<HTMLDivElement>
   ) => {
     const pagePadding = useThemeStateValue((state) => state.pagePadding);
+    const maxPageWidth = useThemeStateValue((state) => state.maxPageWidth);
     const adjustedColors = useThemeStateValue(
       (state) => state.adjustedTextColorState
     );
@@ -64,19 +95,28 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
           className
         )}
       >
-        <div
-          className={cn("w-full max-w-6xl mx-auto", pagePaddings[pagePadding])}
+        <section
+          className={cn(
+            "w-full mx-auto flex flex-col ",
+            main && "md:grid md:grid-cols-2 lg:grid-cols-3",
+            pageGaps[pagePadding],
+            pagePaddings[pagePadding],
+            maxPageWidth && maxPageWidths[maxPageWidth]
+          )}
         >
+          {main && main}
           <div
             className={cn(
-              "grid",
-              colsClassName[cols?.length || 0],
-              gaps[size],
+              "grid col-span-1 lg:col-span-2 xl",
+              main
+                ? colsSmallClassName[links?.length || 0]
+                : colsClassName[links?.length || 0],
+              gapsLarge[size],
               paddingsYLarge[size]
             )}
           >
-            {cols &&
-              cols?.map(({ icon, label, links }, i) => (
+            {links &&
+              links?.map(({ icon, label, links }, i) => (
                 <ul
                   className="items-start flex flex-col"
                   key={`footerlinkgroup_${i}`}
@@ -97,27 +137,35 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
                       {label}
                     </Text>
                   </li>
-                  {links.map(({ label, href }, _i) => (
+                  {links.map(({ label, href, icon }, _i) => (
                     <Text
-                      as="li"
                       size={smallerSize(size)}
                       color="inherit"
-                      className={cn(adjustedColors[color])}
+                      className={cn(
+                        "flex flex-row items-center",
+                        gaps.sm,
+                        adjustedColors[color]
+                      )}
                       key={`footergroup_${i}_el_${_i}`}
+                      asChild
                     >
-                      <Link href={href}>{label}</Link>
+                      <li>
+                        {icon && <Icon icon={icon} />}
+                        <Link href={href}>{label}</Link>
+                      </li>
                     </Text>
                   ))}
                 </ul>
               ))}
           </div>
-        </div>
-        {(copyright || logo) && (
-          <div
+        </section>
+        {divider && (
+          <section
             className={cn(
               "flex flex-col items-center",
               gaps[size],
-              paddingsYLarge[size]
+              paddingsYLarge[size],
+              divider.className
             )}
           >
             <div className={cn("flex justify-center items-center w-full")}>
@@ -128,7 +176,11 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
                   adjustedColors[color]
                 )}
               />
-              {logo && <div className={cn("flex", paddingsX.xl)}>{logo}</div>}
+              {divider.logo && (
+                <div className={cn("flex", paddingsX[size])}>
+                  {divider.logo}
+                </div>
+              )}
               <div
                 className={cn(
                   "border-b w-full flex-grow opacity-50",
@@ -137,17 +189,12 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
                 )}
               />
             </div>
-
-            {copyright && (
-              <Text
-                color="inherit"
-                className={cn(adjustedColors[color])}
-                size="xs"
-              >
-                {copyright}
-              </Text>
-            )}
-          </div>
+          </section>
+        )}
+        {legalSection && (
+          <section className={cn("w-full", pagePaddingsX[pagePadding])}>
+            {legalSection}
+          </section>
         )}
       </footer>
     );

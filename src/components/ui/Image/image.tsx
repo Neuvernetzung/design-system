@@ -1,9 +1,10 @@
-import cn from "classnames";
+import { IconPhotoOff } from "@tabler/icons-react";
 import type { ImageProps as NextImageProps } from "next/image";
 import NextImage from "next/image";
 import { HTMLAttributes, useState } from "react";
-import { IconPhotoOff } from "@tabler/icons-react";
-import { typedMemo } from "../../../utils/internal";
+
+import { cn } from "@/utils";
+
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
@@ -22,6 +23,9 @@ export type ImageProps = NextImageProps & {
   containerClassName?: string;
 };
 
+/**
+ * @deprecated Use next/image instead of if Fallback needed NextImageWithFallback
+ */
 export const Image = ({
   src,
   alt,
@@ -75,7 +79,28 @@ export const Image = ({
   );
 };
 
-export default typedMemo(Image);
+export type NextImageWithFallbackProps = NextImageProps;
+
+export const NextImageWithFallback = ({
+  src,
+  alt,
+  className,
+  ...imageProps
+}: NextImageWithFallbackProps) => {
+  const [error, setError] = useState<boolean>(false);
+
+  return !error && src ? (
+    <ResolvedImage
+      className={cn(className)}
+      alt={alt}
+      src={src}
+      onError={() => setError(true)}
+      {...imageProps}
+    />
+  ) : (
+    <Fallback src={String(src)} alt={alt} className={className} />
+  );
+};
 
 type FallbackProps = { src?: string; alt?: string; className?: string };
 

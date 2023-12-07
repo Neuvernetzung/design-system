@@ -1,5 +1,5 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import cn from "classnames";
+import { cn } from "@/utils";
 import type { KeyboardEventHandler, MouseEventHandler } from "react";
 
 import { gaps, paddingsX } from "../../../styles";

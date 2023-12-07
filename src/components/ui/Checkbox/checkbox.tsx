@@ -1,21 +1,20 @@
-import cn from "classnames";
+import {
+  CheckboxIndicator,
+  CheckedState,
+  Root as CheckboxRoot,
+} from "@radix-ui/react-checkbox";
+import { cn } from "@/utils";
 import isArray from "lodash/isArray";
-import isString from "lodash/isString";
 import { useRouter } from "next/router";
-import {
-  ForwardedRef,
-  forwardRef,
-  KeyboardEvent,
-  MouseEvent,
-  ReactNode,
-} from "react";
-import {
-  Controller,
+import type { ForwardedRef, ReactNode } from "react";
+import { forwardRef } from "react";
+import type {
   FieldError,
   FieldPath,
   FieldValues,
   UseControllerProps,
 } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import type { Locale } from "../../../locales/getText";
 import {
@@ -23,6 +22,7 @@ import {
   bordersInteractive,
   checkboxSizes,
   extendedBgColors,
+  extendedBgColorsInteractive,
   extendedTextColors,
   focus,
   gaps,
@@ -34,7 +34,6 @@ import {
   transition,
 } from "../../../styles";
 import type { CheckboxVariant, Color, Size, SvgType } from "../../../types";
-import { typedMemo } from "../../../utils/internal";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
 import { Button } from "../Button";
 import { FormElement, RequiredRule } from "../Form";
@@ -55,7 +54,7 @@ export type CheckboxProps = {
 
 type OptionProps = {
   label: ReactNode;
-  value: any;
+  value: boolean | number | string;
   disabled?: boolean;
   icon?: SvgType;
 };
@@ -68,17 +67,6 @@ const styles = {
   label: "cursor-pointer select-none",
   labelDisabled: "cursor-not-allowed select-none opacity-75",
   iconWrapper: "pointer-events-none flex items-center justify-center",
-};
-
-export const checkedColors: Record<Color, string> = {
-  brand: "bg-brand-500 hover:bg-brand-600 dark:hover:bg-brand-400",
-  primary: "bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-400",
-  accent: "bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400",
-  success: "bg-success-500 hover:bg-success-600 dark:hover:bg-success-400",
-  warn: "bg-warn-500 hover:bg-warn-600 dark:hover:bg-warn-400",
-  danger: "bg-danger-500 hover:bg-danger-600 dark:hover:bg-danger-400",
-  black: "bg-black hover:bg-accent-900 dark:hover:bg-accent-900",
-  white: "bg-white hover:bg-accent-100 dark:hover:bg-accent-100",
 };
 
 export const Checkbox = <
@@ -108,7 +96,7 @@ export const Checkbox = <
         required: requiredInputRule(required, locale),
       }}
       render={({
-        field: { value: current, onChange, ref },
+        field: { value: values, onChange, ref },
         fieldState: { error },
       }) => (
         <FormElement
@@ -122,36 +110,42 @@ export const Checkbox = <
           <div className={cn("flex flex-col", gapsSmall[size], className)}>
             {options.map(
               (
-                {
-                  label,
-                  value: _value,
-                  disabled: singleDisabled,
-                  icon: singleIcon,
-                },
+                { label, value, disabled: singleDisabled, icon: singleIcon },
                 i
-              ) => {
-                const _disabled = singleDisabled ?? disabled;
-                const _icon = singleIcon ?? icon;
-
-                return (
-                  <CheckboxInner
-                    ref={ref}
-                    id={`checkbox_${name}_${i}`}
-                    key={`checkbox_${name}_${i}`}
-                    current={current}
-                    value={_value}
-                    label={label}
-                    disabled={_disabled}
-                    size={size}
-                    color={color}
-                    onChange={onChange}
-                    options={options.map((o) => o.value)}
-                    icon={_icon}
-                    variant={variant}
-                    error={error}
-                  />
-                );
-              }
+              ) => (
+                <CheckboxInner
+                  ref={ref}
+                  id={`checkbox_${name}_${i}`}
+                  key={`checkbox_${name}_${i}`}
+                  label={label}
+                  disabled={singleDisabled ?? disabled}
+                  size={size}
+                  color={color}
+                  icon={singleIcon ?? icon}
+                  variant={variant}
+                  error={error}
+                  checked={isArray(values) ? values.includes(value) : !!values}
+                  setChecked={() => {
+                    if (options.length <= 1) {
+                      onChange(!values);
+                      return;
+                    }
+                    if (!isArray(values)) {
+                      onChange([value]);
+                      return;
+                    }
+                    if (values.includes(value)) {
+                      onChange([
+                        ...values.filter(
+                          (v: boolean | number | string) => v !== value
+                        ),
+                      ]);
+                      return;
+                    }
+                    onChange([...values, value]);
+                  }}
+                />
+              )
             )}
           </div>
         </FormElement>
@@ -160,204 +154,112 @@ export const Checkbox = <
   );
 };
 
-const isChecked = (current: string | string[], value: any) =>
-  isArray(current) ? current.includes(value) : !!current;
-
-const isIndeterminate = (current: string | string[], options: string[]) => {
-  if (!isArray(current)) return false;
-  return options.some((o) => current?.find((c) => c === o));
-};
-
-const isIndeterminateChecked = (
-  current: string | string[],
-  options: string[]
-) => {
-  if (!isArray(current)) return !!current;
-  return options.every((o) => current?.find((c) => c === o));
-};
-
-const handleChange = (
-  current: string | string[],
-  options: string[],
-  value: any
-) => {
-  if (options.length <= 1) return !current;
-  if (!isArray(current)) return [value];
-  if (current.includes(value)) return [...current.filter((v) => v !== value)];
-  return [...current, value];
-};
-const handleChangeIndeterminate = (
-  options: string[],
-  isIndeterminateChecked: boolean,
-  isIndeterminate?: boolean
-) => {
-  if (isIndeterminateChecked) return [];
-  if (isIndeterminate) return [];
-  return options;
-};
-
 type CheckboxInnerProps = {
-  current: string[];
   id?: string;
   label?: ReactNode;
   disabled?: boolean;
   size?: Size;
   variant?: CheckboxVariant;
   color?: Color;
-  onChange: (...event: any[]) => void;
-  options: string[];
   icon?: SvgType;
   error?: FieldError;
-} & CheckboxInnerIndeterminateProps;
-
-type CheckboxInnerIndeterminateProps =
-  | {
-      allowIndetermination: true;
-      value?: any;
-    }
-  | { allowIndetermination?: false; value: string };
+  checked: CheckedState;
+  setChecked: (value: CheckedState) => void;
+  defaultValue?: boolean;
+};
 
 export const CheckboxInner = forwardRef(
   (
     {
-      current,
       id,
-      value,
       label,
       disabled,
       size = "md",
       variant = "default",
       color = "primary",
-      onChange,
-      options,
       icon,
       error,
-      allowIndetermination,
+      setChecked,
+      checked,
+      defaultValue,
     }: CheckboxInnerProps,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => {
-    const _isIndeterminate = allowIndetermination
-      ? isIndeterminate(current, options)
-      : undefined;
-    const _isChecked = allowIndetermination
-      ? isIndeterminateChecked(current, options)
-      : isChecked(current, value);
-    const _onChange = () =>
-      onChange(
-        !allowIndetermination
-          ? handleChange(current, options, value)
-          : handleChangeIndeterminate(options, _isChecked, _isIndeterminate)
-      );
 
-    return (
-      <div
-        ref={ref}
-        key={id}
-        role="checkbox"
-        aria-checked={
-          _isChecked
-            ? true
-            : allowIndetermination && _isIndeterminate
-            ? "mixed"
-            : false
-        }
-        aria-label={
-          !allowIndetermination
-            ? isString(label)
-              ? label
-              : value
-            : "indeterminationCheckbox"
-        }
-        aria-disabled={disabled ? true : undefined}
-        tabIndex={(() => {
-          if (disabled) return -1;
-          return 0;
-        })()}
-        className={cn(
-          "w-fit",
-          styles.base,
-          gapsSmall[size],
-          focus[color],
-          roundings[size]
-        )}
-        onClick={(e: MouseEvent) => {
-          if (disabled) return;
-          e.preventDefault();
-          e.stopPropagation();
-          _onChange();
-        }}
-        onKeyDown={(e: KeyboardEvent) => {
-          if (disabled) return;
-          if (e.key === " " || e.key === "Enter") {
-            // " " ist Space
-            e.preventDefault();
-            e.stopPropagation();
-            _onChange();
-          }
-        }}
-      >
-        {variant === "default" && (
-          <div className={cn("flex flex-row items-center", gaps[size])}>
-            <div
+    ref: ForwardedRef<HTMLButtonElement>
+  ) => (
+    <CheckboxRoot
+      checked={checked}
+      onCheckedChange={setChecked}
+      defaultChecked={defaultValue}
+      ref={ref}
+      key={id}
+      disabled={disabled}
+      className={cn(
+        "w-fit",
+        styles.base,
+        gapsSmall[size],
+        focus[color],
+        roundings[size]
+      )}
+    >
+      {variant === "default" && (
+        <div className={cn("flex flex-row items-center", gaps[size])}>
+          <div
+            className={cn(
+              "aspect-square flex items-center justify-center",
+              roundingsSmall[size],
+              transition,
+              !disabled ? styles.input : styles.inputDisabled,
+              checkboxSizes[size],
+              bordersInteractive.accent,
+              !disabled &&
+                checked &&
+                `${extendedBgColorsInteractive[color]} border-none`,
+              error && styles.inputError
+            )}
+          >
+            <CheckboxIndicator
               className={cn(
-                "aspect-square flex items-center justify-center",
-                roundingsSmall[size],
-                transition,
-                !disabled ? styles.input : styles.inputDisabled,
-                checkboxSizes[size],
-                bordersInteractive.accent,
-                !disabled &&
-                  (_isChecked || _isIndeterminate) &&
-                  `${checkedColors[color]} border-none`,
-                error && styles.inputError
+                "scale-50",
+                styles.iconWrapper,
+                extendedTextColors.filled
               )}
             >
-              <span
-                className={cn(
-                  "scale-50",
-                  styles.iconWrapper,
-                  extendedTextColors.filled
-                )}
-              >
-                <CheckboxIcon
-                  isChecked={_isChecked}
-                  size={size}
-                  icon={icon}
-                  isIndeterminate={_isIndeterminate}
-                />
-              </span>
-            </div>
-            {label && (
-              <label
-                htmlFor={id}
-                className={cn(
-                  !disabled ? styles.label : styles.labelDisabled,
-                  textColors.accent,
-                  textSizes[size]
-                )}
-              >
-                {label}
-              </label>
-            )}
+              <CheckboxIcon
+                checked={checked === true}
+                size={size}
+                icon={icon}
+                indeterminate={checked === "indeterminate"}
+              />
+            </CheckboxIndicator>
           </div>
-        )}
-        {variant === "button" && (
-          <Button
-            disabled={disabled}
-            variant={_isChecked ? "filled" : "outline"}
-            color={!error ? color : "danger"}
-            size={size}
-            as="span"
-            className={cn(!disabled ? "cursor-pointer" : "cursor-not-allowed")}
-          >
-            {label}
-          </Button>
-        )}
-      </div>
-    );
-  }
+          {label && (
+            <label
+              htmlFor={id}
+              className={cn(
+                !disabled ? styles.label : styles.labelDisabled,
+                textColors.accent,
+                textSizes[size]
+              )}
+            >
+              {label}
+            </label>
+          )}
+        </div>
+      )}
+      {variant === "button" && (
+        <Button
+          disabled={disabled}
+          variant={checked ? "filled" : "outline"}
+          color={!error ? color : "danger"}
+          size={size}
+          asChild
+          className={cn(!disabled ? "cursor-pointer" : "cursor-not-allowed")}
+        >
+          <span>{label}</span>
+        </Button>
+      )}
+    </CheckboxRoot>
+  )
 );
 
 CheckboxInner.displayName = "CheckboxInner";
-
-export default typedMemo(Checkbox);

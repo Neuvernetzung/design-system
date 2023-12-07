@@ -1,8 +1,8 @@
 import { Meta } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Button, Modal, Text } from "../../ui";
-import { Pagination } from ".";
+import { Pagination, usePagination, useUrlPagination } from ".";
 
 export default {
   title: "COMMON/Pagination",
@@ -10,11 +10,14 @@ export default {
   argTypes: {},
 } as Meta;
 
-export const Default = ({ ...args }) => <Pagination result={10000} {...args} />;
+export const Default = ({ ...args }) => {
+  const paginationProps = usePagination();
 
-export const WithState = ({ ...args }) => {
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
+  return <Pagination result={10000} {...paginationProps} {...args} />;
+};
+
+export const WithUrlState = ({ ...args }) => {
+  const paginationUrlProps = useUrlPagination();
 
   return (
     <div>
@@ -23,15 +26,8 @@ export const WithState = ({ ...args }) => {
         setOpen={() => null}
         content={
           <div>
-            Seite: {page}, Limit: {limit}
-            <Pagination
-              activePage={page}
-              setActivePage={setPage}
-              limit={limit}
-              setLimit={setLimit}
-              result={10000}
-              {...args}
-            />
+            Seite: {paginationUrlProps.page}, Limit: {paginationUrlProps.limit}
+            <Pagination {...paginationUrlProps} result={10000} {...args} />
           </div>
         }
       />
@@ -39,63 +35,73 @@ export const WithState = ({ ...args }) => {
   );
 };
 
-export const WithoutLimit = ({ ...args }) => (
-  <Pagination selectLimit={false} result={10000} {...args} />
-);
+export const WithoutLimit = ({ ...args }) => {
+  const paginationProps = usePagination();
 
-export const Minimalistic = ({ ...args }) => (
-  <Pagination
-    selectLimit={false}
-    variant="minimalistic"
-    result={10000}
-    {...args}
-  />
-);
+  return (
+    <Pagination
+      selectLimit={false}
+      result={10000}
+      {...paginationProps}
+      {...args}
+    />
+  );
+};
+
+export const Minimalistic = ({ ...args }) => {
+  const paginationProps = usePagination();
+
+  return (
+    <Pagination
+      selectLimit={false}
+      variant="minimalistic"
+      result={10000}
+      {...paginationProps}
+      {...args}
+    />
+  );
+};
 
 export const Multiple = ({ ...args }) => {
-  const [activePage, setActivePage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>();
+  const paginationProps = usePagination();
+  const paginationUrlProps = useUrlPagination();
 
   return (
     <div className="flex flex-col gap-12">
       <div className="w-full flex justify-end">
-        <Pagination selectLimit={false} result={10000} {...args} />
+        <Pagination
+          selectLimit={false}
+          result={10000}
+          {...paginationUrlProps}
+          {...args}
+        />
       </div>
-      <Pagination result={10000} {...args} />
+      <Pagination result={10000} {...paginationUrlProps} {...args} />
       <hr />
-      <Text>Andere Pagination - Seite: {activePage}</Text>
+      <Text>Andere Pagination - Seite: {paginationProps.page}</Text>
       <div className="w-full flex justify-end">
         <Pagination
           selectLimit={false}
-          limit={limit}
-          setLimit={setLimit}
-          activePage={activePage}
-          setActivePage={setActivePage}
+          {...paginationProps}
           result={10000}
           {...args}
         />
       </div>
 
-      <Pagination
-        activePage={activePage}
-        setActivePage={setActivePage}
-        limit={limit}
-        setLimit={setLimit}
-        result={10000}
-        {...args}
-      />
+      <Pagination {...paginationProps} result={10000} {...args} />
     </div>
   );
 };
 
 export const ToLastPage = ({ ...args }) => {
   const [result, setResult] = useState(50);
+  const paginationProps = usePagination();
 
   return (
     <div>
       <Button onClick={() => setResult(50)}>50</Button>
       <Button onClick={() => setResult(100)}>100</Button>
-      <Pagination result={result} />
+      <Pagination result={result} {...paginationProps} {...args} />
     </div>
   );
 };
