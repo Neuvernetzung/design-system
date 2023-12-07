@@ -1,5 +1,4 @@
 import { flip, offset, useFloating } from "@floating-ui/react-dom";
-import { Portal } from "@radix-ui/react-portal";
 import { IconSelector, IconX } from "@tabler/icons-react";
 import { useMultipleSelection, useSelect } from "downshift";
 import compact from "lodash/compact";
@@ -166,7 +165,7 @@ export const SelectMultipleRawInner = <
     toggleButtonId: id,
     items: valueOptions,
     isItemDisabled: (item) => !!item.disabled,
-    stateReducer: (_, actionAndChanges) => {
+    stateReducer: (state, actionAndChanges) => {
       const { changes, type } = actionAndChanges;
       switch (type) {
         case useSelect.stateChangeTypes.ToggleButtonKeyDownEnter:
@@ -175,6 +174,7 @@ export const SelectMultipleRawInner = <
           return {
             ...changes,
             isOpen: true, // Select geöffnet lassen nach Item Auswahl.
+            highlightedIndex: state.highlightedIndex, // HighlightedIndex beibehalten nach Selektion
           };
         default:
       }
@@ -347,56 +347,50 @@ export const SelectMultipleRawInner = <
         </div>
       </FormElement>
       {isOpen && (
-        <Portal>
-          <div
-            ref={mergeRefs(compact([refs.setFloating, menuRef]))}
-            data-state={isOpen ? "open" : "closed"}
-            style={{
-              top: y,
-              left: x,
-              position: strategy,
-              width: buttonWidth,
-            }}
-            className={cn(
-              getDropdownContainerStyles({ size, disablePadding: true }),
-              "flex flex-col will-change-[transform,opacity] divide-y",
-              divides.accent,
-              popoverAnimation,
-              optionsClassName
-            )}
-          >
-            {beforeChildren && (
-              <div className={cn(getDropdownPadding(size))}>
-                {beforeChildren}
-              </div>
-            )}
-            <ul className={cn(getDropdownPadding(size))} {...menuProps}>
-              {indexedOptions.map((option, i) => (
-                <SelectOption
-                  key={i}
-                  {...option}
-                  size={size}
-                  getItemProps={getItemProps}
-                  isSelected={(value) =>
-                    !!selectedItems.find((item) => item?.value === value)
-                  }
-                  highlightedIndex={highlightedIndex}
-                  checkedType={checkedType}
-                />
+        <div
+          ref={mergeRefs(compact([refs.setFloating, menuRef]))}
+          data-state={isOpen ? "open" : "closed"}
+          style={{
+            top: y,
+            left: x,
+            position: strategy,
+            width: buttonWidth,
+          }}
+          className={cn(
+            getDropdownContainerStyles({ size, disablePadding: true }),
+            "flex flex-col will-change-[transform,opacity] divide-y",
+            divides.accent,
+            popoverAnimation,
+            optionsClassName
+          )}
+        >
+          {beforeChildren && (
+            <div className={cn(getDropdownPadding(size))}>{beforeChildren}</div>
+          )}
+          <ul className={cn(getDropdownPadding(size))} {...menuProps}>
+            {indexedOptions.map((option, i) => (
+              <SelectOption
+                key={i}
+                {...option}
+                size={size}
+                getItemProps={getItemProps}
+                isSelected={(value) =>
+                  !!selectedItems.find((item) => item?.value === value)
+                }
+                highlightedIndex={highlightedIndex}
+                checkedType={checkedType}
+              />
+            ))}
+            {!indexedOptions ||
+              (indexedOptions.length === 0 && (
+                <NoOptionsFound message={noOptionsMessage} size={size} />
               ))}
-              {!indexedOptions ||
-                (indexedOptions.length === 0 && (
-                  <NoOptionsFound message={noOptionsMessage} size={size} />
-                ))}
-            </ul>
+          </ul>
 
-            {afterChildren && (
-              <div className={cn(getDropdownPadding(size))}>
-                {afterChildren}
-              </div>
-            )}
-          </div>
-        </Portal>
+          {afterChildren && (
+            <div className={cn(getDropdownPadding(size))}>{afterChildren}</div>
+          )}
+        </div>
       )}
     </>
   );

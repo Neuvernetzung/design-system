@@ -37,7 +37,12 @@ export const Loading = () => {
     return (
       <div className={cn("relative", zIndexes.modal)}>
         <Backdrop isOpen={isLoading === true} />
-        <div className={cn("fixed inset-0 flex items-center justify-center")}>
+        <div
+          className={cn(
+            zIndexes.modal,
+            "fixed inset-0 flex items-center justify-center"
+          )}
+        >
           <div className={cn("flex flex-col items-center", gaps.md)}>
             <Spinner size="xl" />
             <Text className="animate-pulse">{getText(locale).loading}</Text>

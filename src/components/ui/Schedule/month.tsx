@@ -104,21 +104,21 @@ export const ScheduleMonthView = ({
         editEventProps={editEventProps}
         disableCreate={disabled || !isFunction(onCreate) || disableCreate}
       />
+      <div
+        className={cn(
+          "grid grid-cols-7 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",
+          extendedBorders.filled,
+          divides.accent
+        )}
+      >
+        {new Array(7).fill(null).map((_, i) => (
+          <MonthScheduleHead
+            key={`week_day_head_${i}`}
+            day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
+          />
+        ))}
+      </div>
       <div className={cn("overflow-y-scroll relative", scrollbar)}>
-        <div
-          className={cn(
-            "sticky z-[1] top-0 grid grid-cols-7 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",
-            extendedBorders.filled,
-            divides.accent
-          )}
-        >
-          {new Array(7).fill(null).map((_, i) => (
-            <MonthScheduleHead
-              key={`week_day_head_${i}`}
-              day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
-            />
-          ))}
-        </div>
         <MonthGridDndContext
           onUpdate={onUpdate}
           sensors={sensors}
