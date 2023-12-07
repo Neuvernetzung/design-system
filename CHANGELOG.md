@@ -1,5 +1,42 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.0
+
+### Major Changes
+
+- dcfb067: RichText und Prose overhaul #1003
+- 284a57c: Alle "as" Props zu asChild ändern #1152
+- b6c0947: HeadlessUI durch Radix komplett ersetzen #1128
+- 71182a0: Select überarbeiten #1135
+
+### Minor Changes
+
+- e16fa55: Dependencies aufräumen #1160
+- 0d2f396: typedMemo entfernen #1154
+- e099fa9: Footer Variabler gestalten #1172
+- f79d71d: loadingId entfernen und dafür normales isLoading hinzufügen für Button #1139
+- e3d1032: Pagination verbessern durch usePagination um controlled zu ermöglichen, außerdem useUrl hinzufügen für State #1133
+- 381daf9: Breakpoints selber festlegen #1095
+- 94658e8: RadioGroup und Checkbox zu Menu hinzufügen #1130
+- e9da992: Framer-Motion entfernen, dafür CSS Animationen #1125
+- 76abc9a: Typescript Tailwind Config nutzen #1157
+
+### Patch Changes
+
+- 8441f2c: Menü Link Item target und rel noreferrer als option hinzufügen #1166
+- 8f236d1: Workflow runs sparsamer gestalten #1162
+- ed97bd8: BarChart Tooltip fixen #1137
+- 742c524: Icon bei Item in Footer erlauben, statt nur in Titel #1167
+- 65438b7: cn erweitern mit tailwind merge #1134
+- bb3c9c1: updateQuery durch useUrlState ersetzen #1146
+- b27461f: PagePaddings erweitern #1132
+- 1ce0340: ReadMe anpassen #1159
+- 3ef1c6d: Button "Drop" hinzufügen #1141 #1153
+- 393fcfb: BarList mit langem Namen/mehrzeilig fixen #1136
+- 4d2e5e3: Wenn bei 2 RichText untereinander das Slash Menü genutzt wird Fehler #1180
+- 2a5ec3d: Avatar hinzufügen #1165
+- fa88b42: zIndex bugs fixen #1178
+
 ## 2.3.0
 
 ### Minor Changes
