@@ -7,7 +7,7 @@
     "dist",
     "package.json",
     "README.md",
-    "tailwind.config.js",
+    "tailwind.config.ts",
     "globals.css"
   ],
   "types": "dist/index.d.mts",
