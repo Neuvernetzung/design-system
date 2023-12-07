@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.1
+
+### Patch Changes
+
+- e1343f2: Peer deps updaten #1185
+
 ## 3.0.0
 
 ### Major Changes
