@@ -77,7 +77,7 @@ export const PageContainer = ({
   return (
     <main
       className={cn(
-        "overflow-x-hidden w-full",
+        "overflow-x-hidden",
         enablePagePadding && pagePaddings[pagePadding],
         enabledPageGaps && pageGaps[pagePadding],
         className
