@@ -33,9 +33,14 @@ import { cn } from "@/utils";
 import { MenuItems } from "../../Menu";
 import type { RichTextOptionProps, RichTextPluginProps } from "../richText";
 
-export const slashMenuStore = create<{ open: boolean; range?: Range }>(() => ({
+export const slashMenuStore = create<{
+  open: boolean;
+  range?: Range;
+  target?: Element;
+}>(() => ({
   open: false,
   range: undefined,
+  target: undefined,
 }));
 
 type SlashMenuProps = {
@@ -45,7 +50,7 @@ type SlashMenuProps = {
 };
 
 export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
-  const { open, range: storeRange } = useStore(slashMenuStore);
+  const { open, range: storeRange, target } = useStore(slashMenuStore);
   const range = storeRange || { from: NaN, to: NaN };
 
   const virtualEl = {
@@ -92,7 +97,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
 
   return (
     <DropdownMenuRoot
-      open={open}
+      open={open && editor.options.element === target} // Vergleich mit editorElement und target, da sonst durch globalen State alle SlashMenüs auf gehen bei jedem Editor
       onOpenChange={(open) => {
         slashMenuStore.setState({ open });
       }}

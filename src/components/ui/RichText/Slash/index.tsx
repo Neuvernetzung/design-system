@@ -3,17 +3,29 @@ import Suggestion from "@tiptap/suggestion";
 
 import { slashMenuStore } from "./Menu";
 
-const renderItems = () => ({
-  onStart: ({ range }: { range: Range }) => {
-    slashMenuStore.setState({ open: true, range });
+const render = () => ({
+  onStart: ({ range, editor }: { range: Range; editor: Editor }) => {
+    slashMenuStore.setState({
+      open: true,
+      range,
+      target: editor.options.element,
+    });
   },
-  onKeyDown: (props: { event: KeyboardEvent }) => {
-    if (props.event.key === "Escape") {
-      slashMenuStore.setState({ open: false, range: undefined });
+  onKeyDown: ({ event }: { event: KeyboardEvent }) => {
+    if (event.key === "Escape") {
+      slashMenuStore.setState({
+        open: false,
+        range: undefined,
+        target: undefined,
+      });
     }
   },
   onExit: () => {
-    slashMenuStore.setState({ open: false, range: undefined });
+    slashMenuStore.setState({
+      open: false,
+      range: undefined,
+      target: undefined,
+    });
   },
 });
 
@@ -47,6 +59,6 @@ export const SlashCommand = Extension.create({
   },
 }).configure({
   suggestion: {
-    render: renderItems,
+    render,
   },
 });
