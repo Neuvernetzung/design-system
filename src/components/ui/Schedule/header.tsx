@@ -54,7 +54,7 @@ export const ScheduleHeader = ({
   return (
     <div
       className={cn(
-        "flex flex-col md:flex-row justify-between items-center",
+        "flex flex-col md:flex-row justify-between items-center mb-4",
         gaps.md
       )}
     >

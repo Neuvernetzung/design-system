@@ -120,11 +120,7 @@ export const Schedule = ({
           </div>
         )}
         <div
-          className={cn(
-            "flex flex-col w-full max-h-[80vh]",
-            gaps.md,
-            paddingsEvenly.md
-          )}
+          className={cn("flex flex-col w-full max-h-[80vh]", paddingsEvenly.md)}
         >
           {currentView === "day" && (
             <ScheduleDayView

@@ -112,20 +112,17 @@ export const ScheduleDayView = ({
         disableCreate={disabled || !isFunction(onCreate) || disableCreate}
       />
       <div
+        className={cn(
+          "grid grid-cols-1 border ml-12 divide-x divide-opacity-50 dark:divide-opacity-50",
+          extendedBorders.filled
+        )}
+      >
+        <DayScheduleHead day={viewing} scheduleViewProps={scheduleViewProps} />
+      </div>
+      <div
         ref={gridContainerRef}
         className={cn("overflow-y-scroll relative", scrollbar)}
       >
-        <div
-          className={cn(
-            "sticky z-[1] top-0 grid grid-cols-1 border ml-12 divide-x divide-opacity-50 dark:divide-opacity-50",
-            extendedBorders.filled
-          )}
-        >
-          <DayScheduleHead
-            day={viewing}
-            scheduleViewProps={scheduleViewProps}
-          />
-        </div>
         <DayGridDndContext
           innerHeight={innerHeight}
           modifiers={modifiers}
@@ -204,7 +201,7 @@ export const DayScheduleHead = ({
   return (
     <div
       className={cn(
-        "flex justify-center items-center",
+        "relative flex justify-center items-center",
         bgColors.white,
         heights.md
       )}
@@ -312,7 +309,7 @@ export const ScheduleDay = ({
             <li
               key={`${event.uid}-${i}`}
               className={cn(
-                "w-full",
+                "w-full truncate",
                 paddingsYSmall.md,
                 beginsBeforeThisDay && (isReverse ? "!pb-0" : "!pt-0"),
                 endsAfterThisDay && (isReverse ? "!pt-0" : "!pb-0")

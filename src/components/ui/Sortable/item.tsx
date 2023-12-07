@@ -4,7 +4,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Slot } from "@radix-ui/react-slot";
 import isFunction from "lodash/isFunction";
-import { ForwardedRef, HTMLAttributes, ReactNode } from "react";
+import { ForwardedRef, HTMLAttributes, ReactNode, forwardRef } from "react";
 
 import { cn } from "@/utils";
 
@@ -30,7 +30,7 @@ export type SortableItemProps<THandle extends boolean> = Omit<
     | (({ handle }: FunctionChildrenProps<THandle>) => ReactNode);
 };
 
-export const SortableItem = <THandle extends boolean = false>(
+export const SortableItemInner = <THandle extends boolean = false>(
   {
     id,
     handle,
@@ -83,3 +83,11 @@ export const SortableItem = <THandle extends boolean = false>(
     </Component>
   );
 };
+
+export const SortableItem = forwardRef(SortableItemInner) as <
+  THandle extends boolean = false
+>(
+  props: SortableItemProps<THandle> & {
+    ref?: ForwardedRef<HTMLButtonElement>;
+  }
+) => ReturnType<typeof SortableItemInner>;

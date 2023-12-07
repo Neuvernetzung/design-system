@@ -17,6 +17,7 @@ import {
   paddingsLargeEvenly,
   shadows,
   transition,
+  zIndexes,
 } from "../../../styles";
 import type { ExtendedSize, SvgType } from "../../../types";
 import { Backdrop } from "../Backdrop";
@@ -101,7 +102,7 @@ export const Drawer = ({
   <Root open={open} defaultOpen={defaultOpen} onOpenChange={setOpen}>
     {children && <DialogTrigger asChild>{children}</DialogTrigger>}
     <DialogPortal>
-      <DialogOverlay asChild>
+      <DialogOverlay className={zIndexes.modal} asChild>
         <Backdrop isOpen />
       </DialogOverlay>
       <DialogContent
@@ -114,6 +115,7 @@ export const Drawer = ({
             : undefined
         }
         className={cn(
+          zIndexes.modal,
           transition,
           borders.accent,
           bgColors.white,

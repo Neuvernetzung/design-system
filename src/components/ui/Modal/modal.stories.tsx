@@ -5,10 +5,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, ButtonGroup, IconButton } from "../Button";
-import { Select } from "../Select";
+import { Select, SelectMultiple } from "../Select";
 import { TabGroup, TabItemValueProps, TabList, TabPanels } from "../Tabs";
 import { Heading } from "../Typography";
 import { Modal, ModalSize } from "./modal";
+import { Menu } from "../Menu";
 
 export default {
   title: "UI/Overlay/Modal",
@@ -313,10 +314,11 @@ export const ContainerOverflow = ({ ...args }) => {
 
       <Modal
         content={
-          <div>
+          <div className="flex flex-row gap-4">
             <Select
               control={control}
               name="test"
+              beforeChildren={<Button>Test</Button>}
               options={[
                 {
                   children: "Option 1",
@@ -331,6 +333,28 @@ export const ContainerOverflow = ({ ...args }) => {
                   value: "option-3",
                 },
               ]}
+            />
+            <SelectMultiple
+              control={control}
+              name="multi"
+              options={[
+                {
+                  children: "Option 1",
+                  value: "option-1",
+                },
+                {
+                  children: "Option 2",
+                  value: "option-2",
+                },
+                {
+                  children: "Option 3",
+                  value: "option-3",
+                },
+              ]}
+            />
+            <Menu
+              buttonProps={{ children: "Menu" }}
+              items={[{ type: "button", onClick: () => {}, children: "Test" }]}
             />
           </div>
         }

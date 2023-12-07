@@ -13,14 +13,14 @@ export default {
   argTypes: {},
 } as Meta;
 
-type Item = { id: number; content: string; order: number };
+type Item = { id: string; content: string; order: number };
 
 const defaultItems: Item[] = [
-  { id: 1, content: "Item 1", order: 23 },
-  { id: 2, content: "Item 2", order: 24 },
-  { id: 3, content: "Item 3", order: 25 },
-  { id: 4, content: "Item 4", order: 28 },
-  { id: 5, content: "Item 5", order: 29 },
+  { id: "1", content: "Item 1", order: 23 },
+  { id: "2", content: "Item 2", order: 24 },
+  { id: "3", content: "Item 3", order: 25 },
+  { id: "4", content: "Item 4", order: 28 },
+  { id: "5", content: "Item 5", order: 29 },
 ];
 
 const itemClassName = cn(paddingsEvenly.md, bgColorsInteractive.white);
