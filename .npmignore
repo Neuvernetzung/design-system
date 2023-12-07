@@ -8,3 +8,4 @@ CHANGELOG.md
 public
 storybook-static
 **/**.tsbuildinfo 
+tailwind.config.ts
