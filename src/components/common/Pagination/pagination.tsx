@@ -53,7 +53,7 @@ export const Pagination = ({
 }: PaginationProps) => {
   useEffect(() => {
     // Wenn sich das Result oder Limit ändert z.B. durch Filtern einer anderen Funktion oä. wird automatisch zur letzten Seite gesprungen.
-    if (page * limit <= result) return;
+    if (page > Math.ceil(result / limit)) return;
 
     setPage(Math.ceil(result / limit));
   }, [result, limit]);
