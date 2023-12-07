@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.6
+
+### Patch Changes
+
+- b43a67f: Abfrage in Pagination zurückgeändert und erneut verbessert #1202
+
 ## 3.0.5
 
 ### Patch Changes
