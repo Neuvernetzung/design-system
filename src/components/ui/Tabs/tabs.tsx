@@ -34,6 +34,7 @@ export type TabGroupProps = TabListProps &
   Omit<TabPanelsProps, "items"> & {
     className?: string;
     defaultTab?: string;
+    setValue?: (value: string) => void;
   };
 
 export type TabListProps = {
@@ -48,7 +49,6 @@ export type TabListProps = {
   activeButtonVariant?: ButtonVariant;
   activeButtonColor?: ExtendedColor;
   value?: string;
-  setValue?: (value: string) => void;
 };
 
 export type TabPanelsProps = {
