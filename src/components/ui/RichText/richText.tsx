@@ -45,6 +45,7 @@ import { SlashMenu } from "./Slash/Menu";
 import { SmallParagraph } from "./Small";
 import { TableExtensions } from "./Table";
 import { richTextTableClassName } from "./Table/Table/className";
+import { ReactElement } from "react";
 
 export type RichTextOptionProps = {
   disableFloatingMenu?: boolean;
@@ -53,9 +54,14 @@ export type RichTextOptionProps = {
   disableImages?: boolean;
 };
 
-export type RichTextPluginProps = {
-  menuItems: (editor: Editor) => MenuItemProps[];
-};
+export type RichTextPluginWithEditorProps = {
+  menuItems?: MenuItemProps[];
+  component?: ReactElement;
+}[];
+
+export type RichTextPluginProps = (
+  editor: Editor | null
+) => RichTextPluginWithEditorProps;
 
 export type RichTextProps = {
   label?: string;
@@ -69,7 +75,7 @@ export type RichTextProps = {
   size?: Size;
   options?: RichTextOptionProps;
   extensions?: Extension[];
-  plugins?: RichTextPluginProps[];
+  plugins?: RichTextPluginProps;
 };
 
 export const RichText = <
@@ -89,7 +95,7 @@ export const RichText = <
   size = "md",
   options,
   extensions = [],
-  plugins = [],
+  plugins,
 }: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
   const {
     field: { value, onChange },
@@ -165,63 +171,80 @@ export const RichText = <
     },
   });
 
+  const pluginsWithEditor = plugins?.(editor);
+
   return (
-    <Controller
-      control={control}
-      name={name}
-      rules={{
-        required: requiredInputRule(required),
-      }}
-      render={({ field: { ref }, fieldState: { error } }) => (
-        <FormElement
-          required={required}
-          name={name}
-          label={label}
-          helper={helper}
-          error={error}
-          size={size}
-        >
-          <div
-            defaultValue="editor"
-            className={cn(
-              !error ? bordersInteractive.accent : bordersInteractive.danger,
-              "group border w-full relative cursor-auto overflow-hidden",
-              roundings.md,
-              transition,
-              "focus:outline-none focus-within:ring focus-within:ring-opacity-20 dark:focus-within:ring-opacity-20 focus-within:ring-accent-600 dark:focus-within:ring-accent-300",
-              containerClassName
-            )}
+    <>
+      <Controller
+        control={control}
+        name={name}
+        rules={{
+          required: requiredInputRule(required),
+        }}
+        render={({ field: { ref }, fieldState: { error } }) => (
+          <FormElement
+            required={required}
+            name={name}
+            label={label}
+            helper={helper}
+            error={error}
+            size={size}
           >
-            {editor ? (
-              <BubbleMenu editor={editor} options={options} plugins={plugins} />
-            ) : null}
-            {!options?.disableFloatingMenu && editor ? (
-              <Floating editor={editor} />
-            ) : null}
-            {!options?.disableSlashMenu && editor ? (
-              <SlashMenu editor={editor} options={options} plugins={plugins} />
-            ) : null}
-            <EditorContent
-              ref={ref}
-              className={cn("appearance-none w-full")}
-              editor={editor}
-            />
-            {maxLength && showLength && (
-              <Text
-                size="xs"
-                color={
-                  editor?.storage.characterCount.characters() > maxLength
-                    ? "danger"
-                    : "accent"
-                }
-                className={cn("absolute bottom-2 right-5 pointer-events-none")}
-              >
-                {editor?.storage.characterCount.characters()} / {maxLength}
-              </Text>
-            )}
-          </div>
-        </FormElement>
-      )}
-    />
+            <div
+              defaultValue="editor"
+              className={cn(
+                !error ? bordersInteractive.accent : bordersInteractive.danger,
+                "group border w-full relative cursor-auto overflow-hidden",
+                roundings.md,
+                transition,
+                "focus:outline-none focus-within:ring focus-within:ring-opacity-20 dark:focus-within:ring-opacity-20 focus-within:ring-accent-600 dark:focus-within:ring-accent-300",
+                containerClassName
+              )}
+            >
+              {editor ? (
+                <BubbleMenu
+                  editor={editor}
+                  options={options}
+                  plugins={pluginsWithEditor}
+                />
+              ) : null}
+              {!options?.disableFloatingMenu && editor ? (
+                <Floating editor={editor} />
+              ) : null}
+              {!options?.disableSlashMenu && editor ? (
+                <SlashMenu
+                  editor={editor}
+                  options={options}
+                  plugins={pluginsWithEditor}
+                />
+              ) : null}
+              <EditorContent
+                ref={ref}
+                className={cn("appearance-none w-full")}
+                editor={editor}
+              />
+              {maxLength && showLength && (
+                <Text
+                  size="xs"
+                  color={
+                    editor?.storage.characterCount.characters() > maxLength
+                      ? "danger"
+                      : "accent"
+                  }
+                  className={cn(
+                    "absolute bottom-2 right-5 pointer-events-none"
+                  )}
+                >
+                  {editor?.storage.characterCount.characters()} / {maxLength}
+                </Text>
+              )}
+            </div>
+          </FormElement>
+        )}
+      />
+      {pluginsWithEditor
+        ?.filter((plugin) => !!plugin.component)
+        .map((plugin) => plugin.component)}
+    </>
   );
 };

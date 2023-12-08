@@ -31,7 +31,10 @@ import { offsetSizes } from "@/styles/popper/offset";
 import { cn } from "@/utils";
 
 import { MenuItems } from "../../Menu";
-import type { RichTextOptionProps, RichTextPluginProps } from "../richText";
+import type {
+  RichTextOptionProps,
+  RichTextPluginWithEditorProps,
+} from "../richText";
 
 export const slashMenuStore = create<{
   open: boolean;
@@ -46,7 +49,7 @@ export const slashMenuStore = create<{
 type SlashMenuProps = {
   editor: Editor;
   options: RichTextOptionProps | undefined;
-  plugins: RichTextPluginProps[] | undefined;
+  plugins: RichTextPluginWithEditorProps | undefined;
 };
 
 export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
@@ -92,8 +95,9 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
     ],
   });
 
-  const pluginMenuItems =
-    plugins?.map((plugin) => plugin.menuItems(editor)).flat() || [];
+  const pluginMenuItems = compact(
+    plugins?.map((plugin) => plugin.menuItems).flat() || []
+  );
 
   return (
     <DropdownMenuRoot
