@@ -39,7 +39,10 @@ import { cn } from "@/utils";
 
 import { IconButton } from "../../Button";
 import { Menu } from "../../Menu";
-import type { RichTextOptionProps, RichTextPluginProps } from "../richText";
+import type {
+  RichTextOptionProps,
+  RichTextPluginWithEditorProps,
+} from "../richText";
 import { AddLinkButton } from "./addLink";
 import { RichTextMenuGroup, RichTextMenuGroupItem } from "./menuItem";
 import { SelectText } from "./selectText";
@@ -47,7 +50,7 @@ import { SelectText } from "./selectText";
 export type BubbleMenuProps = {
   editor: Editor;
   options: RichTextOptionProps | undefined;
-  plugins: RichTextPluginProps[] | undefined;
+  plugins: RichTextPluginWithEditorProps | undefined;
 };
 
 export const toolbarClassName = cn(
@@ -115,8 +118,9 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
   )
     return;
 
-  const pluginMenuItems =
-    plugins?.map((plugin) => plugin.menuItems(editor)).flat() || [];
+  const pluginMenuItems = compact(
+    plugins?.map((plugin) => plugin.menuItems).flat() || []
+  );
 
   if (!openRaw) return null;
 
@@ -291,9 +295,8 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
               {
                 type: "button",
                 icon: IconClearFormatting,
-                onClick: () => () => {
-                  editor.chain().focus().unsetAllMarks().run();
-                  editor.chain().focus().clearNodes().run();
+                onClick: () => {
+                  editor.chain().focus().unsetAllMarks().clearNodes().run();
                 },
                 children: "Styles entfernen",
               },

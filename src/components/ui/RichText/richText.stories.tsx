@@ -1,12 +1,13 @@
 import { Meta } from "@storybook/react";
-import { cn } from "@/utils";
+import { IconPhoto } from "@tabler/icons-react";
+import { HTMLAttributes, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Button, Prose } from "..";
-import { RichText } from ".";
-import { IconPhoto } from "@tabler/icons-react";
+import { cn } from "@/utils";
+
+import { Button, Modal, Prose } from "..";
 import { Form } from "../Form/form";
-import { HTMLAttributes } from "react";
+import { RichText } from ".";
 
 export default {
   title: "UI/Form/RichText",
@@ -99,29 +100,48 @@ export const CustomMenuButtons = ({ ...args }) => {
     },
   });
 
+  const [open, setOpen] = useState(false);
+
   return (
     <Container className="grid grid-cols-2">
       <RichText
         control={control}
-        plugins={[
+        plugins={(editor) => [
           {
-            menuItems: (editor) => [
+            menuItems: [
               {
                 type: "button",
                 icon: IconPhoto,
                 children: "Bild",
-                onClick: () =>
-                  editor
-                    ?.chain()
-                    .focus()
-                    .setImage({
-                      src: "https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png",
-                      alt: "Test",
-                      title: "Image",
-                    })
-                    .run(),
+                onClick: () => setOpen(true),
               },
             ],
+            component: (
+              <Modal
+                open={open}
+                setOpen={setOpen}
+                content={
+                  <div>
+                    <Button
+                      onClick={() => {
+                        editor
+                          ?.chain()
+                          .focus()
+                          .setImage({
+                            src: "https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png",
+                            alt: "Test",
+                            title: "Image",
+                          })
+                          .run();
+                        setOpen(false);
+                      }}
+                    >
+                      Bild hinzufügen
+                    </Button>
+                  </div>
+                }
+              />
+            ),
           },
         ]}
         name="RichText"
