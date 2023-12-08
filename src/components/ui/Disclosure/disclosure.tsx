@@ -9,7 +9,7 @@ import { IconChevronDown, IconMinus, IconPlus } from "@tabler/icons-react";
 import { cn } from "@/utils";
 import compact from "lodash/compact";
 import isString from "lodash/isString";
-import { type ReactNode } from "react";
+import { HTMLProps, type ReactNode } from "react";
 
 import {
   borders,
@@ -184,9 +184,21 @@ export const DisclosureItem = ({
   </AccordionItem>
 );
 
-const DisclosureIcon = () => (
+const DisclosureIcon = ({ className, ...props }: HTMLProps<SVGSVGElement>) => (
   <>
-    <IconPlus className="group-data-[state=open]:hidden group-data-[state=closed]:block" />
-    <IconMinus className="group-data-[state=open]:block group-data-[state=closed]:hidden" />
+    <IconPlus
+      className={cn(
+        "group-data-[state=open]:hidden group-data-[state=closed]:block",
+        className
+      )}
+      {...props}
+    />
+    <IconMinus
+      className={cn(
+        "group-data-[state=open]:block group-data-[state=closed]:hidden",
+        className
+      )}
+      {...props}
+    />
   </>
 );
