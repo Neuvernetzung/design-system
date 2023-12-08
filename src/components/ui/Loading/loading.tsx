@@ -15,23 +15,39 @@ import { Backdrop } from "../Backdrop";
 import { iconDimensions } from "../Icon/icon";
 import { Text } from "../Typography/Text";
 
-export const useLoadingState = create<boolean>(() => false);
+export const useLoadingState = create<
+  { status: boolean } & Record<string, boolean>
+>(() => ({ status: false }));
 
-export const loading = (loading: boolean) => {
-  useLoadingState.setState(loading);
+export const loading = (loading: boolean, id?: string) => {
+  if (id) {
+    useLoadingState.setState({ [id]: loading });
+  } else {
+    useLoadingState.setState({ status: loading });
+  }
 };
 
-export const isLoading = () => useLoadingState.getState();
+export const isLoading = (id?: string) => {
+  if (id) {
+    return useLoadingState.getState()?.[id];
+  }
+  return useLoadingState.getState()?.status;
+};
 
-export const useIsLoading = () => {
-  const isLoading = useLoadingState((state) => state);
+export const useIsLoading = (id?: string) => {
+  const isLoading = useLoadingState((state) => {
+    if (id) {
+      return state[id];
+    }
+    return state.status;
+  });
 
   return isLoading;
 };
 
 export const Loading = () => {
   const locale = useRouter().locale as Locale;
-  const isLoading = useLoadingState((state) => state);
+  const isLoading = useLoadingState((state) => state?.status);
 
   if (isLoading === true)
     return (
