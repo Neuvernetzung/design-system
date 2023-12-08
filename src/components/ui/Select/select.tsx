@@ -2,12 +2,20 @@ import {
   flip,
   offset,
   type Placement,
+  size as sizeMiddleware,
   useFloating,
 } from "@floating-ui/react-dom";
 import { IconSelector, IconX } from "@tabler/icons-react";
 import { useSelect } from "downshift";
 import compact from "lodash/compact";
-import { type ForwardedRef, forwardRef, type ReactNode, useRef } from "react";
+import {
+  type ForwardedRef,
+  forwardRef,
+  type ReactNode,
+  useRef,
+  useState,
+} from "react";
+import { flushSync } from "react-dom";
 import {
   type FieldError,
   type FieldPath,
@@ -181,6 +189,8 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
     { suppressRefError: true }
   );
 
+  const [maxHeight, setMaxHeight] = useState<number | null>(null);
+
   const { x, y, strategy, refs } = useFloating({
     open: isOpen,
     strategy: "fixed",
@@ -189,13 +199,14 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
       offset({ mainAxis: offsetSizes[size] }),
       flip({
         padding: offsetSizes[size],
-        fallbackPlacements: [
-          "top",
-          "bottom-start",
-          "top-start",
-          "bottom-end",
-          "top-end",
-        ],
+        fallbackPlacements: ["top"],
+      }),
+      sizeMiddleware({
+        apply({ availableHeight }) {
+          flushSync(() => setMaxHeight(availableHeight));
+        },
+        rootBoundary: "document",
+        padding: offsetSizes[size],
       }),
     ],
   });
@@ -275,6 +286,7 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
             left: x,
             position: strategy,
             width: buttonWidth,
+            maxHeight: maxHeight ? `${maxHeight}px` : undefined,
           }}
           className={cn(
             getDropdownContainerStyles({ size, disablePadding: true }),

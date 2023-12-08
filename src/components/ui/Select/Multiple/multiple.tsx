@@ -1,8 +1,14 @@
-import { flip, offset, useFloating } from "@floating-ui/react-dom";
+import {
+  flip,
+  offset,
+  size as sizeMiddleware,
+  useFloating,
+} from "@floating-ui/react-dom";
 import { IconSelector, IconX } from "@tabler/icons-react";
 import { useMultipleSelection, useSelect } from "downshift";
 import compact from "lodash/compact";
-import { type ForwardedRef, forwardRef, useRef } from "react";
+import { type ForwardedRef, forwardRef, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import {
   FieldError,
   type FieldPath,
@@ -214,6 +220,8 @@ export const SelectMultipleRawInner = <
     { suppressRefError: true }
   );
 
+  const [maxHeight, setMaxHeight] = useState<number | null>(null);
+
   const { x, y, strategy, refs } = useFloating({
     open: isOpen,
     placement,
@@ -228,6 +236,13 @@ export const SelectMultipleRawInner = <
           "bottom-end",
           "top-end",
         ],
+      }),
+      sizeMiddleware({
+        apply({ availableHeight }) {
+          flushSync(() => setMaxHeight(availableHeight));
+        },
+        rootBoundary: "document",
+        padding: offsetSizes[size],
       }),
     ],
   });
@@ -355,6 +370,7 @@ export const SelectMultipleRawInner = <
             left: x,
             position: strategy,
             width: buttonWidth,
+            maxHeight: maxHeight ? `${maxHeight}px` : undefined,
           }}
           className={cn(
             getDropdownContainerStyles({ size, disablePadding: true }),
