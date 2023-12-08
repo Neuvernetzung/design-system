@@ -23,12 +23,20 @@ export type DataTableProps<
   D extends string
 > = Omit<SimpleTableProps<T>, "items" | "cols"> &
   DataTablePropsConditional<T, K, D> & {
-    sort: string | undefined;
-    setSort: (sort: string) => void;
-    cols: DataTableCol<T>[];
     disclosureValue?: D;
     disclosureClassName?: string;
-  };
+    cols: DataTableCol<T>[];
+  } & DataTableSortableProps;
+
+export type DataTableSortableProps =
+  | {
+      sort: string | undefined;
+      setSort: (sort: string) => void;
+    }
+  | {
+      sort?: never;
+      setSort?: never;
+    };
 
 export type DataTablePropsConditional<
   T extends string,
@@ -84,7 +92,7 @@ export const DataTable = <
   const handleSort = (_sort: string) => {
     const __sort = _sort === sort ? `-${_sort}` : _sort;
 
-    setSort(__sort);
+    setSort?.(__sort);
   };
 
   return (
