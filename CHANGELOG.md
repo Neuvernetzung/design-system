@@ -1,5 +1,14 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.7
+
+### Patch Changes
+
+- 6feaaa1: TabList - setValue von Props entfernen #1206
+- 9d6221b: Select - Boundary setzen bei Fenster #1205
+- e0ea44f: RichText - Möglichkeit um eine Plugin - Komponente zu rendern #1208
+- 1a09c5c: RichText - Styles entfernen funktioniert nicht #1207
+
 ## 3.0.6
 
 ### Patch Changes
