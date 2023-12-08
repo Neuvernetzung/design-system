@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 
 import { Logo } from "../../../../public/Logo";
 import { borders } from "../../../styles";
-import { Button, Drawer, IconButton, Menu, Tooltip } from "../../ui";
+import { Button, Drawer, IconButton, Menu, Modal, Tooltip } from "../../ui";
 import { Icon } from "../../ui/Icon";
 import { Loading, loading } from "../../ui/Loading";
 import { Select } from "../../ui/Select";
@@ -198,6 +198,7 @@ export const Default = ({ ...args }) => <Navbar {...baseProps} {...args} />;
 
 export const ZIndexTest = ({ ...args }) => {
   const [openSide, setOpenSide] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
@@ -223,7 +224,16 @@ export const ZIndexTest = ({ ...args }) => {
       >
         Loading
       </Button>
+      <Button
+        className="mt-5"
+        onClick={() => {
+          setOpenModal(true);
+        }}
+      >
+        Modal
+      </Button>
       <Loading />
+      <Modal open={openModal} setOpen={setOpenModal} content="Ok" />
     </>
   );
 };
