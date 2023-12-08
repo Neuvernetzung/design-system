@@ -97,7 +97,10 @@ export const DataTable = <
         <TableHead>
           <TableRow divideX={divideX}>
             {checkable && (
-              <th className={cn("w-0", paddingsEvenly[size])}>
+              <th
+                className={cn("w-0", paddingsEvenly[size])}
+                aria-label="check-all"
+              >
                 <CheckboxInner
                   id="checkbox_indeterminate"
                   disabled={items?.length === 0}
@@ -160,7 +163,10 @@ export const DataTable = <
               hasStripes={hasStripes}
             >
               {checkable && (
-                <td className={cn(paddingsEvenly[size])}>
+                <td
+                  className={cn(paddingsEvenly[size])}
+                  aria-label={`check-item-${i}`}
+                >
                   <CheckboxInner
                     id={`checkbox_${i}`}
                     checked={checked.includes(get(item, checkedValue))}
