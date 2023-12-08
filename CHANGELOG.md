@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.10
+
+### Patch Changes
+
+- c803142: Modal - Backdrop ist hinter Nav #1227
+- 1a80380: Disclosure - Icon ist nicht aligned #1226
+
 ## 3.0.9
 
 ### Patch Changes
