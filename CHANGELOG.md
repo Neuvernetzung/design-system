@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.8
+
+### Patch Changes
+
+- 4f36d7e: RichText - Image ohne Caption parsen funktioniert nicht #1215
+
 ## 3.0.7
 
 ### Patch Changes
