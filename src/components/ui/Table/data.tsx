@@ -23,12 +23,20 @@ export type DataTableProps<
   D extends string
 > = Omit<SimpleTableProps<T>, "items" | "cols"> &
   DataTablePropsConditional<T, K, D> & {
-    sort: string | undefined;
-    setSort: (sort: string) => void;
-    cols: DataTableCol<T>[];
     disclosureValue?: D;
     disclosureClassName?: string;
-  };
+    cols: DataTableCol<T>[];
+  } & DataTableSortableProps;
+
+export type DataTableSortableProps =
+  | {
+      sort: string | undefined;
+      setSort: (sort: string) => void;
+    }
+  | {
+      sort?: never;
+      setSort?: never;
+    };
 
 export type DataTablePropsConditional<
   T extends string,
@@ -84,7 +92,7 @@ export const DataTable = <
   const handleSort = (_sort: string) => {
     const __sort = _sort === sort ? `-${_sort}` : _sort;
 
-    setSort(__sort);
+    setSort?.(__sort);
   };
 
   return (
@@ -97,7 +105,10 @@ export const DataTable = <
         <TableHead>
           <TableRow divideX={divideX}>
             {checkable && (
-              <th className={cn("w-0", paddingsEvenly[size])}>
+              <th
+                className={cn("w-0", paddingsEvenly[size])}
+                aria-label="check-all"
+              >
                 <CheckboxInner
                   id="checkbox_indeterminate"
                   disabled={items?.length === 0}
@@ -160,7 +171,10 @@ export const DataTable = <
               hasStripes={hasStripes}
             >
               {checkable && (
-                <td className={cn(paddingsEvenly[size])}>
+                <td
+                  className={cn(paddingsEvenly[size])}
+                  aria-label={`check-item-${i}`}
+                >
                   <CheckboxInner
                     id={`checkbox_${i}`}
                     checked={checked.includes(get(item, checkedValue))}
