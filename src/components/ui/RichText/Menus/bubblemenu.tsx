@@ -291,9 +291,8 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
               {
                 type: "button",
                 icon: IconClearFormatting,
-                onClick: () => () => {
-                  editor.chain().focus().unsetAllMarks().run();
-                  editor.chain().focus().clearNodes().run();
+                onClick: () => {
+                  editor.chain().focus().unsetAllMarks().clearNodes().run();
                 },
                 children: "Styles entfernen",
               },
