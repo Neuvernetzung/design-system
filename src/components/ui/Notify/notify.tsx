@@ -33,6 +33,7 @@ export type NotifyProps = {
   message: string;
   icon?: SvgType;
   duration?: number;
+  loadingId?: string;
 };
 
 export type GeneralNotifyProps = Pick<NotifyProps, "variant">;
@@ -61,7 +62,10 @@ export const Notify = ({ variant }: GeneralNotifyProps) => {
         },
       ]);
 
-      if (isLoading()) loading(false);
+      if (notification.loadingId) {
+        if (isLoading(notification.loadingId))
+          loading(false, notification.loadingId);
+      } else if (isLoading()) loading(false);
 
       setTimeout(() => {
         setNotificationArray((oldArray) =>

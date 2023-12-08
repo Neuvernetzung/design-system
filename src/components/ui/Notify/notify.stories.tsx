@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react";
 
 import { ThemeProvider } from "../../../theme";
 import { Button } from "../Button";
-import { loading } from "../Loading";
+import { loading, useIsLoading } from "../Loading";
 import { Notify, notify } from ".";
 
 export default {
@@ -87,6 +87,17 @@ export const CancelLoading = () => {
     }, 2000);
   };
 
+  const loadingId = "loadingId";
+
+  const loadById = () => {
+    loading(true, loadingId);
+    setTimeout(() => {
+      notify({ message: "Nicht mehr laden.", loadingId });
+    }, 2000);
+  };
+
+  const isLoading = useIsLoading(loadingId);
+
   return (
     <ThemeProvider
       config={{ allowNotification: true, allowGlobalLoading: true }}
@@ -94,6 +105,13 @@ export const CancelLoading = () => {
       <Container>
         <Button variant="outline" onClick={() => load()}>
           Global
+        </Button>
+        <Button
+          isLoading={isLoading}
+          variant="outline"
+          onClick={() => loadById()}
+        >
+          Id
         </Button>
       </Container>
     </ThemeProvider>
