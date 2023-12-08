@@ -18,11 +18,19 @@ export const ImageExtension = TiptapImageExtension.extend({
     };
   },
 
+  parseHTML() {
+    return [
+      {
+        tag: "picture img",
+      },
+    ];
+  },
+
   renderHTML({ HTMLAttributes }) {
     const { style, "data-float": dataFloat, ...rest } = HTMLAttributes;
 
     return [
-      "figure",
+      "picture",
       mergeAttributes(this.options.HTMLAttributes, {
         style,
         "data-float": dataFloat,
