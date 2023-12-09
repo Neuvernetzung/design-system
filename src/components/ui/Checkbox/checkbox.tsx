@@ -113,7 +113,7 @@ export const Checkbox = <
                 { label, value, disabled: singleDisabled, icon: singleIcon },
                 i
               ) => (
-                <CheckboxInner
+                <CheckboxRaw
                   ref={ref}
                   id={`checkbox_${name}_${i}`}
                   key={`checkbox_${name}_${i}`}
@@ -168,7 +168,7 @@ type CheckboxInnerProps = {
   defaultValue?: boolean;
 };
 
-export const CheckboxInner = forwardRef(
+export const CheckboxRaw = forwardRef(
   (
     {
       id,
@@ -262,4 +262,4 @@ export const CheckboxInner = forwardRef(
   )
 );
 
-CheckboxInner.displayName = "CheckboxInner";
+CheckboxRaw.displayName = "CheckboxRaw";

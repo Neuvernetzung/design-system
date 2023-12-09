@@ -51,6 +51,7 @@ export const Tooltip = ({
             sideOffset={offsetSizes[size]}
             className={cn(
               "pointer-events-none will-change-[transform,opacity]",
+              zIndexes.tooltip,
               tooltipAnimation
             )}
           >

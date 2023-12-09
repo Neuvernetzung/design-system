@@ -24,6 +24,10 @@ export const getFlatSelectOptions = <TValue extends SelectValue = SelectValue>(
       newResult = groupOptions.result;
     }
 
+    if (option.type === "separator") {
+      indexedOptions.push({ ...option });
+    }
+
     if (option.type === "value" || option.type === undefined) {
       valueOptions.push(option);
       indexedOptions.push({ ...option, index: newResult });

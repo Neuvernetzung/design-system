@@ -50,6 +50,7 @@ export const ResizableMediaNodeView: FC<NodeViewProps> = ({
           <img
             ref={imgRef}
             {...node.attrs}
+            data-float={node.attrs.float}
             alt={node.attrs.alt}
             style={{
               ...resizingStyle,

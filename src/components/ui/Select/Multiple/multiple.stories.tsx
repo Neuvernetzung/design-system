@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react";
 import { useForm } from "react-hook-form";
 
 import { inputVariants, sizes } from "../../../../types";
-import { Form } from "../..";
+import { Form, SelectOptionProps } from "../..";
 import { SelectMultiple } from ".";
 
 export default {
@@ -107,12 +107,13 @@ Sizes.parameters = {
 
 export const Checked = ({ ...args }) => {
   const formMethods = useForm();
-  const options = [
+  const options: SelectOptionProps[] = [
     { children: "Option 1", value: "option-1" },
     { children: "Option 2", value: "option-2" },
     { children: "Option 3", value: "option-3" },
     { children: "Option 4", value: "option-4" },
     { children: "Option 5", value: "option-5" },
+    { type: "separator" },
     { children: "Option 6", value: "option-6" },
     { children: "Option 7", value: "option-7" },
     { children: "Option 8", value: "option-8" },
@@ -137,7 +138,15 @@ export const Checked = ({ ...args }) => {
         name="select_multiple"
         options={options}
         label="Hide active"
-        checkedType="hide"
+        checkedType="hidden"
+        {...args}
+      />
+      <SelectMultiple
+        control={formMethods.control}
+        name="select_multiple"
+        options={options}
+        label="Checkbox"
+        checkedType="checkbox"
         {...args}
       />
     </Form>
