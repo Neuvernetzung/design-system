@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.11
+
+### Patch Changes
+
+- 56d0ab4: Select - checkedType Checkbox ermöglichen #1234
+- 48428f5: RichText - Styles in Prose für Figure ebenfalls für Picture einfügen #1233
+- 4de4371: Tooltip wird hinter Modal angezeigt #1232
+- a31881b: Select - Type: separator ermöglichen #1235
+- 9e6be2b: SelectMultiple - Button ist bei Firefox 0px breit #1236
+
 ## 3.0.10
 
 ### Patch Changes
