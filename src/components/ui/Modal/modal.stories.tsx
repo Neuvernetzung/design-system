@@ -10,6 +10,7 @@ import { TabGroup, TabItemValueProps, TabList, TabPanels } from "../Tabs";
 import { Heading } from "../Typography";
 import { Modal, ModalSize } from "./modal";
 import { Menu } from "../Menu";
+import { Tooltip } from "../Tooltip";
 
 export default {
   title: "UI/Overlay/Modal",
@@ -353,9 +354,13 @@ export const ContainerOverflow = ({ ...args }) => {
               ]}
             />
             <Menu
-              buttonProps={{ children: "Menu" }}
+              buttonComponent={<Button>Menü</Button>}
               items={[{ type: "button", onClick: () => {}, children: "Test" }]}
             />
+
+            <Tooltip label="Tooltip">
+              <Button>Tooltip</Button>
+            </Tooltip>
           </div>
         }
         open={open}
