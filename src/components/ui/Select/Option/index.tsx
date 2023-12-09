@@ -12,6 +12,7 @@ import { cn } from "@/utils/cn";
 import { Button } from "../../Button";
 import { Text } from "../../Typography/Text";
 import type { SelectValue } from "../select";
+import { CheckboxRaw } from "../../Checkbox";
 
 export type SelectOptionValueProps<TValue extends SelectValue = SelectValue> = {
   type?: "value";
@@ -31,7 +32,11 @@ export type SelectOptionProps<TValue extends SelectValue = SelectValue> =
   | SelectOptionValueProps<TValue>
   | SelectOptionGroupProps<TValue>;
 
-export type CheckedType = "default" | "hide";
+export const checkedTypes = ["default", "hidden", "checkbox"] as const;
+
+export type CheckedTypes = typeof checkedTypes;
+
+export type CheckedType = CheckedTypes[number];
 
 export type SelectOptionComponentBaseProps<
   TValue extends SelectValue = SelectValue
@@ -72,7 +77,7 @@ export const SelectOptionValue = <TValue extends SelectValue = SelectValue>({
 }: SelectOptionValueProps<TValue> & SelectOptionComponentBaseProps<TValue>) => {
   const selected = isSelected(value);
 
-  if (checkedType === "hide" && selected) return null;
+  if (checkedType === "hidden" && selected) return null;
 
   const itemProps = getItemProps({ item: { value, children }, index });
 
@@ -81,12 +86,20 @@ export const SelectOptionValue = <TValue extends SelectValue = SelectValue>({
       disabled={disabled}
       asChild
       variant={index === highlightedIndex ? "subtile" : "ghost"}
-      className={cn("justify-between font-normal")}
+      className={cn(
+        "font-normal",
+        checkedType === "checkbox" ? "justify-start" : "justify-between"
+      )}
       size={size}
       rightIcon={checkedType === "default" && selected ? IconCheck : undefined}
       {...(!disabled ? itemProps : {})}
     >
-      <li>{children}</li>
+      <li>
+        {checkedType === "checkbox" && (
+          <CheckboxRaw checked={selected} setChecked={() => {}} />
+        )}
+        {children}
+      </li>
     </Button>
   );
 };

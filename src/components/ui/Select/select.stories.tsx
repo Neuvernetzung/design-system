@@ -187,7 +187,15 @@ export const Checked = ({ ...args }) => {
         name="select_multiple"
         options={options}
         label="Hide active"
-        checkedType="hide"
+        checkedType="hidden"
+        {...args}
+      />
+      <Select
+        control={formMethods.control}
+        name="select_multiple"
+        options={options}
+        label="Checkbox"
+        checkedType="checkbox"
         {...args}
       />
     </Form>
