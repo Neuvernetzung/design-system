@@ -5,7 +5,7 @@ import { cn } from "@/utils";
 
 import { paddingsEvenly, transition } from "../../../styles";
 import { IconButton } from "../Button";
-import { CheckboxInner } from "../Checkbox/checkbox";
+import { CheckboxRaw } from "../Checkbox/checkbox";
 import {
   SimpleTableCol,
   SimpleTableProps,
@@ -109,7 +109,7 @@ export const DataTable = <
                 className={cn("w-0", paddingsEvenly[size])}
                 aria-label="check-all"
               >
-                <CheckboxInner
+                <CheckboxRaw
                   id="checkbox_indeterminate"
                   disabled={items?.length === 0}
                   checked={
@@ -175,7 +175,7 @@ export const DataTable = <
                   className={cn(paddingsEvenly[size])}
                   aria-label={`check-item-${i}`}
                 >
-                  <CheckboxInner
+                  <CheckboxRaw
                     id={`checkbox_${i}`}
                     checked={checked.includes(get(item, checkedValue))}
                     setChecked={(value) => {
