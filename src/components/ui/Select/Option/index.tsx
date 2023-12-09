@@ -13,6 +13,8 @@ import { Button } from "../../Button";
 import { Text } from "../../Typography/Text";
 import type { SelectValue } from "../select";
 import { CheckboxRaw } from "../../Checkbox";
+import { HorizontalRule } from "../../HorizontalRule";
+import { marginsYSmall } from "@/styles";
 
 export type SelectOptionValueProps<TValue extends SelectValue = SelectValue> = {
   type?: "value";
@@ -28,9 +30,14 @@ export type SelectOptionGroupProps<TValue extends SelectValue = SelectValue> = {
   options: SelectOptionProps<TValue>[];
 };
 
+export type SelectOptionSeparatorProps = {
+  type: "separator";
+};
+
 export type SelectOptionProps<TValue extends SelectValue = SelectValue> =
   | SelectOptionValueProps<TValue>
-  | SelectOptionGroupProps<TValue>;
+  | SelectOptionGroupProps<TValue>
+  | SelectOptionSeparatorProps;
 
 export const checkedTypes = ["default", "hidden", "checkbox"] as const;
 
@@ -57,9 +64,12 @@ export type SelectOptionComponentProps<
 export const SelectOption = <TValue extends SelectValue = SelectValue>(
   props: SelectOptionComponentProps<TValue>
 ) => {
-  const { type } = props;
+  const { type, size } = props;
 
   if (type === "group") return <SelectOptionGroup {...props} />;
+
+  if (type === "separator")
+    return <HorizontalRule className={cn(marginsYSmall[size])} />;
 
   return <SelectOptionValue {...props} />;
 };
