@@ -281,7 +281,11 @@ export const SelectMultipleRawInner = <
             }}
           >
             <button
-              className={cn("absolute inset-0", roundings[size], focus.accent)}
+              className={cn(
+                "absolute inset-0 w-full",
+                roundings[size],
+                focus.accent
+              )}
               ref={mergeRefs(compact([toggleRef, ref]))}
               disabled={disabled}
               type="button"
