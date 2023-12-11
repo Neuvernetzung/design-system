@@ -59,6 +59,7 @@ export type DisclosureItemProps = {
   className?: string;
   defaultOpen?: boolean;
   panelClassName?: string;
+  forceMount?: true | undefined;
 };
 
 export const DisclosureGroup = ({
@@ -119,7 +120,6 @@ export const Disclosure = ({
 }: DisclosureProps) => (
   <Root
     type="single"
-    // value={open ? SINGLE_DISCLOSURE_NAME : undefined}
     onValueChange={setOpen ? () => setOpen(!open) : undefined}
     defaultValue={defaultOpen || open ? SINGLE_DISCLOSURE_NAME : undefined}
     collapsible
@@ -142,6 +142,7 @@ export const DisclosureItem = ({
   title,
   panelClassName,
   value,
+  forceMount,
 }: DisclosureBaseProps &
   Omit<DisclosureItemProps, "defaultOpen"> & { value: string }) => (
   <AccordionItem
@@ -174,6 +175,7 @@ export const DisclosureItem = ({
       </AccordionTrigger>
     </AccordionHeader>
     <AccordionContent
+      forceMount={forceMount}
       className={cn(
         "overflow-hidden will-change-[height]",
         disclosureAnimation

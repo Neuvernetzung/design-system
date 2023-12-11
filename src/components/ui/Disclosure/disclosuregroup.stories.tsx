@@ -113,7 +113,7 @@ export const Controlled = ({ ...args }) => {
         items={[
           { title: `1`, content: "Content 1", defaultOpen: true },
           { title: `2`, content: "Content 2" },
-          { title: `3`, content: "Content 3" },
+          { title: `3`, content: "Content 3", forceMount: true },
         ]}
         {...args}
       />
