@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import {
   type ForwardedRef,
   forwardRef,
-  type HTMLAttributes,
+  InputHTMLAttributes,
   type ReactNode,
   type Ref,
   useRef,
@@ -162,8 +162,8 @@ export const Input = forwardRef(InputInner) as <
 ) => ReturnType<typeof InputInner>;
 
 export type InputRawProps = Omit<
-  HTMLAttributes<HTMLInputElement>,
-  "onChange"
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "size" | "pattern" | "required"
 > & {
   containerClassName?: string;
   leftAddon?: Pick<InputAddonProps, "children" | "className">;
