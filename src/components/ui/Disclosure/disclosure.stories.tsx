@@ -87,6 +87,7 @@ export const Controlled = ({ ...args }) => {
       <Disclosure
         open={open}
         setOpen={setOpen}
+        forceMount
         {...disclosureProps}
         {...args}
       />
