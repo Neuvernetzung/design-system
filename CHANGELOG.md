@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.13
+
+### Patch Changes
+
+- c1ddaa3: Disclosure controlled verbessern #1247
+
 ## 3.0.12
 
 ### Patch Changes
