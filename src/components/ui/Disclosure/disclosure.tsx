@@ -43,8 +43,8 @@ export type DisclosureGroupProps = DisclosureBaseProps & {
 
 type DisclosureSingleProps = {
   type?: "single";
-  value?: number;
-  setValue?: (value: number) => void;
+  open?: boolean;
+  setOpen?: (value: boolean) => void;
 };
 
 type DisclosureMultipleProps = {
@@ -109,20 +109,22 @@ const variants: Record<
   button: { container: "", button: "" },
 };
 
+const SINGLE_DISCLOSURE_NAME = "default" as const;
+
 export const Disclosure = ({
   defaultOpen,
-  value,
-  setValue,
+  open,
+  setOpen,
   ...props
 }: DisclosureProps) => (
   <Root
     type="single"
-    value={value?.toString()}
-    onValueChange={setValue ? (value) => setValue(Number(value)) : undefined}
-    defaultValue={defaultOpen ? "0" : undefined}
+    // value={open ? SINGLE_DISCLOSURE_NAME : undefined}
+    onValueChange={setOpen ? () => setOpen(!open) : undefined}
+    defaultValue={defaultOpen || open ? SINGLE_DISCLOSURE_NAME : undefined}
     collapsible
   >
-    <DisclosureItem value="0" {...props} />
+    <DisclosureItem value={SINGLE_DISCLOSURE_NAME} {...props} />
   </Root>
 );
 
