@@ -123,6 +123,26 @@ export const Disabled = ({ ...args }) => {
   );
 };
 
+export const ShowLength = ({ ...args }) => {
+  const formMethods = useForm();
+
+  return (
+    <Form
+      handleSubmit={formMethods.handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Textarea
+        control={formMethods.control}
+        name="textarea_max_length"
+        placeholder="max length"
+        showLength
+        {...args}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
 
 export const MaxLength = ({ ...args }) => {
   const formMethods = useForm();
