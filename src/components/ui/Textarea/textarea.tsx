@@ -106,13 +106,18 @@ export const TextareaInner = <
               rows={rows}
               {...props}
             />
-            {maxLength && showLength && (
+            {showLength && (
               <Text
                 size="xs"
-                color={(value?.length || 0) > maxLength ? "danger" : "accent"}
+                color={
+                  maxLength && (value?.length || 0) > maxLength
+                    ? "danger"
+                    : "accent"
+                }
                 className={cn("absolute bottom-2 right-5 pointer-events-none")}
               >
-                {value?.length || 0} / {maxLength}
+                {value?.length || 0}
+                {maxLength ? ` / ${maxLength}` : ""}
               </Text>
             )}
           </div>
