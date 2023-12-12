@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.14
+
+### Patch Changes
+
+- 09c3147: ForceMount Option zu DisclosureItem hinzufügen #1250
+- 3c184d7: Textarea - Showlength auch ohne MaxLength nutzbar #1252
+
 ## 3.0.13
 
 ### Patch Changes
