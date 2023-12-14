@@ -11,6 +11,7 @@ import {
   ForwardedRef,
   forwardRef,
   MouseEvent,
+  ReactNode,
   TouchEvent,
   useRef,
 } from "react";
@@ -41,9 +42,13 @@ import {
   LinechartProps,
 } from "./linechart";
 
+export type LineSerieschartDataProps = (LinechartDataProps & {
+  formatTooltip?: (d?: LinechartDataFieldProps) => ReactNode;
+})[];
+
 export type LineSerieschartProps = {
-  series: LinechartDataProps[];
-} & Omit<LinechartProps, "data">;
+  series: LineSerieschartDataProps;
+} & Omit<LinechartProps, "data"> & { normalized?: boolean };
 
 export type LinechartIndexedDataFieldProps = LinechartDataFieldProps & {
   i: number;
@@ -75,6 +80,7 @@ export const LineSerieschart = forwardRef(
       gridRowProps,
       formatTooltip,
       children,
+      normalized,
     }: LineSerieschartProps,
     ref: ForwardedRef<SVGSVGElement>
   ) => {
@@ -87,6 +93,10 @@ export const LineSerieschart = forwardRef(
 
     const getX = (d: LinechartDataFieldProps) => d.x;
     const getY = (d: LinechartDataFieldProps) => d.y;
+    const getNormalizedY = (
+      d: LinechartDataFieldProps,
+      max: number | undefined = 0
+    ) => (1 / max) * (d.y || 0);
 
     const allData = filterMissingChartData<LinechartDataFieldProps>({
       data: series.map(({ data }) => data).flat(),
@@ -113,9 +123,15 @@ export const LineSerieschart = forwardRef(
     });
 
     const minValue = min(allData, getY) || 0;
+    const maxValue = max(allData, getY) || 0;
 
     const yScale = chartScales[yScaleType]<number>({
-      domain: [minValue > 0 ? 0 : minValue, max(allData, getY) as number],
+      domain: normalized
+        ? [
+            minValue > 0 ? 0 : getNormalizedY({ x: 0, y: minValue }, maxValue),
+            1,
+          ]
+        : [minValue > 0 ? 0 : minValue, maxValue],
       range: [innerHeight, 0],
     });
 
@@ -156,25 +172,37 @@ export const LineSerieschart = forwardRef(
                 ? d1
                 : d0;
           }
-          const realY = getY(d);
+
+          const maxY = max(data, getY);
+
+          const realY = normalized ? getNormalizedY(d, maxY) : getY(d);
           if (missingValueBehaviour !== "zero" && realY === null) return;
 
-          return { ...d, i };
+          return { ...d, i, maxY };
         })
       );
 
-      const distance = (d: LinechartIndexedDataFieldProps) =>
+      const distance = (
+        d: LinechartIndexedDataFieldProps,
+        maxY: number | undefined
+      ) =>
         Math.sqrt(
           (xScale(x0) - xScale(getX(d))) ** 2 +
-            (yScale(y0) - yScale(getY(d) || 0)) ** 2
+            (yScale(y0) -
+              yScale(normalized ? getNormalizedY(d, maxY) : getY(d) || 0)) **
+              2
         );
 
-      const d = points.reduce((a, b) => (distance(a) < distance(b) ? a : b));
+      const d = points.reduce((a, b) =>
+        distance(a, a.maxY) < distance(b, b.maxY) ? a : b
+      );
 
       showTooltip({
         tooltipData: { x: d.x, y: d.y || 0, i: d.i },
         tooltipLeft: xScale(getX(d)),
-        tooltipTop: yScale(d.y || 0),
+        tooltipTop: yScale(
+          normalized ? getNormalizedY(d, d.maxY) : getY(d) || 0
+        ),
       });
     };
 
@@ -213,43 +241,55 @@ export const LineSerieschart = forwardRef(
               {...yAxisProps}
             />
           </ChartYAxisWrapper>
-          {series.map(({ data, color }, i) => (
-            <>
-              <LinePath
-                key={`line-path-${i}`}
-                data={data}
-                x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
-                y={(d: LinechartDataFieldProps) => yScale(getY(d) || 0) ?? 0}
-                stroke={color || getChartColor(i)}
-                fill="none"
-                strokeWidth="2"
-                vectorEffect="non-scaling-stroke"
-                curve={curve}
-                defined={(d) => {
-                  if (missingValueBehaviour === "zero") return true;
-                  return getY(d) !== null;
-                }}
-                {...lineProps}
-              />
-              {showLineArea && (
-                <AreaClosed
-                  key={`area-closed-${i}`}
+          {series.map(({ data, color }, i) => {
+            const maxY = max(data, (v) => v.y);
+
+            return (
+              <>
+                <LinePath
+                  key={`line-path-${i}`}
                   data={data}
-                  x={(d) => xScale(getX(d))}
-                  y={(d) => yScale(getY(d) || 0)}
-                  yScale={yScale}
+                  x={(d: LinechartDataFieldProps) => xScale(getX(d)) ?? 0}
+                  y={(d: LinechartDataFieldProps) =>
+                    yScale(
+                      normalized ? getNormalizedY(d, maxY) : getY(d) || 0
+                    ) ?? 0
+                  }
+                  stroke={color || getChartColor(i)}
+                  fill="none"
+                  strokeWidth="2"
+                  vectorEffect="non-scaling-stroke"
                   curve={curve}
-                  fill={color || getChartColor(i)}
-                  opacity={0.1}
                   defined={(d) => {
                     if (missingValueBehaviour === "zero") return true;
                     return getY(d) !== null;
                   }}
-                  {...lineAreaProps}
+                  {...lineProps}
                 />
-              )}
-            </>
-          ))}
+                {showLineArea && (
+                  <AreaClosed
+                    key={`area-closed-${i}`}
+                    data={data}
+                    x={(d) => xScale(getX(d))}
+                    y={(d) =>
+                      yScale(
+                        normalized ? getNormalizedY(d, maxY) : getY(d) || 0 || 0
+                      )
+                    }
+                    yScale={yScale}
+                    curve={curve}
+                    fill={color || getChartColor(i)}
+                    opacity={0.1}
+                    defined={(d) => {
+                      if (missingValueBehaviour === "zero") return true;
+                      return getY(d) !== null;
+                    }}
+                    {...lineAreaProps}
+                  />
+                )}
+              </>
+            );
+          })}
           {allowTooltipHover && (
             <ChartTooltipHover
               width={width}
@@ -301,9 +341,14 @@ export const LineSerieschart = forwardRef(
         {allowTooltip && (
           <ChartTooltip
             tooltipLabel={
-              isFunction(formatTooltip)
-                ? formatTooltip(tooltipData)
-                : tooltipData?.y
+              tooltipData
+                ? series[tooltipData.i] &&
+                  isFunction(series[tooltipData.i].formatTooltip)
+                  ? series[tooltipData.i].formatTooltip?.(tooltipData)
+                  : isFunction(formatTooltip)
+                  ? formatTooltip(tooltipData)
+                  : tooltipData?.y
+                : undefined
             }
             tooltipLeft={tooltipLeft}
             tooltipTop={tooltipTop}
