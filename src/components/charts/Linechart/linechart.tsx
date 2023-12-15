@@ -5,7 +5,7 @@ import { localPoint } from "@visx/event";
 import { GridColumns, GridRows } from "@visx/grid";
 import type { AllGridColumnsProps } from "@visx/grid/lib/grids/GridColumns";
 import type { AllGridRowsProps } from "@visx/grid/lib/grids/GridRows";
-import { AreaClosed, LinePath } from "@visx/shape";
+import { AreaClosed, Line, LinePath } from "@visx/shape";
 import type { AreaClosedProps } from "@visx/shape/lib/shapes/AreaClosed";
 import type { LinePathProps } from "@visx/shape/lib/shapes/LinePath";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
@@ -65,6 +65,7 @@ export type LinechartProps = LinechartDataProps & {
   gridColumnProps?: AllGridColumnsProps<AxisScale>;
   showGridRows?: boolean;
   gridRowProps?: AllGridRowsProps<AxisScale>;
+  showZeroLine?: boolean;
   allowTooltip?: boolean;
   allowTooltipHover?: boolean;
   xAxisProps?: Partial<AxisProps<AxisScale>>;
@@ -124,6 +125,7 @@ export const Linechart = forwardRef(
       yScaleType = "linear",
       showGridColumns = true,
       showGridRows,
+      showZeroLine = true,
       gridColumnProps,
       gridRowProps,
       formatTooltip,
@@ -228,6 +230,38 @@ export const Linechart = forwardRef(
           onMouseMove={(e) => handleTooltip(e)}
           onMouseLeave={() => hideTooltip()}
         >
+          {showGridRows && (
+            <GridRows
+              scale={yScale}
+              width={innerWidth}
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeDasharray="1,3"
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridRowProps}
+            />
+          )}
+          {showZeroLine && minValue < 0 && (
+            <Line
+              from={{ x: 0, y: yScale(0) }}
+              to={{ x: innerWidth, y: yScale(0) }}
+              stroke="currentColor"
+              strokeWidth={2}
+            />
+          )}
+          {showGridColumns && (
+            <GridColumns
+              scale={xScale}
+              height={innerHeight}
+              strokeDasharray="1,3"
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridColumnProps}
+            />
+          )}
           <ChartXAxisWrapper ref={xAxisRef}>
             <Axis
               hideAxisLine
@@ -270,6 +304,7 @@ export const Linechart = forwardRef(
               data={allData}
               x={(d) => xScale(getX(d))}
               y={(d) => yScale(getY(d) || 0)}
+              y0={yScale(0)}
               yScale={yScale}
               curve={curve}
               fill={color}
@@ -289,30 +324,6 @@ export const Linechart = forwardRef(
               tooltipLeft={tooltipLeft}
               tooltipTop={tooltipTop}
               {...hoverProps}
-            />
-          )}
-          {showGridRows && (
-            <GridRows
-              scale={yScale}
-              width={innerWidth}
-              stroke="currentColor"
-              className={cn(extendedTextColors.subtile)}
-              strokeDasharray="1,3"
-              strokeOpacity={0.2}
-              pointerEvents="none"
-              {...gridRowProps}
-            />
-          )}
-          {showGridColumns && (
-            <GridColumns
-              scale={xScale}
-              height={innerHeight}
-              strokeDasharray="1,3"
-              stroke="currentColor"
-              className={cn(extendedTextColors.subtile)}
-              strokeOpacity={0.2}
-              pointerEvents="none"
-              {...gridColumnProps}
             />
           )}
           {children &&
