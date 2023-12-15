@@ -2,7 +2,7 @@ import { ResizeObserver } from "@juggle/resize-observer";
 import { Axis } from "@visx/axis";
 import { localPoint } from "@visx/event";
 import { GridColumns, GridRows } from "@visx/grid";
-import { AreaClosed, LinePath } from "@visx/shape";
+import { AreaClosed, Line, LinePath } from "@visx/shape";
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip";
 import { bisector, extent, max, min } from "@visx/vendor/d3-array";
 import compact from "lodash/compact";
@@ -19,7 +19,7 @@ import {
 import { useRefDimensions } from "@/hooks";
 import { cn } from "@/utils";
 
-import { extendedTextColors } from "../../../styles";
+import { extendedTextColors, textSizes } from "../../../styles";
 import { mergeRefs } from "../../../utils/internal";
 import { ChartTickXComponent, ChartTickYComponent } from "../components/ticks";
 import { ChartTooltip, ChartTooltipHover } from "../components/tooltip";
@@ -44,6 +44,7 @@ import {
 
 export type LineSerieschartDataProps = (LinechartDataProps & {
   formatTooltip?: (d?: LinechartDataFieldProps) => ReactNode;
+  name?: string;
 })[];
 
 export type LineSerieschartProps = {
@@ -76,6 +77,7 @@ export const LineSerieschart = forwardRef(
       yScaleType = "linear",
       showGridColumns = true,
       showGridRows,
+      showZeroLine = true,
       gridColumnProps,
       gridRowProps,
       formatTooltip,
@@ -132,6 +134,15 @@ export const LineSerieschart = forwardRef(
             1,
           ]
         : [minValue > 0 ? 0 : minValue, maxValue],
+      range: [innerHeight, 0],
+    });
+
+    const firstSerieMaxValue = max(series[0]?.data, getY) || 0;
+    const yScaleOriginal = chartScales[yScaleType]<number>({
+      domain: [
+        minValue > 0 ? 0 : firstSerieMaxValue * ((1 / maxValue) * minValue),
+        firstSerieMaxValue,
+      ],
       range: [innerHeight, 0],
     });
 
@@ -219,6 +230,38 @@ export const LineSerieschart = forwardRef(
           onMouseMove={(e) => handleTooltip(e)}
           onMouseLeave={() => hideTooltip()}
         >
+          {showGridRows && (
+            <GridRows
+              scale={yScale}
+              width={innerWidth}
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeDasharray="1,3"
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridRowProps}
+            />
+          )}
+          {showZeroLine && minValue < 0 && (
+            <Line
+              from={{ x: 0, y: yScale(0) }}
+              to={{ x: innerWidth, y: yScale(0) }}
+              stroke="currentColor"
+              strokeWidth={2}
+            />
+          )}
+          {showGridColumns && (
+            <GridColumns
+              scale={xScale}
+              height={innerHeight}
+              strokeDasharray="1,3"
+              stroke="currentColor"
+              className={cn(extendedTextColors.subtile)}
+              strokeOpacity={0.2}
+              pointerEvents="none"
+              {...gridColumnProps}
+            />
+          )}
           <ChartXAxisWrapper ref={xAxisRef}>
             <Axis
               hideAxisLine
@@ -234,10 +277,14 @@ export const LineSerieschart = forwardRef(
             <Axis
               hideAxisLine
               hideTicks
-              scale={yScale}
+              scale={normalized ? yScaleOriginal : yScale}
               orientation="left"
               tickComponent={ChartTickYComponent}
               numTicks={10}
+              label={normalized ? series[0]?.name : undefined}
+              labelOffset={-15}
+              labelClassName={cn(textSizes.xs, "text-body text-current")}
+              labelProps={{}} // DefaultStyles zurücksetzen
               {...yAxisProps}
             />
           </ChartYAxisWrapper>
@@ -276,6 +323,7 @@ export const LineSerieschart = forwardRef(
                         normalized ? getNormalizedY(d, maxY) : getY(d) || 0 || 0
                       )
                     }
+                    y0={yScale(0)}
                     yScale={yScale}
                     curve={curve}
                     fill={color || getChartColor(i)}
@@ -299,30 +347,6 @@ export const LineSerieschart = forwardRef(
               tooltipTop={tooltipTop}
               color={getChartColor(tooltipData?.i || 0)}
               {...hoverProps}
-            />
-          )}
-          {showGridRows && (
-            <GridRows
-              scale={yScale}
-              width={innerWidth}
-              stroke="currentColor"
-              className={cn(extendedTextColors.subtile)}
-              strokeDasharray="1,3"
-              strokeOpacity={0.2}
-              pointerEvents="none"
-              {...gridRowProps}
-            />
-          )}
-          {showGridColumns && (
-            <GridColumns
-              scale={xScale}
-              height={innerHeight}
-              strokeDasharray="1,3"
-              stroke="currentColor"
-              className={cn(extendedTextColors.subtile)}
-              strokeOpacity={0.2}
-              pointerEvents="none"
-              {...gridColumnProps}
             />
           )}
           {children &&

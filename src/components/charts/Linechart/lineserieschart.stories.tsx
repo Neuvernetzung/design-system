@@ -58,12 +58,18 @@ export const NormalizedValues = ({ ...args }) => (
   <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
     <LineSerieschart
       series={[
-        { data: data1 },
-        { data: data2, formatTooltip: (v) => `${v?.y} $` },
+        { data: data1, name: "Werte" },
+        {
+          data: data2,
+          formatTooltip: (v) => `${v?.y} $`,
+          name: "Andere Werte",
+        },
       ]}
       xScaleType="time"
       normalized
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+      xAxisProps={{
+        tickFormat: (value) => format(value, "d. MMMM"),
+      }}
       {...args}
     />
   </div>
