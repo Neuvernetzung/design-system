@@ -35,7 +35,7 @@ export const Default = ({ ...args }) => (
     <LineSerieschart
       series={[
         { data: data1 },
-        { data: data2, formatTooltip: (v) => `${v?.y} $` },
+        { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
       ]}
       xScaleType="time"
       xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}

@@ -345,7 +345,12 @@ export const LineSerieschart = forwardRef(
               tooltipData={tooltipData}
               tooltipLeft={tooltipLeft}
               tooltipTop={tooltipTop}
-              color={getChartColor(tooltipData?.i || 0)}
+              color={
+                tooltipData?.i
+                  ? series[tooltipData?.i].color ||
+                    getChartColor(tooltipData?.i)
+                  : getChartColor(0)
+              }
               {...hoverProps}
             />
           )}
