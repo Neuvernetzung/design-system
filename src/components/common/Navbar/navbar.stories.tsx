@@ -292,6 +292,8 @@ export const Sidenav = ({ ...args }) => {
         sidenavRef={sidenavRef}
         ref={navbarRef}
         size={size}
+        sideNavStartItems="Start"
+        sideNavEndItems="End"
         {...baseProps}
         {...args}
       />

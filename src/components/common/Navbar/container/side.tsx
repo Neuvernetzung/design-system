@@ -15,10 +15,7 @@ import { NavLogo } from "../logo";
 import { SideNavItem } from "../side/item";
 import type { NavbarContainerProps } from "./default";
 
-export type SidenavProps = Omit<
-  NavbarProps,
-  "startItems" | "endItems" | "justify" | "justifyDesktopNav"
-> &
+export type SidenavProps = Omit<NavbarProps, "justify" | "justifyDesktopNav"> &
   NavbarContainerProps;
 
 export const NavbarSideContainer = forwardRef(
@@ -34,6 +31,8 @@ export const NavbarSideContainer = forwardRef(
       footerClassName,
       color = "white",
       textColor,
+      startItems,
+      endItems,
     }: SidenavProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => (
@@ -54,6 +53,7 @@ export const NavbarSideContainer = forwardRef(
           <NavLogo logo={logo} {...logoProps} textColor={textColor} />
         </div>
       )}
+      {startItems}
       <ul
         className={cn(
           "h-full flex flex-col overflow-y-hidden group-hover:overflow-y-auto",
@@ -70,6 +70,7 @@ export const NavbarSideContainer = forwardRef(
           />
         ))}
       </ul>
+      {endItems}
       {footer && (
         <div
           className={cn("flex w-full", paddingsEvenly[size], footerClassName)}
