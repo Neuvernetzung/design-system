@@ -112,8 +112,10 @@ Navbar.displayName = "Navbar";
 
 export const SideNavbar = forwardRef<
   HTMLDivElement,
-  Omit<NavbarProps, "justifyDesktopNav" | "startItems" | "endItems"> & {
+  Omit<NavbarProps, "justifyDesktopNav"> & {
     sidenavRef?: RefObject<HTMLDivElement>;
+    sideNavStartItems?: ReactNode;
+    sideNavEndItems?: ReactNode;
   }
 >(
   (
@@ -130,6 +132,10 @@ export const SideNavbar = forwardRef<
       footerClassName,
       sidenavRef,
       mobileNavClassName,
+      sideNavEndItems,
+      sideNavStartItems,
+      endItems,
+      startItems,
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -151,6 +157,8 @@ export const SideNavbar = forwardRef<
           size={size}
           footer={footer}
           footerClassName={footerClassName}
+          startItems={sideNavStartItems || startItems}
+          endItems={sideNavEndItems || endItems}
         />
         <NavbarContainer
           ref={ref}
@@ -166,6 +174,8 @@ export const SideNavbar = forwardRef<
           footer={footer}
           footerClassName={footerClassName}
           mobileNavClassName={mobileNavClassName}
+          startItems={startItems}
+          endItems={endItems}
         />
       </>
     );
