@@ -12,6 +12,7 @@ export default {
 } as Meta;
 
 const sales = [
+  { x: "2023-04-28T12:00:00.00+00:00", y: null },
   { x: "2023-04-29T12:00:00.00+00:00", y: 1 },
   { x: "2023-04-30T12:00:00.00+00:00", y: 5 },
   { x: "2023-05-01T12:00:00.00+00:00", y: 0 },
@@ -34,7 +35,7 @@ export const Default = ({ ...args }) => (
     <LineSerieschart
       series={[
         { data: data1 },
-        { data: data2, formatTooltip: (v) => `${v?.y} $` },
+        { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
       ]}
       xScaleType="time"
       xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
