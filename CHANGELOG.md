@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.18
+
+### Patch Changes
+
+- 833d554: Navbar w-full hinzufügen #1270
+- 9264f43: Select, SelectMultiple - Required prop ebenfalls zu Raw Komponente geben #1269
+
 ## 3.0.17
 
 ### Patch Changes
