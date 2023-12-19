@@ -87,6 +87,7 @@ export const SelectMultipleInner = <
       value={value || []}
       onChange={onChange}
       error={error}
+      required={required}
     />
   );
 };
