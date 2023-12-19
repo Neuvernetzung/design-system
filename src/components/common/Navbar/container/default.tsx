@@ -65,7 +65,7 @@ export const NavbarContainer = forwardRef(
       >
         <div
           className={cn(
-            "flex flex-row items-center justify-between mx-auto",
+            "flex flex-row items-center justify-between mx-auto w-full",
             maxPageWidth && maxPageWidths[maxPageWidth],
             gaps[gapSize]
           )}
