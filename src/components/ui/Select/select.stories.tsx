@@ -223,6 +223,7 @@ export const Error = ({ ...args }) => {
       className={formClassName}
     >
       <Select
+        label="Pflicht"
         control={formMethods.control}
         name="select_error"
         options={options}

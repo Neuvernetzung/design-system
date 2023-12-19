@@ -167,7 +167,10 @@ export const DisclosureItem = ({
             {isString(title) ? <Text>{title}</Text> : title}
             <Icon
               size={size}
-              className={cn("group-data-[state=open]:rotate-180", transition)}
+              className={cn(
+                "flex group-data-[state=open]:rotate-180",
+                transition
+              )}
               icon={icon === "chevron" ? IconChevronDown : DisclosureIcon}
             />
           </div>
