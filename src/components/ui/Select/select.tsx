@@ -108,6 +108,7 @@ export const SelectInner = <
       value={value || null}
       onChange={onChange}
       error={error}
+      required={required}
     />
   );
 };
