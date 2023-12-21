@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.19
+
+### Patch Changes
+
+- 49d0667: PageContainer - Wenn localStorage bereits vorhanden wird pagePadding nicht korrekt angewendet #1275
+
 ## 3.0.18
 
 ### Patch Changes
