@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.20
+
+### Patch Changes
+
+- 0b12bc1: PageContainer verbessern #1278
+
 ## 3.0.19
 
 ### Patch Changes
