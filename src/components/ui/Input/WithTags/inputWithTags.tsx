@@ -36,6 +36,7 @@ export type InputWithTagsProps = HTMLAttributes<HTMLInputElement> & {
   inputClassName?: string;
   step?: number;
   notFoundText?: string;
+  placeholder?: string;
 };
 
 export const InputWithTagsInner = <
