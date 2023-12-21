@@ -34,26 +34,29 @@ export const PageContainer = ({
 }: PageContainerProps) => {
   const pageContainerState = useStore(pageContainerStore);
 
-  const navbarHeight =
-    useRefDimensions(navbarRef).height || pageContainerState.navbarHeight;
+  const refNavbarHeight = useRefDimensions(navbarRef).height;
 
   useEffect(() => {
-    pageContainerStore.setState({ navbarHeight });
-  }, [navbarHeight]);
+    pageContainerStore.setState({ navbarHeight: refNavbarHeight });
+  }, [refNavbarHeight]);
 
-  const footerHeight =
-    useRefDimensions(footerRef).height || pageContainerState.footerHeight;
+  const navbarHeight = refNavbarHeight || pageContainerState.navbarHeight;
 
-  useEffect(() => {
-    pageContainerStore.setState({ footerHeight });
-  }, [footerHeight]);
-
-  const sidenavWidth =
-    useRefDimensions(sidenavRef).width || pageContainerState.sidenavWidth;
+  const refFooterHeight = useRefDimensions(footerRef).height;
 
   useEffect(() => {
-    pageContainerStore.setState({ sidenavWidth });
-  }, [sidenavWidth]);
+    pageContainerStore.setState({ footerHeight: refFooterHeight });
+  }, [refFooterHeight]);
+
+  const footerHeight = refFooterHeight || pageContainerState.footerHeight;
+
+  const refSidenavWidth = useRefDimensions(sidenavRef).width;
+
+  useEffect(() => {
+    pageContainerStore.setState({ sidenavWidth: refSidenavWidth });
+  }, [refSidenavWidth]);
+
+  const sidenavWidth = refSidenavWidth || pageContainerState.sidenavWidth;
 
   const pagePadding = useThemeStateValue((state) => state.pagePadding);
   const maxPageWidth = useThemeStateValue((state) => state.maxPageWidth);
