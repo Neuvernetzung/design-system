@@ -1,7 +1,18 @@
 import { MutableRefObject, useEffect, useState } from "react";
 
-export const useRefDimensions = (ref?: MutableRefObject<Element | null>) => {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+type UseRefDimensionValue = { width: number; height: number };
+
+export type UseRefDimensionOptions = {
+  defaultValue?: UseRefDimensionValue;
+};
+
+export const useRefDimensions = (
+  ref?: MutableRefObject<Element | null>,
+  options?: UseRefDimensionOptions
+): UseRefDimensionValue => {
+  const [dimensions, setDimensions] = useState(
+    options?.defaultValue || { width: 0, height: 0 }
+  );
 
   const recalculateDimensions = () => {
     if (ref?.current) {
