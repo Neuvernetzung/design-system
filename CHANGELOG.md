@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.21
+
+### Patch Changes
+
+- c47f203: useStore - extra Hook für persistenten State bereitstellen #1281
+
 ## 3.0.20
 
 ### Patch Changes
