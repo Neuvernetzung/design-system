@@ -39,7 +39,6 @@ export const PageContainer = ({
   }).height;
 
   useEffect(() => {
-    if (pageContainerState.navbarHeight === navbarHeight) return;
     pageContainerStore.setState({ navbarHeight });
   }, [navbarHeight]);
 
@@ -48,7 +47,6 @@ export const PageContainer = ({
   }).height;
 
   useEffect(() => {
-    if (pageContainerState.footerHeight === footerHeight) return;
     pageContainerStore.setState({ footerHeight });
   }, [footerHeight]);
 
@@ -57,7 +55,6 @@ export const PageContainer = ({
   }).width;
 
   useEffect(() => {
-    if (pageContainerState.sidenavWidth === sidenavWidth) return;
     pageContainerStore.setState({ sidenavWidth });
   }, [sidenavWidth]);
 
