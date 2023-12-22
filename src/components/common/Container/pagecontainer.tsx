@@ -1,6 +1,4 @@
-import { type HTMLAttributes, type RefObject, useEffect } from "react";
-import { create, useStore } from "zustand";
-import { persist } from "zustand/middleware";
+import { type HTMLAttributes, type RefObject } from "react";
 
 import { useRefDimensions, useWindowSize } from "@/hooks";
 import { maxPageWidths, pageGaps, pagePaddings } from "@/styles/page";
@@ -16,12 +14,6 @@ type PageContainerProps = HTMLAttributes<HTMLDivElement> & {
   className?: string;
 };
 
-export const pageContainerStore = create(
-  persist(() => ({ navbarHeight: 0, footerHeight: 0, sidenavWidth: 0 }), {
-    name: "pageContainer",
-  })
-);
-
 export const PageContainer = ({
   navbarRef,
   sidenavRef,
@@ -32,31 +24,11 @@ export const PageContainer = ({
   children,
   ...props
 }: PageContainerProps) => {
-  const pageContainerState = useStore(pageContainerStore);
+  const navbarHeight = useRefDimensions(navbarRef).height;
 
-  const navbarHeight = useRefDimensions(navbarRef, {
-    defaultValue: { height: pageContainerState.navbarHeight, width: 0 },
-  }).height;
+  const footerHeight = useRefDimensions(footerRef).height;
 
-  useEffect(() => {
-    pageContainerStore.setState({ navbarHeight });
-  }, [navbarHeight]);
-
-  const footerHeight = useRefDimensions(footerRef, {
-    defaultValue: { height: pageContainerState.footerHeight, width: 0 },
-  }).height;
-
-  useEffect(() => {
-    pageContainerStore.setState({ footerHeight });
-  }, [footerHeight]);
-
-  const sidenavWidth = useRefDimensions(sidenavRef, {
-    defaultValue: { height: 0, width: pageContainerState.sidenavWidth },
-  }).width;
-
-  useEffect(() => {
-    pageContainerStore.setState({ sidenavWidth });
-  }, [sidenavWidth]);
+  const sidenavWidth = useRefDimensions(sidenavRef).width;
 
   const pagePadding = useThemeStateValue((state) => state.pagePadding);
   const maxPageWidth = useThemeStateValue((state) => state.maxPageWidth);
