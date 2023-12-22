@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.22
+
+### Patch Changes
+
+- 48e7486: Persistent Storage in PageContainer entfernen #1284
+
 ## 3.0.21
 
 ### Patch Changes
