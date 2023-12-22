@@ -1,20 +1,22 @@
-import { cn } from "@/utils";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { ReactNode, useState } from "react";
 import {
   A11y,
   Autoplay,
+  Controller,
   FreeMode,
   Keyboard,
   Navigation,
   Pagination,
   Thumbs,
-  Controller,
 } from "swiper/modules";
 import { Swiper, type SwiperProps, SwiperSlide } from "swiper/react";
-import { AutoplayOptions, Swiper as SwiperType } from "swiper/types";
-import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react";
+import type { AutoplayOptions, Swiper as SwiperType } from "swiper/types";
+
+import { cn } from "@/utils";
+
 import { margins } from "../../../styles";
-import { IconButton } from "../Button";
+import { type IconButtonProps, IconButton } from "../Button";
 import useSwiperRef from "./utils/useSwiperRef";
 
 export type CarouselAutoPlayOptions = AutoplayOptions;
@@ -38,10 +40,12 @@ export type CarouselProps = {
   thumbsClassName?: string;
   swiperProps?: SwiperProps;
   thumbsProps?: SwiperProps;
-  previousButtonClassName?: string;
-  nextButtonClassName?: string;
-  previousThumbButtonClassName?: string;
-  nextThumbButtonClassName?: string;
+  previousButtonProps?: Partial<Omit<IconButtonProps, "children" | "asChild">>;
+  nextButtonProps?: Partial<Omit<IconButtonProps, "children" | "asChild">>;
+  previousThumbButtonProps?: Partial<
+    Omit<IconButtonProps, "children" | "asChild">
+  >;
+  nextThumbButtonProps?: Partial<Omit<IconButtonProps, "children" | "asChild">>;
   slideClassName?: string;
   controller?: CarouselController;
 };
@@ -56,10 +60,10 @@ export const Carousel = ({
   thumbsClassName,
   swiperProps,
   thumbsProps,
-  previousButtonClassName,
-  nextButtonClassName,
-  previousThumbButtonClassName,
-  nextThumbButtonClassName,
+  nextButtonProps,
+  previousButtonProps,
+  nextThumbButtonProps,
+  previousThumbButtonProps,
   slideClassName,
   controller,
 }: CarouselProps) => {
@@ -72,7 +76,7 @@ export const Carousel = ({
   return (
     <>
       <Swiper
-        className={cn("w-full rounded-lg", className)}
+        className={cn("w-full rounded-lg relative", className)}
         modules={[
           Navigation,
           Autoplay,
@@ -111,30 +115,36 @@ export const Carousel = ({
             {children}
           </SwiperSlide>
         ))}
-        <IconButton
-          variant="ghost"
-          ariaLabel="previous Element"
-          className={cn(
-            withThumbs && "lg:hidden",
-            "absolute inset-y-0 left-0 z-[1] my-auto flex justify-center h-min",
-            margins.md,
-            previousButtonClassName
-          )}
-          ref={prevElRef}
-          icon={IconChevronLeft}
-        />
-        <IconButton
-          variant="ghost"
-          ariaLabel="next Element"
-          className={cn(
-            withThumbs && "lg:hidden",
-            "absolute inset-y-0 right-0 z-[1] my-auto flex justify-center h-min",
-            margins.md,
-            nextButtonClassName
-          )}
-          ref={nextElRef}
-          icon={IconChevronRight}
-        />
+        <div className="absolute inset-y-0 left-0 h-full flex items-center">
+          <IconButton
+            variant="ghost"
+            ariaLabel="previous Element"
+            ref={prevElRef}
+            icon={IconChevronLeft}
+            {...previousButtonProps}
+            className={cn(
+              withThumbs && "lg:hidden",
+              "z-[1] h-min",
+              margins.md,
+              previousButtonProps?.className
+            )}
+          />
+        </div>
+        <div className="absolute inset-y-0 right-0 h-full flex items-center">
+          <IconButton
+            variant="ghost"
+            ariaLabel="next Element"
+            ref={nextElRef}
+            icon={IconChevronRight}
+            {...nextButtonProps}
+            className={cn(
+              withThumbs && "lg:hidden",
+              "z-[1] h-min",
+              margins.md,
+              nextButtonProps?.className
+            )}
+          />
+        </div>
       </Swiper>
       {withThumbs && slides?.length > 1 && (
         <Swiper
@@ -167,21 +177,23 @@ export const Carousel = ({
             variant="ghost"
             ariaLabel="previous Thumb Element"
             icon={IconChevronLeft}
+            ref={prevElRefThumb}
+            {...previousThumbButtonProps}
             className={cn(
               "absolute inset-y-0 my-auto left-0 z-[1] h-min",
-              previousThumbButtonClassName
+              previousThumbButtonProps?.className
             )}
-            ref={prevElRefThumb}
           />
           <IconButton
             variant="ghost"
             ariaLabel="next Thumb Element"
-            className={cn(
-              "absolute inset-y-0 my-auto right-0 z-[1] h-min",
-              nextThumbButtonClassName
-            )}
             ref={nextElRefThumb}
             icon={IconChevronRight}
+            {...nextThumbButtonProps}
+            className={cn(
+              "absolute inset-y-0 my-auto right-0 z-[1] h-min",
+              nextThumbButtonProps?.className
+            )}
           />
         </Swiper>
       )}
