@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.24
+
+### Patch Changes
+
+- 1622382: Modal - bei großer höhe nicht scrollbar #1290
+
 ## 3.0.23
 
 ### Patch Changes
