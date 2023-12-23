@@ -87,84 +87,89 @@ export const Modal = ({
       {children && <DialogTrigger asChild>{children}</DialogTrigger>}
 
       <DialogPortal>
-        <DialogOverlay className={zIndexes.modal} asChild>
-          <Backdrop isOpen={open} />
-        </DialogOverlay>
-        <div className={cn("fixed inset-0 overflow-y-auto", zIndexes.modal)}>
+        <DialogOverlay>
+          <Backdrop isOpen={open} className={zIndexes.modal} />
           <div
             className={cn(
-              "flex min-h-full items-center justify-center",
-              pagePaddings[pagePadding]
+              "fixed inset-0 h-full overflow-y-auto",
+              zIndexes.modal
             )}
           >
-            <DialogContent
+            <div
               className={cn(
-                "w-full flex flex-col border",
-                transition,
-                sizes[size],
-                roundings.lg,
-                shadows.xl,
-                bgColors.white,
-                borders.accent,
-                wrapperClassName
+                "flex min-h-full items-center justify-center",
+                pagePaddings[pagePadding]
               )}
-              onOpenAutoFocus={
-                initialFocus
-                  ? (e) => {
-                      e.preventDefault();
-                      initialFocus.current?.focus();
-                    }
-                  : undefined
-              }
-              onPointerDownOutside={
-                forbidCancellation
-                  ? (e) => {
-                      e.preventDefault();
-                    }
-                  : undefined
-              }
-              onInteractOutside={
-                forbidCancellation
-                  ? (e) => {
-                      e.preventDefault();
-                    }
-                  : undefined
-              }
-              onEscapeKeyDown={
-                forbidCancellation
-                  ? (e) => {
-                      e.preventDefault();
-                    }
-                  : undefined
-              }
             >
-              <Wrapper>
-                {header && (
-                  <div
-                    className={cn(
-                      sectionStyles,
-                      extendedBgColors.subtile,
-                      roundingsTop.lg,
-                      headerClassName
-                    )}
-                  >
-                    {isString(header) ? <Heading>{header}</Heading> : header}
-                  </div>
+              <DialogContent
+                className={cn(
+                  "w-full flex flex-col border h-full",
+                  transition,
+                  sizes[size],
+                  roundings.lg,
+                  shadows.xl,
+                  bgColors.white,
+                  borders.accent,
+                  wrapperClassName
                 )}
-                {content && (
-                  <div className={cn(sectionStyles, contentClassName)}>
-                    {isString(content) ? <Text>{content}</Text> : content}
-                  </div>
-                )}
-                {footer && (
-                  <div className={cn(sectionStyles, footerClassName)}>
-                    {footer}
-                  </div>
-                )}
-              </Wrapper>
-            </DialogContent>
+                onOpenAutoFocus={
+                  initialFocus
+                    ? (e) => {
+                        e.preventDefault();
+                        initialFocus.current?.focus();
+                      }
+                    : undefined
+                }
+                onPointerDownOutside={
+                  forbidCancellation
+                    ? (e) => {
+                        e.preventDefault();
+                      }
+                    : undefined
+                }
+                onInteractOutside={
+                  forbidCancellation
+                    ? (e) => {
+                        e.preventDefault();
+                      }
+                    : undefined
+                }
+                onEscapeKeyDown={
+                  forbidCancellation
+                    ? (e) => {
+                        e.preventDefault();
+                      }
+                    : undefined
+                }
+              >
+                <Wrapper>
+                  {header && (
+                    <div
+                      className={cn(
+                        sectionStyles,
+                        extendedBgColors.subtile,
+                        roundingsTop.lg,
+                        headerClassName
+                      )}
+                    >
+                      {isString(header) ? <Heading>{header}</Heading> : header}
+                    </div>
+                  )}
+                  {content && (
+                    <div className={cn(sectionStyles, contentClassName)}>
+                      {isString(content) ? <Text>{content}</Text> : content}
+                    </div>
+                  )}
+                  {footer && (
+                    <div className={cn(sectionStyles, footerClassName)}>
+                      {footer}
+                    </div>
+                  )}
+                </Wrapper>
+              </DialogContent>
+            </div>
           </div>
-        </div>
+        </DialogOverlay>
       </DialogPortal>
     </DialogRoot>
   );
