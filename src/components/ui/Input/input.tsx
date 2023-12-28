@@ -57,7 +57,7 @@ export type InputProps = InputRawProps & {
   max?: MaxRule;
   min?: MinRule;
   pattern?: PatternRule;
-  type?: "text" | "number" | "password" | "url" | "email";
+  type?: "text" | "number" | "password" | "url" | "email" | "tel";
 };
 
 export const InputInner = <
