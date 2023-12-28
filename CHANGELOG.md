@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.0.25
+
+### Patch Changes
+
+- 96f3dc0: Input type="tel" ermöglichen #1293
+
 ## 3.0.24
 
 ### Patch Changes
