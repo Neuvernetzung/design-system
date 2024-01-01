@@ -154,7 +154,7 @@ export const Checkbox = <
   );
 };
 
-type CheckboxInnerProps = {
+type CheckboxRawProps = {
   id?: string;
   label?: ReactNode;
   disabled?: boolean;
@@ -182,7 +182,7 @@ export const CheckboxRaw = forwardRef(
       setChecked,
       checked,
       defaultValue,
-    }: CheckboxInnerProps,
+    }: CheckboxRawProps,
 
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
