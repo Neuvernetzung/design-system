@@ -5,8 +5,10 @@ import { capSize, minSize } from "../../utils";
 import {
   bgColors,
   borders,
+  divides,
   paddingsSmallEvenly,
   paddingsX,
+  popoverAnimation,
   roundings,
   scrollbar,
   shadows,
@@ -15,7 +17,6 @@ import {
 
 type DropdownContainerStyleProps = {
   size: Size;
-  disablePadding?: boolean;
 };
 
 export const getDropdownPadding = (size: Size) =>
@@ -23,17 +24,17 @@ export const getDropdownPadding = (size: Size) =>
 
 export const getDropdownContainerStyles = ({
   size,
-  disablePadding,
 }: DropdownContainerStyleProps) =>
   cn(
-    "min-w-[16rem] overflow-auto border",
+    "flex flex-col min-w-[16rem] overflow-auto border divide-y will-change-[transform,opacity]",
+    divides.accent,
     bgColors.white,
     borders.accent,
     zIndexes.dropdown,
     scrollbar,
-    !disablePadding && getDropdownPadding(size),
     roundings[minSize(size, "md")],
-    shadows[minSize(size, "md")]
+    shadows[minSize(size, "md")],
+    popoverAnimation
   );
 
 type DropdownGroupHeaderStyleProps = {

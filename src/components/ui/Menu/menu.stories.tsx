@@ -278,3 +278,30 @@ export const Radio = ({ ...args }) => {
     </Container>
   );
 };
+
+export const BeforeAndAfterChildren = ({ ...args }) => {
+  const items: MenuItemProps[] = [
+    {
+      children: "Normales Item",
+      onClick: () => {},
+    },
+    { type: "separator" },
+    { type: "anchor", children: "Option 6", href: "#" },
+  ];
+
+  return (
+    <Container>
+      <div className="flex flex-col gap-4">
+        <ButtonGroup>
+          <Menu
+            beforeChildren="Before"
+            afterChildren="After"
+            items={items}
+            buttonProps={{ children: "BeforeAndAfterChildren" }}
+            {...args}
+          />
+        </ButtonGroup>
+      </div>
+    </Container>
+  );
+};

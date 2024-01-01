@@ -25,12 +25,7 @@ import {
 } from "react-hook-form";
 
 import { useRefDimensions } from "@/hooks";
-import {
-  divides,
-  placeholderAsText,
-  popoverAnimation,
-  transition,
-} from "@/styles";
+import { placeholderAsText, transition } from "@/styles";
 import { offsetSizes } from "@/styles/popper/offset";
 import { cn } from "@/utils/cn";
 import { mergeRefs } from "@/utils/internal";
@@ -289,13 +284,7 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
             width: buttonWidth,
             maxHeight: maxHeight ? `${maxHeight}px` : undefined,
           }}
-          className={cn(
-            getDropdownContainerStyles({ size, disablePadding: true }),
-            "flex flex-col will-change-[transform,opacity] divide-y",
-            divides.accent,
-            popoverAnimation,
-            optionsClassName
-          )}
+          className={cn(getDropdownContainerStyles({ size }), optionsClassName)}
           {...menuProps}
         >
           {beforeChildren && (

@@ -23,10 +23,11 @@ import {
   RefObject,
 } from "react";
 
-import { marginsYSmall, popoverAnimation } from "@/styles";
+import { marginsYSmall } from "@/styles";
 import {
   getDropdownContainerStyles,
   getDropdownGroupHeaderStyles,
+  getDropdownPadding,
 } from "@/styles/groups";
 import { offsetSizes } from "@/styles/popper/offset";
 import type { Color, Size, SvgType } from "@/types";
@@ -50,6 +51,8 @@ export type MenuProps = {
   menuTriggerProps?: DropdownMenuTriggerProps;
   menuContentProps?: DropdownMenuContentProps;
   containerRef?: RefObject<HTMLElement>;
+  beforeChildren?: ReactNode;
+  afterChildren?: ReactNode;
 };
 
 export type MenuItemBaseProps = {
@@ -127,6 +130,8 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
       menuTriggerProps,
       containerRef,
       menuContentProps,
+      beforeChildren,
+      afterChildren,
     }: MenuProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => (
@@ -148,12 +153,19 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
           className={cn(
             "!w-64",
             getDropdownContainerStyles({ size }),
-            dropdownClassName,
-            popoverAnimation
+            dropdownClassName
           )}
           {...menuContentProps}
         >
-          <MenuItems items={items} size={size} />
+          {beforeChildren && (
+            <div className={cn(getDropdownPadding(size))}>{beforeChildren}</div>
+          )}
+          <ul className={cn(getDropdownPadding(size))}>
+            <MenuItems items={items} size={size} />
+          </ul>
+          {afterChildren && (
+            <div className={cn(getDropdownPadding(size))}>{afterChildren}</div>
+          )}
         </DropdownMenuContent>
       </DropdownMenuPortal>
     </DropdownMenuRoot>
@@ -167,7 +179,9 @@ export const MenuItems = ({
   size = "sm",
 }: Pick<MenuProps, "items" | "size">) =>
   items?.map((props, i) => (
-    <MenuItem key={`menu_option_${i}`} size={size} {...props} />
+    <li key={`menu_option_${i}`}>
+      <MenuItem size={size} {...props} />
+    </li>
   ));
 
 const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {

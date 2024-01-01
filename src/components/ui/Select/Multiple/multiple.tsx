@@ -19,11 +19,9 @@ import {
 
 import { useRefDimensions } from "@/hooks";
 import {
-  divides,
   focus,
   gapsSmall,
   placeholderAsText,
-  popoverAnimation,
   roundings,
   transition,
 } from "@/styles";
@@ -377,13 +375,7 @@ export const SelectMultipleRawInner = <
             width: buttonWidth,
             maxHeight: maxHeight ? `${maxHeight}px` : undefined,
           }}
-          className={cn(
-            getDropdownContainerStyles({ size, disablePadding: true }),
-            "flex flex-col will-change-[transform,opacity] divide-y",
-            divides.accent,
-            popoverAnimation,
-            optionsClassName
-          )}
+          className={cn(getDropdownContainerStyles({ size }), optionsClassName)}
         >
           {beforeChildren && (
             <div className={cn(getDropdownPadding(size))}>{beforeChildren}</div>
