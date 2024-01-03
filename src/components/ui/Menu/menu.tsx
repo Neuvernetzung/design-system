@@ -160,9 +160,8 @@ export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
           {beforeChildren && (
             <div className={cn(getDropdownPadding(size))}>{beforeChildren}</div>
           )}
-          <ul className={cn(getDropdownPadding(size))}>
-            <MenuItems items={items} size={size} />
-          </ul>
+          <MenuItems items={items} size={size} />
+
           {afterChildren && (
             <div className={cn(getDropdownPadding(size))}>{afterChildren}</div>
           )}
@@ -177,12 +176,15 @@ Menu.displayName = "Menu";
 export const MenuItems = ({
   items,
   size = "sm",
-}: Pick<MenuProps, "items" | "size">) =>
-  items?.map((props, i) => (
-    <li key={`menu_option_${i}`}>
-      <MenuItem size={size} {...props} />
-    </li>
-  ));
+}: Pick<MenuProps, "items" | "size">) => (
+  <ul className={cn(getDropdownPadding(size))}>
+    {items?.map((props, i) => (
+      <li key={`menu_option_${i}`}>
+        <MenuItem size={size} {...props} />
+      </li>
+    ))}
+  </ul>
+);
 
 const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
   const { type, size } = props;
