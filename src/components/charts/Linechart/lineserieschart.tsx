@@ -19,7 +19,7 @@ import {
 import { useRefDimensions } from "@/hooks";
 import { cn } from "@/utils";
 
-import { extendedTextColors, textSizes } from "../../../styles";
+import { extendedTextColors, gapsSmall, textSizes } from "../../../styles";
 import { mergeRefs } from "../../../utils/internal";
 import { ChartTickXComponent, ChartTickYComponent } from "../components/ticks";
 import { ChartTooltip, ChartTooltipHover } from "../components/tooltip";
@@ -415,7 +415,21 @@ export const LineSerieschart = forwardRef(
                           if (y === null) return;
 
                           return (
-                            <span key={i}>
+                            <span
+                              key={i}
+                              className={cn(
+                                "flex flex-row items-center",
+                                gapsSmall.md
+                              )}
+                            >
+                              <span
+                                className={cn("rounded-full h-2 w-2")}
+                                style={{
+                                  backgroundColor: i
+                                    ? series[i].color || getChartColor(i)
+                                    : getChartColor(0),
+                                }}
+                              />
                               {isFunction(series[i].formatTooltip)
                                 ? series[i].formatTooltip?.({ x, y })
                                 : isFunction(formatTooltip)
