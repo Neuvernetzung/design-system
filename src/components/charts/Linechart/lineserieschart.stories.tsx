@@ -29,6 +29,10 @@ const data2 = sales.map((d) => ({
   x: addHours(new Date(d.x), 3),
   y: (d.y || 0) * 3 - 5,
 }));
+const data3 = sales.map((d) => ({
+  x: new Date(d.x),
+  y: ((d.y || 0) * (d.y || 0)) / 4 - 4,
+}));
 
 export const Default = ({ ...args }) => (
   <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
@@ -36,6 +40,7 @@ export const Default = ({ ...args }) => (
       series={[
         { data: data1 },
         { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
+        { data: data3, formatTooltip: (v) => `${v?.y} €`, color: "green" },
       ]}
       xScaleType="time"
       xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
@@ -71,6 +76,22 @@ export const NormalizedValues = ({ ...args }) => (
       xAxisProps={{
         tickFormat: (value) => format(value, "d. MMMM"),
       }}
+      {...args}
+    />
+  </div>
+);
+
+export const TooltipMultipleData = ({ ...args }) => (
+  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+    <LineSerieschart
+      series={[
+        { data: data1 },
+        { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
+        { data: data3, formatTooltip: (v) => `${v?.y} €`, color: "green" },
+      ]}
+      xScaleType="time"
+      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+      tooltipDataType="multiple"
       {...args}
     />
   </div>

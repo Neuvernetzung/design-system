@@ -60,12 +60,14 @@ export type BarchartProps = BarchartDataProps & {
   hoverProps?: ChartTooltipHoverProps;
   allowTooltip?: boolean;
   allowTooltipHover?: boolean;
+  allowTooltipHeader?: boolean;
   xAxisProps?: Partial<AxisProps<AxisScale>>;
   yAxisProps?: Partial<AxisProps<AxisScale>>;
   xScaleType?: ChartScale;
   yScaleType?: ChartScale;
   barProps?: AddSVGProps<BarProps, SVGRectElement>;
   formatTooltip?: (d?: BarchartDataFieldProps) => ReactNode;
+  formatTooltipHeader?: (d?: BarchartDataFieldProps) => ReactNode;
   children?:
     | ReactNode
     | (({
@@ -112,6 +114,8 @@ export const Barchart = forwardRef(
       xAxisProps,
       yAxisProps,
       barProps,
+      allowTooltipHeader,
+      formatTooltipHeader,
     }: BarchartProps,
     ref: ForwardedRef<SVGSVGElement>
   ) => {
@@ -294,6 +298,11 @@ export const Barchart = forwardRef(
               isFunction(formatTooltip)
                 ? formatTooltip(tooltipData)
                 : tooltipData?.y
+            }
+            tooltipHeader={
+              allowTooltipHeader && isFunction(formatTooltipHeader)
+                ? formatTooltipHeader(tooltipData)
+                : tooltipData?.y?.toString()
             }
             tooltipLeft={tooltipLeft}
             tooltipTop={tooltipTop}

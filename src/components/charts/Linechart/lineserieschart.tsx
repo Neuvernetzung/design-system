@@ -49,7 +49,10 @@ export type LineSerieschartDataProps = (LinechartDataProps & {
 
 export type LineSerieschartProps = {
   series: LineSerieschartDataProps;
-} & Omit<LinechartProps, "data"> & { normalized?: boolean };
+} & Omit<LinechartProps, "data"> & {
+    normalized?: boolean;
+    tooltipDataType?: "single" | "multiple";
+  };
 
 export type LinechartIndexedDataFieldProps = LinechartDataFieldProps & {
   i: number;
@@ -83,6 +86,9 @@ export const LineSerieschart = forwardRef(
       formatTooltip,
       children,
       normalized,
+      tooltipDataType = "single",
+      allowTooltipHeader,
+      formatTooltipHeader,
     }: LineSerieschartProps,
     ref: ForwardedRef<SVGSVGElement>
   ) => {
@@ -368,22 +374,71 @@ export const LineSerieschart = forwardRef(
               : children)}
         </ChartAreaWrapper>
         {allowTooltip && (
-          <ChartTooltip
-            tooltipLabel={
-              tooltipData
-                ? series[tooltipData.i] &&
-                  isFunction(series[tooltipData.i].formatTooltip)
-                  ? series[tooltipData.i].formatTooltip?.(tooltipData)
-                  : isFunction(formatTooltip)
-                  ? formatTooltip(tooltipData)
-                  : tooltipData?.y
-                : undefined
-            }
-            tooltipLeft={tooltipLeft}
-            tooltipTop={tooltipTop}
-            tooltipData={tooltipData}
-            TooltipInPortal={TooltipInPortal}
-          />
+          <>
+            {tooltipDataType === "single" && (
+              <ChartTooltip
+                tooltipLabel={
+                  tooltipData
+                    ? series[tooltipData.i] &&
+                      isFunction(series[tooltipData.i].formatTooltip)
+                      ? series[tooltipData.i].formatTooltip?.(tooltipData)
+                      : isFunction(formatTooltip)
+                      ? formatTooltip(tooltipData)
+                      : tooltipData?.y
+                    : undefined
+                }
+                tooltipHeader={
+                  allowTooltipHeader && isFunction(formatTooltipHeader)
+                    ? formatTooltipHeader(tooltipData)
+                    : tooltipData?.y?.toString()
+                }
+                tooltipLeft={tooltipLeft}
+                tooltipTop={tooltipTop}
+                tooltipData={tooltipData}
+                TooltipInPortal={TooltipInPortal}
+              />
+            )}
+            {tooltipDataType === "multiple" && (
+              <ChartTooltip
+                tooltipLabel={
+                  tooltipData ? (
+                    <div className="flex flex-col">
+                      {compact(
+                        series.map((_, i) => {
+                          const x = tooltipData.x;
+                          const y =
+                            series[i].data.find(
+                              (v) => v.x?.toString() === x?.toString()
+                            )?.y ?? null;
+
+                          if (y === null) return;
+
+                          return (
+                            <span key={i}>
+                              {isFunction(series[i].formatTooltip)
+                                ? series[i].formatTooltip?.({ x, y })
+                                : isFunction(formatTooltip)
+                                ? formatTooltip({ x, y })
+                                : y}
+                            </span>
+                          );
+                        })
+                      )}
+                    </div>
+                  ) : undefined
+                }
+                tooltipHeader={
+                  allowTooltipHeader && isFunction(formatTooltipHeader)
+                    ? formatTooltipHeader(tooltipData)
+                    : tooltipData?.y?.toString()
+                }
+                tooltipLeft={tooltipLeft}
+                tooltipTop={tooltipTop}
+                tooltipData={tooltipData}
+                TooltipInPortal={TooltipInPortal}
+              />
+            )}
+          </>
         )}
       </ChartWrapper>
     );
