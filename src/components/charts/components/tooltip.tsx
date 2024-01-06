@@ -6,16 +6,19 @@ import {
   durationFast,
   extendedTextColors,
   fillColors,
+  gapsSmall,
   textColors,
 } from "../../../styles";
 import { TooltipInner } from "../../ui/Tooltip";
 import { getChartColor } from "../utils/colors";
+import { Text } from "@/components/ui/Typography";
 
 export type ChartTooltipProps = {
   tooltipLeft: number;
   tooltipTop: number;
   tooltipData?: unknown;
   tooltipLabel: ReactNode;
+  tooltipHeader?: ReactNode;
   TooltipInPortal: FC<TooltipInPortalProps>;
 };
 
@@ -24,6 +27,7 @@ export const ChartTooltip = ({
   tooltipTop,
   tooltipData,
   tooltipLabel,
+  tooltipHeader,
   TooltipInPortal,
 }: ChartTooltipProps) =>
   tooltipData !== undefined ? (
@@ -33,7 +37,18 @@ export const ChartTooltip = ({
       style={{}} // Default Styles von TooltipInPortal entfernen
       className={cn("absolute pointer-events-none")} // transition-transform entfernt, da sonst immer Sprung vom 0 Punkt, sehr schlimm bei BarChart
     >
-      <TooltipInner label={tooltipLabel} />
+      <TooltipInner
+        label={
+          <div className={cn("flex flex-col", gapsSmall.xs)}>
+            {tooltipHeader && (
+              <Text size="xs" color="inherit">
+                {tooltipHeader}
+              </Text>
+            )}
+            {tooltipLabel}
+          </div>
+        }
+      />
     </TooltipInPortal>
   ) : null;
 

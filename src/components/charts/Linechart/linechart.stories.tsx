@@ -46,3 +46,19 @@ export const Empty = ({ ...args }) => (
     />
   </div>
 );
+
+export const TooltipHeader = ({ ...args }) => (
+  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+    <Linechart
+      data={data}
+      xScaleType="time"
+      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+      formatTooltip={(v) => `${v?.y} Aufrufe`}
+      allowTooltipHeader
+      formatTooltipHeader={(v) =>
+        Intl.DateTimeFormat(undefined, {}).format(v?.x)
+      }
+      {...args}
+    />
+  </div>
+);

@@ -68,6 +68,7 @@ export type LinechartProps = LinechartDataProps & {
   showZeroLine?: boolean;
   allowTooltip?: boolean;
   allowTooltipHover?: boolean;
+  allowTooltipHeader?: boolean;
   xAxisProps?: Partial<AxisProps<AxisScale>>;
   yAxisProps?: Partial<AxisProps<AxisScale>>;
   margin?: ChartMargin;
@@ -77,6 +78,7 @@ export type LinechartProps = LinechartDataProps & {
   xScaleType?: ChartScale;
   yScaleType?: ChartScale;
   formatTooltip?: (d?: LinechartDataFieldProps) => ReactNode;
+  formatTooltipHeader?: (d?: LinechartDataFieldProps) => ReactNode;
   children?:
     | ReactNode
     | (({
@@ -115,6 +117,7 @@ export const Linechart = forwardRef(
       },
       allowTooltip = true,
       allowTooltipHover = true,
+      allowTooltipHeader,
       xAxisProps,
       yAxisProps,
       margin: newMargin,
@@ -129,6 +132,7 @@ export const Linechart = forwardRef(
       gridColumnProps,
       gridRowProps,
       formatTooltip,
+      formatTooltipHeader,
       children,
     }: LinechartProps,
     ref: ForwardedRef<SVGSVGElement>
@@ -345,6 +349,11 @@ export const Linechart = forwardRef(
               isFunction(formatTooltip)
                 ? formatTooltip(tooltipData)
                 : tooltipData?.y
+            }
+            tooltipHeader={
+              allowTooltipHeader && isFunction(formatTooltipHeader)
+                ? formatTooltipHeader(tooltipData)
+                : tooltipData?.y?.toString()
             }
             tooltipLeft={tooltipLeft}
             tooltipTop={tooltipTop}
