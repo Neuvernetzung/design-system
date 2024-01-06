@@ -39,14 +39,16 @@ export const ChartTooltip = ({
     >
       <TooltipInner
         label={
-          <div className={cn("flex flex-col", gapsSmall.xs)}>
-            {tooltipHeader && (
-              <Text size="xs" color="inherit">
-                {tooltipHeader}
-              </Text>
-            )}
-            {tooltipLabel}
-          </div>
+          tooltipLabel && (
+            <div className={cn("flex flex-col", gapsSmall.xs)}>
+              {tooltipHeader && (
+                <Text size="xs" color="inherit">
+                  {tooltipHeader}
+                </Text>
+              )}
+              {tooltipLabel}
+            </div>
+          )
         }
       />
     </TooltipInPortal>
