@@ -388,9 +388,10 @@ export const LineSerieschart = forwardRef(
                     : undefined
                 }
                 tooltipHeader={
-                  allowTooltipHeader && isFunction(formatTooltipHeader)
+                  allowTooltipHeader &&
+                  (isFunction(formatTooltipHeader)
                     ? formatTooltipHeader(tooltipData)
-                    : tooltipData?.y?.toString()
+                    : tooltipData?.x?.toString())
                 }
                 tooltipLeft={tooltipLeft}
                 tooltipTop={tooltipTop}
@@ -428,9 +429,10 @@ export const LineSerieschart = forwardRef(
                   ) : undefined
                 }
                 tooltipHeader={
-                  allowTooltipHeader && isFunction(formatTooltipHeader)
+                  allowTooltipHeader &&
+                  (isFunction(formatTooltipHeader)
                     ? formatTooltipHeader(tooltipData)
-                    : tooltipData?.y?.toString()
+                    : tooltipData?.x?.toString())
                 }
                 tooltipLeft={tooltipLeft}
                 tooltipTop={tooltipTop}

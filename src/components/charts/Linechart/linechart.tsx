@@ -351,9 +351,10 @@ export const Linechart = forwardRef(
                 : tooltipData?.y
             }
             tooltipHeader={
-              allowTooltipHeader && isFunction(formatTooltipHeader)
+              allowTooltipHeader &&
+              (isFunction(formatTooltipHeader)
                 ? formatTooltipHeader(tooltipData)
-                : tooltipData?.y?.toString()
+                : tooltipData?.x?.toString())
             }
             tooltipLeft={tooltipLeft}
             tooltipTop={tooltipTop}
