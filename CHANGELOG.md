@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.1.4
+
+### Patch Changes
+
+- e43b61a: Chart Tooltip Header fixen #1311
+
 ## 3.1.3
 
 ### Patch Changes
