@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.1.7
+
+### Patch Changes
+
+- afba95a: Schedule - Event - Tabs value hinzufügen und aktuellen Tab anzuzeigen #1321
+- 2b131a6: Schedule - activationConstraints erhöhen #1323
+
 ## 3.1.6
 
 ### Patch Changes
