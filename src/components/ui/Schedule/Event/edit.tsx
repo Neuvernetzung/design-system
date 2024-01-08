@@ -340,7 +340,12 @@ export const EventEdit = ({
                 size="sm"
               />
             </div>
-            <TabList listClassName={cn(paddingsX.lg)} size="sm" items={tabs} />
+            <TabList
+              value={tab}
+              listClassName={cn(paddingsX.lg)}
+              size="sm"
+              items={tabs}
+            />
           </div>
         }
         content={
