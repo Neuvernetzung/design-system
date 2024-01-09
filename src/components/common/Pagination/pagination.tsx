@@ -44,13 +44,15 @@ export const Pagination = ({
   emptyMessage,
   page = DEFAULT_PAGINATION_PAGE,
   setPage,
-  limit = DEFAULT_PAGINATION_LIMIT,
+  limit: limitValue,
   setLimit,
   size = "md",
   containerClassName,
   selectLimit = true,
   variant = "default",
 }: PaginationProps) => {
+  const limit = limitValue || limits?.[0] || DEFAULT_PAGINATION_LIMIT;
+
   useEffect(() => {
     // Wenn sich das Result oder Limit ändert z.B. durch Filtern einer anderen Funktion oä. wird automatisch zur letzten Seite gesprungen.
     if (page <= Math.ceil(result / limit)) return;
@@ -76,6 +78,7 @@ export const Pagination = ({
             children: `${limit} pro Seite`,
             value: limit,
           }))}
+          placement="bottom-start"
           variant="ghost"
           size={size}
         />

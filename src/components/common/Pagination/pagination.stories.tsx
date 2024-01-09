@@ -48,6 +48,19 @@ export const WithoutLimit = ({ ...args }) => {
   );
 };
 
+export const DifferentLimits = ({ ...args }) => {
+  const paginationProps = usePagination({ defaultLimit: 12 });
+
+  return (
+    <Pagination
+      limits={[12, 24, 36]}
+      result={10000}
+      {...paginationProps}
+      {...args}
+    />
+  );
+};
+
 export const Minimalistic = ({ ...args }) => {
   const paginationProps = usePagination();
 
