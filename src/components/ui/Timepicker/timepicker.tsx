@@ -1,8 +1,15 @@
 import { IconClock, IconX } from "@tabler/icons-react";
-import { cn } from "@/utils/cn";
+import {
+  addMinutes,
+  getHours,
+  getMinutes,
+  setHours,
+  setMinutes,
+  subMinutes,
+} from "date-fns";
 import isNumber from "lodash/isNumber";
 import { useRouter } from "next/router";
-import { type ForwardedRef, forwardRef, type MouseEvent } from "react";
+import { type ForwardedRef, forwardRef, type MouseEvent, useMemo } from "react";
 import {
   Controller,
   FieldError,
@@ -15,10 +22,12 @@ import { getText, type Locale } from "@/locales/getText";
 import { divides, marginsXSmall } from "@/styles";
 import type { InputVariant, Size } from "@/types";
 import { smallerSize } from "@/utils";
+import { cn } from "@/utils/cn";
+
 import { IconButton } from "../Button";
 import { FormElement } from "../Form";
-import { InputRaw } from "../Input";
 import { Icon } from "../Icon";
+import { InputRaw } from "../Input";
 
 export type TimepickerProps = {
   required?: boolean;
@@ -32,6 +41,49 @@ export type TimepickerProps = {
   helper?: string;
   min?: string;
   max?: string;
+  localtime?: boolean;
+};
+
+const utcTimeToLocal = (
+  time: string | undefined,
+  offset: number
+): string | undefined => {
+  if (!time) return time;
+  const [h, m] = time.split(":");
+
+  const localDate = subMinutes(
+    setHours(setMinutes(new Date(), Number(m)), Number(h)),
+    offset
+  );
+
+  const hours = getHours(localDate);
+  const minutes = getMinutes(localDate);
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}`;
+};
+
+const localTimeToUtc = (
+  time: string | undefined | null,
+  offset: number
+): string | undefined | null => {
+  if (!time) return time;
+  const [h, m] = time.split(":");
+
+  const utcDate = addMinutes(
+    setHours(setMinutes(new Date(), Number(m)), Number(h)),
+    offset
+  );
+
+  const hours = getHours(utcDate);
+  const minutes = getMinutes(utcDate);
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}`;
 };
 
 export const Timepicker = <
@@ -51,8 +103,11 @@ export const Timepicker = <
   helper,
   min,
   max,
+  localtime,
 }: TimepickerProps & UseControllerProps<TFieldValues, TName>) => {
   const locale = useRouter().locale as Locale;
+
+  const timezoneOffset = useMemo(() => new Date().getTimezoneOffset(), []);
 
   return (
     <Controller
@@ -63,22 +118,21 @@ export const Timepicker = <
         validate: (v) => {
           if (!v) return true;
 
-          const hour = Number(v.split(":")[0]);
-          const minute = Number(v.split(":")[1]);
+          const [hour, minute] = v.split(":").map(Number);
 
           if (!isNumber(hour) || !isNumber(minute))
             return getText(locale).invalidTime;
 
           if (min) {
-            const minHour = Number(min.split(":")[0]);
-            const minMinute = Number(min.split(":")[1]);
+            const [minHour, minMinute] = min.split(":").map(Number);
+
             if (hour < minHour || (hour === minHour && minute < minMinute)) {
               return getText(locale).min(min);
             }
           }
           if (max) {
-            const maxHour = Number(max.split(":")[0]);
-            const maxMinute = Number(max.split(":")[1]);
+            const [maxHour, maxMinute] = max.split(":").map(Number);
+
             if (hour > maxHour || (hour === maxHour && minute > maxMinute)) {
               return getText(locale).max(max);
             }
@@ -96,9 +150,11 @@ export const Timepicker = <
           placeholder={placeholder}
           inputClassName={inputClassName}
           disabled={disabled}
-          value={value}
+          value={localtime ? utcTimeToLocal(value, timezoneOffset) : value}
           size={size}
-          onChange={onChange}
+          onChange={(v) =>
+            onChange(localtime ? localTimeToUtc(v, timezoneOffset) : v)
+          }
           name={name}
           id={name}
           error={error}
@@ -115,7 +171,7 @@ export type TimePickerInnerProps = Omit<TimepickerProps, "min" | "max"> & {
   error?: FieldError;
   name: string;
   value?: string;
-  onChange: (value?: string) => void;
+  onChange: (value?: string | null) => void;
   id?: string;
   defaultValue?: string;
 };
@@ -182,8 +238,8 @@ export const TimePickerInner = forwardRef(
                   className={cn("pointer-events-auto", marginsXSmall[size])}
                   onClick={async (e: MouseEvent) => {
                     e.preventDefault();
-                    await onChange(""); // "" wird verwendet, da bei undefined der Input nicht zurück gesetzt wird
-                    await onChange(undefined); // um den Controller zurück zu setzen
+                    await onChange("");
+                    await onChange(null);
                   }}
                   disabled={disabled}
                 />

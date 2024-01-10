@@ -5,6 +5,7 @@ import { sizes } from "../../../types";
 import { Form } from "../Form";
 import { Timepicker } from ".";
 import { Button } from "../Button";
+import { useState } from "react";
 
 export default {
   title: "UI/Form/Timepicker",
@@ -40,6 +41,7 @@ export const Default = ({ ...args }) => {
     </Form>
   );
 };
+
 export const Error = ({ ...args }) => {
   const formMethods = useForm();
 
@@ -115,6 +117,87 @@ export const MinMax = ({ ...args }) => {
         placeholder="Zeit auswählen"
         {...args}
       />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const DefaultValue = ({ ...args }) => {
+  const { handleSubmit, control, watch } = useForm({
+    defaultValues: { time1: "12:00", time2: "12:00" },
+  });
+
+  const values = watch();
+
+  const [submitted, setSubmitted] = useState<object>();
+
+  return (
+    <Form
+      handleSubmit={handleSubmit}
+      onSubmit={(data) => {
+        setSubmitted(data);
+      }}
+      className={formClassName}
+    >
+      <Timepicker
+        control={control}
+        name="time1"
+        label="Required Timepicker"
+        removeAll
+        placeholder="Zeit auswählen"
+        required
+        {...args}
+      />
+      Wert: {values.time1} {typeof values.time1}
+      <Timepicker
+        control={control}
+        name="time2"
+        label="Optional Timepicker"
+        removeAll
+        placeholder="Zeit auswählen"
+        {...args}
+      />
+      Wert: {values.time2} {typeof values.time2}
+      <Button type="submit">Submit</Button>
+      {JSON.stringify(submitted)}
+    </Form>
+  );
+};
+
+export const LocalTime = ({ ...args }) => {
+  const { handleSubmit, control, watch } = useForm({
+    defaultValues: { time1: "12:00", time2: "12:00" },
+  });
+
+  const values = watch();
+
+  return (
+    <Form
+      handleSubmit={handleSubmit}
+      onSubmit={() => {}}
+      className={formClassName}
+    >
+      <Timepicker
+        control={control}
+        name="time1"
+        label="UTC Timepicker"
+        removeAll
+        placeholder="Zeit auswählen"
+        required
+        {...args}
+      />
+      UTC Wert: {values.time1}
+      <Timepicker
+        control={control}
+        name="time2"
+        label="Local Timepicker"
+        removeAll
+        placeholder="Zeit auswählen"
+        localtime
+        required
+        {...args}
+      />
+      UTC Wert: {values.time2}
       <Button type="submit">Submit</Button>
     </Form>
   );
