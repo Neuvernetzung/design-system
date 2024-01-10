@@ -144,7 +144,7 @@ export const SortableTable = <
                   <TableDataCell
                     item={item}
                     col={col}
-                    key={`row_${i}_col_${col.id}`}
+                    key={`row_${item[id]}_col_${col.id}`}
                     size={size}
                     className={col.dataCellClassName}
                   />

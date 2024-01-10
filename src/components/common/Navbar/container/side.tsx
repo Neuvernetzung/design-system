@@ -1,5 +1,7 @@
-import { cn } from "@/utils";
 import { ForwardedRef, forwardRef } from "react";
+
+import { ScrollArea } from "@/components/ui";
+import { cn } from "@/utils";
 
 import {
   extendedBgColors,
@@ -7,7 +9,6 @@ import {
   gaps,
   gapsSmall,
   paddingsEvenly,
-  scrollbar,
   zIndexes,
 } from "../../../../styles";
 import type { NavbarProps } from "..";
@@ -53,24 +54,25 @@ export const NavbarSideContainer = forwardRef(
           <NavLogo logo={logo} {...logoProps} textColor={textColor} />
         </div>
       )}
-      {startItems}
-      <ul
-        className={cn(
-          "h-full flex flex-col overflow-y-hidden group-hover:overflow-y-auto",
-          scrollbar,
-          gapsSmall[gapSize],
-          paddingsEvenly[size]
-        )}
-      >
-        {navItems.map((navItem, i) => (
-          <SideNavItem
-            key={`sidenav_item_${i}`}
-            textColor={textColor}
-            {...navItem}
-          />
-        ))}
-      </ul>
-      {endItems}
+      <ScrollArea className="h-full">
+        {startItems}
+        <ul
+          className={cn(
+            "h-full flex flex-col",
+            gapsSmall[gapSize],
+            paddingsEvenly[size]
+          )}
+        >
+          {navItems.map((navItem, i) => (
+            <SideNavItem
+              key={`sidenav_item_${i}`}
+              textColor={textColor}
+              {...navItem}
+            />
+          ))}
+        </ul>
+        {endItems}
+      </ScrollArea>
       {footer && (
         <div
           className={cn("flex w-full", paddingsEvenly[size], footerClassName)}
