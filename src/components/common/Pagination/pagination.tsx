@@ -10,6 +10,7 @@ import {
   DEFAULT_PAGINATION_LIMIT,
   DEFAULT_PAGINATION_PAGE,
   DEFAULT_PAGINATIONS_LIMITS,
+  PAGINATION_MIN_PAGE,
 } from "./constants";
 
 export type PaginationProps = {
@@ -57,7 +58,7 @@ export const Pagination = ({
     // Wenn sich das Result oder Limit ändert z.B. durch Filtern einer anderen Funktion oä. wird automatisch zur letzten Seite gesprungen.
     if (page <= Math.ceil(result / limit)) return;
 
-    setPage(Math.ceil(result / limit));
+    setPage(Math.max(Math.ceil(result / limit), PAGINATION_MIN_PAGE));
   }, [result, limit]);
 
   return (
