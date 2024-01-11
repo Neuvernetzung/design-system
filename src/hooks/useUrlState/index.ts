@@ -31,7 +31,7 @@ export {
 export const useUrlState = <T = string>(
   key: string,
   options: UseQueryStateOptions<T> & { defaultValue?: T } = {
-    parse: (x) => x as unknown as T,
+    parse: (v) => v as unknown as T,
     serialize: String,
   }
 ) => {
@@ -42,7 +42,7 @@ export const useUrlState = <T = string>(
     setIsFirstRender(false);
   }, []);
 
-  const state = isFirstRender ? options?.defaultValue : queryState;
+  const state = isFirstRender ? options?.defaultValue : queryState || undefined;
 
   return [state, setQueryState] as [T, typeof setQueryState];
 };
