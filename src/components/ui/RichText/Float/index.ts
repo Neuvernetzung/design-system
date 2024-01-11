@@ -37,18 +37,18 @@ export const Float = Extension.create<FloatOptions>({
       {
         types: this.options.types,
         attributes: {
-          float: {
+          "data-float": {
             default: this.options.defaultFloat,
             parseHTML: (element) =>
               element.style.float || this.options.defaultFloat,
             renderHTML: (attributes) => {
-              if (attributes.float === this.options.defaultFloat) {
+              if (attributes["data-float"] === this.options.defaultFloat) {
                 return {};
               }
 
               return {
-                style: `float: ${attributes.float}`,
-                "data-float": attributes.float,
+                style: `float: ${attributes["data-float"]}`,
+                "data-float": attributes["data-float"],
               };
             },
           },
@@ -67,7 +67,7 @@ export const Float = Extension.create<FloatOptions>({
           }
 
           return this.options.types.every((type) =>
-            commands.updateAttributes(type, { float })
+            commands.updateAttributes(type, { "data-float": float })
           );
         },
 
@@ -75,7 +75,7 @@ export const Float = Extension.create<FloatOptions>({
         () =>
         ({ commands }) =>
           this.options.types.every((type) =>
-            commands.resetAttributes(type, "float")
+            commands.updateAttributes(type, { "data-float": "none" })
           ),
     };
   },

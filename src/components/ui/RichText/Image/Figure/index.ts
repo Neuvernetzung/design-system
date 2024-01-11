@@ -108,8 +108,6 @@ export const ImageFigure = Node.create<FigureOptions>({
       "figure",
       mergeAttributes(this.options.HTMLAttributes, {
         style,
-        draggable: true,
-        contenteditable: true,
         "data-float": dataFloat,
       }),
       [

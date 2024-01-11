@@ -15,6 +15,11 @@ export const ImageExtension = TiptapImageExtension.extend({
         default: "auto",
         renderHTML: ({ height }) => ({ height }),
       },
+      "data-float": {
+        renderHTML: ({ "data-float": dataFloat }) => ({
+          "data-float": dataFloat,
+        }),
+      },
     };
   },
 
@@ -40,7 +45,6 @@ export const ImageExtension = TiptapImageExtension.extend({
         mergeAttributes(rest, {
           draggable: false,
           contenteditable: false,
-          "data-float": dataFloat,
         }),
       ],
     ];
