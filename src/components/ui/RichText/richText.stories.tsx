@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { cn } from "@/utils";
 
-import { Button, Modal, Prose } from "..";
+import { Button, Modal, Prose, Text } from "..";
 import { Form } from "../Form/form";
 import { RichText } from ".";
 
@@ -97,8 +97,7 @@ export const CustomMenuButtons = ({ ...args }) => {
   const { control, watch } = useForm({
     defaultValues: {
       RichText: `
-      <figure style="text-align: center;"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="100%" height="auto" caption="Tolle Caption"><figcaption>Tolle Caption</figcaption></figure>
-      <picture><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="346" height="auto" draggable="false" contenteditable="false"></picture>
+      <figure style="text-align: center"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="100%" height="auto" draggable="false" contenteditable="false"><figcaption>Tolle Caption</figcaption></figure><figure style="float: right" data-float="right"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="346" height="auto" draggable="false" contenteditable="false"><figcaption>567567567</figcaption></figure><p>sdfsdf</p><p>fgh</p><p>fgh</p><picture style="float: right" data-float="right"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Test" title="Image" width="323" height="auto" draggable="false" contenteditable="false" data-float="right"></picture><p>fgh</p><p>dfgh567567567</p>
       `,
     },
   });
@@ -151,6 +150,7 @@ export const CustomMenuButtons = ({ ...args }) => {
         {...args}
       />
       <Prose content={watch("RichText")} />
+      <Text>{watch("RichText")}</Text>
     </Container>
   );
 };
