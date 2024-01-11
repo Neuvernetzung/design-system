@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.2.1
+
+### Patch Changes
+
+- 945586e: useUrlState - undefined statt null ausgeben #1338
+
 ## 3.2.0
 
 ### Minor Changes
