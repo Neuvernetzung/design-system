@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.2.0
+
+### Minor Changes
+
+- b1cfb8a: useUrlCalendar und useUrlSchedule hinzufügen #1336
+
+### Patch Changes
+
+- b93a0db: ScrollArea hinzufügen #1333
+
 ## 3.1.9
 
 ### Patch Changes
