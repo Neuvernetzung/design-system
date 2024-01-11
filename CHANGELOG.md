@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.2.2
+
+### Patch Changes
+
+- 606035a: RichText - float wird nicht übernommen bei initial Data #1343
+- 46532ff: RichText - Wenn Bild float rechts hat und align left, dann wird Caption nicht in einer Linie dargestellt #1341
+
 ## 3.2.1
 
 ### Patch Changes
