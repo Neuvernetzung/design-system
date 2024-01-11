@@ -107,11 +107,13 @@ export const Multiple = ({ ...args }) => {
 };
 
 export const ToLastPage = ({ ...args }) => {
-  const [result, setResult] = useState(50);
+  const [result, setResult] = useState<number>(50);
   const paginationProps = usePagination();
 
   return (
     <div>
+      Seite <Text>{paginationProps.page}</Text>
+      <Button onClick={() => setResult(0)}>0</Button>
       <Button onClick={() => setResult(50)}>50</Button>
       <Button onClick={() => setResult(100)}>100</Button>
       <Pagination result={result} {...paginationProps} {...args} />
