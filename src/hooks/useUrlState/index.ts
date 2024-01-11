@@ -1,38 +1,63 @@
-import { useRouter } from "next/router";
+import {
+  createParser,
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsFloat,
+  parseAsHex,
+  parseAsInteger,
+  parseAsIsoDateTime,
+  parseAsJson,
+  parseAsString,
+  parseAsStringEnum,
+  parseAsTimestamp,
+  useQueryState as useNuqs,
+  type UseQueryStateOptions,
+} from "nuqs";
+import { useEffect, useState } from "react";
 
-export type UseUrlStateProps = {
-  name: string;
-  replace?: boolean;
-  defaultValue?: string;
+export {
+  parseAsArrayOf as parseQueryAsArrayOf,
+  parseAsBoolean as parseQueryAsBoolean,
+  parseAsFloat as parseQueryAsFloat,
+  parseAsHex as parseQueryAsHex,
+  parseAsInteger as parseQueryAsInteger,
+  parseAsIsoDateTime as parseQueryAsIsoDateTime,
+  parseAsJson as parseQueryAsJson,
+  parseAsString as parseQueryAsString,
+  parseAsStringEnum as parseQueryAsStringEnum,
+  parseAsTimestamp as parseQueryAsTimestamp,
 };
 
-export type UseUrlStateReturn = [string | undefined, (value: string) => void];
+export const useUrlState = <T = string>(
+  key: string,
+  options: UseQueryStateOptions<T> & { defaultValue?: T } = {
+    parse: (x) => x as unknown as T,
+    serialize: String,
+  }
+) => {
+  const [queryState, setQueryState] = useNuqs<T>(key, options);
 
-export const useUrlState = ({
-  name,
-  replace,
-  defaultValue,
-}: UseUrlStateProps): UseUrlStateReturn => {
-  const router = useRouter();
+  const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
+  useEffect(() => {
+    setIsFirstRender(false);
+  }, []);
 
-  const query = router.query;
-  const state = query[name];
-  const path = router.pathname;
+  const state = isFirstRender ? options?.defaultValue : queryState;
 
-  const setState = (value: string) => {
-    query[name] = value;
-
-    const newRouterProps = {
-      pathname: path,
-      query,
-    };
-
-    if (replace) {
-      router.replace(newRouterProps);
-    } else {
-      router.push(newRouterProps);
-    }
-  };
-
-  return [state?.toString() || defaultValue, setState];
+  return [state, setQueryState] as [T, typeof setQueryState];
 };
+
+export function parseQueryAsStringConst<Const extends string>(
+  validValues: readonly Const[]
+) {
+  return createParser({
+    parse: (query: string) => {
+      const asConst = query as unknown as Const;
+      if (validValues.includes(asConst)) {
+        return asConst;
+      }
+      return null;
+    },
+    serialize: (value: Const) => value.toString(),
+  });
+}
