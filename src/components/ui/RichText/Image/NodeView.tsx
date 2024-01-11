@@ -25,12 +25,12 @@ export const ResizableMediaNodeView: FC<NodeViewProps> = ({
         ref={containerRef}
         draggable
         data-drag-handle
-        data-float={node.attrs.float}
+        data-float={node.attrs["data-float"]}
         style={{
           // Weird! Basically tiptap/prose wraps this in a span and the line height causes an annoying buffer.
           lineHeight: "0px",
           textAlign: node.attrs.textAlign,
-          float: node.attrs.float,
+          float: node.attrs["data-float"],
         }}
       >
         <button
@@ -50,7 +50,7 @@ export const ResizableMediaNodeView: FC<NodeViewProps> = ({
           <img
             ref={imgRef}
             {...node.attrs}
-            data-float={node.attrs.float}
+            data-float={node.attrs["data-float"]}
             alt={node.attrs.alt}
             style={{
               ...resizingStyle,

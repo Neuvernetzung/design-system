@@ -289,7 +289,9 @@ export const ImageOptions = ({
                 <IconButton
                   size="xs"
                   variant={
-                    editor.isActive({ float: "left" }) ? "subtile" : "ghost"
+                    editor.isActive({ "data-float": "left" })
+                      ? "subtile"
+                      : "ghost"
                   }
                   icon={IconFloatLeft}
                   ariaLabel="float_left"
@@ -302,7 +304,9 @@ export const ImageOptions = ({
                 <IconButton
                   size="xs"
                   variant={
-                    editor.isActive({ float: "right" }) ? "subtile" : "ghost"
+                    editor.isActive({ "data-float": "right" })
+                      ? "subtile"
+                      : "ghost"
                   }
                   icon={IconFloatRight}
                   ariaLabel="float_right"
@@ -315,7 +319,9 @@ export const ImageOptions = ({
                 <IconButton
                   size="xs"
                   variant={
-                    editor.isActive({ float: "none" }) ? "subtile" : "ghost"
+                    editor.isActive({ "data-float": "none" })
+                      ? "subtile"
+                      : "ghost"
                   }
                   icon={IconFloatNone}
                   ariaLabel="unset_float"
