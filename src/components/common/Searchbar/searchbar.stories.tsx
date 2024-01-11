@@ -19,7 +19,7 @@ export const Default = ({ ...args }) => {
 };
 
 export const WithUrlState = ({ ...args }) => {
-  const [search, setSearch] = useUrlState({ name: "search" });
+  const [search, setSearch] = useUrlState("search");
 
   return (
     <div>

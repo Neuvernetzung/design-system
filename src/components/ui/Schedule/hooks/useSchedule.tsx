@@ -11,11 +11,13 @@ import { useMemo, useState } from "react";
 
 import {
   useCalendar,
+  useUrlCalendar,
   type UseCalendarOwnProps,
   type UseCalendarProps,
 } from "../../Calendar/hooks";
 import { useEditEvent } from "../Event/edit";
 import { useViewEvent } from "../Event/view";
+import { useUrlState, parseQueryAsStringConst } from "@/hooks";
 
 export type UseSchedule = typeof useSchedule;
 export type UseScheduleProps = ReturnType<UseSchedule>;
@@ -66,10 +68,19 @@ export const useDateRange = (
     return { start: undefined, end: undefined };
   }, [viewing, currentView]);
 
-export const useSchedule = (props?: UseCalendarOwnProps) => {
-  const calendarProps = useCalendar(props);
+export const useScheduleBase = () => {
   const viewEventProps = useViewEvent();
   const editEventProps = useEditEvent();
+
+  return {
+    viewEventProps,
+    editEventProps,
+  };
+};
+
+export const useSchedule = (props?: UseCalendarOwnProps) => {
+  const calendarProps = useCalendar(props);
+  const scheduleBaseProps = useScheduleBase();
 
   const [currentView, setCurrentView] = useState<ScheduleView>("day");
 
@@ -84,11 +95,29 @@ export const useSchedule = (props?: UseCalendarOwnProps) => {
     calendarProps.calendar
   );
 
-  return {
-    calendarProps,
-    viewEventProps,
-    editEventProps,
-    scheduleViewProps,
-    dateRange,
+  return { ...scheduleBaseProps, calendarProps, scheduleViewProps, dateRange };
+};
+
+export const useUrlSchedule = (props?: UseCalendarOwnProps) => {
+  const calendarProps = useUrlCalendar(props);
+  const scheduleBaseProps = useScheduleBase();
+
+  const [currentView, setCurrentView] = useUrlState<ScheduleView>("view", {
+    ...parseQueryAsStringConst(scheduleViews),
+    history: "replace",
+    defaultValue: "day",
+  });
+
+  const scheduleViewProps: UseScheduleViewProps = {
+    currentView,
+    setCurrentView,
   };
+
+  const dateRange = useDateRange(
+    currentView,
+    calendarProps.viewing,
+    calendarProps.calendar
+  );
+
+  return { ...scheduleBaseProps, calendarProps, scheduleViewProps, dateRange };
 };

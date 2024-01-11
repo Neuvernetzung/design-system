@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useUrlState } from "@/hooks";
+import { useUrlState, parseQueryAsInteger } from "@/hooks";
 
 import {
   DEFAULT_PAGINATION_LIMIT,
@@ -35,24 +35,24 @@ export const usePagination = (
 export const useUrlPagination = (
   props?: UsePaginationProps
 ): UsePaginationReturn => {
-  const [page, setPage] = useUrlState({
-    name: "page",
-    defaultValue: (props?.defaultPage || DEFAULT_PAGINATION_PAGE).toString(),
+  const [page, setPage] = useUrlState("page", {
+    ...parseQueryAsInteger,
+    defaultValue: props?.defaultPage || DEFAULT_PAGINATION_PAGE,
   });
 
-  const [limit, setLimit] = useUrlState({
-    name: "limit",
-    defaultValue: (props?.defaultLimit || DEFAULT_PAGINATION_LIMIT).toString(),
+  const [limit, setLimit] = useUrlState("limit", {
+    ...parseQueryAsInteger,
+    defaultValue: props?.defaultLimit || DEFAULT_PAGINATION_LIMIT,
   });
 
   return {
-    page: Number(page),
+    page,
     setPage: (page: number) => {
-      setPage(String(page));
+      setPage(page);
     },
-    limit: Number(limit),
+    limit,
     setLimit: (limit: number) => {
-      setLimit(String(limit));
+      setLimit(limit);
     },
   };
 };
