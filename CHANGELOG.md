@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.2.3
+
+### Patch Changes
+
+- 22b4b1a: Pagination kleinste Seite auf 1 setzen #1347
+
 ## 3.2.2
 
 ### Patch Changes
