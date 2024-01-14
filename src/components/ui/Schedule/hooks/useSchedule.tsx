@@ -17,7 +17,7 @@ import {
 } from "../../Calendar/hooks";
 import { useEditEvent } from "../Event/edit";
 import { useViewEvent } from "../Event/view";
-import { useUrlState, parseQueryAsStringConst } from "@/hooks";
+import { useUrlState, parseQueryAsStringLiteral } from "@/hooks";
 
 export type UseSchedule = typeof useSchedule;
 export type UseScheduleProps = ReturnType<UseSchedule>;
@@ -103,7 +103,7 @@ export const useUrlSchedule = (props?: UseCalendarOwnProps) => {
   const scheduleBaseProps = useScheduleBase();
 
   const [currentView, setCurrentView] = useUrlState<ScheduleView>("view", {
-    ...parseQueryAsStringConst(scheduleViews),
+    ...parseQueryAsStringLiteral(scheduleViews),
     history: "replace",
     defaultValue: "day",
   });

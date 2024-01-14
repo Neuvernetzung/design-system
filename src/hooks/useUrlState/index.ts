@@ -1,5 +1,4 @@
 import {
-  createParser,
   parseAsArrayOf,
   parseAsBoolean,
   parseAsFloat,
@@ -7,8 +6,10 @@ import {
   parseAsInteger,
   parseAsIsoDateTime,
   parseAsJson,
+  parseAsNumberLiteral,
   parseAsString,
   parseAsStringEnum,
+  parseAsStringLiteral,
   parseAsTimestamp,
   useQueryState as useNuqs,
   type UseQueryStateOptions,
@@ -23,8 +24,10 @@ export {
   parseAsInteger as parseQueryAsInteger,
   parseAsIsoDateTime as parseQueryAsIsoDateTime,
   parseAsJson as parseQueryAsJson,
+  parseAsNumberLiteral as parseQueryAsNumberLiteral,
   parseAsString as parseQueryAsString,
   parseAsStringEnum as parseQueryAsStringEnum,
+  parseAsStringLiteral as parseQueryAsStringLiteral,
   parseAsTimestamp as parseQueryAsTimestamp,
 };
 
@@ -46,18 +49,3 @@ export const useUrlState = <T = string>(
 
   return [state, setQueryState] as [T, typeof setQueryState];
 };
-
-export function parseQueryAsStringConst<Const extends string>(
-  validValues: readonly Const[]
-) {
-  return createParser({
-    parse: (query: string) => {
-      const asConst = query as unknown as Const;
-      if (validValues.includes(asConst)) {
-        return asConst;
-      }
-      return null;
-    },
-    serialize: (value: Const) => value.toString(),
-  });
-}
