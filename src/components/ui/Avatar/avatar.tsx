@@ -14,14 +14,6 @@ export type AvatarProps = {
   color?: Color;
 };
 
-// TODO: Remove once https://github.com/vercel/next.js/issues/52216 is resolved.
-// `next/image` seems to be affected by a default + named export bundling bug.
-let ResolvedImage = NextImage;
-if ("default" in ResolvedImage) {
-  ResolvedImage = (ResolvedImage as unknown as { default: typeof NextImage })
-    .default;
-}
-
 function lettersToColor(letters: string): HEX {
   const formatted = letters.slice(0, 2).toUpperCase();
 
@@ -63,12 +55,7 @@ export const Avatar = ({
       style={{ backgroundColor: `${randomBgColor}33` }} // 33 für 20% opacity
     >
       {image ? (
-        <ResolvedImage
-          height={100}
-          width={100}
-          src={image.src}
-          alt={image.alt}
-        />
+        <NextImage height={100} width={100} src={image.src} alt={image.alt} />
       ) : (
         <Text size={size}>{initials}</Text>
       )}

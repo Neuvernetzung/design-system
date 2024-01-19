@@ -8,14 +8,6 @@ import { cn } from "@/utils";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
 
-// TODO: Remove once https://github.com/vercel/next.js/issues/52216 is resolved.
-// `next/image` seems to be affected by a default + named export bundling bug.
-let ResolvedImage = NextImage;
-if ("default" in ResolvedImage) {
-  ResolvedImage = (ResolvedImage as unknown as { default: typeof NextImage })
-    .default;
-}
-
 export type ImageProps = NextImageProps & {
   alt: string;
   dynamicRatio?: boolean | "natural";
@@ -50,7 +42,7 @@ export const Image = ({
       )}
     >
       {!error && src ? (
-        <ResolvedImage
+        <NextImage
           className={cn("object-cover object-center", className)}
           src={src}
           {...(!width && !height && { fill: true })}
@@ -90,7 +82,7 @@ export const NextImageWithFallback = ({
   const [error, setError] = useState<boolean>(false);
 
   return !error && src ? (
-    <ResolvedImage
+    <NextImage
       className={cn(className)}
       alt={alt}
       src={src}
