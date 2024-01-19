@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.3.0
+
+### Minor Changes
+
+- 45b44fd: Avatar und Image Workaround entfernen #1317
+
 ## 3.2.4
 
 ### Patch Changes
