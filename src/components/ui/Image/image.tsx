@@ -15,6 +15,14 @@ export type ImageProps = NextImageProps & {
   containerClassName?: string;
 };
 
+// TODO: Remove once https://github.com/vercel/next.js/issues/52216 is resolved.
+// `next/image` seems to be affected by a default + named export bundling bug.
+let ResolvedImage = NextImage;
+if ("default" in ResolvedImage) {
+  ResolvedImage = (ResolvedImage as unknown as { default: typeof NextImage })
+    .default;
+}
+
 /**
  * @deprecated Use next/image instead of if Fallback needed NextImageWithFallback
  */
@@ -42,7 +50,7 @@ export const Image = ({
       )}
     >
       {!error && src ? (
-        <NextImage
+        <ResolvedImage
           className={cn("object-cover object-center", className)}
           src={src}
           {...(!width && !height && { fill: true })}
@@ -82,7 +90,7 @@ export const NextImageWithFallback = ({
   const [error, setError] = useState<boolean>(false);
 
   return !error && src ? (
-    <NextImage
+    <ResolvedImage
       className={cn(className)}
       alt={alt}
       src={src}
