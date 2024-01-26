@@ -9,6 +9,7 @@ import {
 } from "react";
 import {
   Controller,
+  FieldError,
   type FieldPath,
   type FieldValues,
   type UseControllerProps,
@@ -48,16 +49,38 @@ import type { InputAddonProps } from "./InputAddon/inputAddon";
 import { InputElement } from "./InputElement";
 import type { InputElementProps } from "./InputElement/inputElement";
 
-export type InputProps = InputRawProps & {
+export type InputProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "size" | "pattern" | "required"
+> & {
+  containerClassName?: string;
+  leftAddon?: Pick<InputAddonProps, "children" | "className">;
+  size?: Size;
+  variant?: InputVariant;
+  leftElement?: Pick<
+    InputElementProps,
+    "children" | "className" | "pointerEvents"
+  >;
+  value?: string;
+  onChange?: (value: string) => void;
+  error?: FieldError;
+  disabled?: boolean;
+  rightAddon?: Pick<InputAddonProps, "children" | "className">;
+  inputClassName?: string;
+  rightElement?: Pick<
+    InputElementProps,
+    "children" | "className" | "pointerEvents"
+  >;
+  step?: number;
   label?: string;
   helper?: ReactNode;
   required?: RequiredRule;
+  type?: "text" | "number" | "password" | "url" | "email" | "tel";
   maxLength?: MaxLengthRule;
   minLength?: MinLengthRule;
   max?: MaxRule;
   min?: MinRule;
   pattern?: PatternRule;
-  type?: "text" | "number" | "password" | "url" | "email" | "tel";
 };
 
 export const InputInner = <
@@ -117,35 +140,28 @@ export const InputInner = <
         field: { value, onChange, ref: controllerRef },
         fieldState: { error },
       }) => (
-        <FormElement
-          required={required}
-          error={error}
-          name={name}
+        <InputRaw
+          containerClassName={containerClassName}
+          leftAddon={leftAddon}
+          size={size}
+          variant={variant}
+          leftElement={leftElement}
+          type={type}
+          id={name}
           label={label}
           helper={helper}
-          size={size}
+          ref={mergeRefs([ref, controllerRef])}
+          value={value}
+          onChange={onChange}
+          error={error}
+          disabled={disabled}
+          rightAddon={rightAddon}
+          inputClassName={inputClassName}
+          rightElement={rightElement}
+          step={step}
           className={className}
-        >
-          <InputRaw
-            containerClassName={containerClassName}
-            leftAddon={leftAddon}
-            size={size}
-            variant={variant}
-            leftElement={leftElement}
-            type={type}
-            id={name}
-            ref={mergeRefs([ref, controllerRef])}
-            value={value}
-            onChange={onChange}
-            error={!!error}
-            disabled={disabled}
-            rightAddon={rightAddon}
-            inputClassName={inputClassName}
-            rightElement={rightElement}
-            step={step}
-            {...props}
-          />
-        </FormElement>
+          {...props}
+        />
       )}
     />
   );
@@ -161,31 +177,12 @@ export const Input = forwardRef(InputInner) as <
     }
 ) => ReturnType<typeof InputInner>;
 
-export type InputRawProps = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  "onChange" | "size" | "pattern" | "required"
-> & {
-  containerClassName?: string;
-  leftAddon?: Pick<InputAddonProps, "children" | "className">;
-  size?: Size;
-  variant?: InputVariant;
-  leftElement?: Pick<
-    InputElementProps,
-    "children" | "className" | "pointerEvents"
-  >;
-  id?: string;
-  value?: string;
+export type InputRawProps = Omit<InputProps, "pattern" | "name"> & {
+  id: string;
+  value?: string | null;
+  defaultValue?: string | null;
   onChange?: (value: string) => void;
-  error?: boolean;
-  disabled?: boolean;
-  rightAddon?: Pick<InputAddonProps, "children" | "className">;
-  inputClassName?: string;
-  rightElement?: Pick<
-    InputElementProps,
-    "children" | "className" | "pointerEvents"
-  >;
-  step?: number;
-  type?: HTMLInputElement["type"];
+  error?: FieldError;
 };
 
 export const InputRaw = forwardRef(
@@ -206,6 +203,10 @@ export const InputRaw = forwardRef(
       inputClassName,
       rightElement,
       step,
+      required,
+      label,
+      helper,
+      className,
       ...props
     }: InputRawProps,
     ref: ForwardedRef<HTMLInputElement>
@@ -216,67 +217,79 @@ export const InputRaw = forwardRef(
     const { width: rightElementWidth } = useRefDimensions(rightElementRef);
 
     return (
-      <div className={cn(inputContainerClassName, containerClassName)}>
-        {leftAddon && (
-          <InputAddon
-            size={size}
-            variant={variant}
-            type="left"
-            {...leftAddon}
-          />
-        )}
-        {leftElement && (
-          <InputElement
-            size={size}
-            type="left"
-            ref={leftElementRef}
-            {...leftElement}
-          />
-        )}
-        <input
-          type={type}
-          id={id}
-          ref={ref}
-          value={value}
-          onChange={(e) => onChange?.(e.target.value)}
-          onWheel={(e: any) => e.target?.type === "number" && e.target?.blur()} // damit beim scrollen die zahl nicht versehentlich verändert wird
-          className={cn(
-            getInputStyles({
-              size,
-              variant,
-              error: !!error,
-              disabled,
-              leftAddon: !!leftAddon,
-              rightAddon: !!rightAddon,
-            }),
-            inputClassName
+      <FormElement
+        required={required}
+        error={error}
+        name={id}
+        label={label}
+        helper={helper}
+        size={size}
+        className={className}
+      >
+        <div className={cn(inputContainerClassName, containerClassName)}>
+          {leftAddon && (
+            <InputAddon
+              size={size}
+              variant={variant}
+              type="left"
+              {...leftAddon}
+            />
           )}
-          style={{
-            paddingLeft: leftElement && leftElementWidth,
-            paddingRight: rightElement && rightElementWidth,
-          }}
-          step={step}
-          disabled={disabled}
-          {...props}
-        />
+          {leftElement && (
+            <InputElement
+              size={size}
+              type="left"
+              ref={leftElementRef}
+              {...leftElement}
+            />
+          )}
+          <input
+            type={type}
+            id={id}
+            ref={ref}
+            value={value}
+            onChange={(e) => onChange?.(e.target.value)}
+            onWheel={(e: any) =>
+              e.target?.type === "number" && e.target?.blur()
+            } // damit beim scrollen die zahl nicht versehentlich verändert wird
+            className={cn(
+              getInputStyles({
+                size,
+                variant,
+                error: !!error,
+                disabled,
+                leftAddon: !!leftAddon,
+                rightAddon: !!rightAddon,
+              }),
+              inputClassName
+            )}
+            style={{
+              paddingLeft: leftElement && leftElementWidth,
+              paddingRight: rightElement && rightElementWidth,
+            }}
+            step={step}
+            disabled={disabled}
+            {...props}
+          />
 
-        {rightAddon && (
-          <InputAddon
-            size={size}
-            variant={variant}
-            type="right"
-            {...rightAddon}
-          />
-        )}
-        {rightElement && (
-          <InputElement
-            size={size}
-            type="right"
-            ref={rightElementRef}
-            {...rightElement}
-          />
-        )}
-      </div>
+          {rightAddon && (
+            <InputAddon
+              size={size}
+              variant={variant}
+              type="right"
+              {...rightAddon}
+            />
+          )}
+          {rightElement && (
+            <InputElement
+              size={size}
+              type="right"
+              ref={rightElementRef}
+              {...rightElement}
+            />
+          )}
+        </div>
+      </FormElement>
     );
   }
 );

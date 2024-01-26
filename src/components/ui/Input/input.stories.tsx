@@ -4,8 +4,9 @@ import { cn } from "@/utils";
 import { useForm } from "react-hook-form";
 
 import { Button, Form, Icon, Text } from "..";
-import { Input } from ".";
+import { Input, InputRaw } from ".";
 import { inputVariants, sizes } from "../../../types";
+import { useState } from "react";
 
 export default {
   title: "UI/Form/Input",
@@ -220,6 +221,23 @@ export const DefaultValue = ({ ...args }) => {
         {...args}
       />
     </Form>
+  );
+};
+
+export const ControlledRaw = ({ ...args }) => {
+  const [state, setState] = useState<string>();
+
+  return (
+    <div className="flex flex-col gap-4">
+      <Text>Wert: {state}</Text>
+      <InputRaw
+        id="input-default"
+        placeholder="default"
+        value={state}
+        onChange={setState}
+        {...args}
+      />
+    </div>
   );
 };
 
