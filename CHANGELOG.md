@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.3.2
+
+### Patch Changes
+
+- 234bb58: useThemeSwitcher exportieren #1361
+
 ## 3.3.1
 
 ### Patch Changes
