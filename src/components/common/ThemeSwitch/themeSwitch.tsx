@@ -11,7 +11,7 @@ type ThemeSwitchProps = {
   size?: Size;
 };
 
-const useThemeSwitcher = () => {
+export const useThemeSwitcher = () => {
   // Zusätzlicher hook mit useEffect wird nur benötigt, da sonst ein Hydration mismatch auftreten kann.
   const [resolved, setResolved] = useState<string | undefined>();
   const [theme_, setTheme_] = useState<string | undefined>();
