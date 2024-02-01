@@ -160,16 +160,18 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
     getItemProps,
     reset,
   } = useSelect<SelectOptionValueProps<TValue>>({
-    selectedItem: value
-      ? valueOptions.find((v) => v.value === value)
-      : value === null
-      ? null
-      : undefined,
+    selectedItem:
+      value !== undefined
+        ? valueOptions.find((v) => v.value === value)
+        : value === null
+        ? null
+        : undefined,
     toggleButtonId: id,
     items: valueOptions,
-    defaultSelectedItem: defaultValue
-      ? valueOptions.find((v) => v.value === defaultValue)
-      : undefined,
+    defaultSelectedItem:
+      defaultValue !== undefined
+        ? valueOptions.find((v) => v.value === defaultValue)
+        : undefined,
     isItemDisabled: (item) => !!item.disabled,
     onSelectedItemChange: onChange
       ? ({ selectedItem }) => {
