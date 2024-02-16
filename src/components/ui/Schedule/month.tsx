@@ -46,6 +46,7 @@ import {
 import { getThisDaysEvents, getThisMonthEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
 import { IconPlus } from "@tabler/icons-react";
+import { ScrollArea } from "../ScrollArea";
 
 export type ScheduleMonthViewProps = Omit<
   ScheduleProps,
@@ -118,7 +119,7 @@ export const ScheduleMonthView = ({
           />
         ))}
       </div>
-      <div className={cn("overflow-y-scroll relative", scrollbar)}>
+      <ScrollArea className={cn("relative")}>
         <MonthGridDndContext
           onUpdate={onUpdate}
           sensors={sensors}
@@ -204,7 +205,7 @@ export const ScheduleMonthView = ({
             ) : undefined}
           </DragOverlay>
         </MonthGridDndContext>
-      </div>
+      </ScrollArea>
     </>
   );
 };
@@ -338,37 +339,39 @@ export const ScheduleMonthDay = ({
             </Text>
           )}
         </div>
-        <ol
-          className={cn(
-            "flex flex-col overflow-y-hidden hover:overflow-y-auto overflow-x-hidden hover:overflow-x-hidden",
-            gapsSmall.sm,
-            scrollbar
-          )}
-        >
-          {isOver && (
-            <li
-              className={cn(
-                "h-10 flex-shrink-0 w-full bg-opacity-20 border-2 border-dashed",
-                borders.primary,
-                roundings.md,
-                bgColors.primary
-              )}
-            />
-          )}
-          {thisDaysEvents.map(
-            ({ event, beginsBeforeThisDay, endsAfterThisDay }, i) => (
-              <DraggableEventSmall
-                key={`event_${event.summary}_${i}`}
-                beginsBeforeThisDay={beginsBeforeThisDay}
-                endsAfterThisDay={endsAfterThisDay}
-                event={event}
-                viewEventProps={viewEventProps}
-                color={eventColor}
-                disableDrag={disableDrag}
+        <ScrollArea disableHorizontal>
+          <ol
+            className={cn(
+              "flex flex-col overflow-y-hidden",
+              gapsSmall.sm,
+              scrollbar
+            )}
+          >
+            {isOver && (
+              <li
+                className={cn(
+                  "h-10 flex-shrink-0 w-full bg-opacity-20 border-2 border-dashed",
+                  borders.primary,
+                  roundings.md,
+                  bgColors.primary
+                )}
               />
-            )
-          )}
-        </ol>
+            )}
+            {thisDaysEvents.map(
+              ({ event, beginsBeforeThisDay, endsAfterThisDay }, i) => (
+                <DraggableEventSmall
+                  key={`event_${event.summary}_${i}`}
+                  beginsBeforeThisDay={beginsBeforeThisDay}
+                  endsAfterThisDay={endsAfterThisDay}
+                  event={event}
+                  viewEventProps={viewEventProps}
+                  color={eventColor}
+                  disableDrag={disableDrag}
+                />
+              )
+            )}
+          </ol>
+        </ScrollArea>
       </div>
       <EventListModal
         open={allEventsOpen}

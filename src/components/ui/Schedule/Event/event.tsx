@@ -247,13 +247,13 @@ export const EventSmall = ({
       }
       type={viewEventProps ? "button" : undefined}
       className={cn(
-        "flex-shrink-0 w-full flex flex-col !items-start relative truncate",
+        "flex-shrink-0 w-full flex flex-row justify-start relative truncate",
         className
       )}
     >
       <div
         className={cn(
-          "flex flex-row items-center truncate",
+          "absolute overflow-hidden flex flex-row items-start",
           gapsSmall.sm,
           event.status === "CANCELLED" && "line-through"
         )}
