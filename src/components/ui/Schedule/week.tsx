@@ -4,12 +4,7 @@ import { addDays, addWeeks, endOfWeek, startOfWeek, subWeeks } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";
 
-import {
-  divides,
-  extendedBgColors,
-  extendedBorders,
-  scrollbar,
-} from "../../../styles";
+import { divides, extendedBgColors, extendedBorders } from "../../../styles";
 import type { ScheduleDayViewProps } from ".";
 import { DayScheduleHead, ScheduleDay } from "./day";
 import { calcDayRows, ScheduleDayGrid } from "./DayGrid";
@@ -19,6 +14,7 @@ import { ScheduleHeader } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisWeeksEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
+import { ScrollArea } from "../ScrollArea";
 
 export type ScheduleWeekViewProps = ScheduleDayViewProps;
 
@@ -100,10 +96,7 @@ export const ScheduleWeekView = ({
           />
         ))}
       </div>
-      <div
-        ref={gridContainerRef}
-        className={cn("overflow-y-scroll relative", scrollbar)}
-      >
+      <ScrollArea ref={gridContainerRef} className={cn("relative")}>
         <DayGridDndContext
           innerHeight={innerHeight}
           modifiers={modifiers}
@@ -161,7 +154,7 @@ export const ScheduleWeekView = ({
             ) : undefined}
           </DragOverlay>
         </DayGridDndContext>
-      </div>
+      </ScrollArea>
     </>
   );
 };
