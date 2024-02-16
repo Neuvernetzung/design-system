@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.3.5
+
+### Patch Changes
+
+- c62ac95: Navbar - breitere Popover ermöglichen #1371
+- 6600688: Schedule - Event - activationConstraint nicht auf Zeit beschränken, sondern auf Distanz #1364
+
 ## 3.3.4
 
 ### Patch Changes
