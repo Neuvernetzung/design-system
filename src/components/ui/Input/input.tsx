@@ -105,11 +105,13 @@ export const InputInner = <
         min: minInputRule(min, locale),
         pattern: patternInputRule(pattern, locale),
         validate: (value) => {
-          if (type === "number" && step)
+          if (type === "number" && step) {
+            if (value === undefined || value === null) return true;
             return validationInputResult(
               valueOf(value) === Number(snapToStep(value, step)),
               `Die nötige Abstufung ist ${step}`
             );
+          }
           return true;
         },
       }}
