@@ -249,8 +249,8 @@ export const Types = ({ ...args }) => {
 };
 
 export const NumberType = ({ ...args }) => {
-  const formMethods = useForm({
-    defaultValues: { number: undefined, defaultNumber: 123 },
+  const formMethods = useForm<{ number: number; defaultNumber: number }>({
+    defaultValues: { defaultNumber: 123 },
   });
   const { number, defaultNumber } = formMethods.watch();
 
@@ -266,6 +266,7 @@ export const NumberType = ({ ...args }) => {
         control={formMethods.control}
         name="number"
         placeholder="Nummer eingeben."
+        step={0.01}
         required
         {...args}
       />

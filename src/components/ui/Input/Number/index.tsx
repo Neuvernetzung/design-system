@@ -74,11 +74,13 @@ export const InputNumber = forwardRef(
           min: minInputRule(min, locale),
           pattern: patternInputRule(pattern, locale),
           validate: (value) => {
-            if (step)
+            if (step) {
+              if (value === undefined || value === null) return true;
               return validationInputResult(
                 valueOf(value) === Number(snapToStep(value, step)),
                 `Die nötige Abstufung ist ${step}`
               );
+            }
             return true;
           },
         }}
@@ -122,7 +124,6 @@ export const InputNumber = forwardRef(
                     <Button
                       variant="ghost"
                       onClick={() => {
-                        console.log(typeof value);
                         onChange(
                           value !== undefined
                             ? valueOf(snapToStep(increment(value, step), step))
