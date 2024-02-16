@@ -1,8 +1,9 @@
 import { DragOverlay } from "@dnd-kit/core";
-import { cn } from "@/utils";
 import { addDays, getHours, getMinutes, isToday, subDays } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";
+
+import { cn } from "@/utils";
 
 import {
   bgColors,
@@ -13,10 +14,10 @@ import {
   heights,
   paddingsXSmall,
   paddingsYSmall,
-  scrollbar,
 } from "../../../styles";
 import { Color } from "../../../types";
 import { Button } from "../Button";
+import { ScrollArea } from "../ScrollArea";
 import { Text } from "../Typography";
 import type { ScheduleProps } from ".";
 import {
@@ -119,10 +120,7 @@ export const ScheduleDayView = ({
       >
         <DayScheduleHead day={viewing} scheduleViewProps={scheduleViewProps} />
       </div>
-      <div
-        ref={gridContainerRef}
-        className={cn("overflow-y-scroll relative", scrollbar)}
-      >
+      <ScrollArea ref={gridContainerRef} className={cn("relative")}>
         <DayGridDndContext
           innerHeight={innerHeight}
           modifiers={modifiers}
@@ -173,7 +171,7 @@ export const ScheduleDayView = ({
             ) : undefined}
           </DragOverlay>
         </DayGridDndContext>
-      </div>
+      </ScrollArea>
     </>
   );
 };

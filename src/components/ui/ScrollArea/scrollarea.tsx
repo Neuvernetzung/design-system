@@ -5,7 +5,7 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from "@radix-ui/react-scroll-area";
-import type { ReactNode } from "react";
+import { ForwardedRef, forwardRef, type ReactNode } from "react";
 
 import {
   extendedBgColorsInteractive,
@@ -18,6 +18,7 @@ export type ScrollAreaProps = {
   className?: string;
   scrollHideDelay?: number;
   children: ReactNode;
+  disableHorizontal?: boolean;
 };
 
 const scrollbarClassName = cn(
@@ -31,30 +32,40 @@ const thumbClassName = cn(
   roundings.sm
 );
 
-export const ScrollArea = ({
-  className,
-  children,
-  scrollHideDelay = 200,
-}: ScrollAreaProps) => (
-  <ScrollAreaRoot
-    scrollHideDelay={scrollHideDelay}
-    className={cn("overflow-hidden", className)}
-  >
-    <ScrollAreaViewport className="h-full w-full">
-      {children}
-    </ScrollAreaViewport>
-    <ScrollAreaScrollbar
-      className={cn(scrollbarClassName)}
-      orientation="vertical"
+export const ScrollArea = forwardRef(
+  (
+    {
+      className,
+      children,
+      scrollHideDelay = 0,
+      disableHorizontal,
+    }: ScrollAreaProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => (
+    <ScrollAreaRoot
+      scrollHideDelay={scrollHideDelay}
+      className={cn("overflow-hidden", className)}
     >
-      <ScrollAreaThumb className={cn(thumbClassName)} />
-    </ScrollAreaScrollbar>
-    <ScrollAreaScrollbar
-      className={cn(scrollbarClassName)}
-      orientation="horizontal"
-    >
-      <ScrollAreaThumb className={cn(thumbClassName)} />
-    </ScrollAreaScrollbar>
-    <ScrollAreaCorner />
-  </ScrollAreaRoot>
+      <ScrollAreaViewport ref={ref} className="h-full w-full">
+        {children}
+      </ScrollAreaViewport>
+      <ScrollAreaScrollbar
+        className={cn(scrollbarClassName)}
+        orientation="vertical"
+      >
+        <ScrollAreaThumb className={cn(thumbClassName)} />
+      </ScrollAreaScrollbar>
+      {!disableHorizontal && (
+        <ScrollAreaScrollbar
+          className={cn(scrollbarClassName)}
+          orientation="horizontal"
+        >
+          <ScrollAreaThumb className={cn(thumbClassName)} />
+        </ScrollAreaScrollbar>
+      )}
+      <ScrollAreaCorner />
+    </ScrollAreaRoot>
+  )
 );
+
+ScrollArea.displayName = "ScrollArea";

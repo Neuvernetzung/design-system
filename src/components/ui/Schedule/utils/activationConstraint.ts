@@ -1,6 +1,5 @@
 import type { PointerActivationConstraint } from "@dnd-kit/core";
 
 export const activationConstraint: PointerActivationConstraint = {
-  delay: 250,
-  tolerance: 5,
+  distance: 8, // Es ist nur eine Distanz notwendig und keine Zeit, dadurch kann bei Klick Edit geöffnet werden und bei ziehen die Karte verschoben
 };
