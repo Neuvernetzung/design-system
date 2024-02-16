@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.3.4
+
+### Patch Changes
+
+- 8665ad5: Input type:"number" - Wenn kein Wert eintragen, aber Step vorhanden, dann error bei validation #1368
+
 ## 3.3.3
 
 ### Patch Changes
