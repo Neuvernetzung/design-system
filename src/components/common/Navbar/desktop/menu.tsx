@@ -125,7 +125,10 @@ export const NavigationMenu = ({
                           : undefined,
                       }}
                       className={cn(
-                        getPopoverContainerStyles({ size }),
+                        getPopoverContainerStyles({
+                          size,
+                          ignoreMaxSizes: true,
+                        }),
                         fullWidthPopover &&
                           "rounded-none w-screen !max-w-none !border-t-0 !border-x-0",
                         fullWidthPopover && pagePaddingsX[pagePadding]
