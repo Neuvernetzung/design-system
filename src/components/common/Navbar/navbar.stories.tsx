@@ -60,7 +60,13 @@ const baseProps: NavbarProps = {
           icon: IconRoute,
         },
       ],
-      child: <div className="w-full bg-red-100">Test</div>,
+      child: (
+        <div className="flex flex-row w-full bg-red-100">
+          <div className="h-2 bg-red-200 w-96" />
+          <div className="h-2 bg-green-200 w-96" />
+          <div className="h-2 bg-blue-200 w-96" />
+        </div>
+      ),
       icon: IconBolt,
     },
     {
