@@ -240,7 +240,7 @@ export const SelectMultipleRawInner = <
         apply({ availableHeight }) {
           flushSync(() => setMaxHeight(availableHeight));
         },
-        rootBoundary: "document",
+        rootBoundary: "viewport",
         padding: offsetSizes[size],
       }),
     ],
