@@ -191,7 +191,6 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
 
   const { x, y, strategy, refs } = useFloating({
     open: isOpen,
-    strategy: "fixed",
     placement,
     middleware: [
       offset({ mainAxis: offsetSizes[size] }),
@@ -203,7 +202,7 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
         apply({ availableHeight }) {
           flushSync(() => setMaxHeight(availableHeight));
         },
-        rootBoundary: "document",
+        rootBoundary: "viewport",
         padding: offsetSizes[size],
       }),
     ],
