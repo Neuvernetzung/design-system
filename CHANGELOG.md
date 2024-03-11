@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.4.1
+
+### Patch Changes
+
+- 9c989df: Date-fns updaten #1385
+
 ## 3.4.0
 
 ### Minor Changes
