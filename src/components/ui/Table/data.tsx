@@ -1,5 +1,6 @@
 import { IconChevronDown } from "@tabler/icons-react";
 import get from "lodash/get";
+import compact from "lodash/compact";
 
 import { cn } from "@/utils";
 
@@ -125,7 +126,11 @@ export const DataTable = <
                   }
                   setChecked={(value) => {
                     if (value === true) {
-                      setChecked(items.map((item) => get(item, checkedValue)));
+                      setChecked(
+                        compact(
+                          items.map((item) => get(item, checkedValue))
+                        ) as string[]
+                      );
                     } else setChecked([]);
                   }}
                 />
@@ -162,52 +167,64 @@ export const DataTable = <
         </TableHead>
       )}
       <TableBody divideY={divideY}>
-        {items.map((item, i) => (
-          <>
-            <TableRow
-              divideX={divideX}
-              key={`row_${i}`}
-              index={i}
-              hasStripes={hasStripes}
-            >
-              {checkable && (
-                <td
-                  className={cn(paddingsEvenly[size])}
-                  aria-label={`check-item-${i}`}
-                >
-                  <CheckboxRaw
-                    id={`checkbox_${i}`}
-                    checked={checked.includes(get(item, checkedValue))}
-                    setChecked={(value) => {
-                      if (value === true) {
-                        setChecked([...checked, get(item, checkedValue)]);
-                      } else
-                        setChecked(
-                          checked.filter((v) => v !== get(item, checkedValue))
-                        );
-                    }}
+        {items.map((item, i) => {
+          const _checkedValue = checkedValue
+            ? get(item, checkedValue)
+            : undefined;
+
+          return (
+            <>
+              <TableRow
+                divideX={divideX}
+                key={`row_${i}`}
+                index={i}
+                hasStripes={hasStripes}
+              >
+                {checkable && (
+                  <td
+                    className={cn(paddingsEvenly[size])}
+                    aria-label={`check-item-${i}`}
+                  >
+                    <CheckboxRaw
+                      id={`checkbox_${i}`}
+                      checked={
+                        _checkedValue ? checked.includes(_checkedValue) : false
+                      }
+                      setChecked={(value) => {
+                        if (value === true) {
+                          setChecked(
+                            _checkedValue
+                              ? [...checked, _checkedValue]
+                              : checked
+                          );
+                        } else
+                          setChecked(
+                            checked.filter((v) => v !== _checkedValue)
+                          );
+                      }}
+                    />
+                  </td>
+                )}
+                {cols.map((col) => (
+                  <TableDataCell
+                    item={item}
+                    col={col}
+                    key={`row_${i}_col_${col.id}`}
+                    size={size}
+                    className={col.dataCellClassName}
                   />
-                </td>
+                ))}
+              </TableRow>
+              {disclosureValue && item[disclosureValue] && (
+                <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
+                  <td colSpan={checkable ? cols.length + 1 : cols.length}>
+                    <span className="w-full">{item[disclosureValue]}</span>
+                  </td>
+                </tr>
               )}
-              {cols.map((col) => (
-                <TableDataCell
-                  item={item}
-                  col={col}
-                  key={`row_${i}_col_${col.id}`}
-                  size={size}
-                  className={col.dataCellClassName}
-                />
-              ))}
-            </TableRow>
-            {disclosureValue && item[disclosureValue] && (
-              <tr key={`row_${i}_disclosure`} className={disclosureClassName}>
-                <td colSpan={checkable ? cols.length + 1 : cols.length}>
-                  <span className="w-full">{item[disclosureValue]}</span>
-                </td>
-              </tr>
-            )}
-          </>
-        ))}
+            </>
+          );
+        })}
       </TableBody>
     </TableContainer>
   );
