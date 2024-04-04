@@ -1,3 +1,4 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { useRef } from "react";
 
 import { extendedBgColors } from "@/styles";
@@ -7,13 +8,17 @@ import { Heading, Text } from "../../ui/Typography";
 import { Footer, Navbar } from "..";
 import { PageContainer } from "./pagecontainer";
 
-export default {
+const meta: Meta<typeof PageContainer> = {
   title: "COMMON/PageContainer",
   component: PageContainer,
 };
 
-export const Default = {
-  render: ({ ...args }) => {
+export default meta;
+
+type Story = StoryObj<typeof PageContainer>;
+
+export const Default: Story = {
+  render: function Render({ ...args }) {
     const navbarRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
 
@@ -21,7 +26,7 @@ export const Default = {
       <>
         <Navbar
           ref={navbarRef}
-          allowDarkMode={false}
+          allowDarkMode
           navItems={[
             {
               label: "Full",
@@ -49,7 +54,6 @@ export const Default = {
               Navbar
             </Heading>
           }
-          {...args}
         />
         <PageContainer
           navbarRef={navbarRef}
@@ -71,7 +75,6 @@ export const Default = {
             { label: "Test", links: [] },
             { label: "Test", links: [] },
           ]}
-          {...args}
         />
       </>
     );
