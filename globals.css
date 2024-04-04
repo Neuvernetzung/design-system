@@ -39,14 +39,26 @@
     box-sizing: border-box;
   }
 
+  html,
+  body {
+    scrollbar-color: rgb(var(--color-accent-500)) rgb(var(--color-white));
+  }
+
+  html.dark,
+  body.dark {
+    scrollbar-color: rgb(var(--color-accent-500)) rgb(var(--color-black));
+  }
+
   ::-webkit-scrollbar {
     @apply w-3;
   }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-accent-500 dark:bg-accent-600;
-  }
-  ::-webkit-scrollbar-track {
+
+  *::-webkit-scrollbar-track {
     @apply bg-white dark:bg-black;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-accent-500 dark:bg-accent-500;
   }
 
   input:-webkit-autofill,
