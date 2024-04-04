@@ -1,7 +1,8 @@
 import { Meta } from "@storybook/react";
 import { IconChevronDown, IconPencil } from "@tabler/icons-react";
-import { cn } from "@/utils";
 import { useEffect, useState } from "react";
+
+import { cn } from "@/utils";
 
 import { extendedBgColors } from "../../../styles";
 import { IconButton } from "../Button";

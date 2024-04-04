@@ -6,10 +6,11 @@ import {
   Root,
 } from "@radix-ui/react-accordion";
 import { IconChevronDown, IconMinus, IconPlus } from "@tabler/icons-react";
-import { cn } from "@/utils";
 import compact from "lodash/compact";
 import isString from "lodash/isString";
-import { HTMLProps, type ReactNode } from "react";
+import { ComponentPropsWithoutRef, type ReactNode } from "react";
+
+import { cn } from "@/utils";
 
 import {
   borders,
@@ -17,7 +18,12 @@ import {
   paddings,
   transition,
 } from "../../../styles";
-import type { DisclosureVariant, ExtendedColor, Size } from "../../../types";
+import type {
+  DisclosureVariant,
+  ExtendedColor,
+  Size,
+  SvgType,
+} from "../../../types";
 import { Button, ButtonProps } from "../Button";
 import { Icon } from "../Icon";
 import { Text } from "../Typography";
@@ -191,7 +197,10 @@ export const DisclosureItem = ({
   </AccordionItem>
 );
 
-const DisclosureIcon = ({ className, ...props }: HTMLProps<SVGSVGElement>) => (
+const DisclosureIcon = ({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<SvgType>) => (
   <>
     <IconPlus
       className={cn(
