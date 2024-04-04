@@ -1,29 +1,31 @@
-import { Meta } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 import { colors, sizes } from "@/types";
 
 import { Avatar } from ".";
 
-export default {
+const meta: Meta<typeof Avatar> = {
   title: "UI/Data Display/Avatar",
   component: Avatar,
-  argTypes: {},
-} as Meta;
+};
+
+export default meta;
 
 const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
 );
 
-export const Default = ({ ...args }) => (
-  <Container>
-    <Avatar name="Foo Bar" {...args} />
-    <Avatar
-      image={{ src: "/avatar.avif", alt: "Avatar" }}
-      name="Foo Bar"
-      {...args}
-    />
-  </Container>
-);
+type Story = StoryObj<typeof Avatar>;
+
+export const Default: Story = {
+  render: ({ ...args }) => (
+    <Container>
+      <Avatar {...args} />
+      <Avatar image={{ src: "/avatar.avif", alt: "Avatar" }} {...args} />
+    </Container>
+  ),
+  args: { name: "Foo Bar" },
+};
 
 const names = [
   "Foo Bar",
@@ -43,26 +45,34 @@ const names = [
   "Kristin Zilla",
 ];
 
-export const BackgroundColorsByNames = ({ ...args }) => (
-  <Container className="grid grid-cols-5 gap-2">
-    {names.map((name) => (
-      <Avatar name={name} key={name} {...args} />
-    ))}
-  </Container>
-);
+export const BackgroundColorsByNames: Story = {
+  render: ({ name: argName, ...args }) => (
+    <Container className="grid grid-cols-5 gap-2">
+      {names.map((name) => (
+        <Avatar name={argName || name} key={name} {...args} />
+      ))}
+    </Container>
+  ),
+};
 
-export const Colors = ({ ...args }) => (
-  <Container>
-    {colors.map((color) => (
-      <Avatar name="Foo Bar" key={color} color={color} {...args} />
-    ))}
-  </Container>
-);
+export const Colors: Story = {
+  render: ({ ...args }) => (
+    <Container>
+      {colors.map((color) => (
+        <Avatar key={color} color={color} {...args} />
+      ))}
+    </Container>
+  ),
+  args: { name: "Foo bar" },
+};
 
-export const Sizes = ({ ...args }) => (
-  <Container>
-    {sizes.map((size) => (
-      <Avatar name="Foo Bar" key={size} size={size} {...args} />
-    ))}
-  </Container>
-);
+export const Sizes: Story = {
+  render: ({ ...args }) => (
+    <Container>
+      {sizes.map((size) => (
+        <Avatar key={size} size={size} {...args} />
+      ))}
+    </Container>
+  ),
+  args: { name: "Foo bar" },
+};
