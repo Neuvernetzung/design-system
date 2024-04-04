@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/react";
+
 import {
   addDays,
   addHours,
@@ -25,7 +25,7 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} as Meta;
+} ;
 
 const date = setHours(setMinutes(new Date(), 0), 15);
 
@@ -153,111 +153,121 @@ const events: VEvent[] = [
   },
 ];
 
-export const Default = ({ ...args }) => {
-  const [_events, setEvents] = useState(events);
-  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
-    useSchedule();
+export const Default = {
+  render: ({ ...args }) => {
+    const [_events, setEvents] = useState(events);
+    const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+      useSchedule();
 
-  return (
-    <Schedule
-      calendarProps={calendarProps}
-      editEventProps={editEventProps}
-      scheduleViewProps={scheduleViewProps}
-      viewEventProps={viewEventProps}
-      displayDayTime={{ start: 8, end: 18 }}
-      events={_events}
-      onCreate={(event) => {
-        setEvents((events) => [...events, event]);
-      }}
-      onUpdate={(event) => {
-        setEvents((events) => [
-          ...events.filter((e) => e.uid !== event.uid),
-          event,
-        ]);
-      }}
-      onDelete={(event) => {
-        setEvents((events) => events.filter((e) => e.uid !== event.uid));
-      }}
-      {...args}
-    />
-  );
-};
-
-export const Disabled = ({ ...args }) => {
-  const [_events, setEvents] = useState(events);
-  const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
-    useSchedule();
-
-  return (
-    <Schedule
-      calendarProps={calendarProps}
-      editEventProps={editEventProps}
-      scheduleViewProps={scheduleViewProps}
-      viewEventProps={viewEventProps}
-      displayDayTime={{ start: 8, end: 18 }}
-      events={_events}
-      disabled
-      onCreate={(event) => {
-        setEvents((events) => [...events, event]);
-      }}
-      onUpdate={(event) => {
-        setEvents((events) => [
-          ...events.filter((e) => e.uid !== event.uid),
-          event,
-        ]);
-      }}
-      onDelete={(event) => {
-        setEvents((events) => events.filter((e) => e.uid !== event.uid));
-      }}
-      {...args}
-    />
-  );
-};
-
-export const Days = ({ ...args }) => {
-  const { calendarProps, viewEventProps } = useSchedule();
-
-  return (
-    <>
-      <ScheduleDayView
-        events={events}
+    return (
+      <Schedule
         calendarProps={calendarProps}
+        editEventProps={editEventProps}
+        scheduleViewProps={scheduleViewProps}
         viewEventProps={viewEventProps}
+        displayDayTime={{ start: 8, end: 18 }}
+        events={_events}
+        onCreate={(event) => {
+          setEvents((events) => [...events, event]);
+        }}
+        onUpdate={(event) => {
+          setEvents((events) => [
+            ...events.filter((e) => e.uid !== event.uid),
+            event,
+          ]);
+        }}
+        onDelete={(event) => {
+          setEvents((events) => events.filter((e) => e.uid !== event.uid));
+        }}
         {...args}
       />
-      <ViewEvent viewEventProps={viewEventProps} />
-    </>
-  );
+    );
+  },
 };
 
-export const Weeks = ({ ...args }) => {
-  const { calendarProps, viewEventProps } = useSchedule();
+export const Disabled = {
+  render: ({ ...args }) => {
+    const [_events, setEvents] = useState(events);
+    const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+      useSchedule();
 
-  return (
-    <>
-      <ScheduleWeekView
-        events={events}
+    return (
+      <Schedule
         calendarProps={calendarProps}
+        editEventProps={editEventProps}
+        scheduleViewProps={scheduleViewProps}
         viewEventProps={viewEventProps}
+        displayDayTime={{ start: 8, end: 18 }}
+        events={_events}
+        disabled
+        onCreate={(event) => {
+          setEvents((events) => [...events, event]);
+        }}
+        onUpdate={(event) => {
+          setEvents((events) => [
+            ...events.filter((e) => e.uid !== event.uid),
+            event,
+          ]);
+        }}
+        onDelete={(event) => {
+          setEvents((events) => events.filter((e) => e.uid !== event.uid));
+        }}
         {...args}
       />
-      <ViewEvent viewEventProps={viewEventProps} />
-    </>
-  );
+    );
+  },
 };
 
-export const Months = ({ ...args }) => {
-  const { calendarProps, viewEventProps } = useSchedule();
+export const Days = {
+  render: ({ ...args }) => {
+    const { calendarProps, viewEventProps } = useSchedule();
 
-  return (
-    <>
-      <ScheduleMonthView
-        events={events}
-        calendarProps={calendarProps}
-        viewEventProps={viewEventProps}
-        {...args}
-      />
-      <ViewEvent viewEventProps={viewEventProps} />
-    </>
-  );
+    return (
+      <>
+        <ScheduleDayView
+          events={events}
+          calendarProps={calendarProps}
+          viewEventProps={viewEventProps}
+          {...args}
+        />
+        <ViewEvent viewEventProps={viewEventProps} />
+      </>
+    );
+  },
+};
+
+export const Weeks = {
+  render: ({ ...args }) => {
+    const { calendarProps, viewEventProps } = useSchedule();
+
+    return (
+      <>
+        <ScheduleWeekView
+          events={events}
+          calendarProps={calendarProps}
+          viewEventProps={viewEventProps}
+          {...args}
+        />
+        <ViewEvent viewEventProps={viewEventProps} />
+      </>
+    );
+  },
+};
+
+export const Months = {
+  render: ({ ...args }) => {
+    const { calendarProps, viewEventProps } = useSchedule();
+
+    return (
+      <>
+        <ScheduleMonthView
+          events={events}
+          calendarProps={calendarProps}
+          viewEventProps={viewEventProps}
+          {...args}
+        />
+        <ViewEvent viewEventProps={viewEventProps} />
+      </>
+    );
+  },
 };

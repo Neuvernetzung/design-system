@@ -1,15 +1,19 @@
-import { Meta } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { format } from "date-fns";
+
 import { cn } from "@/utils";
 
 import { borders } from "../../../styles";
 import { Linechart } from ".";
-import { format } from "date-fns";
 
-export default {
+const meta: Meta<typeof Linechart> = {
   title: "CHARTS/Linechart",
   component: Linechart,
-  argTypes: {},
-} as Meta;
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Linechart>;
 
 const sales = [
   { x: "2023-04-29T12:00:00.00+00:00", y: 1 },
@@ -25,40 +29,46 @@ const sales = [
 ];
 const data = sales.map((d) => ({ ...d, x: new Date(d.x) }));
 
-export const Default = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <Linechart
-      data={data}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      {...args}
-    />
-  </div>
-);
+export const Default: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <Linechart
+        data={argsData || data}
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        {...args}
+      />
+    </div>
+  ),
+};
 
-export const Empty = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <Linechart
-      data={[]}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      {...args}
-    />
-  </div>
-);
+export const Empty: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <Linechart
+        data={argsData || []}
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        {...args}
+      />
+    </div>
+  ),
+};
 
-export const TooltipHeader = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <Linechart
-      data={data}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      formatTooltip={(v) => `${v?.y} Aufrufe`}
-      allowTooltipHeader
-      formatTooltipHeader={(v) =>
-        Intl.DateTimeFormat(undefined, {}).format(v?.x)
-      }
-      {...args}
-    />
-  </div>
-);
+export const TooltipHeader: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <Linechart
+        data={argsData || data}
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        formatTooltip={(v) => `${v?.y} Aufrufe`}
+        allowTooltipHeader
+        formatTooltipHeader={(v) =>
+          Intl.DateTimeFormat(undefined, {}).format(v?.x)
+        }
+        {...args}
+      />
+    </div>
+  ),
+};

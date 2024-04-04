@@ -1,15 +1,19 @@
-import { Meta } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { addHours, format } from "date-fns";
+
 import { cn } from "@/utils";
 
 import { borders } from "../../../styles";
 import { LineSerieschart } from ".";
-import { addHours, format } from "date-fns";
 
-export default {
+const meta: Meta<typeof LineSerieschart> = {
   title: "CHARTS/LineSerieschart",
   component: LineSerieschart,
-  argTypes: {},
-} as Meta;
+};
+
+export default meta;
+
+type Story = StoryObj<typeof LineSerieschart>;
 
 const sales = [
   { x: "2023-04-28T12:00:00.00+00:00", y: null },
@@ -34,65 +38,79 @@ const data3 = sales.map((d) => ({
   y: ((d.y || 0) * (d.y || 0)) / 4 - 4,
 }));
 
-export const Default = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <LineSerieschart
-      series={[
-        { data: data1 },
-        { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
-        { data: data3, formatTooltip: (v) => `${v?.y} €`, color: "green" },
-      ]}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      {...args}
-    />
-  </div>
-);
+export const Default: Story = {
+  render: ({ series: argsSeries, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <LineSerieschart
+        series={
+          argsSeries || [
+            { data: data1 },
+            { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
+            { data: data3, formatTooltip: (v) => `${v?.y} €`, color: "green" },
+          ]
+        }
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        {...args}
+      />
+    </div>
+  ),
+};
 
-export const Empty = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <LineSerieschart
-      series={[]}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      {...args}
-    />
-  </div>
-);
+export const Empty: Story = {
+  render: ({ series: argsSeries, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <LineSerieschart
+        series={argsSeries || []}
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        {...args}
+      />
+    </div>
+  ),
+};
 
-export const NormalizedValues = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <LineSerieschart
-      series={[
-        { data: data1, name: "Werte" },
-        {
-          data: data2,
-          formatTooltip: (v) => `${v?.y} $`,
-          name: "Andere Werte",
-        },
-      ]}
-      xScaleType="time"
-      normalized
-      xAxisProps={{
-        tickFormat: (value) => format(value, "d. MMMM"),
-      }}
-      {...args}
-    />
-  </div>
-);
+export const NormalizedValues: Story = {
+  render: ({ series: argsSeries, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <LineSerieschart
+        series={
+          argsSeries || [
+            { data: data1, name: "Werte" },
+            {
+              data: data2,
+              formatTooltip: (v) => `${v?.y} $`,
+              name: "Andere Werte",
+            },
+          ]
+        }
+        xScaleType="time"
+        normalized
+        xAxisProps={{
+          tickFormat: (value) => format(value, "d. MMMM"),
+        }}
+        {...args}
+      />
+    </div>
+  ),
+};
 
-export const TooltipMultipleData = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <LineSerieschart
-      series={[
-        { data: data1 },
-        { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
-        { data: data3, formatTooltip: (v) => `${v?.y} €`, color: "green" },
-      ]}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      tooltipDataType="multiple"
-      {...args}
-    />
-  </div>
-);
+export const TooltipMultipleData: Story = {
+  render: ({ series: argsSeries, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <LineSerieschart
+        series={
+          argsSeries || [
+            { data: data1 },
+            { data: data2, formatTooltip: (v) => `${v?.y} $`, color: "red" },
+            { data: data3, formatTooltip: (v) => `${v?.y} €`, color: "green" },
+          ]
+        }
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        tooltipDataType="multiple"
+        {...args}
+      />
+    </div>
+  ),
+};

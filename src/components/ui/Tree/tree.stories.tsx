@@ -1,5 +1,3 @@
-import { Meta } from "@storybook/react";
-
 import { Tree, TreeDisclosure, TreeItemProps } from ".";
 import { borderVariants } from "../../../styles";
 import { sizes } from "../../../types";
@@ -15,7 +13,7 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} as Meta;
+};
 
 const items: TreeItemProps<Omit<DisclosureItemProps, "content">>[] = [
   {
@@ -78,30 +76,38 @@ const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5 w-full justify-between" {...props} />
 );
 
-export const Default = ({ ...args }) => (
-  <Container>
-    <Tree items={items} {...args} />
-  </Container>
-);
+export const Default = {
+  render: ({ ...args }) => (
+    <Container>
+      <Tree items={items} {...args} />
+    </Container>
+  ),
+};
 
-export const BorderVariants = ({ ...args }) => (
-  <Container>
-    {borderVariants.map((variant) => (
-      <Tree key={variant} borderVariant={variant} items={items} {...args} />
-    ))}
-  </Container>
-);
+export const BorderVariants = {
+  render: ({ ...args }) => (
+    <Container>
+      {borderVariants.map((variant) => (
+        <Tree key={variant} borderVariant={variant} items={items} {...args} />
+      ))}
+    </Container>
+  ),
+};
 
-export const Sizes = ({ ...args }) => (
-  <Container>
-    {sizes.map((size) => (
-      <Tree key={size} size={size} items={items} {...args} />
-    ))}
-  </Container>
-);
+export const Sizes = {
+  render: ({ ...args }) => (
+    <Container>
+      {sizes.map((size) => (
+        <Tree key={size} size={size} items={items} {...args} />
+      ))}
+    </Container>
+  ),
+};
 
-export const Disclosure = ({ ...args }) => (
-  <Container>
-    <TreeDisclosure items={items} {...args} />
-  </Container>
-);
+export const Disclosure = {
+  render: ({ ...args }) => (
+    <Container>
+      <TreeDisclosure items={items} {...args} />
+    </Container>
+  ),
+};

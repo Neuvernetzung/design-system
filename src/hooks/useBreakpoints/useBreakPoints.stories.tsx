@@ -1,12 +1,10 @@
-import { Meta } from "@storybook/react";
-
 import { Heading, Tag, Text } from "@/components";
 
 import { useBreakPoints } from ".";
 
 export default {
   title: "utils/useBreakPoints",
-  argTypes: {},
+
   parameters: {
     docs: {
       source: {
@@ -14,7 +12,7 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} as Meta;
+};
 
 const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />

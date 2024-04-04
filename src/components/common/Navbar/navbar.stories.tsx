@@ -1,4 +1,3 @@
-import { Meta } from "@storybook/react";
 import {
   Icon360,
   IconArrowWaveRightUp,
@@ -29,8 +28,7 @@ import { colors, sizes } from "../../../types";
 export default {
   title: "COMMON/Navbar",
   component: Navbar,
-  argTypes: {},
-} as Meta;
+};
 
 const baseProps: NavbarProps = {
   justifyDesktopNav: "center",
@@ -200,117 +198,127 @@ const baseProps: NavbarProps = {
   footerClassName: cn("border-t !p-0", borders.accent),
 };
 
-export const Default = ({ ...args }) => <Navbar {...baseProps} {...args} />;
-
-export const ZIndexTest = ({ ...args }) => {
-  const [openSide, setOpenSide] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-
-  return (
-    <>
-      <Navbar
-        {...baseProps}
-        {...args}
-        endItems={[
-          <IconButton
-            ariaLabel="cart"
-            key="cart"
-            onClick={() => setOpenSide(true)}
-            icon={IconShoppingCart}
-          />,
-        ]}
-      />
-      <Drawer open={openSide} setOpen={setOpenSide} />
-      <Button
-        className="mt-5"
-        onClick={() => {
-          loading(true);
-          setTimeout(() => loading(false), 1500);
-        }}
-      >
-        Loading
-      </Button>
-      <Button
-        className="mt-5"
-        onClick={() => {
-          setOpenModal(true);
-        }}
-      >
-        Modal
-      </Button>
-      <Loading />
-      <Modal open={openModal} setOpen={setOpenModal} content="Ok" />
-    </>
-  );
+export const Default = {
+  render: ({ ...args }) => <Navbar {...baseProps} {...args} />,
 };
 
-export const Size = ({ ...args }) => {
-  const navbarRef = useRef(null);
-  const { control, watch } = useForm();
-  const size = watch("size");
+export const ZIndexTest = {
+  render: ({ ...args }) => {
+    const [openSide, setOpenSide] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
 
-  return (
-    <>
-      <Navbar ref={navbarRef} size={size} {...baseProps} {...args} />
-
-      <PageContainer navbarRef={navbarRef}>
-        <Select
-          control={control}
-          label="Größe"
-          name="size"
-          options={sizes.map((size) => ({ value: size, children: size }))}
+    return (
+      <>
+        <Navbar
+          {...baseProps}
+          {...args}
+          endItems={[
+            <IconButton
+              ariaLabel="cart"
+              key="cart"
+              onClick={() => setOpenSide(true)}
+              icon={IconShoppingCart}
+            />,
+          ]}
         />
-      </PageContainer>
-    </>
-  );
+        <Drawer open={openSide} setOpen={setOpenSide} />
+        <Button
+          className="mt-5"
+          onClick={() => {
+            loading(true);
+            setTimeout(() => loading(false), 1500);
+          }}
+        >
+          Loading
+        </Button>
+        <Button
+          className="mt-5"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
+          Modal
+        </Button>
+        <Loading />
+        <Modal open={openModal} setOpen={setOpenModal} content="Ok" />
+      </>
+    );
+  },
 };
 
-export const Color = ({ ...args }) => {
-  const navbarRef = useRef(null);
-  const { control, watch } = useForm();
-  const color = watch("color");
+export const Size = {
+  render: ({ ...args }) => {
+    const navbarRef = useRef(null);
+    const { control, watch } = useForm();
+    const size = watch("size");
 
-  return (
-    <>
-      <Navbar ref={navbarRef} color={color} {...baseProps} {...args} />
+    return (
+      <>
+        <Navbar ref={navbarRef} size={size} {...baseProps} {...args} />
 
-      <PageContainer navbarRef={navbarRef}>
-        <Select
-          control={control}
-          label="Größe"
-          name="color"
-          options={colors.map((color) => ({ value: color, children: color }))}
-        />
-      </PageContainer>
-    </>
-  );
+        <PageContainer navbarRef={navbarRef}>
+          <Select
+            control={control}
+            label="Größe"
+            name="size"
+            options={sizes.map((size) => ({ value: size, children: size }))}
+          />
+        </PageContainer>
+      </>
+    );
+  },
 };
 
-export const Sidenav = ({ ...args }) => {
-  const navbarRef = useRef(null);
-  const sidenavRef = useRef<HTMLDivElement>(null);
-  const { control, watch } = useForm();
-  const size = watch("size");
+export const Color = {
+  render: ({ ...args }) => {
+    const navbarRef = useRef(null);
+    const { control, watch } = useForm();
+    const color = watch("color");
 
-  return (
-    <>
-      <SideNavbar
-        sidenavRef={sidenavRef}
-        ref={navbarRef}
-        size={size}
-        sideNavStartItems="Start"
-        sideNavEndItems="End"
-        {...baseProps}
-        {...args}
-      />
-      <PageContainer sidenavRef={sidenavRef} navbarRef={navbarRef}>
-        <Select
-          control={control}
-          label="Größe"
-          name="size"
-          options={sizes.map((size) => ({ value: size, children: size }))}
+    return (
+      <>
+        <Navbar ref={navbarRef} color={color} {...baseProps} {...args} />
+
+        <PageContainer navbarRef={navbarRef}>
+          <Select
+            control={control}
+            label="Größe"
+            name="color"
+            options={colors.map((color) => ({ value: color, children: color }))}
+          />
+        </PageContainer>
+      </>
+    );
+  },
+};
+
+export const Sidenav = {
+  render: ({ ...args }) => {
+    const navbarRef = useRef(null);
+    const sidenavRef = useRef<HTMLDivElement>(null);
+    const { control, watch } = useForm();
+    const size = watch("size");
+
+    return (
+      <>
+        <SideNavbar
+          sidenavRef={sidenavRef}
+          ref={navbarRef}
+          size={size}
+          sideNavStartItems="Start"
+          sideNavEndItems="End"
+          {...baseProps}
+          {...args}
         />
-      </PageContainer>
-    </>
-  );
+        <PageContainer sidenavRef={sidenavRef} navbarRef={navbarRef}>
+          <Select
+            control={control}
+            label="Größe"
+            name="size"
+            options={sizes.map((size) => ({ value: size, children: size }))}
+          />
+        </PageContainer>
+      </>
+    );
+  },
 };
