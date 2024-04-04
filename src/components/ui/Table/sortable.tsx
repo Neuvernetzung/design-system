@@ -1,17 +1,30 @@
+import { DndContext, DragOverlay, UniqueIdentifier } from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { IconGripVertical } from "@tabler/icons-react";
-import { cn } from "@/utils";
+import get from "lodash/get";
+import { ForwardedRef, forwardRef } from "react";
+import { createPortal } from "react-dom";
 
 import { paddingsEvenly } from "@/styles";
+import type { Size } from "@/types";
+import { cn } from "@/utils";
 import { mergeRefs } from "@/utils/internal";
+
 import { IconButton } from "../Button";
 import { DragIndicator, SortableProps } from "../Sortable";
+import { DragOverlay as DragOverlayComponent } from "../Sortable/Overlay";
 import {
   AnySortableItem,
   handleDragEnd,
 } from "../Sortable/utils/handleDragEnd";
+import { handleDragStart } from "../Sortable/utils/handleDragStart";
+import { useSortableProps } from "../Sortable/utils/useSortableProps";
 import {
-  SimpleTableCol,
-  SimpleTableProps,
   TableBody,
   TableContainer,
   TableDataCell,
@@ -19,20 +32,8 @@ import {
   TableHeadCell,
   TableRow,
   TableRowProps,
-} from "./table";
-import { useSortableProps } from "../Sortable/utils/useSortableProps";
-import { DndContext, DragOverlay, UniqueIdentifier } from "@dnd-kit/core";
-import { handleDragStart } from "../Sortable/utils/handleDragStart";
-import {
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { createPortal } from "react-dom";
-import type { Size } from "@/types";
-import { DragOverlay as DragOverlayComponent } from "../Sortable/Overlay";
-import { ForwardedRef, forwardRef } from "react";
+} from "./components";
+import { SimpleTableCol, SimpleTableProps } from "./table";
 
 export type SortableTableProps<
   T extends string,
@@ -115,11 +116,14 @@ export const SortableTable = <
               {cols.map((col) => (
                 <TableHeadCell
                   key={`head_col_${col.id}`}
-                  col={col}
                   size={size}
                   uppercase={uppercase}
                   className={col.headCellClassName}
-                />
+                  grow={col.grow}
+                  shrink={col.shrink}
+                >
+                  {col.title}
+                </TableHeadCell>
               ))}
             </TableRow>
           </TableHead>
@@ -142,12 +146,14 @@ export const SortableTable = <
               >
                 {cols.map((col) => (
                   <TableDataCell
-                    item={item}
-                    col={col}
-                    key={`row_${item[id]}_col_${col.id}`}
+                    grow={col.grow}
+                    shrink={col.shrink}
+                    key={`row_${i}_col_${col.id}`}
                     size={size}
                     className={col.dataCellClassName}
-                  />
+                  >
+                    {get(item, col.id)}
+                  </TableDataCell>
                 ))}
               </SortableTableRow>
             ))}
