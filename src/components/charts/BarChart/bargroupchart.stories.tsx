@@ -1,15 +1,19 @@
-import { Meta } from "@storybook/react";
-import { cn } from "@/utils";
+import type { Meta, StoryObj } from "@storybook/react";
 import { format } from "date-fns";
+
+import { cn } from "@/utils";
 
 import { borders } from "../../../styles";
 import { Bargroupchart } from ".";
 
-export default {
+const meta: Meta<typeof Bargroupchart> = {
   title: "CHARTS/Bargroupchart",
   component: Bargroupchart,
-  argTypes: {},
-} as Meta;
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Bargroupchart>;
 
 const sales = [
   { x: "2023-04-29T12:00:00.00+00:00", test: 1 },
@@ -29,24 +33,28 @@ const data = sales.map((d) => ({
   new: (d.test || 0 * 1.5) + 2,
 }));
 
-export const Default = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <Bargroupchart
-      data={data}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      {...args}
-    />
-  </div>
-);
+export const Default: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <Bargroupchart
+        data={argsData || data}
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        {...args}
+      />
+    </div>
+  ),
+};
 
-export const Empty = ({ ...args }) => (
-  <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-    <Bargroupchart
-      data={[]}
-      xScaleType="time"
-      xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-      {...args}
-    />
-  </div>
-);
+export const Empty: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
+      <Bargroupchart
+        data={argsData || []}
+        xScaleType="time"
+        xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+        {...args}
+      />
+    </div>
+  ),
+};

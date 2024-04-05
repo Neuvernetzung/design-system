@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { IconHome } from "@tabler/icons-react";
 import Link from "next/link";
 
@@ -13,165 +13,190 @@ import { loading, useIsLoading } from "../../Loading";
 import { notify } from "../../Notify";
 import { IconButton } from "./iconButton";
 
-export default {
+const meta: Meta<typeof IconButton> = {
   title: "UI/Buttons/IconButton",
   component: IconButton,
-  argTypes: {
-    color: {
-      control: { type: "select" },
-    },
-    variant: {
-      control: { type: "select" },
-    },
-    size: {
-      control: { type: "select", default: "md" },
-    },
-    as: { control: false },
-    leftIcon: { control: false },
-    rightIcon: { control: false },
-  },
-} as Meta;
+};
+
+export default meta;
+
+type Story = StoryObj<typeof IconButton>;
 
 const Container = ({ ...props }) => (
   <div className="flex flex-row items-start gap-5" {...props} />
 );
 
-export const Variants = ({ ...args }) => (
-  <Container>
-    {buttonVariants.map((variant) => (
-      <IconButton
-        ariaLabel="home"
-        variant={variant}
-        key={variant}
-        icon={IconHome}
-        {...args}
-      />
-    ))}
-  </Container>
-);
-
-Variants.parameters = {
-  controls: { exclude: "variant" },
-};
-
-export const Colors = ({ ...args }) => (
-  <Container>
-    {colors.map((color) => (
-      <IconButton
-        ariaLabel="home"
-        color={color}
-        key={color}
-        icon={IconHome}
-        {...args}
-      />
-    ))}
-  </Container>
-);
-
-Colors.parameters = {
-  controls: { exclude: "color" },
-};
-
-export const Focuses = ({ ...args }) => (
-  <Container>
-    {focusesVariants.map((focus) => (
-      <IconButton
-        ariaLabel="home"
-        focus={focus}
-        key={focus}
-        icon={IconHome}
-        {...args}
-      />
-    ))}
-  </Container>
-);
-
-Focuses.parameters = {
-  controls: { exclude: "focus" },
-};
-
-export const Sizes = ({ ...args }) => (
-  <Container>
-    {sizes.map((size) => (
-      <IconButton
-        ariaLabel="home"
-        size={size}
-        key={size}
-        icon={IconHome}
-        {...args}
-      />
-    ))}
-  </Container>
-);
-
-Sizes.parameters = {
-  controls: { exclude: "size" },
-};
-
-export const AsChild = ({ ...args }) => (
-  <Container>
-    <IconButton asChild ariaLabel="home" icon={IconHome} {...args}>
-      <Link href="#" />
-    </IconButton>
-  </Container>
-);
-
-export const Rounded = ({ ...args }) => (
-  <Container>
-    <IconButton ariaLabel="home" rounded icon={IconHome} {...args} />
-  </Container>
-);
-
-export const Disabled = ({ ...args }) => (
-  <Container>
-    <IconButton ariaLabel="home" disabled icon={IconHome} {...args} />
-    <IconButton
-      variant="ghost"
-      ariaLabel="home"
-      disabled
-      icon={IconHome}
-      {...args}
-    />
-    <IconButton
-      variant="outline"
-      ariaLabel="home"
-      disabled
-      icon={IconHome}
-      {...args}
-    />
-    <IconButton
-      variant="subtile"
-      ariaLabel="home"
-      disabled
-      icon={IconHome}
-      {...args}
-    />
-  </Container>
-);
-
-export const IsLoading = ({ ...args }) => {
-  const isLoading = useIsLoading();
-
-  const load = () => {
-    loading(true);
-    setTimeout(() => {
-      notify({ message: "Nicht mehr laden." });
-    }, 2000);
-  };
-
-  return (
-    <ThemeProvider config={{ allowNotification: true }}>
-      <Container className="flex">
+export const Variants: Story = {
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+    <Container>
+      {buttonVariants.map((variant) => (
         <IconButton
-          ariaLabel="button"
-          icon={IconHome}
-          isLoading={isLoading}
-          onClick={() => {
-            load();
-          }}
+          ariaLabel={argsAriaLabel || "home"}
+          variant={variant}
+          key={variant}
+          icon={argsIcon || IconHome}
           {...args}
         />
-      </Container>
-    </ThemeProvider>
-  );
+      ))}
+    </Container>
+  ),
+
+  parameters: {
+    controls: { exclude: "variant" },
+  },
+};
+
+export const Colors: Story = {
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+    <Container>
+      {colors.map((color) => (
+        <IconButton
+          ariaLabel={argsAriaLabel || "home"}
+          color={color}
+          key={color}
+          icon={argsIcon || IconHome}
+          {...args}
+        />
+      ))}
+    </Container>
+  ),
+
+  parameters: {
+    controls: { exclude: "color" },
+  },
+};
+
+export const Focuses: Story = {
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+    <Container>
+      {focusesVariants.map((focus) => (
+        <IconButton
+          ariaLabel={argsAriaLabel || "home"}
+          focus={focus}
+          key={focus}
+          icon={argsIcon || IconHome}
+          {...args}
+        />
+      ))}
+    </Container>
+  ),
+
+  parameters: {
+    controls: { exclude: "focus" },
+  },
+};
+
+export const Sizes: Story = {
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+    <Container>
+      {sizes.map((size) => (
+        <IconButton
+          ariaLabel={argsAriaLabel || "home"}
+          size={size}
+          key={size}
+          icon={argsIcon || IconHome}
+          {...args}
+        />
+      ))}
+    </Container>
+  ),
+
+  parameters: {
+    controls: { exclude: "size" },
+  },
+};
+
+export const AsChild: Story = {
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+    <Container>
+      <IconButton
+        asChild
+        ariaLabel={argsAriaLabel || "home"}
+        icon={argsIcon || IconHome}
+        {...args}
+      >
+        <Link href="#" />
+      </IconButton>
+    </Container>
+  ),
+};
+
+export const Rounded: Story = {
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+    <Container>
+      <IconButton
+        rounded
+        ariaLabel={argsAriaLabel || "home"}
+        icon={argsIcon || IconHome}
+        {...args}
+      />
+    </Container>
+  ),
+};
+
+export const Disabled: Story = {
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+    <Container>
+      <IconButton
+        disabled
+        ariaLabel={argsAriaLabel || "home"}
+        icon={argsIcon || IconHome}
+        {...args}
+      />
+      <IconButton
+        variant="ghost"
+        disabled
+        ariaLabel={argsAriaLabel || "home"}
+        icon={argsIcon || IconHome}
+        {...args}
+      />
+      <IconButton
+        variant="outline"
+        disabled
+        ariaLabel={argsAriaLabel || "home"}
+        icon={argsIcon || IconHome}
+        {...args}
+      />
+      <IconButton
+        variant="subtile"
+        disabled
+        ariaLabel={argsAriaLabel || "home"}
+        icon={argsIcon || IconHome}
+        {...args}
+      />
+    </Container>
+  ),
+};
+
+export const IsLoading: Story = {
+  render: function Render({
+    ariaLabel: argsAriaLabel,
+    icon: argsIcon,
+    ...args
+  }) {
+    const isLoading = useIsLoading();
+
+    const load = () => {
+      loading(true);
+      setTimeout(() => {
+        notify({ message: "Nicht mehr laden." });
+      }, 2000);
+    };
+
+    return (
+      <ThemeProvider config={{ allowNotification: true }}>
+        <Container className="flex">
+          <IconButton
+            ariaLabel={argsAriaLabel || "button"}
+            icon={argsIcon || IconHome}
+            isLoading={isLoading}
+            onClick={() => {
+              load();
+            }}
+            {...args}
+          />
+        </Container>
+      </ThemeProvider>
+    );
+  },
 };

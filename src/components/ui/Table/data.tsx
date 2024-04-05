@@ -1,6 +1,6 @@
 import { IconChevronDown } from "@tabler/icons-react";
-import get from "lodash/get";
 import compact from "lodash/compact";
+import get from "lodash/get";
 
 import { cn } from "@/utils";
 
@@ -8,15 +8,14 @@ import { paddingsEvenly, transition } from "../../../styles";
 import { IconButton } from "../Button";
 import { CheckboxRaw } from "../Checkbox/checkbox";
 import {
-  SimpleTableCol,
-  SimpleTableProps,
   TableBody,
   TableContainer,
   TableDataCell,
   TableHead,
   TableHeadCell,
   TableRow,
-} from "./table";
+} from "./components";
+import { SimpleTableCol, SimpleTableProps } from "./table";
 
 export type DataTableProps<
   T extends string,
@@ -139,7 +138,8 @@ export const DataTable = <
             {cols.map((col) => (
               <TableHeadCell
                 key={`head_col_${col.id}`}
-                col={col}
+                grow={col.grow}
+                shrink={col.shrink}
                 size={size}
                 uppercase={uppercase}
                 className={col.headCellClassName}
@@ -161,7 +161,9 @@ export const DataTable = <
                     />
                   )
                 }
-              />
+              >
+                {col.title}
+              </TableHeadCell>
             ))}
           </TableRow>
         </TableHead>
@@ -207,12 +209,14 @@ export const DataTable = <
                 )}
                 {cols.map((col) => (
                   <TableDataCell
-                    item={item}
-                    col={col}
+                    grow={col.grow}
+                    shrink={col.shrink}
                     key={`row_${i}_col_${col.id}`}
                     size={size}
                     className={col.dataCellClassName}
-                  />
+                  >
+                    {get(item, col.id)}
+                  </TableDataCell>
                 ))}
               </TableRow>
               {disclosureValue && item[disclosureValue] && (

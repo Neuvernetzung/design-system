@@ -1,18 +1,22 @@
-import { Meta } from "@storybook/react";
-import { cn } from "@/utils";
+import type { Meta, StoryObj } from "@storybook/react";
+import { format } from "date-fns";
 import { useRef } from "react";
 
+import { cn } from "@/utils";
+
 import { borders } from "../../../styles";
-import { Linechart } from "../Linechart";
-import { format } from "date-fns";
 import { Button } from "../../ui/Button";
+import { Linechart } from "../Linechart";
 import { downloadChart } from ".";
 
-export default {
+const meta: Meta<typeof Linechart> = {
   title: "CHARTS/Download",
   component: Linechart,
-  argTypes: {},
-} as Meta;
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Linechart>;
 
 const sales = [
   { x: "2023-04-29T12:00:00.00+00:00", y: 1 },
@@ -28,31 +32,37 @@ const sales = [
 ];
 const data = sales.map((d) => ({ ...d, x: new Date(d.x) }));
 
-export const Default = ({ ...args }) => {
-  const ref = useRef<SVGSVGElement>(null);
-  const id = "Test-Id";
+export const Default: Story = {
+  render: function Render({ data: argsData, ...args }) {
+    const ref = useRef<SVGSVGElement>(null);
+    const id = "Test-Id";
 
-  return (
-    <div className="flex flex-col gap-4">
-      <div className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}>
-        <Linechart
-          id={id}
-          ref={ref}
-          data={data}
-          xScaleType="time"
-          xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
-          {...args}
-        />
+    return (
+      <div className="flex flex-col gap-4">
+        <div
+          className={cn("w-full h-64 border rounded-lg p-4", borders.accent)}
+        >
+          <Linechart
+            id={id}
+            ref={ref}
+            data={argsData || data}
+            xScaleType="time"
+            xAxisProps={{ tickFormat: (value) => format(value, "d. MMMM") }}
+            {...args}
+          />
+        </div>
+        <Button onClick={() => downloadChart({ id, title: "Id-SVG" })}>
+          Download by Id
+        </Button>
+        <Button onClick={() => downloadChart({ ref, title: "Ref-SVG" })}>
+          Download by Ref
+        </Button>
+        <Button
+          onClick={() => downloadChart({ ref, title: "Ref", type: "png" })}
+        >
+          Download as PNG
+        </Button>
       </div>
-      <Button onClick={() => downloadChart({ id, title: "Id-SVG" })}>
-        Download by Id
-      </Button>
-      <Button onClick={() => downloadChart({ ref, title: "Ref-SVG" })}>
-        Download by Ref
-      </Button>
-      <Button onClick={() => downloadChart({ ref, title: "Ref", type: "png" })}>
-        Download as PNG
-      </Button>
-    </div>
-  );
+    );
+  },
 };

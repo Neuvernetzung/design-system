@@ -1,11 +1,11 @@
-import { Meta } from "@storybook/react";
+
 
 import { Prose } from "./prose";
 
 export default {
   title: "UI/Data Display/Prose",
   component: Prose,
-} as Meta;
+} ;
 
 const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
@@ -31,8 +31,10 @@ const content = `<h1>HTML Ipsum Presents</h1>
    <li>Aliquam tincidunt mauris eu risus.</li>
 </ul>`;
 
-export const Default = ({ ...args }) => (
-  <Container>
-    <Prose content={content} {...args} />
-  </Container>
-);
+export const Default = {
+  render: ({ ...args }) => (
+    <Container>
+      <Prose content={content} {...args} />
+    </Container>
+  ),
+};

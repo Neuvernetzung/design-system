@@ -1,4 +1,3 @@
-import { Meta } from "@storybook/react";
 import { cn } from "@/utils";
 import { useForm } from "react-hook-form";
 
@@ -27,7 +26,7 @@ import { Icon360, IconHome, IconPlus, IconUpload } from "@tabler/icons-react";
 export default {
   title: "THEME/ThemeProvider",
   component: ThemeProvider,
-  argTypes: {},
+
   parameters: {
     docs: {
       source: {
@@ -35,7 +34,7 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} as Meta;
+};
 
 const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />

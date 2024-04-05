@@ -1,5 +1,5 @@
 import { cn } from "@/utils";
-import { isSameMonth, isSameYear } from "date-fns";
+import { Day, isSameMonth, isSameYear } from "date-fns";
 import type { ReactElement } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
 
@@ -22,17 +22,13 @@ import type { UseScheduleViewProps } from "./hooks/useSchedule";
 import { ScheduleMonthView } from "./month";
 import { isThisDaysEvent } from "./utils/filterEvents";
 import { ScheduleWeekView } from "./week";
+import { ScheduleDisplayWorkHours } from "./DayGrid";
 
 export * from "./day";
 export * from "./Event";
 export * from "./hooks";
 export * from "./month";
 export * from "./week";
-
-export type ScheduleDisplayDaytime = {
-  start: number;
-  end: number;
-};
 
 export type ScheduleProps = {
   calendarProps: UseCalendarProps;
@@ -43,7 +39,9 @@ export type ScheduleProps = {
   className?: string;
   hideSideCalendar?: boolean;
   rowsEachHour?: number;
-  displayDayTime?: ScheduleDisplayDaytime;
+  showWorkHours?: boolean;
+  currentDayWorkHours?: ScheduleDisplayWorkHours;
+  currentWeekWorkHours?: Partial<Record<Day, ScheduleDisplayWorkHours>>;
   onCreate?: (event: VEvent) => void;
   onUpdate?: (event: VEvent, oldEvent: VEvent) => void;
   onDelete?: (event: VEvent) => void;
@@ -68,7 +66,9 @@ export const Schedule = ({
   className,
   hideSideCalendar,
   rowsEachHour,
-  displayDayTime,
+  showWorkHours,
+  currentDayWorkHours,
+  currentWeekWorkHours,
   onCreate,
   onUpdate,
   onDelete,
@@ -128,7 +128,8 @@ export const Schedule = ({
               scheduleViewProps={scheduleViewProps}
               calendarProps={calendarProps}
               rowsEachHour={rowsEachHour}
-              displayDayTime={displayDayTime}
+              showWorkHours={showWorkHours}
+              currentDayWorkHours={currentDayWorkHours}
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
               eventColor={eventColor}
@@ -145,7 +146,9 @@ export const Schedule = ({
               scheduleViewProps={scheduleViewProps}
               calendarProps={calendarProps}
               rowsEachHour={rowsEachHour}
-              displayDayTime={displayDayTime}
+              showWorkHours={showWorkHours}
+              currentDayWorkHours={currentDayWorkHours}
+              currentWeekWorkHours={currentWeekWorkHours}
               viewEventProps={viewEventProps}
               editEventProps={editEventProps}
               eventColor={eventColor}

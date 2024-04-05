@@ -1,4 +1,3 @@
-import { Meta } from "@storybook/react";
 import { useState } from "react";
 
 import { Sortable, SortableItem, UseSortableChange } from ".";
@@ -10,8 +9,7 @@ import { bgColorsInteractive, paddingsEvenly } from "../../../styles";
 export default {
   title: "UI/Data Display/Sortable",
   component: Sortable,
-  argTypes: {},
-} as Meta;
+};
 
 type Item = { id: string; content: string; order: number };
 
@@ -25,114 +23,120 @@ const defaultItems: Item[] = [
 
 const itemClassName = cn(paddingsEvenly.md, bgColorsInteractive.white);
 
-export const Default = ({ ...args }) => {
-  const [items, setItems] = useState<Item[]>(defaultItems);
+export const Default = {
+  render: ({ ...args }) => {
+    const [items, setItems] = useState<Item[]>(defaultItems);
 
-  const handleChange: UseSortableChange<Item> = ({ newItems }) => {
-    setItems(newItems);
-  };
+    const handleChange: UseSortableChange<Item> = ({ newItems }) => {
+      setItems(newItems);
+    };
 
-  return (
-    <Sortable
-      id="id"
-      items={items}
-      handleChange={handleChange}
-      itemIds={items.map((item) => item.id)}
-      {...args}
-    >
-      {items.map((item) => (
-        <SortableItem
-          className={itemClassName}
-          id={item.id.toString()}
-          key={item.id}
-        >
-          <div>{item.content}</div>
-        </SortableItem>
-      ))}
-    </Sortable>
-  );
-};
-
-export const Controlled = ({ ...args }) => {
-  const [changed, setChanged] = useState<Item[]>([]);
-
-  const handleChange: UseSortableChange<Item> = ({ totalChangedItems }) => {
-    setChanged(totalChangedItems);
-  };
-
-  return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <Sortable
-          id="id"
-          items={defaultItems}
-          handleChange={handleChange}
-          itemIds={defaultItems.map((item) => item.id)}
-          order="order"
-          {...args}
-        >
-          {(items) =>
-            items.map((item) => (
-              <SortableItem
-                className={itemClassName}
-                id={item.id.toString()}
-                key={item.id}
-              >
-                <div>{item.content}</div>
-              </SortableItem>
-            ))
-          }
-        </Sortable>
-      </div>
-      <div>
-        <Text size="sm"> Geänderte Items:</Text>
-        {changed.map((item) => (
-          <div key={item.id}>
-            {item.content}: {item.order}
-          </div>
+    return (
+      <Sortable
+        id="id"
+        items={items}
+        handleChange={handleChange}
+        itemIds={items.map((item) => item.id)}
+        {...args}
+      >
+        {items.map((item) => (
+          <SortableItem
+            className={itemClassName}
+            id={item.id.toString()}
+            key={item.id}
+          >
+            <div>{item.content}</div>
+          </SortableItem>
         ))}
-      </div>
-    </div>
-  );
+      </Sortable>
+    );
+  },
 };
 
-export const WithHandle = ({ ...args }) => {
-  const [items, setItems] = useState<Item[]>(defaultItems);
+export const Controlled = {
+  render: ({ ...args }) => {
+    const [changed, setChanged] = useState<Item[]>([]);
 
-  const handleChange: UseSortableChange<Item> = ({ newItems }) => {
-    setItems(newItems);
-  };
+    const handleChange: UseSortableChange<Item> = ({ totalChangedItems }) => {
+      setChanged(totalChangedItems);
+    };
 
-  return (
-    <Sortable
-      id="id"
-      items={items}
-      handleChange={handleChange}
-      itemIds={items.map((item) => item.id)}
-      {...args}
-    >
-      {items.map((item, i) => (
-        <SortableItem
-          className={itemClassName}
-          handle
-          indicator
-          id={item.id.toString()}
-          key={item.id}
-        >
-          {({ handle }) => (
-            <div className="flex flex-row items-center gap-2">
-              <IconButton
-                {...handle}
-                ariaLabel={`drag_handle_${i}`}
-                size="sm"
-                variant="ghost"
-                icon={IconGripVertical}
-              />
-              <Text>{item.content}</Text>
+    return (
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <Sortable
+            id="id"
+            items={defaultItems}
+            handleChange={handleChange}
+            itemIds={defaultItems.map((item) => item.id)}
+            order="order"
+            {...args}
+          >
+            {(items) =>
+              items.map((item) => (
+                <SortableItem
+                  className={itemClassName}
+                  id={item.id.toString()}
+                  key={item.id}
+                >
+                  <div>{item.content}</div>
+                </SortableItem>
+              ))
+            }
+          </Sortable>
+        </div>
+        <div>
+          <Text size="sm"> Geänderte Items:</Text>
+          {changed.map((item) => (
+            <div key={item.id}>
+              {item.content}: {item.order}
             </div>
-          )}
-        </SortableItem>
-      ))}
-    </Sortable>
-  );
+          ))}
+        </div>
+      </div>
+    );
+  },
+};
+
+export const WithHandle = {
+  render: ({ ...args }) => {
+    const [items, setItems] = useState<Item[]>(defaultItems);
+
+    const handleChange: UseSortableChange<Item> = ({ newItems }) => {
+      setItems(newItems);
+    };
+
+    return (
+      <Sortable
+        id="id"
+        items={items}
+        handleChange={handleChange}
+        itemIds={items.map((item) => item.id)}
+        {...args}
+      >
+        {items.map((item, i) => (
+          <SortableItem
+            className={itemClassName}
+            handle
+            indicator
+            id={item.id.toString()}
+            key={item.id}
+          >
+            {({ handle }) => (
+              <div className="flex flex-row items-center gap-2">
+                <IconButton
+                  {...handle}
+                  ariaLabel={`drag_handle_${i}`}
+                  size="sm"
+                  variant="ghost"
+                  icon={IconGripVertical}
+                />
+                <Text>{item.content}</Text>
+              </div>
+            )}
+          </SortableItem>
+        ))}
+      </Sortable>
+    );
+  },
 };

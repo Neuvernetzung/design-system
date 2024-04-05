@@ -1,48 +1,41 @@
-import { cn } from "@/utils/cn";
 import get from "lodash/get";
-import isNumber from "lodash/isNumber";
-import isString from "lodash/isString";
-import {
-  ComponentPropsWithoutRef,
-  ForwardedRef,
-  forwardRef,
-  ReactElement,
-  ReactNode,
-} from "react";
+import { ReactElement } from "react";
+
+import { Size } from "@/types";
 
 import {
-  bgColors,
-  borders,
-  divides,
-  extendedBgColors,
-  paddingsLarge,
-  paddingsLargeEvenly,
-  roundings,
-} from "@/styles";
-import type { Size } from "@/types";
-import { smallerSize } from "@/utils";
-import { Text } from "../Typography";
+  TableBody,
+  type TableBodyOptions,
+  type TableCellProps,
+  TableContainer,
+  type TableContainerOptions,
+  TableDataCell,
+  TableHead,
+  TableHeadCell,
+  type TableHeadOptions,
+  TableRow,
+  type TableRowOptions,
+} from "./components";
 
 export type SimpleTableProps<T extends string> = {
   items?: Array<Partial<Record<T, any>>>;
   size?: Size;
   cols: SimpleTableCol<T>[];
-  divideX?: boolean;
-  uppercase?: boolean;
   disableHead?: boolean;
   disabledBorder?: boolean;
-  hasStripes?: boolean;
   divideY?: boolean;
-};
+} & TableContainerOptions &
+  TableBodyOptions &
+  TableRowOptions &
+  TableHeadOptions;
 
 export type SimpleTableCol<T> = {
   id: T;
   title?: string | ReactElement;
-  grow?: boolean;
-  shrink?: boolean;
+
   headCellClassName?: string;
   dataCellClassName?: string;
-};
+} & TableCellProps;
 
 export const SimpleTable = <T extends string>({
   items = [],
@@ -62,11 +55,14 @@ export const SimpleTable = <T extends string>({
           {cols.map((col) => (
             <TableHeadCell
               key={`head_col_${col.id}`}
-              col={col}
+              grow={col.grow}
+              shrink={col.shrink}
               size={size}
               uppercase={uppercase}
               className={col.headCellClassName}
-            />
+            >
+              {col.title}
+            </TableHeadCell>
           ))}
         </TableRow>
       </TableHead>
@@ -81,175 +77,17 @@ export const SimpleTable = <T extends string>({
         >
           {cols.map((col) => (
             <TableDataCell
-              item={item}
-              col={col}
+              grow={col.grow}
+              shrink={col.shrink}
               key={`row_${i}_col_${col.id}`}
               size={size}
               className={col.dataCellClassName}
-            />
+            >
+              {get(item, col.id)}
+            </TableDataCell>
           ))}
         </TableRow>
       ))}
     </TableBody>
   </TableContainer>
-);
-
-export type TableDataCellProps = {
-  item: Record<string, any>;
-  col: SimpleTableCol<string>;
-  size?: Size;
-  className?: string;
-};
-
-export const TableDataCell = ({
-  item,
-  col,
-  size = "md",
-  className,
-}: TableDataCellProps) => {
-  const content = get(item, col.id);
-
-  return (
-    <td
-      className={cn(
-        paddingsLarge[size],
-        col.grow && "w-[999rem]", // w-full funktioniert hier nicht.
-        col.shrink && "w-0",
-        className
-      )}
-    >
-      {isString(content) || isNumber(content) ? (
-        <Text size={smallerSize(size)}>{content}</Text>
-      ) : (
-        (content as ReactNode)
-      )}
-    </td>
-  );
-};
-
-export type TableRowProps = {
-  divideX?: boolean;
-  children: ReactNode;
-  className?: string;
-  hasStripes?: boolean;
-  index?: number;
-} & ComponentPropsWithoutRef<"tr">;
-
-export const TableRow = forwardRef(
-  (
-    {
-      divideX,
-      children,
-      className,
-      hasStripes,
-      index,
-      ...props
-    }: TableRowProps,
-    ref: ForwardedRef<HTMLTableRowElement>
-  ) => (
-    <tr
-      className={cn(
-        divideX && "divide-x",
-        divides.accent,
-        hasStripes && index && index % 2 && extendedBgColors.subtile,
-        className
-      )}
-      ref={ref}
-      {...props}
-    >
-      {children}
-    </tr>
-  )
-);
-
-TableRow.displayName = "TableRow";
-
-export type TableBodyProps = {
-  children: ReactNode;
-  divideY?: boolean;
-};
-
-export const TableBody = ({ divideY = true, children }: TableBodyProps) => (
-  <tbody className={cn(divideY && "divide-y", divides.accent, bgColors.white)}>
-    {children}
-  </tbody>
-);
-
-export type TableHeadCellProps = {
-  col: SimpleTableCol<string>;
-  size?: Size;
-  attachment?: ReactNode;
-  uppercase?: boolean;
-  className?: string;
-};
-
-export const TableHeadCell = ({
-  col,
-  size = "md",
-  attachment,
-  uppercase = true,
-  className,
-}: TableHeadCellProps) => {
-  const Component = col.title ? "th" : "td";
-
-  return (
-    <Component
-      className={cn(
-        "group",
-        paddingsLargeEvenly[size],
-        col.grow && "w-[999rem]", // w-full funktioniert hier nicht.
-        col.shrink && "w-0",
-        className
-      )}
-    >
-      <div className="flex flex-row gap-1 items-center">
-        <Text
-          className={cn("font-medium", uppercase && "uppercase")}
-          size={smallerSize(size)}
-        >
-          {col.title}
-        </Text>
-        {attachment}
-      </div>
-    </Component>
-  );
-};
-
-export type TableHeadProps = {
-  children: ReactNode;
-};
-
-export const TableHead = ({ children }: TableHeadProps) => (
-  <thead className={cn("text-left", extendedBgColors.filledSubtile)}>
-    {children}
-  </thead>
-);
-
-export type TableContainerProps = {
-  size?: Size;
-  children: ReactNode;
-  disabledBorder?: boolean;
-  divideY?: boolean;
-};
-
-export const TableContainer = ({
-  size = "md",
-  disabledBorder,
-  divideY = true,
-  children,
-}: TableContainerProps) => (
-  <div
-    className={cn(
-      "overflow-x-auto relative",
-      !disabledBorder && "border",
-      !disabledBorder && borders.accent,
-      roundings[size]
-    )}
-  >
-    <table
-      className={cn("table-auto w-full", divideY && "divide-y", divides.accent)}
-    >
-      {children}
-    </table>
-  </div>
 );

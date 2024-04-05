@@ -1,15 +1,19 @@
-import { Meta } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
+
 import { cn } from "@/utils";
 
 import { borders } from "../../../styles";
-import { BarList, barListVariants } from ".";
 import { colors, sizes } from "../../../types";
+import { BarList, barListVariants } from ".";
 
-export default {
+const meta: Meta<typeof BarList> = {
   title: "CHARTS/BarList",
   component: BarList,
-  argTypes: {},
-} as Meta;
+};
+
+export default meta;
+
+type Story = StoryObj<typeof BarList>;
 
 const data = [
   {
@@ -30,69 +34,84 @@ const data = [
   },
 ];
 
-export const Default = ({ ...args }) => (
-  <div
-    className={cn(
-      "w-full border rounded-lg p-4 flex flex-col gap-12",
-      borders.accent
-    )}
-  >
-    <BarList data={data} {...args} />
-  </div>
-);
+export const Default: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div
+      className={cn(
+        "w-full border rounded-lg p-4 flex flex-col gap-12",
+        borders.accent
+      )}
+    >
+      <BarList data={argsData || data} {...args} />
+    </div>
+  ),
+};
 
-export const Sizes = ({ ...args }) => (
-  <div
-    className={cn(
-      "w-full border rounded-lg p-4 flex flex-col gap-12",
-      borders.accent
-    )}
-  >
-    {sizes.map((size) => (
-      <BarList size={size} key={size} data={data} {...args} />
-    ))}
-  </div>
-);
+export const Sizes: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div
+      className={cn(
+        "w-full border rounded-lg p-4 flex flex-col gap-12",
+        borders.accent
+      )}
+    >
+      {sizes.map((size) => (
+        <BarList size={size} key={size} data={argsData || data} {...args} />
+      ))}
+    </div>
+  ),
+};
 
-export const Variants = ({ ...args }) => (
-  <div
-    className={cn(
-      "w-full border rounded-lg p-4 flex flex-col gap-12",
-      borders.accent
-    )}
-  >
-    {barListVariants.map((variant) => (
-      <BarList variant={variant} key={variant} data={data} {...args} />
-    ))}
-  </div>
-);
+export const Variants: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div
+      className={cn(
+        "w-full border rounded-lg p-4 flex flex-col gap-12",
+        borders.accent
+      )}
+    >
+      {barListVariants.map((variant) => (
+        <BarList
+          variant={variant}
+          key={variant}
+          data={argsData || data}
+          {...args}
+        />
+      ))}
+    </div>
+  ),
+};
 
-export const Colors = ({ ...args }) => (
-  <div
-    className={cn(
-      "w-full border rounded-lg p-4 flex flex-col gap-12",
-      borders.accent
-    )}
-  >
-    {colors.map((color) => (
-      <BarList color={color} key={color} data={data} {...args} />
-    ))}
-  </div>
-);
+export const Colors: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div
+      className={cn(
+        "w-full border rounded-lg p-4 flex flex-col gap-12",
+        borders.accent
+      )}
+    >
+      {colors.map((color) => (
+        <BarList color={color} key={color} data={argsData || data} {...args} />
+      ))}
+    </div>
+  ),
+};
 
-export const FormatValue = ({ ...args }) => (
-  <div
-    className={cn(
-      "w-full border rounded-lg p-4 flex flex-col gap-12",
-      borders.accent
-    )}
-  >
-    <BarList
-      data={data}
-      formatValue={(value) =>
-        Intl.NumberFormat("de", { notation: "compact" }).format(value * 1000)
-      }
-      {...args}
-    />
-  </div>
-);
+export const FormatValue: Story = {
+  render: ({ data: argsData, ...args }) => (
+    <div
+      className={cn(
+        "w-full border rounded-lg p-4 flex flex-col gap-12",
+        borders.accent
+      )}
+    >
+      <BarList
+        data={argsData || data}
+        formatValue={(value) =>
+          Intl.NumberFormat("de", { notation: "compact" }).format(value * 1000)
+        }
+        {...args}
+      />
+    </div>
+  ),
+};
