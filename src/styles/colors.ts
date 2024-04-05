@@ -120,6 +120,28 @@ export const extendedBgColorsInteractive: Record<ExtendedColor, string> = {
   subtile: `${extendedBgColors.subtile} hover:bg-accent-100 dark:hover:bg-accent-900`,
 };
 
+export const bgColorsActiveInteractive: Record<Color, string> = {
+  brand: `${bgColorsInteractive.brand} active:bg-brand-700 dark:active:bg-brand-300`,
+  primary: `${bgColorsInteractive.primary} active:bg-primary-700 dark:active:bg-primary-300`,
+  white: `${bgColorsInteractive.white} active:bg-accent-200 dark:active:bg-accent-800`,
+  black: `${bgColorsInteractive.black} active:bg-accent-800 dark:active:bg-accent-200`,
+  accent: `${bgColorsInteractive.accent} active:bg-accent-800 dark:active:bg-accent-400`,
+  success: `${bgColorsInteractive.success} active:bg-success-700 dark:active:bg-success-300`,
+  warn: `${bgColorsInteractive.warn} active:bg-warn-700 dark:active:bg-warn-300`,
+  danger: `${bgColorsInteractive.danger} active:bg-danger-700 dark:active:bg-danger-300`,
+};
+
+export const extendedBgColorsActiveInteractive: Record<ExtendedColor, string> =
+  {
+    ...bgColorsActiveInteractive,
+    inherit: extendedBgColorsInteractive.inherit,
+    light: `${extendedBgColorsInteractive.light} active:bg-accent-300 dark:active:bg-accent-300`,
+    dark: `${extendedBgColorsInteractive.dark} active:bg-accent-700 dark:active:bg-accent-700`,
+    filled: `${extendedBgColorsInteractive.filled} active:bg-accent-400 dark:active:bg-accent-600`,
+    filledSubtile: `${extendedBgColorsInteractive.filledSubtile} active:bg-accent-300 dark:active:bg-accent-700`,
+    subtile: `${extendedBgColorsInteractive.subtile} active:bg-accent-200 dark:active:bg-accent-800`,
+  };
+
 export const fillColors: Record<Color, string> = {
   brand: "fill-brand-500",
   primary: "fill-primary-500",
