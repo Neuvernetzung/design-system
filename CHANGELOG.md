@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.0
+
+### Minor Changes
+
+- d2aff90: Tabellen Komponenten umstrukturieren #1390
+- 9427f06: PageContainer Scrollbar hat im Darkmode gleiche Farbe wie im Lightmode #1393
+- 8021437: Storybook Upgrade auf v8 #1392
+- 5e0dca4: Schedule - Verfügbarkeit für einzelne Tage festlegbar, statt nur für alle #1376
+- 7e0803b: Button bei Mausklick korrekt einfärben #1394
+
 ## 3.4.1
 
 ### Patch Changes
