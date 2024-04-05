@@ -1,22 +1,31 @@
 import { DragOverlay } from "@dnd-kit/core";
-import { cn } from "@/utils";
-import { addDays, addWeeks, endOfWeek, startOfWeek, subWeeks } from "date-fns";
+import {
+  type Day,
+  addDays,
+  addWeeks,
+  endOfWeek,
+  startOfWeek,
+  subWeeks,
+} from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";
 
+import { cn } from "@/utils";
+
 import { divides, extendedBgColors, extendedBorders } from "../../../styles";
-import type { ScheduleDayViewProps } from ".";
+import { ScrollArea } from "../ScrollArea";
+import type { ScheduleDayViewProps, ScheduleProps } from ".";
 import { DayScheduleHead, ScheduleDay } from "./day";
-import { calcDayRows, ScheduleDayGrid } from "./DayGrid";
+import { calcDayRows, ScheduleWeekGrid } from "./DayGrid";
 import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
 import { DragOverlayEvent } from "./Event";
 import { ScheduleHeader } from "./header";
 import { useScrollToTime } from "./hooks/useScrollToTime";
 import { getThisWeeksEvents } from "./utils/filterEvents";
 import { formatTitle } from "./utils/formatTitle";
-import { ScrollArea } from "../ScrollArea";
 
-export type ScheduleWeekViewProps = ScheduleDayViewProps;
+export type ScheduleWeekViewProps = ScheduleDayViewProps &
+  Pick<ScheduleProps, "currentWeekWorkHours">;
 
 export const ScheduleWeekView = ({
   scheduleViewProps,
@@ -24,7 +33,9 @@ export const ScheduleWeekView = ({
   events,
   rowsEachHour = 2,
   precisionInMinutes = 5,
-  displayDayTime,
+  showWorkHours,
+  currentDayWorkHours,
+  currentWeekWorkHours,
   viewEventProps,
   editEventProps,
   onUpdate,
@@ -119,26 +130,33 @@ export const ScheduleWeekView = ({
               divides.accent
             )}
           >
-            <ScheduleDayGrid
-              rowsEachHour={rowsEachHour}
-              displayDayTime={displayDayTime}
-            />
-
             {new Array(7).fill(null).map((_, i) => (
-              <ScheduleDay
-                key={`week_day_${i}`}
-                dayOfWeek={i + 1}
-                events={thisWeeksEvents}
-                day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
-                precisionInMinutes={precisionInMinutes}
-                viewEventProps={viewEventProps}
-                rows={rows}
-                disableDrag={disabled || !isFunction(onUpdate) || disableDrag}
-                disableCreate={
-                  disabled || !isFunction(onCreate) || disableCreate
-                }
-                editEventProps={editEventProps}
-              />
+              <>
+                <ScheduleWeekGrid
+                  rowsEachHour={rowsEachHour}
+                  workHours={
+                    currentWeekWorkHours
+                      ? currentWeekWorkHours?.[(i + 1) as Day]
+                      : currentDayWorkHours
+                  }
+                  dayOfWeek={i + 1}
+                  showWorkHours={showWorkHours}
+                />
+                <ScheduleDay
+                  key={`week_day_${i}`}
+                  dayOfWeek={i + 1}
+                  events={thisWeeksEvents}
+                  day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
+                  precisionInMinutes={precisionInMinutes}
+                  viewEventProps={viewEventProps}
+                  rows={rows}
+                  disableDrag={disabled || !isFunction(onUpdate) || disableDrag}
+                  disableCreate={
+                    disabled || !isFunction(onCreate) || disableCreate
+                  }
+                  editEventProps={editEventProps}
+                />
+              </>
             ))}
           </div>
           <DragOverlay>
