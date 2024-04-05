@@ -5,7 +5,7 @@ import { cn } from "@/utils";
 
 import {
   extendedBgColors,
-  extendedBgColorsInteractive,
+  extendedBgColorsActiveInteractive,
   extendedBorders,
   extendedFocuses,
   extendedTextColors,
@@ -29,18 +29,18 @@ import { Spinner } from "../Loading";
 export const buttonVariantStyles: Record<ButtonVariant, string> = {
   filled: "",
   outline:
-    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10  dark:disabled:hover:bg-opacity-0 border",
+    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10 dark:active:bg-opacity-20 dark:disabled:hover:bg-opacity-0 border",
   ghost:
-    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10  dark:disabled:hover:bg-opacity-0",
+    "bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20 disabled:hover:bg-opacity-0 dark:hover:bg-opacity-10 dark:active:bg-opacity-20 dark:disabled:hover:bg-opacity-0",
   subtile:
-    "bg-opacity-30 dark:bg-opacity-30 hover:bg-opacity-40 hover:dark:bg-opacity-40 disabled:hover:bg-opacity-30 dark:disabled:hover:bg-opacity-30",
+    "bg-opacity-30 dark:bg-opacity-30 hover:bg-opacity-40 active:bg-opacity-50 hover:dark:bg-opacity-40 dark:active:bg-opacity-50 disabled:hover:bg-opacity-30 dark:disabled:hover:bg-opacity-30",
 };
 
 export const getButtonColorStyle = (
   color: ExtendedColor,
   adjustedTextColorState: Record<ExtendedColor, string>
 ): ColorProps => ({
-  base: cn(extendedBgColorsInteractive[color], extendedBorders[color]),
+  base: cn(extendedBgColorsActiveInteractive[color], extendedBorders[color]),
   disabled: cn(extendedBgColors[color], extendedBorders[color], "opacity-50"),
   text: {
     filled: adjustedTextColorState[color],

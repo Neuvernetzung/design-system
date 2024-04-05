@@ -1,5 +1,5 @@
 import { action } from "@storybook/addon-actions";
-
+import type { Meta, StoryObj } from "@storybook/react";
 import { IconHome, IconLink, IconStack } from "@tabler/icons-react";
 
 import { ThemeProvider } from "../../../theme";
@@ -14,17 +14,20 @@ import { useIsLoading } from "../Loading/loading";
 import { notify } from "../Notify";
 import { Button } from "./button";
 
-export default {
+const meta: Meta<typeof Button> = {
   title: "UI/Buttons/Button",
   component: Button,
+};
 
-} ;
+export default meta;
+
+type Story = StoryObj<typeof Button>;
 
 const Container = ({ ...props }) => (
   <div className="flex flex-row items-start gap-5" {...props} />
 );
 
-export const Variants = {
+export const Variants: Story = {
   render: ({ ...args }) => (
     <Container>
       {buttonVariants.map((variant) => (
@@ -40,7 +43,7 @@ export const Variants = {
   },
 };
 
-export const Colors = {
+export const Colors: Story = {
   render: ({ ...args }) => (
     <Container>
       {extendedColors.map((color) => (
@@ -56,7 +59,7 @@ export const Colors = {
   },
 };
 
-export const Focuses = {
+export const Focuses: Story = {
   render: ({ ...args }) => (
     <Container>
       {focusesVariants.map((focus) => (
@@ -72,7 +75,7 @@ export const Focuses = {
   },
 };
 
-export const Sizes = {
+export const Sizes: Story = {
   render: ({ ...args }) => (
     <Container>
       {sizes.map((size) => (
@@ -88,7 +91,7 @@ export const Sizes = {
   },
 };
 
-export const AsChild = {
+export const AsChild: Story = {
   render: ({ ...args }) => (
     <Container>
       <Button leftIcon={IconLink} asChild {...args}>
@@ -101,7 +104,7 @@ export const AsChild = {
   ),
 };
 
-export const FullWidth = {
+export const FullWidth: Story = {
   render: ({ ...args }) => (
     <Container>
       <Button className="w-full" {...args}>
@@ -111,7 +114,7 @@ export const FullWidth = {
   ),
 };
 
-export const ContentAlignment = {
+export const ContentAlignment: Story = {
   render: ({ ...args }) => (
     <Container>
       <Button className="!justify-start w-full" {...args}>
@@ -124,7 +127,7 @@ export const ContentAlignment = {
   ),
 };
 
-export const Rounded = {
+export const Rounded: Story = {
   render: ({ ...args }) => (
     <Container>
       <Button rounded {...args}>
@@ -134,7 +137,7 @@ export const Rounded = {
   ),
 };
 
-export const WithIcon = {
+export const WithIcon: Story = {
   render: ({ ...args }) => (
     <Container>
       <Button leftIcon={IconHome} {...args}>
@@ -147,7 +150,7 @@ export const WithIcon = {
   ),
 };
 
-export const Disabled = {
+export const Disabled: Story = {
   render: ({ ...args }) => (
     <Container>
       <Button disabled {...args}>
@@ -166,7 +169,7 @@ export const Disabled = {
   ),
 };
 
-export const VeryLong = {
+export const VeryLong: Story = {
   render: ({ ...args }) => (
     <Container className="flex flex-col gap-4">
       <Button {...args}>
@@ -187,8 +190,8 @@ export const VeryLong = {
   ),
 };
 
-export const IsLoading = {
-  render: ({ ...args }) => {
+export const IsLoading: Story = {
+  render: function Render({ ...args }) {
     const isLoading = useIsLoading();
 
     const load = () => {
