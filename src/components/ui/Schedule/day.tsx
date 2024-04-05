@@ -43,6 +43,7 @@ export type ScheduleDayViewProps = Omit<
   | "viewEventProps"
   | "editEventProps"
   | "scheduleViewProps"
+  | "currentWeekWorkHours"
 > &
   Required<Pick<ScheduleProps, "calendarProps">> &
   Partial<
@@ -60,7 +61,8 @@ export const ScheduleDayView = ({
   events,
   rowsEachHour = 2,
   precisionInMinutes = DEFAULT_PRECISION_IN_MINUTES,
-  displayDayTime,
+  showWorkHours,
+  currentDayWorkHours,
   viewEventProps,
   editEventProps,
   eventColor,
@@ -144,7 +146,8 @@ export const ScheduleDayView = ({
           >
             <ScheduleDayGrid
               rowsEachHour={rowsEachHour}
-              displayDayTime={displayDayTime}
+              workHours={currentDayWorkHours}
+              showWorkHours={showWorkHours}
             />
             <ScheduleDay
               events={events}
