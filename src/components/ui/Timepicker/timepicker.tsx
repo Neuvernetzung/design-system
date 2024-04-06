@@ -1,12 +1,4 @@
 import { IconClock, IconX } from "@tabler/icons-react";
-import {
-  addMinutes,
-  getHours,
-  getMinutes,
-  setHours,
-  setMinutes,
-  subMinutes,
-} from "date-fns";
 import isNumber from "lodash/isNumber";
 import { useRouter } from "next/router";
 import { type ForwardedRef, forwardRef, type MouseEvent, useMemo } from "react";
@@ -23,6 +15,7 @@ import { divides, marginsXSmall } from "@/styles";
 import type { InputVariant, Size } from "@/types";
 import { smallerSize } from "@/utils";
 import { cn } from "@/utils/cn";
+import { localTimeToUtc, utcTimeToLocal } from "@/utils/time/utcTime";
 
 import { IconButton } from "../Button";
 import { FormElement } from "../Form";
@@ -42,48 +35,6 @@ export type TimepickerProps = {
   min?: string;
   max?: string;
   localtime?: boolean;
-};
-
-const utcTimeToLocal = (
-  time: string | undefined,
-  offset: number
-): string | undefined => {
-  if (!time) return time;
-  const [h, m] = time.split(":");
-
-  const localDate = subMinutes(
-    setHours(setMinutes(new Date(), Number(m)), Number(h)),
-    offset
-  );
-
-  const hours = getHours(localDate);
-  const minutes = getMinutes(localDate);
-
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-    2,
-    "0"
-  )}`;
-};
-
-const localTimeToUtc = (
-  time: string | undefined | null,
-  offset: number
-): string | undefined | null => {
-  if (!time) return time;
-  const [h, m] = time.split(":");
-
-  const utcDate = addMinutes(
-    setHours(setMinutes(new Date(), Number(m)), Number(h)),
-    offset
-  );
-
-  const hours = getHours(utcDate);
-  const minutes = getMinutes(utcDate);
-
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-    2,
-    "0"
-  )}`;
 };
 
 export const Timepicker = <
