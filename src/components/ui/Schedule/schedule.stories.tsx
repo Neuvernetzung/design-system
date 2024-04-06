@@ -3,14 +3,13 @@ import {
   addDays,
   addHours,
   addMinutes,
-  Day,
   getDay,
   setHours,
   setMinutes,
   subDays,
 } from "date-fns";
 import { useState } from "react";
-import type { VEvent } from "ts-ics";
+import { type VEvent, weekDays } from "ts-ics";
 
 import { Schedule, ScheduleDayView, ScheduleProps, ViewEvent } from ".";
 import { useSchedule } from "./hooks/useSchedule";
@@ -160,15 +159,15 @@ const events: VEvent[] = [
 ];
 
 const weekWorkHours: ScheduleProps["currentWeekWorkHours"] = {
-  2: [
-    { start: 8, end: 12 },
-    { start: 13, end: 18 },
+  TU: [
+    { start: "8", end: "12" },
+    { start: "13", end: "18" },
   ],
-  3: [
-    { start: 8, end: 12 },
-    { start: 13, end: 18 },
+  WE: [
+    { start: "8", end: "12" },
+    { start: "13:15", end: "18" },
   ],
-  4: [{ start: 8, end: 15 }],
+  TH: [{ start: "8", end: "15" }],
 };
 
 export const Default: Story = {
@@ -183,7 +182,7 @@ export const Default: Story = {
     const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
       useSchedule();
 
-    const displayedWeekDay = getDay(calendarProps.viewing) as Day;
+    const displayedWeekDay = weekDays[getDay(calendarProps.viewing)];
 
     return (
       <Schedule
@@ -233,8 +232,8 @@ export const Disabled: Story = {
         viewEventProps={argsViewEventProps || viewEventProps}
         showWorkHours
         currentDayWorkHours={[
-          { start: 8, end: 12 },
-          { start: 12.5, end: 18 },
+          { start: "8", end: "12" },
+          { start: "12:30", end: "18" },
         ]}
         events={_events}
         disabled

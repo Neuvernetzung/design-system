@@ -1,14 +1,8 @@
 import { DragOverlay } from "@dnd-kit/core";
-import {
-  type Day,
-  addDays,
-  addWeeks,
-  endOfWeek,
-  startOfWeek,
-  subWeeks,
-} from "date-fns";
+import { addDays, addWeeks, endOfWeek, startOfWeek, subWeeks } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";
+import { weekDays } from "ts-ics";
 
 import { cn } from "@/utils";
 
@@ -136,7 +130,7 @@ export const ScheduleWeekView = ({
                   rowsEachHour={rowsEachHour}
                   workHours={
                     currentWeekWorkHours
-                      ? currentWeekWorkHours?.[(i + 1) as Day]
+                      ? currentWeekWorkHours?.[weekDays[i + 1]]
                       : currentDayWorkHours
                   }
                   dayOfWeek={i + 1}
