@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.1
+
+### Patch Changes
+
+- df1b67b: Schedule workHours optimieren #1401
+
 ## 3.5.0
 
 ### Minor Changes
