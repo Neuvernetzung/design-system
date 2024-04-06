@@ -1,13 +1,15 @@
-import { cn } from "@/utils";
-import { Day, isSameMonth, isSameYear } from "date-fns";
+import { isSameMonth, isSameYear } from "date-fns";
 import type { ReactElement } from "react";
-import { getEventEnd, type VEvent } from "ts-ics";
+import { getEventEnd, type VEvent, type WeekDay } from "ts-ics";
+
+import { cn } from "@/utils";
 
 import { divides, gaps, paddingsEvenly } from "../../../styles";
 import type { Color } from "../../../types";
 import { Calendar } from "../Calendar";
 import type { UseCalendarProps } from "../Calendar/hooks/useCalendar";
 import { ScheduleDayView } from "./day";
+import { ScheduleWorkHours } from "./DayGrid";
 import {
   type EditEventProps,
   EventEdit,
@@ -22,9 +24,9 @@ import type { UseScheduleViewProps } from "./hooks/useSchedule";
 import { ScheduleMonthView } from "./month";
 import { isThisDaysEvent } from "./utils/filterEvents";
 import { ScheduleWeekView } from "./week";
-import { ScheduleDisplayWorkHours } from "./DayGrid";
 
 export * from "./day";
+export * from "./DayGrid";
 export * from "./Event";
 export * from "./hooks";
 export * from "./month";
@@ -40,8 +42,8 @@ export type ScheduleProps = {
   hideSideCalendar?: boolean;
   rowsEachHour?: number;
   showWorkHours?: boolean;
-  currentDayWorkHours?: ScheduleDisplayWorkHours;
-  currentWeekWorkHours?: Partial<Record<Day, ScheduleDisplayWorkHours>>;
+  currentDayWorkHours?: ScheduleWorkHours;
+  currentWeekWorkHours?: Partial<Record<WeekDay, ScheduleWorkHours>>;
   onCreate?: (event: VEvent) => void;
   onUpdate?: (event: VEvent, oldEvent: VEvent) => void;
   onDelete?: (event: VEvent) => void;

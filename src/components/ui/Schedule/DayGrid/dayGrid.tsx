@@ -6,12 +6,13 @@ import { cn } from "@/utils";
 import { bgColors, divides, paddingsXSmall } from "../../../../styles";
 import { Text } from "../../Typography";
 import type { ScheduleProps } from "..";
+import { timeStringToHours } from "../utils/time";
 
 export type ScheduleDayGridProps = Pick<
   ScheduleProps,
   "rowsEachHour" | "showWorkHours"
 > & {
-  workHours?: ScheduleDisplayWorkHours;
+  workHours?: ScheduleWorkHours;
 };
 
 const timeFormatter = new Intl.DateTimeFormat(undefined, {
@@ -67,30 +68,35 @@ export const ScheduleWeekGrid = ({
   </div>
 );
 
-export type ScheduleDisplayWorkHour = {
-  start: number;
-  end: number;
+export type ScheduleWorkHour = {
+  start: string;
+  end: string;
 };
 
-export type ScheduleDisplayWorkHours = ScheduleDisplayWorkHour[];
+export type ScheduleWorkHours = ScheduleWorkHour[];
 
 type DisplayWorkHourProps = {
-  workHours?: ScheduleDisplayWorkHours;
+  workHours?: ScheduleWorkHours;
 };
 
 const DisplayWorkHours = ({ workHours }: DisplayWorkHourProps) => {
   if (!workHours || workHours.length === 0) return null;
 
-  return workHours.map((workHour, i) => (
-    <div
-      key={`workHour_${i}`}
-      className={cn("absolute w-full", bgColors.white)}
-      style={{
-        top: `${(100 / 24) * workHour.start}%`,
-        height: `${(100 / 24) * (workHour.end - workHour.start)}%`,
-      }}
-    />
-  ));
+  return workHours.map((workHour, i) => {
+    const start = timeStringToHours(workHour.start);
+    const end = timeStringToHours(workHour.end);
+
+    return (
+      <div
+        key={`workHour_${i}`}
+        className={cn("absolute w-full", bgColors.white)}
+        style={{
+          top: `${(100 / 24) * start}%`,
+          height: `${(100 / 24) * (end - start)}%`,
+        }}
+      />
+    );
+  });
 };
 
 type DayGridProps = Pick<ScheduleProps, "rowsEachHour"> & {
