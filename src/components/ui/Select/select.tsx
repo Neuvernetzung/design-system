@@ -274,45 +274,52 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
           </InputElement>
         </div>
       </FormElement>
-      {isOpen && (
-        <div
-          ref={mergeRefs(compact([refs.setFloating, menuRef]))}
-          data-state={isOpen ? "open" : "closed"}
-          style={{
-            top: y,
-            left: x,
-            position: strategy,
-            width: buttonWidth,
-            maxHeight: maxHeight ? `${maxHeight}px` : undefined,
-          }}
-          className={cn(getDropdownContainerStyles({ size }), optionsClassName)}
-          {...menuProps}
-        >
-          {beforeChildren && (
-            <div className={cn(getDropdownPadding(size))}>{beforeChildren}</div>
-          )}
-          <ul className={cn(getDropdownPadding(size))}>
-            {indexedOptions.map((option, i) => (
-              <SelectOption
-                key={i}
-                {...option}
-                size={size}
-                getItemProps={getItemProps}
-                isSelected={(value) => selectedItem?.value === value}
-                highlightedIndex={highlightedIndex}
-                checkedType={checkedType}
-              />
-            ))}
-            {!indexedOptions ||
-              (indexedOptions.length === 0 && (
-                <NoOptionsFound message={noOptionsMessage} size={size} />
+      <div
+        ref={mergeRefs(compact([menuRef, refs.setFloating]))}
+        data-state={isOpen ? "open" : "closed"}
+        style={{
+          top: y,
+          left: x,
+          position: strategy,
+          width: buttonWidth,
+          maxHeight: maxHeight ? `${maxHeight}px` : undefined,
+          visibility: !isOpen ? "hidden" : "visible",
+        }}
+        className={cn(getDropdownContainerStyles({ size }), optionsClassName)}
+        {...menuProps}
+      >
+        {isOpen && (
+          <>
+            {beforeChildren && (
+              <div className={cn(getDropdownPadding(size))}>
+                {beforeChildren}
+              </div>
+            )}
+            <ul className={cn(getDropdownPadding(size))}>
+              {indexedOptions.map((option, i) => (
+                <SelectOption
+                  key={i}
+                  {...option}
+                  size={size}
+                  getItemProps={getItemProps}
+                  isSelected={(value) => selectedItem?.value === value}
+                  highlightedIndex={highlightedIndex}
+                  checkedType={checkedType}
+                />
               ))}
-          </ul>
-          {afterChildren && (
-            <div className={cn(getDropdownPadding(size))}>{afterChildren}</div>
-          )}
-        </div>
-      )}
+              {!indexedOptions ||
+                (indexedOptions.length === 0 && (
+                  <NoOptionsFound message={noOptionsMessage} size={size} />
+                ))}
+            </ul>
+            {afterChildren && (
+              <div className={cn(getDropdownPadding(size))}>
+                {afterChildren}
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </>
   );
 };
