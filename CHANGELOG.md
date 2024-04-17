@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.5
+
+### Patch Changes
+
+- e4f79a7: Datetimepicker - Localtime für Timepicker hinzufügen #1413
+
 ## 3.5.4
 
 ### Patch Changes
