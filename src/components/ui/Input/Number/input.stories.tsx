@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 
 import { InputNumber } from ".";
-import { inputVariants, sizes } from "../../../../types";
+import { InputVariant, inputVariants, sizes } from "../../../../types";
 import { Form } from "../../Form";
 import { Button } from "../../Button";
 
@@ -22,7 +22,7 @@ const formClassName = "flex flex-col gap-5";
 
 export const Variants = {
   render: ({ ...args }) => {
-    const formMethods = useForm();
+    const formMethods = useForm<Record<InputVariant, number>>();
 
     return (
       <Form
@@ -30,10 +30,10 @@ export const Variants = {
         onSubmit={() => {}}
         className={formClassName}
       >
-        {inputVariants.map((variant, i) => (
+        {inputVariants.map((variant) => (
           <InputNumber
             control={formMethods.control}
-            name={`${variant}_input_${i}`}
+            name={variant}
             variant={variant}
             key={variant}
             placeholder={variant}
