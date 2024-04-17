@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.4
+
+### Patch Changes
+
+- 6480a8c: InputNumber - forwardRef anpassen #1410
+
 ## 3.5.3
 
 ### Patch Changes
