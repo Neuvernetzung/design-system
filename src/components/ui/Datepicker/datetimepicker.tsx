@@ -22,7 +22,7 @@ import {
 } from "react-hook-form";
 
 import type { Locale } from "@/locales/getText";
-import { divides, marginsXSmall, placeholderAsText } from "@/styles";
+import { divides, gaps, marginsXSmall, placeholderAsText } from "@/styles";
 import { getInputStyles } from "@/styles/groups";
 import { smallerSize } from "@/utils";
 import { requiredInputRule } from "@/utils/internal/inputRule";
@@ -32,7 +32,10 @@ import { useCalendar } from "../Calendar/hooks/useCalendar";
 import { FormElement } from "../Form";
 import { Popover } from "../Popover";
 import { usePopover } from "../Popover/popover";
-import { TimePickerInner } from "../Timepicker/timepicker";
+import {
+  TimePickerInner,
+  type TimepickerProps,
+} from "../Timepicker/timepicker";
 import { DatepickerProps } from "./datepicker";
 import { Icon } from "../Icon";
 
@@ -52,7 +55,10 @@ export const Datetimepicker = <
   removeAll = true,
   minDate,
   maxDate,
-}: DatepickerProps & UseControllerProps<TFieldValues, TName>) => {
+  localtime,
+}: DatepickerProps &
+  Pick<TimepickerProps, "localtime"> &
+  UseControllerProps<TFieldValues, TName>) => {
   const calendarProps = useCalendar();
   const { clearSelected, clearTime, select, selected, setViewing } =
     calendarProps;
@@ -180,7 +186,7 @@ export const Datetimepicker = <
                 </button>
               }
               content={
-                <div>
+                <div className={cn("flex flex-col", gaps[size])}>
                   <Calendar
                     calendarProps={calendarProps}
                     minDate={minDate}
@@ -199,8 +205,9 @@ export const Datetimepicker = <
                     }}
                   />
                   <TimePickerInner
-                    inputVariant="ghost"
+                    inputVariant="outline"
                     size="sm"
+                    localtime={localtime}
                     name={`${name}_timepicker`}
                     label="Zeit"
                     value={
