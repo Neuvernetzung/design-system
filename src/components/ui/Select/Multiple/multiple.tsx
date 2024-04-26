@@ -1,4 +1,5 @@
 import {
+  autoUpdate,
   flip,
   offset,
   size as sizeMiddleware,
@@ -223,6 +224,7 @@ export const SelectMultipleRawInner = <
 
   const { x, y, strategy, refs } = useFloating({
     open: isOpen,
+    whileElementsMounted: autoUpdate,
     placement,
     middleware: [
       offset({ mainAxis: offsetSizes[size] }),
