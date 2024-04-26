@@ -1,5 +1,13 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.6
+
+### Patch Changes
+
+- 616ea89: Select kann nicht von useController onChange zurück gesetzt werden. #1419
+- 20118c5: Select und MultipleSelect Container wird nicht mehr resized nach Scroll oder nachdem sich Buttongröße verändert hat #1416
+- aa09325: Indicator Text lineHeight anpassen #1417
+
 ## 3.5.5
 
 ### Patch Changes
