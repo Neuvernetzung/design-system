@@ -4,6 +4,7 @@ import {
   type Placement,
   size as sizeMiddleware,
   useFloating,
+  autoUpdate,
 } from "@floating-ui/react-dom";
 import { IconSelector, IconX } from "@tabler/icons-react";
 import { useSelect } from "downshift";
@@ -161,11 +162,11 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
     reset,
   } = useSelect<SelectOptionValueProps<TValue>>({
     selectedItem:
-      value !== undefined
-        ? valueOptions.find((v) => v.value === value)
+      value === undefined
+        ? undefined
         : value === null
         ? null
-        : undefined,
+        : valueOptions.find((v) => v.value === value),
     toggleButtonId: id,
     items: valueOptions,
     defaultSelectedItem:
@@ -191,6 +192,7 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
 
   const { x, y, strategy, refs } = useFloating({
     open: isOpen,
+    whileElementsMounted: autoUpdate,
     placement,
     middleware: [
       offset({ mainAxis: offsetSizes[size] }),
