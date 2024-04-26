@@ -47,6 +47,7 @@ import { NoOptionsFound } from "../components/NoOptions";
 import { SelectOption } from "../Option";
 import type { SelectProps, SelectValue } from "../select";
 import { useFlatSelectOptions } from "../utils/getFlatSelectOptions";
+import isArray from "lodash/isArray";
 
 export type SelectMultipleProps<TValue extends SelectValue = SelectValue> =
   SelectProps<TValue> & {
@@ -143,16 +144,14 @@ export const SelectMultipleRawInner = <
     selectedItems,
     reset,
   } = useMultipleSelection({
-    selectedItems:
-      values && values.length !== null
-        ? values.map((value) => valueOptions.find((v) => v.value === value))
-        : undefined,
-    defaultSelectedItems:
-      defaultValues && defaultValues.length !== null
-        ? defaultValues.map((value) =>
-            valueOptions.find((v) => v.value === value)
-          )
-        : undefined,
+    selectedItems: isArray(values)
+      ? values.map((value) => valueOptions.find((v) => v.value === value))
+      : undefined,
+    defaultSelectedItems: isArray(defaultValues)
+      ? defaultValues.map((value) =>
+          valueOptions.find((v) => v.value === value)
+        )
+      : undefined,
     onSelectedItemsChange: onChange
       ? ({ selectedItems }) => {
           onChange(compact(selectedItems?.map((item) => item?.value)));

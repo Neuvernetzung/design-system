@@ -17,7 +17,7 @@ import { Text } from "../Typography/Text";
 export default {
   title: "UI/Overlay/Menu",
   component: Menu,
-} ;
+};
 
 const Container = ({ ...props }) => (
   <div className="flex flex-row gap-5" {...props} />

@@ -1,6 +1,6 @@
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 
 import { inputVariants, sizes } from "../../../types";
 import { Button, Form, InputRaw, Popover } from "..";
@@ -425,6 +425,49 @@ export const BeforeAndAfterChildren = {
           allowReset
           {...args}
         />
+      </Form>
+    );
+  },
+};
+
+export const Reset = {
+  render: ({ ...args }) => {
+    const { control, handleSubmit, watch } = useForm({
+      defaultValues: { reset: "option-1" },
+    });
+
+    const {
+      field: { onChange },
+    } = useController({ control, name: "reset" });
+
+    const values = watch();
+
+    const options = [
+      {
+        children: "Option 1",
+        value: "option-1",
+      },
+      {
+        children: "Option 2",
+        value: "option-2",
+      },
+    ];
+
+    return (
+      <Form
+        handleSubmit={handleSubmit}
+        onSubmit={() => {}}
+        className={formClassName}
+      >
+        <Select
+          control={control}
+          name="reset"
+          options={options}
+          allowReset
+          {...args}
+        />
+        <Button onClick={() => onChange(null)}>Reset</Button>
+        {JSON.stringify(values)}
       </Form>
     );
   },
