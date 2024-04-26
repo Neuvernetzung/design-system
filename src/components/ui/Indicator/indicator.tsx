@@ -37,7 +37,7 @@ export const Indicator = ({
           className
         )}
       >
-        <Text color="inherit" size="xs">
+        <Text color="inherit" size="xs" style={{ lineHeight: "100%" }}>
           {value}
         </Text>
       </span>
