@@ -1,7 +1,7 @@
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 
 import { inputVariants, sizes } from "../../../../types";
-import { Form, SelectOptionProps } from "../..";
+import { Button, Form, SelectOptionProps } from "../..";
 import { SelectMultiple } from ".";
 
 export default {
@@ -253,6 +253,49 @@ export const DefaultValue = {
           options={options}
           {...args}
         />
+      </Form>
+    );
+  },
+};
+
+export const Reset = {
+  render: ({ ...args }) => {
+    const { control, handleSubmit, watch } = useForm({
+      defaultValues: { reset: "option-1" },
+    });
+
+    const {
+      field: { onChange },
+    } = useController({ control, name: "reset" });
+
+    const values = watch();
+
+    const options = [
+      {
+        children: "Option 1",
+        value: "option-1",
+      },
+      {
+        children: "Option 2",
+        value: "option-2",
+      },
+    ];
+
+    return (
+      <Form
+        handleSubmit={handleSubmit}
+        onSubmit={() => {}}
+        className={formClassName}
+      >
+        <SelectMultiple
+          control={control}
+          name="reset"
+          options={options}
+          allowReset
+          {...args}
+        />
+        <Button onClick={() => onChange([])}>Reset</Button>
+        {JSON.stringify(values)}
       </Form>
     );
   },
