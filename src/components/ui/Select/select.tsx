@@ -4,6 +4,7 @@ import {
   type Placement,
   size as sizeMiddleware,
   useFloating,
+  autoUpdate,
 } from "@floating-ui/react-dom";
 import { IconSelector, IconX } from "@tabler/icons-react";
 import { useSelect } from "downshift";
@@ -191,6 +192,7 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
 
   const { x, y, strategy, refs } = useFloating({
     open: isOpen,
+    whileElementsMounted: autoUpdate,
     placement,
     middleware: [
       offset({ mainAxis: offsetSizes[size] }),
