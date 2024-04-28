@@ -55,6 +55,9 @@ export type SelectOptionComponentBaseProps<
   isSelected: (value: TValue) => boolean;
   highlightedIndex: number | undefined;
   checkedType?: CheckedType;
+  groupIndex: number;
+  optionsCount: number;
+  beforeOption: SelectOptionProps<TValue> | undefined;
 };
 
 export type SelectOptionComponentProps<
@@ -64,12 +67,11 @@ export type SelectOptionComponentProps<
 export const SelectOption = <TValue extends SelectValue = SelectValue>(
   props: SelectOptionComponentProps<TValue>
 ) => {
-  const { type, size } = props;
+  const { type } = props;
 
   if (type === "group") return <SelectOptionGroup {...props} />;
 
-  if (type === "separator")
-    return <HorizontalRule className={cn(marginsYSmall[size])} />;
+  if (type === "separator") return <SelectOptionSeparator {...props} />;
 
   return <SelectOptionValue {...props} />;
 };
@@ -114,6 +116,21 @@ export const SelectOptionValue = <TValue extends SelectValue = SelectValue>({
   );
 };
 
+export const SelectOptionSeparator = <
+  TValue extends SelectValue = SelectValue
+>({
+  size,
+  groupIndex,
+  optionsCount,
+  beforeOption,
+}: SelectOptionSeparatorProps & SelectOptionComponentBaseProps<TValue>) => {
+  if (groupIndex === 0) return null;
+  if (groupIndex === optionsCount - 1) return null;
+  if (beforeOption?.type === "separator") return null;
+
+  return <HorizontalRule className={cn(marginsYSmall[size])} />;
+};
+
 export const SelectOptionGroup = <TValue extends SelectValue = SelectValue>({
   label,
   options,
@@ -128,10 +145,13 @@ export const SelectOptionGroup = <TValue extends SelectValue = SelectValue>({
     <ul className="flex flex-col">
       {(options || []).map((props, i) => (
         <SelectOption
-          key={`${type}_${label}_option_${i}`}
+          key={`${type}_${label}_nested_option_${i}`}
           {...props}
           {...rest}
           size={size}
+          groupIndex={i}
+          optionsCount={options.length}
+          beforeOption={options[i - 1]}
         />
       ))}
     </ul>

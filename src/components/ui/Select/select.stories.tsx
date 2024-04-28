@@ -472,3 +472,76 @@ export const Reset = {
     );
   },
 };
+
+export const NoDoubleSeparator = {
+  render: ({ ...args }) => {
+    const { control, handleSubmit } = useForm();
+
+    const options: SelectOptionProps[] = [
+      {
+        type: "separator",
+      },
+      {
+        children: "Option 1",
+        value: "option-1",
+      },
+      {
+        children: "Option 2",
+        value: "option-2",
+      },
+      {
+        type: "separator",
+      },
+      {
+        type: "separator",
+      },
+      {
+        children: "Option 3",
+        value: "option-3",
+      },
+      {
+        type: "group",
+        label: "Test",
+        options: [
+          {
+            type: "separator",
+          },
+          {
+            children: "Option 5",
+            value: "option-5",
+          },
+          {
+            type: "separator",
+          },
+          {
+            type: "separator",
+          },
+          {
+            children: "Option 6",
+            value: "option-6",
+          },
+          {
+            type: "separator",
+          },
+        ],
+      },
+      {
+        children: "Option 4",
+        value: "option-4",
+      },
+      {
+        type: "separator",
+      },
+    ];
+
+    return (
+      <Form
+        handleSubmit={handleSubmit}
+        onSubmit={() => {}}
+        className={formClassName}
+      >
+        <Select control={control} name="noDouble" options={options} {...args} />
+      </Form>
+    );
+  },
+};

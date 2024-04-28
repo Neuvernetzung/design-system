@@ -397,6 +397,9 @@ export const SelectMultipleRawInner = <
                   }
                   highlightedIndex={highlightedIndex}
                   checkedType={checkedType}
+                  beforeOption={indexedOptions[i - 1]}
+                  groupIndex={i}
+                  optionsCount={indexedOptions.length}
                 />
               ))}
               {!indexedOptions ||

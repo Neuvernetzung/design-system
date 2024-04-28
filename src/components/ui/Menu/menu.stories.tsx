@@ -332,3 +332,82 @@ export const BeforeAndAfterChildren = {
     );
   },
 };
+
+export const NoDoubleSeparator = {
+  render: ({ ...args }) => {
+    const items: MenuItemProps[] = [
+      {
+        type: "separator",
+      },
+      {
+        children: "Option 1",
+        onClick: () => {},
+      },
+      {
+        children: "Option 2",
+        onClick: () => {},
+      },
+      {
+        type: "separator",
+      },
+      {
+        type: "separator",
+      },
+      {
+        children: "Option 3",
+        onClick: () => {},
+      },
+      {
+        type: "separator",
+      },
+      {
+        type: "group",
+        children: "Test",
+        items: [
+          {
+            type: "separator",
+          },
+          {
+            children: "Option 5",
+            onClick: () => {},
+          },
+          {
+            type: "separator",
+          },
+          {
+            type: "separator",
+          },
+          {
+            children: "Option 4",
+            onClick: () => {},
+          },
+          {
+            type: "separator",
+          },
+        ],
+      },
+      {
+        type: "separator",
+      },
+      {
+        children: "Option 7",
+        onClick: () => {},
+      },
+      {
+        type: "separator",
+      },
+    ];
+
+    return (
+      <Menu
+        beforeChildren={<Text>Test</Text>}
+        afterChildren={<Text>Test</Text>}
+        buttonComponent={
+          <IconButton icon={IconDotsVertical} ariaLabel="menu" />
+        }
+        items={items}
+        {...args}
+      />
+    );
+  },
+};

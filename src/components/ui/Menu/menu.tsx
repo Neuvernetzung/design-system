@@ -114,7 +114,12 @@ export type MenuItemProps =
   | MenuItemRadioProps
   | MenuItemCustomProps;
 
-export type MenuItemComponentProps = { size: Size };
+export type MenuItemComponentProps = {
+  size: Size;
+  beforeOption: MenuItemProps | undefined;
+  groupIndex: number;
+  optionsCount: number;
+};
 
 export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   (
@@ -180,21 +185,26 @@ export const MenuItems = ({
   <ul className={cn(paddingsYSmall[size])}>
     {items?.map((props, i) => (
       <li key={`menu_option_${i}`}>
-        <MenuItem size={capSize(size, "md")} {...props} />
+        <MenuItem
+          size={capSize(size, "md")}
+          beforeOption={items[i - 1]}
+          groupIndex={i}
+          optionsCount={items.length}
+          {...props}
+        />
       </li>
     ))}
   </ul>
 );
 
 const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
-  const { type, size } = props;
+  const { type } = props;
 
   if (type === "button" || !type) return <MenuItemButton {...props} />;
 
   if (type === "anchor") return <MenuItemAnchor {...props} />;
 
-  if (type === "separator")
-    return <HorizontalRule className={cn(marginsYSmall[size])} />;
+  if (type === "separator") return <MenuItemSeparator {...props} />;
 
   if (type === "group") return <MenuItemGroup {...props} />;
 
@@ -260,6 +270,19 @@ const MenuItemButton = ({
     </Button>
   </DropdownMenuItem>
 );
+
+const MenuItemSeparator = ({
+  size,
+  beforeOption,
+  groupIndex,
+  optionsCount,
+}: Omit<MenuItemSeparatorProps, "type"> & MenuItemComponentProps) => {
+  if (groupIndex === 0) return null;
+  if (groupIndex === optionsCount - 1) return null;
+  if (beforeOption?.type === "separator") return null;
+
+  return <HorizontalRule className={cn(marginsYSmall[size])} />;
+};
 
 const MenuItemGroup = ({
   items,
