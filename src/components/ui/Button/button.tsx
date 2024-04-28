@@ -9,6 +9,7 @@ import {
   extendedBorders,
   extendedFocuses,
   extendedTextColors,
+  gapsSmall,
   minHeights,
   paddings,
   roundings,
@@ -57,7 +58,7 @@ type ColorProps = {
 };
 
 export const buttonBaseStyles = {
-  base: "appearance-none flex items-center justify-center select-none gap-2 font-semibold disabled:cursor-not-allowed text-ellipsis",
+  base: "appearance-none flex items-center justify-center select-none font-semibold disabled:cursor-not-allowed text-ellipsis",
   rounded: "!rounded-full",
 };
 
@@ -115,6 +116,7 @@ export const Button = forwardRef(
           buttonBaseStyles.base,
           transition,
           buttonVariantStyles[variant],
+          gapsSmall[size],
           paddings[size],
           roundings[size],
           minHeights[size],
