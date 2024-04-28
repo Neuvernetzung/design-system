@@ -49,7 +49,7 @@ import {
   type CheckedType,
   SelectOption,
   type SelectOptionProps,
-  SelectOptionValueProps,
+  type SelectOptionValueProps,
 } from "./Option";
 import { useFlatSelectOptions } from "./utils/getFlatSelectOptions";
 
@@ -307,6 +307,9 @@ export const SelectRawInner = <TValue extends SelectValue = SelectValue>(
                   isSelected={(value) => selectedItem?.value === value}
                   highlightedIndex={highlightedIndex}
                   checkedType={checkedType}
+                  groupIndex={i}
+                  optionsCount={indexedOptions.length}
+                  beforeOption={indexedOptions[i - 1]}
                 />
               ))}
               {!indexedOptions ||
