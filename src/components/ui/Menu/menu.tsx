@@ -23,7 +23,7 @@ import {
   RefObject,
 } from "react";
 
-import { marginsYSmall } from "@/styles";
+import { gapsSmall, marginsYSmall, paddingsYSmall } from "@/styles";
 import {
   getDropdownContainerStyles,
   getDropdownGroupHeaderStyles,
@@ -36,7 +36,7 @@ import { cn } from "@/utils/cn";
 
 import { Button, type ButtonProps } from "../Button";
 import { HorizontalRule } from "../HorizontalRule";
-import { Icon } from "../Icon";
+import { Icon, iconDimensions } from "../Icon";
 import { Text } from "../Typography";
 
 export type MenuProps = {
@@ -114,7 +114,12 @@ export type MenuItemProps =
   | MenuItemRadioProps
   | MenuItemCustomProps;
 
-export type MenuItemComponentProps = { size: Size };
+export type MenuItemComponentProps = {
+  size: Size;
+  beforeOption: MenuItemProps | undefined;
+  groupIndex: number;
+  optionsCount: number;
+};
 
 export const Menu = forwardRef<HTMLButtonElement, MenuProps>(
   (
@@ -177,24 +182,29 @@ export const MenuItems = ({
   items,
   size = "sm",
 }: Pick<MenuProps, "items" | "size">) => (
-  <ul className={cn(getDropdownPadding(size))}>
+  <ul className={cn(paddingsYSmall[size])}>
     {items?.map((props, i) => (
       <li key={`menu_option_${i}`}>
-        <MenuItem size={size} {...props} />
+        <MenuItem
+          size={capSize(size, "md")}
+          beforeOption={items[i - 1]}
+          groupIndex={i}
+          optionsCount={items.length}
+          {...props}
+        />
       </li>
     ))}
   </ul>
 );
 
 const MenuItem = (props: MenuItemProps & MenuItemComponentProps) => {
-  const { type, size } = props;
+  const { type } = props;
 
   if (type === "button" || !type) return <MenuItemButton {...props} />;
 
   if (type === "anchor") return <MenuItemAnchor {...props} />;
 
-  if (type === "separator")
-    return <HorizontalRule className={cn(marginsYSmall[size])} />;
+  if (type === "separator") return <MenuItemSeparator {...props} />;
 
   if (type === "group") return <MenuItemGroup {...props} />;
 
@@ -225,7 +235,12 @@ const MenuItemAnchor = ({
       leftIcon={icon}
       className={cn("w-full !justify-start")}
     >
-      <Link href={href}>{children}</Link>
+      <Link href={href}>
+        <span className={cn("flex flex-row", gapsSmall[size])}>
+          {!icon && <span className={cn(iconDimensions[size])} />}
+          {children}
+        </span>
+      </Link>
     </Button>
   </DropdownMenuItem>
 );
@@ -240,7 +255,7 @@ const MenuItemButton = ({
 }: Omit<MenuItemButtonProps, "type"> & MenuItemComponentProps) => (
   <DropdownMenuItem asChild>
     <Button
-      size={capSize(size, "md")}
+      size={size}
       disabled={disabled}
       variant="ghost"
       color={color}
@@ -248,10 +263,26 @@ const MenuItemButton = ({
       onClick={onClick}
       leftIcon={icon}
     >
-      {children}
+      <span className={cn("flex flex-row", gapsSmall[size])}>
+        {!icon && <span className={cn(iconDimensions[size])} />}
+        {children}
+      </span>
     </Button>
   </DropdownMenuItem>
 );
+
+const MenuItemSeparator = ({
+  size,
+  beforeOption,
+  groupIndex,
+  optionsCount,
+}: Omit<MenuItemSeparatorProps, "type"> & MenuItemComponentProps) => {
+  if (groupIndex === 0) return null;
+  if (groupIndex === optionsCount - 1) return null;
+  if (beforeOption?.type === "separator") return null;
+
+  return <HorizontalRule className={cn(marginsYSmall[size])} />;
+};
 
 const MenuItemGroup = ({
   items,
@@ -260,11 +291,17 @@ const MenuItemGroup = ({
 }: Omit<MenuItemGroupProps, "type"> & MenuItemComponentProps) => (
   <DropdownMenuGroup>
     {children && (
-      <DropdownMenuLabel asChild>
-        <Text size="xs" className={cn(getDropdownGroupHeaderStyles({ size }))}>
-          {children}
-        </Text>
-      </DropdownMenuLabel>
+      <div className={cn("flex flex-row", gapsSmall[size])}>
+        <span className={cn(iconDimensions[size], "!h-0")} />
+        <DropdownMenuLabel asChild>
+          <Text
+            size="xs"
+            className={cn(getDropdownGroupHeaderStyles({ size }))}
+          >
+            {children}
+          </Text>
+        </DropdownMenuLabel>
+      </div>
     )}
     <MenuItems items={items || []} size={size} />
   </DropdownMenuGroup>
@@ -280,15 +317,17 @@ const MenuItemCheckbox = ({
 }: Omit<MenuItemCheckboxProps, "type"> & MenuItemComponentProps) => (
   <DropdownMenuCheckboxItem checked={checked} onCheckedChange={setChecked}>
     <Button
-      size={capSize(size, "md")}
+      size={size}
       disabled={disabled}
       variant="ghost"
       color={color}
       className={cn("w-full !justify-start")}
     >
-      <DropdownMenuItemIndicator>
-        <Icon icon={IconCheck} size={capSize(size, "md")} />
-      </DropdownMenuItemIndicator>
+      <span className={cn(iconDimensions[size])}>
+        <DropdownMenuItemIndicator>
+          <Icon icon={IconCheck} size={size} />
+        </DropdownMenuItemIndicator>
+      </span>
       {children}
     </Button>
   </DropdownMenuCheckboxItem>
@@ -309,15 +348,17 @@ const MenuItemRadioGroup = ({
         asChild
       >
         <Button
-          size={capSize(size, "md")}
+          size={size}
           disabled={disabled}
           variant="ghost"
           color={color}
           className={cn("w-full !justify-start")}
         >
-          <DropdownMenuItemIndicator>
-            <Icon icon={IconPointFilled} size={capSize(size, "md")} />
-          </DropdownMenuItemIndicator>
+          <span className={cn(iconDimensions[size])}>
+            <DropdownMenuItemIndicator>
+              <Icon icon={IconPointFilled} size={size} />
+            </DropdownMenuItemIndicator>
+          </span>
           {children}
         </Button>
       </DropdownMenuRadioItem>
