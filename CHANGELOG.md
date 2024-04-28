@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.7
+
+### Patch Changes
+
+- 302cbb6: Select - doppelte Separators filtern und ebenfalls Separator bei erster und letzter Stelle #1425
+- 4506a40: Menu - generell Platz für Icons lassen #1426
+
 ## 3.5.6
 
 ### Patch Changes
