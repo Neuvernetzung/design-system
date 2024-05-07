@@ -49,6 +49,7 @@ export const CalendarDateDayView = ({
   gridClassName,
   shortcuts,
   selectType = "single",
+  enableScroll = false,
 }: CalenderDateDayViewProps) => {
   const {
     selected,
@@ -221,6 +222,7 @@ export const CalendarDateDayView = ({
                 ref={daysRef}
                 className={cn("grid grid-cols-7", gridClassName)}
                 onWheel={(e: WheelEvent) => {
+                  if (!enableScroll) return;
                   if (e.deltaY > 0) {
                     viewNextMonth();
                   } else {
