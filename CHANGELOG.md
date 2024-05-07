@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.11
+
+### Patch Changes
+
+- 2d1065d: Schedule - Event Modal defaultFocus nicht auf löschen legen #1439
+
 ## 3.5.10
 
 ### Patch Changes
