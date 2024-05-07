@@ -13,7 +13,7 @@ import {
 import { cn } from "@/utils";
 import { isSameDay } from "date-fns";
 import isFunction from "lodash/isFunction";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getEventEnd, type VEvent } from "ts-ics";
 
 import {
@@ -79,6 +79,8 @@ export const ViewEvent = ({
 }: ViewEventProps) => {
   if (!viewEventProps || !viewEventProps.event) return null;
 
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   const dayFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "full",
   });
@@ -105,6 +107,7 @@ export const ViewEvent = ({
     <Modal
       open={viewEventProps.open}
       setOpen={viewEventProps.setOpen}
+      initialFocus={closeRef} // initialFocus auf close, damit Fokus nicht auf löschen liegt.
       header={
         <div
           className={cn(
@@ -131,6 +134,7 @@ export const ViewEvent = ({
               />
             )}
             <IconButton
+              ref={closeRef}
               size="sm"
               variant="ghost"
               icon={IconX}
