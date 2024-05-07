@@ -33,40 +33,49 @@ export type ScheduleView = (typeof scheduleViews)[number];
 
 export type UseDateProps = { start?: Date; end?: Date };
 
+export const getDateRange = (
+  currentView: ScheduleView,
+  viewing: Date,
+  calendar: UseCalendarProps["calendar"]
+): UseDateProps => {
+  const date = setHours(setMinutes(setSeconds(viewing, 0), 0), 0);
+
+  if (currentView === "day") {
+    return { start: date, end: addDays(date, 1) };
+  }
+  if (currentView === "week") {
+    return {
+      start: startOfWeek(date, { weekStartsOn: 1 }),
+      end: endOfWeek(date, { weekStartsOn: 1 }),
+    };
+  }
+  if (currentView === "month") {
+    const lastRow = (calendar[0]?.length || 0) - 1;
+    const lastDate = (calendar[0][lastRow]?.length || 0) - 1;
+
+    const start = calendar[0][0][0];
+    const end = calendar[0][lastRow][lastDate];
+
+    if (!start || !end) return { start: undefined, end: undefined };
+
+    return {
+      start,
+      end: endOfDay(end),
+    };
+  }
+
+  return { start: undefined, end: undefined };
+};
+
 export const useDateRange = (
   currentView: ScheduleView,
   viewing: Date,
   calendar: UseCalendarProps["calendar"]
 ): UseDateProps =>
-  useMemo((): UseDateProps => {
-    const date = setHours(setMinutes(setSeconds(viewing, 0), 0), 0);
-
-    if (currentView === "day") {
-      return { start: date, end: addDays(date, 1) };
-    }
-    if (currentView === "week") {
-      return {
-        start: startOfWeek(date, { weekStartsOn: 1 }),
-        end: endOfWeek(date, { weekStartsOn: 1 }),
-      };
-    }
-    if (currentView === "month") {
-      const lastRow = (calendar[0]?.length || 0) - 1;
-      const lastDate = (calendar[0][lastRow]?.length || 0) - 1;
-
-      const start = calendar[0][0][0];
-      const end = calendar[0][lastRow][lastDate];
-
-      if (!start || !end) return { start: undefined, end: undefined };
-
-      return {
-        start,
-        end: endOfDay(end),
-      };
-    }
-
-    return { start: undefined, end: undefined };
-  }, [viewing, currentView]);
+  useMemo(
+    () => getDateRange(currentView, viewing, calendar),
+    [viewing, currentView]
+  );
 
 export const useScheduleBase = () => {
   const viewEventProps = useViewEvent();
