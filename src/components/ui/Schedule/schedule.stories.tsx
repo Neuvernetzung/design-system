@@ -12,7 +12,7 @@ import { useState } from "react";
 import { type VEvent, weekDays } from "ts-ics";
 
 import { Schedule, ScheduleDayView, ScheduleProps, ViewEvent } from ".";
-import { useSchedule } from "./hooks/useSchedule";
+import { useSchedule, useUrlSchedule } from "./hooks/useSchedule";
 import { ScheduleMonthView } from "./month";
 import { ScheduleWeekView } from "./week";
 
@@ -306,6 +306,28 @@ export const Months: Story = {
     ...args
   }) {
     const { calendarProps, viewEventProps } = useSchedule();
+
+    return (
+      <>
+        <ScheduleMonthView
+          events={events}
+          calendarProps={argsCalendarProps || calendarProps}
+          viewEventProps={argsViewEventProps || viewEventProps}
+          {...args}
+        />
+        <ViewEvent viewEventProps={viewEventProps} />
+      </>
+    );
+  },
+};
+
+export const UrlState: Story = {
+  render: function Render({
+    calendarProps: argsCalendarProps,
+    viewEventProps: argsViewEventProps,
+    ...args
+  }) {
+    const { calendarProps, viewEventProps } = useUrlSchedule();
 
     return (
       <>

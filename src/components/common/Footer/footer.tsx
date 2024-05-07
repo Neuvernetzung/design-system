@@ -97,8 +97,8 @@ export const Footer = forwardRef(
       >
         <section
           className={cn(
-            "w-full mx-auto flex flex-col ",
-            main && "md:grid md:grid-cols-2 lg:grid-cols-3",
+            "w-full mx-auto flex flex-col",
+            main !== undefined && "md:grid md:grid-cols-2 lg:grid-cols-3",
             pageGaps[pagePadding],
             pagePaddings[pagePadding],
             maxPageWidth && maxPageWidths[maxPageWidth]

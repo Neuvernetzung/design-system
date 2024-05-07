@@ -14,7 +14,7 @@ import {
   useQueryState as useNuqs,
   type UseQueryStateOptions,
 } from "nuqs";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export {
   parseAsArrayOf as parseQueryAsArrayOf,
@@ -47,5 +47,5 @@ export const useUrlState = <T = string>(
 
   const state = isFirstRender ? options?.defaultValue : queryState || undefined;
 
-  return [state, setQueryState] as [T, typeof setQueryState];
+  return [state, setQueryState] as [T, Dispatch<SetStateAction<T>>];
 };

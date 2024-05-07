@@ -5,6 +5,7 @@ import {
   parseQueryAsIsoDateTime,
   useUrlState,
 } from "@/hooks";
+import type { Dispatch, SetStateAction } from "react";
 
 export type UseCalendar = typeof useCalendar;
 export type UseCalendarProps = ReturnType<UseCalendar>;
@@ -27,8 +28,8 @@ export type UseUrlCalendarReturns = Omit<
   LiliusReturns,
   "setSelected" | "setViewing"
 > & {
-  setSelected: (value: Date[] | ((old: Date[] | null) => Date[])) => void;
-  setViewing: (value: Date | ((old: Date | null) => Date)) => void;
+  setSelected: Dispatch<SetStateAction<Date[]>>;
+  setViewing: Dispatch<SetStateAction<Date>>;
 };
 
 export const useUrlCalendar = (
