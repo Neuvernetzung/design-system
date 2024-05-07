@@ -26,6 +26,7 @@ export type CalendarProps = {
   colsClassName?: string;
   gridClassName?: string;
   shortcuts?: CalendarShortcutProps[];
+  enableScroll?: boolean;
 } & Partial<CalendarSelectPropsUnion>;
 
 export type CalendarShortcutProps = ({
@@ -64,6 +65,7 @@ export const Calendar = ({
   shortcuts,
   onChange,
   selectType = "single",
+  enableScroll = false,
 }: CalendarProps) => {
   const cal = useCalendar();
   const calendarProps = _calendarProps || cal;
@@ -92,6 +94,7 @@ export const Calendar = ({
           gridClassName={gridClassName}
           shortcuts={shortcuts}
           selectType={selectType}
+          enableScroll={enableScroll}
         />
       )}
       {currentView === "months" && (
