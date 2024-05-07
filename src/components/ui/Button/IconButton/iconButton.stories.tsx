@@ -107,7 +107,7 @@ export const Sizes: Story = {
 };
 
 export const AsChild: Story = {
-  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, ...args }) => (
+  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, asChild, ...args }) => (
     <Container>
       <IconButton
         asChild
