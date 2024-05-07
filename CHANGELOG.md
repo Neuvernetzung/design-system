@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.9
+
+### Patch Changes
+
+- 24cc9f0: Calendar - Scroll per default deaktivieren #1433
+
 ## 3.5.8
 
 ### Patch Changes
