@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.12
+
+### Patch Changes
+
+- 9f6f93c: useUrlState Return Type angepasst #1442
+
 ## 3.5.11
 
 ### Patch Changes
