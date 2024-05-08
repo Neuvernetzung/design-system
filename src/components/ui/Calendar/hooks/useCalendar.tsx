@@ -5,7 +5,7 @@ import {
   parseQueryAsIsoDateTime,
   useUrlState,
 } from "@/hooks";
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 export type UseCalendar = typeof useCalendar;
 export type UseCalendarProps = ReturnType<UseCalendar>;
@@ -48,10 +48,12 @@ export const useUrlCalendar = (
     ),
   });
 
+  const [initialViewing] = useState(new Date()); // Muss mit useState verwendet werden, sonst rerendert defaultValue ewig bei useUrlState
+
   const [viewing, setViewing] = useUrlState("viewing", {
     ...parseQueryAsIsoDateTime,
     history: "replace",
-    defaultValue: props?.initialView || new Date(),
+    defaultValue: props?.initialView || initialViewing,
   });
 
   return {
