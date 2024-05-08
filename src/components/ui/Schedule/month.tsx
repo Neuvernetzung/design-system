@@ -1,5 +1,5 @@
 import { DragOverlay, useDroppable } from "@dnd-kit/core";
-import { cn } from "@/utils";
+import { cn, dateInRange } from "@/utils";
 import {
   addDays,
   addMonths,
@@ -82,7 +82,7 @@ export const ScheduleMonthView = ({
   disableDrag,
   disableCreate,
 }: ScheduleMonthViewProps) => {
-  const { setViewing, viewing, calendar, inRange } = calendarProps;
+  const { setViewing, viewing, calendar } = calendarProps;
 
   const { setCurrentView } = scheduleViewProps || {};
 
@@ -174,7 +174,7 @@ export const ScheduleMonthView = ({
                     <ScheduleMonthDay
                       key={`month_week_${i}_day_${j}`}
                       day={day}
-                      isInRange={inRange(
+                      isInRange={dateInRange(
                         day,
                         startOfMonth(viewing),
                         endOfMonth(viewing)

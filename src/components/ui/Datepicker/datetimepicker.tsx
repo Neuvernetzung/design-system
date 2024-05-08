@@ -24,7 +24,7 @@ import {
 import type { Locale } from "@/locales/getText";
 import { divides, gaps, marginsXSmall, placeholderAsText } from "@/styles";
 import { getInputStyles } from "@/styles/groups";
-import { smallerSize } from "@/utils";
+import { clearTime, smallerSize } from "@/utils";
 import { requiredInputRule } from "@/utils/internal/inputRule";
 import { IconButton } from "../Button";
 import { Calendar } from "../Calendar";
@@ -60,12 +60,11 @@ export const Datetimepicker = <
   Pick<TimepickerProps, "localtime"> &
   UseControllerProps<TFieldValues, TName>) => {
   const calendarProps = useCalendar();
-  const { clearSelected, clearTime, select, selected, setViewing } =
-    calendarProps;
+  const { clearSelected, select, selected, setViewing } = calendarProps;
 
   const popoverControler = usePopover({});
 
-  // Initial Value für useLilius select setzen
+  // Initial Value für useCalendar select setzen
   const {
     field: { value: initialValue },
   } = useController({ control, name });

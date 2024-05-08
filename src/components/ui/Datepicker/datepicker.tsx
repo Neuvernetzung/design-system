@@ -30,6 +30,7 @@ import { FormElement, RequiredRule } from "../Form";
 import { Popover } from "../Popover";
 import { usePopover } from "../Popover/popover";
 import { Icon } from "../Icon";
+import { clearTime } from "@/utils/date";
 
 export type DatepickerProps = {
   label?: string;
@@ -62,12 +63,11 @@ export const Datepicker = <
   maxDate,
 }: DatepickerProps & UseControllerProps<TFieldValues, TName>) => {
   const calendarProps = useCalendar();
-  const { clearSelected, clearTime, select, selected, setViewing } =
-    calendarProps;
+  const { clearSelected, select, selected, setViewing } = calendarProps;
 
   const popoverControler = usePopover();
 
-  // Initial Value für useLilius select setzen
+  // Initial Value für useCalendar select setzen
   const {
     field: { value: initialValue },
   } = useController({ control, name });

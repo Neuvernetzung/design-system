@@ -26,6 +26,7 @@ import type { CalendarProps } from "../calendar";
 import { CalendarHeader } from "../header";
 import { isBetweenRange, isRangeEnd, isRangeStart } from "../utils";
 import { calendarSelect } from "../utils/select";
+import { clearTime } from "@/utils/date";
 
 export type CalenderDateDayViewProps = Omit<CalendarProps, "calendarProps"> &
   Required<Pick<CalendarProps, "calendarProps">> & {
@@ -54,7 +55,6 @@ export const CalendarDateDayView = ({
   const {
     selected,
     viewing,
-    clearTime,
     viewToday,
     setViewing,
     viewPreviousMonth,

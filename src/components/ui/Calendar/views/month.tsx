@@ -29,6 +29,7 @@ import { Button } from "../../Button";
 import type { CalendarProps } from "..";
 import { CalendarHeader } from "../header";
 import { Indicator } from "../../Indicator";
+import { clearTime, dateInRange } from "@/utils/date";
 
 export type CalenderDateMonthViewProps = Omit<
   CalendarProps,
@@ -54,7 +55,7 @@ export const CalendarDateMonthView = ({
   buttonClassName,
   gridClassName,
 }: CalenderDateMonthViewProps) => {
-  const { selected, viewing, clearTime, setViewing, inRange } = calendarProps;
+  const { selected, viewing, setViewing } = calendarProps;
 
   const [preselectedMonth, setPreselectedMonth] = useState<Date>(new Date());
 
@@ -68,28 +69,28 @@ export const CalendarDateMonthView = ({
 
     if (e.key === "ArrowLeft") {
       const toSelect = subMonths(preselectedMonth, 1);
-      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
+      if (!dateInRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(subYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
 
     if (e.key === "ArrowRight") {
       const toSelect = addMonths(preselectedMonth, 1);
-      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
+      if (!dateInRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(addYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
 
     if (e.key === "ArrowUp") {
       const toSelect = subMonths(preselectedMonth, 4);
-      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
+      if (!dateInRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(subYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
 
     if (e.key === "ArrowDown") {
       const toSelect = addMonths(preselectedMonth, 4);
-      if (!inRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
+      if (!dateInRange(toSelect, startOfYear(viewing), endOfYear(viewing)))
         setViewing(addYears(viewing, 1));
       setPreselectedMonth(toSelect);
     }
@@ -108,11 +109,11 @@ export const CalendarDateMonthView = ({
 
     if (
       selected.length > 0 &&
-      inRange(selected[0], startOfYear(viewing), endOfYear(viewing))
+      dateInRange(selected[0], startOfYear(viewing), endOfYear(viewing))
     )
       return setPreselectedMonth(selected[0]);
 
-    if (inRange(new Date(), startOfYear(viewing), endOfYear(viewing)))
+    if (dateInRange(new Date(), startOfYear(viewing), endOfYear(viewing)))
       return setPreselectedMonth(new Date());
 
     if (e.key === "ArrowRight" || e.key === "ArrowDown")
