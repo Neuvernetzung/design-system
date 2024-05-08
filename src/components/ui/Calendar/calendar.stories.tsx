@@ -14,7 +14,7 @@ import {
   isSameYear,
   subDays,
 } from "date-fns";
-import { useCalendar } from "./hooks/useCalendar";
+import { useCalendar, useUrlCalendar } from "./hooks/useCalendar";
 
 export default {
   title: "UI/Data Display/Calendar",
@@ -158,6 +158,23 @@ export const RangeSelect = {
           calendarProps={calendarProps}
           {...args}
         />
+      </>
+    );
+  },
+};
+
+export const UseUrlCalendar = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
+  render: ({ ...args }) => {
+    const calendarProps = useUrlCalendar();
+
+    return (
+      <>
+        <Calendar selectType="range" calendarProps={calendarProps} {...args} />
       </>
     );
   },

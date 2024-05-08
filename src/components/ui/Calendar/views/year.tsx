@@ -27,6 +27,7 @@ import { Button } from "../../Button";
 import type { CalendarProps } from "..";
 import { CalendarHeader } from "../header";
 import { Indicator } from "../../Indicator";
+import { clearTime, dateInRange } from "@/utils/date";
 
 export type CalenderDateYearViewProps = Omit<
   CalendarProps,
@@ -52,7 +53,7 @@ export const CalendarDateYearView = ({
   buttonClassName,
   gridClassName,
 }: CalenderDateYearViewProps) => {
-  const { inRange, selected, viewing, clearTime, setViewing } = calendarProps;
+  const { selected, viewing, setViewing } = calendarProps;
 
   const [preselectedYear, setPreselectedYear] = useState<Date>(new Date());
 
@@ -66,28 +67,28 @@ export const CalendarDateYearView = ({
 
     if (e.key === "ArrowLeft") {
       const toSelect = subYears(preselectedYear, 1);
-      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
+      if (!dateInRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(subYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
 
     if (e.key === "ArrowRight") {
       const toSelect = addYears(preselectedYear, 1);
-      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
+      if (!dateInRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(addYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
 
     if (e.key === "ArrowUp") {
       const toSelect = subYears(preselectedYear, 5);
-      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
+      if (!dateInRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(subYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
 
     if (e.key === "ArrowDown") {
       const toSelect = addYears(preselectedYear, 5);
-      if (!inRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
+      if (!dateInRange(toSelect, startOfDecade(viewing), endOfDecade(viewing)))
         setViewing(addYears(viewing, 10));
       setPreselectedYear(toSelect);
     }
@@ -106,11 +107,11 @@ export const CalendarDateYearView = ({
 
     if (
       selected.length > 0 &&
-      inRange(selected[0], startOfDecade(viewing), endOfDecade(viewing))
+      dateInRange(selected[0], startOfDecade(viewing), endOfDecade(viewing))
     )
       return setPreselectedYear(selected[0]);
 
-    if (inRange(new Date(), startOfDecade(viewing), endOfDecade(viewing)))
+    if (dateInRange(new Date(), startOfDecade(viewing), endOfDecade(viewing)))
       return setPreselectedYear(new Date());
 
     if (e.key === "ArrowRight" || e.key === "ArrowDown")
@@ -169,18 +170,18 @@ export const CalendarDateYearView = ({
             tabIndex={
               selected.length > 0 && isSameYear(selected[0], year)
                 ? 0
-                : !inRange(
+                : !dateInRange(
                     selected[0],
                     startOfDecade(viewing),
                     endOfDecade(viewing)
                   ) && isSameYear(new Date(), year)
                 ? 0
-                : !inRange(
+                : !dateInRange(
                     selected[0],
                     startOfDecade(viewing),
                     endOfDecade(viewing)
                   ) &&
-                  !inRange(
+                  !dateInRange(
                     new Date(),
                     startOfDecade(viewing),
                     endOfDecade(viewing)

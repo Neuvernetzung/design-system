@@ -1,11 +1,13 @@
-import { Day, type Returns as LiliusReturns, useLilius } from "use-lilius";
-
 import {
   parseQueryAsArrayOf,
   parseQueryAsIsoDateTime,
   useUrlState,
 } from "@/hooks";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
+import { weekDays } from "ts-ics";
+import { UseCalendarBaseReturns, useCalendarBase } from "./useCalendarBase";
+import { Day } from "date-fns";
+import { clearTime } from "@/utils/date";
 
 export type UseCalendar = typeof useCalendar;
 export type UseCalendarProps = ReturnType<UseCalendar>;
@@ -16,36 +18,38 @@ export type UseCalendarOwnProps = {
   initialView?: Date;
 };
 
-export const useCalendar = (props?: UseCalendarOwnProps): LiliusReturns =>
-  useLilius({
-    weekStartsOn: Day.MONDAY,
+export type UseUrlCalendarReturns = UseCalendarBaseReturns;
+
+export const useCalendar = (
+  props?: UseCalendarOwnProps
+): UseCalendarBaseReturns => {
+  const [selected, setSelected] = useState<Date[]>(
+    props?.defaultValue?.map(clearTime) || []
+  );
+
+  const [viewing, setViewing] = useState<Date>(
+    props?.initialView || new Date()
+  );
+
+  const calendarProps = useCalendarBase({
+    weekStartsOn: weekDays.indexOf("MO") as Day,
     numberOfMonths: props?.cols,
-    selected: props?.defaultValue,
-    viewing: props?.initialView,
+    selected,
+    setSelected,
+    viewing,
+    setViewing,
   });
 
-export type UseUrlCalendarReturns = Omit<
-  LiliusReturns,
-  "setSelected" | "setViewing"
-> & {
-  setSelected: Dispatch<SetStateAction<Date[]>>;
-  setViewing: Dispatch<SetStateAction<Date>>;
+  return calendarProps;
 };
 
 export const useUrlCalendar = (
   props?: UseCalendarOwnProps
 ): UseUrlCalendarReturns => {
-  const calendarProps = useLilius({
-    weekStartsOn: Day.MONDAY,
-    numberOfMonths: props?.cols,
-  });
-
   const [selected, setSelected] = useUrlState("selected", {
     ...parseQueryAsArrayOf(parseQueryAsIsoDateTime),
     history: "replace",
-    defaultValue: (props?.defaultValue || []).map((v) =>
-      calendarProps.clearTime(v)
-    ),
+    defaultValue: (props?.defaultValue || []).map((v) => clearTime(v)),
   });
 
   const [initialViewing] = useState(new Date()); // Muss mit useState verwendet werden, sonst rerendert defaultValue ewig bei useUrlState
@@ -56,11 +60,14 @@ export const useUrlCalendar = (
     defaultValue: props?.initialView || initialViewing,
   });
 
-  return {
-    ...calendarProps,
-    selected,
-    setSelected,
+  const calendarProps = useCalendarBase({
     viewing,
     setViewing,
-  };
+    weekStartsOn: weekDays.indexOf("MO") as Day,
+    numberOfMonths: props?.cols,
+    selected,
+    setSelected,
+  });
+
+  return calendarProps;
 };
