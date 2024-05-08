@@ -1,7 +1,14 @@
 import { DragOverlay } from "@dnd-kit/core";
-import { addDays, getHours, getMinutes, isToday, subDays } from "date-fns";
+import {
+  addDays,
+  getHours,
+  getMinutes,
+  isToday,
+  setHours,
+  subDays,
+} from "date-fns";
 import isFunction from "lodash/isFunction";
-import { useRef } from "react";
+import { MouseEvent, useRef } from "react";
 
 import { cn } from "@/utils";
 
@@ -284,9 +291,13 @@ export const ScheduleDay = ({
         </span>
       ) : null}
       <ol
-        onDoubleClick={() => {
+        onDoubleClick={(e: MouseEvent<HTMLOListElement>) => {
           if (disableCreate) return;
-          editEventProps?.setCreate(day);
+          const rect = e.currentTarget.getBoundingClientRect();
+          const y = e.clientY - rect.top; //y position within the element.
+          const hours = Math.min(Math.max((1 / rect.height) * y * 24, 0), 24); // Muss nicht gerundet werden, da setHours nur volle Stunde setzt.
+
+          editEventProps?.setCreate(setHours(day, hours));
         }}
         className={cn("grid h-full", paddingsXSmall.md, gapsXSmall.md)}
         style={{
