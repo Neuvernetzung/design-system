@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.14
+
+### Patch Changes
+
+- 2a9838b: Schedule - useUrlSchedule optimieren #1448
+
 ## 3.5.13
 
 ### Patch Changes
