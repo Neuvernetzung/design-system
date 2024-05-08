@@ -8,7 +8,7 @@ import {
   setMinutes,
   subDays,
 } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type VEvent, weekDays } from "ts-ics";
 
 import { Schedule, ScheduleDayView, ScheduleProps, ViewEvent } from ".";
@@ -322,22 +322,40 @@ export const Months: Story = {
 };
 
 export const UrlState: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   render: function Render({
+    scheduleViewProps: argsScheduleViewProps,
     calendarProps: argsCalendarProps,
     viewEventProps: argsViewEventProps,
+    editEventProps: argsEditEventProps,
     ...args
   }) {
-    const { calendarProps, viewEventProps } = useUrlSchedule();
+    const {
+      dateRange,
+      editEventProps,
+      scheduleViewProps,
+      calendarProps,
+      viewEventProps,
+    } = useUrlSchedule();
+
+    useEffect(() => {
+      console.log("range");
+    }, [dateRange]);
 
     return (
       <>
-        <ScheduleMonthView
+        <Schedule
           events={events}
+          scheduleViewProps={argsScheduleViewProps || scheduleViewProps}
+          editEventProps={argsEditEventProps || editEventProps}
           calendarProps={argsCalendarProps || calendarProps}
           viewEventProps={argsViewEventProps || viewEventProps}
           {...args}
         />
-        <ViewEvent viewEventProps={viewEventProps} />
       </>
     );
   },
