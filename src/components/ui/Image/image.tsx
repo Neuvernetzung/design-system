@@ -73,7 +73,7 @@ export const Image = ({
           {...imageProps}
         />
       ) : (
-        <Fallback src={String(src)} alt={alt} className={className} />
+        <ImageFallback src={String(src)} alt={alt} className={className} />
       )}
     </div>
   );
@@ -89,7 +89,10 @@ export const NextImageWithFallback = ({
 }: NextImageWithFallbackProps) => {
   const [error, setError] = useState<boolean>(false);
 
-  return !error && src ? (
+  if (!src || error)
+    return <ImageFallback src={String(src)} alt={alt} className={className} />;
+
+  return (
     <ResolvedImage
       className={cn(className)}
       alt={alt}
@@ -97,14 +100,12 @@ export const NextImageWithFallback = ({
       onError={() => setError(true)}
       {...imageProps}
     />
-  ) : (
-    <Fallback src={String(src)} alt={alt} className={className} />
   );
 };
 
-type FallbackProps = { src?: string; alt?: string; className?: string };
+type ImageFallbackProps = { src?: string; alt?: string; className?: string };
 
-const Fallback = ({ src, alt, className }: FallbackProps) => (
+export const ImageFallback = ({ src, alt, className }: ImageFallbackProps) => (
   <div
     aria-describedby={src}
     aria-label={alt}
