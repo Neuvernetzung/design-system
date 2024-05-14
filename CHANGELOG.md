@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.16
+
+### Patch Changes
+
+- 2116f96: Image - Fallback exportieren #1454
+
 ## 3.5.15
 
 ### Patch Changes
