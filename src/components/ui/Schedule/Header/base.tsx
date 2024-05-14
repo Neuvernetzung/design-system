@@ -7,11 +7,11 @@ import {
 import { cn } from "@/utils";
 import type { MouseEventHandler } from "react";
 
-import { gaps } from "../../../styles";
-import { Button, IconButton } from "../Button";
-import { Tooltip } from "../Tooltip";
-import { Text } from "../Typography";
-import type { ScheduleProps } from ".";
+import { gaps } from "@/styles/gaps";
+import { Button, IconButton } from "../../Button";
+import { Tooltip } from "../../Tooltip";
+import { Text } from "../../Typography/Text";
+import type { ScheduleProps } from "..";
 
 export type ScheduleHeaderProps = Omit<
   ScheduleProps,
@@ -34,7 +34,7 @@ export type ScheduleHeaderProps = Omit<
     title: string;
   };
 
-export const ScheduleHeader = ({
+export const ScheduleHeaderBase = ({
   calendarProps,
   scheduleViewProps,
   leftAriaLabel,
@@ -72,7 +72,7 @@ export const ScheduleHeader = ({
             <IconButton
               size="sm"
               variant="ghost"
-              ariaLabel="view_today"
+              ariaLabel="Heute ansehen"
               icon={IconCalendarEvent}
               onClick={viewToday}
             />

@@ -11,10 +11,11 @@ import {
 import { useEffect, useState } from "react";
 import { type VEvent, weekDays } from "ts-ics";
 
-import { Schedule, ScheduleDayView, ScheduleProps, ViewEvent } from ".";
+import { Schedule, ScheduleProps, ViewEvent } from ".";
 import { useSchedule, useUrlSchedule } from "./hooks/useSchedule";
-import { ScheduleMonthView } from "./month";
-import { ScheduleWeekView } from "./week";
+import { ScheduleDayView } from "./View/day";
+import { ScheduleWeekView } from "./View/week";
+import { ScheduleMonthView } from "./View/month";
 
 const meta: Meta<typeof Schedule> = {
   title: "UI/Data Display/Schedule",

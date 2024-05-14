@@ -1,12 +1,5 @@
 import { DragOverlay } from "@dnd-kit/core";
-import {
-  addDays,
-  getHours,
-  getMinutes,
-  isToday,
-  setHours,
-  subDays,
-} from "date-fns";
+import { getHours, getMinutes, isToday, setHours } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { MouseEvent, useRef } from "react";
 
@@ -21,25 +14,23 @@ import {
   heights,
   paddingsXSmall,
   paddingsYSmall,
-} from "../../../styles";
-import { Color } from "../../../types";
-import { Button } from "../Button";
-import { ScrollArea } from "../ScrollArea";
-import { Text } from "../Typography";
-import type { ScheduleProps } from ".";
+} from "../../../../styles";
+import { Color } from "../../../../types";
+import { Button } from "../../Button";
+import { ScrollArea } from "../../ScrollArea";
+import { Text } from "../../Typography/Text";
+import type { ScheduleProps } from "../";
 import {
   calcDayRows,
   DEFAULT_PRECISION_IN_MINUTES,
   ScheduleDayGrid,
   useLayoutDayEvents,
-} from "./DayGrid";
-import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
-import { DraggableEvent, DragOverlayEvent } from "./Event";
-import type { UseViewEventProps } from "./Event/view";
-import { ScheduleHeader, type ScheduleHeaderProps } from "./header";
-import { useScrollToTime } from "./hooks/useScrollToTime";
-import { getThisDaysEvents } from "./utils/filterEvents";
-import { titleFormatter } from "./utils/formatTitle";
+} from "../DayGrid";
+import { DayGridDndContext, useDayGridDraggable } from "../DayGrid/dragAndDrop";
+import { DraggableEvent, DragOverlayEvent } from "../Event";
+import type { UseViewEventProps } from "../Event/view";
+import { useScrollToTime } from "../hooks/useScrollToTime";
+import { getThisDaysEvents } from "../utils/filterEvents";
 
 export type ScheduleDayViewProps = Omit<
   ScheduleProps,
@@ -79,7 +70,7 @@ export const ScheduleDayView = ({
   disableDrag,
   disableCreate,
 }: ScheduleDayViewProps) => {
-  const { setViewing, viewing } = calendarProps;
+  const { viewing } = calendarProps;
 
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const gridInnerRef = useRef<HTMLDivElement>(null);
@@ -110,17 +101,6 @@ export const ScheduleDayView = ({
 
   return (
     <>
-      <ScheduleHeader
-        scheduleViewProps={scheduleViewProps}
-        calendarProps={calendarProps}
-        leftAriaLabel="previous_day"
-        leftArrowFunction={() => setViewing(subDays(viewing, 1))}
-        rightAriaLabel="next_day"
-        rightArrowFunction={() => setViewing(addDays(viewing, 1))}
-        title={titleFormatter.format(viewing)}
-        editEventProps={editEventProps}
-        disableCreate={disabled || !isFunction(onCreate) || disableCreate}
-      />
       <div
         className={cn(
           "grid grid-cols-1 border ml-12 divide-x divide-opacity-50 dark:divide-opacity-50",
@@ -189,7 +169,7 @@ export const ScheduleDayView = ({
 export type DayScheduleHeadProps = {
   day: Date;
   setViewing?: (viewing: Date) => void;
-} & Pick<ScheduleHeaderProps, "scheduleViewProps">;
+} & Partial<Pick<ScheduleProps, "scheduleViewProps">>;
 
 export const DayScheduleHead = ({
   day,

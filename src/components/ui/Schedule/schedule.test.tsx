@@ -2,13 +2,11 @@ import { axe } from "jest-axe";
 import type { ReactNode } from "react";
 
 import { render } from "../../../../test-utils";
-import {
-  Schedule,
-  ScheduleDayView,
-  ScheduleMonthView,
-  ScheduleWeekView,
-} from ".";
+import { Schedule } from ".";
 import { useSchedule, type UseScheduleProps } from "./hooks";
+import { ScheduleDayView } from "./View/day";
+import { ScheduleMonthView } from "./View/month";
+import { ScheduleWeekView } from "./View/week";
 
 type SchedulePropsWrapperProps = {
   children: (scheduleProps: UseScheduleProps) => ReactNode;
