@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.6.2
+
+### Patch Changes
+
+- 029528e: Schedule - Header und Views Type anpassen #1470
+
 ## 3.6.1
 
 ### Patch Changes
