@@ -24,6 +24,7 @@ export * from "./View";
 export * from "./Header";
 export * from "./Event";
 export * from "./hooks";
+export * from "./Wrapper";
 
 export type ScheduleProps = {
   calendarProps: UseCalendarProps;
