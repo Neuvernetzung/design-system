@@ -1,5 +1,6 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { useEffect } from "react";
+import isString from "lodash/isString";
+import { type ReactElement, useEffect } from "react";
 
 import { gaps, paddingsYLarge } from "@/styles";
 import { cn } from "@/utils";
@@ -16,7 +17,7 @@ import {
 export type PaginationProps = {
   limits?: number[];
   result: number;
-  emptyMessage?: string;
+  emptyMessage?: ReactElement;
   size?: Size;
   containerClassName?: string;
   selectLimit?: boolean;
@@ -140,11 +141,11 @@ export const Pagination = ({
             />
           </div>
         )
-      ) : (
+      ) : emptyMessage ? (
         <div className="w-full flex justify-center">
-          <Text>{emptyMessage}</Text>
+          {isString(emptyMessage) ? <Text>{emptyMessage}</Text> : emptyMessage}
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
