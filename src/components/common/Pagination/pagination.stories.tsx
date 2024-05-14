@@ -143,6 +143,12 @@ export const ComponentAsEmptyMessage = {
         <Pagination
           result={0}
           {...paginationProps}
+          emptyMessage="Test"
+          {...args}
+        />
+        <Pagination
+          result={0}
+          {...paginationProps}
           emptyMessage={
             <div className="w-full p-4 bg-gray-500">Komponente</div>
           }

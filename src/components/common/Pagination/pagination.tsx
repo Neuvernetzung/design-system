@@ -1,6 +1,6 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import isString from "lodash/isString";
-import { type ReactElement, useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import { gaps, paddingsYLarge } from "@/styles";
 import { cn } from "@/utils";
@@ -17,7 +17,7 @@ import {
 export type PaginationProps = {
   limits?: number[];
   result: number;
-  emptyMessage?: ReactElement;
+  emptyMessage?: ReactNode;
   size?: Size;
   containerClassName?: string;
   selectLimit?: boolean;
