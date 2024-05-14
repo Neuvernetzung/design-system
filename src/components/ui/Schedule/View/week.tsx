@@ -1,22 +1,20 @@
 import { DragOverlay } from "@dnd-kit/core";
-import { addDays, addWeeks, endOfWeek, startOfWeek, subWeeks } from "date-fns";
+import { addDays, startOfWeek } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef } from "react";
 import { weekDays } from "ts-ics";
 
 import { cn } from "@/utils";
 
-import { divides, extendedBgColors, extendedBorders } from "../../../styles";
-import { ScrollArea } from "../ScrollArea";
-import type { ScheduleDayViewProps, ScheduleProps } from ".";
-import { DayScheduleHead, ScheduleDay } from "./day";
-import { calcDayRows, ScheduleWeekGrid } from "./DayGrid";
-import { DayGridDndContext, useDayGridDraggable } from "./DayGrid/dragAndDrop";
-import { DragOverlayEvent } from "./Event";
-import { ScheduleHeader } from "./header";
-import { useScrollToTime } from "./hooks/useScrollToTime";
-import { getThisWeeksEvents } from "./utils/filterEvents";
-import { formatTitle } from "./utils/formatTitle";
+import { divides, extendedBgColors, extendedBorders } from "../../../../styles";
+import { ScrollArea } from "../../ScrollArea";
+import type { ScheduleProps } from "../";
+import { DayScheduleHead, ScheduleDay, ScheduleDayViewProps } from "./day";
+import { calcDayRows, ScheduleWeekGrid } from "../DayGrid";
+import { DayGridDndContext, useDayGridDraggable } from "../DayGrid/dragAndDrop";
+import { DragOverlayEvent } from "../Event";
+import { useScrollToTime } from "../hooks/useScrollToTime";
+import { getThisWeeksEvents } from "../utils/filterEvents";
 
 export type ScheduleWeekViewProps = ScheduleDayViewProps &
   Pick<ScheduleProps, "currentWeekWorkHours">;
@@ -71,20 +69,6 @@ export const ScheduleWeekView = ({
 
   return (
     <>
-      <ScheduleHeader
-        scheduleViewProps={scheduleViewProps}
-        calendarProps={calendarProps}
-        leftAriaLabel="previous_week"
-        leftArrowFunction={() => setViewing(subWeeks(viewing, 1))}
-        rightAriaLabel="next_week"
-        rightArrowFunction={() => setViewing(addWeeks(viewing, 1))}
-        title={formatTitle(
-          startOfWeek(viewing, { weekStartsOn: 1 }),
-          endOfWeek(viewing, { weekStartsOn: 1 })
-        )}
-        editEventProps={editEventProps}
-        disableCreate={disabled || !isFunction(onCreate) || disableCreate}
-      />
       <div
         className={cn(
           "grid grid-cols-7 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",

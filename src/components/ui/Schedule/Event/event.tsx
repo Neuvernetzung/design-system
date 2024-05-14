@@ -15,11 +15,11 @@ import type { Color } from "../../../../types";
 import { Button } from "../../Button";
 import { Icon } from "../../Icon";
 import { Text } from "../../Typography";
-import type { ScheduleDayProps } from "../day";
 import { dayGridDeltaToTime } from "../DayGrid/dragAndDrop";
-import type { ScheduleMonthViewProps } from "../month";
 import { timeFormatter } from "../utils/formatTitle";
 import type { UseViewEventProps } from "./view";
+import { ScheduleDayProps } from "../View/day";
+import { ScheduleMonthViewProps } from "../View/month";
 
 export type EventProps = {
   event: VEvent;

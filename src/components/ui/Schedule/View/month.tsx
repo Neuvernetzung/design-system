@@ -2,7 +2,6 @@ import { DragOverlay, useDroppable } from "@dnd-kit/core";
 import { cn, dateInRange } from "@/utils";
 import {
   addDays,
-  addMonths,
   compareAsc,
   endOfMonth,
   getDate,
@@ -11,7 +10,6 @@ import {
   isToday,
   startOfMonth,
   startOfWeek,
-  subMonths,
 } from "date-fns";
 import isFunction from "lodash/isFunction";
 import { useRef, useState } from "react";
@@ -30,29 +28,28 @@ import {
   paddingsXSmall,
   roundings,
   scrollbar,
-} from "../../../styles";
-import { Button, IconButton } from "../Button";
-import { Text } from "../Typography";
-import type { ScheduleProps } from ".";
-import { DraggableEventSmall, DragOverlayEventSmall } from "./Event";
-import type { UseEditEventProps } from "./Event/edit";
-import { EventListModal } from "./Event/list";
-import type { UseViewEventProps } from "./Event/view";
-import { ScheduleHeader } from "./header";
+} from "../../../../styles";
+import { Button, IconButton } from "../../Button";
+import { Text } from "../../Typography/Text";
+import type { ScheduleProps } from "../";
+import { DraggableEventSmall, DragOverlayEventSmall } from "../Event";
+import type { UseEditEventProps } from "../Event/edit";
+import { EventListModal } from "../Event/list";
+import type { UseViewEventProps } from "../Event/view";
 import {
   MonthGridDndContext,
   useMonthGridDraggable,
-} from "./MonthGrid/dragAndDrop";
-import { getThisDaysEvents, getThisMonthEvents } from "./utils/filterEvents";
-import { formatTitle } from "./utils/formatTitle";
+} from "../MonthGrid/dragAndDrop";
+import { getThisDaysEvents, getThisMonthEvents } from "../utils/filterEvents";
 import { IconPlus } from "@tabler/icons-react";
-import { ScrollArea } from "../ScrollArea";
+import { ScrollArea } from "../../ScrollArea";
 
 export type ScheduleMonthViewProps = Omit<
   ScheduleProps,
   | "calendarProps"
   | "rowsEachHour"
   | "onDelete"
+  | "onCreate"
   | "disableUpdate"
   | "disableDelete"
   | "viewEventProps"
@@ -77,7 +74,6 @@ export const ScheduleMonthView = ({
   editEventProps,
   eventColor,
   onUpdate,
-  onCreate,
   disabled,
   disableDrag,
   disableCreate,
@@ -94,17 +90,6 @@ export const ScheduleMonthView = ({
 
   return (
     <>
-      <ScheduleHeader
-        scheduleViewProps={scheduleViewProps}
-        calendarProps={calendarProps}
-        leftAriaLabel="previous_week"
-        leftArrowFunction={() => setViewing(subMonths(viewing, 1))}
-        rightAriaLabel="next_week"
-        rightArrowFunction={() => setViewing(addMonths(viewing, 1))}
-        title={formatTitle(startOfMonth(viewing), endOfMonth(viewing))}
-        editEventProps={editEventProps}
-        disableCreate={disabled || !isFunction(onCreate) || disableCreate}
-      />
       <div
         className={cn(
           "grid grid-cols-7 ml-12 border divide-x divide-opacity-50 dark:divide-opacity-50",

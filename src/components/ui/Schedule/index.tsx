@@ -1,14 +1,8 @@
-import { isSameMonth, isSameYear } from "date-fns";
 import type { ReactElement } from "react";
-import { getEventEnd, type VEvent, type WeekDay } from "ts-ics";
+import { type VEvent, type WeekDay } from "ts-ics";
 
-import { cn } from "@/utils";
-
-import { divides, gaps, paddingsEvenly } from "../../../styles";
 import type { Color } from "../../../types";
-import { Calendar } from "../Calendar";
 import type { UseCalendarProps } from "../Calendar/hooks/useCalendar";
-import { ScheduleDayView } from "./day";
 import { ScheduleWorkHours } from "./DayGrid";
 import {
   type EditEventProps,
@@ -21,16 +15,15 @@ import {
   type ViewEventProps,
 } from "./Event/view";
 import type { UseScheduleViewProps } from "./hooks/useSchedule";
-import { ScheduleMonthView } from "./month";
-import { isThisDaysEvent } from "./utils/filterEvents";
-import { ScheduleWeekView } from "./week";
+import { ScheduleViews } from "./View";
+import { ScheduleHeader } from "./Header";
+import { ScheduleWrapper } from "./Wrapper";
 
-export * from "./day";
 export * from "./DayGrid";
+export * from "./View";
+export * from "./Header";
 export * from "./Event";
 export * from "./hooks";
-export * from "./month";
-export * from "./week";
 
 export type ScheduleProps = {
   calendarProps: UseCalendarProps;
@@ -85,99 +78,44 @@ export const Schedule = ({
   CustomViewEventComponent,
   CustomEditEventComponent,
 }: ScheduleProps) => {
-  const { setViewing } = calendarProps;
-
-  const { currentView } = scheduleViewProps;
-
   const ViewEventComponent = CustomViewEventComponent || ViewEvent;
   const EditEventComponent = CustomEditEventComponent || EventEdit;
 
   return (
     <>
-      <div
-        className={cn(
-          "flex flex-row lg:divide-x",
-          gaps.xs,
-          divides.accent,
-          className
-        )}
+      <ScheduleWrapper
+        calendarProps={calendarProps}
+        className={className}
+        events={events}
+        hideSideCalendar={hideSideCalendar}
       >
-        {!hideSideCalendar && (
-          <div className="w-64 hidden lg:block">
-            <Calendar
-              onChange={setViewing}
-              calendarProps={calendarProps}
-              dayHasIndicator={(day) =>
-                events.some((e) =>
-                  isThisDaysEvent(e.start.date, getEventEnd(e), day)
-                )
-              }
-              monthHasIndicator={(month) =>
-                events.some((e) => isSameMonth(e.start.date, month))
-              }
-              yearHasIndicator={(year) =>
-                events.some((e) => isSameYear(e.start.date, year))
-              }
-            />
-          </div>
-        )}
-        <div
-          className={cn("flex flex-col w-full max-h-[80vh]", paddingsEvenly.md)}
-        >
-          {currentView === "day" && (
-            <ScheduleDayView
-              events={events}
-              scheduleViewProps={scheduleViewProps}
-              calendarProps={calendarProps}
-              rowsEachHour={rowsEachHour}
-              showWorkHours={showWorkHours}
-              currentDayWorkHours={currentDayWorkHours}
-              viewEventProps={viewEventProps}
-              editEventProps={editEventProps}
-              eventColor={eventColor}
-              onUpdate={onUpdate}
-              onCreate={onCreate}
-              disabled={disabled}
-              disableDrag={disableDrag || disableUpdate}
-              disableCreate={disableCreate}
-            />
-          )}
-          {currentView === "week" && (
-            <ScheduleWeekView
-              events={events}
-              scheduleViewProps={scheduleViewProps}
-              calendarProps={calendarProps}
-              rowsEachHour={rowsEachHour}
-              showWorkHours={showWorkHours}
-              currentDayWorkHours={currentDayWorkHours}
-              currentWeekWorkHours={currentWeekWorkHours}
-              viewEventProps={viewEventProps}
-              editEventProps={editEventProps}
-              eventColor={eventColor}
-              onUpdate={onUpdate}
-              onCreate={onCreate}
-              disabled={disabled}
-              disableDrag={disableDrag || disableUpdate}
-              disableCreate={disableCreate}
-            />
-          )}
-          {currentView === "month" && (
-            <ScheduleMonthView
-              events={events}
-              scheduleViewProps={scheduleViewProps}
-              calendarProps={calendarProps}
-              viewEventProps={viewEventProps}
-              editEventProps={editEventProps}
-              eventColor={eventColor}
-              onUpdate={onUpdate}
-              onCreate={onCreate}
-              disabled={disabled}
-              disableDrag={disableDrag || disableUpdate}
-              disableCreate={disableCreate}
-            />
-          )}
-        </div>
-      </div>
+        <ScheduleHeader
+          calendarProps={calendarProps}
+          disableCreate={disableCreate}
+          disabled={disabled}
+          editEventProps={editEventProps}
+          onCreate={onCreate}
+          scheduleViewProps={scheduleViewProps}
+        />
+        <ScheduleViews
+          events={events}
+          scheduleViewProps={scheduleViewProps}
+          calendarProps={calendarProps}
+          rowsEachHour={rowsEachHour}
+          showWorkHours={showWorkHours}
+          currentDayWorkHours={currentDayWorkHours}
+          viewEventProps={viewEventProps}
+          editEventProps={editEventProps}
+          eventColor={eventColor}
+          onUpdate={onUpdate}
+          onCreate={onCreate}
+          disabled={disabled}
+          disableDrag={disableDrag || disableUpdate}
+          disableCreate={disableCreate}
+          currentWeekWorkHours={currentWeekWorkHours}
+          disableUpdate={disableUpdate}
+        />
+      </ScheduleWrapper>
       <ViewEventComponent
         viewEventProps={viewEventProps}
         editEventProps={editEventProps}

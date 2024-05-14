@@ -21,11 +21,12 @@ import set from "lodash/set";
 import { type ReactNode, type RefObject, useMemo, useState } from "react";
 
 import { useRefDimensions } from "@/hooks";
-import type { ScheduleDayViewProps, ScheduleProps } from "..";
+import type { ScheduleProps } from "..";
 import { DEFAULT_PRECISION_IN_MINUTES } from "./layoutDayEvents";
 import { createSnapModifier } from "../utils/snapModifier";
 import { activationConstraint } from "../utils/activationConstraint";
 import isFunction from "lodash/isFunction";
+import { ScheduleDayViewProps } from "../View/day";
 
 export type UseDayGridDraggableProps = {
   gridInnerRef: RefObject<HTMLDivElement>;
