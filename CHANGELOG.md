@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.5.17
+
+### Patch Changes
+
+- c0c0085: Pagination - ReactElement als emptyMessage akzeptieren #1458
+
 ## 3.5.16
 
 ### Patch Changes
