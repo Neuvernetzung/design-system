@@ -13,19 +13,17 @@ import {
 import { ScheduleHeaderBase } from "./base";
 import { formatTitle, titleFormatter } from "../utils/formatTitle";
 import isFunction from "lodash/isFunction";
-import { ScheduleProps } from "..";
+import type { ScheduleProps, UseScheduleViewProps } from "..";
 
 export type ScheduleHeaderProps = Pick<
   ScheduleProps,
-  | "scheduleViewProps"
-  | "calendarProps"
-  | "editEventProps"
-  | "disableCreate"
-  | "onCreate"
-  | "disabled"
->;
+  "calendarProps" | "disableCreate" | "onCreate" | "disabled"
+> &
+  Partial<Pick<ScheduleProps, "scheduleViewProps" | "editEventProps">> &
+  Pick<UseScheduleViewProps, "currentView">;
 
 export const ScheduleHeader = ({
+  currentView,
   scheduleViewProps,
   calendarProps,
   editEventProps,
@@ -34,7 +32,6 @@ export const ScheduleHeader = ({
   disabled,
 }: ScheduleHeaderProps) => {
   const { setViewing, viewing } = calendarProps;
-  const { currentView } = scheduleViewProps;
 
   return (
     <>

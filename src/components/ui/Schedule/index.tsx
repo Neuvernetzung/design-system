@@ -91,6 +91,7 @@ export const Schedule = ({
         hideSideCalendar={hideSideCalendar}
       >
         <ScheduleHeader
+          currentView={scheduleViewProps.currentView}
           calendarProps={calendarProps}
           disableCreate={disableCreate}
           disabled={disabled}
@@ -99,6 +100,7 @@ export const Schedule = ({
           scheduleViewProps={scheduleViewProps}
         />
         <ScheduleViews
+          currentView={scheduleViewProps.currentView}
           events={events}
           scheduleViewProps={scheduleViewProps}
           calendarProps={calendarProps}
