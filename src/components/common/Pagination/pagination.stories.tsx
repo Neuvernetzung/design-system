@@ -133,3 +133,22 @@ export const ToLastPage = {
     );
   },
 };
+
+export const ComponentAsEmptyMessage = {
+  render: ({ ...args }) => {
+    const paginationProps = usePagination();
+
+    return (
+      <div>
+        <Pagination
+          result={0}
+          {...paginationProps}
+          emptyMessage={
+            <div className="w-full p-4 bg-gray-500">Komponente</div>
+          }
+          {...args}
+        />
+      </div>
+    );
+  },
+};
