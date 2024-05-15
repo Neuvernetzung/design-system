@@ -7,8 +7,8 @@ import {
 import { cn } from "@/utils";
 import type { MouseEventHandler } from "react";
 
-import { gaps } from "@/styles/gaps";
-import { Button, IconButton } from "../../Button";
+import { gaps, gapsSmall } from "@/styles/gaps";
+import { Button, ButtonGroup, IconButton } from "../../Button";
 import { Tooltip } from "../../Tooltip";
 import { Text } from "../../Typography/Text";
 import type { ScheduleProps } from "..";
@@ -59,7 +59,7 @@ export const ScheduleHeaderBase = ({
       )}
     >
       <div className={cn("flex flex-row items-center", gaps.md)}>
-        <div className={cn("flex flex-row", gaps.xs)}>
+        <ButtonGroup>
           <IconButton
             size="sm"
             variant="ghost"
@@ -85,12 +85,12 @@ export const ScheduleHeaderBase = ({
             ariaLabel={rightAriaLabel}
             disabled={rightArrowDisabled}
           />
-        </div>
+        </ButtonGroup>
         <Text size="sm">{title}</Text>
       </div>
 
       {currentView && setCurrentView && (
-        <div className={cn("flex flex-row", gaps.md)}>
+        <div className={cn("flex flex-row", gapsSmall.md)}>
           <Button
             size="sm"
             variant={currentView === "day" ? "filled" : "ghost"}
