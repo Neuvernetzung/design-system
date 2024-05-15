@@ -16,7 +16,7 @@ import { Button } from "../../Button";
 import { Icon } from "../../Icon";
 import { Text } from "../../Typography";
 import { dayGridDeltaToTime } from "../DayGrid/dragAndDrop";
-import { timeFormatter } from "../utils/formatTitle";
+import { dayAndMonthFormatter, timeFormatter } from "../utils/formatTitle";
 import type { UseViewEventProps } from "./view";
 import { ScheduleDayProps } from "../View/day";
 import { ScheduleMonthViewProps } from "../View/month";
@@ -30,6 +30,7 @@ export type EventProps = {
   color?: Color;
   className?: string;
   isReverse?: boolean;
+  showStartDate?: boolean;
 };
 
 export const DraggableEvent = ({
@@ -111,6 +112,7 @@ export const Event = ({
   color = "primary",
   className,
   isDragoverlay,
+  showStartDate,
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
@@ -146,42 +148,50 @@ export const Event = ({
     >
       <div
         className={cn(
-          "absolute overflow-hidden flex flex-row",
-          gapsSmall.sm,
+          "absolute overflow-hidden flex flex-col",
+          gapsSmall.xs,
           event.status === "CANCELLED" && "line-through"
         )}
       >
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
-        {(!startsAndEndsOnSameDay || event.status === "CANCELLED") && (
-          <Icon
-            color="inherit"
-            size="sm"
-            icon={
-              event.status === "CANCELLED"
-                ? IconCalendarCancel
-                : beginsBeforeThisDay && endsAfterThisDay
-                ? IconArrowNarrowRight
-                : beginsBeforeThisDay
-                ? IconArrowBarToRight
-                : IconArrowBarRight
-            }
-          />
-        )}
-        {showTime && (
+        <div className={cn("flex flex-row items-center", gapsSmall.sm)}>
+          {showStartDate && (
+            <Text size="xs" color="inherit">
+              {dayAndMonthFormatter.format(event.start.date)}
+            </Text>
+          )}
+          {(!startsAndEndsOnSameDay || event.status === "CANCELLED") && (
+            <Icon
+              color="inherit"
+              size="xs"
+              icon={
+                event.status === "CANCELLED"
+                  ? IconCalendarCancel
+                  : beginsBeforeThisDay && endsAfterThisDay
+                  ? IconArrowNarrowRight
+                  : beginsBeforeThisDay
+                  ? IconArrowBarToRight
+                  : IconArrowBarRight
+              }
+            />
+          )}
+          {showTime && (
+            <Text size="xs" color="inherit">
+              {showTime &&
+                (beginsBeforeThisDay
+                  ? timeFormatter.format(getEventEnd(event))
+                  : endsAfterThisDay
+                  ? timeFormatter.format(event.start.date)
+                  : startsAndEndsOnSameDay &&
+                    timeFormatter.format(event.start.date))}
+            </Text>
+          )}
+        </div>
+        <div className={cn("flex flex-row", gapsSmall.sm)}>
           <Text size="sm" color="inherit">
-            {showTime &&
-              (beginsBeforeThisDay
-                ? timeFormatter.format(getEventEnd(event))
-                : endsAfterThisDay
-                ? timeFormatter.format(event.start.date)
-                : startsAndEndsOnSameDay &&
-                  timeFormatter.format(event.start.date))}
-            {" - "}
+            {event.summary}
           </Text>
-        )}
-        <Text size="sm" color="inherit">
-          {event.summary}
-        </Text>
+        </div>
       </div>
     </Button>
   );
@@ -221,6 +231,7 @@ export const EventSmall = ({
   color = "primary",
   className,
   isDragoverlay,
+  showStartDate,
 }: Omit<EventProps, "isReveresed">) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
@@ -253,42 +264,55 @@ export const EventSmall = ({
     >
       <div
         className={cn(
-          "absolute overflow-hidden flex flex-row items-start",
-          gapsSmall.sm,
+          "absolute overflow-hidden flex flex-col items-start",
+          gapsSmall.xs,
           event.status === "CANCELLED" && "line-through"
         )}
       >
         {/* Ist absolute, damit Inhalt nicht die Breite bestimmt. */}
-        {(!startsAndEndsOnSameDay || event.status === "CANCELLED") && (
-          <Icon
-            color="inherit"
-            size="sm"
-            icon={
-              event.status === "CANCELLED"
-                ? IconCalendarCancel
-                : beginsBeforeThisDay && endsAfterThisDay
-                ? IconArrowNarrowRight
-                : beginsBeforeThisDay
-                ? IconArrowBarToRight
-                : IconArrowBarRight
-            }
-          />
-        )}
-        {showTime && (
+        <div className={cn("flex flex-row items-center w-full", gapsSmall.sm)}>
+          {(!startsAndEndsOnSameDay || event.status === "CANCELLED") && (
+            <Icon
+              color="inherit"
+              size="xs"
+              icon={
+                event.status === "CANCELLED"
+                  ? IconCalendarCancel
+                  : beginsBeforeThisDay && endsAfterThisDay
+                  ? IconArrowNarrowRight
+                  : beginsBeforeThisDay
+                  ? IconArrowBarToRight
+                  : IconArrowBarRight
+              }
+            />
+          )}
+          {showTime && (
+            <Text size="xs" color="inherit">
+              {showTime &&
+                (beginsBeforeThisDay
+                  ? timeFormatter.format(getEventEnd(event))
+                  : endsAfterThisDay
+                  ? timeFormatter.format(event.start.date)
+                  : startsAndEndsOnSameDay &&
+                    timeFormatter.format(event.start.date))}
+            </Text>
+          )}
+          {showStartDate && (
+            <Text size="xs" color="inherit" className="w-full">
+              {dayAndMonthFormatter.format(event.start.date)}
+            </Text>
+          )}
+        </div>
+        <div
+          className={cn(
+            "flex flex-row justify-start w-full items-center",
+            gapsSmall.sm
+          )}
+        >
           <Text size="sm" color="inherit">
-            {showTime &&
-              (beginsBeforeThisDay
-                ? timeFormatter.format(getEventEnd(event))
-                : endsAfterThisDay
-                ? timeFormatter.format(event.start.date)
-                : startsAndEndsOnSameDay &&
-                  timeFormatter.format(event.start.date))}
-            {" - "}
+            {event.summary}
           </Text>
-        )}
-        <Text size="sm" color="inherit">
-          {event.summary}
-        </Text>
+        </div>
       </div>
     </Button>
   );

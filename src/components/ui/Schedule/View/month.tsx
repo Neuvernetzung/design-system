@@ -265,7 +265,7 @@ export const ScheduleMonthDay = ({
         }}
         ref={setNodeRef}
         className={cn(
-          "h-full flex flex-col aspect-[9/16] md:aspect-square xl:aspect-video overflow-hidden group",
+          "flex flex-col h-36 overflow-hidden group",
           gaps.xs,
           paddingsSmallEvenly.md,
           !isInRange ? extendedBgColors.subtile : bgColors.white

@@ -6,7 +6,7 @@ export const timeFormatter = new Intl.DateTimeFormat(undefined, {
 
 const dayFormatter = new Intl.DateTimeFormat(undefined, { day: "numeric" });
 
-const dayAndMonthFormatter = new Intl.DateTimeFormat(undefined, {
+export const dayAndMonthFormatter = new Intl.DateTimeFormat(undefined, {
   day: "numeric",
   month: "long",
 });
