@@ -361,3 +361,27 @@ export const UrlState: Story = {
     );
   },
 };
+
+export const DefaultView: Story = {
+  render: function Render({
+    calendarProps: argsCalendarProps,
+    editEventProps: argsEditEventProps,
+    scheduleViewProps: argsScheduleViewProps,
+    viewEventProps: argsViewEventProps,
+    ...args
+  }) {
+    const { calendarProps, editEventProps, scheduleViewProps, viewEventProps } =
+      useSchedule({ initialCurrentView: "month" });
+
+    return (
+      <Schedule
+        calendarProps={argsCalendarProps || calendarProps}
+        editEventProps={argsEditEventProps || editEventProps}
+        scheduleViewProps={argsScheduleViewProps || scheduleViewProps}
+        viewEventProps={argsViewEventProps || viewEventProps}
+        events={events}
+        {...args}
+      />
+    );
+  },
+};

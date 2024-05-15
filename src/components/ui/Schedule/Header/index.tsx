@@ -11,7 +11,7 @@ import {
   subWeeks,
 } from "date-fns";
 import { ScheduleHeaderBase } from "./base";
-import { formatTitle, titleFormatter } from "../utils/formatTitle";
+import { formatScheduleTitle, titleFormatter } from "../utils/formatTitle";
 import isFunction from "lodash/isFunction";
 import type { ScheduleProps, UseScheduleViewProps } from "..";
 
@@ -56,7 +56,7 @@ export const ScheduleHeader = ({
           leftArrowFunction={() => setViewing(subWeeks(viewing, 1))}
           rightAriaLabel="Nächste Woche"
           rightArrowFunction={() => setViewing(addWeeks(viewing, 1))}
-          title={formatTitle(
+          title={formatScheduleTitle(
             startOfWeek(viewing, { weekStartsOn: 1 }),
             endOfWeek(viewing, { weekStartsOn: 1 })
           )}
@@ -72,7 +72,10 @@ export const ScheduleHeader = ({
           leftArrowFunction={() => setViewing(subMonths(viewing, 1))}
           rightAriaLabel="Nächster Monat"
           rightArrowFunction={() => setViewing(addMonths(viewing, 1))}
-          title={formatTitle(startOfMonth(viewing), endOfMonth(viewing))}
+          title={formatScheduleTitle(
+            startOfMonth(viewing),
+            endOfMonth(viewing)
+          )}
           editEventProps={editEventProps}
           disableCreate={disabled || !isFunction(onCreate) || disableCreate}
         />

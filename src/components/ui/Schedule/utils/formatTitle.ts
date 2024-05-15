@@ -15,7 +15,7 @@ export const titleFormatter = new Intl.DateTimeFormat(undefined, {
   dateStyle: "long",
 });
 
-export const formatTitle = (start: Date, end: Date) => {
+export const formatScheduleTitle = (start: Date, end: Date) => {
   const formattedEnd = titleFormatter.format(end);
 
   const formattedStart = isSameMonth(start, end)
