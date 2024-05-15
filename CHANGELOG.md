@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.6.3
+
+### Patch Changes
+
+- 40315d5: Schedule - Buttongroup für Pfeile und View Buttons verwenden #1474
+- 8f7c9c1: Schedule - bei Event und Eventsmall optional den Tag anzeigen #1473
+
 ## 3.6.2
 
 ### Patch Changes
