@@ -15,7 +15,7 @@ export type UseCalendarProps = ReturnType<UseCalendar>;
 export type UseCalendarOwnProps = {
   cols?: number;
   defaultValue?: Date[];
-  initialView?: Date;
+  initialViewing?: Date;
 };
 
 export type UseUrlCalendarReturns = UseCalendarBaseReturns;
@@ -28,7 +28,7 @@ export const useCalendar = (
   );
 
   const [viewing, setViewing] = useState<Date>(
-    props?.initialView || new Date()
+    props?.initialViewing || new Date()
   );
 
   const calendarProps = useCalendarBase({
@@ -57,7 +57,7 @@ export const useUrlCalendar = (
   const [viewing, setViewing] = useUrlState("viewing", {
     ...parseQueryAsIsoDateTime,
     history: "replace",
-    defaultValue: props?.initialView || initialViewing,
+    defaultValue: props?.initialViewing || initialViewing,
   });
 
   const calendarProps = useCalendarBase({

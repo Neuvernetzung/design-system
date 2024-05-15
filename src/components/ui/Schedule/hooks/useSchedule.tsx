@@ -87,11 +87,20 @@ export const useScheduleBase = () => {
   };
 };
 
-export const useSchedule = (props?: UseCalendarOwnProps) => {
-  const calendarProps = useCalendar(props);
+type UseScheduleOwnProps =
+  | ({ initialCurrentView?: ScheduleView } & UseCalendarOwnProps)
+  | undefined;
+
+export const useSchedule = ({
+  initialCurrentView,
+  ...calendarDefaultProps
+}: UseScheduleOwnProps = {}) => {
+  const calendarProps = useCalendar(calendarDefaultProps);
   const scheduleBaseProps = useScheduleBase();
 
-  const [currentView, setCurrentView] = useState<ScheduleView>("day");
+  const [currentView, setCurrentView] = useState<ScheduleView>(
+    initialCurrentView || "day"
+  );
 
   const scheduleViewProps: UseScheduleViewProps = {
     currentView,
@@ -107,14 +116,17 @@ export const useSchedule = (props?: UseCalendarOwnProps) => {
   return { ...scheduleBaseProps, calendarProps, scheduleViewProps, dateRange };
 };
 
-export const useUrlSchedule = (props?: UseCalendarOwnProps) => {
-  const calendarProps = useUrlCalendar(props);
+export const useUrlSchedule = ({
+  initialCurrentView,
+  ...calendarDefaultProps
+}: UseScheduleOwnProps = {}) => {
+  const calendarProps = useUrlCalendar(calendarDefaultProps);
   const scheduleBaseProps = useScheduleBase();
 
   const [currentView, setCurrentView] = useUrlState<ScheduleView>("view", {
     ...parseQueryAsStringLiteral(scheduleViews),
     history: "replace",
-    defaultValue: "day",
+    defaultValue: initialCurrentView || "day",
   });
 
   const scheduleViewProps: UseScheduleViewProps = {
