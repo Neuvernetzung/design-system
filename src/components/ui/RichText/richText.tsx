@@ -46,12 +46,15 @@ import { SmallParagraph } from "./Small";
 import { TableExtensions } from "./Table";
 import { richTextTableClassName } from "./Table/Table/className";
 import { ReactElement } from "react";
+import { VideoFigure } from "./Video/Figure";
+import { VideoExtension } from "./Video";
 
 export type RichTextOptionProps = {
   disableFloatingMenu?: boolean;
   disableSlashMenu?: boolean;
   disableTable?: boolean;
   disableImages?: boolean;
+  disableVideos?: boolean;
 };
 
 export type RichTextPluginWithEditorProps = {
@@ -122,7 +125,7 @@ export const RichText = <
           if (node.type.name === "heading") {
             return `Überschrift ${node.attrs.level}`;
           }
-          if (node.type.name === "figure") {
+          if (node.type.name === "figure" || node.type.name === "videoFigure") {
             return "";
           }
           return `Tippe "/" für Befehle...`;
@@ -142,6 +145,7 @@ export const RichText = <
       Float,
       SmallParagraph,
       ...(options?.disableImages ? [] : [ImageFigure, ImageExtension]),
+      ...(options?.disableVideos ? [] : [VideoFigure, VideoExtension]),
       ...(options?.disableSlashMenu ? [] : [SlashCommand]),
       ...(options?.disableFloatingMenu ? [] : [FloatingMenuExtension]),
       ...(options?.disableTable ? [] : TableExtensions),
