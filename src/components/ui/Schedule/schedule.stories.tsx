@@ -47,10 +47,10 @@ const events: VEvent[] = [
   {
     summary: "Event - nicht heute",
     uid: "2",
-    start: { date: addDays(date, 1) },
+    start: { date: addMinutes(addDays(date, 1), 3) },
     created: { date: addDays(date, 1) },
     stamp: { date: addDays(date, 1) },
-    duration: { hours: 1 },
+    duration: { hours: 1, minutes: 2 },
   },
   {
     summary: "Event - 3",
