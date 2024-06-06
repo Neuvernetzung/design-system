@@ -1,5 +1,15 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.7.0
+
+### Minor Changes
+
+- 471631b: Videos in RichText ermöglichen #1483
+
+### Patch Changes
+
+- ef6cc98: Deps updaten #1484
+
 ## 3.6.4
 
 ### Patch Changes
