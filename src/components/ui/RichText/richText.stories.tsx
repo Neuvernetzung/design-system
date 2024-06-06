@@ -1,5 +1,4 @@
-
-import { IconPhoto } from "@tabler/icons-react";
+import { IconPhoto, IconVideo } from "@tabler/icons-react";
 import { HTMLAttributes, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -19,7 +18,7 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} ;
+};
 
 const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col gap-5", className)} {...props} />
@@ -106,12 +105,13 @@ export const CustomMenuButtons = {
     const { control, watch } = useForm({
       defaultValues: {
         RichText: `
-        <figure style="text-align: center"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="100%" height="auto" draggable="false" contenteditable="false"><figcaption>Tolle Caption</figcaption></figure><figure style="float: right" data-float="right"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="346" height="auto" draggable="false" contenteditable="false"><figcaption>567567567</figcaption></figure><p>sdfsdf</p><p>fgh</p><p>fgh</p><picture style="float: right" data-float="right"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Test" title="Image" width="323" height="auto" draggable="false" contenteditable="false" data-float="right"></picture><p>fgh</p><p>dfgh567567567</p>
+        <figure style="text-align: center"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="100%" height="auto" draggable="false" contenteditable="false"><figcaption>Tolle Caption</figcaption></figure><figure style="float: right" data-float="right"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Alt Tag" title="Image" width="346" height="auto" draggable="false" contenteditable="false"><figcaption>567567567</figcaption></figure><p>sdfsdf</p><p>fgh</p><p>fgh</p><picture style="float: right" data-float="right"><img src="https://raw.githubusercontent.com/Neuvernetzung/design-system/master/public/Header.png" alt="Test" title="Image" width="323" height="auto" draggable="false" contenteditable="false" data-float="right"></picture><p>fgh</p><p>dfgh567567567</p><video controls="true"><source src="https://www.w3schools.com/html/mov_bbb.mp4"></video><figure data-type="video"><video controls="true" draggable="false" contenteditable="false"><source src="https://www.w3schools.com/html/mov_bbb.mp4"></video><figcaption>Test</figcaption></figure>
         `,
       },
     });
 
-    const [open, setOpen] = useState(false);
+    const [imageOpen, setImageOpen] = useState(false);
+    const [videoOpen, setVideoOpen] = useState(false);
 
     return (
       <Container className="grid grid-cols-2">
@@ -124,13 +124,13 @@ export const CustomMenuButtons = {
                   type: "button",
                   icon: IconPhoto,
                   children: "Bild",
-                  onClick: () => setOpen(true),
+                  onClick: () => setImageOpen(true),
                 },
               ],
               component: (
                 <Modal
-                  open={open}
-                  setOpen={setOpen}
+                  open={imageOpen}
+                  setOpen={setImageOpen}
                   content={
                     <div>
                       <Button
@@ -144,10 +144,44 @@ export const CustomMenuButtons = {
                               title: "Image",
                             })
                             .run();
-                          setOpen(false);
+                          setImageOpen(false);
                         }}
                       >
                         Bild hinzufügen
+                      </Button>
+                    </div>
+                  }
+                />
+              ),
+            },
+            {
+              menuItems: [
+                {
+                  type: "button",
+                  icon: IconVideo,
+                  children: "Video",
+                  onClick: () => setVideoOpen(true),
+                },
+              ],
+              component: (
+                <Modal
+                  open={videoOpen}
+                  setOpen={setVideoOpen}
+                  content={
+                    <div>
+                      <Button
+                        onClick={() => {
+                          editor
+                            ?.chain()
+                            .focus()
+                            .setVideo({
+                              src: "https://www.w3schools.com/html/mov_bbb.mp4",
+                            })
+                            .run();
+                          setVideoOpen(false);
+                        }}
+                      >
+                        Video hinzufügen
                       </Button>
                     </div>
                   }

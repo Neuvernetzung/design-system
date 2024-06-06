@@ -7,7 +7,7 @@ import {
 } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 
-import { ResizableMediaNodeView } from "./NodeView";
+import { ResizableVideoNodeView } from "./NodeView";
 
 export interface FigureOptions {
   HTMLAttributes: Record<string, any>;
@@ -15,34 +15,29 @@ export interface FigureOptions {
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
-    figure: {
+    videoFigure: {
       /**
        * Add a figure element
        */
-      setFigure: (options: {
-        src: string;
-        alt?: string;
-        title?: string;
-        caption?: string;
-      }) => ReturnType;
+      setFigure: (options: { src: string; caption?: string }) => ReturnType;
 
       /**
-       * Converts an image to a figure
+       * Converts a video to a figure
        */
-      imageToFigure: () => ReturnType;
+      videoToFigure: () => ReturnType;
 
       /**
-       * Converts a figure to an image
+       * Converts a figure to a video
        */
-      figureToImage: () => ReturnType;
+      figureToVideo: () => ReturnType;
     };
   }
 }
 
 export const inputRegex = /!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/;
 
-export const ImageFigure = Node.create<FigureOptions>({
-  name: "figure",
+export const VideoFigure = Node.create<FigureOptions>({
+  name: "videoFigure",
 
   addOptions() {
     return {
@@ -62,32 +57,6 @@ export const ImageFigure = Node.create<FigureOptions>({
     return {
       src: {
         default: null,
-        parseHTML: (element) =>
-          element.querySelector("img")?.getAttribute("src"),
-      },
-
-      alt: {
-        default: null,
-        parseHTML: (element) =>
-          element.querySelector("img")?.getAttribute("alt"),
-      },
-
-      title: {
-        default: null,
-        parseHTML: (element) =>
-          element.querySelector("img")?.getAttribute("title"),
-      },
-
-      width: {
-        default: "100%",
-        parseHTML: (element) =>
-          element.querySelector("img")?.getAttribute("width"),
-      },
-
-      height: {
-        default: "auto",
-        parseHTML: (element) =>
-          element.querySelector("img")?.getAttribute("height"),
       },
     };
   },
@@ -95,28 +64,41 @@ export const ImageFigure = Node.create<FigureOptions>({
   parseHTML() {
     return [
       {
-        tag: `figure[data-type="image"]`,
+        tag: `figure[data-type="video"]`,
         contentElement: "figcaption",
-      },
-      {
-        // Ohne data-type trotzdem unterstützen
-        tag: `figure`,
-        contentElement: "figcaption",
+        priority: 999, // Um data-type="video" zu bevorzugen im Vergleich zu ohne data-type Attribut
+        getAttrs(element) {
+          if (typeof element === "string") return { src: null }; // Return, da el kein HTMLElement ist
+          const el = element.querySelector("video");
+          if (!el) return { src: null };
+
+          let src: string | null = null;
+
+          /**
+           * Source Childnode muss gefunden werden um src Attribut zu bekommen.
+           */
+          for (let i = 0; i < el.children.length; i += 1) {
+            if (el.children[i].localName === "source") {
+              src = el.children[i].getAttribute("src");
+            }
+          }
+
+          return { src };
+        },
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
-    const { style, "data-float": dataFloat, ...rest } = HTMLAttributes;
+    const { style, src, ...rest } = HTMLAttributes;
 
     return [
       "figure",
       mergeAttributes(this.options.HTMLAttributes, {
         style,
-        "data-float": dataFloat,
-        "data-type": "image",
+        "data-type": "video",
       }),
-      ["img", rest],
+      ["video", mergeAttributes({ controls: true }, rest), ["source", { src }]],
       ["figcaption", 0],
     ];
   },
@@ -141,24 +123,24 @@ export const ImageFigure = Node.create<FigureOptions>({
             })
             .run(),
 
-      imageToFigure:
+      videoToFigure:
         () =>
         ({ tr, commands }) => {
           const { doc, selection } = tr;
           const { from, to } = selection;
-          const images = findChildrenInRange(
+          const videos = findChildrenInRange(
             doc,
             { from, to },
-            (node) => node.type.name === "image"
+            (node) => node.type.name === "video"
           );
 
-          if (!images.length) {
+          if (!videos.length) {
             return false;
           }
 
           const tracker = new Tracker(tr);
 
-          return commands.forEach(images, ({ node, pos }) => {
+          return commands.forEach(videos, ({ node, pos }) => {
             const mapResult = tracker.map(pos);
 
             if (mapResult.deleted) {
@@ -177,7 +159,7 @@ export const ImageFigure = Node.create<FigureOptions>({
           });
         },
 
-      figureToImage:
+      figureToVideo:
         () =>
         ({ tr, commands }) => {
           const { doc, selection } = tr;
@@ -207,7 +189,7 @@ export const ImageFigure = Node.create<FigureOptions>({
             };
 
             return commands.insertContentAt(range, {
-              type: "image",
+              type: "video",
               attrs: node.attrs,
             });
           });
@@ -221,15 +203,15 @@ export const ImageFigure = Node.create<FigureOptions>({
         find: inputRegex,
         type: this.type,
         getAttributes: (match) => {
-          const [, src, alt, title] = match;
+          const [, src] = match;
 
-          return { src, alt, title };
+          return { src };
         },
       }),
     ];
   },
 
   addNodeView() {
-    return ReactNodeViewRenderer(ResizableMediaNodeView);
+    return ReactNodeViewRenderer(ResizableVideoNodeView);
   },
 });
