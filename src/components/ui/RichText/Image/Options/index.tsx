@@ -336,7 +336,7 @@ export const ImageOptions = ({
                 size="xs"
                 variant="ghost"
                 icon={IconTrash}
-                ariaLabel="remove_image"
+                ariaLabel="Bild löschen"
                 onClick={() => {
                   deleteNode();
                 }}
