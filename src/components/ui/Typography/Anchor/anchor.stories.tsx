@@ -29,7 +29,7 @@ export const Default = {
 };
 
 export const AnchorInsideCheckbox = {
-  render: ({ ...args }) => {
+  render: function Render({ ...args }) {
     const { control } = useForm();
 
     return (

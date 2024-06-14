@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { AnchorHTMLAttributes, ReactElement } from "react";
 
 import { getLinkStyle } from "../../../../styles/link";
-import { Color } from "../../../../types";
+import type { Color, Size } from "../../../../types";
 import { Icon } from "../../Icon";
 import { IconExternalLink } from "@tabler/icons-react";
 
@@ -11,6 +11,7 @@ export type AnchorProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href?: string;
   children?: ReactElement | string;
   color?: Color;
+  size?: Size;
 };
 
 export const Anchor = ({
@@ -18,6 +19,7 @@ export const Anchor = ({
   children,
   className,
   color = "accent",
+  size = "md",
   ...props
 }: AnchorProps) => {
   if (!href)
@@ -38,7 +40,12 @@ export const Anchor = ({
     >
       {children}
       {isExternal && (
-        <Icon icon={IconExternalLink} color={color} className="!inline" />
+        <Icon
+          size={size}
+          icon={IconExternalLink}
+          color={color}
+          className="!inline"
+        />
       )}
     </NextLink>
   );
