@@ -13,7 +13,9 @@ export const Prose = ({ content, className }: ProseProps) => {
   return (
     <div
       // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: sanitize(content) }}
+      dangerouslySetInnerHTML={{
+        __html: sanitize(content, { ADD_ATTR: ["target"] }),
+      }}
       className={cn(proseClassName, className)}
     />
   );
