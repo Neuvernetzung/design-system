@@ -57,7 +57,11 @@ export const AddLinkButton = ({ editor }: AddLinkButtonProps) => {
       .chain()
       .focus()
       .extendMarkRange("link")
-      .setLink({ href: isExternal ? `https://${href}` : `/${href}` })
+      .setLink({
+        href: isExternal ? `https://${href}` : `/${href}`,
+        target: isExternal ? "_blank" : null,
+        rel: isExternal ? "noopener noreferrer nofollow" : null,
+      })
       .run();
     setOpen(false);
   };

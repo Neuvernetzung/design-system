@@ -25,7 +25,7 @@ const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
 );
 
 export const Default = {
-  render: ({ ...args }) => {
+  render: function DefaultRender({ ...args }) {
     const formMethods = useForm();
 
     return (
@@ -44,7 +44,7 @@ export const Default = {
 };
 
 export const Error = {
-  render: ({ ...args }) => {
+  render: function ErrorRender({ ...args }) {
     const formMethods = useForm();
 
     return (
@@ -71,7 +71,7 @@ type CompareProps = {
 };
 
 export const CompareToProse = {
-  render: ({ ...args }) => {
+  render: function CompareToProseRender({ ...args }) {
     const { control, watch } = useForm<CompareProps>({
       defaultValues: {
         RichTextCompare: `<h1>Dies ist ein Vergleich.</h1><p>Dieser dient zur <strong>Veranschaulich </strong>zwischen <em>RichText Editor</em> und <a target="_blank" rel="noopener noreferrer nofollow" class="underline font-bold  focus-visible:ring-accent-600 dark:focus-visible:ring-accent-300 focus:outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20 underline font-bold  focus-visible:ring-accent-600 dark:focus-visible:ring-accent-300 focus:outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20 underline font-bold  focus-visible:ring-accent-600 dark:focus-visible:ring-accent-300 focus:outline-none focus-visible:ring focus-visible:ring-opacity-20 dark:focus-visible:ring-opacity-20 text-accent-900 dark:text-accent-100 outline-none transition ease-in-out duration-300" href="/story/ui-form-richtext--compare-to-prose">Prose</a> Komponente. Wichtig ist, dass beide Komponenten den gleichen <u>Output</u> hervorbringen und <s>nicht</s> voneinander abweichen.</p><small>Kleiner Text</small><table-wrapper><table><tbody><tr><th colspan="1" rowspan="1"><p>Test</p></th><th colspan="1" rowspan="1"><p>Test</p></th><th colspan="1" rowspan="1"><p>Test</p></th></tr><tr><td colspan="1" rowspan="1"><p>1</p></td><td colspan="1" rowspan="1"><p>2</p></td><td colspan="1" rowspan="1"><p>3</p></td></tr><tr><td colspan="1" rowspan="1"><p>4</p></td><td colspan="1" rowspan="1"><p>5</p></td><td colspan="1" rowspan="1"><p>6</p></td></tr></tbody></table></table-wrapper><h2>Ein Paar Komponenten sind zum Beispiel:</h2><ol><li><p>Überschriften</p><ol><li><p>H1</p></li><li><p>H2</p></li><li><p>...</p></li></ol></li><li><p>Texte</p></li></ol><hr><ul><li><p>Ausrichtungen</p><ul><li><p>Links</p></li><li><p>Zentriert</p></li><li><p>Rechts</p></li></ul></li></ul><blockquote><p>Außerdem sind Zitate möglich.</p></blockquote><p></p>`,
@@ -88,7 +88,7 @@ export const CompareToProse = {
 };
 
 export const SelectOnTopOfEachOther = {
-  render: ({ ...args }) => {
+  render: function SelectRender({ ...args }) {
     const formMethods = useForm();
 
     return (
@@ -101,7 +101,7 @@ export const SelectOnTopOfEachOther = {
 };
 
 export const CustomMenuButtons = {
-  render: ({ ...args }) => {
+  render: function MenuButtonsRender({ ...args }) {
     const { control, watch } = useForm({
       defaultValues: {
         RichText: `

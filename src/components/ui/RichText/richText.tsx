@@ -139,7 +139,6 @@ export const RichText = <
       }),
       LinkExtension.configure({
         openOnClick: false,
-        HTMLAttributes: { target: "_blank" },
       }),
 
       Float,
