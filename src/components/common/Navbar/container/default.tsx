@@ -41,6 +41,7 @@ export const NavbarContainer = forwardRef(
       footer,
       footerClassName,
       mobileNavClassName,
+      navbarStyle,
     }: NavbarProps & NavbarContainerProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -62,6 +63,7 @@ export const NavbarContainer = forwardRef(
           pagePaddingsX[pagePadding],
           navbarClassName
         )}
+        style={navbarStyle}
       >
         <div
           className={cn(

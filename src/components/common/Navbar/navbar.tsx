@@ -1,5 +1,6 @@
 import { cn } from "@/utils";
 import {
+  type CSSProperties,
   type ForwardedRef,
   forwardRef,
   type ReactElement,
@@ -49,6 +50,7 @@ export type NavbarProps = {
   footer?: ReactNode;
   footerClassName?: string;
   mobileNavClassName?: string;
+  navbarStyle?: CSSProperties;
 };
 
 export type LogoProps = {
@@ -78,6 +80,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
       footer,
       footerClassName,
       mobileNavClassName,
+      navbarStyle,
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -103,6 +106,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
         footerClassName={footerClassName}
         justifyDesktopNav={justifyDesktopNav}
         mobileNavClassName={mobileNavClassName}
+        navbarStyle={navbarStyle}
       />
     );
   }
@@ -136,6 +140,7 @@ export const SideNavbar = forwardRef<
       sideNavStartItems,
       endItems,
       startItems,
+      navbarStyle,
     },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -176,6 +181,7 @@ export const SideNavbar = forwardRef<
           mobileNavClassName={mobileNavClassName}
           startItems={startItems}
           endItems={endItems}
+          navbarStyle={navbarStyle}
         />
       </>
     );
