@@ -1,5 +1,5 @@
+import { Button, Input, Text } from "../../ui";
 import { Funnelform, useFunnelForm } from "./funnelform";
-import { Input, Button, Text } from "../../ui";
 
 export default {
   title: "COMMON/Funnelform",
@@ -13,7 +13,7 @@ type MyFunnel = {
 };
 
 export const Start = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const { control, handleSubmit, funnel } = useFunnelForm<MyFunnel>({
       name: "Test",
     });
@@ -39,7 +39,7 @@ export const Start = {
 };
 
 export const Mid = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const { control, handleSubmit, funnel } = useFunnelForm<MyFunnel>({
       name: "Test",
     });
@@ -66,7 +66,7 @@ export const Mid = {
 };
 
 export const Finish = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const { control, handleSubmit, funnel } = useFunnelForm<MyFunnel>({
       name: "Test",
     });
@@ -74,6 +74,7 @@ export const Finish = {
     const data = funnel.state;
 
     const onSubmit = (data: MyFunnel) => {
+      // eslint-disable-next-line no-console
       console.log(data);
     };
 

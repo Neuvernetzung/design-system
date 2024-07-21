@@ -80,7 +80,12 @@
     margin: 0;
     -moz-appearance: textfield !important;
   }
-  input[type="time"]::-webkit-calendar-picker-indicator {
+
+  input[type="time"]::-webkit-inner-spin-button,
+  input[type="time"]::-webkit-calendar-picker-indicator,
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
+    -webkit-appearance: none;
   }
 }
