@@ -1,11 +1,10 @@
-
 import { addDays, addMonths, subDays, subMonths } from "date-fns";
 import { useForm } from "react-hook-form";
 
 import { sizes } from "../../../types";
+import { Button } from "../Button";
 import { Form } from "../Form";
 import { Datepicker } from ".";
-import { Button } from "../Button";
 
 export default {
   title: "UI/Form/Datepicker",
@@ -17,12 +16,12 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} ;
+};
 
 const formClassName = "flex flex-col gap-5";
 
 export const Default = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const formMethods = useForm();
 
     return (
@@ -44,7 +43,7 @@ export const Default = {
 };
 
 export const Sizes = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const formMethods = useForm();
 
     return (
@@ -70,7 +69,7 @@ export const Sizes = {
 };
 
 export const ButtonVariant = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const formMethods = useForm();
 
     return (
@@ -101,7 +100,7 @@ export const ButtonVariant = {
 };
 
 export const MinMaxDate = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const formMethods = useForm();
 
     return (
@@ -112,7 +111,7 @@ export const MinMaxDate = {
       >
         <Datepicker
           name="min"
-          label="min"
+          label="minLastMonth"
           minDate={subMonths(new Date(), 1)}
           control={formMethods.control}
           placeholder="Datum auswählen"
@@ -136,7 +135,7 @@ export const MinMaxDate = {
         />
         <Datepicker
           name="max"
-          label="min"
+          label="maxNextMonth"
           maxDate={addMonths(new Date(), 1)}
           control={formMethods.control}
           placeholder="Datum auswählen"
@@ -176,13 +175,14 @@ export const MinMaxDate = {
           placeholder="Datum auswählen"
           {...args}
         />
+        <Button type="submit">Bestätigen</Button>
       </Form>
     );
   },
 };
 
 export const DefaultValue = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const formMethods = useForm({
       defaultValues: {
         date: subDays(new Date(), 3),
@@ -215,7 +215,7 @@ export const DefaultValue = {
   },
 };
 export const Error = {
-  render: ({ ...args }) => {
+  render: function RenderComponent({ ...args }) {
     const formMethods = useForm({});
 
     return (
