@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 import { sizes } from "../../../types";
 import { Button } from "../Button";
 import { Form } from "../Form";
-import { Datepicker } from ".";
+import { DateRangepicker } from ".";
 
 export default {
-  title: "UI/Form/Datepicker",
-  component: Datepicker,
+  title: "UI/Form/DateRangepicker",
+  component: DateRangepicker,
   parameters: {
     docs: {
       source: {
@@ -30,11 +30,10 @@ export const Default = {
         onSubmit={() => {}}
         className={formClassName}
       >
-        <Datepicker
+        <DateRangepicker
           control={control}
-          name="datepicker-1"
-          label="Datepicker"
-          placeholder="Datum auswählen"
+          name={{ start: "date.start", end: "date.end" }}
+          label="DateRangepicker"
           {...args}
         />
         {JSON.stringify(watch())}
@@ -54,13 +53,12 @@ export const Sizes = {
         className={formClassName}
       >
         {sizes.map((size) => (
-          <Datepicker
+          <DateRangepicker
             key={size}
             control={formMethods.control}
             size={size}
-            name={size}
+            name={{ start: `${size}.start`, end: `${size}.end` }}
             label={size}
-            placeholder="Datum auswählen"
             {...args}
           />
         ))}
@@ -79,20 +77,18 @@ export const ButtonVariant = {
         onSubmit={() => {}}
         className={formClassName}
       >
-        <Datepicker
+        <DateRangepicker
           control={formMethods.control}
-          name="outline"
+          name={{ start: "date.start", end: "date.end" }}
           label="outline"
           inputVariant="outline"
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
+        <DateRangepicker
           control={formMethods.control}
-          name="filled"
+          name={{ start: "date.start", end: "date.end" }}
           label="filled"
           inputVariant="filled"
-          placeholder="Datum auswählen"
           {...args}
         />
       </Form>
@@ -110,70 +106,62 @@ export const MinMaxDate = {
         onSubmit={() => {}}
         className={formClassName}
       >
-        <Datepicker
-          name="min"
+        <DateRangepicker
+          name={{ start: "min.start", end: "min.end" }}
           label="minLastMonth"
           minDate={subMonths(new Date(), 1)}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="minToday"
+        <DateRangepicker
+          name={{ start: "minToday.start", end: "minToday.end" }}
           label="minToday"
           minDate={new Date()}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="minTomorrow"
+        <DateRangepicker
+          name={{ start: "minTomorrow.start", end: "minTomorrow.end" }}
           label="minTomorrow"
           minDate={addDays(new Date(), 1)}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="max"
+        <DateRangepicker
+          name={{ start: "maxNextMonth.start", end: "maxNextMonth.end" }}
           label="maxNextMonth"
           maxDate={addMonths(new Date(), 1)}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="minmax"
+        <DateRangepicker
+          name={{ start: "minMax.start", end: "minMax.end" }}
           label="min/max"
           minDate={subMonths(new Date(), 1)}
           maxDate={addMonths(new Date(), 1)}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="minnotinview"
+        <DateRangepicker
+          name={{ start: "minNotInView.start", end: "minNotInView.end" }}
           label="min not in View"
           minDate={addMonths(new Date(), 1)}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="maxnotinview"
+        <DateRangepicker
+          name={{ start: "maxNotInView.start", end: "maxNotInView.end" }}
           label="max not in View"
           maxDate={subMonths(new Date(), 1)}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="minmaxnotinview"
+        <DateRangepicker
+          name={{ start: "minMaxNotInView.start", end: "minMaxNotInView.end" }}
           label="min and max not in View"
           minDate={addMonths(new Date(), 1)}
           maxDate={addMonths(new Date(), 3)}
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
         <Button type="submit">Bestätigen</Button>
@@ -186,8 +174,11 @@ export const DefaultValue = {
   render: function RenderComponent({ ...args }) {
     const formMethods = useForm({
       defaultValues: {
-        date: subDays(new Date(), 3),
-        isoDate: "2022-11-15T23:00:00.000Z",
+        date: { start: subDays(new Date(), 6), end: subDays(new Date(), 3) },
+        isoDate: {
+          start: "2022-11-15T23:00:00.000Z",
+          end: "2022-11-17T23:00:00.000Z",
+        },
       },
     });
 
@@ -197,18 +188,16 @@ export const DefaultValue = {
         onSubmit={() => {}}
         className={formClassName}
       >
-        <Datepicker
-          name="date"
+        <DateRangepicker
+          name={{ start: "date.start", end: "date.end" }}
           label="Date"
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
-        <Datepicker
-          name="isoDate"
+        <DateRangepicker
+          name={{ start: "isoDate.start", end: "isoDate.end" }}
           label="ISO Date"
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
       </Form>
@@ -225,12 +214,11 @@ export const Error = {
         onSubmit={() => {}}
         className={formClassName}
       >
-        <Datepicker
+        <DateRangepicker
           required
-          name="date"
+          name={{ start: "date.start", end: "date.end" }}
           label="Date"
           control={formMethods.control}
-          placeholder="Datum auswählen"
           {...args}
         />
         <Button type="submit">Bestätigen</Button>

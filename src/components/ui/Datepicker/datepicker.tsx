@@ -19,7 +19,7 @@ import {
 import type { Locale } from "@/locales/getText";
 import { marginsXSmall } from "@/styles";
 import type { InputVariant, Size } from "@/types";
-import { smallerSize } from "@/utils";
+import { smallerSize, utcDateToLocal } from "@/utils";
 import { requiredInputRule } from "@/utils/internal/inputRule";
 import { IconButton } from "../Button";
 import { Calendar } from "../Calendar";
@@ -30,6 +30,7 @@ import { usePopover } from "../Popover/popover";
 import { clearTime } from "@/utils/date";
 import { InputRaw } from "../Input";
 import { isFirefox } from "@/utils/browser/isFirefox";
+import { dateInputValueToDate, formatDateInputValue } from "./utils/format";
 
 export type DatepickerProps = {
   label?: string;
@@ -62,7 +63,7 @@ export const Datepicker = <
   maxDate,
 }: DatepickerProps & UseControllerProps<TFieldValues, TName>) => {
   const calendarProps = useCalendar();
-  const { clearSelected, select, selected, setViewing } = calendarProps;
+  const { clearSelected, setSelected, selected, setViewing } = calendarProps;
 
   const popoverControler = usePopover();
 
@@ -92,7 +93,8 @@ export const Datepicker = <
   useEffect(() => {
     if (!value || !isValid(new Date(value))) return;
 
-    select(clearTime(new Date(value)), true);
+    setViewing(new Date(value));
+    setSelected([clearTime(new Date(value))]);
   }, []);
 
   // Initiale Kalenderseite setzen
@@ -119,6 +121,15 @@ export const Datepicker = <
 
   const firefox = useMemo(() => isFirefox(), []);
 
+  const handleOnChange = (value: Date) => {
+    onChange(value);
+
+    setSelected([clearTime(value)]);
+    setViewing(value);
+  };
+
+  const timezoneOffset = useMemo(() => new Date().getTimezoneOffset(), []);
+
   return (
     <FormElement
       required={required}
@@ -131,21 +142,19 @@ export const Datepicker = <
       <InputRaw
         ref={ref}
         type="date"
-        value={value ? new Date(value).toISOString().slice(0, 10) : ""}
-        onChange={(v) => {
-          if (v.length > 10)
-            return onChange(new Date(v.slice(v.length - 10, v.length))); // Beim Input kann es vorkommen, dass für einen Sekundenbruchteil mehr als 11 Zeichen vorhanden sind, dies würde den Input brechen.
-          if (v.length === 0) return; // Wenn Jahreszahl 4 Zeichen beträgt und eine "0" eingetragen wird, würde sonst kurzzeitig v === "" sein und somit auserrorn.
-          return onChange(new Date(v));
+        value={formatDateInputValue(value)}
+        onChange={(value) => {
+          const v = dateInputValueToDate(value);
+          if (!v) return;
+          handleOnChange(v);
         }}
         variant={inputVariant}
         disabled={disabled}
         placeholder={placeholder}
-        min={minDate ? new Date(minDate).toISOString().slice(0, 10) : undefined}
-        max={maxDate ? new Date(maxDate).toISOString().slice(0, 10) : undefined}
+        min={formatDateInputValue(minDate)}
+        max={formatDateInputValue(maxDate)}
         error={!!error}
         size={size}
-        containerClassName="test"
         rightElement={{
           pointerEvents: true,
           children: (
@@ -169,7 +178,6 @@ export const Datepicker = <
               {!firefox && ( // Bei Firefox muss Button versteckt werden, da der native Button nicht versteckt werden kann und somit sonst 2 angezeigt werden würden.
                 <Popover
                   controller={popoverControler}
-                  ref={ref}
                   side="bottom"
                   disabled={disabled}
                   align="end"
@@ -188,8 +196,8 @@ export const Datepicker = <
                       minDate={minDate}
                       maxDate={maxDate}
                       selectType="single"
-                      onChange={(e) => {
-                        onChange(e);
+                      onChange={(v) => {
+                        onChange(utcDateToLocal(v, timezoneOffset));
                         popoverControler.close();
                       }}
                     />
