@@ -7,6 +7,14 @@ import {
   subMinutes,
 } from "date-fns";
 
+export const utcDateToLocal = (date: Date, offset: number) => {
+  const time = `${getHours(date)}:${getMinutes(date)}`;
+  const utcTime = utcTimeToLocal(time, offset);
+  if (!utcTime) return;
+  const [hours, minutes] = utcTime.split(":");
+  return setHours(setMinutes(date, Number(minutes)), Number(hours));
+};
+
 export const utcTimeToLocal = (
   time: string | undefined,
   offset: number

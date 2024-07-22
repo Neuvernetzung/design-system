@@ -8,9 +8,8 @@ import {
   isValid,
 } from "date-fns";
 import { useRouter } from "next/router";
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent, useEffect, useMemo } from "react";
 import {
-  Controller,
   FieldPath,
   FieldValues,
   useController,
@@ -18,10 +17,9 @@ import {
 } from "react-hook-form";
 
 import type { Locale } from "@/locales/getText";
-import { divides, marginsXSmall, placeholderAsText } from "@/styles";
-import { getInputStyles } from "@/styles/groups";
+import { marginsXSmall } from "@/styles";
 import type { InputVariant, Size } from "@/types";
-import { smallerSize } from "@/utils";
+import { smallerSize, utcDateToLocal } from "@/utils";
 import { requiredInputRule } from "@/utils/internal/inputRule";
 import { IconButton } from "../Button";
 import { Calendar } from "../Calendar";
@@ -29,8 +27,10 @@ import { useCalendar } from "../Calendar/hooks/useCalendar";
 import { FormElement, RequiredRule } from "../Form";
 import { Popover } from "../Popover";
 import { usePopover } from "../Popover/popover";
-import { Icon } from "../Icon";
 import { clearTime } from "@/utils/date";
+import { InputRaw } from "../Input";
+import { isFirefox } from "@/utils/browser/isFirefox";
+import { dateInputValueToDate, formatDateInputValue } from "./utils/format";
 
 export type DatepickerProps = {
   label?: string;
@@ -63,19 +63,38 @@ export const Datepicker = <
   maxDate,
 }: DatepickerProps & UseControllerProps<TFieldValues, TName>) => {
   const calendarProps = useCalendar();
-  const { clearSelected, select, selected, setViewing } = calendarProps;
+  const { clearSelected, setSelected, selected, setViewing } = calendarProps;
 
   const popoverControler = usePopover();
 
-  // Initial Value für useCalendar select setzen
+  const locale = useRouter().locale as Locale;
+
   const {
-    field: { value: initialValue },
-  } = useController({ control, name });
+    field: { value, onChange, ref },
+    fieldState: { error },
+  } = useController({
+    control,
+    name,
+    rules: {
+      required: requiredInputRule(required, locale),
+      validate: (v) => {
+        if (minDate && isAfter(minDate, v))
+          return `Wert muss nach ${minDate.toLocaleDateString()} sein.`;
+
+        if (maxDate && isBefore(maxDate, v))
+          return `Wert muss vor ${maxDate.toLocaleDateString()} sein.`;
+
+        return true;
+      },
+    },
+    disabled,
+  });
 
   useEffect(() => {
-    if (!initialValue || !isValid(new Date(initialValue))) return;
+    if (!value || !isValid(new Date(value))) return;
 
-    select(clearTime(new Date(initialValue)), true);
+    setViewing(new Date(value));
+    setSelected([clearTime(new Date(value))]);
   }, []);
 
   // Initiale Kalenderseite setzen
@@ -100,108 +119,95 @@ export const Datepicker = <
     }
   }, [selected, setViewing]);
 
-  const locale = useRouter().locale as Locale;
+  const firefox = useMemo(() => isFirefox(), []);
 
-  const dateFormatter = new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-  });
+  const handleOnChange = (value: Date) => {
+    onChange(value);
+
+    setSelected([clearTime(value)]);
+    setViewing(value);
+  };
+
+  const timezoneOffset = useMemo(() => new Date().getTimezoneOffset(), []);
 
   return (
-    <Controller
+    <FormElement
+      required={required}
       name={name}
-      control={control}
-      rules={{
-        required: requiredInputRule(required, locale),
-      }}
-      render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
-        <div className={cn()}>
-          <FormElement
-            required={required}
-            name={name}
-            error={error}
-            label={label}
-            helper={helper}
-            size={size}
-          >
-            <Popover
-              controller={popoverControler}
-              ref={ref}
-              side="bottom"
-              buttonComponent={
-                <button
-                  type="button"
-                  className={cn(
-                    "relative",
-                    getInputStyles({
-                      size,
-                      variant: inputVariant,
-                      error: !!error,
-                      disabled,
-                    })
-                  )}
-                >
-                  <div className="flex flex-row justify-between items-center">
-                    {value ? (
-                      dateFormatter.format(new Date(value))
-                    ) : (
-                      <span className={cn(placeholderAsText[inputVariant])}>
-                        {placeholder}
-                      </span>
-                    )}
-                    <span
-                      className={cn(
-                        "pointer-events-none absolute inset-y-0 right-0 flex flex-row items-center divide-x",
-                        divides.accent
-                      )}
-                    >
-                      {removeAll && !!value && (
-                        <IconButton
-                          size={smallerSize(size)}
-                          variant="ghost"
-                          ariaLabel="delete_selected_date"
-                          icon={IconX}
-                          className={cn(
-                            "pointer-events-auto",
-                            marginsXSmall[size]
-                          )}
-                          onClick={(e: MouseEvent) => {
-                            e.preventDefault();
-                            clearSelected();
-                            onChange(null); // null wird verwendet, da bei undefined der Controller auf den defaultValue zurücksetzt
-                          }}
-                          disabled={disabled}
-                        />
-                      )}
-                      <div className="aspect-square h-full flex items-center justify-center">
-                        <Icon
-                          size={smallerSize(size)}
-                          icon={IconCalendar}
-                          className={cn(
-                            "pointer-events-none flex max-h-6",
-                            marginsXSmall[size]
-                          )}
-                        />
-                      </div>
-                    </span>
-                  </div>
-                </button>
-              }
-              content={
-                <Calendar
-                  calendarProps={calendarProps}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  selectType="single"
-                  onChange={(e) => {
-                    onChange(e);
-                    popoverControler.close();
+      error={error}
+      label={label}
+      helper={helper}
+      size={size}
+    >
+      <InputRaw
+        ref={ref}
+        type="date"
+        value={formatDateInputValue(value)}
+        onChange={(value) => {
+          const v = dateInputValueToDate(value);
+          if (!v) return;
+          handleOnChange(v);
+        }}
+        variant={inputVariant}
+        disabled={disabled}
+        placeholder={placeholder}
+        min={formatDateInputValue(minDate)}
+        max={formatDateInputValue(maxDate)}
+        error={!!error}
+        size={size}
+        rightElement={{
+          pointerEvents: true,
+          children: (
+            <span className={cn("flex flex-row items-center")}>
+              {removeAll && !!value && (
+                <IconButton
+                  size={smallerSize(size)}
+                  variant="ghost"
+                  ariaLabel="delete_selected_date"
+                  icon={IconX}
+                  className={cn("pointer-events-auto", marginsXSmall[size])}
+                  onClick={(e: MouseEvent) => {
+                    e.preventDefault();
+                    clearSelected();
+                    onChange(null); // null wird verwendet, da bei undefined der Controller auf den defaultValue zurücksetzt
+                    onChange(undefined);
                   }}
+                  disabled={disabled}
                 />
-              }
-            />
-          </FormElement>
-        </div>
-      )}
-    />
+              )}
+              {!firefox && ( // Bei Firefox muss Button versteckt werden, da der native Button nicht versteckt werden kann und somit sonst 2 angezeigt werden würden.
+                <Popover
+                  controller={popoverControler}
+                  side="bottom"
+                  disabled={disabled}
+                  align="end"
+                  buttonComponent={
+                    <IconButton
+                      ariaLabel="Kalender öffnen"
+                      variant="ghost"
+                      icon={IconCalendar}
+                      size={smallerSize(size)}
+                      disabled={disabled}
+                    />
+                  }
+                  content={
+                    <Calendar
+                      calendarProps={calendarProps}
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      selectType="single"
+                      onChange={(v) => {
+                        onChange(utcDateToLocal(v, timezoneOffset));
+                        popoverControler.close();
+                      }}
+                    />
+                  }
+                />
+              )}
+            </span>
+          ),
+        }}
+      />
+    </FormElement>
   );
 };
