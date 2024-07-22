@@ -10,16 +10,12 @@ import {
 export const utcDateToLocal = (date: Date, offset: number) => {
   const time = `${getHours(date)}:${getMinutes(date)}`;
   const utcTime = utcTimeToLocal(time, offset);
-  if (!utcTime) return;
+
   const [hours, minutes] = utcTime.split(":");
   return setHours(setMinutes(date, Number(minutes)), Number(hours));
 };
 
-export const utcTimeToLocal = (
-  time: string | undefined,
-  offset: number
-): string | undefined => {
-  if (!time) return time;
+export const utcTimeToLocal = (time: string, offset: number): string => {
   const [h, m] = time.split(":");
 
   const localDate = subMinutes(
@@ -36,11 +32,15 @@ export const utcTimeToLocal = (
   )}`;
 };
 
-export const localTimeToUtc = (
-  time: string | undefined | null,
-  offset: number
-): string | undefined | null => {
-  if (!time) return time;
+export const localDateToUtc = (date: Date, offset: number) => {
+  const time = `${getHours(date)}:${getMinutes(date)}`;
+  const utcTime = localTimeToUtc(time, offset);
+
+  const [hours, minutes] = utcTime.split(":");
+  return setHours(setMinutes(date, Number(minutes)), Number(hours));
+};
+
+export const localTimeToUtc = (time: string, offset: number): string => {
   const [h, m] = time.split(":");
 
   const utcDate = addMinutes(

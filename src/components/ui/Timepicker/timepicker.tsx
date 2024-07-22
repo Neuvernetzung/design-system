@@ -104,7 +104,7 @@ export const Timepicker = <
           value={localtime ? utcTimeToLocal(value, timezoneOffset) : value}
           size={size}
           onChange={(v) =>
-            onChange(localtime ? localTimeToUtc(v, timezoneOffset) : v)
+            onChange(!v ? v : localtime ? localTimeToUtc(v, timezoneOffset) : v)
           }
           name={name}
           id={name}
