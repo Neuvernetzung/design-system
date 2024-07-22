@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.8.1
+
+### Patch Changes
+
+- 74d886d: Unkontrollierte Inputs für Datepicker und DateRangepicker hinzufügen #1511
+
 ## 3.8.0
 
 ### Minor Changes
