@@ -1,24 +1,20 @@
 import { cn } from "@/utils";
 
 import type { InputVariant, Size } from "../../types";
+import { bordersInteractive, extendedBorders } from "../borders";
 import {
   bgColors,
-  bordersInteractive,
   extendedBgColors,
   extendedBgColorsInteractive,
-  extendedBorders,
   extendedTextColors,
-  focus,
-  minHeights,
-  paddings,
-  placeholder,
-  roundings,
-  roundingsLeft,
-  roundingsRight,
   textColors,
-  textSizes,
-  transition,
-} from "..";
+} from "../colors";
+import { focus } from "../focus";
+import { paddings } from "../paddings";
+import { placeholder } from "../placeholder";
+import { roundings, roundingsLeft, roundingsRight } from "../roundings";
+import { minHeights, textSizes } from "../sizes";
+import { transition } from "../transition";
 
 type InputStyleProps = {
   size: Size;
@@ -30,11 +26,11 @@ type InputStyleProps = {
 };
 
 export const inputSizes: Record<Size, string> = {
-  xs: `${paddings.xs} ${minHeights.xs} ${textSizes.xs}`,
-  sm: `${paddings.sm} ${minHeights.sm} ${textSizes.sm}`,
-  md: `${paddings.md} ${minHeights.md} ${textSizes.md}`,
-  lg: `${paddings.lg} ${minHeights.lg} ${textSizes.lg}`,
-  xl: `${paddings.xl} ${minHeights.xl} ${textSizes.xl}`,
+  xs: cn(paddings.xs, minHeights.xs, textSizes.xs),
+  sm: cn(paddings.sm, minHeights.sm, textSizes.sm),
+  md: cn(paddings.md, minHeights.md, textSizes.md),
+  lg: cn(paddings.lg, minHeights.lg, textSizes.lg),
+  xl: cn(paddings.xl, minHeights.xl, textSizes.xl),
 };
 
 type VariantProps = {
@@ -44,7 +40,7 @@ type VariantProps = {
   disabled: string;
 };
 
-export const inputVariants: Record<InputVariant, VariantProps> = {
+export const nputVariantClassnames: Record<InputVariant, VariantProps> = {
   outline: {
     base: `${bgColors.white} border ${placeholder.outline}`,
     default: `${bordersInteractive.accent} ${textColors.accent}`,
@@ -78,15 +74,14 @@ export const getInputStyles = ({
   cn(
     "appearance-none outline-none w-full",
     inputSizes[size],
-    inputVariants[variant]?.base,
+    nputVariantClassnames[variant]?.base,
     !error ? focus.accent : focus.danger,
-    focus,
     transition,
     !error
-      ? !disabled && inputVariants[variant]?.default
-      : inputVariants[variant]?.error,
-    disabled && `cursor-not-allowed ${inputVariants[variant]?.disabled}`,
-    !disabled,
+      ? !disabled && nputVariantClassnames[variant]?.default
+      : nputVariantClassnames[variant]?.error,
+    disabled &&
+      `cursor-not-allowed ${nputVariantClassnames[variant]?.disabled}`,
     !leftAddon && !rightAddon && roundings[size],
     !leftAddon && roundingsLeft[size],
     !rightAddon && roundingsRight[size]

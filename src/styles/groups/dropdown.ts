@@ -2,18 +2,14 @@ import { cn } from "@/utils/cn";
 
 import type { Size } from "../../types";
 import { capSize, minSize } from "../../utils";
-import {
-  bgColors,
-  borders,
-  divides,
-  paddingsSmallEvenly,
-  paddingsX,
-  popoverAnimation,
-  roundings,
-  scrollbar,
-  shadows,
-  zIndexes,
-} from "..";
+import { borders, divides } from "../borders";
+import { bgColors } from "../colors";
+import { zIndexes } from "../zIndexes";
+import { scrollbar } from "../scrollbar";
+import { roundings } from "../roundings";
+import { shadows } from "../shadows";
+import { popoverAnimation } from "../animation";
+import { paddingsSmallEvenly, paddingsX } from "../paddings";
 
 type DropdownContainerStyleProps = {
   size: Size;
