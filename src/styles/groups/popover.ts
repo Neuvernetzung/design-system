@@ -1,15 +1,13 @@
 import { cn } from "@/utils";
 
 import type { Size } from "../../types";
-import {
-  bgColors,
-  borders,
-  paddingsLargeEvenly,
-  popoverMaxSizes,
-  roundings,
-  shadows,
-  zIndexes,
-} from "..";
+import { borders } from "../borders";
+import { bgColors } from "../colors";
+import { zIndexes } from "../zIndexes";
+import { shadows } from "../shadows";
+import { roundings } from "../roundings";
+import { paddingsLargeEvenly } from "../paddings";
+import { popoverMaxSizes } from "../sizes";
 
 type PopoverContainerStyleProps = {
   size: Size;
