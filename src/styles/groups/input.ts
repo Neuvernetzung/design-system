@@ -40,7 +40,7 @@ type VariantProps = {
   disabled: string;
 };
 
-export const nputVariantClassnames: Record<InputVariant, VariantProps> = {
+export const inputVariantClassnames: Record<InputVariant, VariantProps> = {
   outline: {
     base: `${bgColors.white} border ${placeholder.outline}`,
     default: `${bordersInteractive.accent} ${textColors.accent}`,
@@ -74,14 +74,14 @@ export const getInputStyles = ({
   cn(
     "appearance-none outline-none w-full",
     inputSizes[size],
-    nputVariantClassnames[variant]?.base,
+    inputVariantClassnames[variant]?.base,
     !error ? focus.accent : focus.danger,
     transition,
     !error
-      ? !disabled && nputVariantClassnames[variant]?.default
-      : nputVariantClassnames[variant]?.error,
+      ? !disabled && inputVariantClassnames[variant]?.default
+      : inputVariantClassnames[variant]?.error,
     disabled &&
-      `cursor-not-allowed ${nputVariantClassnames[variant]?.disabled}`,
+      `cursor-not-allowed ${inputVariantClassnames[variant]?.disabled}`,
     !leftAddon && !rightAddon && roundings[size],
     !leftAddon && roundingsLeft[size],
     !rightAddon && roundingsRight[size]
