@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.8.5
+
+### Patch Changes
+
+- e1c6565: Switch - Raw Variante hinzufügen #1524
+
 ## 3.8.4
 
 ### Patch Changes
