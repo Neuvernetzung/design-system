@@ -139,7 +139,9 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
           data-state={open ? "open" : "closed"}
           className={cn(open ? "flex" : "hidden", toolbarClassName)}
         >
-          <SelectText editor={editor} containerRef={containerRef} />
+          {!options?.disableTextSelection && (
+            <SelectText editor={editor} containerRef={containerRef} />
+          )}
           <RichTextMenuGroup type="multiple">
             <RichTextMenuGroupItem
               value="bold"
@@ -248,7 +250,7 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
                 },
               },
               { type: "separator" },
-              {
+              !options?.disableLists && {
                 type: "button",
                 icon: IconList,
                 onClick: () => editor.chain().focus().toggleBulletList().run(),
@@ -257,7 +259,7 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
                   variant: editor.isActive("bulletList") ? "subtile" : "ghost",
                 },
               },
-              {
+              !options?.disableLists && {
                 type: "button",
                 icon: IconListNumbers,
                 onClick: () => editor.chain().focus().toggleOrderedList().run(),
@@ -267,7 +269,7 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
                 },
               },
               { type: "separator" },
-              {
+              !options?.disableQuote && {
                 type: "button",
                 icon: IconQuote,
                 onClick: () => editor.chain().focus().toggleBlockquote().run(),
@@ -276,7 +278,7 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
                   variant: editor.isActive("blockquote") ? "subtile" : "ghost",
                 },
               },
-              {
+              !options?.disableCodeBlock && {
                 type: "button",
                 icon: IconCode,
                 onClick: () => editor.chain().focus().toggleCodeBlock().run(),
@@ -286,7 +288,7 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
                 },
               },
               { type: "separator" },
-              {
+              !options?.disableHorizontalRule && {
                 type: "button",
                 icon: IconSeparator,
                 onClick: () => editor.chain().focus().setHorizontalRule().run(),
