@@ -4,12 +4,7 @@ import LinkExtension from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import {
-  type Editor,
-  EditorContent,
-  type Extension,
-  useEditor,
-} from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {
   Controller,
@@ -28,67 +23,29 @@ import {
   roundings,
   transition,
 } from "../../../styles";
-import type { Size } from "../../../types";
 import { requiredInputRule } from "../../../utils/internal/inputRule";
-import { FormElement, type RequiredRule } from "../Form";
-import type { MenuItemProps } from "../Menu";
+import { FormElement } from "../Form";
 import { proseClassName } from "../Prose";
 import { Text } from "../Typography/Text";
-import { Float } from "./Float";
 import { FloatingMenuExtension } from "./Floating";
 import { Floating } from "./Floating/NodeView";
-import { ImageExtension } from "./Image";
-import { ImageFigure } from "./Image/Figure";
 import { BubbleMenu } from "./Menus/bubblemenu";
-import { SlashCommand } from "./Slash";
-import { SlashMenu } from "./Slash/Menu";
-import { SmallParagraph } from "./Small";
-import { TableExtensions } from "./Table";
+import type { RichTextOptionProps, RichTextProps } from "./richText";
 import { richTextTableClassName } from "./Table/Table/className";
-import { ReactElement } from "react";
-import { VideoFigure } from "./Video/Figure";
-import { VideoExtension } from "./Video";
+import { replaceMustacheVariables, VariablesExtension } from "./Variables";
+import { VariablesContextProvider } from "./Variables/Context/provider";
+import { VariableMenu } from "./Variables/Menu";
+import { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
-export type RichTextOptionProps = {
-  disableFloatingMenu?: boolean;
-  disableSlashMenu?: boolean;
-  disableTable?: boolean;
-  disableImages?: boolean;
-  disableVideos?: boolean;
-  disableLists?: boolean;
-  disableCodeBlock?: boolean;
-  disableQuote?: boolean;
-  disableHorizontalRule?: boolean;
-  disableTextSelection?: boolean;
-};
+type EmailEditorProps<TVariables extends string> = Omit<
+  RichTextProps,
+  "options" | "plugins" | "extensions"
+> & { variables: EmailVariables<TVariables>; parseVariables?: boolean };
 
-export type RichTextPluginWithEditorProps = {
-  menuItems?: MenuItemProps[];
-  component?: ReactElement;
-}[];
-
-export type RichTextPluginProps = (
-  editor: Editor | null
-) => RichTextPluginWithEditorProps;
-
-export type RichTextProps = {
-  label?: string;
-  helper?: string;
-  required?: RequiredRule;
-  placeholder?: string;
-  maxLength?: number;
-  showLength?: boolean;
-  containerClassName?: string;
-  editorClassName?: string;
-  size?: Size;
-  options?: RichTextOptionProps;
-  extensions?: Extension[];
-  plugins?: RichTextPluginProps;
-};
-
-export const RichText = <
+export const EmailEditor = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TVariables extends string = string
 >({
   label,
   name,
@@ -101,10 +58,20 @@ export const RichText = <
   containerClassName,
   editorClassName,
   size = "md",
-  options,
-  extensions = [],
-  plugins,
-}: RichTextProps & UseControllerProps<TFieldValues, TName>) => {
+  variables,
+  parseVariables,
+}: EmailEditorProps<TVariables> & UseControllerProps<TFieldValues, TName>) => {
+  const options: RichTextOptionProps = {
+    disableTable: true,
+    disableVideos: true,
+    disableImages: true,
+    disableTextSelection: true,
+    disableCodeBlock: true,
+    disableHorizontalRule: true,
+    disableLists: true,
+    disableQuote: true,
+  };
+
   const {
     field: { value, onChange },
   } = useController({ control, name });
@@ -130,10 +97,7 @@ export const RichText = <
           if (node.type.name === "heading") {
             return `Überschrift ${node.attrs.level}`;
           }
-          if (node.type.name === "figure" || node.type.name === "videoFigure") {
-            return "";
-          }
-          return `Tippe "/" für Befehle...`;
+          return `Mit "@" Variable hinzufügen...`;
         },
       }),
       CharacterCount.configure({
@@ -145,15 +109,8 @@ export const RichText = <
       LinkExtension.configure({
         openOnClick: false,
       }),
-
-      Float,
-      SmallParagraph,
-      ...(options?.disableImages ? [] : [ImageFigure, ImageExtension]),
-      ...(options?.disableVideos ? [] : [VideoFigure, VideoExtension]),
-      ...(options?.disableSlashMenu ? [] : [SlashCommand]),
+      VariablesExtension,
       ...(options?.disableFloatingMenu ? [] : [FloatingMenuExtension]),
-      ...(options?.disableTable ? [] : TableExtensions),
-      ...extensions,
     ],
     editorProps: {
       attributes: {
@@ -172,17 +129,19 @@ export const RichText = <
       },
     },
     onCreate: ({ editor }) => {
-      editor.commands.setContent(value);
+      // Mustache Template muss vor dem parsen zu einem Html-Tag umgewandelt werden, da parsen von reinem Text mit parseDom oder parseHtml nicht möglich ist.
+      editor.commands.setContent(replaceMustacheVariables(value));
     },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
   });
 
-  const pluginsWithEditor = plugins?.(editor);
-
   return (
-    <>
+    <VariablesContextProvider
+      variables={variables}
+      parseVariables={parseVariables}
+    >
       <Controller
         control={control}
         name={name}
@@ -213,18 +172,11 @@ export const RichText = <
                 <BubbleMenu
                   editor={editor}
                   options={options}
-                  plugins={pluginsWithEditor}
+                  plugins={undefined}
                 />
               ) : null}
               {!options?.disableFloatingMenu && editor ? (
                 <Floating editor={editor} />
-              ) : null}
-              {!options?.disableSlashMenu && editor ? (
-                <SlashMenu
-                  editor={editor}
-                  options={options}
-                  plugins={pluginsWithEditor}
-                />
               ) : null}
               <EditorContent
                 ref={ref}
@@ -250,9 +202,8 @@ export const RichText = <
           </FormElement>
         )}
       />
-      {pluginsWithEditor
-        ?.filter((plugin) => !!plugin.component)
-        .map((plugin) => plugin.component)}
-    </>
+
+      {editor ? <VariableMenu editor={editor} /> : null}
+    </VariablesContextProvider>
   );
 };
