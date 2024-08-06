@@ -45,6 +45,7 @@ export const ImageExtension = TiptapImageExtension.extend({
         mergeAttributes(rest, {
           draggable: false,
           contenteditable: false,
+          "data-float": dataFloat,
         }),
       ],
     ];
