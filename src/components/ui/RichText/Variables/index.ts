@@ -20,7 +20,7 @@ const pasteRegex = /((?:{{)((?:[^}]+))(?:}}))/gm;
 
 export const VARIABLE_COMPONENT_TAG = "var-comp";
 
-export const replaceMustacheVariables = (htmlString: string) => {
+export const replaceMustacheVariables = (htmlString: string = "") => {
   const replacedString = htmlString.replace(
     pasteRegex,
     (...match) =>

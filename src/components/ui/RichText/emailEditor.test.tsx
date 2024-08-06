@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { render } from "../../../../test-utils";
 import { EmailEditor } from ".";
-import { EmailVariables } from "@/utils/template/renderEmailTemplate";
+import type { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
 const ExtendedForm = () => {
   const { control } = useForm();
