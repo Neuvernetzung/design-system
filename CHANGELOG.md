@@ -1,5 +1,18 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.9.0
+
+### Minor Changes
+
+- 959453a: RichText - E-Mail Editor hinzufügen #1533
+
+### Patch Changes
+
+- f4c7e75: Prose - Bilder mit floating werden nicht korrekt dargestellt #1529
+- 2ecdf8a: Avatar - radix Primitive nutzen #1528
+- 66cae50: Modal - a11y verbessern #1527
+- 8ff716c: RichText - BubbleMenü ausblenden wenn außerhalb des RichText Editor geklickt wird #1534
+
 ## 3.8.5
 
 ### Patch Changes
