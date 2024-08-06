@@ -1,4 +1,9 @@
-import NextImage, { type ImageProps } from "next/image";
+import {
+  AvatarFallback,
+  AvatarImage,
+  Root as AvatarRoot,
+} from "@radix-ui/react-avatar";
+import { getImageProps, type ImageProps } from "next/image";
 
 import { Text } from "@/components/ui/Typography/Text";
 import { borders, heights } from "@/styles";
@@ -6,14 +11,6 @@ import { useThemeStateValue } from "@/theme";
 import type { Color, HEX, Size } from "@/types";
 import { cn } from "@/utils";
 import { blendColor } from "@/utils/internal";
-
-// TODO: Remove once https://github.com/vercel/next.js/issues/52216 is resolved.
-// `next/image` seems to be affected by a default + named export bundling bug.
-let ResolvedImage = NextImage;
-if ("default" in ResolvedImage) {
-  ResolvedImage = (ResolvedImage as unknown as { default: typeof NextImage })
-    .default;
-}
 
 export type AvatarProps = {
   image?: Pick<ImageProps, "src" | "alt">;
@@ -53,8 +50,15 @@ export const Avatar = ({
   const c = colorState?.[color]?.[500];
   const randomBgColor = blendColor(`#${c}`, lettersToColor(initials), 0.5);
 
+  const { props } = getImageProps({
+    height: 100,
+    width: 100,
+    src: image?.src || "",
+    alt: image?.alt || "",
+  });
+
   return (
-    <div
+    <AvatarRoot
       className={cn(
         "flex flex-col w-min items-center justify-center aspect-square rounded-full border overflow-hidden",
         borders.accent, // Ist immer accent, jedoch die Hintergrundfarbe mischt sich aus color zusammen.
@@ -62,16 +66,10 @@ export const Avatar = ({
       )}
       style={{ backgroundColor: `${randomBgColor}33` }} // 33 für 20% opacity
     >
-      {image ? (
-        <ResolvedImage
-          height={100}
-          width={100}
-          src={image.src}
-          alt={image.alt}
-        />
-      ) : (
+      <AvatarImage {...props} />
+      <AvatarFallback>
         <Text size={size}>{initials}</Text>
-      )}
-    </div>
+      </AvatarFallback>
+    </AvatarRoot>
   );
 };
