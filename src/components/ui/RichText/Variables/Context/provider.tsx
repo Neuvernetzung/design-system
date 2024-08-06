@@ -12,7 +12,7 @@ export function VariablesContextProvider({
   variables: EmailVariable[];
 }) {
   const providerValue = useMemo(
-    () => ({ values: variables, parseVariables }),
+    () => ({ variables, parseVariables }),
     [variables, parseVariables]
   );
 

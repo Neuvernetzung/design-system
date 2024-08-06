@@ -4,7 +4,7 @@ import LinkExtension from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, type Extension, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
 import {
@@ -31,15 +31,11 @@ import { Text } from "../Typography/Text";
 import { FloatingMenuExtension } from "./Floating";
 import { Floating } from "./Floating/NodeView";
 import { BubbleMenu } from "./Menus/bubblemenu";
-import type {
-  RichTextOptionProps,
-  RichTextPluginProps,
-  RichTextProps,
-} from "./richText";
+import type { RichTextOptionProps, RichTextProps } from "./richText";
 import { richTextTableClassName } from "./Table/Table/className";
-import { VariablesExtension } from "./Variables";
+import { replaceMustacheVariables, VariablesExtension } from "./Variables";
 import { VariablesContextProvider } from "./Variables/Context/provider";
-import { suggestion } from "./Variables/suggestion";
+import { VariableMenu } from "./Variables/Menu";
 
 export type EmailVariable = { title: string; value: string };
 
@@ -76,15 +72,7 @@ export const EmailEditor = <
     disableQuote: true,
   };
 
-  const plugins: RichTextPluginProps = (editor) => [{}];
-
   const [parseVariables] = useState(false);
-
-  const extensions: Extension[] = [
-    VariablesExtension.configure({
-      suggestion,
-    }),
-  ];
 
   const {
     field: { value, onChange },
@@ -123,8 +111,8 @@ export const EmailEditor = <
       LinkExtension.configure({
         openOnClick: false,
       }),
+      VariablesExtension,
       ...(options?.disableFloatingMenu ? [] : [FloatingMenuExtension]),
-      ...extensions,
     ],
     editorProps: {
       attributes: {
@@ -143,14 +131,13 @@ export const EmailEditor = <
       },
     },
     onCreate: ({ editor }) => {
-      editor.commands.setContent(value);
+      // Mustache Template muss vor dem parsen zu einem Html-Tag umgewandelt werden, da parsen von reinem Text mit parseDom oder parseHtml nicht möglich ist.
+      editor.commands.setContent(replaceMustacheVariables(value));
     },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
   });
-
-  const pluginsWithEditor = plugins?.(editor);
 
   return (
     <VariablesContextProvider
@@ -187,7 +174,7 @@ export const EmailEditor = <
                 <BubbleMenu
                   editor={editor}
                   options={options}
-                  plugins={pluginsWithEditor}
+                  plugins={undefined}
                 />
               ) : null}
               {!options?.disableFloatingMenu && editor ? (
@@ -217,9 +204,8 @@ export const EmailEditor = <
           </FormElement>
         )}
       />
-      {pluginsWithEditor
-        ?.filter((plugin) => !!plugin.component)
-        .map((plugin) => plugin.component)}
+
+      {editor ? <VariableMenu editor={editor} /> : null}
     </VariablesContextProvider>
   );
 };

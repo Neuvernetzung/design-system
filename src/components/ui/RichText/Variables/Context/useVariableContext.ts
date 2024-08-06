@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { VariablesContext } from "./context";
 
 export const useVariablesContext = () => {
-  const values = useContext(VariablesContext);
+  const variables = useContext(VariablesContext);
 
-  if (values === undefined)
+  if (variables === undefined)
     throw new Error(
       "useVariablesContext must be used within a VariablesProvider"
     );
 
-  return values;
+  return variables;
 };

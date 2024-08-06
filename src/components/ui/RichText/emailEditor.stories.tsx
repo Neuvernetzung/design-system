@@ -24,7 +24,10 @@ const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
 export const Default = {
   render: function DefaultRender({ ...args }) {
     const { control, watch } = useForm({
-      defaultValues: { EmailEditor: "Hallo, mein Name ist {{name}}." },
+      defaultValues: {
+        EmailEditor:
+          "Hallo, mein Name ist {{name}}. ...{{date}} ist heute und es ist sehr sonnig.",
+      },
     });
 
     return (

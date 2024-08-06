@@ -2,7 +2,7 @@ import { createContext } from "react";
 import type { EmailVariable } from "../../emailEditor";
 
 interface VariablesContextProps {
-  values: EmailVariable[] | undefined;
+  variables: EmailVariable[] | undefined;
   parseVariables: boolean;
 }
 
