@@ -35,21 +35,17 @@ import { richTextTableClassName } from "./Table/Table/className";
 import { replaceMustacheVariables, VariablesExtension } from "./Variables";
 import { VariablesContextProvider } from "./Variables/Context/provider";
 import { VariableMenu } from "./Variables/Menu";
+import { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
-export type EmailVariable = {
-  title: string;
-  value: string;
-  example?: string;
-};
-
-type EmailEditorProps = Omit<
+type EmailEditorProps<TVariables extends string> = Omit<
   RichTextProps,
   "options" | "plugins" | "extensions"
-> & { variables: EmailVariable[]; parseVariables?: boolean };
+> & { variables: EmailVariables<TVariables>; parseVariables?: boolean };
 
 export const EmailEditor = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TVariables extends string = string
 >({
   label,
   name,
@@ -64,7 +60,7 @@ export const EmailEditor = <
   size = "md",
   variables,
   parseVariables,
-}: EmailEditorProps & UseControllerProps<TFieldValues, TName>) => {
+}: EmailEditorProps<TVariables> & UseControllerProps<TFieldValues, TName>) => {
   const options: RichTextOptionProps = {
     disableTable: true,
     disableVideos: true,

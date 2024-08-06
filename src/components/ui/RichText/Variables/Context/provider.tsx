@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { VariablesContext } from "./context";
-import type { EmailVariable } from "../../emailEditor";
+import { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
 export function VariablesContextProvider({
   children,
@@ -9,7 +9,7 @@ export function VariablesContextProvider({
 }: {
   children: React.ReactNode;
   parseVariables?: boolean;
-  variables: EmailVariable[];
+  variables: EmailVariables;
 }) {
   const providerValue = useMemo(
     () => ({ variables, parseVariables }),

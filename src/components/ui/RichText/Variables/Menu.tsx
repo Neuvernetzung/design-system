@@ -26,7 +26,7 @@ export const VariableMenu = ({ editor }: VariableMenuProps) => {
   const { open, target, range: storeRange } = useStore(variableMenuStore);
   const range = storeRange || { from: NaN, to: NaN };
 
-  const { variables = [] } = useVariablesContext();
+  const { variables = {} } = useVariablesContext();
 
   const virtualEl = {
     getBoundingClientRect() {
@@ -86,7 +86,7 @@ export const VariableMenu = ({ editor }: VariableMenuProps) => {
         >
           <MenuItems
             size="sm"
-            items={variables.map((variable) => ({
+            items={Object.entries(variables).map(([id, variable]) => ({
               children: variable.title,
               onClick: () => {
                 const allowed = allow({ state: editor.state, range });
@@ -94,7 +94,7 @@ export const VariableMenu = ({ editor }: VariableMenuProps) => {
                 command({
                   editor,
                   range,
-                  props: { label: variable.title, id: variable.value },
+                  props: { label: variable.title, id },
                 });
               },
             }))}

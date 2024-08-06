@@ -7,9 +7,7 @@ import { useVariablesContext } from "./Context/useVariableContext";
 export const VariableNodeView: FC<NodeViewProps> = ({ node }) => {
   const { parseVariables, variables } = useVariablesContext();
 
-  const variable = variables?.find(
-    (variable) => variable.value === node?.attrs.id
-  );
+  const variable = variables?.[node?.attrs.id];
 
   return (
     <NodeViewWrapper className="inline w-fit">
@@ -20,8 +18,8 @@ export const VariableNodeView: FC<NodeViewProps> = ({ node }) => {
           color={!variable ? "danger" : "accent"}
         >
           {variable
-            ? variable.example
-              ? variable.example
+            ? variable.value
+              ? variable.value
               : variable.title
             : `"unbekannte Variable"`}
         </Tag>

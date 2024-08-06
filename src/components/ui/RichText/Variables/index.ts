@@ -12,8 +12,8 @@ import type {
 } from "@tiptap/suggestion";
 import { create } from "zustand";
 
-import type { EmailVariable } from "../emailEditor";
 import { VariableNodeView } from "./NodeView";
+import { EmailVariable } from "@/utils/template/renderEmailTemplate";
 
 const inputRegex = /((?:{{)((?:[^}]+))(?:}}))$/gm;
 const pasteRegex = /((?:{{)((?:[^}]+))(?:}}))/gm;

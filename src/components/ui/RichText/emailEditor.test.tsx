@@ -5,11 +5,29 @@ import { useForm } from "react-hook-form";
 
 import { render } from "../../../../test-utils";
 import { EmailEditor } from ".";
+import { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
 const ExtendedForm = () => {
   const { control } = useForm();
 
-  return <EmailEditor control={control} name="richText" label="EmailEditor" />;
+  const variables: EmailVariables = {
+    name: { title: "Name", value: "Max Mustermann" },
+    date: {
+      title: "Datum",
+      value: Intl.DateTimeFormat(undefined, {
+        dateStyle: "medium",
+      }).format(new Date()),
+    },
+  };
+
+  return (
+    <EmailEditor
+      control={control}
+      name="richText"
+      label="EmailEditor"
+      variables={variables}
+    />
+  );
 };
 
 beforeAll(() => {

@@ -5,6 +5,10 @@ import { cn } from "@/utils";
 
 import { EmailEditor } from ".";
 import { Button } from "../Button";
+import {
+  EmailVariables,
+  renderEmailTemplate,
+} from "@/utils/template/renderEmailTemplate";
 
 export default {
   title: "UI/Form/EmailEditor",
@@ -35,6 +39,22 @@ export const Default = {
 
     const currentDate = useMemo(() => new Date(), []);
 
+    const variables: EmailVariables = {
+      name: { title: "Name", value: "Max Mustermann" },
+      date: {
+        title: "Datum",
+        value: Intl.DateTimeFormat(undefined, {
+          dateStyle: "medium",
+        }).format(currentDate),
+      },
+    };
+
+    const value = watch();
+    const rendered = useMemo(
+      () => renderEmailTemplate(value.EmailEditor, variables),
+      [value]
+    );
+
     return (
       <Container>
         <EmailEditor
@@ -43,23 +63,10 @@ export const Default = {
           name="EmailEditor"
           showLength
           parseVariables={parseVariables}
-          variables={[
-            {
-              title: "Name",
-              value: "name",
-              example: "Max Mustermann",
-            },
-            {
-              title: "Datum",
-              value: "date",
-              example: Intl.DateTimeFormat(undefined, {
-                dateStyle: "medium",
-              }).format(currentDate),
-            },
-          ]}
+          variables={variables}
           {...args}
         />
-        {JSON.stringify(watch())}
+        {JSON.stringify(value)}
         <div>
           <Button
             onClick={() => {
@@ -71,6 +78,7 @@ export const Default = {
             Variablen parsen
           </Button>
         </div>
+        <div dangerouslySetInnerHTML={{ __html: rendered }} />
       </Container>
     );
   },
