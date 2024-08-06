@@ -1,10 +1,10 @@
 import { EmailVariables } from "@/utils/template/renderEmailTemplate";
 import { createContext } from "react";
 
-interface VariablesContextProps {
+export type VariablesContextProps = {
   variables: EmailVariables | undefined;
   parseVariables?: boolean;
-}
+};
 
 export const VariablesContext = createContext<
   VariablesContextProps | undefined

@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { VariablesContext } from "./context";
+import { VariablesContext, type VariablesContextProps } from "./context";
 
-export const useVariablesContext = () => {
+export const useVariablesContext = (): VariablesContextProps => {
   const variables = useContext(VariablesContext);
 
   if (variables === undefined)
