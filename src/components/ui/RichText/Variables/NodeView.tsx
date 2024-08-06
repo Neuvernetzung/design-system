@@ -7,17 +7,31 @@ import { useVariablesContext } from "./Context/useVariableContext";
 export const VariableNodeView: FC<NodeViewProps> = ({ node }) => {
   const { parseVariables, variables } = useVariablesContext();
 
-  const title = variables?.find(
+  const variable = variables?.find(
     (variable) => variable.value === node?.attrs.id
-  )?.title;
+  );
 
   return (
     <NodeViewWrapper className="inline w-fit">
       {parseVariables ? (
-        title ?? `unbekannte Variable`
+        <Tag
+          size="sm"
+          variant="subtile"
+          color={!variable ? "danger" : "accent"}
+        >
+          {variable
+            ? variable.example
+              ? variable.example
+              : variable.title
+            : `"unbekannte Variable"`}
+        </Tag>
       ) : (
-        <Tag size="sm" variant="subtile" color={!title ? "danger" : "accent"}>
-          {title ?? `unbekannte Variable`}
+        <Tag
+          size="sm"
+          variant="subtile"
+          color={!variable ? "danger" : "accent"}
+        >
+          {variable?.title || `unbekannte Variable`}
         </Tag>
       )}
     </NodeViewWrapper>

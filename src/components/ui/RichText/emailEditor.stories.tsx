@@ -1,9 +1,10 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { cn } from "@/utils";
 
 import { EmailEditor } from ".";
+import { Button } from "../Button";
 
 export default {
   title: "UI/Form/EmailEditor",
@@ -30,6 +31,10 @@ export const Default = {
       },
     });
 
+    const [parseVariables, setParseVariables] = useState<boolean>(false);
+
+    const currentDate = useMemo(() => new Date(), []);
+
     return (
       <Container>
         <EmailEditor
@@ -37,13 +42,35 @@ export const Default = {
           control={control}
           name="EmailEditor"
           showLength
+          parseVariables={parseVariables}
           variables={[
-            { title: "Name", value: "name" },
-            { title: "Datum", value: "date" },
+            {
+              title: "Name",
+              value: "name",
+              example: "Max Mustermann",
+            },
+            {
+              title: "Datum",
+              value: "date",
+              example: Intl.DateTimeFormat(undefined, {
+                dateStyle: "medium",
+              }).format(currentDate),
+            },
           ]}
           {...args}
         />
         {JSON.stringify(watch())}
+        <div>
+          <Button
+            onClick={() => {
+              setParseVariables((v) => !v);
+            }}
+            color={parseVariables ? "primary" : "accent"}
+            size="sm"
+          >
+            Variablen parsen
+          </Button>
+        </div>
       </Container>
     );
   },

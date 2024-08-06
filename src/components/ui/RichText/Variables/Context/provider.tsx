@@ -8,7 +8,7 @@ export function VariablesContextProvider({
   variables,
 }: {
   children: React.ReactNode;
-  parseVariables: boolean;
+  parseVariables?: boolean;
   variables: EmailVariable[];
 }) {
   const providerValue = useMemo(

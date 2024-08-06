@@ -6,7 +6,6 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState } from "react";
 import {
   Controller,
   type FieldPath,
@@ -37,12 +36,16 @@ import { replaceMustacheVariables, VariablesExtension } from "./Variables";
 import { VariablesContextProvider } from "./Variables/Context/provider";
 import { VariableMenu } from "./Variables/Menu";
 
-export type EmailVariable = { title: string; value: string };
+export type EmailVariable = {
+  title: string;
+  value: string;
+  example?: string;
+};
 
 type EmailEditorProps = Omit<
   RichTextProps,
   "options" | "plugins" | "extensions"
-> & { variables: EmailVariable[] };
+> & { variables: EmailVariable[]; parseVariables?: boolean };
 
 export const EmailEditor = <
   TFieldValues extends FieldValues = FieldValues,
@@ -60,6 +63,7 @@ export const EmailEditor = <
   editorClassName,
   size = "md",
   variables,
+  parseVariables,
 }: EmailEditorProps & UseControllerProps<TFieldValues, TName>) => {
   const options: RichTextOptionProps = {
     disableTable: true,
@@ -71,8 +75,6 @@ export const EmailEditor = <
     disableLists: true,
     disableQuote: true,
   };
-
-  const [parseVariables] = useState(false);
 
   const {
     field: { value, onChange },
