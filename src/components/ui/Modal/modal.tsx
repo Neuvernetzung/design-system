@@ -4,6 +4,8 @@ import {
   DialogPortal,
   DialogTrigger,
   Root as DialogRoot,
+  DialogTitle,
+  DialogDescription,
 } from "@radix-ui/react-dialog";
 import { cn } from "@/utils";
 import isString from "lodash/isString";
@@ -144,21 +146,29 @@ export const Modal = ({
               >
                 <Wrapper>
                   {header && (
-                    <div
-                      className={cn(
-                        sectionStyles,
-                        extendedBgColors.subtile,
-                        roundingsTop.lg,
-                        headerClassName
-                      )}
-                    >
-                      {isString(header) ? <Heading>{header}</Heading> : header}
-                    </div>
+                    <DialogTitle asChild>
+                      <div
+                        className={cn(
+                          sectionStyles,
+                          extendedBgColors.subtile,
+                          roundingsTop.lg,
+                          headerClassName
+                        )}
+                      >
+                        {isString(header) ? (
+                          <Heading>{header}</Heading>
+                        ) : (
+                          header
+                        )}
+                      </div>
+                    </DialogTitle>
                   )}
                   {content && (
-                    <div className={cn(sectionStyles, contentClassName)}>
-                      {isString(content) ? <Text>{content}</Text> : content}
-                    </div>
+                    <DialogDescription asChild>
+                      <div className={cn(sectionStyles, contentClassName)}>
+                        {isString(content) ? <Text>{content}</Text> : content}
+                      </div>
+                    </DialogDescription>
                   )}
                   {footer && (
                     <div className={cn(sectionStyles, footerClassName)}>

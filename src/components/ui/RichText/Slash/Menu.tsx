@@ -119,7 +119,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
           <MenuItems
             size="sm"
             items={compact([
-              {
+              !options?.disableTextSelection && {
                 type: "group",
                 children: "Fließtexte",
                 items: [
@@ -138,7 +138,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
                 ],
               },
               { type: "separator" },
-              {
+              !options?.disableTextSelection && {
                 type: "group",
                 children: "Überschriften",
                 items: [
@@ -195,7 +195,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
                 },
               },
               { type: "separator" },
-              {
+              !options?.disableLists && {
                 icon: IconList,
                 children: "Ungeordnete Liste",
                 onClick: () => {
@@ -207,7 +207,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
                     .run();
                 },
               },
-              {
+              !options?.disableLists && {
                 icon: IconListNumbers,
                 children: "Geordnete Liste",
                 onClick: () => {
@@ -220,7 +220,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
                 },
               },
               { type: "separator" },
-              {
+              !options?.disableQuote && {
                 icon: IconQuote,
                 children: "Zitat",
                 onClick: () => {
@@ -232,7 +232,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
                     .run();
                 },
               },
-              {
+              !options?.disableCodeBlock && {
                 icon: IconCode,
                 children: "Code Block",
                 onClick: () => {
@@ -245,7 +245,7 @@ export const SlashMenu = ({ editor, options, plugins }: SlashMenuProps) => {
                 },
               },
               { type: "separator" },
-              {
+              !options?.disableHorizontalRule && {
                 icon: IconSeparator,
                 children: "Separierung",
                 onClick: () => {
