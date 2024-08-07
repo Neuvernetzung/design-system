@@ -15,6 +15,7 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@/utils/cn";
+import { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
 import {
   bordersInteractive,
@@ -32,10 +33,13 @@ import { Floating } from "./Floating/NodeView";
 import { BubbleMenu } from "./Menus/bubblemenu";
 import type { RichTextOptionProps, RichTextProps } from "./richText";
 import { richTextTableClassName } from "./Table/Table/className";
-import { replaceMustacheVariables, VariablesExtension } from "./Variables";
+import {
+  replaceMustacheVariables,
+  replaceVariableComponentVariables,
+  VariablesExtension,
+} from "./Variables";
 import { VariablesContextProvider } from "./Variables/Context/provider";
 import { VariableMenu } from "./Variables/Menu";
-import { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
 type EmailEditorProps<TVariables extends string> = Omit<
   RichTextProps,
@@ -97,7 +101,9 @@ export const EmailEditor = <
           if (node.type.name === "heading") {
             return `Überschrift ${node.attrs.level}`;
           }
-          return `Mit "@" Variable hinzufügen...`;
+          return Object.keys(variables).length !== 0
+            ? `Mit "@" Variable hinzufügen...`
+            : "";
         },
       }),
       CharacterCount.configure({
@@ -133,7 +139,8 @@ export const EmailEditor = <
       editor.commands.setContent(replaceMustacheVariables(value));
     },
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      // TipTap braucht ein Html-Tag, sonst tritt der Fehler "TypeError: dom.hasAttribute is not a function" auf. Deswegen wird nicht direkt in Variable umgewandelt sondern erst hier.
+      onChange(replaceVariableComponentVariables(editor.getHTML()));
     },
   });
 
