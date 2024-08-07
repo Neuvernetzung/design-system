@@ -107,7 +107,7 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
     ],
   });
 
-  const openRaw = !editor.view.state.selection.empty && editor.view.hasFocus();
+  const openRaw = !editor.view.state.selection.empty;
 
   const open = useDebounce(openRaw, 250);
 
