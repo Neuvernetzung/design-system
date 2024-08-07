@@ -30,6 +30,21 @@ export const replaceMustacheVariables = (htmlString: string = "") => {
   return replacedString;
 };
 
+const variableComponentTagRegex = new RegExp(
+  `<${VARIABLE_COMPONENT_TAG}[^>]*data-id="([^"]*)"[^>]*>(.*?)</${VARIABLE_COMPONENT_TAG}>`,
+  "gi"
+);
+
+export const replaceVariableComponentVariables = (htmlString: string = "") => {
+  // ersetzt Html-Tag durch Template
+  const replacedString = htmlString.replace(
+    variableComponentTagRegex,
+    (...match) => `{{${match[1]}}}`
+  );
+
+  return replacedString;
+};
+
 export const variableMenuStore = create<{
   open: boolean;
   range?: Range;
@@ -106,12 +121,17 @@ export const VariablesExtension = MentionExtension.extend({
     ];
   },
 
-  renderHTML: ({ node }) => `{{${node.attrs.id}}}`,
+  // ({ node }) => `{{${node.attrs.id}}}` kann nicht direkt verwendet werden, da sonst "TypeError: dom.hasAttribute is not a function" Fehler auftritt
+  renderHTML: ({ node }) => [
+    VARIABLE_COMPONENT_TAG,
+    { "data-id": node.attrs.id },
+  ],
 
   addNodeView() {
     return ReactNodeViewRenderer(VariableNodeView);
   },
 }).configure({
+  deleteTriggerWithBackspace: true,
   suggestion: {
     render,
   },
