@@ -86,18 +86,33 @@ export const VariableMenu = ({ editor }: VariableMenuProps) => {
         >
           <MenuItems
             size="sm"
-            items={Object.entries(variables).map(([id, variable]) => ({
-              children: variable.title,
-              onClick: () => {
-                const allowed = allow({ state: editor.state, range });
-                if (!allowed) return;
-                command({
-                  editor,
-                  range,
-                  props: { label: variable.title, id },
-                });
+            items={[
+              {
+                type: "group",
+                children: "Variablen",
+                items:
+                  Object.keys(variables).length !== 0
+                    ? Object.entries(variables).map(([id, variable]) => ({
+                        children: variable.title,
+                        onClick: () => {
+                          const allowed = allow({ state: editor.state, range });
+                          if (!allowed) return;
+                          command({
+                            editor,
+                            range,
+                            props: { label: variable.title, id },
+                          });
+                        },
+                      }))
+                    : [
+                        {
+                          children: "Keine Variablen verfügbar.",
+                          disabled: true,
+                          onClick: () => {},
+                        },
+                      ],
               },
-            }))}
+            ]}
           />
         </DropdownMenuContent>
       </DropdownMenuPortal>
