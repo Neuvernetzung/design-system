@@ -83,3 +83,31 @@ export const Default = {
     );
   },
 };
+
+export const NoVariables = {
+  render: function DefaultRender({ ...args }) {
+    const { control, watch } = useForm({
+      defaultValues: {
+        EmailEditor: "Hallo, hier steht ein Beispieltext.",
+      },
+    });
+
+    const variables: EmailVariables = {};
+
+    const value = watch();
+
+    return (
+      <Container>
+        <EmailEditor
+          maxLength={120}
+          control={control}
+          name="EmailEditor"
+          showLength
+          variables={variables}
+          {...args}
+        />
+        {JSON.stringify(value)}
+      </Container>
+    );
+  },
+};
