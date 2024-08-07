@@ -1,4 +1,4 @@
-import { EmailVariables } from "@/utils/template/renderEmailTemplate";
+import type { EmailVariables } from "@/utils/template/renderEmailTemplate";
 import { createContext } from "react";
 
 export type VariablesContextProps = {

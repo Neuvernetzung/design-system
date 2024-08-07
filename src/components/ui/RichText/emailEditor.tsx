@@ -15,7 +15,7 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@/utils/cn";
-import { EmailVariables } from "@/utils/template/renderEmailTemplate";
+import type { EmailVariables } from "@/utils/template/renderEmailTemplate";
 
 import {
   bordersInteractive,

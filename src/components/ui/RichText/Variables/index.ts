@@ -13,7 +13,7 @@ import type {
 import { create } from "zustand";
 
 import { VariableNodeView } from "./NodeView";
-import { EmailVariable } from "@/utils/template/renderEmailTemplate";
+import type { EmailVariable } from "@/utils/template/renderEmailTemplate";
 
 const inputRegex = /((?:{{)((?:[^}]+))(?:}}))$/gm;
 const pasteRegex = /((?:{{)((?:[^}]+))(?:}}))/gm;
