@@ -7,6 +7,7 @@ import { EmailEditor } from ".";
 import { Button } from "../Button";
 import {
   EmailVariables,
+  EmailVariableValues,
   renderEmailTemplate,
 } from "@/utils/template/renderEmailTemplate";
 
@@ -26,6 +27,8 @@ const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col gap-5", className)} {...props} />
 );
 
+type FormVariables = "name" | "date";
+
 export const Default = {
   render: function DefaultRender({ ...args }) {
     const { control, watch } = useForm({
@@ -39,7 +42,7 @@ export const Default = {
 
     const currentDate = useMemo(() => new Date(), []);
 
-    const variables: EmailVariables = {
+    const variables: EmailVariables<FormVariables> = {
       name: { title: "Name", value: "Max Mustermann" },
       date: {
         title: "Datum",
@@ -49,9 +52,16 @@ export const Default = {
       },
     };
 
+    const values: EmailVariableValues<FormVariables> = {
+      name: "Max Mustermann",
+      date: Intl.DateTimeFormat(undefined, {
+        dateStyle: "medium",
+      }).format(currentDate),
+    };
+
     const value = watch();
     const rendered = useMemo(
-      () => renderEmailTemplate(value.EmailEditor, variables),
+      () => renderEmailTemplate(value.EmailEditor, values),
       [value]
     );
 
