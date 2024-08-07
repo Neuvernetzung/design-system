@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.9.2
+
+### Patch Changes
+
+- f15c55f: RichText - BubbleMenü nicht ausblenden, wenn fokus außerhalb gelegt wird, da wenn auf Menü geklickt wird ebenfalls fokus verschwindet #1545
+- f49d420: renderEmailTemplate - EmailVariables durch EmailVariableValues ersetzen #1546
+
 ## 3.9.1
 
 ### Patch Changes
