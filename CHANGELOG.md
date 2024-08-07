@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.9.1
+
+### Patch Changes
+
+- c50c59a: EmailEditor - TypeError: dom.hasAttribute is not a function #1540
+- eb17dc4: EmailEditor - Wenn keine Variablen verfügbar, dann anderer Platzhalter und "@" Funktionalität deaktivieren #1539
+
 ## 3.9.0
 
 ### Minor Changes
