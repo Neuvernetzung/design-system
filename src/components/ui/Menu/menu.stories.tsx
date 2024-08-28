@@ -42,6 +42,7 @@ export const Default = {
             children: "Option 2",
             icon: IconDownload,
             href: "#",
+            anchorProps: { target: "_blank" },
           },
         ],
       },
@@ -208,7 +209,7 @@ export const Disabled = {
 };
 
 export const Checkbox = {
-  render: ({ ...args }) => {
+  render: function Render({ ...args }) {
     const [bookmarksChecked, setBookmarksChecked] = useState(false);
     const [urlsChecked, setUrlsChecked] = useState(false);
 
@@ -259,7 +260,7 @@ export const Checkbox = {
 };
 
 export const Radio = {
-  render: ({ ...args }) => {
+  render: function Render({ ...args }) {
     const [radio, setRadio] = useState<string>();
 
     const items: MenuItemProps[] = [

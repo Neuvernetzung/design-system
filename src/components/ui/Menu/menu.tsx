@@ -65,7 +65,11 @@ export type MenuItemAnchorProps = {
   href: string;
   color?: Color;
   icon?: SvgType;
-  anchorProps?: LinkProps;
+  anchorProps?: Omit<
+    Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &
+      LinkProps,
+    "href"
+  >;
 } & MenuItemBaseProps;
 
 export type MenuItemButtonProps = {
@@ -224,6 +228,7 @@ const MenuItemAnchor = ({
   disabled,
   icon,
   size,
+  anchorProps,
 }: Omit<MenuItemAnchorProps, "type"> & MenuItemComponentProps) => (
   <DropdownMenuItem asChild>
     <Button
@@ -235,7 +240,7 @@ const MenuItemAnchor = ({
       leftIcon={icon}
       className={cn("w-full !justify-start")}
     >
-      <Link href={href}>
+      <Link {...anchorProps} href={href}>
         <span className={cn("flex flex-row", gapsSmall[size])}>
           {!icon && <span className={cn(iconDimensions[size])} />}
           {children}
