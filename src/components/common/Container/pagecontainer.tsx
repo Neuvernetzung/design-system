@@ -1,6 +1,6 @@
-import { type HTMLAttributes, type RefObject } from "react";
+import { useMemo, type HTMLAttributes, type RefObject } from "react";
 
-import { useRefDimensions, useWindowSize } from "@/hooks";
+import { useBreakPoints, useRefDimensions } from "@/hooks";
 import { maxPageWidths, pageGaps, pagePaddings } from "@/styles/page";
 import { useThemeStateValue } from "@/theme";
 import { cn } from "@/utils/cn";
@@ -12,6 +12,21 @@ type PageContainerProps = HTMLAttributes<HTMLDivElement> & {
   enablePagePadding?: boolean;
   enabledPageGaps?: boolean;
   className?: string;
+};
+
+type CalcHeightProps = { navbarHeight?: number; footerHeight?: number };
+
+const calcHeight = ({
+  navbarHeight,
+  footerHeight,
+}: CalcHeightProps): string => {
+  if (navbarHeight && footerHeight)
+    return `calc(100vh - ${footerHeight}px - ${navbarHeight}px)`;
+
+  if (navbarHeight) return `calc(100vh - ${navbarHeight}px)`;
+  if (footerHeight) return `calc(100vh - ${footerHeight}px)`;
+
+  return "100vh";
 };
 
 export const PageContainer = ({
@@ -33,21 +48,14 @@ export const PageContainer = ({
   const pagePadding = useThemeStateValue((state) => state.pagePadding);
   const maxPageWidth = useThemeStateValue((state) => state.maxPageWidth);
 
-  const windowWidth = useWindowSize().width;
+  const { isBreakpointOrLarger } = useBreakPoints();
 
-  const LG_MEDIA_QUERY_SIZE = 1024;
+  const isMobile = !isBreakpointOrLarger("lg");
 
-  const isMobile = windowWidth < LG_MEDIA_QUERY_SIZE;
-
-  const calcHeight = () => {
-    if (navbarHeight && footerHeight)
-      return `calc(100vh - ${footerHeight}px - ${navbarHeight}px)`;
-
-    if (navbarHeight) return `calc(100vh - ${navbarHeight}px)`;
-    if (footerHeight) return `calc(100vh - ${footerHeight}px)`;
-
-    return "100vh";
-  };
+  const minHeight = useMemo(
+    () => calcHeight({ navbarHeight, footerHeight }),
+    [navbarHeight, footerHeight]
+  );
 
   return (
     <main
@@ -61,7 +69,7 @@ export const PageContainer = ({
         paddingTop:
           (isMobile && sidenavRef) || !sidenavRef ? `${navbarHeight}px` : "0",
         marginLeft: !isMobile ? sidenavWidth : "0",
-        minHeight: calcHeight(),
+        minHeight,
       }}
       {...props}
     >
