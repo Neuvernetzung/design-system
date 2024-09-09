@@ -6,4 +6,5 @@ export * from "./Navbar";
 export * from "./PaginatedSelect";
 export * from "./Pagination";
 export * from "./Searchbar";
+export * from "./Section";
 export * from "./ThemeSwitch";
