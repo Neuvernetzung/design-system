@@ -10,7 +10,6 @@ import {
   Close as PopoverClose,
   Content as PopoverContent,
   PopoverAnchor,
-  PopperContentProps,
   Portal as PopoverPortal,
   Root as PopoverRoot,
   Trigger as PopoverTrigger,
@@ -52,8 +51,8 @@ export type PopoverProps = {
   content: ReactNode;
   controller?: ControlledPopoverProps;
   size?: Size;
-  align?: PopperContentProps["align"];
-  side?: PopperContentProps["side"];
+  align?: PopoverContentProps["align"];
+  side?: PopoverContentProps["side"];
   disabled?: boolean;
   panelClassName?: string;
   positionAgainstRelativeParent?: boolean;

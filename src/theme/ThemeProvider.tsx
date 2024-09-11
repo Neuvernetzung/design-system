@@ -40,7 +40,6 @@ export type ConfigProps = {
   allowGlobalLoading?: boolean;
   forcedTheme?: "system" | "light" | "dark";
   disableSetTheme?: boolean;
-  preferSetValuesOverConfig?: boolean;
   iconStrokeWidth?: number;
   maxPageWidth?: Size;
 } & NotificationConfigProps;
@@ -65,12 +64,12 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     forcedTheme,
     requiredInfoVariant,
     pagePadding,
-    preferSetValuesOverConfig,
     iconStrokeWidth,
     maxPageWidth,
   } = config || {};
 
   const store = useRef(
+    // useRef https://zustand.docs.pmnd.rs/guides/initialize-state-with-props#basic-component-usage
     createThemeStore({
       colors,
       darkColors,
@@ -88,7 +87,6 @@ export const ThemeProvider = ({ config, children }: ThemeProviderProps) => {
     darkColors,
     borderRadius,
     iconStrokeWidth,
-    preferSetValuesOverConfig,
   });
 
   return (
@@ -152,42 +150,31 @@ type UseThemeProps = {
   darkColors?: Partial<ExtendColors>;
   borderRadius?: Size;
   iconStrokeWidth?: number;
-  preferSetValuesOverConfig?: boolean;
 };
 
 export const useTheme = (
   selector: ":root" | string,
-  {
-    store,
-    colors,
-    darkColors,
-    borderRadius,
-    iconStrokeWidth,
-    preferSetValuesOverConfig,
-  }: UseThemeProps
+  { store, colors, darkColors, borderRadius, iconStrokeWidth }: UseThemeProps
 ) => {
   useEffect(() => {
-    if (preferSetValuesOverConfig) return;
-    if (keys(colors).length > 0) setColors(store, selector, colors);
+    if (keys(colors).length > 0) setInternalColors(store, selector, colors);
   }, [colors, store]);
 
   useEffect(() => {
-    if (preferSetValuesOverConfig) return;
-    setDarkColors(store, selector, darkColors);
+    setInternalDarkColors(store, selector, darkColors);
   }, [darkColors, store]);
 
   useEffect(() => {
-    if (preferSetValuesOverConfig) return;
-    if (borderRadius) setBorderRadius(store, selector, borderRadius);
+    if (borderRadius) setInternalBorderRadius(store, selector, borderRadius);
   }, [borderRadius, store]);
 
   useEffect(() => {
-    if (preferSetValuesOverConfig) return;
-    if (iconStrokeWidth) setIconStrokeWidth(store, selector, iconStrokeWidth);
+    if (iconStrokeWidth)
+      setInternalIconStrokeWidth(store, selector, iconStrokeWidth);
   }, [iconStrokeWidth, store]);
 };
 
-export const setColors = (
+export const setInternalColors = (
   themeStore: ThemeStore,
   selector: ":root" | string,
   colors?: Partial<ExtendColors>
@@ -203,7 +190,7 @@ export const setColors = (
   }
 };
 
-export const setDarkColors = (
+export const setInternalDarkColors = (
   themeStore: ThemeStore,
   selector: ":root" | string,
   colors?: Partial<ExtendColors>
@@ -221,7 +208,7 @@ export const setDarkColors = (
   }
 };
 
-export const setBorderRadius = (
+export const setInternalBorderRadius = (
   themeStore: ThemeStore,
   selector: ":root" | string,
   borderRadius?: Size
@@ -238,7 +225,7 @@ export const setBorderRadius = (
   }
 };
 
-export const setIconStrokeWidth = (
+export const setInternalIconStrokeWidth = (
   themeStore: ThemeStore,
   selector: ":root" | string,
   iconStrokeWidth?: number

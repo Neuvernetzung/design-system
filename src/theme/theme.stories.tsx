@@ -14,9 +14,9 @@ import { borders } from "../styles";
 import { Size, sizes } from "../types";
 import {
   ExtendColors,
-  setBorderRadius,
-  setColors,
-  setDarkColors,
+  setInternalBorderRadius,
+  setInternalColors,
+  setInternalDarkColors,
   ThemeProvider,
   useThemeState,
   useThemeStore,
@@ -61,8 +61,8 @@ export const Default = () => {
 
   const onSubmit = (data: FormProps) => {
     if (!themeStore) return;
-    setColors(themeStore, ":root", data.colors);
-    setBorderRadius(themeStore, ":root", data.radius);
+    setInternalColors(themeStore, ":root", data.colors);
+    setInternalBorderRadius(themeStore, ":root", data.radius);
   };
 
   return (
@@ -107,12 +107,12 @@ export const DarkTheme = () => {
 
   const onSubmit = (data: Partial<ExtendColors>) => {
     if (!themeStore) return;
-    setColors(themeStore, ":root", data);
+    setInternalColors(themeStore, ":root", data);
   };
 
   const onDarkSubmit = (data: Partial<ExtendColors>) => {
     if (!themeStore) return;
-    setDarkColors(themeStore, `:root`, data);
+    setInternalDarkColors(themeStore, `:root`, data);
   };
 
   return (
@@ -174,17 +174,17 @@ export const NestedTheme = () => {
 
   const onSubmit = (data: Partial<ExtendColors>) => {
     if (!themeStore) return;
-    setColors(themeStore, ":root", data);
+    setInternalColors(themeStore, ":root", data);
   };
 
   const onNestedSubmit = (data: Partial<ExtendColors>) => {
     if (!themeStore) return;
-    setColors(themeStore, ".container", data);
+    setInternalColors(themeStore, ".container", data);
   };
 
   const onNestedDarkSubmit = (data: Partial<ExtendColors>) => {
     if (!themeStore) return;
-    setDarkColors(themeStore, ".container", data);
+    setInternalDarkColors(themeStore, ".container", data);
   };
 
   return (
