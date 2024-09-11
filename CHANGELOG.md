@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.11.0
+
+### Minor Changes
+
+- 0259ed4: ThemeState - Persistence entfernen #1567
+
 ## 3.10.1
 
 ### Patch Changes
