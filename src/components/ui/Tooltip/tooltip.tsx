@@ -1,10 +1,10 @@
 import {
-  PopperContentProps,
   Root,
   TooltipContent,
   TooltipPortal,
   TooltipProvider,
   TooltipTrigger,
+  type TooltipContentProps,
 } from "@radix-ui/react-tooltip";
 import { cn } from "@/utils";
 import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
@@ -25,8 +25,8 @@ export type TooltipProps = {
   children: ReactElement;
   label?: ReactNode;
   size?: Size;
-  side?: PopperContentProps["side"];
-  align?: PopperContentProps["align"];
+  side?: TooltipContentProps["side"];
+  align?: TooltipContentProps["align"];
   delay?: number;
 };
 

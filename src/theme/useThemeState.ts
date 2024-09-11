@@ -1,13 +1,10 @@
 import { createContext, useContext } from "react";
 import { createStore, useStore } from "zustand";
-import { persist } from "zustand/middleware";
 
 import { adjustedTextColors } from "../styles";
 import type { ExtendedColor, RequiredInfoVariant, Size } from "../types";
 import { extendBorderRadius, ReturnedBorderRadius } from "./borderRadius";
 import { ExtendColors, extendColors, ReturnedColors } from "./colors";
-
-export const LOCAL_THEME_KEY = "theme-storage";
 
 export type ThemeState = {
   colorState: ReturnedColors | undefined;
@@ -39,33 +36,24 @@ export const createThemeStore = ({
   maxPageWidth,
   iconStrokeWidth = 1.5,
 }: CreateThemeStoreProps) =>
-  createStore(
-    persist(
-      () => {
-        const defaultColors = extendColors(colors);
-        const defaultDarkColors = darkColors
-          ? extendColors(darkColors)
-          : undefined;
+  createStore(() => {
+    const defaultColors = extendColors(colors);
+    const defaultDarkColors = darkColors ? extendColors(darkColors) : undefined;
 
-        return {
-          colorState: defaultColors,
-          darkColorState: defaultDarkColors,
-          borderRadiusState: extendBorderRadius(borderRadius),
-          adjustedTextColorState: adjustedTextColors(
-            defaultColors,
-            defaultDarkColors || defaultColors
-          ),
-          requiredInfoVariant,
-          pagePadding,
-          iconStrokeWidth,
-          maxPageWidth,
-        };
-      },
-      {
-        name: LOCAL_THEME_KEY,
-      }
-    )
-  );
+    return {
+      colorState: defaultColors,
+      darkColorState: defaultDarkColors,
+      borderRadiusState: extendBorderRadius(borderRadius),
+      adjustedTextColorState: adjustedTextColors(
+        defaultColors,
+        defaultDarkColors || defaultColors
+      ),
+      requiredInfoVariant,
+      pagePadding,
+      iconStrokeWidth,
+      maxPageWidth,
+    };
+  });
 
 export type ThemeStore = ReturnType<typeof createThemeStore>;
 
