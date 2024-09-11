@@ -11,6 +11,7 @@ type PageContainerProps = HTMLAttributes<HTMLDivElement> & {
   footerRef?: RefObject<HTMLDivElement>;
   enablePagePadding?: boolean;
   enabledPageGaps?: boolean;
+  enabledMaxPageWidth?: boolean;
   className?: string;
 };
 
@@ -35,6 +36,7 @@ export const PageContainer = ({
   footerRef,
   enablePagePadding = true,
   enabledPageGaps = true,
+  enabledMaxPageWidth = true,
   className,
   children,
   ...props
@@ -76,7 +78,7 @@ export const PageContainer = ({
       <div
         className={cn(
           "flex flex-col w-full mx-auto",
-          maxPageWidth && maxPageWidths[maxPageWidth]
+          enabledMaxPageWidth && maxPageWidth && maxPageWidths[maxPageWidth]
         )}
       >
         {children}
