@@ -100,6 +100,7 @@ export const SectionWithBackgroundImage = forwardRef(
         backgroundImage: backgroundImageString,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
+        backgroundPosition: "center",
         ...style,
       }),
       [backgroundImageString, style]
