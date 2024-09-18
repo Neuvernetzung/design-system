@@ -142,7 +142,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-environment-node": "^29.7.0",
     "lodash": "^4.17.21",
-    "next": "^14.2.9",
+    "next": "^14.2.12",
     "next-themes": "^0.3.0",
     "postcss": "^8.4.45",
     "postcss-loader": "^8.1.1",
