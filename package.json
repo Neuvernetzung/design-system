@@ -41,7 +41,7 @@
     "swiper": "^10 || ^11",
     "tailwindcss": "^3",
     "ts-ics": "^1",
-    "uuid": "^9",
+    "uuid": "^10",
     "zustand": "^4"
   },
   "dependencies": {
