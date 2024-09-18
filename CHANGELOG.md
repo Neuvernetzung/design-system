@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.12.1
+
+### Patch Changes
+
+- 38b2d28: UUID Peer anpassen #1577
+
 ## 3.12.0
 
 ### Minor Changes
