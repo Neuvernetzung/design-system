@@ -1,5 +1,4 @@
 import { IconCalendar, IconX } from "@tabler/icons-react";
-import { cn } from "@/utils/cn";
 import {
   addDays,
   differenceInDays,
@@ -27,16 +26,18 @@ import type { Locale } from "@/locales/getText";
 import { marginsXSmall } from "@/styles";
 import type { InputVariant, Size } from "@/types";
 import { smallerSize, utcDateToLocal } from "@/utils";
+import { isFirefox } from "@/utils/browser/isFirefox";
+import { cn } from "@/utils/cn";
+import { clearTime } from "@/utils/date";
 import { requiredInputRule } from "@/utils/internal/inputRule";
+
 import { IconButton } from "../Button";
 import { Calendar } from "../Calendar";
 import { useCalendar } from "../Calendar/hooks/useCalendar";
 import { FormElement, RequiredRule } from "../Form";
+import { InputRaw } from "../Input";
 import { Popover } from "../Popover";
 import { usePopover } from "../Popover/popover";
-import { clearTime } from "@/utils/date";
-import { InputRaw } from "../Input";
-import { isFirefox } from "@/utils/browser/isFirefox";
 import { dateInputValueToDate, formatDateInputValue } from "./utils/format";
 
 export type DatepickerProps = Omit<
@@ -58,6 +59,15 @@ export const Datepicker = <
 }: DatepickerProps & UseControllerProps<TFieldValues, TName>) => {
   const locale = useRouter().locale as Locale;
 
+  const minDateWithoutTime = useMemo(
+    () => (minDate ? clearTime(minDate) : undefined),
+    [minDate]
+  );
+  const maxDateWithoutTime = useMemo(
+    () => (maxDate ? clearTime(maxDate) : undefined),
+    [maxDate]
+  );
+
   const {
     field: { value, onChange, ref },
     fieldState: { error },
@@ -67,11 +77,11 @@ export const Datepicker = <
     rules: {
       required: requiredInputRule(required, locale),
       validate: (v) => {
-        if (minDate && isAfter(minDate, v))
-          return `Wert muss nach ${minDate.toLocaleDateString()} sein.`;
+        if (minDateWithoutTime && isAfter(minDateWithoutTime, v))
+          return `Das Datum muss nach dem ${minDateWithoutTime.toLocaleDateString()} sein.`;
 
-        if (maxDate && isBefore(maxDate, v))
-          return `Wert muss vor ${maxDate.toLocaleDateString()} sein.`;
+        if (maxDateWithoutTime && isBefore(maxDateWithoutTime, v))
+          return `Das Datum muss vor dem ${maxDateWithoutTime.toLocaleDateString()} sein.`;
 
         return true;
       },
@@ -89,6 +99,7 @@ export const Datepicker = <
       minDate={minDate}
       maxDate={maxDate}
       error={error}
+      required={required}
       {...props}
     />
   );
