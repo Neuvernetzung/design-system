@@ -1,4 +1,3 @@
-
 import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -17,7 +16,7 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} ;
+};
 
 const Container = ({ ...props }) => (
   <div className="flex flex-col gap-5" {...props} />
@@ -177,7 +176,7 @@ export const WithSpace = {
 };
 
 export const Controlled = {
-  render: ({ ...args }) => {
+  render: function Render({ ...args }) {
     const items = [
       { title: "Tab 1", content: "Content 1", value: "1" },
       { title: "Tab 2", content: "Content 2", value: "2" },

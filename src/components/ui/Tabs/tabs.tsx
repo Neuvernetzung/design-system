@@ -30,7 +30,10 @@ import type {
 } from "../../../types";
 import { Button } from "../Button";
 
-export type TabGroupProps = TabListProps &
+export type TabGroupProps = { items: TabItemProps[] } & Omit<
+  TabListProps,
+  "items"
+> &
   Omit<TabPanelsProps, "items"> & {
     className?: string;
     defaultTab?: string;
@@ -38,7 +41,7 @@ export type TabGroupProps = TabListProps &
   };
 
 export type TabListProps = {
-  items: TabItemProps[];
+  items: (Omit<TabItemValueProps, "content"> | TabItemSeparatorProps)[];
   listClassName?: string;
   size?: Size;
   color?: Color;
@@ -52,7 +55,7 @@ export type TabListProps = {
 };
 
 export type TabPanelsProps = {
-  items: TabItemValueProps[];
+  items: Omit<TabItemValueProps, "title">[];
   panelsClassName?: string;
   size?: Size;
   unmount?: boolean;
