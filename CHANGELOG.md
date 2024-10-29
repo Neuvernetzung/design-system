@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.13.1
+
+### Patch Changes
+
+- b6a339a: Navbar - exports hinzufügen #1591
+
 ## 3.13.0
 
 ### Minor Changes
