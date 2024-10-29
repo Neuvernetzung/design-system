@@ -123,7 +123,7 @@ NavbarContainer.displayName = "navbarContainer";
 export type NavbarWrapperProps = {
   className?: string;
   children: ReactNode;
-  style: CSSProperties | undefined;
+  style?: CSSProperties;
 } & Pick<NavbarProps, "color" | "size">;
 
 export const NavbarWrapper = forwardRef(
