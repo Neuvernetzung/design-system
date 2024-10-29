@@ -1,17 +1,15 @@
-import { cn } from "@/utils";
-import Link from "next/link";
+import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { ReactNode, RefObject, useEffect, useMemo, useState } from "react";
 
-import { bgColors, gaps, paddingsEvenly, scrollbar } from "@/styles";
-import { IconX, IconMenu2 } from "@tabler/icons-react";
 import { useRefDimensions } from "@/hooks";
-import { Button, IconButton } from "../../../ui/Button";
-import { DisclosureGroup } from "../../../ui/Disclosure";
-import { Icon } from "../../../ui/Icon";
-import { Tag } from "../../../ui/Tag";
-import type { NavbarProps, NavItemProps, SubNavProps } from "../navbar";
-import { NavbarMobileSubItem } from "./sub";
+import { bgColors, paddingsEvenly, scrollbar } from "@/styles";
+import { cn } from "@/utils";
+
+import { IconButton } from "../../../ui/Button";
+import type { NavbarProps, SubNavProps } from "../navbar";
+import { MobileNavItem } from "./item";
+import { Portal } from "@radix-ui/react-portal";
 
 export const MobileNav = ({
   navItems,
@@ -22,9 +20,53 @@ export const MobileNav = ({
   textColor,
 }: SubNavProps &
   Pick<NavbarProps, "footer" | "footerClassName" | "mobileNavClassName">) => {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  if (!navItems || navItems.length === 0) return null;
 
-  const navbarHeight = useRefDimensions(navbarRef).height;
+  return (
+    <div className={cn("flex lg:hidden")}>
+      <MobileNavButton
+        containerClassName={mobileNavClassName}
+        navbarRef={navbarRef}
+        textColor={textColor}
+      >
+        <ul
+          className={cn("h-full overflow-y-auto", scrollbar, paddingsEvenly.md)}
+        >
+          {navItems.map((navItem) => (
+            <MobileNavItem key={navItem.label} {...navItem} />
+          ))}
+        </ul>
+        {footer && (
+          <div
+            className={cn(
+              "flex w-full",
+              paddingsEvenly.md,
+              textColor,
+              footerClassName
+            )}
+          >
+            {footer}
+          </div>
+        )}
+      </MobileNavButton>
+    </div>
+  );
+};
+
+export type MobileNavButtonProps = {
+  textColor?: string;
+  navbarRef?: RefObject<HTMLElement>;
+  children: ReactNode;
+  containerClassName?: string;
+};
+
+export const MobileNavButton = ({
+  textColor,
+  navbarRef,
+  children,
+  containerClassName,
+}: MobileNavButtonProps) => {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const router = useRouter();
 
@@ -43,6 +85,8 @@ export const MobileNav = ({
     };
   }, [router]);
 
+  const navbarHeight = useRefDimensions(navbarRef).height;
+
   const containerHeight = useMemo(() => {
     if (!navbarHeight) return "100vh";
 
@@ -51,137 +95,27 @@ export const MobileNav = ({
 
   return (
     <>
-      <div className={cn("flex lg:hidden")}>
-        {navItems && navItems.length > 0 && (
-          <IconButton
-            className={cn(textColor)}
-            icon={mobileNavOpen ? IconX : IconMenu2}
-            variant="ghost"
-            ariaLabel="Toggle Navigation"
-            onClick={() => setMobileNavOpen(!mobileNavOpen)}
-          />
-        )}
-      </div>
+      <IconButton
+        className={cn(textColor)}
+        icon={mobileNavOpen ? IconX : IconMenu2}
+        variant="ghost"
+        ariaLabel={mobileNavOpen ? "Navigation schließen" : "Navigation öffnen"}
+        onClick={() => setMobileNavOpen(!mobileNavOpen)}
+      />
       {mobileNavOpen && (
-        <div
-          className={cn(
-            bgColors.white,
-            "fixed inset-x-0 flex flex-col justify-between lg:hidden",
-            mobileNavClassName
-          )}
-          style={{ top: navbarHeight, height: containerHeight }}
-        >
-          <ul
+        <Portal>
+          <div
             className={cn(
-              "h-full overflow-y-auto",
-              scrollbar,
-              paddingsEvenly.md
+              bgColors.white,
+              "fixed inset-x-0 flex flex-col justify-between lg:hidden",
+              containerClassName
             )}
+            style={{ top: navbarHeight, height: containerHeight }}
           >
-            {navItems.map((navItem) => (
-              <MobileNavItem key={navItem.label} {...navItem} />
-            ))}
-          </ul>
-          {footer && (
-            <div
-              className={cn(
-                "flex w-full",
-                paddingsEvenly.md,
-                textColor,
-                footerClassName
-              )}
-            >
-              {footer}
-            </div>
-          )}
-        </div>
+            {children}
+          </div>
+        </Portal>
       )}
     </>
-  );
-};
-
-export const MobileNavItem = ({
-  label,
-  children,
-  href,
-  tag,
-  disabled,
-  icon,
-  defaultOpen,
-  child,
-  external,
-}: NavItemProps) => {
-  if (!disabled)
-    return (
-      <li>
-        {!children && !child ? (
-          <Button variant="ghost" className="w-full" asChild>
-            <Link
-              href={href || "#"}
-              {...(external ? { target: "_blank" } : {})}
-            >
-              {icon && (
-                <div className="flex">
-                  <Icon color="accent" icon={icon} />
-                </div>
-              )}
-              <div
-                className={cn(
-                  "w-full flex items-center justify-start",
-                  gaps.sm
-                )}
-              >
-                {label}
-                {tag && <Tag variant="solid" size="sm" {...tag} />}
-              </div>
-            </Link>
-          </Button>
-        ) : (
-          <DisclosureGroup
-            className="border-none"
-            items={[
-              {
-                title: (
-                  <div className={cn("flex flex-row", gaps.xs)}>
-                    {icon && (
-                      <div className="flex">
-                        <Icon color="accent" icon={icon} />
-                      </div>
-                    )}
-                    {label}
-                    {tag && <Tag variant="solid" size="sm" {...tag} />}
-                  </div>
-                ),
-                defaultOpen,
-                content: (
-                  <>
-                    {children?.map((child, i) => (
-                      <NavbarMobileSubItem
-                        key={`navbar_subitem_${i}`}
-                        {...child}
-                      />
-                    ))}
-                    {child}
-                  </>
-                ),
-              },
-            ]}
-          />
-        )}
-      </li>
-    );
-
-  return (
-    <Button disabled={disabled} variant="ghost" className="w-full">
-      {icon && (
-        <div className="flex">
-          <Icon color="accent" icon={icon} />
-        </div>
-      )}
-      <div className={cn("w-full flex items-center justify-start", gaps.sm)}>
-        {label}
-        {tag && <Tag variant="solid" size="sm" {...tag} />}
-      </div>
-    </Button>
   );
 };

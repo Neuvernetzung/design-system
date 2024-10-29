@@ -1,4 +1,10 @@
-import { ForwardedRef, forwardRef, useRef } from "react";
+import {
+  type CSSProperties,
+  type ForwardedRef,
+  forwardRef,
+  type ReactNode,
+  useRef,
+} from "react";
 
 import {
   extendedBgColors,
@@ -47,23 +53,15 @@ export const NavbarContainer = forwardRef(
   ) => {
     const navBarInternalRef = useRef<HTMLElement>(null);
 
-    const pagePadding = useThemeStateValue((state) => state.pagePadding);
     const maxPageWidth = useThemeStateValue((state) => state.maxPageWidth);
 
     return (
-      <nav
-        aria-label="Main Navigation"
+      <NavbarWrapper
         ref={mergeRefs([ref, navBarInternalRef])}
-        className={cn(
-          "fixed top-0 inset-x-0 w-full border-b",
-          extendedBorders[color],
-          extendedBgColors[color],
-          zIndexes.nav,
-          paddingsY[size],
-          pagePaddingsX[pagePadding],
-          navbarClassName
-        )}
+        className={navbarClassName}
         style={navbarStyle}
+        color={color}
+        size={size}
       >
         <div
           className={cn(
@@ -115,9 +113,51 @@ export const NavbarContainer = forwardRef(
             />
           </div>
         </div>
-      </nav>
+      </NavbarWrapper>
     );
   }
 );
 
 NavbarContainer.displayName = "navbarContainer";
+
+export type NavbarWrapperProps = {
+  className?: string;
+  children: ReactNode;
+  style: CSSProperties | undefined;
+} & Pick<NavbarProps, "color" | "size">;
+
+export const NavbarWrapper = forwardRef(
+  (
+    {
+      className,
+      color = "white",
+      children,
+      style,
+      size = "md",
+    }: NavbarWrapperProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
+    const pagePadding = useThemeStateValue((state) => state.pagePadding);
+
+    return (
+      <nav
+        aria-label="Main Navigation"
+        ref={ref}
+        className={cn(
+          "fixed top-0 inset-x-0 w-full border-b",
+          extendedBorders[color],
+          extendedBgColors[color],
+          zIndexes.nav,
+          paddingsY[size],
+          pagePaddingsX[pagePadding],
+          className
+        )}
+        style={style}
+      >
+        {children}
+      </nav>
+    );
+  }
+);
+
+NavbarWrapper.displayName = "NavbarWrapper";

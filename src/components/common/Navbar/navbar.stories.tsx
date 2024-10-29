@@ -203,7 +203,7 @@ export const Default = {
 };
 
 export const ZIndexTest = {
-  render: ({ ...args }) => {
+  render: function Render({ ...args }) {
     const [openSide, setOpenSide] = useState(false);
     const [openModal, setOpenModal] = useState(false);
 
@@ -241,6 +241,8 @@ export const ZIndexTest = {
         </Button>
         <Loading />
         <Modal open={openModal} setOpen={setOpenModal} content="Ok" />
+        <div className="h-screen w-1 bg-red-500" />{" "}
+        {/* ist background scrolling deaktiviert während mobile Nav offen? */}
       </>
     );
   },
