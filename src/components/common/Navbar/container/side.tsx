@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
 
 import { ScrollArea } from "@/components/ui";
 import { cn } from "@/utils";
@@ -37,21 +37,15 @@ export const NavbarSideContainer = forwardRef(
     }: SidenavProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => (
-    <nav
-      aria-label="Main Navigation"
+    <NavbarSideWrapper
       ref={ref}
-      className={cn(
-        "group left-0 inset-y-0 fixed h-full w-64 flex-col overflow-hidden border-r",
-        gaps[gapSize],
-        zIndexes.nav,
-        extendedBorders[color],
-        extendedBgColors[color],
-        navbarClassName
-      )}
+      className={navbarClassName}
+      color={color}
+      gapSize={gapSize}
     >
       {logo && (
         <div className={cn(paddingsEvenly[size])}>
-          <NavLogo logo={logo} {...logoProps} textColor={textColor} />
+          <NavLogo logo={logo} logoProps={logoProps} textColor={textColor} />
         </div>
       )}
       <ScrollArea className="h-full">
@@ -80,8 +74,42 @@ export const NavbarSideContainer = forwardRef(
           {footer}
         </div>
       )}
-    </nav>
+    </NavbarSideWrapper>
   )
 );
 
 NavbarSideContainer.displayName = "navbarSideContainer";
+
+export type NavbarSideWrapperProps = {
+  className?: string;
+  children: ReactNode;
+} & Pick<SidenavProps, "gapSize" | "color">;
+
+export const NavbarSideWrapper = forwardRef(
+  (
+    {
+      className,
+      gapSize = "md",
+      color = "white",
+      children,
+    }: NavbarSideWrapperProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => (
+    <nav
+      aria-label="Main Navigation"
+      ref={ref}
+      className={cn(
+        "group left-0 inset-y-0 fixed h-full w-64 flex-col overflow-hidden border-r",
+        gaps[gapSize],
+        zIndexes.nav,
+        extendedBorders[color],
+        extendedBgColors[color],
+        className
+      )}
+    >
+      {children}
+    </nav>
+  )
+);
+
+NavbarSideWrapper.displayName = "NavbarSideWrapper";

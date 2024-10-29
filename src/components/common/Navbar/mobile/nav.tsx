@@ -1,7 +1,7 @@
 import { cn } from "@/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { bgColors, gaps, paddingsEvenly, scrollbar } from "@/styles";
 import { IconX, IconMenu2 } from "@tabler/icons-react";
@@ -43,11 +43,11 @@ export const MobileNav = ({
     };
   }, [router]);
 
-  const calcHeight = () => {
+  const containerHeight = useMemo(() => {
     if (!navbarHeight) return "100vh";
 
     return `calc(100vh - ${navbarHeight}px)`;
-  };
+  }, [navbarHeight]);
 
   return (
     <>
@@ -69,7 +69,7 @@ export const MobileNav = ({
             "fixed inset-x-0 flex flex-col justify-between lg:hidden",
             mobileNavClassName
           )}
-          style={{ top: navbarHeight, height: calcHeight() }}
+          style={{ top: navbarHeight, height: containerHeight }}
         >
           <ul
             className={cn(

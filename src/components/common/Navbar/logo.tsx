@@ -8,16 +8,15 @@ export const NavLogo = ({
   logo,
   textColor,
 }: Pick<NavbarProps, "logo" | "logoProps"> & { textColor?: string }) => (
-  <Link href={logoProps?.href || "/"} legacyBehavior>
-    <a
-      className={cn(
-        "flex flex-row items-center select-none whitespace-nowrap",
-        gaps.sm,
-        logoProps?.containerClassName,
-        textColor
-      )}
-    >
-      {logo}
-    </a>
+  <Link
+    href={logoProps?.href || "/"}
+    className={cn(
+      "flex flex-row items-center select-none whitespace-nowrap",
+      gaps.sm,
+      logoProps?.containerClassName,
+      textColor
+    )}
+  >
+    {logo}
   </Link>
 );
