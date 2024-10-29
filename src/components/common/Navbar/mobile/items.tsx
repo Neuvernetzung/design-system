@@ -53,7 +53,7 @@ export const MobileNavItem = ({
           </Button>
         ) : (
           <DisclosureGroup
-            className="border-none"
+            variant="button"
             items={[
               {
                 title: (

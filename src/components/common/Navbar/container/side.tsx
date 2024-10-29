@@ -58,11 +58,9 @@ export const NavbarSideContainer = forwardRef(
         {endItems}
       </ScrollArea>
       {footer && (
-        <div
-          className={cn("flex w-full", paddingsEvenly[size], footerClassName)}
-        >
+        <NavbarSideFooter className={footerClassName}>
           {footer}
-        </div>
+        </NavbarSideFooter>
       )}
     </NavbarSideWrapper>
   )
@@ -103,3 +101,17 @@ export const NavbarSideWrapper = forwardRef(
 );
 
 NavbarSideWrapper.displayName = "NavbarSideWrapper";
+
+export type NavbarSideFooterProps = {
+  children: ReactNode;
+  className?: string;
+};
+
+export const NavbarSideFooter = ({
+  children,
+  className,
+}: NavbarSideFooterProps) => (
+  <div className={cn("flex w-full", paddingsEvenly.md, className)}>
+    {children}
+  </div>
+);
