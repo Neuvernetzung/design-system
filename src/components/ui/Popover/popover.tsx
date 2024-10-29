@@ -14,7 +14,6 @@ import {
   Root as PopoverRoot,
   Trigger as PopoverTrigger,
 } from "@radix-ui/react-popover";
-import { cn } from "@/utils";
 import {
   ForwardedRef,
   forwardRef,
@@ -22,6 +21,8 @@ import {
   ReactNode,
   useState,
 } from "react";
+
+import { cn } from "@/utils";
 
 import { focus as focusStyle } from "../../../styles";
 import { popoverAnimation } from "../../../styles/animation";
