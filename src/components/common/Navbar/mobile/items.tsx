@@ -1,11 +1,19 @@
 import Link from "next/link";
 
 import { Button, DisclosureGroup, Icon, Tag } from "@/components/ui";
-import { gaps } from "@/styles";
+import { gaps, paddingsEvenly, scrollbar } from "@/styles";
 import { cn } from "@/utils";
 
-import type { NavItemProps } from "../navbar";
+import type { NavbarProps, NavItemProps } from "../navbar";
 import { NavbarMobileSubItem } from "./sub";
+
+export const MobileNavItems = ({ navItems }: Pick<NavbarProps, "navItems">) => (
+  <ul className={cn("h-full overflow-y-auto", scrollbar, paddingsEvenly.md)}>
+    {navItems.map((navItem) => (
+      <MobileNavItem key={navItem.label} {...navItem} />
+    ))}
+  </ul>
+);
 
 export const MobileNavItem = ({
   label,
