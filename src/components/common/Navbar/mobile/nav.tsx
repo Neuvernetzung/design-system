@@ -1,15 +1,15 @@
+import { Portal } from "@radix-ui/react-portal";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { ReactNode, RefObject, useEffect, useMemo, useState } from "react";
 
 import { useRefDimensions } from "@/hooks";
-import { bgColors, paddingsEvenly, scrollbar } from "@/styles";
+import { bgColors, paddingsEvenly } from "@/styles";
 import { cn } from "@/utils";
 
 import { IconButton } from "../../../ui/Button";
 import type { NavbarProps, SubNavProps } from "../navbar";
-import { MobileNavItem } from "./item";
-import { Portal } from "@radix-ui/react-portal";
+import { MobileNavItems } from "./items";
 
 export const MobileNav = ({
   navItems,
@@ -29,24 +29,11 @@ export const MobileNav = ({
         navbarRef={navbarRef}
         textColor={textColor}
       >
-        <ul
-          className={cn("h-full overflow-y-auto", scrollbar, paddingsEvenly.md)}
-        >
-          {navItems.map((navItem) => (
-            <MobileNavItem key={navItem.label} {...navItem} />
-          ))}
-        </ul>
+        <MobileNavItems navItems={navItems} />
         {footer && (
-          <div
-            className={cn(
-              "flex w-full",
-              paddingsEvenly.md,
-              textColor,
-              footerClassName
-            )}
-          >
+          <MobileNavFooter textColor={textColor} className={footerClassName}>
             {footer}
-          </div>
+          </MobileNavFooter>
         )}
       </MobileNavButton>
     </div>
@@ -119,3 +106,18 @@ export const MobileNavButton = ({
     </>
   );
 };
+
+export type MobileNavFooterProps = Pick<MobileNavButtonProps, "textColor"> & {
+  children: ReactNode;
+  className?: string;
+};
+
+export const MobileNavFooter = ({
+  children,
+  className,
+  textColor,
+}: MobileNavFooterProps) => (
+  <div className={cn("flex w-full", paddingsEvenly.md, textColor, className)}>
+    {children}
+  </div>
+);

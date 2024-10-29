@@ -7,13 +7,12 @@ import {
   extendedBgColors,
   extendedBorders,
   gaps,
-  gapsSmall,
   paddingsEvenly,
   zIndexes,
 } from "../../../../styles";
-import type { NavbarProps } from "..";
 import { NavLogo } from "../logo";
-import { SideNavItem } from "../side/item";
+import type { NavbarProps } from "../navbar";
+import { SideNavItems } from "../side/items";
 import type { NavbarContainerProps } from "./default";
 
 export type SidenavProps = Omit<NavbarProps, "justify" | "justifyDesktopNav"> &
@@ -50,21 +49,12 @@ export const NavbarSideContainer = forwardRef(
       )}
       <ScrollArea className="h-full">
         {startItems}
-        <ul
-          className={cn(
-            "h-full flex flex-col",
-            gapsSmall[gapSize],
-            paddingsEvenly[size]
-          )}
-        >
-          {navItems.map((navItem, i) => (
-            <SideNavItem
-              key={`sidenav_item_${i}`}
-              textColor={textColor}
-              {...navItem}
-            />
-          ))}
-        </ul>
+        <SideNavItems
+          navItems={navItems}
+          gapSize={gapSize}
+          size={size}
+          textColor={textColor}
+        />
         {endItems}
       </ScrollArea>
       {footer && (
