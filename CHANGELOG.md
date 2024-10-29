@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.13.3
+
+### Patch Changes
+
+- 7de543c: MobileNav exports hinzufügen #1598
+
 ## 3.13.2
 
 ### Patch Changes
