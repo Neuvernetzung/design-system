@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.13.5
+
+### Patch Changes
+
+- 3200680: RichText - LinkPlugin deaktivierbar machen und BubbleMenuItems zu Plugin hinzufügen #1605
+
 ## 3.13.4
 
 ### Patch Changes
