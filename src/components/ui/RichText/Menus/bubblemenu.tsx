@@ -43,7 +43,7 @@ import type {
   RichTextOptionProps,
   RichTextPluginWithEditorProps,
 } from "../richText";
-import { AddLinkButton } from "./addLink";
+import { AddLinkButton } from "../Link/addLink";
 import { RichTextMenuGroup, RichTextMenuGroupItem } from "./menuItem";
 import { SelectText } from "./selectText";
 
@@ -120,7 +120,11 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
     return;
 
   const pluginMenuItems = compact(
-    plugins?.map((plugin) => plugin.menuItems).flat() || []
+    plugins?.flatMap((plugin) => plugin.menuItems) || []
+  );
+
+  const pluginBubbleItems = compact(
+    plugins?.flatMap((plugin) => plugin.bubbleItems)
   );
 
   if (!openRaw) return null;
@@ -173,7 +177,8 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
               active={editor.isActive("strike")}
             />
           </RichTextMenuGroup>
-          <AddLinkButton editor={editor} />
+          {!options?.disableAddLink && <AddLinkButton editor={editor} />}
+          {pluginBubbleItems}
           <Menu
             containerRef={containerRef}
             buttonComponent={
@@ -236,13 +241,12 @@ export const BubbleMenu = ({ editor, options, plugins }: BubbleMenuProps) => {
                   },
                 ],
               },
-              pluginMenuItems.length !== 0 && { type: "separator" },
+              { type: "separator" },
               pluginMenuItems.length !== 0 && {
                 type: "group",
                 items: pluginMenuItems,
               },
-
-              !options?.disableTable && { type: "separator" },
+              { type: "separator" },
               !options?.disableTable && {
                 icon: IconTable,
                 children: "Tabelle",

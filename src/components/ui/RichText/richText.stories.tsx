@@ -7,6 +7,7 @@ import { cn } from "@/utils";
 import { Button, Modal, Prose, Text } from "..";
 import { Form } from "../Form/form";
 import { RichText } from ".";
+import { AddLinkButton } from "./Link/addLink";
 
 export default {
   title: "UI/Form/RichText",

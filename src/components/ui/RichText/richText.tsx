@@ -60,10 +60,12 @@ export type RichTextOptionProps = {
   disableQuote?: boolean;
   disableHorizontalRule?: boolean;
   disableTextSelection?: boolean;
+  disableAddLink?: boolean;
 };
 
 export type RichTextPluginWithEditorProps = {
   menuItems?: MenuItemProps[];
+  bubbleItems?: ReactElement;
   component?: ReactElement;
 }[];
 
