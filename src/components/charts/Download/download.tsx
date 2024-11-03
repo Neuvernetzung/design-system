@@ -1,5 +1,6 @@
 import { MutableRefObject, RefObject } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const chartdownloadTypes = ["svg", "png"] as const;
 
 type ChartDownloadType = (typeof chartdownloadTypes)[number];

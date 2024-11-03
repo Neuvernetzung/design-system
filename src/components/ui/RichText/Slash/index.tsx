@@ -42,6 +42,7 @@ export const SlashCommand = Extension.create({
         }: {
           editor: Editor;
           range: Range;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           props: any;
         }) => {
           props.command({ editor, range });

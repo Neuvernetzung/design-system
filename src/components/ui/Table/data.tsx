@@ -49,6 +49,7 @@ export type DataTablePropsConditional<
       checked: string[];
       setChecked: (checked: string[]) => void;
       items: Array<
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         Record<K, string> & Partial<Record<T, any>> & Partial<Record<D, any>>
       >;
     }
@@ -57,6 +58,7 @@ export type DataTablePropsConditional<
       checkedValue?: never;
       checked?: never;
       setChecked?: never;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       items: Array<Partial<Record<T, any>> & Partial<Record<D, any>>>;
     };
 

@@ -1,6 +1,7 @@
 import { DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnySortableItem = Record<string, any>;
 
 export type UseSortableChange<TItem extends AnySortableItem> = ({
