@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.13.6
+
+### Patch Changes
+
+- b193145: NodeJs 22 Updaten #1608
+
 ## 3.13.5
 
 ### Patch Changes
