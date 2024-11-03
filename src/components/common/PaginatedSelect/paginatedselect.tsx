@@ -70,6 +70,7 @@ export type PaginatedSelectProps<TItem, TMultiple extends boolean> = {
 export const PaginatedSelect = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends Path<TFieldValues> = Path<TFieldValues>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-constraint
   TItem extends any = any,
   TMultiple extends boolean = boolean
 >({

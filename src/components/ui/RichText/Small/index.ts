@@ -1,6 +1,7 @@
 import { mergeAttributes, Node } from "@tiptap/react";
 
 export interface SmallOptions {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   HTMLAttributes: Record<string, any>;
 }
 

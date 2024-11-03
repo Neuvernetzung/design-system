@@ -165,6 +165,7 @@ export const CalendarDateDayView = ({
                       day: date,
                       selectType,
                       calendarProps,
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       onChange: onChange as any,
                     });
                   },
@@ -287,6 +288,7 @@ export const CalendarDateDayView = ({
                           day,
                           selectType,
                           calendarProps,
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           onChange: onChange as any,
                         });
                       }}

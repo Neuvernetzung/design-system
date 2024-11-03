@@ -1,21 +1,22 @@
 {
-  "extends": "@neuvernetzung/tsconfig/react-library.json",
-  "include": ["**/*.ts", "**/*.tsx", "./src/**/*ts", "./src/**/*tsx"],
-  "exclude": ["dist", "alt", "node_modules", "commitlint.config.ts"],
+  "extends": "@tsconfig/next/tsconfig.json",
+  "include": ["./**/*.ts", "./**/*.tsx", "./src/**/*ts", "./src/**/*tsx"],
+  "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "ES2015"],
-    "allowJs": true,
-    "resolveJsonModule": true,
     "rootDir": "./",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "declaration": true,
+    "target": "ESNext",
+    "jsx": "react-jsx",
     "outDir": "dist",
+    "allowJs": true,
+    "resolveJsonModule": true,
     "importHelpers": true,
     "sourceMap": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "incremental": false
   }
 }

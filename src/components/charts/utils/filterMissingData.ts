@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const missingValueBehaviours = ["skip", "zero", "undefined"] as const;
 
 export type MissingValueBehaviour = (typeof missingValueBehaviours)[number];

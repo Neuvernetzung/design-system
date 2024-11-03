@@ -77,9 +77,9 @@ export const ViewEvent = ({
   disableDelete,
   disableUpdate,
 }: ViewEventProps) => {
-  if (!viewEventProps || !viewEventProps.event) return null;
-
   const closeRef = useRef<HTMLButtonElement>(null);
+
+  if (!viewEventProps || !viewEventProps.event) return null;
 
   const dayFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "full",

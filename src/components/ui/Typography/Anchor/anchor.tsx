@@ -55,7 +55,8 @@ const isValidHttpUrl = (href: string) => {
   try {
     const url = new URL(href);
     return url.protocol === "http:" || url.protocol === "https:";
-  } catch (_) {
+  } catch (err) {
+    console.error(err);
     return false;
   }
 };

@@ -1,10 +1,9 @@
 module.exports = {
   root: true,
-  extends: ["@neuvernetzung/eslint-config-custom"],
-  rules: {
-    "no-html-link-for-pages": "off",
-  },
-  globals: {
-    JSX: true,
-  },
+  extends: [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:storybook/recommended",
+  ],
+  ignorePatterns: ["tailwind.config.js", "dist/**"],
 };

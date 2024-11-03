@@ -18,6 +18,7 @@ import {
 } from "./components";
 
 export type SimpleTableProps<T extends string> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items?: Array<Partial<Record<T, any>>>;
   size?: Size;
   cols: SimpleTableCol<T>[];

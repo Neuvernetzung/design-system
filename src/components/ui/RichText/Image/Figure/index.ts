@@ -10,6 +10,7 @@ import { ReactNodeViewRenderer } from "@tiptap/react";
 import { ResizableMediaNodeView } from "./NodeView";
 
 export interface FigureOptions {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   HTMLAttributes: Record<string, any>;
 }
 

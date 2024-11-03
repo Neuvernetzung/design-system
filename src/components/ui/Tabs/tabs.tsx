@@ -190,8 +190,9 @@ export const TabList = ({
     >
       <div className={cn("flex flex-row items-center w-full", gaps[size])}>
         {headerStartElement && headerStartElement}
-        {items.map((props) => {
-          if (props.type === "separator") return <span className="w-full" />;
+        {items.map((props, i) => {
+          if (props.type === "separator")
+            return <span key={`tab_separator_${i}`} className="w-full" />;
 
           if (props.type === "tab" || !props.type)
             return (

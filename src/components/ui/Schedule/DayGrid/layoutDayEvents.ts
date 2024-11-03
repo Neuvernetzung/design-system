@@ -23,6 +23,7 @@ type DayLayout = {
 
 type DayLayoutWithoutTime = Pick<DayLayout, "event" | "width" | "left">;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const dayLayoutReturnTypes = ["columns", "percent"] as const;
 type DayLayoutReturnTypes = typeof dayLayoutReturnTypes;
 type DayLayoutReturnType = DayLayoutReturnTypes[number];

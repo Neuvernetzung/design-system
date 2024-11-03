@@ -43,6 +43,7 @@ export type SortableTableProps<
   handle?: boolean;
   indicator?: boolean;
   id?: TId;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: Array<Record<TId, string> & Partial<Record<T, any>>>;
 } & Omit<SortableProps<TItem>, "children" | "itemIds">;
 

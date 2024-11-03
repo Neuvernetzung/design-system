@@ -18,13 +18,13 @@ import {
   DisclosureItemProps,
 } from "../Disclosure";
 
-export type TreeItemProps<TItem extends {} = {}> = {
+export type TreeItemProps<TItem extends object = object> = {
   className?: string;
   items?: TreeItemProps<TItem>[];
   children?: ReactNode;
 } & TItem;
 
-export type TreeProps<TItem extends {} = {}> = Omit<
+export type TreeProps<TItem extends object = object> = Omit<
   DisclosureGroupProps,
   "items"
 > & {
@@ -59,7 +59,7 @@ const borderVariants: Record<BorderVariant, string> = {
   hidden: "border-hidden",
 };
 
-export const Tree = <TItem extends {} = {}>({
+export const Tree = <TItem extends object = object>({
   items,
   size = "md",
   className,
@@ -77,7 +77,7 @@ export const Tree = <TItem extends {} = {}>({
   return (
     <div className={cn("flex flex-col w-full", groupClassName)}>
       {items.map(({ items: subItems, ...item }, i) => (
-        <div key={`disclosure_${i}`} className={cn("flex flex-row")}>
+        <div key={`disclosure_${i}`} className={cn("flex flex-row", className)}>
           {depth !== 0 && !disabledBorder && (
             <span
               className={cn(

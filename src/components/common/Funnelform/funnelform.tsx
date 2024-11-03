@@ -6,6 +6,7 @@ import { Form, FormProps } from "../../ui";
 
 type UseFunnelFormOwnProps<TName extends string> = { name: TName };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const internalFunnelState = create<Record<string, any>>(() => ({}));
 
 type FunnelProps<T extends FieldValues, TName extends string> = {
@@ -15,6 +16,7 @@ type FunnelProps<T extends FieldValues, TName extends string> = {
 
 export const useFunnelForm = <
   T extends FieldValues,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   TContext = any,
   TName extends string = string
 >({

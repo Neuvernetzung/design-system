@@ -109,6 +109,7 @@ export const InputWithTagsInner = <
                 ref={mergeRefs([ref, controlleRef])}
                 value={inputState}
                 onChange={(e) => setInputState(e.target.value)}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onWheel={(e: any) =>
                   e.target?.type === "number" && e.target?.blur()
                 } // damit beim scrollen die zahl nicht versehentlich verändert wird

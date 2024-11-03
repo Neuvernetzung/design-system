@@ -107,15 +107,21 @@ export const Sizes: Story = {
 };
 
 export const AsChild: Story = {
-  render: ({ ariaLabel: argsAriaLabel, icon: argsIcon, asChild, ...args }) => (
+  render: ({
+    ariaLabel: argsAriaLabel,
+    icon: argsIcon,
+    children,
+    asChild,
+    ...args
+  }) => (
     <Container>
       <IconButton
-        asChild
+        asChild={asChild || true}
         ariaLabel={argsAriaLabel || "home"}
         icon={argsIcon || IconHome}
         {...args}
       >
-        <Link href="#" />
+        {children || <Link href="#" />}
       </IconButton>
     </Container>
   ),

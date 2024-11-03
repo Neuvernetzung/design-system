@@ -14,6 +14,7 @@ const config: Config.InitialOptions = {
   transform: {
     "^.+\\.tsx?$": "ts-jest",
   },
+
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   // Test spec file resolution pattern
   // Matches parent folder `__tests__` and filename
