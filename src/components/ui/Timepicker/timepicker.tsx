@@ -78,14 +78,18 @@ export const Timepicker = <
             const [minHour, minMinute] = min.split(":").map(Number);
 
             if (hour < minHour || (hour === minHour && minute < minMinute)) {
-              return getText(locale).min(min);
+              return getText(locale).min(
+                localtime ? utcTimeToLocal(min, timezoneOffset) : min
+              );
             }
           }
           if (max) {
             const [maxHour, maxMinute] = max.split(":").map(Number);
 
             if (hour > maxHour || (hour === maxHour && minute > maxMinute)) {
-              return getText(locale).max(max);
+              return getText(locale).max(
+                localtime ? utcTimeToLocal(max, timezoneOffset) : max
+              );
             }
           }
           return true;
