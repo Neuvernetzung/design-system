@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 
 import { sizes } from "../../../types";
@@ -17,7 +16,7 @@ export default {
       },
     },
   }, // Workaround für https://github.com/storybookjs/storybook/issues/12747#issuecomment-707265001
-} ;
+};
 
 const formClassName = "flex flex-col gap-5";
 
@@ -209,6 +208,50 @@ export const LocalTime = {
           {...args}
         />
         UTC Wert: {values.time2}
+        <Button type="submit">Submit</Button>
+      </Form>
+    );
+  },
+};
+
+export const LocalTimeMinMax = {
+  render: ({ ...args }) => {
+    const { handleSubmit, control, watch } = useForm({
+      defaultValues: { min: "6:00", max: "18:00" },
+    });
+
+    const values = watch();
+
+    return (
+      <Form
+        handleSubmit={handleSubmit}
+        onSubmit={() => {}}
+        className={formClassName}
+      >
+        <Timepicker
+          control={control}
+          name="min"
+          label="Min Timepicker"
+          removeAll
+          placeholder="Min Zeit auswählen"
+          localtime
+          max={values.max}
+          required
+          {...args}
+        />
+        Min Wert: {values.min}
+        <Timepicker
+          control={control}
+          name="max"
+          label="Max Timepicker"
+          removeAll
+          placeholder="Max Zeit auswählen"
+          localtime
+          min={values.min}
+          required
+          {...args}
+        />
+        Max Wert: {values.max}
         <Button type="submit">Submit</Button>
       </Form>
     );
