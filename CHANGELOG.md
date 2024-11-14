@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.13.10
+
+### Patch Changes
+
+- b009360: Schedule - weekDays Index fixen #1622
+
 ## 3.13.9
 
 ### Patch Changes
