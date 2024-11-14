@@ -1,4 +1,3 @@
-import { clearTime } from "@/utils/date";
 import {
   type Day,
   type Month,
@@ -23,7 +22,6 @@ import {
   type SetStateAction,
   useCallback,
   useMemo,
-  useState,
 } from "react";
 import { weekDays } from "ts-ics";
 
@@ -172,7 +170,8 @@ export const useCalendarBase = ({
   viewing,
   setViewing,
   weekStartsOn = weekDays.indexOf("MO") as Day,
-  selected: initialSelected = [],
+  selected = [],
+  setSelected,
   numberOfMonths = 1,
 }: UseCalendarBaseOptions): UseCalendarBaseReturns => {
   const viewToday = useCallback(() => setViewing(startOfToday()), [setViewing]);
@@ -203,10 +202,6 @@ export const useCalendarBase = ({
   );
 
   const viewNextYear = useCallback(() => setViewing((v) => addYears(v, 1)), []);
-
-  const [selected, setSelected] = useState<Date[]>(
-    initialSelected.map(clearTime)
-  );
 
   const clearSelected = () => setSelected([]);
 
