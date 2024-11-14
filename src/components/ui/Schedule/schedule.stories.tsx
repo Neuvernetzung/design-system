@@ -169,6 +169,7 @@ const weekWorkHours: ScheduleProps["currentWeekWorkHours"] = {
     { start: "13:15", end: "18" },
   ],
   TH: [{ start: "8", end: "15" }],
+  SU: [{ start: "9", end: "13" }],
 };
 
 export const Default: Story = {

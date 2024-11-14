@@ -114,7 +114,7 @@ export const ScheduleWeekView = ({
                   rowsEachHour={rowsEachHour}
                   workHours={
                     currentWeekWorkHours
-                      ? currentWeekWorkHours?.[weekDays[i + 1]]
+                      ? currentWeekWorkHours?.[weekDays[(i + 1) % 7]] // %7 da Index 7 bei einem Array von einer länge 7 nicht erfasst werden kann, maximal 6
                       : currentDayWorkHours
                   }
                   dayOfWeek={i + 1}
