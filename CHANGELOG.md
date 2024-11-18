@@ -1,5 +1,12 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.13.11
+
+### Patch Changes
+
+- 097c55b: Schedule - Week und Daygrid wird verzerrt, wenn Termine mit unrunden Zeiten festgelegt werden #1621
+- 8230e65: DatePicker - timeZoneOffset korrigieren #1625
+
 ## 3.13.10
 
 ### Patch Changes
