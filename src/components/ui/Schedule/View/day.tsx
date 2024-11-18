@@ -146,6 +146,7 @@ export const ScheduleDayView = ({
               disableDrag={disabled || !isFunction(onUpdate) || disableDrag}
               disableCreate={disabled || !isFunction(onCreate) || disableCreate}
               editEventProps={editEventProps}
+              gridHeight={innerHeight}
             />
           </div>
           <DragOverlay>
@@ -228,6 +229,7 @@ export type ScheduleDayProps = Pick<
   viewEventProps?: UseViewEventProps;
   eventColor?: Color;
   rows: number;
+  gridHeight: number;
 };
 
 export const ScheduleDay = ({
@@ -241,6 +243,7 @@ export const ScheduleDay = ({
   disableDrag,
   disableCreate,
   editEventProps,
+  gridHeight,
 }: ScheduleDayProps) => {
   const layout = useLayoutDayEvents(getThisDaysEvents(events || [], day), day, {
     return: "columns",
@@ -310,6 +313,7 @@ export const ScheduleDay = ({
                 gridRowStart: start,
                 gridRowEnd: end,
                 gridColumn: `span ${width}`,
+                maxHeight: `${(gridHeight / rows) * (end - start)}px`,
               }}
             >
               <DraggableEvent

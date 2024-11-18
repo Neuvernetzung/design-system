@@ -26,7 +26,7 @@ const preview: Preview = {
     ),
   ],
   parameters: {
-    showPanel: true,
+    // showPanel: true,
     sortStoriesByKind: true,
     panelPosition: "bottom",
   },

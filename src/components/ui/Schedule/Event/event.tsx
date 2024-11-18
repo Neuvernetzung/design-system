@@ -20,6 +20,7 @@ import { dayAndMonthFormatter, timeFormatter } from "../utils/formatTitle";
 import type { UseViewEventProps } from "./view";
 import { ScheduleDayProps } from "../View/day";
 import { ScheduleMonthViewProps } from "../View/month";
+import { CSSProperties } from "react";
 
 export type EventProps = {
   event: VEvent;
@@ -29,6 +30,7 @@ export type EventProps = {
   isDragoverlay?: boolean;
   color?: Color;
   className?: string;
+  style?: CSSProperties;
   isReverse?: boolean;
   showStartDate?: boolean;
 };
@@ -113,6 +115,7 @@ export const Event = ({
   className,
   isDragoverlay,
   showStartDate,
+  style,
 }: EventProps) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
@@ -145,6 +148,7 @@ export const Event = ({
         endsAfterThisDay && (isReverse ? "rounded-t-none" : "rounded-b-none"),
         className
       )}
+      style={style}
     >
       <div
         className={cn(
@@ -232,7 +236,8 @@ export const EventSmall = ({
   className,
   isDragoverlay,
   showStartDate,
-}: Omit<EventProps, "isReveresed">) => {
+  style,
+}: Omit<EventProps, "isReverse">) => {
   const startsAndEndsOnSameDay = !beginsBeforeThisDay && !endsAfterThisDay;
   const showTime = !beginsBeforeThisDay || !endsAfterThisDay;
 
@@ -261,6 +266,7 @@ export const EventSmall = ({
         "flex-shrink-0 w-full flex flex-row justify-start relative truncate",
         className
       )}
+      style={style}
     >
       <div
         className={cn(
