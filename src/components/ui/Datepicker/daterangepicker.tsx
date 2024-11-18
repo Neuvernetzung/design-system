@@ -215,8 +215,6 @@ export const DateRangepickerRaw = forwardRef(
       disabled,
     });
 
-    const timezoneOffset = useMemo(() => new Date().getTimezoneOffset(), []);
-
     const handleOnChange = (
       value: Date,
       onChange: (v: Date) => void,
@@ -325,11 +323,13 @@ export const DateRangepickerRaw = forwardRef(
                         onChange={(v) => {
                           if (v[0]) {
                             onChange?.start(
-                              utcDateToLocal(v[0], timezoneOffset)
+                              utcDateToLocal(v[0], v[0].getTimezoneOffset())
                             );
                           }
                           if (v[1]) {
-                            onChange?.end(utcDateToLocal(v[1], timezoneOffset));
+                            onChange?.end(
+                              utcDateToLocal(v[1], v[1].getTimezoneOffset())
+                            );
                           }
                         }}
                       />

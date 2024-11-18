@@ -185,8 +185,6 @@ export const DatepickerRaw = forwardRef(
       setViewing(value);
     };
 
-    const timezoneOffset = useMemo(() => new Date().getTimezoneOffset(), []);
-
     return (
       <FormElement
         required={required}
@@ -255,7 +253,7 @@ export const DatepickerRaw = forwardRef(
                         maxDate={maxDate}
                         selectType="single"
                         onChange={(v) => {
-                          onChange?.(utcDateToLocal(v, timezoneOffset));
+                          onChange?.(utcDateToLocal(v, v.getTimezoneOffset()));
                           popoverControler.close();
                         }}
                       />
