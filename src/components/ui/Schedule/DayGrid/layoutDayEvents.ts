@@ -39,9 +39,11 @@ const intervalOverlapping = (a: VEvent, b: VEvent) =>
     { start: b.start.date, end: getEventEnd(b) }
   );
 
+export const DEFAULT_PRECISION_IN_MINUTES = 15;
+
 export const calcDayRows = (options?: DayLayoutEventOptionProps) =>
   options?.return === "columns"
-    ? totalRows(options?.precisionInMinutes || 5)
+    ? totalRows(options?.precisionInMinutes || DEFAULT_PRECISION_IN_MINUTES)
     : 1;
 
 export const useLayoutDayEvents = (
@@ -125,8 +127,6 @@ const packEvents = (columns: DayLayoutWithoutTime[][]) => {
 
 const HOURS_A_DAY = 24;
 
-export const DEFAULT_PRECISION_IN_MINUTES = 5;
-
 const totalRows = (precisionInMinutes: number) =>
   HOURS_A_DAY * (60 / precisionInMinutes);
 
@@ -136,7 +136,7 @@ const calcRow = (timeInHours: number, options?: DayLayoutEventOptionProps) =>
         Math.min(timeInHours, HOURS_A_DAY) *
           (60 / (options?.precisionInMinutes || DEFAULT_PRECISION_IN_MINUTES))
       ) + 1
-    : (1 / 24) * Math.min(timeInHours, HOURS_A_DAY);
+    : (1 / HOURS_A_DAY) * Math.min(timeInHours, HOURS_A_DAY);
 
 const setStartAndEndOfEvent = (
   { event, width, left }: DayLayoutWithoutTime,

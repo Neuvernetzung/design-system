@@ -7,6 +7,7 @@ import {
   setHours,
   setMinutes,
   subDays,
+  subHours,
 } from "date-fns";
 import { useEffect, useState } from "react";
 import { type VEvent, weekDays } from "ts-ics";
@@ -36,6 +37,14 @@ type Story = StoryObj<typeof Schedule>;
 const date = setHours(setMinutes(new Date(), 0), 15);
 
 const events: VEvent[] = [
+  {
+    summary: "Event - unrunde Zeit",
+    start: { date: subHours(date, 2) },
+    created: { date: subHours(date, 2) },
+    stamp: { date: subHours(date, 2) },
+    uid: "1",
+    duration: { minutes: 5 },
+  },
   {
     summary: "Event - jetzt",
     start: { date },

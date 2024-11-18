@@ -10,7 +10,11 @@ import { divides, extendedBgColors, extendedBorders } from "../../../../styles";
 import { ScrollArea } from "../../ScrollArea";
 import type { ScheduleProps } from "../";
 import { DayScheduleHead, ScheduleDay, ScheduleDayViewProps } from "./day";
-import { calcDayRows, ScheduleWeekGrid } from "../DayGrid";
+import {
+  calcDayRows,
+  DEFAULT_PRECISION_IN_MINUTES,
+  ScheduleWeekGrid,
+} from "../DayGrid";
 import { DayGridDndContext, useDayGridDraggable } from "../DayGrid/dragAndDrop";
 import { DragOverlayEvent } from "../Event";
 import { useScrollToTime } from "../hooks/useScrollToTime";
@@ -24,7 +28,7 @@ export const ScheduleWeekView = ({
   calendarProps,
   events,
   rowsEachHour = 2,
-  precisionInMinutes = 5,
+  precisionInMinutes = DEFAULT_PRECISION_IN_MINUTES,
   showWorkHours,
   currentDayWorkHours,
   currentWeekWorkHours,
@@ -111,6 +115,7 @@ export const ScheduleWeekView = ({
             {new Array(7).fill(null).map((_, i) => (
               <>
                 <ScheduleWeekGrid
+                  key={`week_day_${i}_grid`}
                   rowsEachHour={rowsEachHour}
                   workHours={
                     currentWeekWorkHours
@@ -121,7 +126,7 @@ export const ScheduleWeekView = ({
                   showWorkHours={showWorkHours}
                 />
                 <ScheduleDay
-                  key={`week_day_${i}`}
+                  key={`week_day_${i}_day`}
                   dayOfWeek={i + 1}
                   events={thisWeeksEvents}
                   day={addDays(startOfWeek(viewing, { weekStartsOn: 1 }), i)}
@@ -133,6 +138,7 @@ export const ScheduleWeekView = ({
                     disabled || !isFunction(onCreate) || disableCreate
                   }
                   editEventProps={editEventProps}
+                  gridHeight={innerHeight}
                 />
               </>
             ))}
