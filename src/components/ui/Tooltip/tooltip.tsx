@@ -8,9 +8,11 @@ import {
 } from "@radix-ui/react-tooltip";
 import { cn } from "@/utils";
 import { ForwardedRef, forwardRef, ReactElement, ReactNode } from "react";
+import isString from "lodash/isString";
 
 import {
   bgColors,
+  extendedTextColors,
   paddingsSmall,
   roundings,
   shadows,
@@ -83,7 +85,7 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
         "flex",
         paddingsSmall[size],
         roundings[size],
-
+        extendedTextColors.filled,
         bgColors.black,
         shadows.sm,
         zIndexes.tooltip,
@@ -92,9 +94,13 @@ export const TooltipInner = forwardRef<HTMLSpanElement, TooltipInnerT>(
       style={styles}
       {...attributes}
     >
-      <Text size={size} color="filled">
-        {label}
-      </Text>
+      {isString(label) ? (
+        <Text size={size} color="inherit">
+          {label}
+        </Text>
+      ) : (
+        label
+      )}
     </span>
   )
 );
