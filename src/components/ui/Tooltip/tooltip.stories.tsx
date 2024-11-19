@@ -1,12 +1,11 @@
-
-
 import { Button } from "../Button";
 import { Tooltip, TooltipInner } from ".";
+import { Text } from "../Typography";
 
 export default {
   title: "UI/Overlay/Tooltip",
   component: Tooltip,
-} ;
+};
 
 const Container = ({ ...props }) => (
   <div className="flex flex-row gap-5 w-full justify-between" {...props} />
@@ -53,6 +52,27 @@ export const Delay = {
   render: ({ ...args }) => (
     <Container>
       <Tooltip side="top" label="Dies ist ein Tooltip" delay={500} {...args}>
+        <Button>500ms</Button>
+      </Tooltip>
+    </Container>
+  ),
+};
+
+export const ComponentLabel = {
+  render: ({ ...args }) => (
+    <Container>
+      <Tooltip
+        side="top"
+        label={
+          <Text size="sm" color="inherit">
+            <b>Klicken</b> zum bearbeiten
+            <br />
+            <b>Ziehen</b> zum verschieben
+          </Text>
+        }
+        delay={500}
+        {...args}
+      >
         <Button>500ms</Button>
       </Tooltip>
     </Container>
