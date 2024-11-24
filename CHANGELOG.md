@@ -1,5 +1,11 @@
 ## [1.55.1](https://github.com/Neuvernetzung/design-system/compare/v1.55.0...v1.55.1) (2023-05-31)
 
+## 3.14.0
+
+### Minor Changes
+
+- 671e18e: dnd-kit updaten #1632
+
 ## 3.13.12
 
 ### Patch Changes
